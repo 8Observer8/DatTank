@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "argparse": "^1.0.7",
+    "uglify-js2": "^2.1.11"
+  }
+}

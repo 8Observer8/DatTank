@@ -13,6 +13,8 @@ DT.Core = function () {
 
 DT.Core.prototype.init = function () {
 
+    ui.init();
+
     var login = Utils.ge('#username').value || localStorage.getItem('login') || '';
     Utils.ge('#username').value = login;
 
@@ -21,12 +23,15 @@ DT.Core.prototype.init = function () {
     Utils.ge('#signin-box #username').focus();
     Utils.ge('#play-btn').addEventListener( 'click', this.play.bind( this ) );
 
+    $('#graphics-quality').click( ui.chageGameQuality.bind( ui ) );
+
 };
 
 DT.Core.prototype.play = function ( event ) {
 
     var scope = this;
 
+    soundSys.playMenuSound();
     event.preventDefault();
 
     //
@@ -122,6 +127,7 @@ var network = new DT.Network();
 var view = new DT.View();
 var controls = new DT.Controls();
 var resourceManager = new DT.ResourceManager();
+var soundSys = new DT.SoundSys();
 
 // page loaded
 

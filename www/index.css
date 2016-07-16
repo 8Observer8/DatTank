@@ -32,36 +32,6 @@ body {
     display: none;
 }
 
-/**/
-
-#graphics-quality {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 50px;
-    height: 40px;
-    background-image: url(/resources/img/tank-quality.png);
-    background-size: 100% 200%;
-    opacity: 0.7;
-    transition: opacity 200ms ease;
-    cursor: url('../resources/img/cursor.png'), auto;
-}
-
-#graphics-quality:hover {
-    opacity: 0.85;
-}
-
-#graphics-quality:active {
-    top: 21px;
-    opacity: 1;
-}
-
-#graphics-quality[hq="true"] {
-    background-position: 0% 100%;
-}
-
-/**/
-
 #signin-box-wrapper {
     position: absolute;
     top: 26%;
@@ -140,6 +110,7 @@ body {
 }
 
 /* continue box */
+
 
 #continue-box-wrapper {
     display: none;
@@ -587,3 +558,4 @@ body {
     font: normal 14px 'Roboto';
     color: #dfdfdf;
 }
+
