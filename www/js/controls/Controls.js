@@ -108,13 +108,46 @@ DT.Controls.prototype.keyInit = function () {
                 Utils.ge('#stats').style['display'] = 'block';
                 break;
 
+            case 38: // up
+            case 87: // w
+                moveForward = true;
+                break;
+            case 37: // left
+            case 65: // a
+                moveLeft = true; 
+                break;
+            case 40: // down
+            case 83: // s
+                moveBackward = true;
+                break;
+            case 39: // right
+            case 68: // d
+                moveRight = true;
+                break;
         }
 
     };
 
     function keyUp ( event ) {
-
-        // todo
+        
+        switch( event.keyCode ) {
+            case 38: // up
+            case 87: // w
+                moveForward = false;
+                break;
+            case 37: // left
+            case 65: // a
+                moveLeft = false;
+                break;
+            case 40: // down
+            case 83: // s
+                moveBackward = false;
+                break;
+            case 39: // right
+            case 68: // d
+                moveRight = false;
+                break;
+        }
 
     };
 

@@ -30,8 +30,13 @@ DT.Player = function ( arena, params ) {
     this.smokePool = [];
     this.blastSmokePool = [];
 
+    // keyMovement 
+    this.moveForward = false;
+    this.moveLeft = false;
+    this.moveBackward = false;
+    this.moveRight = false;
     //
-
+    
     this.moveProgress = false;
     this.movePath = false;
     this.movementStart = false;
