@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "argparse": "^1.0.4",
+    "engine.io": "^1.6.11",
+    "engine.io-rooms": "^0.2.0",
     "express": "^4.13.4",
     "socket.io": "^1.4.4"
   }
