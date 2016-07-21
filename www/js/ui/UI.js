@@ -84,11 +84,11 @@ DT.UI.prototype.showContinueBox = function () {
 
 DT.UI.prototype.showKills = function ( killer, killed ) {
 
-    Utils.ge('#kill-events').innerHTML += '<p><span style="color:' + DT.Team.colors[ killer.team ]+ '">' + killer.login +'</span> killed <span style="color:' + DT.Team.colors[ killed.team ]+ '">' + killed.login + '</span>!</p>';
+    $('#kill-events').html( $('#kill-events').html() + '<p><span style="color:' + DT.Team.colors[ killer.team ]+ '">' + killer.login +'</span> killed <span style="color:' + DT.Team.colors[ killed.team ]+ '">' + killed.login + '</span>!</p>');
 
-    if ( Utils.ge('#kill-events').childNodes.length > 5 ) {
+    if ( $('#kill-events').length > 5 ) {
 
-        Utils.ge('#kill-events').firstChild.remove();
+         $('#kill-events').first().remove();
 
     }
 
@@ -168,11 +168,11 @@ DT.UI.prototype.updateLeaderboard = function ( players, me ) {
 
     players.sort( function ( a, b ) { return ( b.kills - a.kills ); });
 
-    var names = Utils.ges('#top-killers .player-name');
-    var kills = Utils.ges('#top-killers .kills');
-    var team = Utils.ges('#top-killers .players-team-image');
+    var names = $('#top-killers .player-name');
+    var kills = $('#top-killers .kills');
+    var team = $('#top-killers .players-team-image');
 
-    var row = Utils.ges('#top-killers .killer-outer');
+    var row = $('#top-killers .killer-outer');
 
     for ( var i = 0, il = Math.min( players.length, 9 ); i < il; i ++ ) {
 
