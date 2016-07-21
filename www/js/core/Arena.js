@@ -18,7 +18,6 @@ DT.Arena = function () {
     this.time = false;
 
     this.timeInterval = false;
-    this.pingInterval = false;
 
     //
 

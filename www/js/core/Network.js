@@ -7,275 +7,280 @@
 
 DT.Network = function () {
 
-    var scope = this;
-
     this.connected = 0;
-
     this.transport = false;
-    var reconnect = false;
-
-    this.init = function () {
-
-        if ( this.transport ) {
-
-            return;
-
-        }
-
-        //
-
-        this.transport = eio.Socket( DT.socketHost );
-        this.transport.binaryType = 'blob';
-
-        //
-
-        this.transport.on( 'open', function () {
-
-            scope.connected = 1;
-
-            if ( reconnect ) {
-
-                reconnect = false;
-                setTimeout( scope.send.bind( scope, 'reconnect', { arena: DT.arena.id, id: DT.arena.me.id }), 10 );
-                console.log( 'reconnected' );
-                return;
-
-            }
-
-            console.log( 'Connected to server.' );
-
-        });
-
-        this.transport.on( 'close', function ( param ) {
-
-            console.log('Network closed.');
-
-            scope.connected = 0;
-
-            scope.transport = false;
-            reconnect = true;
-
-            scope.init();
-
-        });        
-
-        this.transport.on( 'error', function ( param ) {
-
-            if ( param.gameplay ) {
-
-                // todo
-
-            }
-
-            if ( param.system ) {
-
-                // todo
-
-            }
-
-        });
-
-        this.transport.on( 'message', function ( param ) {
-
-            var data = false;
-            var event = false;
-
-            if ( typeof param === 'string' ) {
-            
-                param = JSON.parse( param );
-                data = param.data;
-                event = param.event;
-
-                switch ( event ) {
-
-                    case 'joinArena':
-
-                        core.joinArena( data );
-                        break;
-
-                    case 'playerJoined':
-
-                        var player = new DT.Player( false, data );
-                        DT.arena.addPlayer( player );
-                        break;
-
-                    case 'respawn':
-
-                        var player = DT.arena.getPlayerById( data.player.id );
-
-                        if ( ! player ) {
-
-                            console.warn( '[Network:MOVE] Player not fond in list.' );
-                            return;
-
-                        }
-
-                        player.respawn( true, data.player );
-
-                        break;
-
-                    case 'resetArena':
-
-                        DT.arena.clear();
-                        ui.showWinners( data.winnerTeam );
-                        break;
-
-                    case 'playerLeft':
-
-                        if ( DT.arena.getPlayerById( data.id ) ) {
-
-                            DT.arena.removePlayer( DT.arena.getPlayerById( data.id ) );
-
-                        }
-
-                        ui.updateLeaderboard( DT.arena.players, DT.arena.me );
-                        break;
-
-                    default:
-
-                        // nothing here
-                        break;
-
-                }
-
-            } else {
-
-                var arrayBuffer;
-                var fileReader = new FileReader();
-
-                fileReader.onload = function() {
-
-                    var event = new Uint16Array( this.result, 0, 2 )[0];
-                    var data = new Uint16Array( this.result, 2 );
-
-                    switch ( event ) {
-
-                        case 1:     // rotateTop
-
-                            var playerId = data[0];
-                            var topAngle = data[1] / 100;
-
-                            var player = DT.arena.getPlayerById( playerId );
-
-                            if ( ! player ) {
-
-                                console.warn( '[Network:MOVE] Player not fond in list.' );
-                                return;
-
-                            }
-
-                            player.rotateTop( topAngle, true );
-
-                            break;
-
-                        case 2:     // move
-
-                            var playerId = data[0];
-                            var path = [];
-
-                            for ( var i = 1, il = data.length; i < il; i ++ ) {
-
-                                path.push( data[ i ] - 2000 );
-
-                            }
-
-                            var player = DT.arena.getPlayerById( playerId );
-
-                            if ( ! player ) {
-
-                                console.warn( '[Network:MOVE] Player not fond in list.' );
-                                return;
-
-                            }
-
-                            player.processPath( path );
-                            break;
-
-                        case 3:     // shoot
-
-                            var playerId = data[0];
-                            var player = DT.arena.getPlayerById( playerId );
-
-                            if ( ! player ) {
-
-                                console.warn( '[Network:MOVE] Player not fond in list.' );
-                                return;
-
-                            }
-
-                            player.shoot( data[ 1 ] );
-                            break;
-
-                        case 4:     // hit
-
-                            var playerId = data[0];
-                            var player = DT.arena.getPlayerById( playerId );
-
-                            if ( ! player ) {
-
-                                console.warn( '[Network:MOVE] Player not fond in list.' );
-                                return;
-
-                            }
-
-                            player.health = data[1];
-                            player.hit();
-                            break;
-
-                        case 5:     // die
-
-                            var playerId = data[0];
-                            var killerId = data[1];
-
-                            var player = DT.arena.getPlayerById( playerId );
-                            var killer = DT.arena.getPlayerById( killerId );
-
-                            if ( ! player || ! killer ) {
-
-                                console.warn( '[Network:MOVE] Player not fond in list.' );
-                                return;
-
-                            }
-
-                            player.die( killer );
-                            break;
-
-                        case 100:
-
-                            var playerId = data[0];
-
-                            var player = DT.arena.getPlayerById( playerId );
-                            if ( ! player ) return;
-
-                            player.move( new THREE.Vector3( data[1] - 1000, 0, data[2] - 1000 ), true );
-                            break;
-
-                        default:
-
-                            // nothing here
-                            break;
-
-                    }
-                
-                };
-
-                fileReader.readAsArrayBuffer( param );
-
-            }
-
-        });
-
-    };
+    this.tryToReconnect = false;
 
 };
 
 DT.Network.prototype = {};
 
+DT.Network.prototype.init = function () {
+
+    if ( this.transport ) {
+
+        console.error( '[NETWORK] Connection already established.' );
+        return;
+
+    }
+
+    //
+
+    this.transport = eio.Socket( DT.socketHost );
+    this.transport.binaryType = 'blob';
+
+    //
+
+    this.transport.on( 'open', this.connect.bind( this ) );
+    this.transport.on( 'close', this.disconnected.bind( this ) );
+    this.transport.on( 'error', this.error.bind( this ) );
+    this.transport.on( 'message', this.message.bind( this ) );
+
+};
+
+DT.Network.prototype.connect = function () {
+
+    this.connected = 1;
+
+    if ( this.tryToReconnect ) {
+
+        this.reconnect();
+        return;
+
+    }
+
+    //
+
+    console.log( '[NETWORK] Connected to server.' );
+
+};
+
+DT.Network.prototype.reconnect = function () {
+
+    this.tryToReconnect = false;
+    setTimeout( scope.send.bind( scope, 'reconnect', { arena: DT.arena.id, id: DT.arena.me.id }), 10 );
+
+    //
+    
+    console.log( '[NETWORK] Reconnected to server.' );
+
+};
+
+DT.Network.prototype.message = function ( param ) {
+
+    var data = false;
+    var event = false;
+
+    if ( typeof param === 'string' ) {
+
+        param = JSON.parse( param );
+        data = param.data;
+        event = param.event;
+
+        switch ( event ) {
+
+            case 'joinArena':
+
+                core.joinArena( data );
+                break;
+
+            case 'playerJoined':
+
+                var player = new DT.Player( false, data );
+                DT.arena.addPlayer( player );
+                break;
+
+            case 'respawn':
+
+                var player = DT.arena.getPlayerById( data.player.id );
+
+                if ( ! player ) {
+
+                    console.warn( '[Network:MOVE] Player not fond in list.' );
+                    return;
+
+                }
+
+                player.respawn( true, data.player );
+
+                break;
+
+            case 'resetArena':
+
+                DT.arena.clear();
+                ui.showWinners( data.winnerTeam );
+                break;
+
+            case 'playerLeft':
+
+                if ( DT.arena.getPlayerById( data.id ) ) {
+
+                    DT.arena.removePlayer( DT.arena.getPlayerById( data.id ) );
+
+                }
+
+                ui.updateLeaderboard( DT.arena.players, DT.arena.me );
+                break;
+
+            default:
+
+                console.error( '[NETWORK:GOT_MESSAGE] Unknown event occurred.' );
+                break;
+
+        }
+
+    } else {
+
+        var arrayBuffer;
+        var fileReader = new FileReader();
+
+        fileReader.onload = function() {
+
+            var event = new Uint16Array( this.result, 0, 2 )[0];
+            var data = new Uint16Array( this.result, 2 );
+
+            switch ( event ) {
+
+                case 1:     // rotateTop
+
+                    var playerId = data[0];
+                    var topAngle = data[1] / 100;
+
+                    var player = DT.arena.getPlayerById( playerId );
+
+                    if ( ! player ) {
+
+                        console.warn( '[Network:MOVE] Player not fond in list.' );
+                        return;
+
+                    }
+
+                    player.rotateTop( topAngle, true );
+
+                    break;
+
+                case 2:     // move
+
+                    var playerId = data[0];
+                    var path = [];
+
+                    for ( var i = 1, il = data.length; i < il; i ++ ) {
+
+                        path.push( data[ i ] - 2000 );
+
+                    }
+
+                    var player = DT.arena.getPlayerById( playerId );
+
+                    if ( ! player ) {
+
+                        console.warn( '[Network:MOVE] Player not fond in list.' );
+                        return;
+
+                    }
+
+                    player.processPath( path );
+                    break;
+
+                case 3:     // shoot
+
+                    var playerId = data[0];
+                    var player = DT.arena.getPlayerById( playerId );
+
+                    if ( ! player ) {
+
+                        console.warn( '[Network:SHOOT] Player not fond in list.' );
+                        return;
+
+                    }
+
+                    player.shoot( data[ 1 ] );
+                    break;
+
+                case 4:     // hit
+
+                    var playerId = data[0];
+                    var player = DT.arena.getPlayerById( playerId );
+
+                    if ( ! player ) {
+
+                        console.warn( '[Network:HIT] Player not fond in list.' );
+                        return;
+
+                    }
+
+                    player.health = data[1];
+                    player.hit();
+                    break;
+
+                case 5:     // die
+
+                    var playerId = data[0];
+                    var killerId = data[1];
+
+                    var player = DT.arena.getPlayerById( playerId );
+                    var killer = DT.arena.getPlayerById( killerId );
+
+                    if ( ! player || ! killer ) {
+
+                        console.warn( '[Network:DIE] Player not fond in list.' );
+                        return;
+
+                    }
+
+                    player.die( killer );
+                    break;
+
+                case 100:
+
+                    var playerId = data[0];
+
+                    var player = DT.arena.getPlayerById( playerId );
+                    if ( ! player ) return;
+
+                    player.move( new THREE.Vector3( data[1] - 1000, 0, data[2] - 1000 ), true );
+                    break;
+
+                default:
+
+                    console.error( '[NETWORK:GOT_MESSAGE] Unknown event "' + event + '" occurred.' );
+                    break;
+
+            }
+
+        };
+
+        fileReader.readAsArrayBuffer( param );
+
+    }
+
+};
+
+DT.Network.prototype.disconnected = function () {
+
+    this.connected = 0;
+    this.transport = false;
+    this.tryToReconnect = true;
+
+    this.init();
+
+    //
+
+    console.log( '[NETWORK] Connection closed.' );
+
+};
+
+DT.Network.prototype.error = function ( err ) {
+
+    console.error( '[NETWORK] Connection error: ', err );
+
+};
+
 DT.Network.prototype.send = function ( event, data, view ) {
 
     if ( ! this.transport ) {
 
-        console.error( 'No network socket connection.' );
+        console.error( '[NETWORK:SEND_MESSAGE] No network socket connection.' );
         return false;
 
     }
@@ -328,7 +333,7 @@ DT.Network.prototype.send = function ( event, data, view ) {
 
             default:
 
-                // nothing here
+                console.error( '[NETWORK:SEND_MESSAGE] Unknown event "' + event + '" occurred.' );
                 break;
 
         }

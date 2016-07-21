@@ -99,12 +99,8 @@ DT.Core.prototype.joinArena = function ( params ) {
 
     //
 
-    if ( DT.arena && DT.arena.pingInterval ) clearInterval( DT.arena.pingInterval );
-
     DT.arena = new DT.Arena();
     DT.arena.init( params );
-
-    DT.arena.pingInterval = setInterval( network.send.bind( network, 'ping' ), 15000 );
 
     // change camera position
 
