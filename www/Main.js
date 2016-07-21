@@ -47142,9 +47142,19 @@ THREE.Projector = function () {
 
 var DT = {};
 
-// DT.socketHost = 'http://188.166.164.236:8085';
-DT.socketHost = 'http://localhost:8085';
-// DT.socketHost = 'http://46.101.205.239:8085';
+DT.Version = '2dev';
+DT.Build = 3;
+DT.local = false;
+
+if ( DT.local ) {
+
+    DT.socketHost = 'http://localhost:8085';
+
+} else {
+
+    DT.socketHost = 'http://188.166.164.236:8085';
+
+}
 
 
 /*
@@ -47213,6 +47223,7 @@ DT.Arena.prototype.reset = function ( params ) {
     // init obstacles
 
     this.pathFinder.reset();
+    ui.clearKills();
 
     view.addObsticles( params.obstacles );
 
@@ -48292,6 +48303,8 @@ DT.Core = function () {
 
 DT.Core.prototype.init = function () {
 
+    ui.init();
+
     var login = Utils.ge('#username').value || localStorage.getItem('login') || '';
     Utils.ge('#username').value = login;
 
@@ -48300,12 +48313,15 @@ DT.Core.prototype.init = function () {
     Utils.ge('#signin-box #username').focus();
     Utils.ge('#play-btn').addEventListener( 'click', this.play.bind( this ) );
 
+    $('#graphics-quality').click( ui.chageGameQuality.bind( ui ) );
+
 };
 
 DT.Core.prototype.play = function ( event ) {
 
     var scope = this;
 
+    soundSys.playMenuSound();
     event.preventDefault();
 
     //
@@ -48401,6 +48417,7 @@ var network = new DT.Network();
 var view = new DT.View();
 var controls = new DT.Controls();
 var resourceManager = new DT.ResourceManager();
+var soundSys = new DT.SoundSys();
 
 // page loaded
 
@@ -49111,52 +49128,72 @@ DT.UI = function () {
 
 };
 
+DT.UI.prototype.init = function () {
+
+    if ( localStorage.getItem('hq') === 'true' ) {
+
+        this.chageGameQuality( true );
+
+    }
+
+};
+
+DT.UI.prototype.chageGameQuality = function ( value ) {
+
+    value = ( typeof value === 'boolean' ) ? value : $('#graphics-quality').attr('hq') !== 'true';
+    $('#graphics-quality').attr( 'hq', value );
+    localStorage.setItem( 'hq', value );
+
+    soundSys.playMenuSound();
+
+};
+
 DT.UI.prototype.hideSignInPopup = function () {
 
-    Utils.ge('#signin-box-wrapper').style['display'] = 'none';
+    $('#signin-box-wrapper').hide();
+    $('#graphics-quality').hide();
 
 };
 
 DT.UI.prototype.hideFooter = function () {
 
-    Utils.ge('#footer').style['display'] = 'none';
+    $('#footer').hide();
 
 };
 
 DT.UI.prototype.showViewport = function () {
 
-    Utils.ge('#viewport').style['display'] = 'block';
+    $('#viewport').show();
 
 };
 
 DT.UI.prototype.setCursor = function () {
 
-    Utils.ge('#viewport').className += 'properCursor';
+    $('#viewport').addClass('properCursor');
 
 };
 
 DT.UI.prototype.updateHealth = function ( value ) {
 
-    Utils.ge('#health-number').innerHTML = value;
-    Utils.ge('#empty-health-image').style['height'] = ( 100 - value ) + '%';
+    $('#health-number').html( value );
+    $('#empty-health-image').css( 'height', ( 100 - value ) + '%' );
 
 };
 
 DT.UI.prototype.updateAmmo = function ( value ) {
 
-    Utils.ge('#ammo-number').innerHTML = value;
+    $('#ammo-number').html( value );
 
 };
 
 DT.UI.prototype.showContinueBox = function () {
 
-    Utils.ge('#continue-box-wrapper #continue-btn').onclick = DT.arena.me.respawn.bind( DT.arena.me, false );
-
-    Utils.ge('#continue-box-wrapper').style['display'] = 'block';
+    $('#continue-box-wrapper #continue-btn').click( DT.arena.me.respawn.bind( DT.arena.me, false ) );
+    $('#continue-box-wrapper').show();
 
     setTimeout( function () {
 
-        Utils.ge('#continue-box-wrapper').style['opacity'] = 1;
+        $('#continue-box-wrapper').css( 'opacity', 1 );
 
     }, 100 );
 
@@ -49174,11 +49211,17 @@ DT.UI.prototype.showKills = function ( killer, killed ) {
 
 };
 
+DT.UI.prototype.clearKills = function () {
+
+    $('#kill-events').html('');
+
+};
+
 DT.UI.prototype.showWinners = function ( winner ) {
 
-    Utils.ge('#winners #play-button').onclick = function () {
+    $('#winners #play-button').click( function () {
 
-        Utils.ge('#winners').style['display'] = 'none';
+        $('#winners').hide();
 
         if ( ! network.send( 'joinArena', { login: localStorage.getItem('login') || '' }, core.joinArena ) ) {
 
@@ -49188,15 +49231,15 @@ DT.UI.prototype.showWinners = function ( winner ) {
 
         }
 
-    };
+    });
 
-    Utils.ge('#winners #team-color').style['background-color'] = DT.Team.colors[ winner ];
-    Utils.ge('#continue-box-wrapper').style['display'] = 'none';
-    Utils.ge('#winners').style['display'] = 'block';
+    $('#winners #team-color').css( 'background-color', DT.Team.colors[ winner ] );
+    $('#continue-box-wrapper').hide();
+    $('#winners').show();
 
     setTimeout( function () {
 
-        Utils.ge('#winners').style['opacity'] = 1;
+        $('#winners').css( 'opacity', 1 );
 
     }, 100 );
 
@@ -49204,11 +49247,11 @@ DT.UI.prototype.showWinners = function ( winner ) {
 
 DT.UI.prototype.hideContinueBox = function () {
 
-    Utils.ge('#continue-box-wrapper').style['opacity'] = 0;
+    $('#continue-box-wrapper').css( 'opacity', 0 );
 
     setTimeout( function () {
 
-        Utils.ge('#continue-box-wrapper').style['display'] = 'none';
+        $('#continue-box-wrapper').hide();
 
     }, 200);
 
@@ -49216,11 +49259,11 @@ DT.UI.prototype.hideContinueBox = function () {
 
 DT.UI.prototype.hideWinners = function () {
 
-    Utils.ge('#winners').style['opacity'] = 0;
+    $('#winners').css( 'opacity', 0 );
 
     setTimeout( function () {
 
-        Utils.ge('#winners').style['display'] = 'none';
+        $('#winners').hide();
 
     }, 200);
 
@@ -49228,11 +49271,11 @@ DT.UI.prototype.hideWinners = function () {
 
 DT.UI.prototype.updateTeamScore = function ( teams ) {
 
-    var list = Utils.ges( '#team-params .team-number' );
+    var list = $( '#team-params .team-number' );
 
     for ( var i = 0, il = list.length; i < il; i ++ ) {
 
-        list[ i ].innerHTML = teams[ i ].kills;
+        $( list[ i ] ).html( teams[ i ].kills );
 
     }
 
@@ -49267,7 +49310,7 @@ DT.UI.prototype.updateLeaderboard = function ( players, me ) {
 
         } else {
 
-            row[ i ].style['display'] = 'none';
+            $( row[ i ] ).hide();
 
         }
 
@@ -49275,7 +49318,7 @@ DT.UI.prototype.updateLeaderboard = function ( players, me ) {
 
     for ( var i = 9; i >= players.length; i -- ) {
 
-        row[ i ].style['display'] = 'none';
+        $( row[ i ] ).hide();
 
     }
 
@@ -49296,10 +49339,10 @@ DT.UI.prototype.updateArenaTime = function ( time ) {
 
     if ( minutes === '00' && + seconds < 30 ) {
 
-        Utils.ge('#arena-time #time').style['color'] = 'red';
+        $('#arena-time #time').css( 'color', 'red' );
         setTimeout( function () {
 
-            Utils.ge('#arena-time #time').style['color'] = 'burlywood';
+            $('#arena-time #time').css( 'color', 'burlywood' );
 
         }, 500 );
 
@@ -49307,17 +49350,17 @@ DT.UI.prototype.updateArenaTime = function ( time ) {
 
     //
 
-    Utils.ge('#arena-time #time').innerHTML = minutes + ':' + seconds;
+    $('#arena-time #time').html( minutes + ':' + seconds );
 
 };
 
 DT.UI.prototype.showLoaderScreen = function () {
 
-    Utils.ge('#loader-wrapper').style['display'] = 'block';
+    $('#loader-wrapper').show();
 
     setTimeout( function () {
 
-        Utils.ge('#loader-wrapper').style['opacity'] = 1;
+        $('#loader-wrapper').css( 'opacity', 1 );
 
     }, 50 );
 
@@ -49327,11 +49370,11 @@ DT.UI.prototype.hideLoaderScreen = function () {
 
     setTimeout( function () {
 
-        Utils.ge('#loader-wrapper').style['display'] = 'none';
+        $('#loader-wrapper').hide();
 
     }, 200 );
 
-    Utils.ge('#loader-wrapper').style['opacity'] = 0;
+    $('#loader-wrapper').css( 'opacity', 0 );
 
 };
 

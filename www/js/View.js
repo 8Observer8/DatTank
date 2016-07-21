@@ -88,15 +88,14 @@ DT.View.prototype.setupScene = function () {
 
     this.sunLight.castShadow = true;
 
-    this.sunLight.shadowMapWidth = 2048;
-    this.sunLight.shadowMapHeight = 2048;
+    this.sunLight.shadow.mapSize.width = 2048;
+    this.sunLight.shadow.mapSize.height = 2048;
 
-    this.sunLight.shadowCameraRight    =  1000;
-    this.sunLight.shadowCameraLeft     = -1000;
-    this.sunLight.shadowCameraTop      =  1000;
-    this.sunLight.shadowCameraBottom   = -1000;
-    this.sunLight.shadowCameraFar = 6000;
-    this.sunLight.shadowDarkness = 1;
+    this.sunLight.shadow.camera.right    =  1000;
+    this.sunLight.shadow.camera.left     = -1000;
+    this.sunLight.shadow.camera.top      =  1000;
+    this.sunLight.shadow.camera.bottom   = -1000;
+    this.sunLight.shadow.camera.far      = 6000;
 
     // add stats
 
