@@ -132,7 +132,7 @@ DT.Arena.prototype.addPlayer = function ( player ) {
         this.me = player;
 
         view.sunLight.position.set( player.position.x - 100, view.sunLight.position.y, player.position.z + 100 );
-        view.sunLight.target = player.object;
+        view.sunLight.target = player.tank.object;
         view.sunLight.target.updateMatrixWorld();
 
     }

@@ -57,6 +57,8 @@ DT.Network.prototype.connect = function () {
 
 DT.Network.prototype.reconnect = function () {
 
+    var scope = this;
+
     this.tryToReconnect = false;
     setTimeout( scope.send.bind( scope, 'reconnect', { arena: DT.arena.id, id: DT.arena.me.id }), 10 );
 
@@ -73,9 +75,21 @@ DT.Network.prototype.message = function ( param ) {
 
     if ( typeof param === 'string' ) {
 
-        param = JSON.parse( param );
-        data = param.data;
-        event = param.event;
+        parseStringMessage( param );
+
+    } else {
+
+        parseBinMessage( param );
+
+    }
+
+    //
+
+    function parseStringMessage ( message ) {
+
+        message = JSON.parse( message );
+        data = message.data;
+        event = message.event;
 
         switch ( event ) {
 
@@ -129,7 +143,9 @@ DT.Network.prototype.message = function ( param ) {
 
         }
 
-    } else {
+    };
+
+    function parseBinMessage ( message ) {
 
         var arrayBuffer;
         var fileReader = new FileReader();
@@ -250,9 +266,9 @@ DT.Network.prototype.message = function ( param ) {
 
         };
 
-        fileReader.readAsArrayBuffer( param );
+        fileReader.readAsArrayBuffer( message );
 
-    }
+    };
 
 };
 
