@@ -55,6 +55,8 @@
 
         <a href="#" id="graphics-quality" hq="false"></a>
 
+        <div class="fb-like" data-href="https://www.facebook.com/dattankgame" data-layout="button" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
+
         <div id="signin-box-wrapper">
             <form id="signin-box">
                 <div id="title">DatTank<div id="beta">beta</div></div>
@@ -65,6 +67,18 @@
                     Left mouse btn - shoot
                 </div>
             </form>
+            <div id="share-btn">
+                <div id="f-btn">
+                    <a class="btn-share-fb" >
+                        <img class="fb-picture-share" src="/resources/img/im102.png">
+                    </a>
+                </div>
+                <div id="tw-btn">
+                    <a class="btn-share-tw" href="https://twitter.com/intent/tweet?status=Come%20and%20play%20dattank.com">
+                        <img class="tw-picture-share" src="/resources/img/im101.png">
+                    </a>
+                </div>
+            </div>
         </div>
 
         <div id="continue-box-wrapper">
@@ -156,6 +170,17 @@
             <a href="/policy">Privacy Policy</a>
             <a href="/terms">Terms of Service</a>
         </div>
+
+        <div id="fb-root"></div>
+        <script>
+            (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7&appId=384093235091765";
+            fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
 
     </body>
 
