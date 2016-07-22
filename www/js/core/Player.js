@@ -90,7 +90,7 @@ DT.Player.prototype.respawn = function ( fromNetwork, params ) {
             view.camera.lookAt( this.position );
 
             view.sunLight.position.set( this.position.x - 100, view.sunLight.position.y, this.position.z + 100 );
-            view.sunLight.target = this.object;
+            view.sunLight.target = this.tank.object;
             view.sunLight.target.updateMatrixWorld();
 
         }
