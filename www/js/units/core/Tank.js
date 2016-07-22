@@ -276,7 +276,7 @@ DT.Tank.prototype.hideBlastSmoke = function () {
 
     this.blastSmokeEnabled = false;
 
-    for ( var i = 0; i < this.blastSmokePool.length; i ++ ) {
+    for ( var i = 0; i < this.effects.blastSmoke.length; i ++ ) {
 
         this.effects.blastSmoke[ i ].opacity = 0;
 

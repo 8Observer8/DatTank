@@ -479,7 +479,6 @@ Socket.prototype.onHandshake = function (data) {
   this.upgrades = this.filterUpgrades(data.upgrades);
   this.pingInterval = data.pingInterval;
   this.pingTimeout = data.pingTimeout;
-  console.log(data);
   this.onOpen();
   // In case open handler closes socket
   if  ('closed' == this.readyState) return;

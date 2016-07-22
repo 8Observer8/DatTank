@@ -78,6 +78,7 @@ DT.Player.prototype.respawn = function ( fromNetwork, params ) {
         this.rotation = params.rotation;
         this.topRotation = params.rotationTop;
 
+        this.tank.reset();
         this.tank.setPosition( this.position.x, this.position.y, this.position.z );
         this.tank.setRotation( params.rotation );
 
@@ -413,7 +414,7 @@ DT.Player.prototype.die = function ( killer ) {
 
 DT.Player.prototype.dispose = function () {
 
-    // todo rest
     this.tank.dispose();
+    this.tank = false;
 
 };
