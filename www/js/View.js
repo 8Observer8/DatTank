@@ -88,15 +88,14 @@ DT.View.prototype.setupScene = function () {
 
     this.sunLight.castShadow = true;
 
-    this.sunLight.shadowMapWidth = 2048;
-    this.sunLight.shadowMapHeight = 2048;
+    this.sunLight.shadow.mapSize.width = 2048;
+    this.sunLight.shadow.mapSize.height = 2048;
 
-    this.sunLight.shadowCameraRight    =  1000;
-    this.sunLight.shadowCameraLeft     = -1000;
-    this.sunLight.shadowCameraTop      =  1000;
-    this.sunLight.shadowCameraBottom   = -1000;
-    this.sunLight.shadowCameraFar = 6000;
-    this.sunLight.shadowDarkness = 1;
+    this.sunLight.shadow.camera.right    =  1000;
+    this.sunLight.shadow.camera.left     = -1000;
+    this.sunLight.shadow.camera.top      =  1000;
+    this.sunLight.shadow.camera.bottom   = -1000;
+    this.sunLight.shadow.camera.far      = 6000;
 
     // add stats
 
@@ -427,19 +426,19 @@ DT.View.prototype.updatePlayersPosition = function ( delta ) {
 
         var player = DT.arena.players[ i ];
 
-        player.animate();
+        player.tank.update();
 
         if ( ! player.movePath || player.movePath.length === 0 ) {
 
             player.movePath = false;
 
-            if ( player.sounds.moving.source.buffer && player.sounds.moving.isPlaying ) {
+            // if ( player.sounds.moving.source.buffer && player.sounds.moving.isPlaying ) {
             
-                player.sounds.moving.stop();
-                player.sounds.moving.startTime = 0;
-                player.sounds.moving.isPlaying = false;
+            //     player.sounds.moving.stop();
+            //     player.sounds.moving.startTime = 0;
+            //     player.sounds.moving.isPlaying = false;
 
-            }
+            // }
 
             continue;
 
@@ -467,23 +466,23 @@ DT.View.prototype.updatePlayersPosition = function ( delta ) {
 
             player.movePath = false;
 
-            if ( player.sounds.moving.source.buffer && player.sounds.moving.isPlaying ) {
+            // if ( player.sounds.moving.source.buffer && player.sounds.moving.isPlaying ) {
 
-                player.sounds.moving.stop();
-                player.sounds.moving.startTime = false;
-                player.sounds.moving.isPlaying = false;
+            //     player.sounds.moving.stop();
+            //     player.sounds.moving.startTime = false;
+            //     player.sounds.moving.isPlaying = false;
 
-            }
+            // }
 
             continue;
 
         } else {
 
-            if ( player.sounds.moving.source.buffer && ! player.sounds.moving.isPlaying ) {
+            // if ( player.sounds.moving.source.buffer && ! player.sounds.moving.isPlaying ) {
 
-                player.sounds.moving.play();
+            //     player.sounds.moving.play();
 
-            }
+            // }
 
             if ( progress !== player.moveProgress ) {
 
@@ -541,7 +540,7 @@ DT.View.prototype.updatePlayersPosition = function ( delta ) {
             if ( player.dRotCount > 0 ) {
 
                 player.rotation = Utils.addAngle( player.rotation, player.dRotation );
-                player.object.rotation.y = player.rotation;
+                player.tank.setRotation( player.rotation );
 
                 player.dRotCount --;
 
@@ -557,7 +556,7 @@ DT.View.prototype.updatePlayersPosition = function ( delta ) {
                 player.position.x += dx;
                 player.position.z += dz;
 
-                player.object.position.set( player.position.x, player.position.y, player.position.z );
+                player.tank.setPosition( player.position.x, player.position.y, player.position.z );
 
                 if ( player.id === DT.arena.me.id ) {
 

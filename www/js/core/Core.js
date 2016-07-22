@@ -15,13 +15,13 @@ DT.Core.prototype.init = function () {
 
     ui.init();
 
-    var login = Utils.ge('#username').value || localStorage.getItem('login') || '';
-    Utils.ge('#username').value = login;
+    var login = $('#username').val() || localStorage.getItem('login') || '';
+    $('#username').val( login );
 
     // add handlers
 
-    Utils.ge('#signin-box #username').focus();
-    Utils.ge('#play-btn').addEventListener( 'click', this.play.bind( this ) );
+    $('#signin-box #username').focus();
+    $('#play-btn').click( this.play.bind( this ) );
 
     $('#graphics-quality').click( ui.chageGameQuality.bind( ui ) );
 
@@ -40,8 +40,9 @@ DT.Core.prototype.play = function ( event ) {
 
     resourceManager.load( function ( progress ) {
 
-        Utils.ge('#loader-wrapper #progress-wrapper #progress-bar').style['width'] = ( 100 * progress ) + '%';
-        Utils.ge('#loader-wrapper #title span').innerHTML = Math.round( 100 * progress ) + '%';
+        var value = Math.round( 100 * progress ) + '%';
+        $('#loader-wrapper #progress-wrapper #progress-bar').css( 'width', value );
+        $('#loader-wrapper #title span').html( value );
 
     }, function () {
 
@@ -66,7 +67,7 @@ DT.Core.prototype.play = function ( event ) {
 
         // send network request
 
-        var login = Utils.ge('#username').value || localStorage.getItem('login') || '';
+        var login = $('#username').val() || localStorage.getItem('login') || '';
         localStorage.setItem( 'login', login );
 
         ga('send', {
@@ -99,12 +100,8 @@ DT.Core.prototype.joinArena = function ( params ) {
 
     //
 
-    if ( DT.arena && DT.arena.pingInterval ) clearInterval( DT.arena.pingInterval );
-
     DT.arena = new DT.Arena();
     DT.arena.init( params );
-
-    DT.arena.pingInterval = setInterval( network.send.bind( network, 'ping' ), 15000 );
 
     // change camera position
 
@@ -131,4 +128,4 @@ var soundSys = new DT.SoundSys();
 
 // page loaded
 
-document.addEventListener( 'DOMContentLoaded', core.init.bind( core ), false );
+$( document ).ready( core.init.bind( core ), false );
