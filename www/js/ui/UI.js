@@ -84,11 +84,11 @@ DT.UI.prototype.showContinueBox = function () {
 
 DT.UI.prototype.showKills = function ( killer, killed ) {
 
-    $('#kill-events').html( $('#kill-events').html() + '<p><span style="color:' + DT.Team.colors[ killer.team ]+ '">' + killer.login +'</span> killed <span style="color:' + DT.Team.colors[ killed.team ]+ '">' + killed.login + '</span>!</p>');
+    $('#kill-events').append( '<p><span style="color:' + DT.Team.colors[ killer.team ]+ '">' + killer.login +'</span> killed <span style="color:' + DT.Team.colors[ killed.team ]+ '">' + killed.login + '</span>!</p>');
 
-    if ( $('#kill-events').length > 5 ) {
+    if ( $('#kill-events').children().length > 5 ) {
 
-         $('#kill-events').first().remove();
+        $('#kill-events p').first().remove();
 
     }
 
