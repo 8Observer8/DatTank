@@ -24,7 +24,7 @@ DT.Core.prototype.init = function () {
     $('#play-btn').click( this.play.bind( this ) );
 
     $('#graphics-quality').click( ui.chageGameQuality.bind( ui ) );
-
+    $('#sound-on-off').click(ui.changeSound.bind( ui ) );
 };
 
 DT.Core.prototype.play = function ( event ) {

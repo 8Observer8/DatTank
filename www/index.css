@@ -61,6 +61,35 @@ body {
 }
 
 /**/
+/*sound-on-off*/
+
+#sound-on-off {
+    position: absolute;
+    top: 20px;
+    right: 100px;
+    width: 50px;
+    height: 40px;
+    background-image: url(../resources/img/sound-on-off.png);
+    background-size: 100% 200%;
+    opacity: 0.7;
+    transition: opacity 200ms ease;
+    cursor: url('../resources/img/cursor.png'), auto;
+}
+
+#sound-on-off:hover {
+    opacity: 0.85;
+}
+
+#sound-on-off:active {
+    top: 21px;
+    opacity: 1;
+}
+
+#sound-on-off[sound="true"] {
+    background-position: 0% 100%;
+}
+
+/**/
 
 #signin-box-wrapper {
     position: absolute;

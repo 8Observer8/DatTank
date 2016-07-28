@@ -14,6 +14,9 @@ DT.SoundSys.prototype = {};
 
 DT.SoundSys.prototype.playMenuSound = function () {
 
-	this.menuSound.play();
+	// this.menuSound.play();
+	if ( localStorage.getItem('sound') === 'true' ) {
+    	this.menuSound.play();
+  	};
 
 };
