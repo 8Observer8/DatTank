@@ -19,6 +19,12 @@ DT.UI.prototype.init = function () {
 
     }
 
+    if ( localStorage.getItem('sound') === 'true' ) {
+
+        this.changeSound( true );
+
+    }
+
 };
 
 DT.UI.prototype.chageGameQuality = function ( value ) {
@@ -31,10 +37,20 @@ DT.UI.prototype.chageGameQuality = function ( value ) {
 
 };
 
+DT.UI.prototype.changeSound = function (value) {
+
+    value = ( typeof value === 'boolean' ) ? value : $('#sound-on-off').attr('sound') !== 'true';
+    $('#sound-on-off').attr( 'sound', value );
+    localStorage.setItem( 'sound', value );
+
+    soundSys.playMenuSound();
+};
+
 DT.UI.prototype.hideSignInPopup = function () {
 
     $('#signin-box-wrapper').hide();
     $('#graphics-quality').hide();
+    $('#sound-on-off').hide();
 
 };
 

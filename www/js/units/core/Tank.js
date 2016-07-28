@@ -125,7 +125,13 @@ DT.Tank.prototype.initBullets = function () {
         bullet.soundShooting.loop = false;
         bullet.soundShooting.setRefDistance( 30 );
         bullet.soundShooting.autoplay = false;
-        bullet.soundShooting.setVolume( 1 );
+        // bullet.soundShooting.setVolume( 0 );
+        
+        if ( localStorage.getItem('sound') === 'false' ) {
+            bullet.soundShooting.setVolume( 0 );
+        } else {
+            bullet.soundShooting.setVolume( 1 );
+        };
 
         this.object.add( bullet.soundShooting );
 
@@ -140,7 +146,13 @@ DT.Tank.prototype.initSounds = function () {
     this.sounds.moving.loop = true;
     this.sounds.moving.setRefDistance( 15 );
     this.sounds.moving.autoplay = false;
-    this.sounds.moving.setVolume( 0.3 );
+    // this.sounds.moving.setVolume( 0.3 );
+
+    if ( localStorage.getItem('sound') === 'false' ) {
+        this.sounds.moving.setVolume( 0 );
+    } else {
+        this.sounds.moving.setVolume( 0.3 );
+    };
 
     this.object.add( this.sounds.moving );
 
@@ -149,7 +161,13 @@ DT.Tank.prototype.initSounds = function () {
     this.sounds.explosion.loop = true;
     this.sounds.explosion.setRefDistance( 15 );
     this.sounds.explosion.autoplay = false;
-    this.sounds.explosion.setVolume( 0.7 );
+    // this.sounds.explosion.setVolume( 0.7 );
+
+    if ( localStorage.getItem('sound') === 'false' ) {
+        this.sounds.explosion.setVolume( 0 );
+    } else {
+        this.sounds.explosion.setVolume( 0.7 );
+    };
 
     this.object.add( this.sounds.explosion );
 
