@@ -25,6 +25,8 @@ DT.Core.prototype.init = function () {
 
     $('#graphics-quality').click( ui.chageGameQuality.bind( ui ) );
     $('#sound-on-off').click(ui.changeSound.bind( ui ) );
+    // $('#gear_btn').click(ui.openSettings.bind( ui ) );
+
 };
 
 DT.Core.prototype.play = function ( event ) {
@@ -114,6 +116,8 @@ DT.Core.prototype.joinArena = function ( params ) {
 
     ui.updateLeaderboard( DT.arena.players, DT.arena.me );
 
+    $('#gear_btn').click(ui.openSettings.bind( ui ) );
+    $('#sound-on-off').click(ui.changeSound.bind( ui ) );
 };
 
 // init services

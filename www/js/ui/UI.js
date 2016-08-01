@@ -25,6 +25,9 @@ DT.UI.prototype.init = function () {
 
     }
 
+    $('#settings').hide();
+
+    localStorage.setItem( 'gear', false );
 };
 
 DT.UI.prototype.chageGameQuality = function ( value ) {
@@ -52,6 +55,22 @@ DT.UI.prototype.hideSignInPopup = function () {
     $('#graphics-quality').hide();
     $('#sound-on-off').hide();
 
+};
+
+DT.UI.prototype.openSettings = function (value) {
+
+    value = ( typeof value === 'boolean' ) ? value : $('#gear_btn').attr('gear') !== 'true';
+    $('#gear_btn').attr( 'gear', value );
+    localStorage.setItem( 'gear', value );
+    soundSys.playMenuSound();
+    
+    if ( localStorage.getItem('gear') === 'true' ) {
+        $('#settings').show();
+    }
+    if (localStorage.getItem('gear') === 'false' ){
+        $('#settings').hide();
+    }
+    
 };
 
 DT.UI.prototype.hideFooter = function () {

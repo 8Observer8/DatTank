@@ -283,6 +283,8 @@ DT.Network.prototype.disconnected = function () {
     //
 
     console.log( '[NETWORK] Connection closed.' );
+    
+    // setInterval( alert( "INTERNET CONNECTION LOST!!!" ), 5000 );
 
 };
 

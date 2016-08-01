@@ -65,8 +65,8 @@ body {
 
 #sound-on-off {
     position: absolute;
-    top: 20px;
-    right: 120px;
+    top: 18px;
+    right: 90px;
     width: 50px;
     height: 40px;
     background-image: url(../resources/img/sound-on-off.png);
@@ -89,6 +89,42 @@ body {
     background-position: 0% 100%;
 }
 
+/**/
+/*GEAR BTN*/
+#gear_btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    background-image: url(../resources/img/gear.png);
+    background-size: 100%;
+    opacity: 0.9;
+    transition: opacity 200ms ease;
+    cursor: url('../resources/img/cursor.png'), auto;
+}
+
+#gear_btn:hover {
+    opacity: 0.85;
+}
+
+#gear_btn:active {
+    top: 21px;
+    opacity: 1;
+}
+
+#gear_btn[gear="true"] {
+    background-position: 0% 100%;
+}
+
+#settings {
+    position: relative;
+    top: 80px;
+    left: 10px;
+    background-color: purple;
+    width: 200px;
+    height: 200px;
+}
 /**/
 
 #signin-box-wrapper {
