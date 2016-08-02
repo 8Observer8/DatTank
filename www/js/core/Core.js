@@ -24,6 +24,9 @@ DT.Core.prototype.init = function () {
     Utils.ge('#play-btn').addEventListener( 'click', this.play.bind( this ) );
 
     $('#graphics-quality').click( ui.chageGameQuality.bind( ui ) );
+    $('.change-skin-btn').click( ui.showChoiceWindow.bind( ui ) );
+    $('.close-tank-skins').click(ui.closeChoiceWindow.bind( ui ) );
+    $('.btn-pick').click(ui.selectTankAndcloseChoiceWindow.bind( ui ) );
 
 };
 
