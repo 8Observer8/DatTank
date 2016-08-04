@@ -40,7 +40,7 @@ DT.UI.prototype.chageGameQuality = function ( value ) {
 
 };
 
-DT.UI.prototype.changeSound = function (value) {
+DT.UI.prototype.changeSound = function ( value ) {
 
     value = ( typeof value === 'boolean' ) ? value : $('#sound-on-off').attr('sound') !== 'true';
     $('#sound-on-off').attr( 'sound', value );
@@ -64,10 +64,10 @@ DT.UI.prototype.openSettings = function (value) {
     localStorage.setItem( 'gear', value );
     soundSys.playMenuSound();
     
-    if ( localStorage.getItem('gear') === 'true' ) {
+    if ( localStorage.getItem( 'gear' ) === 'true' ) {
         $('#settings').show();
     }
-    if (localStorage.getItem('gear') === 'false' ){
+    if ( localStorage.getItem( 'gear' ) === 'false' ){
         $('#settings').hide();
     }
     
