@@ -663,7 +663,7 @@ body {
 
 #f-btn {
     position: fixed;
-    bottom: 44px;
+    bottom: 37px;
     right: 15px;
     z-index: 20;
 }
@@ -681,7 +681,7 @@ body {
 
 #tw-btn {
     position: fixed; 
-    bottom: 44px; 
+    bottom: 37px; 
     z-index: 20; 
     right: 104px;
 }
@@ -702,4 +702,191 @@ body {
     position: absolute;
     top:20px;
     left:20px;
+}
+
+.change-skin-btn {
+    position: fixed;
+    left: 20px;
+    bottom: 34px;
+    z-index: 20;
+    display: inline;
+}
+
+.btn-skin {
+    width: 85px;
+    height:80px;
+}
+
+.snake-img {
+    width: 85px;
+    height:80px;
+}
+
+.tank-skins {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+    z-index: 100;
+    background: rgba(0,0,0,0.4);
+}
+
+.select-tank-skins {
+    position: relative;
+    min-width: 318px;
+    min-height: 311px;
+    margin-left: auto;
+    margin-right: auto;
+    top: 8%;
+    width: 70%;
+    height: 70%;
+    background-color: white;
+}
+
+.close-tank-skins {
+    position: inherit;
+    float: right;
+    margin-right: 13px;
+    margin-top: 6px;
+    cursor: pointer;
+}
+
+.select-window {
+    position: fixed;
+    width: 40%;
+    height: 47%;
+    margin-left: 2%;
+    top: 16%;
+    border: 1px solid gray;
+    min-width: 201px;
+    background-color: white;
+}
+
+.tank1-img {
+    width: 100%;
+    height: 100%;
+}
+
+.arrows1 {
+    position: absolute;
+    width: 11%;
+    height: 100%;
+    top: 0%;
+    cursor: pointer;
+    min-width: 31px;
+}
+
+.arrows2 {
+    position: absolute;
+    width: 15%;
+    height: 100%;
+    left: 85%;
+    top: 0%;
+    cursor: pointer;
+}
+
+.arrows-right {
+    position: absolute;
+    width: 29px;
+    height: 11%;
+    top: 45%;
+    right: 5%;
+}
+
+.arrows-left {
+    position: absolute;
+    width: 29px;
+    height: 11%;
+    top: 45%;
+    left: 5%;
+}
+
+.choice-skins {
+    position: fixed;
+    height: auto;
+    top: 65%;
+    border: none;
+    left: 26%;
+    width: calc(36% + 6rem);
+    margin-left: -8rem;
+}
+
+.model1 {
+    position: relative;
+    width: 84px;
+    height: 84px;
+    border: 1px solid gray;
+    display: inline-block;
+    left: calc(32%);
+}
+
+.select1-img {
+    width: 84px;
+    height: 84px;
+    cursor: pointer;
+}
+
+.model2 {
+    position: relative;
+    width: 84px;
+    height: 84px;
+    border: 1px solid gray;
+    display: inline-block;
+    left: calc(32%);
+}
+
+.select2-img {
+    width: 84px;
+    height: 84px;
+    cursor: pointer;
+}
+
+.title-select {
+    position: absolute;
+    top: 9.3%;
+    right: 3%;
+    width: 29%;
+    height: 6%;
+    font-family: sans-serif;
+}
+
+.name-specifications {
+    position: absolute;
+    right: 4%;
+    top: 13%;
+    left: 69%;
+}
+
+.specifications {
+    position: absolute;
+    height: 54.8%;
+    width: 26%;
+    border: 1px solid gray;
+    top: 20%;
+    min-width: 55px;
+    min-height: 85px;
+    margin-left: 68%;
+}
+
+.specification-text {
+    position: initial;
+    margin: 11%;
+    font-size: 90%;
+}
+
+.btn-pick {
+    position: absolute;
+    right: 6%;
+    color: white;
+    background-color: #689f38;
+    border: 1px solid green;
+    top: 87%;
+    width: 10%;
+    height: 4%;
+    text-align: center;
+    opacity: 0.8;
+    cursor: pointer;
+    padding: 8px;
+    min-width: 64px;
+    min-height: 18px;
 }
