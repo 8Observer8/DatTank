@@ -11,6 +11,7 @@ DT.Player = function ( arena, params ) {
     this.login = params.login || 'guest';
 
     this.status = 'alive';
+    this.team = params.team;
 
     this.health = params.health;
     this.ammo = params.ammo;
@@ -20,10 +21,8 @@ DT.Player = function ( arena, params ) {
 
     //
 
-    this.team = params.team;
     this.position = new THREE.Vector3( params.position[0], params.position[1], params.position[2] );
     this.rotation = params.rotation;
-
     this.topRotation = params.rotationTop;
 
     // keyMovement 
