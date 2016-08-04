@@ -144,12 +144,19 @@
 
             <div id="gear_btn" gear="false"></div>
             
-            <div id="settings">
-                <div>Settings</div>
-                <div>Change nickname</div>
-                <div>Sound on/off</div>
-                <div>Quality on/off</div>
-                <div>Change tank</div>
+            <div id="settings-wrapper">
+                <div id="settings-tittle">Settings</div>
+                <div id="settings-nickname">Change nickname</div>
+                <input id="username" class="field" type="text" placeholder="Username" maxlength="13" />
+                <button type="submit" id="change-nickname">Change</button>
+                <div id="settings-sound">Sound</div>
+                <button type="submit" id="soundon">ON</button>
+                <!-- <button type="submit" id="soundoff">OFF</button> -->
+                <div id=settings-quality>Quality</div>
+                <button type="submit" id="qualityon">ON</button>
+                <!-- <button type="submit" id="qualityoff">OFF</button> -->
+
+                <button type="submit" id="exit-btn">EXIT</button>
             </div>
 
             <div id="arena-time">

@@ -25,7 +25,7 @@ DT.UI.prototype.init = function () {
 
     }
 
-    $('#settings').hide();
+    $('#settings-wrapper').hide();
 
     localStorage.setItem( 'gear', false );
 };
@@ -38,6 +38,7 @@ DT.UI.prototype.chageGameQuality = function ( value ) {
 
     soundSys.playMenuSound();
 
+    
 };
 
 DT.UI.prototype.changeSound = function ( value ) {
@@ -65,10 +66,10 @@ DT.UI.prototype.openSettings = function (value) {
     soundSys.playMenuSound();
     
     if ( localStorage.getItem( 'gear' ) === 'true' ) {
-        $('#settings').show();
+        $('#settings-wrapper').show();
     }
     if ( localStorage.getItem( 'gear' ) === 'false' ){
-        $('#settings').hide();
+        $('#settings-wrapper').hide();
     }
     
 };

@@ -575,6 +575,36 @@ DT.View.prototype.updatePlayersPosition = function ( delta ) {
 
 };
 
+DT.View.prototype.changeGraficQuality = function () {
+
+    var antialias = false;
+    var quality = 0.7;
+
+    if ( localStorage.getItem('hq') === 'true' ) {
+
+        antialias = true;
+        quality = 1;
+
+    }
+
+    if ( ! this.renderer ) {
+
+        this.renderer = new THREE.WebGLRenderer({ canvas: Utils.ge('#renderport'), antialias: antialias });
+        this.renderer.setSize( quality * this.SCREEN_WIDTH, quality * this.SCREEN_HEIGHT );
+        this.renderer.setClearColor( 0x000000 );
+
+        if ( ! MOBILE ) {
+        
+            // this.renderer.shadowMap.enabled = true;
+
+        }
+
+        this.render();
+
+    }
+    
+};    
+
 DT.View.prototype.render = (function () {
 
     var prevRenderTime;
