@@ -463,6 +463,12 @@ DT.Tank.prototype.shootBullet = function () {
 
         bullet.soundShooting.play();
 
+        if ( localStorage.getItem('sound') === 'false' ) {
+            bullet.soundShooting.setVolume( 0 );
+        } else {
+            bullet.soundShooting.setVolume( 1 );
+        };
+
     }
 
     //
@@ -579,6 +585,11 @@ DT.Tank.prototype.destroy = function () {
     }, 200 );
 
     this.sounds.explosion.play();
+        if ( localStorage.getItem('sound') === 'false' ) {
+            this.sounds.explosion.setVolume( 0 );
+        } else {
+            this.sounds.explosion.setVolume( 1 );
+        };
 
 };
 

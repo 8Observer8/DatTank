@@ -117,13 +117,180 @@ body {
     background-position: 0% 100%;
 }
 
-#settings {
+#settings-wrapper {
     position: relative;
-    top: 80px;
-    left: 10px;
-    background-color: purple;
-    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
     height: 200px;
+    padding-bottom: 20px;
+    border: 1px solid #CCC;
+    box-shadow: #888 0 0 40px;
+    background-color: #fff;
+    top: 30%;
+}
+
+#settings-wrapper #settings-tittle {
+    position: relative;
+    color: black;
+    font: normal 20px 'Roboto';
+    text-align: center;
+}
+
+#settings-wrapper #settings-nickname {
+    position:relative;
+    color: black;
+    margin-left: 5px;
+    font: normal 17px 'Roboto';
+}
+
+#settings-wrapper .field {
+    display: table;
+    margin-top: 2px;
+    margin-left: 5px;
+    margin-right: auto;
+    padding: 2px 2px;
+    width: 55%;
+    border: 2px solid #00b6ff;
+    border-radius: 4px;
+    font: normal 15px 'Roboto';
+    cursor: url('../resources/img/cursor.png'), auto;
+}
+
+#settings-wrapper #change-nickname {
+    position: absolute;
+    top: 20%;
+    left: 65%;
+    background-color: #00b6ff;
+    padding: 2px 2px;
+    margin-top: 2px;
+    float: top;
+    margin-left: auto;
+    margin-right: 15px;
+    width: 30%;
+    text-align: center;
+    font: normal 15px 'Roboto';
+    color: #fff;
+    border: 1px solid #0493CC;
+    opacity: 0.8;
+    transition: opacity 200ms ease;
+    cursor: url('../resources/img/cursor.png'), auto;
+}
+
+#settings-wrapper #settings-sound {
+    position: relative;
+    color: black;
+    margin-left: 5px;
+    margin-top: 2px;
+    font: normal 20px 'Roboto';
+}
+
+#settings-wrapper #soundon {
+    position: absolute;
+    top: 32%;
+    left: 65%;
+    background-color: #00b6ff;
+    padding: 2px 2px;
+    margin-top: 3px;
+    float: top;
+    margin-left: auto;
+    margin-right: 15px;
+    width: 14%;
+    text-align: center;
+    font: normal 15px 'Roboto';
+    color: #fff;
+    border: 1px solid #0493CC;
+    opacity: 0.8;
+    transition: opacity 200ms ease;
+    cursor: url('../resources/img/cursor.png'), auto;
+}
+
+#settings-wrapper #soundoff {
+    position: absolute;
+    top: 32%;
+    left: 81%;
+    background-color: red;
+    padding: 2px 2px;
+    margin-top: 3px;
+    float: top;
+    margin-left: auto;
+    margin-right: 15px;
+    width: 14%;
+    text-align: center;
+    font: normal 15px 'Roboto';
+    color: #fff;
+    border: 1px solid #0493CC;
+    opacity: 0.8;
+    transition: opacity 200ms ease;
+    cursor: url('../resources/img/cursor.png'), auto;
+}
+
+#settings-wrapper #settings-quality {
+    position: relative;
+    color: black;
+    margin-left: 5px;
+    margin-top: 2px;
+    font: normal 20px 'Roboto';
+}
+
+#settings-wrapper #qualityon {
+    position: absolute;
+    top: 45%;
+    left: 65%;
+    background-color: #00b6ff;
+    padding: 2px 2px;
+    margin-top: 3px;
+    float: top;
+    margin-left: auto;
+    margin-right: 15px;
+    width: 14%;
+    text-align: center;
+    font: normal 15px 'Roboto';
+    color: #fff;
+    border: 1px solid #0493CC;
+    opacity: 0.8;
+    transition: opacity 200ms ease;
+    cursor: url('../resources/img/cursor.png'), auto;
+}
+
+#settings-wrapper #qualityoff {
+    position: absolute;
+    top: 45%;
+    left: 81%;
+    background-color: red;
+    padding: 2px 2px;
+    margin-top: 3px;
+    float: top;
+    margin-left: auto;
+    margin-right: 14px;
+    width: 14%;
+    text-align: center;
+    font: normal 15px 'Roboto';
+    color: #fff;
+    border: 1px solid #0493CC;
+    opacity: 0.8;
+    transition: opacity 200ms ease;
+    cursor: url('../resources/img/cursor.png'), auto;
+}
+
+#settings-wrapper #exit-btn {
+    position: absolute;
+    top: 85%;
+    left: 65%;
+    background-color: red;
+    padding: 2px 2px;
+    margin-top: 2px;
+    float: top;
+    margin-left: auto;
+    margin-right: 15px;
+    width: 30%;
+    text-align: center;
+    font: normal 15px 'Roboto';
+    color: #fff;
+    border: 1px solid #0493CC;
+    opacity: 0.8;
+    transition: opacity 200ms ease;
+    cursor: url('../resources/img/cursor.png'), auto;
 }
 /**/
 
@@ -692,18 +859,6 @@ body {
     height: 74;
 }
 
-.tw-picture-share {
-    border:0px; 
-    width:80px; 
-    height:74px;
-}
-
-.fb-like {
-    position: absolute;
-    top:20px;
-    left:20px;
-}
-
 .change-skin-btn {
     position: fixed;
     left: 20px;
@@ -758,13 +913,13 @@ body {
     margin-left: 2%;
     top: 16%;
     border: 1px solid gray;
-    min-width: 201px;
-    background-color: white;
 }
 
-.tank1-img {
+.tankskin {
+    position: relative;
     width: 100%;
     height: 100%;
+    border: 1px solid gray;
 }
 
 .arrows1 {
@@ -889,4 +1044,16 @@ body {
     padding: 8px;
     min-width: 64px;
     min-height: 18px;
+} 
+
+.tw-picture-share {
+    border:0px; 
+    width:80px; 
+    height:74px;
+}
+
+.fb-like {
+    position: absolute;
+    top:20px;
+    left:20px;
 }

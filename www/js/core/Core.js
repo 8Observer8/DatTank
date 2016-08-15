@@ -22,9 +22,17 @@ DT.Core.prototype.init = function () {
 
     $('#signin-box #username').focus();
     $('#play-btn').click( this.play.bind( this ) );
+    $('.change-skin-btn').click( ui.showChoiceWindow.bind( ui ) );
+    $('.close-tank-skins').click(ui.closeChoiceWindow.bind( ui ) );
+    $('.btn-pick').click(ui.selectTankAndcloseChoiceWindow.bind( ui ) )
+
 
     $('#graphics-quality').click( ui.chageGameQuality.bind( ui ) );
     $('#sound-on-off').click( ui.changeSound.bind( ui ) );
+    $('#model1').click( ui.choseModel1.bind( ui ) );
+    $('#model2').click( ui.choseModel2.bind( ui ) );
+    $('#arrow1').click( ui.arrowBack.bind( ui ) );
+    $('#arrow2').click( ui.arrowForward.bind( ui ) );
 
 };
 
@@ -115,8 +123,10 @@ DT.Core.prototype.joinArena = function ( params ) {
 
     ui.updateLeaderboard( DT.arena.players, DT.arena.me );
 
-    $('#gear_btn').click(ui.openSettings.bind( ui ) );
-    $('#sound-on-off').click(ui.changeSound.bind( ui ) );
+    $('#gear_btn').click( ui.openSettings.bind( ui ) );  
+    $('#exit-btn').click( ui.openSettings.bind( ui ) );
+    $('#soundon').click( ui.changeSound.bind( ui ) );
+    $('#qualityon').click( ui.chageGameQuality.bind( ui ) );
 
 };
 

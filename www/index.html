@@ -21,7 +21,7 @@
         <link rel="stylesheet" type="text/css" href="css/Main.css" />
         <link rel="stylesheet" id="google-fonts-css" href="http://fonts.googleapis.com/css?family=Roboto:400,400italic,700,700italic,300,300italic,500,500italic" type="text/css" media="all">
         <link rel="shortcut icon" href="/resources/img/fav.ico">
-
+        
         <script src="js/libs/Engine.io.js"></script>
         <script src="js/libs/HackTimer.js"></script>
         <script src="js/libs/three.js"></script>
@@ -29,6 +29,11 @@
         <script src="js/libs/stats.js"></script>
         <script src="js/libs/mobile-detect.js"></script>
         <script src="js/libs/jquery.js"></script>
+
+        <script src="js/libs/stats.min.js"></script>
+        <script src="js/libs/AssimpJSONLoader.js"></script>
+        <script src="js/libs/Detector.js"></script>
+        
 
         <script src="js/DT.js"></script>
 
@@ -108,22 +113,26 @@
         <div class="tank-skins">
             <div class="select-tank-skins">
                 <div class="close-tank-skins">&#10006;</div>
+               
                 <div class="select-window">
-                    <img class="tank1-img" src="/resources/img/tank1.png">
+                    <!-- ChoseScin scene -->
+                    <div id="skin" class="tankskin"></div>
+                    <script src="js/ChooseScin.js"></script>
+                    <!--  -->
                     <div class="arrows">
-                        <div class="arrows1">
-                            <img class="arrows-left" src="/resources/img/arrow1.jpg">
+                        <div id="arrow1" class="arrows1">
+                            <img class="arrows-left" src="/resources/img/arrow1_inv.png">
                         </div>
-                        <div class="arrows2">
-                            <img class="arrows-right" src="/resources/img/arrow2.jpg">
+                        <div id="arrow2" class="arrows2">
+                            <img class="arrows-right" src="/resources/img/arrow2_inv.png">
                         </div>
                     </div>
                 </div>
                 <div class="choice-skins">
-                    <div class="model1">
+                    <div id="model1" class="model1" model1="false" >
                         <img class="select1-img" src="/resources/img/model1.jpg">
                     </div>
-                    <div class="model2">
+                    <div id="model2" class="model2" model2="false">
                         <img class="select2-img" src="/resources/img/model2.png">
                     </div>
                 </div>
@@ -183,12 +192,19 @@
 
             <div id="gear_btn" gear="false"></div>
             
-            <div id="settings">
-                <div>Settings</div>
-                <div>Change nickname</div>
-                <div>Sound on/off</div>
-                <div>Quality on/off</div>
-                <div>Change tank</div>
+            <div id="settings-wrapper">
+                <div id="settings-tittle">Settings</div>
+                <div id="settings-nickname">Change nickname</div>
+                <input id="username" class="field" type="text" placeholder="Username" maxlength="13" />
+                <button type="submit" id="change-nickname">Change</button>
+                <div id="settings-sound">Sound</div>
+                <button type="submit" id="soundon">ON</button>
+                <!-- <button type="submit" id="soundoff">OFF</button> -->
+                <div id=settings-quality>Quality</div>
+                <button type="submit" id="qualityon">ON</button>
+                <!-- <button type="submit" id="qualityoff">OFF</button> -->
+
+                <button type="submit" id="exit-btn">EXIT</button>
             </div>
 
             <div id="arena-time">

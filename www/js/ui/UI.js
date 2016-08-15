@@ -25,7 +25,7 @@ DT.UI.prototype.init = function () {
 
     }
 
-    $('#settings').hide();
+    $('#settings-wrapper').hide();
 
     localStorage.setItem( 'gear', false );
 };
@@ -65,10 +65,10 @@ DT.UI.prototype.openSettings = function (value) {
     soundSys.playMenuSound();
     
     if ( localStorage.getItem( 'gear' ) === 'true' ) {
-        $('#settings').show();
+        $('#settings-wrapper').show();
     }
     if ( localStorage.getItem( 'gear' ) === 'false' ){
-        $('#settings').hide();
+        $('#settings-wrapper').hide();
     }
     
 };
@@ -299,13 +299,13 @@ DT.UI.prototype.hideLoaderScreen = function () {
 DT.UI.prototype.showChoiceWindow = function () {
 
     $(".tank-skins").show();
-     $("#signin-box").css("opacity", 0); 
+    $("#signin-box").css("opacity", 0); 
 };
 
 DT.UI.prototype.closeChoiceWindow = function () {
 
     $(".tank-skins").hide();
-     $("#signin-box").css("opacity", 1); 
+    $("#signin-box").css("opacity", 1); 
     
 };
 
@@ -315,4 +315,65 @@ DT.UI.prototype.selectTankAndcloseChoiceWindow = function () {
     $("#signin-box").css("opacity", 1); 
 };
 
+DT.UI.prototype.choseModel1 = function() {
+
+    var value = ( typeof value === 'boolean' ) ? value : $('#model1').attr('model1') !== 'true';
+    localStorage.setItem( 'model1', value );
+    localStorage.setItem( 'model2', false );
+
+    if ( localStorage.getItem('model1') === 'true' ) {
+        object2.visible = false;
+        object1.visible = true;
+    }
+
+    soundSys.playMenuSound();
+};
+
+DT.UI.prototype.choseModel2 = function() {
+
+    var value = ( typeof value === 'boolean' ) ? value : $('#model2').attr('model2') !== 'true';
+    localStorage.setItem( 'model2', value );
+    localStorage.setItem( 'model1', false );
+    
+    if ( localStorage.getItem('model2') === 'true' ) {
+        object2.visible = true;
+        object1.visible = false;
+    }
+
+    soundSys.playMenuSound();
+};
+
+DT.UI.prototype.arrowForward = function() {
+
+    if ( object1.visible === true ) {
+
+    DT.UI.prototype.choseModel2();
+
+    soundSys.playMenuSound();
+
+    } else {
+
+    DT.UI.prototype.choseModel1();
+
+    soundSys.playMenuSound();
+    }
+
+};
+
+DT.UI.prototype.arrowBack = function() {
+
+    if ( object2.visible === true ) {
+
+    DT.UI.prototype.choseModel1();
+
+    soundSys.playMenuSound();
+
+    } else {
+        
+    DT.UI.prototype.choseModel2();
+
+    soundSys.playMenuSound();
+    }
+    
+};
 
