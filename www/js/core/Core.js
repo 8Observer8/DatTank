@@ -29,7 +29,10 @@ DT.Core.prototype.init = function () {
 
     $('#graphics-quality').click( ui.chageGameQuality.bind( ui ) );
     $('#sound-on-off').click( ui.changeSound.bind( ui ) );
-
+    $('#model1').click( ui.choseModel1.bind( ui ) );
+    $('#model2').click( ui.choseModel2.bind( ui ) );
+    $('#arrow1').click( ui.arrowBack.bind( ui ) );
+    $('#arrow2').click( ui.arrowForward.bind( ui ) );
 
 };
 

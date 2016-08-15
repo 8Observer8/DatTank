@@ -38,7 +38,6 @@ DT.UI.prototype.chageGameQuality = function ( value ) {
 
     soundSys.playMenuSound();
 
-    
 };
 
 DT.UI.prototype.changeSound = function ( value ) {
@@ -300,13 +299,13 @@ DT.UI.prototype.hideLoaderScreen = function () {
 DT.UI.prototype.showChoiceWindow = function () {
 
     $(".tank-skins").show();
-     $("#signin-box").css("opacity", 0); 
+    $("#signin-box").css("opacity", 0); 
 };
 
 DT.UI.prototype.closeChoiceWindow = function () {
 
     $(".tank-skins").hide();
-     $("#signin-box").css("opacity", 1); 
+    $("#signin-box").css("opacity", 1); 
     
 };
 
@@ -316,4 +315,65 @@ DT.UI.prototype.selectTankAndcloseChoiceWindow = function () {
     $("#signin-box").css("opacity", 1); 
 };
 
+DT.UI.prototype.choseModel1 = function() {
+
+    var value = ( typeof value === 'boolean' ) ? value : $('#model1').attr('model1') !== 'true';
+    localStorage.setItem( 'model1', value );
+    localStorage.setItem( 'model2', false );
+
+    if ( localStorage.getItem('model1') === 'true' ) {
+        object2.visible = false;
+        object1.visible = true;
+    }
+
+    soundSys.playMenuSound();
+};
+
+DT.UI.prototype.choseModel2 = function() {
+
+    var value = ( typeof value === 'boolean' ) ? value : $('#model2').attr('model2') !== 'true';
+    localStorage.setItem( 'model2', value );
+    localStorage.setItem( 'model1', false );
+    
+    if ( localStorage.getItem('model2') === 'true' ) {
+        object2.visible = true;
+        object1.visible = false;
+    }
+
+    soundSys.playMenuSound();
+};
+
+DT.UI.prototype.arrowForward = function() {
+
+    if ( object1.visible === true ) {
+
+    DT.UI.prototype.choseModel2();
+
+    soundSys.playMenuSound();
+
+    } else {
+
+    DT.UI.prototype.choseModel1();
+
+    soundSys.playMenuSound();
+    }
+
+};
+
+DT.UI.prototype.arrowBack = function() {
+
+    if ( object2.visible === true ) {
+
+    DT.UI.prototype.choseModel1();
+
+    soundSys.playMenuSound();
+
+    } else {
+        
+    DT.UI.prototype.choseModel2();
+
+    soundSys.playMenuSound();
+    }
+    
+};
 

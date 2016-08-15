@@ -913,13 +913,13 @@ body {
     margin-left: 2%;
     top: 16%;
     border: 1px solid gray;
-    min-width: 201px;
-    background-color: white;
 }
 
-.tank1-img {
+.tankskin {
+    position: relative;
     width: 100%;
     height: 100%;
+    border: 1px solid gray;
 }
 
 .arrows1 {
