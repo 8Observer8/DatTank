@@ -13,6 +13,16 @@ DT.Core = function () {
 
 DT.Core.prototype.init = function () {
 
+    window.ui = new DT.UI();
+    window.network = new DT.Network();
+    window.view = new DT.View();
+    window.controls = new DT.Controls();
+    window.resourceManager = new DT.ResourceManager();
+    window.soundSys = new DT.SoundSys();
+    window.chooseSkin = new DT.ChooseSkin();
+
+    //
+
     ui.init();
 
     var login = $('#username').val() || localStorage.getItem('login') || '';
@@ -23,16 +33,16 @@ DT.Core.prototype.init = function () {
     $('#signin-box #username').focus();
     $('#play-btn').click( this.play.bind( this ) );
     $('.change-skin-btn').click( ui.showChoiceWindow.bind( ui ) );
-    $('.close-tank-skins').click(ui.closeChoiceWindow.bind( ui ) );
+    $('.close-tank-skins').click( ui.closeChoiceWindow.bind( ui ) );
     $('.btn-pick').click(ui.selectTankAndcloseChoiceWindow.bind( ui ) )
 
 
     $('#graphics-quality').click( ui.chageGameQuality.bind( ui ) );
     $('#sound-on-off').click( ui.changeSound.bind( ui ) );
-    $('#model1').click( ui.choseModel1.bind( ui ) );
-    $('#model2').click( ui.choseModel2.bind( ui ) );
-    $('#arrow1').click( ui.arrowBack.bind( ui ) );
-    $('#arrow2').click( ui.arrowForward.bind( ui ) );
+    $('#model1').click( chooseSkin.chooseModel1.bind( ui ) );
+    $('#model2').click( chooseSkin.chooseModel2.bind( ui ) );
+    $('#arrow1').click( chooseSkin.arrowBack.bind( ui ) );
+    $('#arrow2').click( chooseSkin.arrowForward.bind( ui ) );
 
 };
 
@@ -133,12 +143,6 @@ DT.Core.prototype.joinArena = function ( params ) {
 // init services
 
 var core = new DT.Core();
-var ui = new DT.UI();
-var network = new DT.Network();
-var view = new DT.View();
-var controls = new DT.Controls();
-var resourceManager = new DT.ResourceManager();
-var soundSys = new DT.SoundSys();
 
 // page loaded
 

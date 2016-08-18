@@ -33,11 +33,11 @@ if ( args.debug ) {
 
 //
 
-app.use( express.static( './../www') );
-app.use( '/terms', express.static( './../www/terms.html') );
-app.use( '/policy', express.static( './../www/policy.html') );
-app.use( '/changelog', express.static( './../www/changelog.html') );
-app.use( '/*', express.static( './../www/notfound.html') );
+app.use( express.static( './../client') );
+app.use( '/terms', express.static( './../client/terms.html') );
+app.use( '/policy', express.static( './../client/policy.html') );
+app.use( '/changelog', express.static( './../client/changelog.html') );
+app.use( '/*', express.static( './../client/notfound.html') );
 
 //
 
