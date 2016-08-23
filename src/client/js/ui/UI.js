@@ -310,7 +310,9 @@ DT.UI.prototype.showChoiceWindow = function () {
 
 };
 
-DT.UI.prototype.closeChoiceWindow = function () {
+DT.UI.prototype.closeChoiceWindow = function ( event ) {
+
+    event.stopPropagation();
 
     $(".tank-skins").hide();
     $("#signin-box").css("opacity", 1); 

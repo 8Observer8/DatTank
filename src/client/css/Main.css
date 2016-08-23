@@ -879,6 +879,8 @@ body {
 
 .tank-skins {
     position: absolute;
+    top: 0px;
+    left: 0px;
     width: 100%;
     height: 100%;
     display: none;
@@ -895,30 +897,32 @@ body {
     top: 8%;
     width: 70%;
     height: 70%;
-    background-color: white;
+    border: 3px solid #422;
 }
 
 .close-tank-skins {
     position: inherit;
     float: right;
+    padding: 10px;
     margin-right: 13px;
     margin-top: 6px;
+    z-index: 100;
+    color: #fff;
+    font-size: 30px;
 }
 
 .select-window {
-    position: fixed;
-    width: 40%;
-    height: 47%;
-    margin-left: 2%;
-    top: 16%;
-    border: 1px solid gray;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
 }
 
 .tankskin {
     position: relative;
     width: 100%;
     height: 100%;
-    border: 1px solid gray;
 }
 
 .arrows1 {
@@ -1005,13 +1009,14 @@ body {
     right: 4%;
     top: 13%;
     left: 69%;
+    color: #fff;
+    font-size: 30px;
 }
 
 .specifications {
     position: absolute;
     height: 54.8%;
     width: 26%;
-    border: 1px solid gray;
     top: 20%;
     min-width: 55px;
     min-height: 85px;
@@ -1022,6 +1027,7 @@ body {
     position: initial;
     margin: 11%;
     font-size: 90%;
+    color: #fff;
 }
 
 .btn-pick {
@@ -1032,7 +1038,6 @@ body {
     border: 1px solid green;
     top: 87%;
     width: 10%;
-    height: 4%;
     text-align: center;
     opacity: 0.8;
     padding: 8px;
