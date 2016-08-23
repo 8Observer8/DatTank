@@ -34,8 +34,13 @@ gulp.task( 'resources', function () {
 
 gulp.task( 'js', function () {
 
-    gulp.src([ './src/client/js/**/*', '!./src/client/js/pathFinder/WebWorker.js' ])
+    gulp.src([ './src/client/js/pathFinder/WebWorker.js' ])
+        .pipe( gulp.dest('./bin/client/js/pathFinder/') )
         .pipe(uglify())
+        .pipe(connect.reload());
+
+    gulp.src([ './src/client/js/**/*', '!./src/client/js/pathFinder/WebWorker.js' ])
+        //.pipe(uglify())
         .pipe(order([
             'libs/three.js',
             'libs/*.js',
@@ -43,9 +48,7 @@ gulp.task( 'js', function () {
             '**/*'
         ]))
         .pipe(concat('all.js'))
-        .pipe( gulp.src('./src/client/js/pathFinder/WebWorker.js') )
-        .pipe( gulp.dest('./bin/client/js/pathFinder/') )
-        .pipe(uglify())
+        .pipe( gulp.dest('./bin/client/js/') )
         .pipe(connect.reload());
 
 });
@@ -54,7 +57,7 @@ gulp.task( 'js', function () {
 
 gulp.task( 'css', function () {
 
-    gulp.src('./src/client/css/**/*.*')
+    gulp.src('./src/client/css/*')
         .pipe(concat('all.css'))
         .pipe(gulp.dest('./bin/client/css/'))
         .pipe(connect.reload());
@@ -94,12 +97,12 @@ gulp.task( 'connect', function () {
 
 // RUN
 
-gulp.task( 'run', function () {
+gulp.task( 'run', [ 'resources', 'js', 'html', 'css', 'server' ], function () {
 
     nodemon({
         delay: 10,
-        script: 'server.js',
-        cwd: './bin/server/',
+        script: './bin/server/server.js',
+        cwd: '',
         args: [],
         ext: 'html js css'
     })
@@ -115,15 +118,13 @@ gulp.task( 'run', function () {
 
 gulp.task( 'watch', function () {
 
-    gulp.watch( './src/client/css/**/*.css', ['css']);
-    gulp.watch( './src/client/*.html', ['html'] );
-    gulp.watch( './src/client/js/*', ['js'] );
-    gulp.watch( './src/server/js/*', ['server'] );
-    // gulp.watch( './client/js/libs/*.js', ['jslibs']);
-    // gulp.watch( './client/js/modules/**/*.js', ['jsmods']);
+    gulp.watch( './src/client/css/*', ['css']);
+    gulp.watch( './src/client/*', ['html'] );
+    gulp.watch( './src/client/js/**/*', ['js'] );
+    gulp.watch( './src/server/js/**/*', ['server'] );
 
 });
 
 // Default
 
-gulp.task( 'default', [ 'watch', 'js', 'html', 'resources', 'css', 'server', 'run' ] );
+gulp.task( 'default', [ 'watch', 'run' ] );

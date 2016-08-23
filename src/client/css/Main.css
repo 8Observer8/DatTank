@@ -65,10 +65,10 @@ body {
 
 #sound-on-off {
     position: absolute;
-    top: 18px;
+    top: 10px;
     right: 90px;
-    width: 50px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     background-image: url('../resources/img/sound-on-off.png');
     background-size: 100% 200%;
     opacity: 0.7;
@@ -81,7 +81,7 @@ body {
 }
 
 #sound-on-off:active {
-    top: 21px;
+    top: 11px;
     opacity: 1;
 }
 
@@ -862,14 +862,14 @@ body {
 .change-skin-btn {
     position: fixed;
     left: 20px;
-    bottom: 34px;
+    bottom: 40px;
     z-index: 20;
     display: inline;
 }
 
 .btn-skin {
-    width: 85px;
-    height:80px;
+    width: 128px;
+    height: 85px;
 }
 
 .snake-img {
@@ -903,7 +903,6 @@ body {
     float: right;
     margin-right: 13px;
     margin-top: 6px;
-    cursor: pointer;
 }
 
 .select-window {
@@ -927,7 +926,6 @@ body {
     width: 11%;
     height: 100%;
     top: 0%;
-    cursor: pointer;
     min-width: 31px;
 }
 
@@ -937,7 +935,6 @@ body {
     height: 100%;
     left: 85%;
     top: 0%;
-    cursor: pointer;
 }
 
 .arrows-right {
@@ -978,7 +975,6 @@ body {
 .select1-img {
     width: 84px;
     height: 84px;
-    cursor: pointer;
 }
 
 .model2 {
@@ -993,7 +989,6 @@ body {
 .select2-img {
     width: 84px;
     height: 84px;
-    cursor: pointer;
 }
 
 .title-select {
@@ -1040,7 +1035,6 @@ body {
     height: 4%;
     text-align: center;
     opacity: 0.8;
-    cursor: pointer;
     padding: 8px;
     min-width: 64px;
     min-height: 18px;

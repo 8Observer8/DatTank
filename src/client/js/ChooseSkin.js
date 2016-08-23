@@ -1,3 +1,8 @@
+/*
+ * @author biven, ohmed
+ * Tank customization
+*/
+
 DT.ChooseSkin = function () {
 
     this.container = false;
@@ -12,11 +17,13 @@ DT.ChooseSkin = function () {
 
     this.clock = new THREE.Clock();
 
-}
+};
 
 DT.ChooseSkin.prototype = {};
 
-DT.ChooseSkin.prototype.init = function() {
+DT.ChooseSkin.prototype.init = function () {
+
+    soundSys.playMenuSound();
 
     this.animate = this.animate.bind( this );
     this.container = document.getElementById( 'skin' );
@@ -40,55 +47,41 @@ DT.ChooseSkin.prototype.init = function() {
 
     var scope = this;
     
-    // Events
-    // window.addEventListener( 'resize', this.onWindowResize, false );
+    //
 
-            var loader1 = new THREE.JSONLoader();
+    var loader1 = new THREE.JSONLoader();
 
-            loader1.load( 
+    loader1.load( 'resources/models/tank.json', function ( geometry, materials ) {
 
-                "resources/models/tank.json" ,
+        var material = new THREE.MultiMaterial( materials );
+        Tank_01 = new THREE.Mesh( geometry, material );
+        scope.scene.add( Tank_01 );
+        Tank_01.position.y += 0.3;
+        Tank_01.visible = true;
+        localStorage.setItem( 'model1', true );
 
-                function( geometry, materials ) {
+    });
 
-                    var material = new THREE.MultiMaterial( materials );
-                    Tank_01 = new THREE.Mesh( geometry, material );
-                    scope.scene.add( Tank_01 );
-                    Tank_01.position.y += 0.3;
-                    Tank_01.visible = true;
-                    localStorage.setItem( 'model1', true );
+    var loader2 = new THREE.JSONLoader();
 
-                });
+    loader2.load( 'resources/models/Tank01_top.json', function ( geometry, materials ) {
 
-            var loader2 = new THREE.JSONLoader();
+        var material = new THREE.MultiMaterial( materials );
+        Tank_02 = new THREE.Mesh( geometry, material );
+        scope.scene.add( Tank_02 );
+        Tank_02.position.y += 0.3;
+        Tank_02.visible = false;
+        localStorage.setItem( 'model2', false );
 
-            loader2.load( 
+    });
 
-                "resources/models/Tank01_top.json" , 
+    var loaderscene = new THREE.AssimpJSONLoader();
 
-                function( geometry, materials ) {
+    loaderscene.load( 'resources/models/assimp/interior/interior.assimp.json', function ( object ) {
 
-                    var material = new THREE.MultiMaterial( materials );
-                    Tank_02 = new THREE.Mesh( geometry, material );
-                    scope.scene.add( Tank_02 );
-                    Tank_02.position.y +=0.3;
-                    Tank_02.visible = false;
-                    localStorage.setItem( 'model2', false );
+        scope.scene.add( object );
 
-                });
-
-        var loaderscene = new THREE.AssimpJSONLoader();
-
-            loaderscene.load( 
-
-                'resources/models/assimp/interior/interior.assimp.json', 
-
-                function ( object ) {
-
-                    scope.scene.add( object );
-
-                }, scope.onProgress );
-
+    }, scope.onProgress );
 
     this.animate();
 
@@ -114,27 +107,20 @@ DT.ChooseSkin.prototype.onWindowResize = function ( event ) {
 
 };
 
-
-DT.ChooseSkin.prototype.animate = function() {
+DT.ChooseSkin.prototype.animate = function () {
 
     requestAnimationFrame( this.animate );
-                
     this.render();
 
 };
 
-//
-
-DT.ChooseSkin.prototype.render = function() {
+DT.ChooseSkin.prototype.render = function () {
 
     this.onWindowResize();
 
     var timer = Date.now() * 0.00015;
 
-    this.camera.position.x = Math.cos( timer ) * 10;
-    this.camera.position.y = 4;
-    this.camera.position.z = Math.sin( timer ) * 10;
-
+    this.camera.position.set( Math.cos( timer ) * 10, 4, Math.sin( timer ) * 10 );
     this.camera.lookAt( this.scene.position );
 
     this.renderer.render( this.scene, this.camera );
@@ -146,71 +132,74 @@ DT.ChooseSkin.prototype.render = function() {
 DT.ChooseSkin.prototype.stop = function () {
 
     this.renderer.domElement.remove();
+    soundSys.playMenuSound();
 
 };
 
-DT.ChooseSkin.prototype.chooseModel1 = function() {
+DT.ChooseSkin.prototype.chooseModel1 = function () {
 
     var value = ( typeof value === 'boolean' ) ? value : $('#model1').attr('model1') !== 'true';
+
     localStorage.setItem( 'model1', value );
     localStorage.setItem( 'model2', false );
 
     if ( localStorage.getItem('model1') === 'true' ) {
+
         Tank_02.visible = false;
         Tank_01.visible = true;
+
     }
 
     soundSys.playMenuSound();
 
 };
 
-DT.ChooseSkin.prototype.chooseModel2 = function() {
+DT.ChooseSkin.prototype.chooseModel2 = function () {
 
     var value = ( typeof value === 'boolean' ) ? value : $('#model2').attr('model2') !== 'true';
+
     localStorage.setItem( 'model2', value );
     localStorage.setItem( 'model1', false );
-    
+
     if ( localStorage.getItem('model2') === 'true' ) {
+
         Tank_02.visible = true;
         Tank_01.visible = false;
+
     }
 
     soundSys.playMenuSound();
 
 };
 
-DT.ChooseSkin.prototype.arrowForward = function() {
+DT.ChooseSkin.prototype.arrowForward = function () {
 
     if ( Tank_01.visible === true ) {
 
-    chooseSkin.chooseModel2();
-
-    soundSys.playMenuSound();
+        chooseSkin.chooseModel2();
+        soundSys.playMenuSound();
 
     } else {
 
-    chooseSkin.chooseModel1();
-
-    soundSys.playMenuSound();
+        chooseSkin.chooseModel1();
+        soundSys.playMenuSound();
 
     }
 
 };
 
-DT.ChooseSkin.prototype.arrowBack = function() {
+DT.ChooseSkin.prototype.arrowBack = function () {
 
     if ( Tank_02.visible === true ) {
 
-    chooseSkin.chooseModel1();
-
-    soundSys.playMenuSound();
+        chooseSkin.chooseModel1();
+        soundSys.playMenuSound();
 
     } else {
-        
-    chooseSkin.chooseModel2();
 
-    soundSys.playMenuSound();
+        chooseSkin.chooseModel2();
+        soundSys.playMenuSound();
 
     }
-    
+
 };

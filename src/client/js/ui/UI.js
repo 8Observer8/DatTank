@@ -28,6 +28,7 @@ DT.UI.prototype.init = function () {
     $('#settings-wrapper').hide();
 
     localStorage.setItem( 'gear', false );
+
 };
 
 DT.UI.prototype.chageGameQuality = function ( value ) {
@@ -63,14 +64,19 @@ DT.UI.prototype.openSettings = function (value) {
     $('#gear_btn').attr( 'gear', value );
     localStorage.setItem( 'gear', value );
     soundSys.playMenuSound();
-    
+
     if ( localStorage.getItem( 'gear' ) === 'true' ) {
+
         $('#settings-wrapper').show();
+
     }
+
     if ( localStorage.getItem( 'gear' ) === 'false' ){
+
         $('#settings-wrapper').hide();
+
     }
-    
+
 };
 
 DT.UI.prototype.hideFooter = function () {
@@ -300,7 +306,7 @@ DT.UI.prototype.showChoiceWindow = function () {
 
     $(".tank-skins").show();
     $("#signin-box").css("opacity", 0);
-    chooseSkin.init(); 
+    chooseSkin.init();
 
 };
 
@@ -309,7 +315,7 @@ DT.UI.prototype.closeChoiceWindow = function () {
     $(".tank-skins").hide();
     $("#signin-box").css("opacity", 1); 
     chooseSkin.stop();
-    
+
 };
 
 DT.UI.prototype.selectTankAndcloseChoiceWindow = function () {
