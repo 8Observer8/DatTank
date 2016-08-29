@@ -16,6 +16,7 @@ var Player = function ( params ) {
 
     this.arena = false;
     this.team = false;
+    this.tank = params.tank;
     this.health = 100;
     this.ammo = 100;
     this.kills = 0;
@@ -33,6 +34,8 @@ var Player = function ( params ) {
     this.rotationTop = - Math.PI / 2;
 
     this.afkTimeout = false;
+
+    console.log( this.tank );
 
 };
 

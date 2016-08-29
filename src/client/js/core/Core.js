@@ -19,7 +19,7 @@ DT.Core.prototype.init = function () {
     window.controls = new DT.Controls();
     window.resourceManager = new DT.ResourceManager();
     window.soundSys = new DT.SoundSys();
-    window.chooseSkin = new DT.ChooseSkin();
+    window.garage = new DT.Garage();
 
     //
 
@@ -36,13 +36,8 @@ DT.Core.prototype.init = function () {
     $('.close-tank-skins').click( ui.closeChoiceWindow.bind( ui ) );
     $('.btn-pick').click(ui.selectTankAndcloseChoiceWindow.bind( ui ) )
 
-
     $('#graphics-quality').click( ui.chageGameQuality.bind( ui ) );
     $('#sound-on-off').click( ui.changeSound.bind( ui ) );
-    $('#model1').click( chooseSkin.chooseModel1.bind( ui ) );
-    $('#model2').click( chooseSkin.chooseModel2.bind( ui ) );
-    $('#arrow1').click( chooseSkin.arrowBack.bind( ui ) );
-    $('#arrow2').click( chooseSkin.arrowForward.bind( ui ) );
 
 };
 
@@ -95,7 +90,9 @@ DT.Core.prototype.play = function ( event ) {
             eventAction: 'play'
         });
 
-        setTimeout( function () { network.send( 'joinArena', { login: login } ); }, 1000 );
+        var tank = localStorage.getItem( 'selectedTank' ) || 0;
+
+        setTimeout( function () { network.send( 'joinArena', { login: login, tank: tank } ); }, 1000 );
 
         // UI changes
 

@@ -306,7 +306,7 @@ DT.UI.prototype.showChoiceWindow = function () {
 
     $(".tank-skins").show();
     $("#signin-box").css("opacity", 0);
-    chooseSkin.init();
+    garage.init();
 
 };
 
@@ -316,7 +316,7 @@ DT.UI.prototype.closeChoiceWindow = function ( event ) {
 
     $(".tank-skins").hide();
     $("#signin-box").css("opacity", 1); 
-    chooseSkin.stop();
+    garage.stop();
 
 };
 
@@ -324,6 +324,7 @@ DT.UI.prototype.selectTankAndcloseChoiceWindow = function () {
 
     $(".tank-skins").hide();
     $("#signin-box").css("opacity", 1);
-    chooseSkin.stop();
+    garage.pickTank();
+    garage.stop();
  
 };

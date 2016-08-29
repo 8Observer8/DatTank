@@ -621,4 +621,5 @@ DT.Tank.prototype.update = function ( delta ) {
 
 };
 
+DT.Tank.list = {};
 DT.Tank.numID = 0;

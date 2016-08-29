@@ -24,7 +24,7 @@ Network.init = function () {
                     case 'joinArena':
 
                         var arena = DT.ArenaManager.findArena();
-                        var player = new DT.Player({ login: data.login });
+                        var player = new DT.Player({ login: data.login, tank: data.tank });
                         player.socket = socket;
 
                         socket.join( 'arenaRoomId' + arena.id );

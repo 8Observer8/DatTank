@@ -967,32 +967,31 @@ body {
     margin-left: -8rem;
 }
 
-.model1 {
+.choice-skins .tank {
     position: relative;
     width: 84px;
-    height: 84px;
-    border: 1px solid gray;
+    height: 60px;
     display: inline-block;
     left: calc(32%);
+    opacity: 0.7;
+    transition: opacity 200ms ease;
 }
 
-.select1-img {
-    width: 84px;
-    height: 84px;
+.choice-skins .tank:hover {
+    opacity: 0.9;
 }
 
-.model2 {
-    position: relative;
+.choice-skins .tank .tank-img {
     width: 84px;
-    height: 84px;
-    border: 1px solid gray;
-    display: inline-block;
-    left: calc(32%);
+    height: 60px;
 }
 
-.select2-img {
-    width: 84px;
-    height: 84px;
+.choice-skins .tank.active {
+    opacity: 1;
+}
+
+.choice-skins .tank.active .tank-img {
+    border-bottom: 3px solid #00b6ff;
 }
 
 .title-select {
