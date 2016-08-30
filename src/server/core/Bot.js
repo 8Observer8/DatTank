@@ -30,7 +30,8 @@ Bot.prototype = {};
 
 Bot.prototype.init = function () {
 
-    this.player = new DT.Player({ login: this.login });
+    var tank = ( Math.random() < 0.5 ) ? 'USAT54' : 'UKBlackPrince';
+    this.player = new DT.Player({ login: this.login, tank: tank });
     this.arena.addPlayer( this.player );
 
     this.updateInterval = setInterval( this.update.bind( this ), 100 );
@@ -89,7 +90,7 @@ Bot.prototype.update = (function () {
         if ( target && minDist < 200 ) {
 
             var angle = Math.atan2( target.position[0] - this.player.position[0], target.position[2] - this.player.position[2] ) - Math.PI / 2;
-            this.player.rotateTop({ topAngle: formatAngle( angle - this.player.rotation ), baseAngle: this.player.rotation });
+            this.player.rotateTop({ topAngle: utils.formatAngle( angle - this.player.rotation ), baseAngle: this.player.rotation });
 
             if ( Math.random() < 0.3 ) {
 
@@ -106,20 +107,6 @@ Bot.prototype.update = (function () {
 Bot.prototype.dispose = function () {
 
     clearInterval( this.updateInterval );
-
-};
-
-var formatAngle = function ( a ) {
-
-    a = a % ( 2 * Math.PI );
-
-    if ( a < 0 ) {
-
-        a += 2 * Math.PI;
-
-    }
-
-    return a;
 
 };
 

@@ -4,8 +4,10 @@
 */
 
 var os = require('os');
-
 var argparse = require('argparse');
+
+//
+
 var parser = new argparse.ArgumentParser();
 
 parser.addArgument(['--debug'], {
@@ -20,7 +22,7 @@ global.SOCKET_PORT = 8085;
 
 //
 
-//
+global.utils = require('./utils/Utils');
 
 global.DT = require('./core/DT');
 
@@ -31,6 +33,13 @@ global.DT.Bot = require('./core/Bot');
 
 global.DT.Network = require('./core/Network');
 global.DT.ArenaManager = require('./core/ArenaManager');
+
+//
+
+global.DT.Tank = require('./units/core/Tank');
+
+global.DT.Tank.USAT54 = require('./units/tanks/USA-T54');
+global.DT.Tank.UKBlackPrince = require('./units/tanks/UK-BlackPrince');
 
 //
 

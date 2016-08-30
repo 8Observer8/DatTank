@@ -380,7 +380,7 @@ Arena.prototype.update = (function () {
                     if ( progress !== 0 ) {
 
                         var newRotation = ( dz === 0 && dx !== 0 ) ? ( Math.PI / 2 ) * Math.abs( dx ) / dx : Math.atan2( dx, dz );
-                        newRotation = formatAngle( newRotation );
+                        newRotation = utils.formatAngle( newRotation );
                         var dRotation = newRotation - player.rotation;
 
                         if ( isNaN( dRotation ) ) dRotation = 0;
@@ -397,7 +397,7 @@ Arena.prototype.update = (function () {
 
                         }
 
-                        player.rotation = formatAngle( player.rotation + dRotation );
+                        player.rotation = utils.formatAngle( player.rotation + dRotation );
 
                     }
 
@@ -414,20 +414,6 @@ Arena.prototype.update = (function () {
     };
 
 }) ();
-
-var formatAngle = function ( a ) {
-
-    a = a % ( 2 * Math.PI );
-
-    if ( a < 0 ) {
-
-        a += 2 * Math.PI;
-
-    }
-
-    return a;
-
-};
 
 Arena.numIds = 0;
 

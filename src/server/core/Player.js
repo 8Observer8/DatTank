@@ -16,7 +16,6 @@ var Player = function ( params ) {
 
     this.arena = false;
     this.team = false;
-    this.tank = params.tank;
     this.health = 100;
     this.ammo = 100;
     this.kills = 0;
@@ -35,7 +34,28 @@ var Player = function ( params ) {
 
     this.afkTimeout = false;
 
-    console.log( this.tank );
+    //
+
+    switch ( params.tank ) {
+
+        case 'USAT54':
+
+            this.tank = new DT.Tank.USAT54();
+            break;
+
+        case 'UKBlackPrince':
+
+            this.tank = new DT.Tank.UKBlackPrince();
+            break;
+
+        default:
+
+            this.tank = new DT.Tank.USAT54();
+            break;
+
+    }
+
+    this.moveSpeed = this.moveSpeed * this.tank.speed / 40;
 
 };
 
@@ -200,7 +220,7 @@ Player.prototype.hit = (function () {
 
         }
 
-        this.health -= Math.floor( Math.random() * 6 ) + 8;
+        this.health -= 40 * ( killer.tank.bullet / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
         this.health = Math.max( this.health, 0 );
 
         bufferView[ 1 ] = this.id;
@@ -264,6 +284,8 @@ Player.prototype.toPrivateJSON = function () {
         id:             this.id,
         login:          this.login,
         team:           this.team.id,
+        tank:           this.tank.title,
+        tank:           this.tank.title,
         health:         this.health,
         ammo:           this.ammo,
         rotation:       this.rotation,
@@ -281,6 +303,7 @@ Player.prototype.toPublicJSON = function () {
         id:             this.id,
         login:          this.login,
         team:           this.team.id,
+        tank:           this.tank.title,
         health:         this.health,
         ammo:           this.ammo,
         rotation:       this.rotation,

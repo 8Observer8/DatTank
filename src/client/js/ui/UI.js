@@ -110,10 +110,11 @@ DT.UI.prototype.updateAmmo = function ( value ) {
 
 };
 
-DT.UI.prototype.showContinueBox = function () {
+DT.UI.prototype.showContinueBox = function ( player ) {
 
     $('#continue-box-wrapper #continue-btn').click( DT.arena.me.respawn.bind( DT.arena.me, false ) );
     $('#continue-box-wrapper').show();
+    $('#continue-box-wrapper #title').html( 'Killed by ' + player );
 
     setTimeout( function () {
 

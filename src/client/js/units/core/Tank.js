@@ -43,8 +43,8 @@ DT.Tank.prototype.initModel = function () {
 
     this.object = new THREE.Object3D();
 
-    var tankBaseModel = resourceManager.getModel( 'Tank01_base.json' );
-    var tankTopModel = resourceManager.getModel( 'Tank01_top.json' );
+    var tankBaseModel = resourceManager.getModel( this.model.base );
+    var tankTopModel = resourceManager.getModel( this.model.top );
 
     //
 
@@ -78,6 +78,7 @@ DT.Tank.prototype.initModel = function () {
     box.position.y = 10;
     box.name = 'tank';
     box.owner = this.player;
+    box.material.visible = false;
     this.object.add( box );
     view.scene.intersections.push( box );
     this.object.top = top;

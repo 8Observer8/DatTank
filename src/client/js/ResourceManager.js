@@ -14,6 +14,10 @@ DT.ResourceManager = function () {
     this.modelList = [
         'Tank01_base.json',
         'Tank01_top.json',
+
+        'Tank02_base.json',
+        'Tank02_top.json',
+
         'tree.json',
         'stone.json'
     ];

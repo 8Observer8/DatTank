@@ -66,6 +66,9 @@ DT.Garage.prototype.init = function () {
         var material = new THREE.MultiMaterial( materials );
         var model = new THREE.Mesh( geometry, material );
         model.position.y += 0.3;
+        model.position.x += 1;
+        model.position.z -= 1.5;
+        model.rotation.y = - Math.PI / 2;
         model.visible = true;
 
         scope.scene.add( model );
@@ -80,9 +83,6 @@ DT.Garage.prototype.init = function () {
         var material = new THREE.MultiMaterial( materials );
         model = new THREE.Mesh( geometry, material );
         model.position.y += 0.3;
-        model.position.x += 1;
-        model.position.z -= 1.5;
-        model.rotation.y = - Math.PI / 2;
         model.visible = false;
 
         scope.scene.add( model );
@@ -188,9 +188,10 @@ DT.Garage.prototype.selectTank = function ( event ) {
     var tankId = $( event.currentTarget ).attr('id');
 
     $('.name-specifications').html( DT.Tank.list[ tankId ].title );
-    $('.specification-text#speed').html( '&#x2623;&nbsp;&nbsp;&nbsp;' + 'Speed: ' + DT.Tank.list[ tankId ].speed );
-    $('.specification-text#power').html( '&#x2623;&nbsp;&nbsp;&nbsp;' + 'Harm: ' + DT.Tank.list[ tankId ].harm );
-    $('.specification-text#deffence').html( '&#x2623;&nbsp;&nbsp;&nbsp;' + 'Deffence: ' + DT.Tank.list[ tankId ].deffence );
+    $('.specification-text#speed').html( '&#x2623;&nbsp;&nbsp;&nbsp;' + 'Speed: ' + DT.Tank.list[ tankId ].speed + 'km/h' );
+    $('.specification-text#range').html( '&#x2623;&nbsp;&nbsp;&nbsp;' + 'Range: ' + DT.Tank.list[ tankId ].range + 'km' );
+    $('.specification-text#armour').html( '&#x2623;&nbsp;&nbsp;&nbsp;' + 'Armour: ' + DT.Tank.list[ tankId ].armour + 'mm' );
+    $('.specification-text#bullet').html( '&#x2623;&nbsp;&nbsp;&nbsp;' + 'Bullet: ' + DT.Tank.list[ tankId ].bullet + 'mm' );
     this.currentTank = tankId;
 
     for ( var modelName in this.models ) {

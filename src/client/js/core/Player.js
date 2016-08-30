@@ -49,7 +49,22 @@ DT.Player = function ( arena, params ) {
 
     this.lastShot = Date.now();
 
-    this.tank = new DT.Tank.USAT54({ player: this });
+    switch ( params.tank ) {
+
+        case 'USA-T54':
+        
+            this.tank = new DT.Tank.USAT54({ player: this });
+            break;
+
+        case 'UK-BlackPrince':
+
+            this.tank = new DT.Tank.UKBlackPrince({ player: this });
+            break;
+
+    }
+
+    this.moveSpeed = this.moveSpeed * this.tank.speed / 40;
+
     this.init();
 
 };
@@ -103,6 +118,7 @@ DT.Player.prototype.respawn = function ( fromNetwork, params ) {
         this.stepDx = this.stepDy = this.stepDz = 0;
         this.moveDt = 0;
         this.moveSpeed = 0.09;
+        this.moveSpeed = this.moveSpeed * this.tank.speed / 40;
 
         if ( DT.arena.me.id === this.id ) {
 
@@ -390,7 +406,7 @@ DT.Player.prototype.die = function ( killer ) {
             eventAction: 'kill'
         });
 
-        ui.showContinueBox();
+        ui.showContinueBox( killer.login );
 
     }
 
