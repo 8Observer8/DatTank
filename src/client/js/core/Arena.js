@@ -3,8 +3,6 @@
  * DatTank Arena object
 */
 
-'use strict';
-
 DT.Arena = function () {
 
     this.players = [];

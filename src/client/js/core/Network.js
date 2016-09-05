@@ -3,8 +3,6 @@
  * DatTank networking
 */
 
-'use strict';
-
 DT.Network = function () {
 
     this.connected = 0;

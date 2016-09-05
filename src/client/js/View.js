@@ -3,8 +3,6 @@
  * DatTank Scene Rendering core
 */
 
-'use strict';
-
 var MOBILE;
 
 DT.View = function () {
@@ -426,20 +424,21 @@ DT.View.prototype.updatePlayersPosition = function ( delta ) {
     for ( var i = 0, il = DT.arena.players.length; i < il; i ++ ) {
 
         var player = DT.arena.players[ i ];
+        var tank = player.tank;
 
-        player.tank.update();
+        player.tank.update( delta );
 
         if ( ! player.movePath || player.movePath.length === 0 ) {
 
             player.movePath = false;
 
-            // if ( player.sounds.moving.source.buffer && player.sounds.moving.isPlaying ) {
-            
-            //     player.sounds.moving.stop();
-            //     player.sounds.moving.startTime = 0;
-            //     player.sounds.moving.isPlaying = false;
+            if ( tank.sounds.moving.source.buffer && tank.sounds.moving.isPlaying ) {
 
-            // }
+                tank.sounds.moving.stop();
+                tank.sounds.moving.startTime = 0;
+                tank.sounds.moving.isPlaying = false;
+
+            }
 
             continue;
 
@@ -467,23 +466,23 @@ DT.View.prototype.updatePlayersPosition = function ( delta ) {
 
             player.movePath = false;
 
-            // if ( player.sounds.moving.source.buffer && player.sounds.moving.isPlaying ) {
+            if ( tank.sounds.moving.source.buffer && tank.sounds.moving.isPlaying ) {
 
-            //     player.sounds.moving.stop();
-            //     player.sounds.moving.startTime = false;
-            //     player.sounds.moving.isPlaying = false;
+                tank.sounds.moving.stop();
+                tank.sounds.moving.startTime = false;
+                tank.sounds.moving.isPlaying = false;
 
-            // }
+            }
 
             continue;
 
         } else {
 
-            // if ( player.sounds.moving.source.buffer && ! player.sounds.moving.isPlaying ) {
+            if ( localStorage.getItem('sound') !== 'false' && tank.sounds.moving.source.buffer && ! tank.sounds.moving.isPlaying ) {
 
-            //     player.sounds.moving.play();
+                tank.sounds.moving.play();
 
-            // }
+            }
 
             if ( progress !== player.moveProgress ) {
 
@@ -595,7 +594,7 @@ DT.View.prototype.changeGraficQuality = function () {
         this.renderer.setClearColor( 0x000000 );
 
         if ( ! MOBILE ) {
-        
+
             // this.renderer.shadowMap.enabled = true;
 
         }
@@ -603,8 +602,8 @@ DT.View.prototype.changeGraficQuality = function () {
         this.render();
 
     }
-    
-};    
+
+};
 
 DT.View.prototype.render = (function () {
 

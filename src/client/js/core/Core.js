@@ -3,8 +3,6 @@
  * DatTank core file
 */
 
-'use strict';
-
 DT.Core = function () {
 
     this.arena = false;

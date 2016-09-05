@@ -3,8 +3,6 @@
  * DatTank Player object
 */
 
-'use strict';
-
 DT.Player = function ( arena, params ) {
 
     this.id = params.id;

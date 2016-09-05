@@ -14,6 +14,8 @@ var Arena = function () {
     this.obstacles = [];
     this.bots = [];
 
+    this.boxManager = new DT.BoxManager( this, {} );
+
     this.updateInterval = false;
 
     //
@@ -57,6 +59,7 @@ Arena.prototype.reset = function ( isNew ) {
 
     //
 
+    this.boxManager.reset();
     this.addObstacles( 190, 80 );
 
     //
@@ -178,21 +181,21 @@ Arena.prototype.getWinnerTeamId = function () {
 
 };
 
-Arena.prototype.detectVeakestTeam = function () {
+Arena.prototype.detectWeakestTeam = function () {
 
-    var veakestTeam = this.teams[0];
+    var weakestTeam = this.teams[0];
 
     for ( var i = 1, il = this.teams.length; i < il; i ++ ) {
 
-        if ( veakestTeam.players.length > this.teams[ i ].players.length ) {
+        if ( weakestTeam.players.length > this.teams[ i ].players.length ) {
 
-            veakestTeam = this.teams[ i ];
+            weakestTeam = this.teams[ i ];
 
         }
 
     }
 
-    return veakestTeam;
+    return weakestTeam;
 
 };
 
@@ -214,7 +217,7 @@ Arena.prototype.getPlayerById = function ( playerId ) {
 
 Arena.prototype.addPlayer = function ( player ) {
 
-    var team = this.detectVeakestTeam();
+    var team = this.detectWeakestTeam();
 
     team.addPlayer( player );
     this.players.push( player );
@@ -410,6 +413,8 @@ Arena.prototype.update = (function () {
             }
         
         }
+
+        this.boxManager.update( delta );
 
     };
 

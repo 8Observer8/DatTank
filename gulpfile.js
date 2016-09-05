@@ -45,6 +45,8 @@ gulp.task( 'js', function () {
             'libs/three.js',
             'libs/*.js',
             'DT.js',
+            'core/**/*',
+            'objects/core/**/*',
             '**/*'
         ]))
         .pipe(concat('all.js'))

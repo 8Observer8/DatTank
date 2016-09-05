@@ -3,8 +3,6 @@
  * DatTank Team object
 */
 
-'use strict';
-
 DT.Team = function ( params ) {
 
     this.id = params.id ++;

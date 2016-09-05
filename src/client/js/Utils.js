@@ -3,8 +3,6 @@
  * DatTank utils functions
 */
 
-'use strict';
-
 var Utils = {};
 
 Utils.ge = function ( selector ) {
