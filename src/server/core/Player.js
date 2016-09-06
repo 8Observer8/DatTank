@@ -220,8 +220,12 @@ Player.prototype.hit = (function () {
 
         }
 
-        this.health -= 40 * ( killer.tank.bullet / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
-        this.health = Math.max( this.health, 0 );
+        if ( killer ) {
+
+            this.health -= 40 * ( killer.tank.bullet / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
+            this.health = Math.max( this.health, 0 );
+
+        }
 
         bufferView[ 1 ] = this.id;
         bufferView[ 2 ] = this.health;

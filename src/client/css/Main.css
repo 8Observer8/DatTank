@@ -428,6 +428,15 @@ body {
     opacity: 1;
 }
 
+#continue-box-wrapper #continue-box #instructions {
+    position: relative;
+    width: 100%;
+    margin-top: 11px;
+    font: normal 13px arial, tahoma;
+    text-align: center;
+    color: #888;
+}
+
 /* viewport */
 
 #viewport {

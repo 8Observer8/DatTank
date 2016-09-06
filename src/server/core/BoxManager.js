@@ -45,7 +45,7 @@ BoxManager.prototype.addBox = function ( params ) {
 
             box = new DT.Box.Health({
                 arena: this.arena,
-                position: [ Math.floor( 1000 * ( Math.random() - 0.5 ) ), 20, Math.floor( 1000 * ( Math.random() - 0.5 ) ) ]
+                position: [ Math.floor( 1500 * ( Math.random() - 0.5 ) ), 20, Math.floor( 1500 * ( Math.random() - 0.5 ) ) ]
             });
             break;
 
@@ -53,7 +53,7 @@ BoxManager.prototype.addBox = function ( params ) {
 
             box = new DT.Box.Ammo({
                 arena: this.arena,
-                position: [ Math.floor( 1000 * ( Math.random() - 0.5 ) ), 20, Math.floor( 1000 * ( Math.random() - 0.5 ) ) ]
+                position: [ Math.floor( 1500 * ( Math.random() - 0.5 ) ), 20, Math.floor( 1500 * ( Math.random() - 0.5 ) ) ]
             });
             break;
 
@@ -120,7 +120,7 @@ BoxManager.prototype.update = function ( delay, players ) {
     if ( this.boxes.length < this.boxAVGCount ) {
 
         this.addBox({
-            type: ( Math.random() > 0.5 ) ? 'Ammo' : 'Health'
+            type: ( Math.random() > 0.8 ) ? 'Ammo' : 'Health'
         });
 
     }

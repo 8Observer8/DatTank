@@ -26,24 +26,6 @@ Box.prototype.init = function () {
 
 };
 
-Box.prototype.pickUp = function ( player ) {
-
-    DT.Network.announce( this.arena.room, 'pickedBox', { id: this.id } );
-
-    if ( player.socket ) {
-
-        DT.Network.send( player.socket, 'gotBox', { box: this.toPublicJSON() } );
-
-    }
-
-};
-
-Box.prototype.remove = function () {
-
-    // todo
-
-};
-
 Box.prototype.toPublicJSON = function () {
 
     return {

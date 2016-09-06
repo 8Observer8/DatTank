@@ -13,10 +13,10 @@ DT.local = true;
 
 if ( DT.local ) {
 
-    DT.socketHost = 'http://localhost:8085';
+    DT.socketHost = 'http://localhost:8086';
 
 } else {
 
-    DT.socketHost = 'http://188.166.164.236:8085';
+    DT.socketHost = 'http://188.166.164.236:8086';
 
 }

@@ -83,7 +83,7 @@ DT.Player.prototype.respawn = function ( fromNetwork, params ) {
     if ( fromNetwork ) {
 
         this.status = 'alive';
-        this.ammo = 100;
+        this.ammo = 20;
         this.health = 100;
 
         this.position.set( params.position[0], params.position[1], params.position[2] );

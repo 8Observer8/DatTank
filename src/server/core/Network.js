@@ -113,7 +113,7 @@ Network.init = function () {
                         if ( target.hits[ shootId ] === 1 ) {
 
                             target.hit( shooter );
-                            delete target.hits[ shootId ];
+                            // delete target.hits[ shootId ];
 
                         }
 
@@ -181,7 +181,11 @@ Network.send = function ( socket, event, data ) {
 
     }
 
-    socket.send( data );
+    if ( socket ) {
+
+        socket.send( data );
+
+    }
 
 };
 
