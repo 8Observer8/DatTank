@@ -17,7 +17,7 @@ var Player = function ( params ) {
     this.arena = false;
     this.team = false;
     this.health = 100;
-    this.ammo = 100;
+    this.ammo = 20;
     this.kills = 0;
     this.death = 0;
 

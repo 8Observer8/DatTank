@@ -374,7 +374,32 @@ DT.Player.prototype.shoot = (function () {
 
 }) ();
 
-DT.Player.prototype.hit = function () {
+DT.Player.prototype.gotBox = function ( box ) {
+
+    switch ( box.type ) {
+
+        case 'Health':
+
+            this.health += box.amount;
+            this.health = Math.min( this.health, 100 );
+            this.updateHealth();
+            break;
+
+        case 'Ammo':
+
+            this.ammo += box.amount;
+            ui.updateAmmo( this.ammo );
+            break;
+
+        default:
+
+            console.log('Unknown box type[' + box.type + '].');
+
+    }
+
+};
+
+DT.Player.prototype.updateHealth = function () {
 
     if ( DT.arena && DT.arena.me.id === this.id ) {
 

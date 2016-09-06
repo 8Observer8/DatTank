@@ -9,8 +9,15 @@ DT.Box = function ( params ) {
 
     this.id = params.id;
 
-    this.position = { x: 0, y: 0, z: 0 };
+    this.position = new THREE.Vector3();
     this.type = 'none';
+
+    this.mesh = false;
+
+    //
+
+    this.position.set( params.position[0], params.position[1], params.position[2] );
+    this.amount = params.amount;
 
 };
 

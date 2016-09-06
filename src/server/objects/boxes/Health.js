@@ -7,8 +7,12 @@ var Health = function ( params ) {
 
     DT.Box.call( this, params );
 
-    this.type = 'HealthBox';
+    this.type = 'Health';
     this.amount = 20;
+
+    //
+
+    this.init();
 
 };
 

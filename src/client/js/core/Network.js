@@ -134,6 +134,21 @@ DT.Network.prototype.message = function ( param ) {
                 ui.updateLeaderboard( DT.arena.players, DT.arena.me );
                 break;
 
+            case 'addBox':
+
+                DT.arena.boxManager.addBox( data );
+                break;
+
+            case 'pickedBox':
+
+                DT.arena.boxManager.removeBox( data.id );
+                break;
+
+            case 'gotBox':
+
+                DT.arena.me.gotBox( data.box );
+                break;
+
             default:
 
                 console.error( '[NETWORK:GOT_MESSAGE] Unknown event occurred.' );
@@ -224,7 +239,7 @@ DT.Network.prototype.message = function ( param ) {
                     }
 
                     player.health = data[1];
-                    player.hit();
+                    player.updateHealth();
                     break;
 
                 case 5:     // die

@@ -9,6 +9,8 @@ DT.Arena = function () {
     this.teams = [];
     this.me = false;
 
+    this.boxManager = new DT.BoxManager();
+
     //
 
     this.resetTime = false;
@@ -81,6 +83,14 @@ DT.Arena.prototype.reset = function ( params ) {
     for ( var i = 0; i < 4; i ++ ) {
 
         this.teams.push( new DT.Team( params.teams[ i ] ) );
+
+    }
+
+    // add boxes
+
+    for ( var i = 0, il = params.boxes.length; i < il; i ++ ) {
+
+        this.boxManager.addBox( params.boxes[ i ] );
 
     }
 

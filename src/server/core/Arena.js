@@ -289,6 +289,7 @@ Arena.prototype.toPublicJSON = function () {
 
     var players = [];
     var teams = [];
+    var boxes = [];
 
     for ( var i = 0, il = this.players.length; i < il; i ++ ) {
 
@@ -302,6 +303,12 @@ Arena.prototype.toPublicJSON = function () {
 
     }
 
+    for ( var i = 0, il = this.boxManager.boxes.length; i < il; i ++ ) {
+
+        boxes.push( this.boxManager.boxes[ i ].toPublicJSON() );
+
+    }
+
     //
 
     return {
@@ -310,6 +317,7 @@ Arena.prototype.toPublicJSON = function () {
         obstacles:      this.obstacles,
         players:        players,
         teams:          teams,
+        boxes:          boxes,
         resetTime:      this.resetTime,
         currentTime:    Date.now()
 
@@ -414,7 +422,7 @@ Arena.prototype.update = (function () {
         
         }
 
-        this.boxManager.update( delta );
+        this.boxManager.update( delta, this.players );
 
     };
 
