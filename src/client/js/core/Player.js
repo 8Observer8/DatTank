@@ -429,7 +429,7 @@ DT.Player.prototype.die = function ( killer ) {
             eventAction: 'kill'
         });
 
-        ui.showContinueBox( killer.login );
+        ui.showContinueBox( killer.login, DT.Team.colors[ killer.team ] ); 
 
     }
 
