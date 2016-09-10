@@ -359,9 +359,15 @@ DT.View.prototype.showDestinationPoint = (function() {
 
 var intersections = false;
 
-DT.View.prototype.animate = function () {
+DT.View.prototype.animate = function ( delta ) {
 
     if ( ! DT.arena ) return;
+
+    if ( DT.arena.boxManager ) {
+
+        DT.arena.boxManager.update( delta );
+
+    }
 
     if ( ! intersections || DT.arena.me.movePath.length || Math.abs( controls.mousePos.x - controls.prevMousePos.x ) > 0.02 || Math.abs( controls.mousePos.y - controls.prevMousePos.y ) > 0.02 ) {
 

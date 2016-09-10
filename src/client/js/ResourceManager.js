@@ -18,6 +18,9 @@ DT.ResourceManager = function () {
         'Tank02_base.json',
         'Tank02_top.json',
 
+        'health_box.json',
+        'ammo_box.json',
+
         'tree.json',
         'stone.json'
     ];

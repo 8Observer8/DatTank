@@ -78,12 +78,6 @@ DT.BoxManager.prototype.removeBox = function ( boxId ) {
 
 };
 
-DT.BoxManager.prototype.pickUp = function () {
-
-    // todo
-
-};
-
 DT.BoxManager.prototype.getBoxById = function ( id ) {
 
     for ( var i = 0, il = this.boxes.length; i < il; i ++ ) {
@@ -97,5 +91,15 @@ DT.BoxManager.prototype.getBoxById = function ( id ) {
     }
 
     return false;
+
+};
+
+DT.BoxManager.prototype.update = function ( delta ) {
+
+    for ( var i = 0, il = this.boxes.length; i < il; i ++ ) {
+
+        this.boxes[ i ].update( delta );
+
+    }
 
 };
