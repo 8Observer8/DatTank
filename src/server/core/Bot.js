@@ -7,6 +7,7 @@ var Bot = function ( arena ) {
 
     this.player = false;
     this.arena = arena;
+    this.login = false;
 
     var logins = [ '¥Rebook¥', 'BratoK', 'Terrorist', 'Mahno', 'Skuzi', 'Suzuki', 'Myron', 'horror', 'zuzu', 'o_0', 'HEqpOPMaJI', 'X_A_M', 
     'Vadic', '@did@s', 'Alliance', 'TRAKTORIST', 'MaJoR$', 'DeRJkiY', ']{olyan@', 'kaban', 'Semkiv', 'Agent', 'CJIeCaPb', 'Delros', 
@@ -16,11 +17,23 @@ var Bot = function ( arena ) {
     'Mam_ya_ebashy', 'LLI_K_O_JI_b_H_U_K', 'FRESH_MEAT', 'LegendarY', 'Rabbit_wolf', 'iJseven', 'Ha_KoJleHu_OJleHu', 'Vertyxan',
     'x_Evil_x', 'cTaTucT_kycToDpoT', 'TaNkIsT228', 'LaRDeN', 'EHOT', 'CruzTanks', 'Mazay_Ded', 'Dark_Foch', 'FL1pSTaR', 'SkyDog ',
     'Nevrox', 'AWAJA', 'GrizeR', 'Jove_V_KyStax', 'Zybinjo', 'Pro1004EloVe4Ek', 'Ben_Laden', 'DeLviR', 'SkyLiTeR', '_fly_', '4ypa-4yps' 
-    ];
+    ]; 
 
-    this.login = logins[ Math.floor( logins.length * Math.random() ) ];
+    while ( this.login === false ) {
 
-    //
+        this.login = logins[ Math.floor( logins.length * Math.random() ) ];
+
+        for ( var i = 0; i < this.arena.bots.length; i++ ) {
+
+            if ( this.login === this.arena.bots[i].login ) {
+
+                this.login = false;
+
+            } 
+
+        } 
+
+    }
 
     this.init();
 
