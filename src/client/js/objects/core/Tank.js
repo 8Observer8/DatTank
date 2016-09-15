@@ -481,13 +481,13 @@ DT.Tank.prototype.destroy = function () {
 
     var scope = this;
 
-    this.animations.deathAction.reset();
-    this.animations.deathAction.play();
-    this.animations.deathAction.time = 0;
+    // this.animations.deathAction.reset();
+    // this.animations.deathAction.play();
+    // this.animations.deathAction.time = 0;
 
     setTimeout( function () { // todo: need to improve this
 
-        scope.animations.deathAction.paused = true;
+        // scope.animations.deathAction.paused = true;
 
     }, 200 );
 

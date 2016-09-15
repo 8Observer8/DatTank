@@ -34,7 +34,8 @@ DT.Tank.USAT54.prototype.initModel = function () {
 
     //
 
-    var base = new THREE.Mesh( tankBaseModel.geometry, new THREE.MeshFaceMaterial( tankBaseModel.material ) );
+    var base = new THREE.Mesh( tankBaseModel.geometry.clone(), new THREE.MeshFaceMaterial( tankBaseModel.material ) );
+    base.geometry.morphTargets = tankBaseModel.geometry.morphTargets;
     base.castShadow = true;
     base.rotation.y =  0;
     base.receiveShadow = true;
@@ -44,7 +45,8 @@ DT.Tank.USAT54.prototype.initModel = function () {
 
     //
 
-    var top = new THREE.Mesh( tankTopModel.geometry, new THREE.MeshFaceMaterial( tankTopModel.material ) );
+    var top = new THREE.Mesh( tankTopModel.geometry.clone(), new THREE.MeshFaceMaterial( tankTopModel.material ) );
+    top.geometry.morphTargets = tankTopModel.geometry.morphTargets;
     top.castShadow = true;
     top.receiveShadow = true;
     top.position.y = 20;

@@ -45,6 +45,7 @@ Bot.prototype.init = function () {
 
     var tank = ( Math.random() < 0.5 ) ? 'USAT54' : 'UKBlackPrince';
     this.player = new DT.Player({ login: this.login, tank: tank });
+    this.player.ammo = 10000000;
     this.arena.addPlayer( this.player );
 
     this.updateInterval = setInterval( this.update.bind( this ), 100 );

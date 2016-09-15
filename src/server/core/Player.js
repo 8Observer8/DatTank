@@ -17,7 +17,6 @@ var Player = function ( params ) {
     this.arena = false;
     this.team = false;
     this.health = 100;
-    this.ammo = 20;
     this.kills = 0;
     this.death = 0;
 
@@ -56,6 +55,7 @@ var Player = function ( params ) {
     }
 
     this.moveSpeed = this.moveSpeed * this.tank.speed / 40;
+    this.ammo = this.tank.maxShells;
 
 };
 
@@ -65,7 +65,7 @@ Player.prototype.reset = function () {
 
     this.status = 'alive';
     this.health = 100;
-    this.ammo = 100;
+    this.ammo = this.tank.maxShells;
 
     switch ( this.team.id ) {
 

@@ -25,6 +25,7 @@ DT.Box.Ammo.prototype.init = function () {
     var boxModel = resourceManager.getModel( 'ammo_box.json' );
 
     this.mesh = new THREE.Mesh( boxModel.geometry, new THREE.MeshFaceMaterial( boxModel.material ) );
+    this.mesh.name = 'AmmoBox';
     this.mesh.scale.set( 20, 20, 20 );
     this.mesh.position.copy( this.position );
 

@@ -13,6 +13,7 @@ var UKBlackPrince = function ( params ) {
     this.range = 160;
     this.armour = 252;
     this.bullet = 77;
+    this.maxShells = 30;
 
 };
 

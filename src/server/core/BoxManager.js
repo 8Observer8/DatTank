@@ -66,10 +66,6 @@ BoxManager.prototype.addBox = function ( params ) {
 
     this.boxes.push( box );
 
-    //
-
-    console.log('Added box [' + params.type + '] to the map.');
-
 };
 
 BoxManager.prototype.removeBox = function ( box ) {
