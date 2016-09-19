@@ -661,6 +661,11 @@ body {
     margin-top: 5px;
 }
 
+.leaderboard-wrapper {
+    position: relative;
+    display: block;
+}
+
 .player-counter {
     float: left;
     width: 25px;

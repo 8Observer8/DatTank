@@ -79,6 +79,18 @@ DT.UI.prototype.openSettings = function (value) {
 
 };
 
+DT.UI.prototype.showLeaderboard = function () {
+
+    $('#leaderboard-wrapper').show();
+
+};
+
+DT.UI.prototype.hideLeaderboard = function () {
+
+    $('#leaderboard-wrapper').hide();
+
+};
+
 DT.UI.prototype.hideFooter = function () {
 
     $('#footer').hide();
@@ -114,7 +126,6 @@ DT.UI.prototype.showContinueBox = function ( playerlogin, playerColor ) {
 
     $('#continue-box-wrapper #continue-btn').click( DT.arena.me.respawn.bind( DT.arena.me, false ) );
     $('#continue-box-wrapper').show();
-    // $('#continue-box-wrapper #title').html( 'Killed by ' + DT.Team.colors[ killer.team ] + player );
     $('#continue-box-wrapper #title').html('<p>Killed by <span style="color:'+ playerColor + '">' + playerlogin +'</span></p>');
 
     setTimeout( function () {

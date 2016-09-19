@@ -133,6 +133,9 @@ DT.Core.prototype.joinArena = function ( params ) {
     $('#soundon').click( ui.changeSound.bind( ui ) );
     $('#qualityon').click( ui.chageGameQuality.bind( ui ) );
 
+    $('#leaderboard-btn').click( ui.showLeaderboard.bind( ui ) );
+    $('#close-leaderboard-btn').click( ui.hideLeaderboard.bind( ui ) );
+
 };
 
 // init services
