@@ -5,7 +5,17 @@
 
 DT.Settings = function () {
 
-    // todo
+    if ( ! localStorage.getItem('hq') ) {
+
+        localStorage.setItem('hq', true);
+
+    }
+
+    if ( ! localStorage.getItem('sound') ) {
+
+        localStorage.setItem('sound', true);
+
+    }
 
 };
 

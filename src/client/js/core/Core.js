@@ -18,6 +18,7 @@ DT.Core.prototype.init = function () {
     window.resourceManager = new DT.ResourceManager();
     window.soundSys = new DT.SoundSys();
     window.garage = new DT.Garage();
+    window.settings = new DT.Settings();
 
     //
 
