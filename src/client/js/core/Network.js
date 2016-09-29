@@ -25,7 +25,7 @@ DT.Network.prototype.init = function () {
     //
 
     this.transport = eio.Socket( DT.socketHost );
-    this.transport.binaryType = 'blob';
+    this.transport.binaryType = 'arraybuffer';
 
     //
 
@@ -158,128 +158,119 @@ DT.Network.prototype.message = function ( param ) {
 
     };
 
-    function parseBinMessage ( message ) {
+    function parseBinMessage ( data ) {
 
-        var arrayBuffer;
-        var fileReader = new FileReader();
+        var event = new Uint16Array( data, 0, 2 )[0];
+        var data = new Uint16Array( data, 2 );
 
-        fileReader.onload = function() {
+        switch ( event ) {
 
-            var event = new Uint16Array( this.result, 0, 2 )[0];
-            var data = new Uint16Array( this.result, 2 );
+            case 1:     // rotateTop
 
-            switch ( event ) {
+                var playerId = data[0];
+                var topAngle = data[1] / 100;
 
-                case 1:     // rotateTop
+                var player = DT.arena.getPlayerById( playerId );
 
-                    var playerId = data[0];
-                    var topAngle = data[1] / 100;
+                if ( ! player ) {
 
-                    var player = DT.arena.getPlayerById( playerId );
+                    console.warn( '[Network:MOVE] Player not fond in list.' );
+                    return;
 
-                    if ( ! player ) {
+                }
 
-                        console.warn( '[Network:MOVE] Player not fond in list.' );
-                        return;
+                player.rotateTop( topAngle, true );
 
-                    }
+                break;
 
-                    player.rotateTop( topAngle, true );
+            case 2:     // move
 
-                    break;
+                var playerId = data[0];
+                var path = [];
 
-                case 2:     // move
+                for ( var i = 1, il = data.length; i < il; i ++ ) {
 
-                    var playerId = data[0];
-                    var path = [];
+                    path.push( data[ i ] - 2000 );
 
-                    for ( var i = 1, il = data.length; i < il; i ++ ) {
+                }
 
-                        path.push( data[ i ] - 2000 );
+                var player = DT.arena.getPlayerById( playerId );
 
-                    }
+                if ( ! player ) {
 
-                    var player = DT.arena.getPlayerById( playerId );
+                    console.warn( '[Network:MOVE] Player not fond in list.' );
+                    return;
 
-                    if ( ! player ) {
+                }
 
-                        console.warn( '[Network:MOVE] Player not fond in list.' );
-                        return;
+                player.processPath( path );
+                break;
 
-                    }
+            case 3:     // shoot
 
-                    player.processPath( path );
-                    break;
+                var playerId = data[0];
+                var player = DT.arena.getPlayerById( playerId );
 
-                case 3:     // shoot
+                if ( ! player ) {
 
-                    var playerId = data[0];
-                    var player = DT.arena.getPlayerById( playerId );
+                    console.warn( '[Network:SHOOT] Player not fond in list.' );
+                    return;
 
-                    if ( ! player ) {
+                }
 
-                        console.warn( '[Network:SHOOT] Player not fond in list.' );
-                        return;
+                player.shoot( data[ 1 ] );
+                break;
 
-                    }
+            case 4:     // hit
 
-                    player.shoot( data[ 1 ] );
-                    break;
+                var playerId = data[0];
+                var player = DT.arena.getPlayerById( playerId );
 
-                case 4:     // hit
+                if ( ! player ) {
 
-                    var playerId = data[0];
-                    var player = DT.arena.getPlayerById( playerId );
+                    console.warn( '[Network:HIT] Player not fond in list.' );
+                    return;
 
-                    if ( ! player ) {
+                }
 
-                        console.warn( '[Network:HIT] Player not fond in list.' );
-                        return;
+                player.health = data[1];
+                player.updateHealth();
+                break;
 
-                    }
+            case 5:     // die
 
-                    player.health = data[1];
-                    player.updateHealth();
-                    break;
+                var playerId = data[0];
+                var killerId = data[1];
 
-                case 5:     // die
+                var player = DT.arena.getPlayerById( playerId );
+                var killer = DT.arena.getPlayerById( killerId );
 
-                    var playerId = data[0];
-                    var killerId = data[1];
+                if ( ! player || ! killer ) {
 
-                    var player = DT.arena.getPlayerById( playerId );
-                    var killer = DT.arena.getPlayerById( killerId );
+                    console.warn( '[Network:DIE] Player not fond in list.' );
+                    return;
 
-                    if ( ! player || ! killer ) {
+                }
 
-                        console.warn( '[Network:DIE] Player not fond in list.' );
-                        return;
+                player.die( killer );
+                break;
 
-                    }
+            case 100:
 
-                    player.die( killer );
-                    break;
+                var playerId = data[0];
 
-                case 100:
+                var player = DT.arena.getPlayerById( playerId );
+                if ( ! player ) return;
 
-                    var playerId = data[0];
+                player.move( new THREE.Vector3( data[1] - 1000, 0, data[2] - 1000 ), true );
+                break;
 
-                    var player = DT.arena.getPlayerById( playerId );
-                    if ( ! player ) return;
+            default:
 
-                    player.move( new THREE.Vector3( data[1] - 1000, 0, data[2] - 1000 ), true );
-                    break;
+                console.error( '[NETWORK:GOT_MESSAGE] Unknown event "' + event + '" occurred.' );
+                break;
 
-                default:
-
-                    console.error( '[NETWORK:GOT_MESSAGE] Unknown event "' + event + '" occurred.' );
-                    break;
-
-            }
-
-        };
-
-        fileReader.readAsArrayBuffer( message );
+        }
 
     };
 

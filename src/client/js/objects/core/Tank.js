@@ -112,16 +112,9 @@ DT.Tank.prototype.initLabel = function () {
 
 DT.Tank.prototype.reset = function () {
 
-    this.animations.shotAction.time = 0;
-    this.animations.deathAction.time = 0;
-
-    this.animations.deathAction.enabled = true;
-    this.animations.shotAction.enabled = true;
-
-    this.mixer.update(0);
-
-    this.animations.deathAction.enabled = false;
-    this.animations.shotAction.enabled = false;
+    this.animations.deathAction1.stop();
+    this.animations.deathAction2.stop();
+    this.animations.shotAction.stop();
 
     this.object.rotation.y = 0;
 
@@ -350,9 +343,8 @@ DT.Tank.prototype.shootBullet = function () {
 
     //
 
-    this.animations.shotAction.reset();
+    this.animations.shotAction.stop();
     this.animations.shotAction.play();
-    this.animations.shotAction.time = 0;
 
     //
 
@@ -481,15 +473,17 @@ DT.Tank.prototype.destroy = function () {
 
     var scope = this;
 
-    // this.animations.deathAction.reset();
-    // this.animations.deathAction.play();
-    // this.animations.deathAction.time = 0;
+    this.animations.deathAction1.stop();
+    this.animations.deathAction1.play();
+
+    this.animations.deathAction2.stop();
+    this.animations.deathAction2.play();
 
     setTimeout( function () { // todo: need to improve this
 
         // scope.animations.deathAction.paused = true;
 
-    }, 200 );
+    }, 650 );
 
     if ( localStorage.getItem('sound') !== 'false' ) {
 

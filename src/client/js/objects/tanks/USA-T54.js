@@ -34,22 +34,22 @@ DT.Tank.USAT54.prototype.initModel = function () {
 
     //
 
-    var base = new THREE.Mesh( tankBaseModel.geometry.clone(), new THREE.MeshFaceMaterial( tankBaseModel.material ) );
-    base.geometry.morphTargets = tankBaseModel.geometry.morphTargets;
+    var base = new THREE.Mesh( tankBaseModel.geometry, new THREE.MultiMaterial( tankBaseModel.material ) );
+    // base.geometry.morphTargets = tankBaseModel.geometry.morphTargets;
     base.castShadow = true;
-    base.rotation.y =  0;
+    base.rotation.y = 0;
     base.receiveShadow = true;
     base.scale.set( 20, 20, 20 );
+    base.material.morphTargets = true;
     this.object.add( base );
     this.object.base = base;
 
     //
 
-    var top = new THREE.Mesh( tankTopModel.geometry.clone(), new THREE.MeshFaceMaterial( tankTopModel.material ) );
-    top.geometry.morphTargets = tankTopModel.geometry.morphTargets;
+    var top = new THREE.Mesh( tankTopModel.geometry, new THREE.MultiMaterial( tankTopModel.material ) );
     top.castShadow = true;
     top.receiveShadow = true;
-    top.position.y = 20;
+    top.position.y = 0;
     top.scale.set( 20, 20, 20 );
 
     for ( var i = 0, il = top.material.materials.length; i < il; i ++ ) {
@@ -75,22 +75,13 @@ DT.Tank.USAT54.prototype.initModel = function () {
 
     this.mixer = new THREE.AnimationMixer( top );
 
-    var morphTargets = top.geometry.morphTargets;
-
-    var clip = THREE.AnimationClip.CreateFromMorphTargetSequence( 'shot', [ morphTargets[0], morphTargets[1], morphTargets[2] ], 30 );
-    clip.duration = 30;
-    var shotAction = this.mixer.clipAction( clip );
-    shotAction.loop = THREE.LoopOnce;
-    shotAction.enabled = false;
+    var shotAction = this.mixer.clipAction( top.geometry.animations[0], top );
+    shotAction.setDuration( 0.5 ).setLoop( THREE.LoopOnce );
     this.animations.shotAction = shotAction;
 
-    var clip = THREE.AnimationClip.CreateFromMorphTargetSequence( 'death', [ morphTargets[2], morphTargets[3], morphTargets[4] ], 10 );
-    clip.duration = 10;
-    var deathAction = this.mixer.clipAction( clip );
-    deathAction.duration = clip.duration;
-    deathAction.loop = THREE.LoopOnce;
-    deathAction.enabled = false;
-    this.animations.deathAction = shotAction;
+    var deathAction = this.mixer.clipAction( top.geometry.animations[1], top );
+    deathAction.setDuration( 0.8 ).setLoop( THREE.LoopOnce );
+    this.animations.deathAction = deathAction;
 
     //
 

@@ -82,7 +82,7 @@ Arena.prototype.reset = function ( isNew ) {
     //
 
     setTimeout( function () {
-    
+
         for ( var i = 0; i < 3 + Math.floor( Math.random() * 3 ); i ++ ) {
 
             scope.bots.push( new DT.Bot( scope ) );
