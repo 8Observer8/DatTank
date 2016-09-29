@@ -17,6 +17,12 @@ DT.Settings = function () {
 
     }
 
+    if ( ! localStorage.getItem('currentTank') ) {
+
+        localStorage.setItem('currentTank', 'USAT54');
+
+    }
+
 };
 
 DT.Settings.prototype = {};

@@ -32,7 +32,6 @@ DT.Core.prototype.init = function () {
     $('#signin-box #username').focus();
     $('#play-btn').click( this.play.bind( this ) );
     $('.change-skin-btn').click( ui.showChoiceWindow.bind( ui ) );
-    $('.close-tank-skins').click( ui.closeChoiceWindow.bind( ui ) );
     $('.btn-pick').click(ui.selectTankAndcloseChoiceWindow.bind( ui ) )
 
     $('#graphics-quality').click( ui.chageGameQuality.bind( ui ) );
@@ -89,9 +88,13 @@ DT.Core.prototype.play = function ( event ) {
             eventAction: 'play'
         });
 
-        var tank = localStorage.getItem( 'selectedTank' ) || 0;
+        var tank = localStorage.getItem( 'currentTank' ) || 0;
 
-        setTimeout( function () { network.send( 'joinArena', { login: login, tank: tank } ); }, 1000 );
+        setTimeout( function () {
+
+            network.send( 'joinArena', { login: login, tank: tank } );
+
+        }, 1000 );
 
         // UI changes
 

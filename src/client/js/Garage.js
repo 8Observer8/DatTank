@@ -32,6 +32,7 @@ DT.Garage.prototype.init = function () {
     $('#arrow1').click( garage.arrowBack.bind( this ) );
     $('#arrow2').click( garage.arrowForward.bind( this ) );
     $('.choice-skins .tank').click( this.selectTank.bind( this ) );
+    $('.close-tank-skins').click( ui.closeChoiceWindow.bind( ui ) );
 
     //
 
@@ -60,6 +61,7 @@ DT.Garage.prototype.init = function () {
     //
 
     var loader1 = new THREE.JSONLoader();
+    var loaded = 0;
 
     loader1.load( 'resources/models/tank-demo-1.json', function ( geometry, materials ) {
 
@@ -73,6 +75,13 @@ DT.Garage.prototype.init = function () {
 
         scope.scene.add( model );
         scope.models['USAT54'] = model;
+
+        loaded ++;
+        if ( loaded === 3 ) {
+
+            $( '.choice-skins #' + localStorage.getItem('currentTank') ).click();
+
+        }
 
     });
 
@@ -88,6 +97,13 @@ DT.Garage.prototype.init = function () {
         scope.scene.add( model );
         scope.models['UKBlackPrince'] = model;
 
+        loaded ++;
+        if ( loaded === 3 ) {
+
+            $( '.choice-skins #' + localStorage.getItem('currentTank') ).click();
+
+        }
+
     });
 
     var loaderscene = new THREE.AssimpJSONLoader();
@@ -95,9 +111,25 @@ DT.Garage.prototype.init = function () {
     loaderscene.load( 'resources/models/assimp/interior/interior.assimp.json', function ( object ) {
 
         scope.scene.add( object );
-        $('.choice-skins .tank').first().click();
+
+        loaded ++;
+        if ( loaded === 3 ) {
+
+            $( '.choice-skins #' + localStorage.getItem('currentTank') ).click();
+
+        }
 
     }, scope.onProgress );
+
+    $( document ).keydown( function ( event ) {
+
+        if ( event.keyCode === 27 ) {
+
+            ui.closeChoiceWindow();
+
+        }
+
+    });
 
     this.animate();
 
@@ -208,6 +240,6 @@ DT.Garage.prototype.selectTank = function ( event ) {
 
 DT.Garage.prototype.pickTank = function () {
 
-    localStorage.setItem( 'selectedTank', this.currentTank );
+    localStorage.setItem( 'currentTank', this.currentTank );
 
 };
