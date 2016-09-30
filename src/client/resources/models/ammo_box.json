@@ -21,7 +21,7 @@
         "mapDiffuseWrap":["RepeatWrapping","RepeatWrapping"],
         "DbgColor":15658734,
         "DbgIndex":0,
-        "mapDiffuse":"ammo.png",
+        "mapDiffuse":"ammo.jpg",
         "specularCoef":50,
         "transparent":false
     }],

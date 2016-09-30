@@ -18,7 +18,7 @@ parser.addArgument(['--debug'], {
 var args = parser.parseArgs();
 
 global.DEBUG = args.debug;
-global.SOCKET_PORT = 8086;
+global.SOCKET_PORT = 8085;
 
 //
 

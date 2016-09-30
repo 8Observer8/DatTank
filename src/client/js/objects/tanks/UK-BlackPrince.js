@@ -97,6 +97,35 @@ DT.Tank.UKBlackPrince.prototype.initModel = function () {
 
 };
 
+DT.Tank.UKBlackPrince.prototype.destroy = function () {
+
+    var scope = this;
+
+    this.animations.deathAction1.stop();
+    this.animations.deathAction1.play();
+
+    this.animations.deathAction2.stop();
+    this.animations.deathAction2.play();
+
+    this.moveProgress = false;
+    this.movementDurationMap = [];
+    this.moveProgress = 0;
+
+    setTimeout( function () {
+
+        scope.animations.deathAction1.paused = true;
+        scope.animations.deathAction2.paused = true;
+
+    }, 1100 );
+
+    if ( localStorage.getItem('sound') !== 'false' ) {
+
+        this.sounds.explosion.play();
+
+    }
+
+};
+
 //
 
 DT.Tank.list[ 'UKBlackPrince' ] = {

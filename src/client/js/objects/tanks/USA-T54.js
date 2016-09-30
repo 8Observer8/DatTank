@@ -35,7 +35,6 @@ DT.Tank.USAT54.prototype.initModel = function () {
     //
 
     var base = new THREE.Mesh( tankBaseModel.geometry, new THREE.MultiMaterial( tankBaseModel.material ) );
-    // base.geometry.morphTargets = tankBaseModel.geometry.morphTargets;
     base.castShadow = true;
     base.rotation.y = 0;
     base.receiveShadow = true;
@@ -43,6 +42,12 @@ DT.Tank.USAT54.prototype.initModel = function () {
     base.material.morphTargets = true;
     this.object.add( base );
     this.object.base = base;
+
+    for ( var i = 0, il = base.material.materials.length; i < il; i ++ ) {
+
+        base.material.materials[ i ].morphTargets = true;
+
+    }
 
     //
 
@@ -79,13 +84,46 @@ DT.Tank.USAT54.prototype.initModel = function () {
     shotAction.setDuration( 0.5 ).setLoop( THREE.LoopOnce );
     this.animations.shotAction = shotAction;
 
-    var deathAction = this.mixer.clipAction( top.geometry.animations[1], top );
-    deathAction.setDuration( 0.8 ).setLoop( THREE.LoopOnce );
-    this.animations.deathAction = deathAction;
+    var deathAction1 = this.mixer.clipAction( top.geometry.animations[1], top );
+    deathAction1.setDuration( 0.8 ).setLoop( THREE.LoopOnce );
+    this.animations.deathAction1 = deathAction1;
+
+    var deathAction2 = this.mixer.clipAction( base.geometry.animations[0], base );
+    deathAction2.setDuration( 0.8 ).setLoop( THREE.LoopOnce );
+    this.animations.deathAction2 = deathAction2;
 
     //
 
     view.scene.add( this.object );
+
+};
+
+DT.Tank.USAT54.prototype.destroy = function () {
+
+    var scope = this;
+
+    this.animations.deathAction1.stop();
+    this.animations.deathAction1.play();
+
+    this.animations.deathAction2.stop();
+    this.animations.deathAction2.play();
+
+    this.moveProgress = false;
+    this.movementDurationMap = [];
+    this.moveProgress = 0;
+
+    setTimeout( function () { // todo: need to improve this
+
+        scope.animations.deathAction1.paused = true;
+        scope.animations.deathAction2.paused = true;
+
+    }, 750 );
+
+    if ( localStorage.getItem('sound') !== 'false' ) {
+
+        this.sounds.explosion.play();
+
+    }
 
 };
 

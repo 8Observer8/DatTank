@@ -233,8 +233,7 @@ DT.Network.prototype.message = function ( param ) {
 
                 }
 
-                player.health = data[1];
-                player.updateHealth();
+                player.updateHealth( data[1] );
                 break;
 
             case 5:     // die

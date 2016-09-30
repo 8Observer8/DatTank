@@ -10,7 +10,7 @@ var BoxManager = function ( arena, params ) {
     this.arena = arena;
     this.boxes = [];
 
-    this.boxAVGCount = params.boxAVGCount || 10;
+    this.boxAVGCount = params.boxAVGCount || 14;
 
     this.time = 0;
 
@@ -116,7 +116,7 @@ BoxManager.prototype.update = function ( delay, players ) {
     if ( this.boxes.length < this.boxAVGCount ) {
 
         this.addBox({
-            type: ( Math.random() > 0.8 ) ? 'Ammo' : 'Health'
+            type: ( Math.random() > 0.6 ) ? 'Ammo' : 'Health'
         });
 
     }

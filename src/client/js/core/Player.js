@@ -155,6 +155,12 @@ DT.Player.prototype.move = function ( destination, fromServer ) {
 
     var scope = this;
 
+    if ( this.health <= 0 ) {
+
+        return;
+
+    }
+
     DT.arena.pathFinder.findPath( this.position, destination, function ( path ) {
 
         if ( path.length === 0 ) {
@@ -315,6 +321,12 @@ DT.Player.prototype.shoot = (function () {
 
         var scope = this;
 
+        if ( this.health <= 0 ) {
+
+            return;
+
+        }
+
         if ( ! shootId ) {
 
             network.send( 'shoot' );
@@ -376,6 +388,8 @@ DT.Player.prototype.shoot = (function () {
 
 DT.Player.prototype.gotBox = function ( box ) {
 
+    soundSys.menuSound.play();
+
     switch ( box.type ) {
 
         case 'Health':
@@ -399,13 +413,26 @@ DT.Player.prototype.gotBox = function ( box ) {
 
 };
 
-DT.Player.prototype.updateHealth = function () {
+DT.Player.prototype.updateHealth = function ( value ) {
+
+    value = ( value !== undefined ) ? value : this.health;
+
+    //
 
     if ( DT.arena && DT.arena.me.id === this.id ) {
 
+        if ( value < this.health ) {
+
+            view.addCameraShake( 400, 3 );
+
+        }
+
+        this.health = value;
         ui.updateHealth( this.health );
 
     }
+
+    this.health = value;
 
     if ( this.health <= 50 ) {
 
@@ -429,7 +456,13 @@ DT.Player.prototype.die = function ( killer ) {
             eventAction: 'kill'
         });
 
-        ui.showContinueBox( killer.login, DT.Team.colors[ killer.team ] ); 
+        view.addCameraShake( 1000, 1.5 );
+
+        setTimeout( function () {
+
+            ui.showContinueBox( killer.login, DT.Team.colors[ killer.team ] ); 
+
+        }, 1400 );
 
     }
 

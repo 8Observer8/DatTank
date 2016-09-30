@@ -340,6 +340,7 @@ body {
     width: 80%;
     font: normal 15px 'Roboto';
     cursor: url('../resources/img/cursor.png'), auto;
+    outline: none;
 }
 
 #signin-box-wrapper #signin-box #play-btn {
@@ -357,6 +358,7 @@ body {
     opacity: 0.8;
     transition: opacity 200ms ease;
     cursor: url('../resources/img/cursor.png'), auto;
+    outline: none;
 }
 
 #signin-box-wrapper #signin-box #play-btn:hover {

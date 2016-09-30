@@ -160,7 +160,9 @@ DT.UI.prototype.showWinners = function ( winner ) {
 
         $('#winners').hide();
 
-        if ( ! network.send( 'joinArena', { login: localStorage.getItem('login') || '' }, core.joinArena ) ) {
+        var tank = localStorage.getItem( 'currentTank' ) || 0;
+
+        if ( ! network.send( 'joinArena', { login: localStorage.getItem('login') || '', tank: tank }, core.joinArena ) ) {
 
             // :(
 

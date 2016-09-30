@@ -23,6 +23,8 @@ DT.View = function () {
 
     this.selectionCircle = false;
 
+    this.cameraOffset = new THREE.Vector3();
+
     //
 
     this.stats = false;
@@ -363,6 +365,15 @@ DT.View.prototype.animate = function ( delta ) {
 
     if ( ! DT.arena ) return;
 
+    // update camera position
+
+    this.camera.position.set( DT.arena.me.position.x + 180 + this.cameraOffset.x, this.camera.position.y + this.cameraOffset.y, DT.arena.me.position.z + this.cameraOffset.z );
+    this.camera.lookAt( DT.arena.me.position );
+
+    this.sunLight.position.set( DT.arena.me.position.x - 100, this.sunLight.position.y, DT.arena.me.position.z + 100 );
+
+    //
+
     if ( DT.arena.boxManager ) {
 
         DT.arena.boxManager.update( delta );
@@ -564,15 +575,6 @@ DT.View.prototype.updatePlayersPosition = function ( delta ) {
 
                 player.tank.setPosition( player.position.x, player.position.y, player.position.z );
 
-                if ( player.id === DT.arena.me.id ) {
-
-                    this.camera.position.set( player.position.x + 180, this.camera.position.y, player.position.z );
-                    this.camera.lookAt( player.position );
-
-                    this.sunLight.position.set( player.position.x - 100, this.sunLight.position.y, player.position.z + 100 );
-
-                }
-
             }
 
         }
@@ -608,6 +610,28 @@ DT.View.prototype.changeGraficQuality = function () {
         this.render();
 
     }
+
+};
+
+DT.View.prototype.addCameraShake = function ( duration, intencity ) {
+
+    var iter = 0;
+    var shakeInterval = setInterval( function () {
+
+        view.cameraOffset.x = intencity * ( Math.random() - 0.5 ) * iter / 2;
+        view.cameraOffset.y = intencity * ( Math.random() - 0.5 ) * iter / 2;
+        view.cameraOffset.z = intencity * ( Math.random() - 0.5 ) * iter / 2;
+
+        iter ++;
+
+        if ( iter === Math.floor( ( duration - 100 ) / 40 ) ) {
+
+            view.cameraOffset.set( 0, 0, 0 );
+            clearInterval( shakeInterval );
+
+        }
+
+    }, 40 );
 
 };
 

@@ -9,7 +9,7 @@ var DT = {};
 
 DT.Version = '2dev';
 DT.Build = 3;
-DT.local = true;
+DT.local = false;
 
 if ( DT.local ) {
 
@@ -17,6 +17,6 @@ if ( DT.local ) {
 
 } else {
 
-    DT.socketHost = 'http://188.166.164.236:8086';
+    DT.socketHost = 'http://188.166.164.236:8085';
 
 }

@@ -469,30 +469,6 @@ DT.Tank.prototype.rotateTop = function () {
 
 };
 
-DT.Tank.prototype.destroy = function () {
-
-    var scope = this;
-
-    this.animations.deathAction1.stop();
-    this.animations.deathAction1.play();
-
-    this.animations.deathAction2.stop();
-    this.animations.deathAction2.play();
-
-    setTimeout( function () { // todo: need to improve this
-
-        // scope.animations.deathAction.paused = true;
-
-    }, 650 );
-
-    if ( localStorage.getItem('sound') !== 'false' ) {
-
-        this.sounds.explosion.play();
-
-    }
-
-};
-
 DT.Tank.prototype.dispose = function () {
 
     // todo: dispose effects

@@ -3,7 +3,7 @@
  * Basic start server
 */
 
-var PORT = 8083;
+var PORT = 8082;
 
 var argparse = require('argparse');
 var express = require('express');

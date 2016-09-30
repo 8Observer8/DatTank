@@ -40,7 +40,7 @@ gulp.task( 'js', function () {
         .pipe(connect.reload());
 
     gulp.src([ './src/client/js/**/*', '!./src/client/js/pathFinder/WebWorker.js' ])
-        //.pipe(uglify())
+        .pipe(uglify())
         .pipe(order([
             'libs/three.js',
             'libs/*.js',
