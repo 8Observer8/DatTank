@@ -317,7 +317,7 @@ DT.Player.prototype.shoot = (function () {
     var buffer = new ArrayBuffer( 8 );
     var bufferView = new Uint16Array( buffer );
 
-    return function ( shootId ) {
+    return function ( shootId, ammo ) {
 
         var scope = this;
 
@@ -341,6 +341,13 @@ DT.Player.prototype.shoot = (function () {
         }
 
         //
+
+        if ( DT.arena.me.id === this.id ) {
+        
+            this.ammo = ammo;
+            ui.updateAmmo( this.ammo );
+
+        }
 
         this.tank.showBlastSmoke();
         this.tank.shootBullet().onHit( function ( target ) {
@@ -377,8 +384,8 @@ DT.Player.prototype.shoot = (function () {
 
             //
 
-            scope.ammo --;
-            ui.updateAmmo( this.ammo );
+            // scope.ammo --;
+            // ui.updateAmmo( this.ammo );
 
         }
 
@@ -386,7 +393,7 @@ DT.Player.prototype.shoot = (function () {
 
 }) ();
 
-DT.Player.prototype.gotBox = function ( box ) {
+DT.Player.prototype.gotBox = function ( box, value ) {
 
     soundSys.menuSound.play();
 
@@ -394,14 +401,13 @@ DT.Player.prototype.gotBox = function ( box ) {
 
         case 'Health':
 
-            this.health += box.amount;
-            this.health = Math.min( this.health, 100 );
+            this.health = value;
             this.updateHealth();
             break;
 
         case 'Ammo':
 
-            this.ammo += box.amount;
+            this.ammo = value;
             ui.updateAmmo( this.ammo );
             break;
 

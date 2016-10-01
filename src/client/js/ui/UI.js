@@ -56,6 +56,10 @@ DT.UI.prototype.hideSignInPopup = function () {
     $('#graphics-quality').hide();
     $('#sound-on-off').hide();
 
+    $('#share-btn').css('display', 'none');
+    $('#fb-like').css('display', 'none');
+    $('#folow-btn').css('display', 'none');
+
 };
 
 DT.UI.prototype.openSettings = function (value) {

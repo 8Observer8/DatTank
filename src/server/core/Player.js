@@ -176,7 +176,7 @@ Player.prototype.move = function ( path ) {
 
 Player.prototype.shoot = (function () {
 
-    var buffer = new ArrayBuffer( 6 );
+    var buffer = new ArrayBuffer( 8 );
     var bufferView = new Uint16Array( buffer );
 
     return function () {
@@ -200,6 +200,7 @@ Player.prototype.shoot = (function () {
 
         bufferView[ 1 ] = this.id;
         bufferView[ 2 ] = Math.floor( 1000 * Math.random() );
+        bufferView[ 3 ] = this.ammo;
 
         DT.Network.announce( this.arena.room, 'shoot', buffer, bufferView );
 

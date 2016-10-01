@@ -146,7 +146,7 @@ DT.Network.prototype.message = function ( param ) {
 
             case 'gotBox':
 
-                DT.arena.me.gotBox( data.box );
+                DT.arena.me.gotBox( data.box, data.value );
                 break;
 
             default:
@@ -218,7 +218,7 @@ DT.Network.prototype.message = function ( param ) {
 
                 }
 
-                player.shoot( data[ 1 ] );
+                player.shoot( data[ 1 ], data[ 2 ] );
                 break;
 
             case 4:     // hit

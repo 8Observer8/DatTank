@@ -31,7 +31,7 @@ Health.prototype.pickUp = function ( player ) {
 
     if ( player.socket ) {
 
-        DT.Network.send( player.socket, 'gotBox', { box: this.toPublicJSON() } );
+        DT.Network.send( player.socket, 'gotBox', { box: this.toPublicJSON(), value: player.health } );
 
     }
 

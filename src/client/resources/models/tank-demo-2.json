@@ -41,7 +41,7 @@
         "transparent":false,
         "DbgColor":15597568,
         "mapDiffuseWrap":["RepeatWrapping","RepeatWrapping"],
-        "mapDiffuse":"tank_texture.png",
+        "mapDiffuse":"tank_texture.jpg",
         "shading":"phong",
         "mapDiffuseAnisotropy":1,
         "blending":"NormalBlending",

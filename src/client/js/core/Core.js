@@ -50,6 +50,9 @@ DT.Core.prototype.play = function ( event ) {
 
     ui.showLoaderScreen();
 
+    ui.hideSignInPopup();
+    ui.hideFooter();
+
     resourceManager.load( function ( progress ) {
 
         var value = Math.round( 100 * progress ) + '%';
@@ -98,8 +101,6 @@ DT.Core.prototype.play = function ( event ) {
 
         // UI changes
 
-        ui.hideSignInPopup();
-        ui.hideFooter();
         ui.showViewport();
         ui.setCursor();
 
