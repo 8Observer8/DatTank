@@ -224,7 +224,7 @@ Player.prototype.hit = (function () {
         if ( killer ) {
 
             this.health -= 40 * ( killer.tank.bullet / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
-            this.health = Math.max( this.health, 0 );
+            this.health = Math.max( Math.round( this.health ), 0 );
 
         }
 
