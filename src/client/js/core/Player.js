@@ -80,6 +80,8 @@ DT.Player.prototype.init = function () {
 
 DT.Player.prototype.respawn = function ( fromNetwork, params ) {
 
+    view.cameraOffset.set( 0, 0, 0 );
+
     if ( fromNetwork ) {
 
         this.status = 'alive';

@@ -9,11 +9,11 @@ var DT = {};
 
 DT.Version = '2dev';
 DT.Build = 3;
-DT.local = false;
+DT.local = true;
 
 if ( DT.local ) {
 
-    DT.socketHost = 'http://localhost:8086';
+    DT.socketHost = 'http://localhost:8085';
 
 } else {
 
