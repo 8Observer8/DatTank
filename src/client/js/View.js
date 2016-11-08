@@ -15,6 +15,13 @@ DT.View = function () {
     MOBILE = new MobileDetect( window.navigator.userAgent );
     MOBILE = MOBILE.mobile() || MOBILE.phone() || MOBILE.tablet();
 
+    if ( MOBILE ) {
+
+        $('.error-on-mobile').show();
+        return;
+
+    }
+
     //
 
     this.scene = false;
