@@ -30,7 +30,7 @@ DT.UI.prototype.init = function () {
     localStorage.setItem( 'gear', false );
 
     setTimeout( function () { $('.fb-like').animate( { opacity: 1 }, 500 ); }, 1000 );
-    setTimeout( function () { $('.folow-btn').animate( { opacity: 1 }, 500 ); }, 1200 );
+    // setTimeout( function () { $('.folow-btn').animate( { opacity: 1 }, 500 ); }, 1200 );
 
 };
 

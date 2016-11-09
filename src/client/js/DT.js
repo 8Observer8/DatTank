@@ -9,7 +9,7 @@ var DT = {};
 
 DT.Version = '2dev';
 DT.Build = 3;
-DT.local = true;
+DT.local = false;
 
 if ( DT.local ) {
 
