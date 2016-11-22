@@ -48,6 +48,8 @@ Bot.prototype.init = function () {
     this.player.ammo = 10000000;
     this.arena.addPlayer( this.player );
 
+    this.player.bot = true;
+
     this.updateInterval = setInterval( this.update.bind( this ), 100 );
 
 };
@@ -74,7 +76,7 @@ Bot.prototype.update = (function () {
             moveBufferView[ 2 ] = x;
             moveBufferView[ 3 ] = z;
 
-            DT.Network.announce( this.arena.room, 'moveBot', moveBuffer, moveBufferView );
+            DT.Network.announce( this.arena, 'moveBot', moveBuffer, moveBufferView );
             return;
 
         }

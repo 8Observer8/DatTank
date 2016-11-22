@@ -69,42 +69,44 @@ DT.Core.prototype.play = function ( event ) {
 
         // init network
 
-        network.init();
+        network.init( function () {
 
-        // free prev arena if still exists
+            // free prev arena if still exists
 
-        if ( scope.arena !== false ) {
+            if ( scope.arena !== false ) {
 
-            scope.arena.dispose();
-            scope.arena = false;
+                scope.arena.dispose();
+                scope.arena = false;
 
-        }
+            }
 
-        // send network request
+            // send network request
 
-        var login = $('#username').val() || localStorage.getItem('login') || '';
-        localStorage.setItem( 'login', login );
+            var login = $('#username').val() || localStorage.getItem('login') || '';
+            localStorage.setItem( 'login', login );
 
-        ga('send', {
-            hitType: 'event',
-            eventCategory: 'game',
-            eventAction: 'play'
+            ga('send', {
+                hitType: 'event',
+                eventCategory: 'game',
+                eventAction: 'play'
+            });
+
+            var tank = localStorage.getItem( 'currentTank' ) || 0;
+
+            setTimeout( function () {
+
+                network.send( 'joinArena', { login: login, tank: tank } );
+
+            }, 1000 );
+
+            // UI changes
+
+            ui.showViewport();
+            ui.setCursor();
+
+            ui.hideLoaderScreen();
+
         });
-
-        var tank = localStorage.getItem( 'currentTank' ) || 0;
-
-        setTimeout( function () {
-
-            network.send( 'joinArena', { login: login, tank: tank } );
-
-        }, 1000 );
-
-        // UI changes
-
-        ui.showViewport();
-        ui.setCursor();
-
-        ui.hideLoaderScreen();
 
     });
 
@@ -138,8 +140,7 @@ DT.Core.prototype.joinArena = function ( params ) {
     $('#soundon').click( ui.changeSound.bind( ui ) );
     $('#qualityon').click( ui.chageGameQuality.bind( ui ) );
 
-    $('#leaderboard-btn').click( ui.showLeaderboard.bind( ui ) );
-    $('#close-leaderboard-btn').click( ui.hideLeaderboard.bind( ui ) );
+    $('#leaderboard').click( ui.toggleLeaderboard.bind( ui ) );
 
 };
 

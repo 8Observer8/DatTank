@@ -30,7 +30,7 @@ DT.UI.prototype.init = function () {
     localStorage.setItem( 'gear', false );
 
     setTimeout( function () { $('.fb-like').animate( { opacity: 1 }, 500 ); }, 1000 );
-    // setTimeout( function () { $('.folow-btn').animate( { opacity: 1 }, 500 ); }, 1200 );
+    setTimeout( function () { $('.folow-btn').animate( { opacity: 1 }, 500 ); }, 1200 );
 
 };
 
@@ -51,6 +51,7 @@ DT.UI.prototype.changeSound = function ( value ) {
     localStorage.setItem( 'sound', value );
 
     soundSys.playMenuSound();
+
 };
 
 DT.UI.prototype.hideSignInPopup = function () {
@@ -58,10 +59,8 @@ DT.UI.prototype.hideSignInPopup = function () {
     $('#signin-box-wrapper').hide();
     $('#graphics-quality').hide();
     $('#sound-on-off').hide();
-
-    $('#share-btn').css('display', 'none');
-    $('#fb-like').css('display', 'none');
-    $('#folow-btn').css('display', 'none');
+    $('#share-btn').hide();
+    $('.top-left-like-btns').hide();
 
 };
 
@@ -86,15 +85,9 @@ DT.UI.prototype.openSettings = function (value) {
 
 };
 
-DT.UI.prototype.showLeaderboard = function () {
+DT.UI.prototype.toggleLeaderboard = function () {
 
-    $('#leaderboard-wrapper').show();
-
-};
-
-DT.UI.prototype.hideLeaderboard = function () {
-
-    $('#leaderboard-wrapper').hide();
+    $('#leaderboard-wrapper').toggle();
 
 };
 
@@ -131,6 +124,7 @@ DT.UI.prototype.updateAmmo = function ( value ) {
 
 DT.UI.prototype.showContinueBox = function ( playerlogin, playerColor ) {
 
+    $('#continue-box-wrapper #continue-btn').off();
     $('#continue-box-wrapper #continue-btn').click( DT.arena.me.respawn.bind( DT.arena.me, false ) );
     $('#continue-box-wrapper').show();
     $('#continue-box-wrapper #title').html('<p>Killed by <span style="color:'+ playerColor + '">' + playerlogin +'</span></p>');
@@ -163,6 +157,7 @@ DT.UI.prototype.clearKills = function () {
 
 DT.UI.prototype.showWinners = function ( winner ) {
 
+    $('#winners #play-button').off();
     $('#winners #play-button').click( function () {
 
         $('#winners').hide();
@@ -233,38 +228,70 @@ DT.UI.prototype.updateLeaderboard = function ( players, me ) {
 
     var names = $('#top-killers .player-name');
     var kills = $('#top-killers .kills');
-    var team = $('#top-killers .players-team-image');
+    var teams = $('#top-killers .players-team-image');
 
-    var row = $('#top-killers .killer-outer');
+    var rows = $('#top-killers .killer-outer');
 
-    for ( var i = 0, il = Math.min( players.length, 9 ); i < il; i ++ ) {
+    rows.removeClass('myplace');
 
-        names[ i ].innerHTML = players[ i ].login;
-        kills[ i ].innerHTML = players[ i ].kills;
-        team[ i ].style['background-color'] = DT.Team.colors[ players[ i ].team ];
+    var meInTop = false;
 
-        row[ i ].style['display'] = 'block';
-        row[ i ].classList.remove('myplace');
+    for ( var i = 0; i < 5; i ++ ) {
 
-    }
+        if ( i < players.length ) {
 
-    for ( var i = Math.min( players.length - 1, 9 ); i > 9; i -- ) {
+            $( names[ i ] ).html( players[ i ].login );
+            $( kills[ i ] ).html( players[ i ].kills );
+            $( teams[ i ] ).css( 'background-color', DT.Team.colors[ players[ i ].team ] );
 
-        if ( players[ i ].id === me ) {
+            $( rows[ i ] ).show();
 
-            row[ i ].classList.add('myplace');
+            if ( me && players[ i ].id === me.id ) {
+
+                $( rows[ i ] ).addClass('myplace');
+                meInTop = true;
+
+            }
 
         } else {
 
-            $( row[ i ] ).hide();
+            $( rows[ i ] ).hide();
 
         }
 
     }
 
-    for ( var i = 9; i >= players.length; i -- ) {
+    //
 
-        $( row[ i ] ).hide();
+    if ( ! meInTop ) {
+
+        var rank = 0;
+
+        for ( var i = 0, il = players.length; i < il; i ++ ) {
+
+            if ( me && players[ i ].id === me.id ) {
+
+                rank = i + 1;
+                break;
+
+            }
+
+        }
+
+        if ( rank === 0 ) return;
+
+        $('#top-killers .killer-outer.last .player-counter').html( '#' + rank );
+        $('#top-killers .killer-outer.last .player-name').html( me.login );
+        $('#top-killers .killer-outer.last .kills').html( me.kills );
+        $('#top-killers .killer-outer.last .players-team-image').css( 'background-color', DT.Team.colors[ me.team ] );
+
+        $('#top-killers #divider').show();
+        $('#top-killers .killer-outer.last').show();
+
+    } else {
+
+        $('#top-killers #divider').hide();
+        $('#top-killers .killer-outer.last').hide();
 
     }
 

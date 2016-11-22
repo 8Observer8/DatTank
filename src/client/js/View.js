@@ -31,6 +31,7 @@ DT.View = function () {
     this.selectionCircle = false;
 
     this.cameraOffset = new THREE.Vector3();
+    this.shakeInterval = false;
 
     //
 
@@ -300,8 +301,18 @@ DT.View.prototype.clean = function () {
 
     if ( this.scene ) {
 
+        this.camera.position.y = 400;
+
         for ( var i = 0, il = this.scene.children.length; i < il; i ++ ) {
 
+            if ( this.shakeInterval !== false ) {
+
+                clearInterval( this.shakeInterval );
+                this.shakeInterval = false;
+
+            }
+
+            this.cameraOffset.set( 0, 0, 0 );
             this.scene.remove( this.scene.children[ i ] );
 
         }
@@ -623,18 +634,28 @@ DT.View.prototype.changeGraficQuality = function () {
 DT.View.prototype.addCameraShake = function ( duration, intencity ) {
 
     var iter = 0;
-    var shakeInterval = setInterval( function () {
+    var scope = this;
 
-        view.cameraOffset.x = intencity * ( Math.random() - 0.5 ) * iter / 2;
-        view.cameraOffset.y = intencity * ( Math.random() - 0.5 ) * iter / 2;
-        view.cameraOffset.z = intencity * ( Math.random() - 0.5 ) * iter / 2;
+    if ( this.shakeInterval !== false ) {
+    
+        clearInterval( this.shakeInterval );
+        this.cameraOffset.set( 0, 0, 0 );
+
+    }
+
+    this.shakeInterval = setInterval( function () {
+
+        scope.cameraOffset.x = intencity * ( Math.random() - 0.5 ) * iter / 2;
+        scope.cameraOffset.y = intencity * ( Math.random() - 0.5 ) * iter / 2;
+        scope.cameraOffset.z = intencity * ( Math.random() - 0.5 ) * iter / 2;
 
         iter ++;
 
-        if ( iter === Math.floor( ( duration - 100 ) / 40 ) ) {
+        if ( iter > Math.floor( ( duration - 100 ) / 40 ) ) {
 
-            view.cameraOffset.set( 0, 0, 0 );
-            clearInterval( shakeInterval );
+            clearInterval( scope.shakeInterval );
+            scope.cameraOffset.set( 0, 0, 0 );
+            scope.shakeInterval = false;
 
         }
 

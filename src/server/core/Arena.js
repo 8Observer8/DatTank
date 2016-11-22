@@ -41,8 +41,8 @@ Arena.prototype.reset = function ( isNew ) {
     var scope = this;
 
     if ( ! isNew ) {
-    
-        DT.Network.announce( this.room, 'resetArena', { winnerTeam: this.getWinnerTeamId(), arena: this.toPublicJSON() } );
+
+        DT.Network.announce( this, 'resetArena', { winnerTeam: this.getWinnerTeamId(), arena: this.toPublicJSON() } );
 
     }
 
@@ -253,23 +253,45 @@ Arena.prototype.addPlayer = function ( player ) {
 
     if ( ! player.socket ) {
 
-        DT.Network.announce( this.room, 'playerJoined', player.toPublicJSON() );
+        DT.Network.announce( this, 'playerJoined', player.toPublicJSON() );
 
     } else {
 
-        DT.Network.broadcast( player.socket, 'arenaRoomId' + this.id, 'playerJoined', player.toPublicJSON() );
+        DT.Network.broadcast( player.socket, this, 'playerJoined', player.toPublicJSON() );
 
     }
+
+};
+
+Arena.prototype.removeBot = function ( player ) {
+
+    var newBotList = [];
+
+    for ( var i = 0, il = this.bots.length; i < il; i ++ ) {
+
+        if ( this.bots[ i ].player.id === player.id ) continue;
+
+        newBotList.push( this.bots[ i ] );
+
+    }
+
+    this.bots = newBotList;
 
 };
 
 Arena.prototype.removePlayer = function ( player ) {
 
     var newPlayersList = [];
+    var removed = true;
 
     for ( var i = 0, il = this.players.length; i < il; i ++ ) {
 
-        if ( this.players[ i ].id === player.id ) continue;
+        if ( this.players[ i ].id === player.id ) {
+
+            removed = true;
+            continue;
+
+        }
 
         newPlayersList.push( this.players[ i ] );
 
@@ -277,11 +299,14 @@ Arena.prototype.removePlayer = function ( player ) {
 
     this.players = newPlayersList;
 
-    player.team.removePlayer( player );
-
     //
 
-    DT.Network.announce( this.room, 'playerLeft', { id: player.id } );
+    if ( removed ) {
+
+        player.team.removePlayer( player );
+        DT.Network.announce( this, 'playerLeft', { id: player.id } );
+
+    }
 
 };
 
@@ -419,7 +444,7 @@ Arena.prototype.update = (function () {
                 }
 
             }
-        
+
         }
 
         this.boxManager.update( delta, this.players );

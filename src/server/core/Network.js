@@ -3,15 +3,21 @@
  * DatTank Networking
 */
 
+var WebSocketServer = require('ws').Server;
+
 var Network = {};
 
 Network.init = function () {
 
     var scope = this;
 
+    this.io = new WebSocketServer({ port: SOCKET_PORT });
+
     console.log( '> Socket network started on port ' + SOCKET_PORT );
 
-    io.on( 'connection', function ( socket ) {
+    //
+
+    this.io.on( 'connection', function ( socket ) {
 
         socket.on( 'message', function ( data ) {
 
@@ -27,11 +33,8 @@ Network.init = function () {
                         var player = new DT.Player({ login: data.login, tank: data.tank });
                         player.socket = socket;
 
-                        socket.join( 'arenaRoomId' + arena.id );
+                        if ( arena.players.length === 0 ) {
 
-                        if ( ! arena.room ) {
-
-                            arena.room = socket.room( 'arenaRoomId' + arena.id );
                             arena.reset( true );
 
                         }
@@ -50,19 +53,19 @@ Network.init = function () {
 
                         break;
 
-                    case 'reconnect':
+                    // case 'reconnect':
 
-                        var arena = DT.ArenaManager.getArenaById( data.arena );
-                        if ( ! arena ) return;
-                        var player = arena.getPlayerById( data.id );
-                        if ( ! player ) return;
-                        if ( player.afkTimeout ) clearTimeout( player.afkTimeout );
-                        socket.join( 'arenaRoomId' + arena.id );
-                        socket.arena = arena;
-                        socket.player = player;
-                        player.socket = socket;
+                    //     var arena = DT.ArenaManager.getArenaById( data.arena );
+                    //     if ( ! arena ) return;
+                    //     var player = arena.getPlayerById( data.id );
+                    //     if ( ! player ) return;
+                    //     if ( player.afkTimeout ) clearTimeout( player.afkTimeout );
 
-                        break;
+                    //     socket.arena = arena;
+                    //     socket.player = player;
+                    //     player.socket = socket;
+
+                    //     break;
 
                     default:
 
@@ -107,12 +110,13 @@ Network.init = function () {
 
                         if ( ! target || ! shooter ) return;
 
-                        target.hits[ shootId ] = ( target.hits[ shootId ] || 0 ) + 1;
+                        // target.hits[ shootId ] = 1;//( target.hits[ shootId ] || 0 ) + 1;
 
                         // if ( socket.arena.players.length - socket.arena.bots.length <= 3 * target.hits[ shootId ] ) {
-                        if ( target.hits[ shootId ] === 1 ) {
+                        if ( target.hits[ shootId ] !== 1 ) {
 
                             target.hit( shooter );
+                            target.hits[ shootId ] = 1;
                             // delete target.hits[ shootId ];
 
                         }
@@ -159,8 +163,13 @@ Network.init = function () {
 
             if ( socket.arena && socket.player ) {
 
-                // socket.arena.removePlayer( socket.player );
                 socket.player.socket = 'disconnected';
+
+                setTimeout( function () {
+
+                    socket.arena.removePlayer( socket.player );
+
+                }, 4000 );
 
             }
 
@@ -172,10 +181,15 @@ Network.init = function () {
 
 Network.send = function ( socket, event, data ) {
 
+    var bin = true;
+
     if ( data instanceof ArrayBuffer ) {
+
+        bin = true;
 
     } else {
 
+        bin = false;
         data.event = event;
         data = JSON.stringify( { 'event': event, 'data': data } );
 
@@ -183,15 +197,27 @@ Network.send = function ( socket, event, data ) {
 
     if ( socket ) {
 
-        socket.send( data );
+        try {
+        
+            socket.send( data, { binary: bin } );
+
+        } catch ( e ) {
+
+            console.warn( e );
+
+        }
 
     }
 
 };
 
-Network.announce = function ( room, event, data, view ) {
+Network.announce = function ( arena, event, data, view ) {
+
+    var bin = false;
 
     if ( data instanceof ArrayBuffer ) {
+
+        bin = true;
 
         switch ( event ) {
 
@@ -236,27 +262,27 @@ Network.announce = function ( room, event, data, view ) {
 
     }
 
-    if ( ! room ) return;
+    //
 
-    room.clients( function ( err, clients ) {
+    for ( var i = 0, il = arena.players.length; i < il; i ++ ) {
 
-        for ( var i = 0, il = clients.length; i < il; i ++ ) {
-        
-            if ( io.clients[ clients[ i ] ] ) {
+        if ( arena.players[ i ].socket && arena.players[ i ].socket.readyState === 1 ) {
 
-                io.clients[ clients[ i ] ].send( data );
-
-            }
+            arena.players[ i ].socket.send( data, { binary: bin } );
 
         }
 
-    });
+    }
 
 };
 
-Network.broadcast = function ( socket, roomName, event, data, view ) {
+Network.broadcast = function ( socket, arena, event, data, view ) {
+
+    var bin = false;
 
     if ( data instanceof ArrayBuffer ) {
+
+        bin = true;
 
         switch ( event ) {
 
@@ -291,7 +317,17 @@ Network.broadcast = function ( socket, roomName, event, data, view ) {
 
     }
 
-    socket.room( roomName ).send( data );
+    //
+
+    for ( var i = 0, il = arena.players.length; i < il; i ++ ) {
+
+        if ( arena.players[ i ].socket && arena.players[ i ].socket !== socket && arena.players[ i ].socket.readyState === 1 ) {
+
+            arena.players[ i ].socket.send( data, { binary: bin } );
+
+        }
+
+    }
 
 };
 

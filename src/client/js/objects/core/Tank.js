@@ -116,6 +116,7 @@ DT.Tank.prototype.reset = function () {
     this.animations.deathAction2.stop();
     this.animations.shotAction.stop();
 
+    this.object.visible = true;
     this.object.rotation.y = 0;
 
     this.hideSmoke();

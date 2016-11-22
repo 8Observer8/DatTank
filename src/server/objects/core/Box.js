@@ -22,7 +22,7 @@ Box.prototype = {};
 
 Box.prototype.init = function () {
 
-    DT.Network.announce( this.arena.room, 'addBox', this.toPublicJSON() );
+    DT.Network.announce( this.arena, 'addBox', this.toPublicJSON() );
 
 };
 

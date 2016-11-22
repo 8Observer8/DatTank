@@ -80,7 +80,17 @@ DT.Player.prototype.init = function () {
 
 DT.Player.prototype.respawn = function ( fromNetwork, params ) {
 
+    if ( view.shakeInterval !== false ) {
+
+        clearInterval( view.shakeInterval );
+        view.shakeInterval = false;
+
+    }
+
+    view.camera.position.y = 400;
     view.cameraOffset.set( 0, 0, 0 );
+
+    //
 
     if ( fromNetwork ) {
 
@@ -133,7 +143,7 @@ DT.Player.prototype.respawn = function ( fromNetwork, params ) {
 
         }
 
-        ui.updateLeaderboard( DT.arena.players );
+        ui.updateLeaderboard( DT.arena.players, DT.arena.me );
 
     } else {
 

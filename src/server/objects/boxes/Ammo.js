@@ -25,7 +25,7 @@ Ammo.prototype.pickUp = function ( player ) {
 
 	//
 
-    DT.Network.announce( this.arena.room, 'pickedBox', { id: this.id } );
+    DT.Network.announce( this.arena, 'pickedBox', { id: this.id } );
 
     if ( player.socket ) {
 

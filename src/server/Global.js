@@ -48,11 +48,3 @@ global.DT.Tank.UKBlackPrince = require('./objects/tanks/UK-BlackPrince');
 global.DT.Box = require('./objects/core/Box');
 global.DT.Box.Health = require('./objects/boxes/Health');
 global.DT.Box.Ammo = require('./objects/boxes/Ammo');
-
-//
-
-var Rooms = require('engine.io-rooms');
-var engine = require('engine.io');
-
-global.io = engine.listen( SOCKET_PORT );
-io = Rooms( io );

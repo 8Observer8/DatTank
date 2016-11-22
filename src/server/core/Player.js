@@ -66,6 +66,7 @@ Player.prototype.reset = function () {
     this.status = 'alive';
     this.health = 100;
     this.ammo = this.tank.maxShells;
+    this.hits = {};
 
     switch ( this.team.id ) {
 
@@ -102,7 +103,7 @@ Player.prototype.respawn = function () {
 
     //
 
-    DT.Network.announce( this.arena.room, 'respawn', { player: this.toPrivateJSON() } );
+    DT.Network.announce( this.arena, 'respawn', { player: this.toPrivateJSON() } );
 
 };
 
@@ -113,6 +114,12 @@ Player.prototype.rotateTop = (function () {
 
     return function ( params ) {
 
+        if ( this.status !== 'alive' ) {
+
+            return;
+
+        }
+
         // this.rotation = params.baseAngle;
         this.rotationTop = params.topAngle;
 
@@ -121,11 +128,11 @@ Player.prototype.rotateTop = (function () {
 
         if ( this.socket ) {
 
-            DT.Network.broadcast( this.socket, 'arenaRoomId' + this.arena.id, 'rotateTop', buffer, bufferView );
+            DT.Network.broadcast( this.socket, this.arena, 'rotateTop', buffer, bufferView );
 
         } else {
 
-            DT.Network.announce( this.arena.room, 'rotateTop', buffer, bufferView );
+            DT.Network.announce( this.arena, 'rotateTop', buffer, bufferView );
 
         }
 
@@ -134,6 +141,12 @@ Player.prototype.rotateTop = (function () {
 }) ();
 
 Player.prototype.move = function ( path ) {
+
+    if ( this.status !== 'alive' ) {
+
+        return;
+
+    }
 
     var dx, dz;
 
@@ -168,7 +181,7 @@ Player.prototype.move = function ( path ) {
 
     if ( this.socket ) {
 
-        DT.Network.broadcast( this.socket, 'arenaRoomId' + this.arena.id, 'move', pathBuffer, pathBufferView );
+        DT.Network.broadcast( this.socket, this.arena, 'move', pathBuffer, pathBufferView );
 
     }
 
@@ -182,6 +195,12 @@ Player.prototype.shoot = (function () {
     return function () {
 
         var scope = this;
+
+        if ( this.status !== 'alive' ) {
+
+            return;
+
+        }
 
         if ( this.shootTimeout ) return;
         this.shootTimeout = setTimeout( function () {
@@ -202,7 +221,7 @@ Player.prototype.shoot = (function () {
         bufferView[ 2 ] = Math.floor( 1000 * Math.random() );
         bufferView[ 3 ] = this.ammo;
 
-        DT.Network.announce( this.arena.room, 'shoot', buffer, bufferView );
+        DT.Network.announce( this.arena, 'shoot', buffer, bufferView );
 
     };
 
@@ -231,7 +250,7 @@ Player.prototype.hit = (function () {
         bufferView[ 1 ] = this.id;
         bufferView[ 2 ] = this.health;
 
-        DT.Network.announce( this.arena.room, 'hit', buffer, bufferView );
+        DT.Network.announce( this.arena, 'hit', buffer, bufferView );
 
         if ( this.health <= 0 ) {
 
@@ -250,6 +269,8 @@ Player.prototype.die = (function () {
 
     return function ( killer ) {
 
+        if ( this.status === 'dead' ) return;
+
         this.status = 'dead';
 
         killer.kills ++;
@@ -263,18 +284,32 @@ Player.prototype.die = (function () {
 
         //
 
-        DT.Network.announce( this.arena.room, 'die', buffer, bufferView );
+        DT.Network.announce( this.arena, 'die', buffer, bufferView );
 
-        if ( this.socket === 'disconnected' ) {
+        //
 
-            this.afkTimeout = setTimeout( this.arena.removePlayer.bind( this.arena, this ), 3000 );
-            return;
+        if ( this.bot ) { // tmp hack for bot respown
 
-        }
+            var scope = this;
 
-        if ( ! this.socket ) {
+            if ( this.arena.players.length - this.arena.bots.length < 5 ) {
 
-            setTimeout( this.respawn.bind( this ), 3000 );
+                setTimeout( this.respawn.bind( this ), 3000 );
+
+            } else {
+
+                setTimeout( function () {
+
+                    scope.arena.removeBot( scope );
+                    scope.arena.removePlayer( scope );
+
+                }, 2000 );
+
+            }
+
+        } else if ( ! this.socket ) {
+
+            this.arena.removePlayer( this );
 
         }
 

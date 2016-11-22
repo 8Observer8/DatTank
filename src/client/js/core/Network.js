@@ -13,7 +13,7 @@ DT.Network = function () {
 
 DT.Network.prototype = {};
 
-DT.Network.prototype.init = function () {
+DT.Network.prototype.init = function ( callback ) {
 
     if ( this.transport ) {
 
@@ -24,15 +24,17 @@ DT.Network.prototype.init = function () {
 
     //
 
-    this.transport = eio.Socket( DT.socketHost );
+    this.transport = new WebSocket( 'ws://' + window.location.host.split(':')[0] + ':8085/ws/game' );
     this.transport.binaryType = 'arraybuffer';
 
     //
 
-    this.transport.on( 'open', this.connect.bind( this ) );
-    this.transport.on( 'close', this.disconnected.bind( this ) );
-    this.transport.on( 'error', this.error.bind( this ) );
-    this.transport.on( 'message', this.message.bind( this ) );
+    this.transport.addEventListener( 'open', this.connect.bind( this ) );
+    this.transport.addEventListener( 'close', this.disconnected.bind( this ) );
+    this.transport.addEventListener( 'error', this.error.bind( this ) );
+    this.transport.addEventListener( 'message', this.message.bind( this ) );
+
+    callback();
 
 };
 
@@ -66,18 +68,18 @@ DT.Network.prototype.reconnect = function () {
 
 };
 
-DT.Network.prototype.message = function ( param ) {
+DT.Network.prototype.message = function ( event ) {
 
-    var data = false;
+    var data = event.data;
     var event = false;
 
-    if ( typeof param === 'string' ) {
+    if ( typeof data === 'string' ) {
 
-        parseStringMessage( param );
+        parseStringMessage( data );
 
     } else {
 
-        parseBinMessage( param );
+        parseBinMessage( data );
 
     }
 
@@ -286,11 +288,6 @@ DT.Network.prototype.disconnected = function () {
     //
 
     console.log( '[NETWORK] Connection closed.' );
-    
-    // function internetlost() {
-    //     alert( "INTERNET CONNECTION LOST!!!" );
-    // }
-    // setInterval(internetlost(), 10000);
 
 };
 
