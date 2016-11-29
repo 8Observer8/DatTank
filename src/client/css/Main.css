@@ -24,6 +24,10 @@ body {
     user-select: none;
 }
 
+object {
+    display: none;
+}
+
 .clearfix {
     clear: both;
 }

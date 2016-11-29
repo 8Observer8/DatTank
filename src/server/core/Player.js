@@ -5,6 +5,8 @@
 
 var Player = function ( params ) {
 
+    if ( Player.numIds > 1000 ) Player.numIds = 0;
+
     this.id = Player.numIds ++;
     this.login = params.login || 'guest';
 
