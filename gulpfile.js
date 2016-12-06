@@ -40,7 +40,7 @@ gulp.task( 'js', function () {
         .pipe(connect.reload());
 
     gulp.src([ './src/client/js/**/*', '!./src/client/js/pathFinder/WebWorker.js' ])
-        .pipe(uglify())
+        //.pipe(uglify())
         .pipe(order([
             'libs/three.js',
             'libs/*.js',
@@ -123,7 +123,7 @@ gulp.task( 'watch', function () {
     gulp.watch( './src/client/css/*', ['css']);
     gulp.watch( './src/client/*', ['html'] );
     gulp.watch( './src/client/js/**/*', ['js'] );
-    gulp.watch( './src/server/js/**/*', ['server'] );
+    gulp.watch( './src/server/**/*', ['server'] );
 
 });
 

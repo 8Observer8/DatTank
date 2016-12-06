@@ -29,6 +29,7 @@ global.DT = require('./core/DT');
 
 global.DT.Arena = require('./core/Arena');
 global.DT.Team = require('./core/Team');
+global.DT.Tower = require('./core/Tower');
 global.DT.Player = require('./core/Player');
 global.DT.Bot = require('./core/Bot');
 global.DT.BoxManager = require('./core/BoxManager');

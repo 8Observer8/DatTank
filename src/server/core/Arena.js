@@ -13,6 +13,7 @@ var Arena = function () {
 
     this.obstacles = [];
     this.bots = [];
+    this.towers = [];
 
     this.boxManager = new DT.BoxManager( this, {} );
 
@@ -23,6 +24,12 @@ var Arena = function () {
     for ( var i = 0; i < 4; i ++ ) {
 
         this.teams.push( new DT.Team( i ) );
+
+    }
+
+    for ( var i = 0; i < 25; i ++ ) {
+
+        this.towers.push( new DT.Tower( this, { position: { x: 0, y: 0, z: 0 } } ) );
 
     }
 
@@ -73,6 +80,12 @@ Arena.prototype.reset = function ( isNew ) {
     for ( var i = 0, il = this.bots.length; i < il; i ++ ) {
 
         this.bots[ i ].dispose();
+
+    }
+
+    for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
+
+        this.towers[ i ].reset();
 
     }
 
@@ -315,6 +328,7 @@ Arena.prototype.toPublicJSON = function () {
     var players = [];
     var teams = [];
     var boxes = [];
+    var towers = [];
 
     for ( var i = 0, il = this.players.length; i < il; i ++ ) {
 
@@ -334,12 +348,19 @@ Arena.prototype.toPublicJSON = function () {
 
     }
 
+    for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
+
+        towers.push( this.towers[ i ].toJSON() );
+
+    }
+
     //
 
     return {
 
         id:             this.id,
         obstacles:      this.obstacles,
+        towers:         towers,
         players:        players,
         teams:          teams,
         boxes:          boxes,

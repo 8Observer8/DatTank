@@ -7,6 +7,7 @@ DT.Arena = function () {
 
     this.players = [];
     this.teams = [];
+    this.towers = [];
     this.me = false;
 
     this.boxManager = new DT.BoxManager();
@@ -91,6 +92,14 @@ DT.Arena.prototype.reset = function ( params ) {
     for ( var i = 0, il = params.boxes.length; i < il; i ++ ) {
 
         this.boxManager.addBox( params.boxes[ i ] );
+
+    }
+
+    // add towers
+
+    for ( var i = 0, il = params.towers.length; i < il; i ++ ) {
+
+        this.towers.push( new DT.Tower( params.towers[ i ] ) );
 
     }
 
