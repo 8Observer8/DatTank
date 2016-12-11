@@ -12,7 +12,7 @@ var Player = function ( params ) {
 
     this.moveSpeed = 0.09;
 
-    this.status = 'alive';
+    this.status = Player.Alive;
 
     this.socket = false;
 
@@ -65,7 +65,7 @@ Player.prototype = {};
 
 Player.prototype.reset = function () {
 
-    this.status = 'alive';
+    this.status = Player.Alive;
     this.health = 100;
     this.ammo = this.tank.maxShells;
     this.hits = {};
@@ -116,7 +116,7 @@ Player.prototype.rotateTop = (function () {
 
     return function ( params ) {
 
-        if ( this.status !== 'alive' ) {
+        if ( this.status !== Player.Alive ) {
 
             return;
 
@@ -144,7 +144,7 @@ Player.prototype.rotateTop = (function () {
 
 Player.prototype.move = function ( path ) {
 
-    if ( this.status !== 'alive' ) {
+    if ( this.status !== Player.Alive ) {
 
         return;
 
@@ -198,7 +198,7 @@ Player.prototype.shoot = (function () {
 
         var scope = this;
 
-        if ( this.status !== 'alive' ) {
+        if ( this.status !== Player.Alive ) {
 
             return;
 
@@ -236,7 +236,7 @@ Player.prototype.hit = (function () {
 
     return function ( killer ) {
 
-        if ( this.status !== 'alive' ) {
+        if ( this.status !== Player.Alive ) {
 
             return;
 
@@ -244,8 +244,17 @@ Player.prototype.hit = (function () {
 
         if ( killer ) {
 
-            this.health -= 40 * ( killer.tank.bullet / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
-            this.health = Math.max( Math.round( this.health ), 0 );
+            if ( killer instanceof DT.Tank ) {
+            
+                this.health -= 40 * ( killer.tank.bullet / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
+                this.health = Math.max( Math.round( this.health ), 0 );
+
+            } else if ( killer instanceof DT.Tower ) {
+
+                this.health -= 40 * ( 50 / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
+                this.health = Math.max( Math.round( this.health ), 0 );
+
+            }
 
         }
 
@@ -271,15 +280,19 @@ Player.prototype.die = (function () {
 
     return function ( killer ) {
 
-        if ( this.status === 'dead' ) return;
+        if ( this.status === Player.Dead ) return;
 
-        this.status = 'dead';
+        this.status = Player.Dead;
 
-        killer.kills ++;
-        this.death ++;
+        if ( killer.team.id ) {
 
-        killer.team.kills ++;
-        this.team.death ++;
+            killer.kills ++;
+            this.death ++;
+
+            killer.team.kills ++;
+            this.team.death ++;
+
+        }
 
         bufferView[ 1 ] = this.id;
         bufferView[ 2 ] = killer.id;
@@ -358,8 +371,9 @@ Player.prototype.toPublicJSON = function () {
 
 };
 
-Player.numIds = 0;
-
+Player.numIds = 1;
+Player.Alive = 100;
+Player.Dead = 110;
 //
 
 module.exports = Player;

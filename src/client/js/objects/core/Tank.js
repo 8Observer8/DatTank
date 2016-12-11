@@ -390,10 +390,10 @@ DT.Tank.prototype.shootBullet = function () {
 
             bullet.position.set( x, bullet.position.y, z );
 
-            if ( intersections.length && intersections[ 0 ].object.name !== 'tank' ) {
+            if ( intersections.length && intersections[ 0 ].object.name !== 'tank' && intersections[ 0 ].object.name !== 'tower' ) {
 
                 if ( Utils.getDistance( bullet.position, intersections[ 0 ].point ) < 9 ) {
-                
+
                     clearInterval( bullet.shotInterval );
                     bullet.visible = false;
                     bullet.active = false;
@@ -403,7 +403,7 @@ DT.Tank.prototype.shootBullet = function () {
 
             }
 
-            if ( ! ( intersections.length && intersections[ 0 ].object.name === 'tank' ) ) continue;
+            if ( ! ( intersections.length && ( intersections[ 0 ].object.name === 'tank' || intersections[ 0 ].object.name === 'tower' ) ) ) continue;
 
             if ( Utils.getDistance( bullet.position, intersections[ 0 ].point ) < 9 ) {
 

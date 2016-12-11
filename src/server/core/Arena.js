@@ -27,9 +27,16 @@ var Arena = function () {
 
     }
 
-    for ( var i = 0; i < 25; i ++ ) {
+    for ( var i = 0; i < 5; i ++ ) {
 
-        this.towers.push( new DT.Tower( this, { position: { x: 0, y: 0, z: 0 } } ) );
+        for ( var j = 0; j < 5; j ++ ) {
+
+            var x = ( 0.5 - i / 4 ) * 1900;
+            var z = ( 0.5 - j / 4 ) * 1900;
+
+            this.towers.push( new DT.Tower( this, { position: { x: x, y: 0, z: z } } ) );
+
+        }
 
     }
 
@@ -96,7 +103,7 @@ Arena.prototype.reset = function ( isNew ) {
 
     setTimeout( function () {
 
-        for ( var i = 0; i < 3 + Math.floor( Math.random() * 3 ); i ++ ) {
+        for ( var i = 0; i < 0 /*3 + Math.floor( Math.random() * 3 )*/; i ++ ) {
 
             scope.bots.push( new DT.Bot( scope ) );
 
@@ -219,6 +226,23 @@ Arena.prototype.getPlayerById = function ( playerId ) {
         if ( this.players[ i ].id === playerId ) {
 
             return this.players[ i ];
+
+        }
+
+    }
+
+    return false;
+
+};
+
+
+Arena.prototype.getTowerById = function ( towerId ) {
+
+    for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
+
+        if ( this.towers[ i ].id === towerId ) {
+
+            return this.towers[ i ];
 
         }
 
@@ -380,6 +404,14 @@ Arena.prototype.update = (function () {
         var time = Date.now();
         var delta = ( prevUpdateTime !== false ) ? time - prevUpdateTime : 0;
         prevUpdateTime = time;
+
+        // update towers
+
+        for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
+
+            this.towers[ i ].update();
+
+        }
 
         // update players position & rotation
 

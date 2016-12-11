@@ -104,8 +104,29 @@ Network.init = function () {
 
                         if ( ! socket.arena || ! socket.player ) return;
 
-                        var target = socket.arena.getPlayerById( data[ 0 ] );
-                        var shooter = socket.arena.getPlayerById( data[ 2 ] );
+                        var target;
+                        var shooter;
+
+                        if ( data[2] <= 10000 ) {
+
+                            shooter = socket.arena.getPlayerById( data[ 2 ] );
+
+                        } else {
+
+                            shooter = socket.arena.getTowerById( data[ 2 ] - 10000 );
+
+                        }
+
+                        if ( data[0] > 10000 ) {
+
+                            target = socket.arena.getTowerById( data[ 0 ] - 10000 );
+
+                        } else {
+
+                            target = socket.arena.getPlayerById( data[ 0 ] );
+
+                        }
+
                         var shootId = data[ 1 ];
 
                         if ( ! target || ! shooter ) return;
@@ -113,6 +134,7 @@ Network.init = function () {
                         // target.hits[ shootId ] = 1;//( target.hits[ shootId ] || 0 ) + 1;
 
                         // if ( socket.arena.players.length - socket.arena.bots.length <= 3 * target.hits[ shootId ] ) {
+
                         if ( target.hits[ shootId ] !== 1 ) {
 
                             target.hit( shooter );
@@ -244,6 +266,16 @@ Network.announce = function ( arena, event, data, view ) {
             case 'moveBot':
 
                 view[0] = 100;
+                break;
+
+            case 'TowerRotateTop':
+
+                view[0] = 200;
+                break;
+
+            case 'ShootTower':
+
+                view[0] = 210;
                 break;
 
             default:

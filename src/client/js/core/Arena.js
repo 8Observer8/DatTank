@@ -142,6 +142,22 @@ DT.Arena.prototype.getPlayerById = function ( playerId ) {
 
 };
 
+DT.Arena.prototype.getTowerById = function ( towerId ) {
+
+    for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
+
+        if ( this.towers[ i ].id === towerId ) {
+
+            return this.towers[ i ];
+
+        }
+
+    }
+
+    return false;
+
+};
+
 DT.Arena.prototype.addPlayer = function ( player ) {
 
     if ( player.id === this.me ) {

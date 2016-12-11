@@ -398,6 +398,12 @@ DT.View.prototype.animate = function ( delta ) {
 
     }
 
+    for ( var i = 0, il = DT.arena.towers.length; i < il; i ++ ) {
+
+        DT.arena.towers[ i ].update( delta );
+
+    }
+
     if ( ! intersections || DT.arena.me.movePath.length || Math.abs( controls.mousePos.x - controls.prevMousePos.x ) > 0.02 || Math.abs( controls.mousePos.y - controls.prevMousePos.y ) > 0.02 ) {
 
         view.raycaster.setFromCamera( controls.mousePos, view.camera );

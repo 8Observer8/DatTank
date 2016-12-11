@@ -9,11 +9,15 @@ DT.Network = function () {
     this.transport = false;
     this.tryToReconnect = false;
 
+    this.initCallback = false;
+
 };
 
 DT.Network.prototype = {};
 
 DT.Network.prototype.init = function ( callback ) {
+
+    this.initCallback = callback;
 
     if ( this.transport ) {
 
@@ -34,8 +38,6 @@ DT.Network.prototype.init = function ( callback ) {
     this.transport.addEventListener( 'error', this.error.bind( this ) );
     this.transport.addEventListener( 'message', this.message.bind( this ) );
 
-    callback();
-
 };
 
 DT.Network.prototype.connect = function () {
@@ -50,6 +52,8 @@ DT.Network.prototype.connect = function () {
     }
 
     //
+
+    this.initCallback();
 
     console.log( '[NETWORK] Connected to server.' );
 
@@ -151,6 +155,11 @@ DT.Network.prototype.message = function ( event ) {
                 DT.arena.me.gotBox( data.box, data.value );
                 break;
 
+            case 'TowerRotateTop':
+
+                console.log( data );
+                break;
+
             default:
 
                 console.error( '[NETWORK:GOT_MESSAGE] Unknown event occurred.' );
@@ -225,17 +234,30 @@ DT.Network.prototype.message = function ( event ) {
 
             case 4:     // hit
 
-                var playerId = data[0];
-                var player = DT.arena.getPlayerById( playerId );
+                var targetId = data[0];
 
-                if ( ! player ) {
+                if ( targetId < 10000 ) {
 
-                    console.warn( '[Network:HIT] Player not fond in list.' );
-                    return;
+                    var player = DT.arena.getPlayerById( targetId );
+
+                    if ( ! player ) {
+
+                        console.warn( '[Network:HIT] Player not fond in list.' );
+                        return;
+
+                    }
+
+                    player.updateHealth( data[1] );
+
+                } else {
+
+                    targetId -= 10000;
+
+                    var tower = DT.arena.getTowerById( targetId );
+                    tower.updateHealth( data[1] );
 
                 }
 
-                player.updateHealth( data[1] );
                 break;
 
             case 5:     // die
@@ -246,7 +268,7 @@ DT.Network.prototype.message = function ( event ) {
                 var player = DT.arena.getPlayerById( playerId );
                 var killer = DT.arena.getPlayerById( killerId );
 
-                if ( ! player || ! killer ) {
+                if ( ! player ) {
 
                     console.warn( '[Network:DIE] Player not fond in list.' );
                     return;
@@ -264,6 +286,38 @@ DT.Network.prototype.message = function ( event ) {
                 if ( ! player ) return;
 
                 player.move( new THREE.Vector3( data[1] - 1000, 0, data[2] - 1000 ), true );
+                break;
+
+            case 200:
+
+                var towerId = data[0];
+                var tower = DT.arena.getTowerById( towerId );
+                tower.rotateTop( data[1] / 100 );
+                break;
+
+            case 210:
+
+                var towerId = data[0];
+                var shootId = data[1];
+                var tower = DT.arena.getTowerById( towerId );
+
+                tower.shoot( shootId ).onHit( function ( target ) {
+
+                    if ( tower.team === 1000 || tower.team.id !== target.owner.team.id ) {
+
+                        var buffer = new ArrayBuffer( 8 );
+                        var bufferView = new Uint16Array( buffer );
+
+                        bufferView[ 1 ] = target.owner.id;
+                        bufferView[ 2 ] = shootId;
+                        bufferView[ 3 ] = 10000 + towerId;
+
+                        network.send( 'hit', buffer, bufferView );
+
+                    }
+
+                });
+
                 break;
 
             default:

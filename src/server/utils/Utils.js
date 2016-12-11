@@ -21,8 +21,24 @@ Utils.formatAngle = function ( angle ) {
 
 Utils.getDistance = function ( a, b ) {
 
-	return Math.sqrt( Math.pow( a.x - b.x, 2 ) + Math.pow( a.z - b.z, 2 ) );
+    return Math.sqrt( Math.pow( a.x - b.x, 2 ) + Math.pow( a.z - b.z, 2 ) );
 
 };
+
+Utils.formatAngle = function ( a ) {
+
+    a = a % ( 2 * Math.PI );
+
+    if ( a < 0 ) {
+
+        a += 2 * Math.PI;
+
+    }
+
+    return a;
+
+};
+
+//
 
 module.exports = Utils;

@@ -366,9 +366,18 @@ DT.Player.prototype.shoot = (function () {
 
             if ( scope.team !== target.owner.team ) {
 
-                bufferView[ 1 ] = target.owner.id;
                 bufferView[ 2 ] = shootId;
                 bufferView[ 3 ] = scope.id;
+
+                if ( target.name === 'tank' ) {
+
+                    bufferView[ 1 ] = target.owner.id;
+
+                } else {
+
+                    bufferView[ 1 ] = 10000 + target.owner.id;
+
+                }
 
                 network.send( 'hit', buffer, bufferView );
 
@@ -486,7 +495,12 @@ DT.Player.prototype.die = function ( killer ) {
 
     ui.showKills( killer, this );
 
-    DT.arena.teams[ killer.team ].kills ++;
+    if ( killer ) {
+    
+        DT.arena.teams[ killer.team ].kills ++;
+
+    }
+
     DT.arena.teams[ this.team ].death ++;
 
     this.movePath = [];
