@@ -111,7 +111,7 @@ Arena.prototype.addObstacles = function ( treeCount, rockCount ) {
     var scale, scaleH;
     var baseSize = 100;
 
-    for ( var i = 0; i < treeCount; i ++ ) {
+    while ( treeCount ) {
 
         scale = 20 * Math.random() + 25;
         scaleH = 20 * Math.random() + 25;
@@ -119,10 +119,31 @@ Arena.prototype.addObstacles = function ( treeCount, rockCount ) {
         x = 2000 * ( Math.random() - 0.5 );
         z = 2000 * ( Math.random() - 0.5 );
 
+        //
+
+        var placedOnTower = false;
+
+        for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
+
+            var tower = this.towers[ i ];
+
+            if ( Math.abs( x - tower.position.x ) + Math.abs( z - tower.position.z ) < 150 ) {
+
+                placedOnTower = true;
+                break;
+
+            }
+
+        }
+
+        if ( placedOnTower ) continue;
+
         if ( Math.sqrt( Math.pow( 500 - x, 2 ) + Math.pow( 500 - z, 2 ) ) < baseSize ) continue;
         if ( Math.sqrt( Math.pow( - 500 - x, 2 ) + Math.pow( 500 - z, 2 ) ) < baseSize ) continue;
         if ( Math.sqrt( Math.pow( 500 - x, 2 ) + Math.pow( - 500 - z, 2 ) ) < baseSize ) continue;
         if ( Math.sqrt( Math.pow( - 500 - x, 2 ) + Math.pow( - 500 - z, 2 ) ) < baseSize ) continue;
+
+        //
 
         this.obstacles.push({
             type:   'tree',
@@ -139,15 +160,36 @@ Arena.prototype.addObstacles = function ( treeCount, rockCount ) {
             rotation: 2 * Math.PI * Math.random()
         });
 
+        treeCount --;
+
     }
 
     // rock obstacles
 
-    for ( var i = 0; i < rockCount; i ++ ) {
+    while ( rockCount ) {
 
         scale = 30 * Math.random() + 20;
         x = 2000 * ( Math.random() - 0.5 );
         z = 2000 * ( Math.random() - 0.5 );
+
+        //
+
+        var placedOnTower = false;
+
+        for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
+
+            var tower = this.towers[ i ];
+
+            if ( Math.abs( x - tower.position.x ) + Math.abs( z - tower.position.z ) < 150 ) {
+
+                placedOnTower = true;
+                break;
+
+            }
+
+        }
+
+        if ( placedOnTower ) continue;
 
         if ( Math.sqrt( Math.pow( 500 - x, 2 ) + Math.pow( 500 - z, 2 ) ) < baseSize ) continue;
         if ( Math.sqrt( Math.pow( - 500 - x, 2 ) + Math.pow( 500 - z, 2 ) ) < baseSize ) continue;
@@ -168,6 +210,8 @@ Arena.prototype.addObstacles = function ( treeCount, rockCount ) {
             },
             rotation: 2 * Math.PI * Math.random()
         });
+
+        rockCount --;
 
     }
 
