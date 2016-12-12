@@ -144,7 +144,7 @@ Tower.prototype.checkForTarget = function ( players ) {
     this.target = false;
 
     if ( target && target.status === DT.Player.Alive ) {
-    
+
         dist = utils.getDistance( this.position, { x: target.position[0], y: target.position[1], z: target.position[2] });
 
         if ( dist < this.range ) {

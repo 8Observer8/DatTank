@@ -35,7 +35,7 @@ DT.Team.colors = {
     '1':        '#00ff00',
     '2':        '#0000ff',
     '3':        '#fcaa12',
-    '1000':     '#aaa'
+    '1000':     '#aaaaaa'
 };
 
 DT.Team.names = {

@@ -21,6 +21,10 @@ DT.Tower = function ( params ) {
     this.initBullets();
     this.init();
 
+    //
+
+    this.changeTeam( this.team );
+
 };
 
 DT.Tower.prototype = {};
@@ -103,6 +107,12 @@ DT.Tower.prototype.initBullets = function () {
         this.object.add( bullet.soundShooting );
 
     }
+
+};
+
+DT.Tower.prototype.updateHealthBar = function () {
+
+    // todo
 
 };
 
@@ -255,11 +265,15 @@ DT.Tower.prototype.changeTeam = function ( team ) {
 
     this.team = team;
 
+    this.object.top.material.materials[1].color.setHex( + team.color.replace('#', '0x') );
+    this.object.base.material.materials[1].color.setHex( + team.color.replace('#', '0x') );
+
 };
 
 DT.Tower.prototype.updateHealth = function ( health ) {
 
-    console.log( health );
+    this.health = health;
+    this.updateHealthBar();
 
 };
 

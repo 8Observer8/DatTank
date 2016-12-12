@@ -31,7 +31,7 @@ DT.Player = function ( arena, params ) {
     this.moveRight = false;
 
     //
-    
+
     this.moveProgress = false;
     this.movePath = false;
     this.movementStart = false;
@@ -50,7 +50,7 @@ DT.Player = function ( arena, params ) {
     switch ( params.tank ) {
 
         case 'USA-T54':
-        
+
             this.tank = new DT.Tank.USAT54({ player: this });
             break;
 
@@ -355,7 +355,7 @@ DT.Player.prototype.shoot = (function () {
         //
 
         if ( DT.arena.me.id === this.id ) {
-        
+
             this.ammo = ammo;
             ui.updateAmmo( this.ammo );
 
@@ -402,11 +402,6 @@ DT.Player.prototype.shoot = (function () {
 
             // -> and re-adding the class
             element.addClass('ammo-animation');
-
-            //
-
-            // scope.ammo --;
-            // ui.updateAmmo( this.ammo );
 
         }
 
@@ -504,7 +499,7 @@ DT.Player.prototype.die = function ( killer ) {
     ui.showKills( killer, this );
 
     if ( killer ) {
-    
+
         killer.team.kills ++;
 
     }

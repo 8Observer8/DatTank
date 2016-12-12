@@ -175,7 +175,7 @@ DT.Tank.prototype.showBlastSmoke = function () {
     material.depthWrite = false;
 
     for ( var i = 0; i <= 5; i ++ ) {
-        
+
         sprite = sprite.clone();
         sprite.position.z = 0;
         sprite.position.y = 0;
@@ -264,7 +264,7 @@ DT.Tank.prototype.showSmoke = function () {
     material.depthWrite = false;
 
     for ( var i = 0; i <= 5; i ++ ) {
-        
+
         sprite = sprite.clone();
         sprite.position.z = -15;
         sprite.position.y = 0 + 7 * i;
@@ -309,7 +309,7 @@ DT.Tank.prototype.updateSmoke = function () {
         sprite.position.y += 35 / 150;
 
         sprite.material.opacity -= 0.8 / 150;
-        
+
         if ( sprite.material.opacity < 0 ) {
 
             sprite.material.opacity = 0.8;

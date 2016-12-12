@@ -146,7 +146,7 @@ DT.View.prototype.setupScene = function () {
         this.renderer.setClearColor( 0x000000 );
 
         if ( ! MOBILE ) {
-        
+
             // this.renderer.shadowMap.enabled = true;
 
         }
@@ -208,7 +208,7 @@ DT.View.prototype.addObsticles = function ( obstacles ) {
     }
 
     DT.arena.pathFinder.placeObjects( placingObjects );
-    
+
     setTimeout( DT.arena.pathFinder.constructMap.bind( DT.arena.pathFinder ), 1000 );
 
 };
@@ -415,7 +415,7 @@ DT.View.prototype.animate = function ( delta ) {
 
             var me = DT.arena.me;
             var angle = Math.atan2( intersections[0].point.x - me.position.x, intersections[0].point.z - me.position.z ) - Math.PI / 2;
-            
+
             if ( Math.abs( angle - me.topRotation ) > 0.03 ) {
 
                 me.rotateTop( angle );
@@ -643,7 +643,7 @@ DT.View.prototype.addCameraShake = function ( duration, intencity ) {
     var scope = this;
 
     if ( this.shakeInterval !== false ) {
-    
+
         clearInterval( this.shakeInterval );
         this.cameraOffset.set( 0, 0, 0 );
 
