@@ -88,7 +88,7 @@ DT.Tank.prototype.initLabel = function () {
     canvas.width = 30 + 20 * this.player.login.length;
     canvas.height = 25;
     var ctx = canvas.getContext('2d');
-    ctx.fillStyle = DT.Team.colors[ this.player.team ];
+    ctx.fillStyle = this.player.team.color;
     ctx.fillRect( 0, 0, 25, 25 );
 
     ctx.fillStyle = '#ffffff';

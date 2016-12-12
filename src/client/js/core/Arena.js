@@ -68,6 +68,14 @@ DT.Arena.prototype.reset = function ( params ) {
 
     view.addObsticles( params.obstacles );
 
+    // add teams
+
+    for ( var i = 0; i < params.teams.length; i ++ ) {
+
+        this.teams.push( new DT.Team( params.teams[ i ] ) );
+
+    }
+
     // add / init existing players
 
     for ( var i = 0, il = params.players.length; i < il; i ++ ) {
@@ -76,14 +84,6 @@ DT.Arena.prototype.reset = function ( params ) {
         var player = new DT.Player( this, playerParams );
 
         this.addPlayer( player );
-
-    }
-
-    // add teams
-
-    for ( var i = 0; i < 4; i ++ ) {
-
-        this.teams.push( new DT.Team( params.teams[ i ] ) );
 
     }
 
@@ -149,6 +149,22 @@ DT.Arena.prototype.getTowerById = function ( towerId ) {
         if ( this.towers[ i ].id === towerId ) {
 
             return this.towers[ i ];
+
+        }
+
+    }
+
+    return false;
+
+};
+
+DT.Arena.prototype.getTeamById = function ( teamId ) {
+
+    for ( var i = 0, il = this.teams.length; i < il; i ++ ) {
+
+        if ( this.teams[ i ].id === teamId ) {
+
+            return this.teams[ i ];
 
         }
 

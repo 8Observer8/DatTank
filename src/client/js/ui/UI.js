@@ -139,7 +139,9 @@ DT.UI.prototype.showContinueBox = function ( playerlogin, playerColor ) {
 
 DT.UI.prototype.showKills = function ( killer, killed ) {
 
-    $('#kill-events').append( '<p><span style="color:' + DT.Team.colors[ killer.team ]+ '">' + killer.login +'</span> killed <span style="color:' + DT.Team.colors[ killed.team ]+ '">' + killed.login + '</span>!</p>');
+    var killerName = ( killer instanceof DT.Tower ) ? 'Tower' : killer.login;
+
+    $('#kill-events').append( '<p><span style="color:' + killer.team.color + '">' + killerName +'</span> killed <span style="color:' + killed.team.color + '">' + killed.login + '</span>!</p>');
 
     if ( $('#kill-events').children().length > 5 ) {
 
@@ -174,7 +176,7 @@ DT.UI.prototype.showWinners = function ( winner ) {
 
     });
 
-    $('#winners #team-color').css( 'background-color', DT.Team.colors[ winner ] );
+    $('#winners #team-color').css( 'background-color', winner.color );
     $('#continue-box-wrapper').hide();
     $('#winners').show();
 
@@ -242,7 +244,7 @@ DT.UI.prototype.updateLeaderboard = function ( players, me ) {
 
             $( names[ i ] ).html( players[ i ].login );
             $( kills[ i ] ).html( players[ i ].kills );
-            $( teams[ i ] ).css( 'background-color', DT.Team.colors[ players[ i ].team ] );
+            $( teams[ i ] ).css( 'background-color', players[ i ].team.color );
 
             $( rows[ i ] ).show();
 
@@ -283,7 +285,7 @@ DT.UI.prototype.updateLeaderboard = function ( players, me ) {
         $('#top-killers .killer-outer.last .player-counter').html( '#' + rank );
         $('#top-killers .killer-outer.last .player-name').html( me.login );
         $('#top-killers .killer-outer.last .kills').html( me.kills );
-        $('#top-killers .killer-outer.last .players-team-image').css( 'background-color', DT.Team.colors[ me.team ] );
+        $('#top-killers .killer-outer.last .players-team-image').css( 'background-color', me.team.color );
 
         $('#top-killers #divider').show();
         $('#top-killers .killer-outer.last').show();

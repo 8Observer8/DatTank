@@ -67,7 +67,7 @@ DT.Network.prototype.reconnect = function () {
     setTimeout( scope.send.bind( scope, 'reconnect', { arena: DT.arena.id, id: DT.arena.me.id }), 10 );
 
     //
-    
+
     console.log( '[NETWORK] Reconnected to server.' );
 
 };
@@ -266,7 +266,17 @@ DT.Network.prototype.message = function ( event ) {
                 var killerId = data[1];
 
                 var player = DT.arena.getPlayerById( playerId );
-                var killer = DT.arena.getPlayerById( killerId );
+                var killer;
+
+                if ( killerId < 10000 ) {
+
+                    killer = DT.arena.getPlayerById( killerId );
+
+                } else {
+
+                    killer = DT.arena.getTowerById( killerId - 10000 );
+
+                }
 
                 if ( ! player ) {
 
@@ -301,6 +311,13 @@ DT.Network.prototype.message = function ( event ) {
                 var shootId = data[1];
                 var tower = DT.arena.getTowerById( towerId );
 
+                if ( ! tower ) {
+
+                    console.warn( '[Network:TowerShoot] Tower not fond in list.' );
+                    return;
+
+                }
+
                 tower.shoot( shootId ).onHit( function ( target ) {
 
                     if ( tower.team === 1000 || tower.team.id !== target.owner.team.id ) {
@@ -317,6 +334,31 @@ DT.Network.prototype.message = function ( event ) {
                     }
 
                 });
+
+                break;
+
+            case 400:
+
+                var towerId = data[0];
+                var teamId = data[1];
+                var tower = DT.arena.getTowerById( towerId );
+                var team = DT.arena.getTeamById( teamId );
+
+                if ( ! tower ) {
+
+                    console.warn( '[Network:TowerChangeTeam] Tower not fond in list.' );
+                    return;
+
+                }
+
+                if ( ! team ) {
+
+                    console.warn( '[Network:TowerChangeTeam] Team not fond in list.' );
+                    return;
+
+                }
+
+                tower.changeTeam( team );
 
                 break;
 

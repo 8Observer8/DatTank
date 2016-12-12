@@ -278,6 +278,11 @@ Network.announce = function ( arena, event, data, view ) {
                 view[0] = 210;
                 break;
 
+            case 'TowerChangeTeam':
+
+                view[0] = 400;
+                break;
+
             default:
 
                 // nothing here

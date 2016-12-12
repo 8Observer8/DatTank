@@ -10,7 +10,7 @@ var Tower = function ( arena, params ) {
     this.id = Tower.numIds ++;
 
     this.arena = arena;
-    this.team = Tower.Neutral;
+    this.team = params.team || false;
     this.health = 100;
     this.shootTime = Date.now();
     this.cooldown = 2000;
@@ -118,12 +118,24 @@ Tower.prototype.hit = (function () {
 
 }) ();
 
-Tower.prototype.changeTeam = function ( team ) {
+Tower.prototype.changeTeam = (function () {
 
-    this.team = team;
-    console.log( 'tower changed team' );
+    var buffer = new ArrayBuffer( 6 );
+    var bufferView = new Uint16Array( buffer );
 
-};
+    return function ( team ) {
+
+        this.team = team;
+        this.health = 100;
+
+        bufferView[ 1 ] = this.id;
+        bufferView[ 2 ] = team.id;
+
+        DT.Network.announce( this.arena, 'TowerChangeTeam', buffer, bufferView );
+
+    };
+
+}) ();
 
 Tower.prototype.checkForTarget = function ( players ) {
 
@@ -235,7 +247,7 @@ Tower.prototype.toJSON = function () {
     return {
 
         id:         this.id,
-        owner:      ( this.team === Tower.Neutral ) ? Tower.Neutral : this.team.id,
+        team:       this.team.id,
         health:     this.health,
         position:   { x: this.position.x, y: this.position.y, z: this.position.z }
 
@@ -249,7 +261,6 @@ Tower.numIds = 0;
 Tower.numShootId = 0;
 Tower.Alive = 100;
 Tower.Dead = 101;
-Tower.Neutral = 1000;
 
 //
 

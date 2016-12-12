@@ -9,7 +9,7 @@ DT.Player = function ( arena, params ) {
     this.login = params.login || 'guest';
 
     this.status = 'alive';
-    this.team = params.team;
+    this.team = arena.getTeamById( params.team ) || false;
 
     this.health = params.health;
     this.ammo = params.ammo;
@@ -487,7 +487,15 @@ DT.Player.prototype.die = function ( killer ) {
 
         setTimeout( function () {
 
-            ui.showContinueBox( killer.login, DT.Team.colors[ killer.team ] ); 
+            if ( killer instanceof DT.Tower ) {
+
+                ui.showContinueBox( '<br>' + killer.team.name + ' team tower', killer.team.color ); 
+
+            } else {
+
+                ui.showContinueBox( killer.login, killer.team.color ); 
+
+            }
 
         }, 1400 );
 
@@ -497,11 +505,11 @@ DT.Player.prototype.die = function ( killer ) {
 
     if ( killer ) {
     
-        DT.arena.teams[ killer.team ].kills ++;
+        killer.team.kills ++;
 
     }
 
-    DT.arena.teams[ this.team ].death ++;
+    this.team.death ++;
 
     this.movePath = [];
 

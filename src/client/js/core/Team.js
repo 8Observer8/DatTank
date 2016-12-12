@@ -5,11 +5,14 @@
 
 DT.Team = function ( params ) {
 
-    this.id = params.id ++;
+    this.id = params.id;
 
     this.players = [];
     this.kills = params.kills;
     this.death = params.death;
+
+    this.color = DT.Team.colors[ this.id + '' ];
+    this.name = DT.Team.names[ this.id + '' ];
 
 };
 
@@ -27,4 +30,18 @@ DT.Team.prototype.removePlayer = function ( player ) {
 
 };
 
-DT.Team.colors = [ '#ff0000', '#00ff00', '#0000ff', '#fcaa12' ];
+DT.Team.colors = {
+    '0':        '#ff0000',
+    '1':        '#00ff00',
+    '2':        '#0000ff',
+    '3':        '#fcaa12',
+    '1000':     '#aaa'
+};
+
+DT.Team.names = {
+    '0':        'Red',
+    '1':        'Green',
+    '2':        'Blue',
+    '3':        'Orange',
+    '1000':     'Neutral'
+};

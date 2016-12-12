@@ -6,12 +6,12 @@
 DT.Tower = function ( params ) {
 
     this.id = params.id;
-    this.team = params.owner;
+    this.team = DT.arena.getTeamById( params.team ) || false;
     this.health = params.health;
 
     this.bullets = [];
     this.object = new THREE.Object3D();
-    this.rotation = params.rotation;
+    this.rotation = params.rotation || 0;
     this.position = new THREE.Vector3( params.position.x, params.position.y, params.position.z );
 
     this.animations = {};
@@ -176,7 +176,7 @@ DT.Tower.prototype.shoot = function ( shootId ) {
             if ( intersections.length && intersections[ 0 ].object.name !== 'tank' ) {
 
                 if ( Utils.getDistance( bullet.position, intersections[ 0 ].point ) < 9 ) {
-                
+
                     clearInterval( bullet.shotInterval );
                     bullet.visible = false;
                     bullet.active = false;
@@ -251,9 +251,9 @@ DT.Tower.prototype.hit = function () {
 
 };
 
-DT.Tower.prototype.changeOwner = function () {
+DT.Tower.prototype.changeTeam = function ( team ) {
 
-    // todo
+    this.team = team;
 
 };
 

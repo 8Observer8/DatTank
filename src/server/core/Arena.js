@@ -19,13 +19,17 @@ var Arena = function () {
 
     this.updateInterval = false;
 
-    //
+    // add teams
 
     for ( var i = 0; i < 4; i ++ ) {
 
         this.teams.push( new DT.Team( i ) );
 
     }
+
+    this.teams.push( new DT.Team( 1000 ) );
+
+    // add towers
 
     for ( var i = 0; i < 5; i ++ ) {
 
@@ -34,7 +38,7 @@ var Arena = function () {
             var x = ( 0.5 - i / 4 ) * 1900;
             var z = ( 0.5 - j / 4 ) * 1900;
 
-            this.towers.push( new DT.Tower( this, { position: { x: x, y: 0, z: z } } ) );
+            this.towers.push( new DT.Tower( this, { team: this.getTeamById( Arena.NeutralTeam ), position: { x: x, y: 0, z: z } } ) );
 
         }
 
@@ -235,6 +239,21 @@ Arena.prototype.getPlayerById = function ( playerId ) {
 
 };
 
+Arena.prototype.getTeamById = function ( teamId ) {
+
+    for ( var i = 0, il = this.teams.length; i < il; i ++ ) {
+
+        if ( this.teams[ i ].id === teamId ) {
+
+            return this.teams[ i ];
+
+        }
+
+    }
+
+    return false;
+
+};
 
 Arena.prototype.getTowerById = function ( towerId ) {
 
@@ -507,6 +526,7 @@ Arena.prototype.update = (function () {
 }) ();
 
 Arena.numIds = 0;
+Arena.NeutralTeam = 1000;
 
 //
 

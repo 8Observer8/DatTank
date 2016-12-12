@@ -122,7 +122,6 @@ Player.prototype.rotateTop = (function () {
 
         }
 
-        // this.rotation = params.baseAngle;
         this.rotationTop = params.topAngle;
 
         bufferView[1] = this.id;
@@ -295,7 +294,16 @@ Player.prototype.die = (function () {
         }
 
         bufferView[ 1 ] = this.id;
-        bufferView[ 2 ] = killer.id;
+
+        if ( killer instanceof DT.Tower ) {
+
+            bufferView[ 2 ] = killer.id + 10000;
+
+        } else {
+        
+            bufferView[ 2 ] = killer.id;
+
+        }
 
         //
 
