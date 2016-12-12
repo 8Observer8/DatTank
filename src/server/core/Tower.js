@@ -194,13 +194,35 @@ Tower.prototype.rotateTop = (function () {
 
     return function ( target ) {
 
-        var dx = this.position.x - target.position[0];
-        var dz = this.position.z - target.position[2];
-        var rotation = ( dz === 0 && dx !== 0 ) ? ( Math.PI / 2 ) * Math.abs( dx ) / dx : Math.atan2( dx, dz );
-        var delta;
+        var dx = target.position[0] - this.position.x;
+        var dz = target.position[2] - this.position.z;
+        var rotation, delta;
 
-        rotation = utils.formatAngle( rotation );
-        delta = rotation - this.rotation;
+        if ( dz === 0 && dx !== 0 ) {
+
+            rotation = ( dx > 0 ) ? - Math.PI : 0;
+
+        } else {
+
+            rotation = - Math.PI / 2 - Math.atan2( dz, dx );
+
+        }
+
+        delta = utils.formatAngle( rotation ) - utils.formatAngle( this.rotation );
+
+        if ( Math.abs( delta ) > Math.PI ) {
+
+            if ( delta > 0 ) {
+                
+                delta = - 2 * Math.PI + delta;
+
+            } else {
+                
+                delta = 2 * Math.PI + delta;
+
+            }
+
+        }
 
         //
 
@@ -215,6 +237,8 @@ Tower.prototype.rotateTop = (function () {
                 this.rotation -= 0.05;
 
             }
+
+            this.rotation = utils.formatAngle( this.rotation );
 
             //
 
