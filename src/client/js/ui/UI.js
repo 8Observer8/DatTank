@@ -299,36 +299,6 @@ DT.UI.prototype.updateLeaderboard = function ( players, me ) {
 
 };
 
-DT.UI.prototype.updateArenaTime = function ( time ) {
-
-    var matchTime = 300;
-
-    var seconds = 59 - ( time % 60 );
-    if ( seconds < 10 ) seconds = '0' + seconds;
-
-    var minutes = Math.floor( matchTime / 60 ) - Math.floor( time / 60 ) - 1;
-    if ( minutes < 0 ) return;
-    if ( minutes < 10 ) minutes = '0' + minutes;
-
-    //
-
-    if ( minutes === '00' && + seconds < 30 ) {
-
-        $('#arena-time #time').css( 'color', 'red' );
-        setTimeout( function () {
-
-            $('#arena-time #time').css( 'color', 'burlywood' );
-
-        }, 500 );
-
-    }
-
-    //
-
-    $('#arena-time #time').html( minutes + ':' + seconds );
-
-};
-
 DT.UI.prototype.showLoaderScreen = function () {
 
     $('#loader-wrapper').show();

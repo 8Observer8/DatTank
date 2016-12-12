@@ -11,18 +11,11 @@ DT.Arena = function () {
     this.me = false;
 
     this.boxManager = new DT.BoxManager();
-
-    //
-
-    this.resetTime = false;
-    this.currentTime = false;
-    this.time = false;
-
-    this.timeInterval = false;
-
-    //
-
     this.pathFinder = new DT.PathFinder();
+
+    //
+
+    this.currentTime = false;
 
 };
 
@@ -32,14 +25,6 @@ DT.Arena.prototype.init = function ( params ) {
 
     this.id = params.id;
     this.reset( params );
-
-};
-
-DT.Arena.prototype.updateTime = function () {
-
-    this.time = this.time + 1000;
-
-    ui.updateArenaTime( Math.floor( this.time / 1000 ) );
 
 };
 
@@ -105,11 +90,7 @@ DT.Arena.prototype.reset = function ( params ) {
 
     //
 
-    this.resetTime = params.resetTime;
     this.currentTime = params.currentTime;
-    this.time = params.currentTime - params.resetTime;
-
-    this.updateTime();
 
     //
 
@@ -118,11 +99,6 @@ DT.Arena.prototype.reset = function ( params ) {
 
     ui.updateAmmo( this.me.ammo );
     ui.updateHealth( this.me.health );
-
-    //
-
-    clearInterval( this.timeInterval );
-    this.timeInterval = setInterval( this.updateTime.bind( this ), 1000 );
 
 };
 
@@ -214,7 +190,6 @@ DT.Arena.prototype.removePlayer = function ( player ) {
 
 DT.Arena.prototype.clear = function () {
 
-    clearInterval( this.timeInterval );
     this.players = [];
     this.teams = [];
 

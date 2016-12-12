@@ -143,7 +143,7 @@ Tower.prototype.checkForTarget = function ( players ) {
     var target = this.target || false;
     this.target = false;
 
-    if ( target && target.status === DT.Player.Alive ) {
+    if ( target && target.status === DT.Player.Alive && target.team.id !== this.team.id ) {
 
         dist = utils.getDistance( this.position, { x: target.position[0], y: target.position[1], z: target.position[2] });
 
@@ -160,7 +160,7 @@ Tower.prototype.checkForTarget = function ( players ) {
 
     for ( var i = 0, il = players.length; i < il; i ++ ) {
 
-        if ( this.team !== Tower.Neutral && players[ i ].team.id === this.team.id || players[ i ].status !== DT.Player.Alive ) {
+        if ( players[ i ].team.id === this.team.id || players[ i ].status !== DT.Player.Alive ) {
 
             continue;
 

@@ -36,7 +36,7 @@ DT.Tower.prototype.init = function () {
 
     //
 
-    var base = new THREE.Mesh( towerBaseModel.geometry, new THREE.MeshFaceMaterial( towerBaseModel.material ) );
+    var base = new THREE.Mesh( towerBaseModel.geometry, new THREE.MeshFaceMaterial( towerBaseModel.material ).clone() );
     base.castShadow = true;
     base.rotation.y = 0;
     base.receiveShadow = true;
@@ -46,7 +46,7 @@ DT.Tower.prototype.init = function () {
 
     //
 
-    var top = new THREE.Mesh( towerTopModel.geometry, new THREE.MeshFaceMaterial( towerTopModel.material ) );
+    var top = new THREE.Mesh( towerTopModel.geometry, new THREE.MeshFaceMaterial( towerTopModel.material ).clone() );
     top.castShadow = true;
     top.receiveShadow = true;
     top.position.y = 0;

@@ -46,9 +46,7 @@ var Arena = function () {
 
     //
 
-    this.resetTime = false;
     this.currentTime = false;
-    this.resetInterval = false;
 
 };
 
@@ -58,21 +56,9 @@ Arena.prototype.reset = function ( isNew ) {
 
     var scope = this;
 
-    if ( ! isNew ) {
-
-        DT.Network.announce( this, 'resetArena', { winnerTeam: this.getWinnerTeamId(), arena: this.toPublicJSON() } );
-
-    }
-
-    //
-
-    clearTimeout( this.resetTimeout );
     clearInterval( this.updateInterval );
-
     this.updateInterval = setInterval( this.update.bind( this ), 20 );
 
-    this.resetTimeout = setTimeout( this.reset.bind( this ), 5 * 60 * 1000 );
-    this.resetTime = Date.now();
     this.obstacles = [];
 
     //
@@ -407,7 +393,6 @@ Arena.prototype.toPublicJSON = function () {
         players:        players,
         teams:          teams,
         boxes:          boxes,
-        resetTime:      this.resetTime,
         currentTime:    Date.now()
 
     };
