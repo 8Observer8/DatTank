@@ -262,37 +262,22 @@ DT.View.prototype.addMap = function () {
 
 DT.View.prototype.addTeamZone = function () {
 
-    var zone1 = new THREE.Mesh( new THREE.PlaneGeometry( 100, 100 ), new THREE.MeshLambertMaterial({ color: 0xff0000, transparent: true }) );
-    zone1.rotation.x = - Math.PI / 2;
-    zone1.receiveShadow = true;
-    zone1.material.opacity = 0.2;
-    zone1.position.set( 500, 1, 500 );
-    this.scene.add( zone1 );
-    zone1.name = 'zone1';
+    for ( var i = 0, il = DT.arena.teams.length; i < il; i ++ ) {
 
-    var zone2 = new THREE.Mesh( new THREE.PlaneGeometry( 100, 100 ), new THREE.MeshLambertMaterial({ color: 0x008000, transparent: true }) );
-    zone2.rotation.x = - Math.PI / 2;
-    zone2.receiveShadow = true;
-    zone2.material.opacity = 0.2;
-    zone2.position.set( -500, 1, 500 );
-    this.scene.add( zone2 );
-    zone2.name = 'zone2';
+        var name = DT.arena.teams[ i ].name;
+        var color = + DT.arena.teams[ i ].color.replace('#', '0x');
+        var x = DT.arena.teams[ i ].spawnPosition.x;
+        var z = DT.arena.teams[ i ].spawnPosition.z;
 
-    var zone3 = new THREE.Mesh( new THREE.PlaneGeometry( 100, 100 ), new THREE.MeshLambertMaterial({ color: 0x0000ff, transparent: true }) );
-    zone3.rotation.x = - Math.PI / 2;
-    zone3.receiveShadow =true;
-    zone3.material.opacity = 0.2;
-    zone3.position.set( 500, 1, -500 );
-    this.scene.add( zone3 );
-    zone3.name = 'zone3';
+        var plane = new THREE.Mesh( new THREE.PlaneGeometry( 200, 200 ), new THREE.MeshLambertMaterial({ color: color, transparent: true }) );
+        plane.rotation.x = - Math.PI / 2;
+        plane.receiveShadow = true;
+        plane.material.opacity = 0.2;
+        plane.position.set( x, 1, z );
+        this.scene.add( plane );
+        plane.name = 'team-spawn-plane-' + name;
 
-    var zone4 = new THREE.Mesh( new THREE.PlaneGeometry( 100, 100 ), new THREE.MeshLambertMaterial({ color: 0xffa500, transparent: true }) );
-    zone4.rotation.x = - Math.PI / 2;
-    zone4.receiveShadow = true;
-    zone4.material.opacity = 0.2;
-    zone4.position.set( -500, 1, -500);
-    this.scene.add( zone4 );
-    zone4.name = 'zone4';
+    }
 
 };
 

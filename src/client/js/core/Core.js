@@ -116,13 +116,16 @@ DT.Core.prototype.joinArena = function ( params ) {
 
     view.clean();
     view.setupScene();
-    view.addMap();
-    view.addTeamZone();
 
     //
 
     DT.arena = new DT.Arena();
     DT.arena.init( params );
+
+    //
+
+    view.addMap();
+    view.addTeamZone();
 
     // change camera position
 

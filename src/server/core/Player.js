@@ -69,31 +69,7 @@ Player.prototype.reset = function () {
     this.health = 100;
     this.ammo = this.tank.maxShells;
     this.hits = {};
-
-    switch ( this.team.id ) {
-
-        case 0:
-
-            this.position = [ 500, 1, 500 ];
-            break;
-
-        case 1:
-
-            this.position = [ -500, 1, 500 ];
-            break;
-
-        case 2:
-
-            this.position = [ 500, 1, -500 ];
-            break;
-
-        case 3:
-
-            this.position = [ -500, 1, -500 ];
-            break;
-
-    }
-
+    this.position = [ this.team.spawnPosition.x, this.team.spawnPosition.y, this.team.spawnPosition.z ];
     this.rotation = 0;
     this.rotationTop = 0;
 

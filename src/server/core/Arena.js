@@ -310,7 +310,7 @@ Arena.prototype.addPlayer = function ( player ) {
 
     player.arena = this;
     player.team = team;
-    player.position = [ team.position[0], team.position[1], team.position[2] ];
+    player.position = [ team.spawnPosition.x, team.spawnPosition.y, team.spawnPosition.z ];
 
     var offsetX = 0;
     var offsetZ = 0;
