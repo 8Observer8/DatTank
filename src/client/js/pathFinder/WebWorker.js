@@ -331,7 +331,7 @@ Worker.aStarSearch = function ( from, to ) {
     from.open = true;
 
     if ( worldMap[ to.y ] && worldMap[ to.y ][ to.x ] && worldMap[ to.y ][ to.x ].walkable ) {
-    
+
         openList.push( from );
 
     } else {

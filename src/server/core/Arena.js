@@ -310,30 +310,20 @@ Arena.prototype.addPlayer = function ( player ) {
 
     player.arena = this;
     player.team = team;
+    player.position = [ team.position[0], team.position[1], team.position[2] ];
 
-    switch ( team.id ) {
+    var offsetX = 0;
+    var offsetZ = 0;
 
-        case 0:
+    while ( Math.abs( offsetX ) < 50 && Math.abs( offsetZ ) < 50 ) {
 
-            player.position = [ 500, 1, 500 ];
-            break;
-
-        case 1:
-
-            player.position = [ -500, 1, 500 ];
-            break;
-
-        case 2:
-
-            player.position = [ 500, 1, -500 ];
-            break;
-
-        case 3:
-
-            player.position = [ -500, 1, -500 ];
-            break;
+        offsetX = ( Math.random() - 0.5 ) * 200;
+        offsetZ = ( Math.random() - 0.5 ) * 200;        
 
     }
+
+    player.position[0] += offsetX;
+    player.position[2] += offsetZ;
 
     //
 

@@ -244,7 +244,7 @@ Player.prototype.hit = (function () {
         if ( killer ) {
 
             if ( killer instanceof DT.Tank ) {
-            
+
                 this.health -= 40 * ( killer.tank.bullet / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
                 this.health = Math.max( Math.round( this.health ), 0 );
 
@@ -300,7 +300,7 @@ Player.prototype.die = (function () {
             bufferView[ 2 ] = killer.id + 10000;
 
         } else {
-        
+
             bufferView[ 2 ] = killer.id;
 
         }

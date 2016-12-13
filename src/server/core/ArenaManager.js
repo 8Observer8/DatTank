@@ -91,7 +91,7 @@ ArenaManager.prototype.findArena = function () {
             arena = this.addArena();
 
         } else {
-            
+
             arena = minArena;
 
         }

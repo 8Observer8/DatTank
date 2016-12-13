@@ -351,5 +351,5 @@ DT.UI.prototype.selectTankAndcloseChoiceWindow = function () {
     $("#signin-box").css("opacity", 1);
     garage.pickTank();
     garage.stop();
- 
+
 };

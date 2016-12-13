@@ -148,7 +148,7 @@ DT.ResourceManager.prototype.load = function ( onProgress, onEnd ) {
         this.loadSound( this.soundsList.pop(), this.load.bind( this, onProgress, onEnd ) );
 
         if ( onProgress ) {
-        
+
             onProgress( progress );
 
         }

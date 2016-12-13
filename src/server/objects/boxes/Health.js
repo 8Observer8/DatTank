@@ -20,12 +20,12 @@ Health.prototype = Object.create( DT.Box.prototype );
 
 Health.prototype.pickUp = function ( player ) {
 
-	player.health += this.amount;
-	player.health = Math.min( player.health, 100 );
+    player.health += this.amount;
+    player.health = Math.min( player.health, 100 );
 
-	player.hit( false );
+    player.hit( false );
 
-	//
+    //
 
     DT.Network.announce( this.arena, 'pickedBox', { id: this.id } );
 

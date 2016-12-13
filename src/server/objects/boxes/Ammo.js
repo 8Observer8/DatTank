@@ -20,10 +20,10 @@ Ammo.prototype = Object.create( DT.Box.prototype );
 
 Ammo.prototype.pickUp = function ( player ) {
 
-	player.ammo += this.amount;
+    player.ammo += this.amount;
     player.ammo = Math.min( player.tank.maxShells, player.ammo );
 
-	//
+    //
 
     DT.Network.announce( this.arena, 'pickedBox', { id: this.id } );
 

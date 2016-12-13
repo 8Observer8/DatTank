@@ -213,11 +213,11 @@ Tower.prototype.rotateTop = (function () {
         if ( Math.abs( delta ) > Math.PI ) {
 
             if ( delta > 0 ) {
-                
+
                 delta = - 2 * Math.PI + delta;
 
             } else {
-                
+
                 delta = 2 * Math.PI + delta;
 
             }

@@ -48,7 +48,6 @@ DT.View = function () {
     this.gameLoopInterval = setInterval( function () {
 
         scope.updatePlayersPosition( 20 );
-        scope.updatePlayersTopRotation( 20 );
 
     }, 20 );
 
@@ -77,7 +76,7 @@ DT.View.prototype.setupScene = function () {
     // setup sound listener
 
     if ( ! this.sound ) {
-    
+
         this.sound = {};
         this.sound.listener = new THREE.AudioListener();
         this.camera.add( this.sound.listener );
@@ -425,33 +424,6 @@ DT.View.prototype.animate = function ( delta ) {
         }
 
     }
-
-};
-
-DT.View.prototype.updatePlayersTopRotation = function ( delta ) {
-
-    if ( ! DT.arena ) return;
-
-    // for ( var i = 0, il = DT.arena.players.length; i < il; i ++ ) {
-
-    //     var player = DT.arena.players[ i ];
-
-    //     if ( Math.abs( player.rotationTopTarget - player.object.top.rotation.y ) > 0.1 ) {
-
-    //         if ( Math.abs( player.rotationTopTarget - ( player.object.top.rotation.y + ( player.rotDelta / 3 ) * ( delta / 16 ) ) ) > Math.abs( player.rotationTopTarget - player.object.top.rotation.y ) ) {
-
-    //             player.object.top.rotation.y = player.rotationTopTarget;
-    //             player.topRotation = player.object.top.rotation.y;
-    //             return;
-
-    //         }
-
-    //         player.object.top.rotation.y += ( player.rotDelta / 3 ) * ( delta / 16 );
-    //         player.topRotation = player.object.top.rotation.y;
-
-    //     }
-
-    // }
 
 };
 

@@ -11,6 +11,8 @@ var Team = function ( id ) {
     this.kills = 0;
     this.death = 0;
 
+    this.position = Team.StartPositions[ this.id + '' ];
+
 };
 
 Team.prototype = {};
@@ -68,6 +70,13 @@ Team.prototype.toPublicJSON = function () {
 
     };
 
+};
+
+Team.StartPositions = {
+    '0':    [   500, 1,   500 ],
+    '1':    [ - 500, 1,   500 ],
+    '2':    [   500, 1, - 500 ],
+    '3':    [ - 500, 1, - 500 ]
 };
 
 //

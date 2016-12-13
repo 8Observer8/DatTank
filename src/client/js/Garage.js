@@ -46,10 +46,12 @@ DT.Garage.prototype.init = function () {
     this.scene.fog = new THREE.FogExp2( 0x000000, 0.035 );
 
     // Lights
+
     var ambientlight = new THREE.AmbientLight( 0xeeeeee );
     this.scene.add( ambientlight );
 
     // Renderer
+
     this.renderer = new THREE.WebGLRenderer( { antialias: true } );
     this.renderer.setPixelRatio( window.devicePixelRatio );
     this.renderer.setSize( $('#skin').innerWidth() , $('#skin').innerHeight() );
@@ -57,7 +59,7 @@ DT.Garage.prototype.init = function () {
     this.container.appendChild( this.renderer.domElement );
 
     var scope = this;
-    
+
     //
 
     var loader1 = new THREE.JSONLoader();
@@ -148,7 +150,7 @@ DT.Garage.prototype.onProgress = function ( xhr ) {
 
 DT.Garage.prototype.onWindowResize = function ( event ) {
 
-    this.renderer.setSize( $('#skin').innerWidth() , $('#skin').innerHeight() );
+    this.renderer.setSize( $('#skin').innerWidth(), $('#skin').innerHeight() );
 
     this.camera.aspect = $('#skin').innerWidth() / $('#skin').innerHeight();
     this.camera.updateProjectionMatrix();
@@ -187,7 +189,7 @@ DT.Garage.prototype.stop = function () {
 DT.Garage.prototype.arrowForward = function () {
 
     if ( $('.choice-skins .tank.active').next().length ) {
-    
+
         $('.choice-skins .tank.active').next().click();
 
     } else {
@@ -201,7 +203,7 @@ DT.Garage.prototype.arrowForward = function () {
 DT.Garage.prototype.arrowBack = function () {
 
     if ( $('.choice-skins .tank.active').prev().length ) {
-    
+
         $('.choice-skins .tank.active').prev().click();
 
     } else {

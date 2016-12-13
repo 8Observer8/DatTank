@@ -220,7 +220,7 @@ Network.send = function ( socket, event, data ) {
     if ( socket ) {
 
         try {
-        
+
             socket.send( data, { binary: bin } );
 
         } catch ( e ) {

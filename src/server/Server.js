@@ -47,18 +47,18 @@ app.use( '/changelog', express.static( __dirname + './../client/changelog.html')
 
 app.get( '/info', function ( req, res ) {
 
-	var players = 0;
-	var bots = 0;
-	var arenas = DT.ArenaManager.arenas.length;
+    var players = 0;
+    var bots = 0;
+    var arenas = DT.ArenaManager.arenas.length;
 
-	for ( var i = 0, il = DT.ArenaManager.arenas.length; i < il; i ++ ) {
+    for ( var i = 0, il = DT.ArenaManager.arenas.length; i < il; i ++ ) {
 
-		players += DT.ArenaManager.arenas[ i ].players.length - DT.ArenaManager.arenas[ i ].bots.length;
-		bots += DT.ArenaManager.arenas[ i ].bots.length;
+        players += DT.ArenaManager.arenas[ i ].players.length - DT.ArenaManager.arenas[ i ].bots.length;
+        bots += DT.ArenaManager.arenas[ i ].bots.length;
 
-	}
+    }
 
-	res.send({ info: { arenas: arenas, players: players, bots: bots } });
+    res.send({ info: { arenas: arenas, players: players, bots: bots } });
 
 });
 

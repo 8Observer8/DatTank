@@ -82,11 +82,7 @@ DT.Arena.prototype.reset = function ( params ) {
 
     // add towers
 
-    for ( var i = 0, il = params.towers.length; i < il; i ++ ) {
-
-        this.towers.push( new DT.Tower( params.towers[ i ] ) );
-
-    }
+    this.addTowers( params.towers );
 
     //
 
@@ -99,6 +95,24 @@ DT.Arena.prototype.reset = function ( params ) {
 
     ui.updateAmmo( this.me.ammo );
     ui.updateHealth( this.me.health );
+
+};
+
+DT.Arena.prototype.addTowers = function ( params ) {
+
+    var sizeX = 130;
+    var sizeZ = 130;
+    var placingObjects = [];
+
+    for ( var i = 0, il = params.length; i < il; i ++ ) {
+
+        var tower = new DT.Tower( params[ i ] );
+        this.towers.push( tower );
+        placingObjects.push( [ new THREE.Vector3( tower.position.x - sizeX / 2, 0, tower.position.z - sizeZ / 2 ), new THREE.Vector3( tower.position.x + sizeX / 2, 0, tower.position.z + sizeZ / 2 ) ] );
+
+    }
+
+    DT.arena.pathFinder.placeObjects( placingObjects );
 
 };
 
