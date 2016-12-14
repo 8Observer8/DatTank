@@ -264,6 +264,8 @@ DT.View.prototype.addTeamZone = function () {
 
     for ( var i = 0, il = DT.arena.teams.length; i < il; i ++ ) {
 
+        if ( DT.arena.teams[ i ].id > 1000 ) continue;
+
         var name = DT.arena.teams[ i ].name;
         var color = + DT.arena.teams[ i ].color.replace('#', '0x');
         var x = DT.arena.teams[ i ].spawnPosition.x;
