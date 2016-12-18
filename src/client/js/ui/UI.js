@@ -15,13 +15,13 @@ DT.UI.prototype.init = function () {
 
     if ( localStorage.getItem('hq') === 'true' ) {
 
-        this.chageGameQuality( true );
+        this.chageGameQuality( true, true );
 
     }
 
     if ( localStorage.getItem('sound') === 'true' ) {
 
-        this.changeSound( true );
+        this.changeSound( true, true );
 
     }
 
@@ -34,23 +34,31 @@ DT.UI.prototype.init = function () {
 
 };
 
-DT.UI.prototype.chageGameQuality = function ( value ) {
+DT.UI.prototype.chageGameQuality = function ( value, withoutSound ) {
 
     value = ( typeof value === 'boolean' ) ? value : $('#graphics-quality').attr('hq') !== 'true';
     $('#graphics-quality').attr( 'hq', value );
     localStorage.setItem( 'hq', value );
 
-    soundSys.playMenuSound();
+    if ( ! withoutSound ) {
+
+        soundSys.playMenuSound();
+
+    }
 
 };
 
-DT.UI.prototype.changeSound = function ( value ) {
+DT.UI.prototype.changeSound = function ( value, withoutSound ) {
 
     value = ( typeof value === 'boolean' ) ? value : $('#sound-on-off').attr('sound') !== 'true';
     $('#sound-on-off').attr( 'sound', value );
     localStorage.setItem( 'sound', value );
 
-    soundSys.playMenuSound();
+    if ( ! withoutSound ) {
+    
+        soundSys.playMenuSound();
+
+    }
 
 };
 
