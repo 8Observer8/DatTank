@@ -73,6 +73,21 @@ Player.prototype.reset = function () {
     this.rotation = 0;
     this.rotationTop = 0;
 
+    //
+
+    var offsetX = 0;
+    var offsetZ = 0;
+
+    while ( Math.abs( offsetX ) < 50 && Math.abs( offsetZ ) < 50 ) {
+
+        offsetX = ( Math.random() - 0.5 ) * 200;
+        offsetZ = ( Math.random() - 0.5 ) * 200;        
+
+    }
+
+    this.position[0] += offsetX;
+    this.position[2] += offsetZ;
+
 };
 
 Player.prototype.respawn = function () {

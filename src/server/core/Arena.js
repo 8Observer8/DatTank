@@ -93,7 +93,7 @@ Arena.prototype.reset = function ( isNew ) {
 
     setTimeout( function () {
 
-        for ( var i = 0; i < 0 /*3 + Math.floor( Math.random() * 3 )*/; i ++ ) {
+        for ( var i = 0; i < 3 + Math.floor( Math.random() * 3 ); i ++ ) {
 
             scope.bots.push( new DT.Bot( scope ) );
 
@@ -240,6 +240,8 @@ Arena.prototype.detectWeakestTeam = function () {
     var weakestTeam = this.teams[0];
 
     for ( var i = 1, il = this.teams.length; i < il; i ++ ) {
+
+        if ( this.teams[ i ].id >= 1000 ) continue;
 
         if ( weakestTeam.players.length > this.teams[ i ].players.length ) {
 

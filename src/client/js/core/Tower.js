@@ -103,6 +103,7 @@ DT.Tower.prototype.initBullets = function () {
         bullet.soundShooting.loop = false;
         bullet.soundShooting.setRefDistance( 30 );
         bullet.soundShooting.autoplay = false;
+        bullet.soundShooting.setVolume(0.5);
 
         this.object.add( bullet.soundShooting );
 

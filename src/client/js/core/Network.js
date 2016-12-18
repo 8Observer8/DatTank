@@ -104,7 +104,7 @@ DT.Network.prototype.message = function ( event ) {
 
             case 'playerJoined':
 
-                var player = new DT.Player( false, data );
+                var player = new DT.Player( DT.arena, data );
                 DT.arena.addPlayer( player );
                 break;
 

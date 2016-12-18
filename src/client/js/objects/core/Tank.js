@@ -56,6 +56,8 @@ DT.Tank.prototype.initBullets = function () {
         bullet.soundShooting.setRefDistance( 30 );
         bullet.soundShooting.autoplay = false;
 
+        if ( this.player.id !== DT.arena.me ) bullet.soundShooting.setVolume(0.4);
+
         this.object.add( bullet.soundShooting );
 
     }
@@ -69,6 +71,7 @@ DT.Tank.prototype.initSounds = function () {
     this.sounds.moving.loop = true;
     this.sounds.moving.setRefDistance( 15 );
     this.sounds.moving.autoplay = false;
+    if ( this.player.id !== DT.arena.me ) this.sounds.moving.setVolume(0.4);
 
     this.object.add( this.sounds.moving );
 
@@ -77,6 +80,7 @@ DT.Tank.prototype.initSounds = function () {
     this.sounds.explosion.loop = true;
     this.sounds.explosion.setRefDistance( 15 );
     this.sounds.explosion.autoplay = false;
+    if ( this.player.id !== DT.arena.me ) this.sounds.explosion.setVolume(0.4);
 
     this.object.add( this.sounds.explosion );
 
