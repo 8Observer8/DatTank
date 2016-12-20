@@ -11,15 +11,14 @@ DT.Controls = function () {
     this.mousePos = new THREE.Vector2( 0.5, 0.5 );
     this.prevMousePos = new THREE.Vector2( 0.5, 0.5 );
 
+    this.moveForward = false;
+    this.moveBackward = false;
+    this.rotateLeft = false;
+    this.rotateRight = false;
+
 };
 
 DT.Controls.prototype = {};
-
-DT.Controls.prototype.clear = function () {
-
-    // todo
-
-};
 
 DT.Controls.prototype.mouseInit = function () {
 
@@ -99,33 +98,45 @@ DT.Controls.prototype.mouseInit = function () {
 
 DT.Controls.prototype.keyInit = function () {
 
+    var scope = this;
+
     function keyDown ( event ) {
+
+        scope.pressedKey[ event.keyCode ] = true;
 
         switch ( event.keyCode ) {
 
-            case 80: // 'p' key
-
-                Utils.ge('#stats').style['display'] = 'block';
-                break;
-
             case 38: // up
             case 87: // w
-                moveForward = true;
+                if ( scope.moveForward ) break;
+                scope.moveForward = true;
+                scope.move( 1 );
                 break;
 
             case 37: // left
             case 65: // a
-                moveLeft = true; 
+                if ( scope.rotateLeft ) break;
+                scope.rotateLeft = true;
+                scope.rotateBase( 1 );
                 break;
 
             case 40: // down
             case 83: // s
-                moveBackward = true;
+                if ( scope.moveBackward ) break;
+                scope.moveBackward = true;
+                scope.move( -1 );
                 break;
 
             case 39: // right
             case 68: // d
-                moveRight = true;
+                if ( scope.rotateRight ) break;
+                scope.rotateRight = true;
+                scope.rotateBase( -1 );
+                break;
+
+            case 80: // 'p' key
+
+                Utils.ge('#stats').style['display'] = 'block';
                 break;
 
         }
@@ -134,29 +145,35 @@ DT.Controls.prototype.keyInit = function () {
 
     function keyUp ( event ) {
 
-        switch( event.keyCode ) {
+        switch ( event.keyCode ) {
 
             case 38: // up
             case 87: // w
-                moveForward = false;
+                scope.moveForward = false;
+                scope.move( 0 );
                 break;
 
             case 37: // left
             case 65: // a
-                moveLeft = false;
+                scope.rotateLeft = false;
+                scope.rotateBase( 0 );
                 break;
 
             case 40: // down
             case 83: // s
-                moveBackward = false;
+                scope.moveBackward = false;
+                scope.move( 0 );
                 break;
 
             case 39: // right
             case 68: // d
-                moveRight = false;
+                scope.rotateRight = false;
+                scope.rotateBase( 0 );
                 break;
 
         }
+
+        delete scope.pressedKey[ event.keyCode ];
 
     };
 
@@ -166,3 +183,37 @@ DT.Controls.prototype.keyInit = function () {
     document.addEventListener( 'keyup', keyUp );
 
 };
+
+//
+
+DT.Controls.prototype.rotateBase = ( function () {
+
+    var buffer = new ArrayBuffer( 4 );
+    var bufferView = new Int16Array( buffer );
+
+    return function ( direction ) {
+
+        bufferView[ 0 ] = 0;
+        bufferView[ 1 ] = direction;
+
+        network.send( 'PlayerTankRotateBase', buffer, bufferView );
+
+    };
+
+}) ();
+
+DT.Controls.prototype.move = ( function () {
+
+    var buffer = new ArrayBuffer( 4 );
+    var bufferView = new Int16Array( buffer );
+
+    return function ( direction ) {
+
+        bufferView[ 0 ] = 0;
+        bufferView[ 1 ] = direction;
+
+        network.send( 'PlayerTankMove', buffer, bufferView );
+
+    };
+
+}) ();

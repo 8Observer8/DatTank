@@ -25,6 +25,12 @@ global.SOCKET_PORT = 8085;
 global.utils = require('./utils/Utils');
 global.DT = require('./core/DT');
 
+// import game managers
+
+global.DT.BoxManager = require('./managers/BoxManager');
+global.DT.Network = require('./managers/NetworkManager');
+global.DT.ArenaManager = require('./managers/ArenaManager');
+
 // import main objects
 
 global.DT.Arena = require('./core/Arena');
@@ -32,10 +38,6 @@ global.DT.Team = require('./core/Team');
 global.DT.Tower = require('./core/Tower');
 global.DT.Player = require('./core/Player');
 global.DT.Bot = require('./core/Bot');
-global.DT.BoxManager = require('./core/BoxManager');
-
-global.DT.Network = require('./core/Network');
-global.DT.ArenaManager = require('./core/ArenaManager');
 
 // import tank units
 

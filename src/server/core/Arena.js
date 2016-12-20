@@ -347,6 +347,8 @@ Arena.prototype.removeBot = function ( player ) {
 
     }
 
+    player.bot.dispose();
+
     this.bots = newBotList;
 
 };
@@ -451,7 +453,7 @@ Arena.prototype.update = (function () {
 
         for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
 
-            this.towers[ i ].update();
+            this.towers[ i ].update( delta );
 
         }
 
@@ -459,86 +461,7 @@ Arena.prototype.update = (function () {
 
         for ( var i = 0, il = this.players.length; i < il; i ++ ) {
 
-            var player = this.players[ i ];
-
-            if ( ! player.movePath.length ) continue;
-
-            var progress = player.movementDurationMap.length - 1;
-
-            for ( var j = 0, jl = player.movementDurationMap.length; j < jl; j ++ ) {
-
-                if ( time - player.movementStart > player.movementDurationMap[ j ] ) {
-
-                    progress --;
-
-                } else {
-
-                    break;
-
-                }
-
-            }
-
-            if ( progress < 0 ) {
-
-                player.movePath.length = 0;
-                player.movementDurationMap.length = 0;
-                continue;
-
-            } else {
-
-                if ( progress !== player.moveProgress ) {
-
-                    var dx, dz;
-
-                    if ( player.movePath[ 2 * ( progress - 30 ) ] ) {
-
-                        dx = ( player.movePath[ 2 * ( progress - 30 ) + 0 ] + player.movePath[ 2 * ( progress - 29 ) + 0 ] + player.movePath[ 2 * ( progress - 28 ) + 0 ] ) / 3 - 2000 - player.position[0];
-                        dz = ( player.movePath[ 2 * ( progress - 30 ) + 1 ] + player.movePath[ 2 * ( progress - 29 ) + 1 ] + player.movePath[ 2 * ( progress - 28 ) + 1 ] ) / 3 - 2000 - player.position[2];
-
-                    } else {
-
-                        dx = ( player.movePath[ 2 * progress + 0 ] - 2000 ) - player.position[0];
-                        dz = ( player.movePath[ 2 * progress + 1 ] - 2000 ) - player.position[2];
-
-                    }
-
-                    player.position[0] = player.movePath[ 2 * progress + 0 ] - 2000;
-                    player.position[2] = player.movePath[ 2 * progress + 1 ] - 2000;
-
-                    //
-
-                    if ( progress !== 0 ) {
-
-                        var newRotation = ( dz === 0 && dx !== 0 ) ? ( Math.PI / 2 ) * Math.abs( dx ) / dx : Math.atan2( dx, dz );
-                        newRotation = utils.formatAngle( newRotation );
-                        var dRotation = newRotation - player.rotation;
-
-                        if ( isNaN( dRotation ) ) dRotation = 0;
-
-                        if ( dRotation > Math.PI ) {
-
-                            dRotation -= 2 * Math.PI;
-
-                        }
-
-                        if ( dRotation < - Math.PI ) {
-
-                            dRotation += 2 * Math.PI;
-
-                        }
-
-                        player.rotation = utils.formatAngle( player.rotation + dRotation );
-
-                    }
-
-                    //
-
-                    player.moveProgress = progress;
-
-                }
-
-            }
+            this.players[ i ].update( delta, time );
 
         }
 

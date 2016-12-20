@@ -35,35 +35,16 @@ var Player = function ( params ) {
 
     this.afkTimeout = false;
 
-    //
+    this.baseRotationDirection = 0;
+    this.moveDirection = 0;
 
-    switch ( params.tank ) {
-
-        case 'USAT54':
-
-            this.tank = new DT.Tank.USAT54();
-            break;
-
-        case 'UKBlackPrince':
-
-            this.tank = new DT.Tank.UKBlackPrince();
-            break;
-
-        default:
-
-            this.tank = new DT.Tank.USAT54();
-            break;
-
-    }
-
-    this.moveSpeed = this.moveSpeed * this.tank.speed / 40;
-    this.ammo = this.tank.maxShells;
+    this.selectTank( params.tank );
 
 };
 
 Player.prototype = {};
 
-Player.prototype.reset = function () {
+Player.prototype.respawn = function () {
 
     this.status = Player.Alive;
     this.health = 100;
@@ -88,15 +69,35 @@ Player.prototype.reset = function () {
     this.position[0] += offsetX;
     this.position[2] += offsetZ;
 
-};
-
-Player.prototype.respawn = function () {
-
-    this.reset();
-
     //
 
     DT.Network.announce( this.arena, 'respawn', { player: this.toPrivateJSON() } );
+
+};
+
+Player.prototype.selectTank = function ( tankName ) {
+
+    switch ( tankName ) {
+
+        case 'USAT54':
+
+            this.tank = new DT.Tank.USAT54();
+            break;
+
+        case 'UKBlackPrince':
+
+            this.tank = new DT.Tank.UKBlackPrince();
+            break;
+
+        default:
+
+            this.tank = new DT.Tank.USAT54();
+            break;
+
+    }
+
+    this.moveSpeed = this.moveSpeed * this.tank.speed / 40;
+    this.ammo = this.tank.maxShells;
 
 };
 
@@ -132,7 +133,7 @@ Player.prototype.rotateTop = (function () {
 
 }) ();
 
-Player.prototype.move = function ( path ) {
+Player.prototype.moveByPath = function ( path ) {
 
     if ( this.status !== Player.Alive ) {
 
@@ -176,6 +177,18 @@ Player.prototype.move = function ( path ) {
         DT.Network.broadcast( this.socket, this.arena, 'move', pathBuffer, pathBufferView );
 
     }
+
+};
+
+Player.prototype.rotateBase = function ( direction ) {
+        
+    this.baseRotationDirection = direction;
+
+};
+
+Player.prototype.move = function ( direction ) {
+
+    this.moveDirection = direction;
 
 };
 
@@ -312,7 +325,6 @@ Player.prototype.die = (function () {
 
                     scope.arena.removeBot( scope );
                     scope.arena.removePlayer( scope );
-                    scope.bot.dispose();
 
                 }, 2000 );
 
@@ -323,6 +335,101 @@ Player.prototype.die = (function () {
             this.arena.removePlayer( this );
 
         }
+
+    };
+
+}) ();
+
+Player.prototype.update = (function () {
+
+    return function ( delta, time ) {
+
+        var player = this;
+
+        // update player PATH movement
+
+        if ( ! player.movePath.length ) return;
+
+        var progress = player.movementDurationMap.length - 1;
+
+        for ( var j = 0, jl = player.movementDurationMap.length; j < jl; j ++ ) {
+
+            if ( time - player.movementStart > player.movementDurationMap[ j ] ) {
+
+                progress --;
+
+            } else {
+
+                break;
+
+            }
+
+        }
+
+        if ( progress < 0 ) {
+
+            player.movePath.length = 0;
+            player.movementDurationMap.length = 0;
+            return;
+
+        } else {
+
+            if ( progress !== player.moveProgress ) {
+
+                var dx, dz;
+
+                if ( player.movePath[ 2 * ( progress - 30 ) ] ) {
+
+                    dx = ( player.movePath[ 2 * ( progress - 30 ) + 0 ] + player.movePath[ 2 * ( progress - 29 ) + 0 ] + player.movePath[ 2 * ( progress - 28 ) + 0 ] ) / 3 - 2000 - player.position[0];
+                    dz = ( player.movePath[ 2 * ( progress - 30 ) + 1 ] + player.movePath[ 2 * ( progress - 29 ) + 1 ] + player.movePath[ 2 * ( progress - 28 ) + 1 ] ) / 3 - 2000 - player.position[2];
+
+                } else {
+
+                    dx = ( player.movePath[ 2 * progress + 0 ] - 2000 ) - player.position[0];
+                    dz = ( player.movePath[ 2 * progress + 1 ] - 2000 ) - player.position[2];
+
+                }
+
+                player.position[0] = player.movePath[ 2 * progress + 0 ] - 2000;
+                player.position[2] = player.movePath[ 2 * progress + 1 ] - 2000;
+
+                //
+
+                if ( progress !== 0 ) {
+
+                    var newRotation = ( dz === 0 && dx !== 0 ) ? ( Math.PI / 2 ) * Math.abs( dx ) / dx : Math.atan2( dx, dz );
+                    newRotation = utils.formatAngle( newRotation );
+                    var dRotation = newRotation - player.rotation;
+
+                    if ( isNaN( dRotation ) ) dRotation = 0;
+
+                    if ( dRotation > Math.PI ) {
+
+                        dRotation -= 2 * Math.PI;
+
+                    }
+
+                    if ( dRotation < - Math.PI ) {
+
+                        dRotation += 2 * Math.PI;
+
+                    }
+
+                    player.rotation = utils.formatAngle( player.rotation + dRotation );
+
+                }
+
+                //
+
+                player.moveProgress = progress;
+
+            }
+
+        }
+
+        // update player AWSD movement
+
+        // todo
 
     };
 
@@ -370,6 +477,7 @@ Player.prototype.toPublicJSON = function () {
 Player.numIds = 1;
 Player.Alive = 100;
 Player.Dead = 110;
+Player.AFK = 120;
 
 //
 

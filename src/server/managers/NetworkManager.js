@@ -53,20 +53,6 @@ Network.init = function () {
 
                         break;
 
-                    // case 'reconnect':
-
-                    //     var arena = DT.ArenaManager.getArenaById( data.arena );
-                    //     if ( ! arena ) return;
-                    //     var player = arena.getPlayerById( data.id );
-                    //     if ( ! player ) return;
-                    //     if ( player.afkTimeout ) clearTimeout( player.afkTimeout );
-
-                    //     socket.arena = arena;
-                    //     socket.player = player;
-                    //     player.socket = socket;
-
-                    //     break;
-
                     default:
 
                         // nothig here
@@ -91,7 +77,7 @@ Network.init = function () {
                     case 2:     // move
 
                         if ( ! socket.arena || ! socket.player ) return;
-                        socket.player.move( data );
+                        socket.player.moveByPath( data );
                         break;
 
                     case 3:     // shoot
@@ -159,7 +145,29 @@ Network.init = function () {
                         if ( ! player ) return;
 
                         data = new Uint16Array( ab, 4 );
-                        player.move( data );
+                        player.moveByPath( data );
+                        break;
+
+                    case 100: // 'PlayerTankRotateBase'
+
+                        if ( ! socket.arena || ! socket.player ) return;
+
+                        var player = socket.player;
+                        var direction = data[ 0 ];
+
+                        player.rotateBase( direction );
+
+                        break;
+
+                    case 101: // 'PlayerTankMove':
+
+                        if ( ! socket.arena || ! socket.player ) return;
+
+                        var player = socket.player;
+                        var direction = data[ 0 ];
+
+                        player.move( direction );
+
                         break;
 
                     default:

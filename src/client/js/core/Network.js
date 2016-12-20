@@ -448,6 +448,16 @@ DT.Network.prototype.send = function ( event, data, view ) {
                 view[0] = 7;
                 break;
 
+            case 'PlayerTankRotateBase':
+
+                view[0] = 100;
+                break;
+
+            case 'PlayerTankMove':
+
+                view[0] = 101;
+                break;
+
             default:
 
                 console.error( '[NETWORK:SEND_MESSAGE] Unknown event "' + event + '" occurred.' );
