@@ -10,6 +10,7 @@ DT.Team = function ( params ) {
     this.players = [];
     this.kills = params.kills;
     this.death = params.death;
+    this.towersCount = 0;
     this.spawnPosition = { x: params.spawnPosition.x, y: params.spawnPosition.y, z: params.spawnPosition.z };
 
     this.color = DT.Team.colors[ this.id + '' ];

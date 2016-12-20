@@ -91,7 +91,7 @@ DT.Arena.prototype.reset = function ( params ) {
     //
 
     ui.updateLeaderboard( this.players, this.me );
-    ui.updateTeamScore( this.teams );
+    ui.updateTeamScore( this );
 
     ui.updateAmmo( this.me.ammo );
     ui.updateHealth( this.me.health );

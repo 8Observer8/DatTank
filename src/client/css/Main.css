@@ -633,7 +633,7 @@ object {
 #team-params {
     top: 10px;
     position: absolute;
-    width: 320px;
+    width: 380px;
     left: calc(50% - 160px);
     color: burlywood;
 }
@@ -657,7 +657,7 @@ object {
 
 .team-stat {
     height: 100%;
-    width: 80px;
+    width: 95px;
     float: left;
 }
 
@@ -794,6 +794,17 @@ object {
     color: #fff;
     width: 250px;
     font: normal 13px Roboto, arial, tahoma;
+}
+
+#loader-wrapper #background-img {
+    position: absolute;
+    width: 200px;
+    height: 150px;
+    left: 0px;
+    bottom: 0px;
+    opacity: 0.3;
+    background-image: url('../resources/img/tank-bg.png');
+    background-size: 100% 100%;
 }
 
 #loader-wrapper #progress-wrapper {

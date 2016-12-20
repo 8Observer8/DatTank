@@ -501,17 +501,17 @@ DT.Player.prototype.die = function ( killer ) {
     if ( killer ) {
 
         killer.team.kills ++;
+        killer.kills ++;
 
     }
 
     this.team.death ++;
+    this.death ++;
 
     this.movePath = [];
+    this.moveProgress = [];
+    this.movementDurationMap = [];
 
-    this.death ++;
-    killer.kills ++;
-
-    ui.updateTeamScore( DT.arena.teams );
     ui.updateLeaderboard( DT.arena.players, DT.arena.me );
 
     this.tank.destroy();

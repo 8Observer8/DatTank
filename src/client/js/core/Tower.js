@@ -298,7 +298,7 @@ DT.Tower.prototype.changeTeam = function ( team ) {
     //
 
     team.kills ++;
-    ui.updateTeamScore( DT.arena.teams );
+    ui.updateTeamScore( DT.arena );
 
 };
 

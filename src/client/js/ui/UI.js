@@ -220,13 +220,29 @@ DT.UI.prototype.hideWinners = function () {
 
 };
 
-DT.UI.prototype.updateTeamScore = function ( teams ) {
+DT.UI.prototype.updateTeamScore = function ( arena ) {
+
+    var totalTowerCount = arena.towers.length;
+
+    for ( var i = 0; i < arena.teams.length; i ++ ) {
+
+        arena.teams[ i ].towersCount = 0;
+
+    }
+
+    for ( var i = 0; i < totalTowerCount; i ++ ) {
+
+        arena.towers[ i ].team.towersCount ++;
+
+    }
+
+    //
 
     var list = $( '#team-params .team-number' );
 
     for ( var i = 0, il = list.length; i < il; i ++ ) {
 
-        $( list[ i ] ).html( teams[ i ].kills );
+        $( list[ i ] ).html( Math.floor( 100 * arena.teams[ i ].towersCount / totalTowerCount ) + '%' );
 
     }
 
