@@ -45,7 +45,16 @@ app.use( '/terms', express.static( __dirname + './../client/terms.html') );
 app.use( '/policy', express.static( __dirname + './../client/policy.html') );
 app.use( '/changelog', express.static( __dirname + './../client/changelog.html') );
 
-app.get( '/info', function ( req, res ) {
+app.get( '/api/info', function ( req, res ) {
+
+    if ( req.param( 'auth' ) !== 'ohmed' ) {
+
+        res.send('Bad auth.');
+        return;
+
+    }
+
+    //
 
     var players = 0;
     var bots = 0;
@@ -59,6 +68,23 @@ app.get( '/info', function ( req, res ) {
     }
 
     res.send({ info: { arenas: arenas, players: players, bots: bots } });
+
+});
+
+app.get( '/api/restart', function ( req, res ) {
+
+    if ( req.param( 'auth' ) !== 'ohmed' ) {
+
+        res.send('Bad auth.');
+        return;
+
+    }
+
+    //
+
+    console.log( 'Shutting down.' );
+    res.send( 'Done.' );
+    process.exit();
 
 });
 

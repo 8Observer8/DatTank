@@ -63,7 +63,6 @@ DT.Core.prototype.play = function ( event ) {
 
         // init controls
 
-        controls.clear();
         controls.mouseInit();
         controls.keyInit();
 
