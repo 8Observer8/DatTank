@@ -10,7 +10,7 @@ var BoxManager = function ( arena, params ) {
     this.arena = arena;
     this.boxes = [];
 
-    this.boxAVGCount = params.boxAVGCount || 14;
+    this.boxAVGCount = params.boxAVGCount || 25;
 
     this.time = 0;
 
@@ -87,7 +87,7 @@ BoxManager.prototype.removeBox = function ( box ) {
 BoxManager.prototype.getBoxesInRange = function ( player ) {
 
     var dx, dz;
-    var range = 40;
+    var range = 50;
     var result = [];
 
     for ( var i = 0, il = this.boxes.length; i < il; i ++ ) {
@@ -116,7 +116,7 @@ BoxManager.prototype.update = function ( delay, players ) {
     if ( this.boxes.length < this.boxAVGCount ) {
 
         this.addBox({
-            type: ( Math.random() > 0.6 ) ? 'Ammo' : 'Health'
+            type: ( Math.random() > 0.4 ) ? 'Ammo' : 'Health'
         });
 
     }

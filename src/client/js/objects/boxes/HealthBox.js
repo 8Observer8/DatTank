@@ -8,8 +8,6 @@ DT.Box.Health = function ( params ) {
     DT.Box.call( this, params );
 
     this.type = 'HealthBox';
-    this.amount = 20;
-
     this.animTime = 600 * Math.random() * Math.PI * 2;
 
     //

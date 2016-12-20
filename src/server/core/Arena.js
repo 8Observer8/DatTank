@@ -80,12 +80,6 @@ Arena.prototype.reset = function ( isNew ) {
 
     }
 
-    for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
-
-        this.towers[ i ].reset();
-
-    }
-
     this.players = [];
     this.bots = [];
 
@@ -93,7 +87,7 @@ Arena.prototype.reset = function ( isNew ) {
 
     setTimeout( function () {
 
-        for ( var i = 0; i < 3 + Math.floor( Math.random() * 3 ); i ++ ) {
+        for ( var i = 0; i < 5 + Math.floor( Math.random() * 5 ); i ++ ) {
 
             scope.bots.push( new DT.Bot( scope ) );
 
@@ -109,15 +103,15 @@ Arena.prototype.addObstacles = function ( treeCount, rockCount ) {
 
     var x, z;
     var scale, scaleH;
-    var baseSize = 100;
+    var baseSize = 150;
 
     while ( treeCount ) {
 
         scale = 20 * Math.random() + 25;
         scaleH = 20 * Math.random() + 25;
 
-        x = 2000 * ( Math.random() - 0.5 );
-        z = 2000 * ( Math.random() - 0.5 );
+        x = 2350 * ( Math.random() - 0.5 );
+        z = 2350 * ( Math.random() - 0.5 );
 
         //
 
@@ -383,6 +377,14 @@ Arena.prototype.removePlayer = function ( player ) {
 
         player.team.removePlayer( player );
         DT.Network.announce( this, 'playerLeft', { id: player.id } );
+
+    }
+
+    //
+
+    for ( var i = this.players.length; i < 8; i ++ ) {
+
+        this.bots.push( new DT.Bot( this ) );
 
     }
 

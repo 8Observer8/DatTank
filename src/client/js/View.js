@@ -219,7 +219,7 @@ DT.View.prototype.addMap = function () {
     groundTexture.wrapT = THREE.RepeatWrapping;
     groundTexture.repeat.set( 10, 10 );
 
-    var ground = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2000, 2000 ), new THREE.MeshLambertMaterial({ map: groundTexture, color: 0x555555 }) );
+    var ground = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2400, 2400 ), new THREE.MeshLambertMaterial({ map: groundTexture, color: 0x555555 }) );
     ground.rotation.x = - Math.PI / 2;
     ground.receiveShadow = true;
     this.scene.add( ground );
@@ -228,7 +228,7 @@ DT.View.prototype.addMap = function () {
     ground.name = 'ground';
     this.ground = ground;
 
-    var size = 2030;
+    var size = 2430;
 
     var edgeTexture = resourceManager.getTexture( 'brick.jpg' );
     edgeTexture.wrapS = THREE.RepeatWrapping;

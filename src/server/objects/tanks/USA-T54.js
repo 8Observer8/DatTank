@@ -13,7 +13,7 @@ var USAT54 = function ( params ) {
     this.range = 100;
     this.armour = 180;
     this.bullet = 105;
-    this.maxShells = 20;
+    this.maxShells = 70;
 
 };
 

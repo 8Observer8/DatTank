@@ -15,6 +15,7 @@ DT.Tower = function ( params ) {
     this.position = new THREE.Vector3( params.position.x, params.position.y, params.position.z );
 
     this.animations = {};
+    this.healthBar = false;
 
     //
 
@@ -85,6 +86,10 @@ DT.Tower.prototype.init = function () {
     shotAction.setDuration( 0.5 ).setLoop( THREE.LoopOnce );
     this.animations.shotAction = shotAction;
 
+    //
+
+    this.updateHealthBar();
+
 };
 
 DT.Tower.prototype.initBullets = function () {
@@ -113,7 +118,25 @@ DT.Tower.prototype.initBullets = function () {
 
 DT.Tower.prototype.updateHealthBar = function () {
 
-    // todo
+    if ( ! this.healthBar ) {
+
+        var bg = new THREE.Sprite( new THREE.SpriteMaterial( { color: 0xffffff, fog: true } ) );
+        var healthBar = new THREE.Sprite( new THREE.SpriteMaterial( { color: 0x00ff00, fog: true } ) );
+        healthBar.position.set( 0, 50, 0 );
+        healthBar.scale.set( 50, 2, 1 );
+
+        this.healthBar = {
+            bg:     bg,
+            health: healthBar
+        };
+
+        this.object.add( this.healthBar.health );
+
+    }
+
+    //
+
+    this.healthBar.health.scale.x = 50 * this.health / 100;
 
 };
 
@@ -268,6 +291,14 @@ DT.Tower.prototype.changeTeam = function ( team ) {
 
     this.object.top.material.materials[1].color.setHex( + team.color.replace('#', '0x') );
     this.object.base.material.materials[1].color.setHex( + team.color.replace('#', '0x') );
+
+    this.health = 100;
+    this.updateHealthBar();
+
+    //
+
+    team.kills ++;
+    ui.updateTeamScore( DT.arena.teams );
 
 };
 

@@ -234,7 +234,7 @@ Player.prototype.hit = (function () {
 
         if ( killer ) {
 
-            if ( killer instanceof DT.Tank ) {
+            if ( killer instanceof DT.Player ) {
 
                 this.health -= 40 * ( killer.tank.bullet / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
                 this.health = Math.max( Math.round( this.health ), 0 );
@@ -274,15 +274,11 @@ Player.prototype.die = (function () {
 
         this.status = Player.Dead;
 
-        if ( killer.team.id ) {
+        killer.kills ++;
+        this.death ++;
 
-            killer.kills ++;
-            this.death ++;
-
-            killer.team.kills ++;
-            this.team.death ++;
-
-        }
+        killer.team.kills ++;
+        this.team.death ++;
 
         bufferView[ 1 ] = this.id;
 
@@ -373,6 +369,7 @@ Player.prototype.toPublicJSON = function () {
 Player.numIds = 1;
 Player.Alive = 100;
 Player.Dead = 110;
+
 //
 
 module.exports = Player;

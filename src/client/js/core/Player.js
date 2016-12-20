@@ -95,8 +95,8 @@ DT.Player.prototype.respawn = function ( fromNetwork, params ) {
     if ( fromNetwork ) {
 
         this.status = 'alive';
-        this.ammo = 20;
-        this.health = 100;
+        this.ammo = params.ammo;
+        this.health = params.health;
 
         this.position.set( params.position[0], params.position[1], params.position[2] );
         this.rotation = params.rotation;
@@ -512,7 +512,7 @@ DT.Player.prototype.die = function ( killer ) {
     killer.kills ++;
 
     ui.updateTeamScore( DT.arena.teams );
-    ui.updateLeaderboard( DT.arena.players, DT.Arena.me );
+    ui.updateLeaderboard( DT.arena.players, DT.arena.me );
 
     this.tank.destroy();
 

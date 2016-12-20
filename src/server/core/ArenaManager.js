@@ -23,6 +23,8 @@ ArenaManager.prototype.addArena = function () {
 
 ArenaManager.prototype.removeArena = function ( arena ) {
 
+    if ( this.arenas.length === 1 ) return;
+
     var newArenaList = [];
 
     for ( var i = 0, il = this.arenas.length; i < il; i ++ ) {

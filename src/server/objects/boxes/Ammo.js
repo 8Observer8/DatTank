@@ -8,7 +8,7 @@ var Ammo = function ( params ) {
     DT.Box.call( this, params );
 
     this.type = 'Ammo';
-    this.amount = 20;
+    this.amount = 40;
 
     //
 

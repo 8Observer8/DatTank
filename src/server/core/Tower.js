@@ -13,7 +13,7 @@ var Tower = function ( arena, params ) {
     this.team = params.team || false;
     this.health = 100;
     this.shootTime = Date.now();
-    this.cooldown = 2000;
+    this.cooldown = 1500;
 
     this.target = false;
     this.hits = {};
@@ -25,20 +25,29 @@ var Tower = function ( arena, params ) {
         z: params.position.z || 0
     };
 
-    this.range = 200;
-    this.armour = 300;
+    this.range = 300;
+    this.armour = 350;
+
+    //
+
+    for ( var i in arena.teams ) {
+
+        if ( arena.teams[ i ].id >= 1000 ) continue;
+
+        if ( utils.getDistance( arena.teams[ i ].spawnPosition, this.position ) < 50 ) {
+
+            this.team = arena.teams[ i ];
+            break;
+
+        }
+
+    }
 
 };
 
 Tower.prototype = {};
 
 Tower.prototype.init = function () {
-
-    // todo
-
-};
-
-Tower.prototype.reset = function () {
 
     // todo
 
@@ -63,7 +72,7 @@ Tower.prototype.shoot = (function () {
         rotation = utils.formatAngle( rotation );
         delta = rotation - this.rotation;
 
-        if ( Math.abs( delta ) > 0.3 ) return;
+        if ( Math.abs( delta ) > 0.5 ) return;
 
         //
 
@@ -95,12 +104,16 @@ Tower.prototype.hit = (function () {
 
     return function ( killer ) {
 
-        var amount = Math.floor( 40 * ( killer.tank.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ) );
+        var amount = Math.floor( 57 * ( killer.tank.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ) );
 
         if ( this.health - amount <= 0 ) {
 
             this.health = 0;
             this.changeTeam( killer.team );
+
+            killer.team.kills ++;
+            killer.kills ++;
+
             return;
 
         }
@@ -140,22 +153,7 @@ Tower.prototype.changeTeam = (function () {
 Tower.prototype.checkForTarget = function ( players ) {
 
     var dist;
-    var target = this.target || false;
-    this.target = false;
-
-    if ( target && target.status === DT.Player.Alive && target.team.id !== this.team.id ) {
-
-        dist = utils.getDistance( this.position, { x: target.position[0], y: target.position[1], z: target.position[2] });
-
-        if ( dist < this.range ) {
-
-            return target;
-
-        }
-
-    }
-
-    target = false;
+    var target = false;
     var minDistance = false;
 
     for ( var i = 0, il = players.length; i < il; i ++ ) {
@@ -255,9 +253,27 @@ Tower.prototype.rotateTop = (function () {
 
 Tower.prototype.update = function () {
 
-    var target = this.checkForTarget( this.arena.players );
+    var target = false;
+
+    if ( this.target ) {
+
+        if ( this.target.team.id !== this.team.id && this.target.status === DT.Player.Alive ) {
+
+            var dist = utils.getDistance( this.position, { x: this.target.position[0], y: this.target.position[1], z: this.target.position[2] });
+            if ( dist < this.range ) target = this.target;
+
+        }
+
+    }
+
+    if ( ! target ) {
+
+        target = this.checkForTarget( this.arena.players );
+        this.target = target;
+
+    }
+
     if ( ! target ) return;
-    this.target = target;
 
     //
 

@@ -107,7 +107,7 @@ Network.init = function () {
                         var target;
                         var shooter;
 
-                        if ( data[2] <= 10000 ) {
+                        if ( data[2] < 10000 ) {
 
                             shooter = socket.arena.getPlayerById( data[ 2 ] );
 
@@ -117,7 +117,7 @@ Network.init = function () {
 
                         }
 
-                        if ( data[0] > 10000 ) {
+                        if ( data[0] >= 10000 ) {
 
                             target = socket.arena.getTowerById( data[ 0 ] - 10000 );
 
