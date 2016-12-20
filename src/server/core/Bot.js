@@ -23,9 +23,9 @@ var Bot = function ( arena ) {
 
         this.login = logins[ Math.floor( logins.length * Math.random() ) ];
 
-        for ( var i = 0; i < this.arena.bots.length; i++ ) {
+        for ( var i = 0; i < this.arena.bots.length; i ++ ) {
 
-            if ( this.login === this.arena.bots[i].login ) {
+            if ( this.login === this.arena.bots[ i ].login ) {
 
                 this.login = false;
 

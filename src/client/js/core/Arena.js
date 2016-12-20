@@ -48,7 +48,6 @@ DT.Arena.prototype.reset = function ( params ) {
 
     // init obstacles
 
-    this.pathFinder.reset();
     ui.clearKills();
 
     view.addObsticles( params.obstacles );

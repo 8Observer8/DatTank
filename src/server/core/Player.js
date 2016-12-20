@@ -312,6 +312,7 @@ Player.prototype.die = (function () {
 
                     scope.arena.removeBot( scope );
                     scope.arena.removePlayer( scope );
+                    scope.bot.dispose();
 
                 }, 2000 );
 
