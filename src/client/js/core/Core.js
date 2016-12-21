@@ -58,8 +58,12 @@ DT.Core.prototype.play = function ( event ) {
         var value = Math.round( 100 * progress ) + '%';
         $('#loader-wrapper #progress-wrapper #progress-bar').css( 'width', value );
         $('#loader-wrapper #title span').html( value );
+        $('#crowd-shortcut').hide();
 
     }, function () {
+
+        $('#loader-wrapper #progress-wrapper').hide();
+        $('#loader-wrapper #title').html('Initializing arena...');
 
         // init controls
 
@@ -100,10 +104,7 @@ DT.Core.prototype.play = function ( event ) {
 
             // UI changes
 
-            ui.showViewport();
             ui.setCursor();
-
-            ui.hideLoaderScreen();
 
         });
 
@@ -116,10 +117,17 @@ DT.Core.prototype.joinArena = function ( params ) {
     view.clean();
     view.setupScene();
 
+    $('#crowd-shortcut').show();
+
     //
 
     DT.arena = new DT.Arena();
     DT.arena.init( params );
+
+    //
+
+    ui.showViewport();
+    ui.hideLoaderScreen();
 
     //
 

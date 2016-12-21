@@ -48,7 +48,7 @@ Bot.prototype.init = function () {
     this.player.ammo = 10000000;
     this.arena.addPlayer( this.player );
 
-    this.player.bot = true;
+    this.player.bot = this;
 
     this.updateInterval = setInterval( this.update.bind( this ), 100 );
 
