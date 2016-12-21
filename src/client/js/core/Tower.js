@@ -3,10 +3,10 @@
  * Tower object class
 */
 
-DT.Tower = function ( params ) {
+Game.Tower = function ( params ) {
 
     this.id = params.id;
-    this.team = DT.arena.getTeamById( params.team ) || false;
+    this.team = Game.arena.getTeamById( params.team ) || false;
     this.health = params.health;
 
     this.bullets = [];
@@ -28,9 +28,9 @@ DT.Tower = function ( params ) {
 
 };
 
-DT.Tower.prototype = {};
+Game.Tower.prototype = {};
 
-DT.Tower.prototype.init = function () {
+Game.Tower.prototype.init = function () {
 
     var towerBaseModel = resourceManager.getModel('Tower_base.json');
     var towerTopModel = resourceManager.getModel('Tower_top.json');
@@ -92,7 +92,7 @@ DT.Tower.prototype.init = function () {
 
 };
 
-DT.Tower.prototype.initBullets = function () {
+Game.Tower.prototype.initBullets = function () {
 
     for ( var i = 0; i < 5; i ++ ) {
 
@@ -116,7 +116,7 @@ DT.Tower.prototype.initBullets = function () {
 
 };
 
-DT.Tower.prototype.updateHealthBar = function () {
+Game.Tower.prototype.updateHealthBar = function () {
 
     if ( ! this.healthBar ) {
 
@@ -140,14 +140,14 @@ DT.Tower.prototype.updateHealthBar = function () {
 
 };
 
-DT.Tower.prototype.rotateTop = function ( angle ) {
+Game.Tower.prototype.rotateTop = function ( angle ) {
 
     this.rotation = angle;
     this.object.top.rotation.y = angle;
 
 };
 
-DT.Tower.prototype.shoot = function ( shootId ) {
+Game.Tower.prototype.shoot = function ( shootId ) {
 
     var bullet = false;
     var hitCallback = false;
@@ -269,7 +269,7 @@ DT.Tower.prototype.shoot = function ( shootId ) {
 
 };
 
-DT.Tower.prototype.animate = function ( delta ) {
+Game.Tower.prototype.animate = function ( delta ) {
 
     if ( this.mixer ) {
 
@@ -279,13 +279,13 @@ DT.Tower.prototype.animate = function ( delta ) {
 
 };
 
-DT.Tower.prototype.hit = function () {
+Game.Tower.prototype.hit = function () {
 
     // todo
 
 };
 
-DT.Tower.prototype.changeTeam = function ( team ) {
+Game.Tower.prototype.changeTeam = function ( team ) {
 
     this.team = team;
 
@@ -298,18 +298,18 @@ DT.Tower.prototype.changeTeam = function ( team ) {
     //
 
     team.kills ++;
-    ui.updateTeamScore( DT.arena );
+    ui.updateTeamScore( Game.arena );
 
 };
 
-DT.Tower.prototype.updateHealth = function ( health ) {
+Game.Tower.prototype.updateHealth = function ( health ) {
 
     this.health = health;
     this.updateHealthBar();
 
 };
 
-DT.Tower.prototype.update = function ( delta ) {
+Game.Tower.prototype.update = function ( delta ) {
 
     this.animate( delta );
 

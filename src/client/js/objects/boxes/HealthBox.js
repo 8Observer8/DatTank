@@ -3,9 +3,9 @@
  * HealthBox main class
 */
 
-DT.Box.Health = function ( params ) {
+Game.Box.Health = function ( params ) {
 
-    DT.Box.call( this, params );
+    Game.Box.call( this, params );
 
     this.type = 'HealthBox';
     this.animTime = 600 * Math.random() * Math.PI * 2;
@@ -16,9 +16,9 @@ DT.Box.Health = function ( params ) {
 
 };
 
-DT.Box.Health.prototype = Object.create( DT.Box.prototype );
+Game.Box.Health.prototype = Object.create( Game.Box.prototype );
 
-DT.Box.Health.prototype.init = function () {
+Game.Box.Health.prototype.init = function () {
 
     var boxModel = resourceManager.getModel( 'health_box.json' );
 
@@ -33,13 +33,13 @@ DT.Box.Health.prototype.init = function () {
 
 };
 
-DT.Box.Health.prototype.remove = function () {
+Game.Box.Health.prototype.remove = function () {
 
     view.scene.remove( this.mesh );
 
 };
 
-DT.Box.Health.prototype.update = function ( delta ) {
+Game.Box.Health.prototype.update = function ( delta ) {
 
     this.animTime += delta;
     this.mesh.rotation.y = Math.sin( this.animTime / 600 );

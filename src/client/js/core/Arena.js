@@ -3,15 +3,15 @@
  * DatTank Arena object
 */
 
-DT.Arena = function () {
+Game.Arena = function () {
 
     this.players = [];
     this.teams = [];
     this.towers = [];
     this.me = false;
 
-    this.boxManager = new DT.BoxManager();
-    this.pathFinder = new DT.PathFinder();
+    this.boxManager = new Game.BoxManager();
+    this.pathFinder = new Game.PathFinder();
 
     //
 
@@ -19,16 +19,16 @@ DT.Arena = function () {
 
 };
 
-DT.Arena.prototype = {};
+Game.Arena.prototype = {};
 
-DT.Arena.prototype.init = function ( params ) {
+Game.Arena.prototype.init = function ( params ) {
 
     this.id = params.id;
     this.reset( params );
 
 };
 
-DT.Arena.prototype.clear = function () {
+Game.Arena.prototype.clear = function () {
 
     this.teams = [];
 
@@ -42,7 +42,7 @@ DT.Arena.prototype.clear = function () {
 
 };
 
-DT.Arena.prototype.reset = function ( params ) {
+Game.Arena.prototype.reset = function ( params ) {
 
     this.me = ( params.me !== undefined ) ? params.me : false;
 
@@ -56,7 +56,7 @@ DT.Arena.prototype.reset = function ( params ) {
 
     for ( var i = 0; i < params.teams.length; i ++ ) {
 
-        this.teams.push( new DT.Team( params.teams[ i ] ) );
+        this.teams.push( new Game.Team( params.teams[ i ] ) );
 
     }
 
@@ -65,7 +65,7 @@ DT.Arena.prototype.reset = function ( params ) {
     for ( var i = 0, il = params.players.length; i < il; i ++ ) {
 
         var playerParams = params.players[ i ];
-        var player = new DT.Player( this, playerParams );
+        var player = new Game.Player( this, playerParams );
 
         this.addPlayer( player );
 
@@ -97,7 +97,7 @@ DT.Arena.prototype.reset = function ( params ) {
 
 };
 
-DT.Arena.prototype.addTowers = function ( params ) {
+Game.Arena.prototype.addTowers = function ( params ) {
 
     var sizeX = 130;
     var sizeZ = 130;
@@ -105,17 +105,17 @@ DT.Arena.prototype.addTowers = function ( params ) {
 
     for ( var i = 0, il = params.length; i < il; i ++ ) {
 
-        var tower = new DT.Tower( params[ i ] );
+        var tower = new Game.Tower( params[ i ] );
         this.towers.push( tower );
         placingObjects.push( [ new THREE.Vector3( tower.position.x - sizeX / 2, 0, tower.position.z - sizeZ / 2 ), new THREE.Vector3( tower.position.x + sizeX / 2, 0, tower.position.z + sizeZ / 2 ) ] );
 
     }
 
-    DT.arena.pathFinder.placeObjects( placingObjects );
+    Game.arena.pathFinder.placeObjects( placingObjects );
 
 };
 
-DT.Arena.prototype.getPlayerById = function ( playerId ) {
+Game.Arena.prototype.getPlayerById = function ( playerId ) {
 
     for ( var i = 0, il = this.players.length; i < il; i ++ ) {
 
@@ -131,7 +131,7 @@ DT.Arena.prototype.getPlayerById = function ( playerId ) {
 
 };
 
-DT.Arena.prototype.getTowerById = function ( towerId ) {
+Game.Arena.prototype.getTowerById = function ( towerId ) {
 
     for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
 
@@ -147,7 +147,7 @@ DT.Arena.prototype.getTowerById = function ( towerId ) {
 
 };
 
-DT.Arena.prototype.getTeamById = function ( teamId ) {
+Game.Arena.prototype.getTeamById = function ( teamId ) {
 
     for ( var i = 0, il = this.teams.length; i < il; i ++ ) {
 
@@ -163,7 +163,7 @@ DT.Arena.prototype.getTeamById = function ( teamId ) {
 
 };
 
-DT.Arena.prototype.addPlayer = function ( player ) {
+Game.Arena.prototype.addPlayer = function ( player ) {
 
     if ( player.id === this.me ) {
 
@@ -183,7 +183,7 @@ DT.Arena.prototype.addPlayer = function ( player ) {
 
 };
 
-DT.Arena.prototype.removePlayer = function ( player ) {
+Game.Arena.prototype.removePlayer = function ( player ) {
 
     var newPlayersList = [];
 
@@ -201,7 +201,7 @@ DT.Arena.prototype.removePlayer = function ( player ) {
 
 };
 
-DT.Arena.prototype.clear = function () {
+Game.Arena.prototype.clear = function () {
 
     this.players = [];
     this.teams = [];

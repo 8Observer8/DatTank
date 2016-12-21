@@ -3,9 +3,9 @@
  * Tank "USA-T54" unit class
 */
 
-DT.Tank.USAT54 = function ( params ) {
+Game.Tank.USAT54 = function ( params ) {
 
-    DT.Tank.call( this, params );
+    Game.Tank.call( this, params );
 
     //
 
@@ -18,14 +18,14 @@ DT.Tank.USAT54 = function ( params ) {
 
 };
 
-DT.Tank.USAT54.prototype = Object.create( DT.Tank.prototype );
+Game.Tank.USAT54.prototype = Object.create( Game.Tank.prototype );
 
-DT.Tank.USAT54.prototype.speed = 43;
-DT.Tank.USAT54.prototype.range = 100;
-DT.Tank.USAT54.prototype.armour = 180;
-DT.Tank.USAT54.prototype.bullet = 105;
+Game.Tank.USAT54.prototype.speed = 43;
+Game.Tank.USAT54.prototype.range = 100;
+Game.Tank.USAT54.prototype.armour = 180;
+Game.Tank.USAT54.prototype.bullet = 105;
 
-DT.Tank.USAT54.prototype.initModel = function () {
+Game.Tank.USAT54.prototype.initModel = function () {
 
     this.object = new THREE.Object3D();
 
@@ -98,7 +98,7 @@ DT.Tank.USAT54.prototype.initModel = function () {
 
 };
 
-DT.Tank.USAT54.prototype.destroy = function () {
+Game.Tank.USAT54.prototype.destroy = function () {
 
     var scope = this;
 
@@ -129,10 +129,10 @@ DT.Tank.USAT54.prototype.destroy = function () {
 
 //
 
-DT.Tank.list[ 'USAT54' ] = {
+Game.Tank.list[ 'USAT54' ] = {
     title:      'USA-T54',
-    speed:      DT.Tank.USAT54.prototype.speed,
-    range:      DT.Tank.USAT54.prototype.range,
-    armour:     DT.Tank.USAT54.prototype.armour,
-    bullet:     DT.Tank.USAT54.prototype.bullet
+    speed:      Game.Tank.USAT54.prototype.speed,
+    range:      Game.Tank.USAT54.prototype.range,
+    armour:     Game.Tank.USAT54.prototype.armour,
+    bullet:     Game.Tank.USAT54.prototype.bullet
 };

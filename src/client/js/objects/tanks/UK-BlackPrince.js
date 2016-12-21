@@ -3,9 +3,9 @@
  * Tank "USA-T54" unit class
 */
 
-DT.Tank.UKBlackPrince = function ( params ) {
+Game.Tank.UKBlackPrince = function ( params ) {
 
-    DT.Tank.call( this, params );
+    Game.Tank.call( this, params );
 
     //
 
@@ -18,14 +18,14 @@ DT.Tank.UKBlackPrince = function ( params ) {
 
 };
 
-DT.Tank.UKBlackPrince.prototype = Object.create( DT.Tank.prototype );
+Game.Tank.UKBlackPrince.prototype = Object.create( Game.Tank.prototype );
 
-DT.Tank.UKBlackPrince.prototype.speed = 30;
-DT.Tank.UKBlackPrince.prototype.range = 160;
-DT.Tank.UKBlackPrince.prototype.armour = 252;
-DT.Tank.UKBlackPrince.prototype.bullet = 77;
+Game.Tank.UKBlackPrince.prototype.speed = 30;
+Game.Tank.UKBlackPrince.prototype.range = 160;
+Game.Tank.UKBlackPrince.prototype.armour = 252;
+Game.Tank.UKBlackPrince.prototype.bullet = 77;
 
-DT.Tank.UKBlackPrince.prototype.initModel = function () {
+Game.Tank.UKBlackPrince.prototype.initModel = function () {
 
     this.object = new THREE.Object3D();
 
@@ -97,7 +97,7 @@ DT.Tank.UKBlackPrince.prototype.initModel = function () {
 
 };
 
-DT.Tank.UKBlackPrince.prototype.destroy = function () {
+Game.Tank.UKBlackPrince.prototype.destroy = function () {
 
     var scope = this;
 
@@ -128,10 +128,10 @@ DT.Tank.UKBlackPrince.prototype.destroy = function () {
 
 //
 
-DT.Tank.list[ 'UKBlackPrince' ] = {
+Game.Tank.list[ 'UKBlackPrince' ] = {
     title:      'UK-Black-Prince',
-    speed:      DT.Tank.UKBlackPrince.prototype.speed,
-    range:      DT.Tank.UKBlackPrince.prototype.range,
-    armour:     DT.Tank.UKBlackPrince.prototype.armour,
-    bullet:     DT.Tank.UKBlackPrince.prototype.bullet
+    speed:      Game.Tank.UKBlackPrince.prototype.speed,
+    range:      Game.Tank.UKBlackPrince.prototype.range,
+    armour:     Game.Tank.UKBlackPrince.prototype.armour,
+    bullet:     Game.Tank.UKBlackPrince.prototype.bullet
 };

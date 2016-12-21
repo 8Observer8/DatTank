@@ -3,19 +3,18 @@
  * DatTank networking
 */
 
-DT.Network = function () {
+Game.NetworkManager = function () {
 
-    this.connected = 0;
+    this.connected = false;
     this.transport = false;
-    this.tryToReconnect = false;
 
     this.initCallback = false;
 
 };
 
-DT.Network.prototype = {};
+Game.NetworkManager.prototype = {};
 
-DT.Network.prototype.init = function ( callback ) {
+Game.NetworkManager.prototype.init = function ( callback ) {
 
     this.initCallback = callback;
 
@@ -40,39 +39,24 @@ DT.Network.prototype.init = function ( callback ) {
 
 };
 
-DT.Network.prototype.connect = function () {
+Game.NetworkManager.prototype.connect = function () {
 
-    this.connected = 1;
-
-    if ( this.tryToReconnect ) {
-
-        this.reconnect();
-        return;
-
-    }
+    this.connected = true;
+    this.initCallback();
 
     //
-
-    this.initCallback();
 
     console.log( '[NETWORK] Connected to server.' );
 
 };
 
-DT.Network.prototype.reconnect = function () {
+Game.NetworkManager.prototype.reconnect = function () {
 
-    var scope = this;
-
-    this.tryToReconnect = false;
-    setTimeout( scope.send.bind( scope, 'reconnect', { arena: DT.arena.id, id: DT.arena.me.id }), 10 );
-
-    //
-
-    console.log( '[NETWORK] Reconnected to server.' );
+    // todo
 
 };
 
-DT.Network.prototype.message = function ( event ) {
+Game.NetworkManager.prototype.message = function ( event ) {
 
     var data = event.data;
     var event = false;
@@ -99,18 +83,18 @@ DT.Network.prototype.message = function ( event ) {
 
             case 'joinArena':
 
-                core.joinArena( data );
+                game.joinArena( data );
                 break;
 
             case 'playerJoined':
 
-                var player = new DT.Player( DT.arena, data );
-                DT.arena.addPlayer( player );
+                var player = new Game.Player( Game.arena, data );
+                Game.arena.addPlayer( player );
                 break;
 
             case 'respawn':
 
-                var player = DT.arena.getPlayerById( data.player.id );
+                var player = Game.arena.getPlayerById( data.player.id );
 
                 if ( ! player ) {
 
@@ -125,34 +109,34 @@ DT.Network.prototype.message = function ( event ) {
 
             case 'resetArena':
 
-                DT.arena.clear();
+                Game.arena.clear();
                 ui.showWinners( data.winnerTeam );
                 break;
 
             case 'playerLeft':
 
-                if ( DT.arena.getPlayerById( data.id ) ) {
+                if ( Game.arena.getPlayerById( data.id ) ) {
 
-                    DT.arena.removePlayer( DT.arena.getPlayerById( data.id ) );
+                    Game.arena.removePlayer( Game.arena.getPlayerById( data.id ) );
 
                 }
 
-                ui.updateLeaderboard( DT.arena.players, DT.arena.me );
+                ui.updateLeaderboard( Game.arena.players, Game.arena.me );
                 break;
 
             case 'addBox':
 
-                DT.arena.boxManager.addBox( data );
+                Game.arena.boxManager.addBox( data );
                 break;
 
             case 'pickedBox':
 
-                DT.arena.boxManager.removeBox( data.id );
+                Game.arena.boxManager.removeBox( data.id );
                 break;
 
             case 'gotBox':
 
-                DT.arena.me.gotBox( data.box, data.value );
+                Game.arena.me.gotBox( data.box, data.value );
                 break;
 
             case 'TowerRotateTop':
@@ -181,7 +165,7 @@ DT.Network.prototype.message = function ( event ) {
                 var playerId = data[0];
                 var topAngle = data[1] / 100;
 
-                var player = DT.arena.getPlayerById( playerId );
+                var player = Game.arena.getPlayerById( playerId );
 
                 if ( ! player ) {
 
@@ -205,7 +189,7 @@ DT.Network.prototype.message = function ( event ) {
 
                 }
 
-                var player = DT.arena.getPlayerById( playerId );
+                var player = Game.arena.getPlayerById( playerId );
 
                 if ( ! player ) {
 
@@ -220,7 +204,7 @@ DT.Network.prototype.message = function ( event ) {
             case 3:     // shoot
 
                 var playerId = data[0];
-                var player = DT.arena.getPlayerById( playerId );
+                var player = Game.arena.getPlayerById( playerId );
 
                 if ( ! player ) {
 
@@ -238,7 +222,7 @@ DT.Network.prototype.message = function ( event ) {
 
                 if ( targetId < 10000 ) {
 
-                    var player = DT.arena.getPlayerById( targetId );
+                    var player = Game.arena.getPlayerById( targetId );
 
                     if ( ! player ) {
 
@@ -253,7 +237,7 @@ DT.Network.prototype.message = function ( event ) {
 
                     targetId -= 10000;
 
-                    var tower = DT.arena.getTowerById( targetId );
+                    var tower = Game.arena.getTowerById( targetId );
                     tower.updateHealth( data[1] );
 
                 }
@@ -265,16 +249,16 @@ DT.Network.prototype.message = function ( event ) {
                 var playerId = data[0];
                 var killerId = data[1];
 
-                var player = DT.arena.getPlayerById( playerId );
+                var player = Game.arena.getPlayerById( playerId );
                 var killer;
 
                 if ( killerId < 10000 ) {
 
-                    killer = DT.arena.getPlayerById( killerId );
+                    killer = Game.arena.getPlayerById( killerId );
 
                 } else {
 
-                    killer = DT.arena.getTowerById( killerId - 10000 );
+                    killer = Game.arena.getTowerById( killerId - 10000 );
 
                 }
 
@@ -292,7 +276,7 @@ DT.Network.prototype.message = function ( event ) {
 
                 var playerId = data[0];
 
-                var player = DT.arena.getPlayerById( playerId );
+                var player = Game.arena.getPlayerById( playerId );
                 if ( ! player ) return;
 
                 player.move( new THREE.Vector3( data[1] - 1000, 0, data[2] - 1000 ), true );
@@ -301,7 +285,7 @@ DT.Network.prototype.message = function ( event ) {
             case 200:
 
                 var towerId = data[0];
-                var tower = DT.arena.getTowerById( towerId );
+                var tower = Game.arena.getTowerById( towerId );
                 tower.rotateTop( data[1] / 100 );
                 break;
 
@@ -309,7 +293,7 @@ DT.Network.prototype.message = function ( event ) {
 
                 var towerId = data[0];
                 var shootId = data[1];
-                var tower = DT.arena.getTowerById( towerId );
+                var tower = Game.arena.getTowerById( towerId );
 
                 if ( ! tower ) {
 
@@ -341,8 +325,8 @@ DT.Network.prototype.message = function ( event ) {
 
                 var towerId = data[0];
                 var teamId = data[1];
-                var tower = DT.arena.getTowerById( towerId );
-                var team = DT.arena.getTeamById( teamId );
+                var tower = Game.arena.getTowerById( towerId );
+                var team = Game.arena.getTeamById( teamId );
 
                 if ( ! tower ) {
 
@@ -373,11 +357,10 @@ DT.Network.prototype.message = function ( event ) {
 
 };
 
-DT.Network.prototype.disconnected = function () {
+Game.NetworkManager.prototype.disconnected = function () {
 
-    this.connected = 0;
+    this.connected = false;
     this.transport = false;
-    this.tryToReconnect = true;
 
     this.init();
 
@@ -387,13 +370,17 @@ DT.Network.prototype.disconnected = function () {
 
 };
 
-DT.Network.prototype.error = function ( err ) {
+Game.NetworkManager.prototype.error = function ( err ) {
+
+    // todo: handle error
+
+    //
 
     console.error( '[NETWORK] Connection error: ', err );
 
 };
 
-DT.Network.prototype.send = function ( event, data, view ) {
+Game.NetworkManager.prototype.send = function ( event, data, view ) {
 
     if ( ! this.transport ) {
 
@@ -476,4 +463,9 @@ DT.Network.prototype.send = function ( event, data, view ) {
 
     return true;
 
+};
+
+Game.NetworkManager.events = {
+    in:     {},
+    out:    {}
 };

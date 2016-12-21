@@ -3,7 +3,7 @@
  * Box main class
 */
 
-DT.Box = function ( params ) {
+Game.Box = function ( params ) {
 
     params = params || {};
 
@@ -21,4 +21,4 @@ DT.Box = function ( params ) {
 
 };
 
-DT.Box.prototype = {};
+Game.Box.prototype = {};

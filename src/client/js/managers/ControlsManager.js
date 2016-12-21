@@ -3,7 +3,7 @@
  * DatTank mouse/keys controls
 */
 
-DT.Controls = function () {
+Game.Controls = function () {
 
     this.pressedKey = false;
     this.pressedMouseKey = false;
@@ -18,9 +18,9 @@ DT.Controls = function () {
 
 };
 
-DT.Controls.prototype = {};
+Game.Controls.prototype = {};
 
-DT.Controls.prototype.mouseInit = function () {
+Game.Controls.prototype.mouseInit = function () {
 
     var scope = this;
 
@@ -44,7 +44,7 @@ DT.Controls.prototype.mouseInit = function () {
 
             case 1:
 
-                DT.arena.me.shoot();
+                Game.arena.me.shoot();
                 break;
 
             case 2:
@@ -59,7 +59,7 @@ DT.Controls.prototype.mouseInit = function () {
 
                 if ( intersections[0] && intersections[0].object.name === 'ground' ) {
 
-                    DT.arena.me.move( intersections[0].point );
+                    Game.arena.me.move( intersections[0].point );
                     view.showDestinationPoint( intersections[0].point );
 
                 }
@@ -96,7 +96,7 @@ DT.Controls.prototype.mouseInit = function () {
 
 };
 
-DT.Controls.prototype.keyInit = function () {
+Game.Controls.prototype.keyInit = function () {
 
     var scope = this;
 
@@ -186,7 +186,7 @@ DT.Controls.prototype.keyInit = function () {
 
 //
 
-DT.Controls.prototype.rotateBase = ( function () {
+Game.Controls.prototype.rotateBase = ( function () {
 
     var buffer = new ArrayBuffer( 4 );
     var bufferView = new Int16Array( buffer );
@@ -202,7 +202,7 @@ DT.Controls.prototype.rotateBase = ( function () {
 
 }) ();
 
-DT.Controls.prototype.move = ( function () {
+Game.Controls.prototype.move = ( function () {
 
     var buffer = new ArrayBuffer( 4 );
     var bufferView = new Int16Array( buffer );

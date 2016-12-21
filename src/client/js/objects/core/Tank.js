@@ -3,11 +3,11 @@
  * Tank unit general class
 */
 
-DT.Tank = function ( params ) {
+Game.Tank = function ( params ) {
 
     params = params || {};
 
-    this.id = DT.Tank.numID ++;
+    this.id = Game.Tank.numID ++;
     this.player = params.player;
 
     this.animations = {};
@@ -28,9 +28,9 @@ DT.Tank = function ( params ) {
 
 };
 
-DT.Tank.prototype = {};
+Game.Tank.prototype = {};
 
-DT.Tank.prototype.init = function () {
+Game.Tank.prototype.init = function () {
 
     this.initModel();
     this.initBullets();
@@ -39,7 +39,7 @@ DT.Tank.prototype.init = function () {
 
 };
 
-DT.Tank.prototype.initBullets = function () {
+Game.Tank.prototype.initBullets = function () {
 
     for ( var i = 0; i < 5; i ++ ) {
 
@@ -56,7 +56,7 @@ DT.Tank.prototype.initBullets = function () {
         bullet.soundShooting.setRefDistance( 30 );
         bullet.soundShooting.autoplay = false;
 
-        if ( this.player.id !== DT.arena.me ) bullet.soundShooting.setVolume(0.4);
+        if ( this.player.id !== Game.arena.me ) bullet.soundShooting.setVolume(0.4);
 
         this.object.add( bullet.soundShooting );
 
@@ -64,14 +64,14 @@ DT.Tank.prototype.initBullets = function () {
 
 };
 
-DT.Tank.prototype.initSounds = function () {
+Game.Tank.prototype.initSounds = function () {
 
     this.sounds.moving = new THREE.PositionalAudio( view.sound.listener );
     this.sounds.moving.setBuffer( resourceManager.getSound('tank_moving.wav') );
     this.sounds.moving.loop = true;
     this.sounds.moving.setRefDistance( 15 );
     this.sounds.moving.autoplay = false;
-    if ( this.player.id !== DT.arena.me ) this.sounds.moving.setVolume(0.4);
+    if ( this.player.id !== Game.arena.me ) this.sounds.moving.setVolume(0.4);
 
     this.object.add( this.sounds.moving );
 
@@ -80,13 +80,13 @@ DT.Tank.prototype.initSounds = function () {
     this.sounds.explosion.loop = true;
     this.sounds.explosion.setRefDistance( 15 );
     this.sounds.explosion.autoplay = false;
-    if ( this.player.id !== DT.arena.me ) this.sounds.explosion.setVolume(0.4);
+    if ( this.player.id !== Game.arena.me ) this.sounds.explosion.setVolume(0.4);
 
     this.object.add( this.sounds.explosion );
 
 };
 
-DT.Tank.prototype.initLabel = function () {
+Game.Tank.prototype.initLabel = function () {
 
     var canvas = document.createElement( 'canvas' );
     canvas.width = 30 + 20 * this.player.login.length;
@@ -114,7 +114,7 @@ DT.Tank.prototype.initLabel = function () {
 
 };
 
-DT.Tank.prototype.reset = function () {
+Game.Tank.prototype.reset = function () {
 
     this.animations.deathAction1.stop();
     this.animations.deathAction2.stop();
@@ -128,25 +128,25 @@ DT.Tank.prototype.reset = function () {
 
 };
 
-DT.Tank.prototype.setRotation = function ( angle ) {
+Game.Tank.prototype.setRotation = function ( angle ) {
 
     this.object.rotation.y = angle;
 
 };
 
-DT.Tank.prototype.setTopRotation = function ( angle ) {
+Game.Tank.prototype.setTopRotation = function ( angle ) {
 
     this.object.top.rotation.y = angle;
 
 };
 
-DT.Tank.prototype.setPosition = function ( x, y, z ) {
+Game.Tank.prototype.setPosition = function ( x, y, z ) {
 
     this.object.position.set( x, y, z );
 
 };
 
-DT.Tank.prototype.showBlastSmoke = function () {
+Game.Tank.prototype.showBlastSmoke = function () {
 
     this.blastSmokeEnabled = true;
 
@@ -195,7 +195,7 @@ DT.Tank.prototype.showBlastSmoke = function () {
 
 };
 
-DT.Tank.prototype.hideBlastSmoke = function () {
+Game.Tank.prototype.hideBlastSmoke = function () {
 
     if ( ! this.effects.blastSmoke ) return;
 
@@ -209,7 +209,7 @@ DT.Tank.prototype.hideBlastSmoke = function () {
 
 };
 
-DT.Tank.prototype.updateBlastSmoke = function () {
+Game.Tank.prototype.updateBlastSmoke = function () {
 
     if ( ! this.blastSmokeEnabled || ! this.effects.blastSmoke ) return;
 
@@ -242,7 +242,7 @@ DT.Tank.prototype.updateBlastSmoke = function () {
 
 };
 
-DT.Tank.prototype.showSmoke = function () {
+Game.Tank.prototype.showSmoke = function () {
 
     this.smokeEnabled = true;
 
@@ -285,7 +285,7 @@ DT.Tank.prototype.showSmoke = function () {
 
 };
 
-DT.Tank.prototype.hideSmoke = function () {
+Game.Tank.prototype.hideSmoke = function () {
 
     if ( ! this.effects.smoke ) return;
 
@@ -299,7 +299,7 @@ DT.Tank.prototype.hideSmoke = function () {
 
 };
 
-DT.Tank.prototype.updateSmoke = function () {
+Game.Tank.prototype.updateSmoke = function () {
 
     if ( ! this.smokeEnabled || ! this.effects.smoke ) return;
 
@@ -334,7 +334,7 @@ DT.Tank.prototype.updateSmoke = function () {
 
 };
 
-DT.Tank.prototype.shootBullet = function () {
+Game.Tank.prototype.shootBullet = function () {
 
     var bullet = false;
     var hitCallback = false;
@@ -456,25 +456,25 @@ DT.Tank.prototype.shootBullet = function () {
 
 };
 
-DT.Tank.prototype.updateBullets = function () {
+Game.Tank.prototype.updateBullets = function () {
 
     // todo
 
 };
 
-DT.Tank.prototype.setDamage = function () {
+Game.Tank.prototype.setDamage = function () {
 
     // todo
 
 };
 
-DT.Tank.prototype.rotateTop = function () {
+Game.Tank.prototype.rotateTop = function () {
 
     // todo
 
 };
 
-DT.Tank.prototype.dispose = function () {
+Game.Tank.prototype.dispose = function () {
 
     // todo: dispose effects
     // todo: dispose bullets
@@ -483,7 +483,7 @@ DT.Tank.prototype.dispose = function () {
 
 };
 
-DT.Tank.prototype.animate = function ( delta ) {
+Game.Tank.prototype.animate = function ( delta ) {
 
     if ( this.mixer ) {
 
@@ -493,7 +493,7 @@ DT.Tank.prototype.animate = function ( delta ) {
 
 };
 
-DT.Tank.prototype.update = function ( delta ) {
+Game.Tank.prototype.update = function ( delta ) {
 
     this.updateSmoke();
     this.updateBlastSmoke();
@@ -502,5 +502,5 @@ DT.Tank.prototype.update = function ( delta ) {
 
 };
 
-DT.Tank.list = {};
-DT.Tank.numID = 0;
+Game.Tank.list = {};
+Game.Tank.numID = 0;

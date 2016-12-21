@@ -5,7 +5,7 @@
 
 var MOBILE;
 
-DT.View = function () {
+Game.View = function () {
 
     this.SCREEN_WIDTH = false;
     this.SCREEN_HEIGHT = false;
@@ -53,9 +53,9 @@ DT.View = function () {
 
 };
 
-DT.View.prototype = {};
+Game.View.prototype = {};
 
-DT.View.prototype.setupScene = function () {
+Game.View.prototype.setupScene = function () {
 
     this.SCREEN_WIDTH = window.innerWidth;
     this.SCREEN_HEIGHT = window.innerHeight;
@@ -160,7 +160,7 @@ DT.View.prototype.setupScene = function () {
 
 };
 
-DT.View.prototype.addObsticles = function ( obstacles ) {
+Game.View.prototype.addObsticles = function ( obstacles ) {
 
     var tree = resourceManager.getModel( 'tree.json' );
     tree.material[0].alphaTest = 0.5;
@@ -206,13 +206,13 @@ DT.View.prototype.addObsticles = function ( obstacles ) {
 
     }
 
-    DT.arena.pathFinder.placeObjects( placingObjects );
+    Game.arena.pathFinder.placeObjects( placingObjects );
 
-    setTimeout( DT.arena.pathFinder.constructMap.bind( DT.arena.pathFinder ), 1000 );
+    setTimeout( Game.arena.pathFinder.constructMap.bind( Game.arena.pathFinder ), 1000 );
 
 };
 
-DT.View.prototype.addMap = function () {
+Game.View.prototype.addMap = function () {
 
     var groundTexture = resourceManager.getTexture( 'Ground.jpg' );
     groundTexture.wrapS = THREE.RepeatWrapping;
@@ -260,16 +260,16 @@ DT.View.prototype.addMap = function () {
 
 };
 
-DT.View.prototype.addTeamZone = function () {
+Game.View.prototype.addTeamZone = function () {
 
-    for ( var i = 0, il = DT.arena.teams.length; i < il; i ++ ) {
+    for ( var i = 0, il = Game.arena.teams.length; i < il; i ++ ) {
 
-        if ( DT.arena.teams[ i ].id >= 1000 ) continue;
+        if ( Game.arena.teams[ i ].id >= 1000 ) continue;
 
-        var name = DT.arena.teams[ i ].name;
-        var color = + DT.arena.teams[ i ].color.replace('#', '0x');
-        var x = DT.arena.teams[ i ].spawnPosition.x;
-        var z = DT.arena.teams[ i ].spawnPosition.z;
+        var name = Game.arena.teams[ i ].name;
+        var color = + Game.arena.teams[ i ].color.replace('#', '0x');
+        var x = Game.arena.teams[ i ].spawnPosition.x;
+        var z = Game.arena.teams[ i ].spawnPosition.z;
 
         var plane = new THREE.Mesh( new THREE.PlaneGeometry( 200, 200 ), new THREE.MeshLambertMaterial({ color: color, transparent: true }) );
         plane.rotation.x = - Math.PI / 2;
@@ -283,7 +283,7 @@ DT.View.prototype.addTeamZone = function () {
 
 };
 
-DT.View.prototype.clean = function () {
+Game.View.prototype.clean = function () {
 
     if ( this.scene ) {
 
@@ -307,7 +307,7 @@ DT.View.prototype.clean = function () {
 
 };
 
-DT.View.prototype.resize = function () {
+Game.View.prototype.resize = function () {
 
     this.SCREEN_WIDTH = window.innerWidth;
     this.SCREEN_HEIGHT = window.innerHeight;
@@ -321,7 +321,7 @@ DT.View.prototype.resize = function () {
 
 };
 
-DT.View.prototype.showDestinationPoint = (function() {
+Game.View.prototype.showDestinationPoint = (function() {
 
     var interval;
 
@@ -365,32 +365,32 @@ DT.View.prototype.showDestinationPoint = (function() {
 
 var intersections = false;
 
-DT.View.prototype.animate = function ( delta ) {
+Game.View.prototype.animate = function ( delta ) {
 
-    if ( ! DT.arena ) return;
+    if ( ! Game.arena ) return;
 
     // update camera position
 
-    this.camera.position.set( DT.arena.me.position.x + 180 + this.cameraOffset.x, this.camera.position.y + this.cameraOffset.y, DT.arena.me.position.z + this.cameraOffset.z );
-    this.camera.lookAt( DT.arena.me.position );
+    this.camera.position.set( Game.arena.me.position.x + 180 + this.cameraOffset.x, this.camera.position.y + this.cameraOffset.y, Game.arena.me.position.z + this.cameraOffset.z );
+    this.camera.lookAt( Game.arena.me.position );
 
-    this.sunLight.position.set( DT.arena.me.position.x - 100, this.sunLight.position.y, DT.arena.me.position.z + 100 );
+    this.sunLight.position.set( Game.arena.me.position.x - 100, this.sunLight.position.y, Game.arena.me.position.z + 100 );
 
     //
 
-    if ( DT.arena.boxManager ) {
+    if ( Game.arena.boxManager ) {
 
-        DT.arena.boxManager.update( delta );
-
-    }
-
-    for ( var i = 0, il = DT.arena.towers.length; i < il; i ++ ) {
-
-        DT.arena.towers[ i ].update( delta );
+        Game.arena.boxManager.update( delta );
 
     }
 
-    if ( ! intersections || DT.arena.me.movePath.length || Math.abs( controls.mousePos.x - controls.prevMousePos.x ) > 0.02 || Math.abs( controls.mousePos.y - controls.prevMousePos.y ) > 0.02 ) {
+    for ( var i = 0, il = Game.arena.towers.length; i < il; i ++ ) {
+
+        Game.arena.towers[ i ].update( delta );
+
+    }
+
+    if ( ! intersections || Game.arena.me.movePath.length || Math.abs( controls.mousePos.x - controls.prevMousePos.x ) > 0.02 || Math.abs( controls.mousePos.y - controls.prevMousePos.y ) > 0.02 ) {
 
         view.raycaster.setFromCamera( controls.mousePos, view.camera );
         intersections = view.raycaster.intersectObjects( [ view.ground ] );
@@ -399,7 +399,7 @@ DT.View.prototype.animate = function ( delta ) {
 
         if ( intersections.length ) {
 
-            var me = DT.arena.me;
+            var me = Game.arena.me;
             var angle = Math.atan2( intersections[0].point.x - me.position.x, intersections[0].point.z - me.position.z ) - Math.PI / 2;
 
             if ( Math.abs( angle - me.topRotation ) > 0.03 ) {
@@ -414,16 +414,16 @@ DT.View.prototype.animate = function ( delta ) {
 
 };
 
-DT.View.prototype.updatePlayersPosition = function ( delta ) {
+Game.View.prototype.updatePlayersPosition = function ( delta ) {
 
-    if ( ! DT.arena ) return;
+    if ( ! Game.arena ) return;
 
     var time = Date.now();
     var abs = Math.abs;
 
-    for ( var i = 0, il = DT.arena.players.length; i < il; i ++ ) {
+    for ( var i = 0, il = Game.arena.players.length; i < il; i ++ ) {
 
-        var player = DT.arena.players[ i ];
+        var player = Game.arena.players[ i ];
         var tank = player.tank;
 
         player.tank.update( delta );
@@ -566,7 +566,7 @@ DT.View.prototype.updatePlayersPosition = function ( delta ) {
 
 };
 
-DT.View.prototype.changeGraficQuality = function () {
+Game.View.prototype.changeGraficQuality = function () {
 
     var antialias = false;
     var quality = 0.7;
@@ -596,7 +596,7 @@ DT.View.prototype.changeGraficQuality = function () {
 
 };
 
-DT.View.prototype.addCameraShake = function ( duration, intencity ) {
+Game.View.prototype.addCameraShake = function ( duration, intencity ) {
 
     var iter = 0;
     var scope = this;
@@ -628,7 +628,7 @@ DT.View.prototype.addCameraShake = function ( duration, intencity ) {
 
 };
 
-DT.View.prototype.render = (function () {
+Game.View.prototype.render = (function () {
 
     var prevRenderTime;
 

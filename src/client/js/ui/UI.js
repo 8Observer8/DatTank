@@ -5,13 +5,13 @@
 
 'use strict';
 
-DT.UI = function () {
+Game.UI = function () {
 
     // nothing here
 
 };
 
-DT.UI.prototype.init = function () {
+Game.UI.prototype.init = function () {
 
     if ( localStorage.getItem('hq') === 'true' ) {
 
@@ -34,7 +34,7 @@ DT.UI.prototype.init = function () {
 
 };
 
-DT.UI.prototype.chageGameQuality = function ( value, withoutSound ) {
+Game.UI.prototype.chageGameQuality = function ( value, withoutSound ) {
 
     value = ( typeof value === 'boolean' ) ? value : $('#graphics-quality').attr('hq') !== 'true';
     $('#graphics-quality').attr( 'hq', value );
@@ -48,7 +48,7 @@ DT.UI.prototype.chageGameQuality = function ( value, withoutSound ) {
 
 };
 
-DT.UI.prototype.changeSound = function ( value, withoutSound ) {
+Game.UI.prototype.changeSound = function ( value, withoutSound ) {
 
     value = ( typeof value === 'boolean' ) ? value : $('#sound-on-off').attr('sound') !== 'true';
     $('#sound-on-off').attr( 'sound', value );
@@ -62,7 +62,7 @@ DT.UI.prototype.changeSound = function ( value, withoutSound ) {
 
 };
 
-DT.UI.prototype.hideSignInPopup = function () {
+Game.UI.prototype.hideSignInPopup = function () {
 
     $('#signin-box-wrapper').hide();
     $('#graphics-quality').hide();
@@ -72,7 +72,7 @@ DT.UI.prototype.hideSignInPopup = function () {
 
 };
 
-DT.UI.prototype.openSettings = function (value) {
+Game.UI.prototype.openSettings = function (value) {
 
     value = ( typeof value === 'boolean' ) ? value : $('#gear_btn').attr('gear') !== 'true';
     $('#gear_btn').attr( 'gear', value );
@@ -93,47 +93,47 @@ DT.UI.prototype.openSettings = function (value) {
 
 };
 
-DT.UI.prototype.toggleLeaderboard = function () {
+Game.UI.prototype.toggleLeaderboard = function () {
 
     $('#leaderboard-wrapper').toggle();
 
 };
 
-DT.UI.prototype.hideFooter = function () {
+Game.UI.prototype.hideFooter = function () {
 
     $('#footer').hide();
 
 };
 
-DT.UI.prototype.showViewport = function () {
+Game.UI.prototype.showViewport = function () {
 
     $('#viewport').show();
 
 };
 
-DT.UI.prototype.setCursor = function () {
+Game.UI.prototype.setCursor = function () {
 
     $('#viewport').addClass('properCursor');
 
 };
 
-DT.UI.prototype.updateHealth = function ( value ) {
+Game.UI.prototype.updateHealth = function ( value ) {
 
     $('#health-number').html( value );
     $('#empty-health-image').css( 'height', ( 100 - value ) + '%' );
 
 };
 
-DT.UI.prototype.updateAmmo = function ( value ) {
+Game.UI.prototype.updateAmmo = function ( value ) {
 
     $('#ammo-number').html( value );
 
 };
 
-DT.UI.prototype.showContinueBox = function ( playerlogin, playerColor ) {
+Game.UI.prototype.showContinueBox = function ( playerlogin, playerColor ) {
 
     $('#continue-box-wrapper #continue-btn').off();
-    $('#continue-box-wrapper #continue-btn').click( DT.arena.me.respawn.bind( DT.arena.me, false ) );
+    $('#continue-box-wrapper #continue-btn').click( Game.arena.me.respawn.bind( Game.arena.me, false ) );
     $('#continue-box-wrapper').show();
     $('#continue-box-wrapper #title').html('<p>Killed by <span style="color:'+ playerColor + '">' + playerlogin +'</span></p>');
 
@@ -145,9 +145,9 @@ DT.UI.prototype.showContinueBox = function ( playerlogin, playerColor ) {
 
 };
 
-DT.UI.prototype.showKills = function ( killer, killed ) {
+Game.UI.prototype.showKills = function ( killer, killed ) {
 
-    var killerName = ( killer instanceof DT.Tower ) ? 'Tower' : killer.login;
+    var killerName = ( killer instanceof Game.Tower ) ? 'Tower' : killer.login;
 
     $('#kill-events').append( '<p><span style="color:' + killer.team.color + '">' + killerName +'</span> killed <span style="color:' + killed.team.color + '">' + killed.login + '</span>!</p>');
 
@@ -159,13 +159,13 @@ DT.UI.prototype.showKills = function ( killer, killed ) {
 
 };
 
-DT.UI.prototype.clearKills = function () {
+Game.UI.prototype.clearKills = function () {
 
     $('#kill-events').html('');
 
 };
 
-DT.UI.prototype.showWinners = function ( winner ) {
+Game.UI.prototype.showWinners = function ( winner ) {
 
     $('#winners #play-button').off();
     $('#winners #play-button').click( function () {
@@ -174,7 +174,7 @@ DT.UI.prototype.showWinners = function ( winner ) {
 
         var tank = localStorage.getItem( 'currentTank' ) || 0;
 
-        if ( ! network.send( 'joinArena', { login: localStorage.getItem('login') || '', tank: tank }, core.joinArena ) ) {
+        if ( ! network.send( 'joinArena', { login: localStorage.getItem('login') || '', tank: tank }, game.joinArena ) ) {
 
             // :(
 
@@ -196,7 +196,7 @@ DT.UI.prototype.showWinners = function ( winner ) {
 
 };
 
-DT.UI.prototype.hideContinueBox = function () {
+Game.UI.prototype.hideContinueBox = function () {
 
     $('#continue-box-wrapper').css( 'opacity', 0 );
 
@@ -208,7 +208,7 @@ DT.UI.prototype.hideContinueBox = function () {
 
 };
 
-DT.UI.prototype.hideWinners = function () {
+Game.UI.prototype.hideWinners = function () {
 
     $('#winners').css( 'opacity', 0 );
 
@@ -220,7 +220,7 @@ DT.UI.prototype.hideWinners = function () {
 
 };
 
-DT.UI.prototype.updateTeamScore = function ( arena ) {
+Game.UI.prototype.updateTeamScore = function ( arena ) {
 
     var totalTowerCount = arena.towers.length;
 
@@ -248,7 +248,7 @@ DT.UI.prototype.updateTeamScore = function ( arena ) {
 
 };
 
-DT.UI.prototype.updateLeaderboard = function ( players, me ) {
+Game.UI.prototype.updateLeaderboard = function ( players, me ) {
 
     players.sort( function ( a, b ) { return ( b.kills - a.kills ); });
 
@@ -323,7 +323,7 @@ DT.UI.prototype.updateLeaderboard = function ( players, me ) {
 
 };
 
-DT.UI.prototype.showLoaderScreen = function () {
+Game.UI.prototype.showLoaderScreen = function () {
 
     $('#loader-wrapper').show();
 
@@ -335,7 +335,7 @@ DT.UI.prototype.showLoaderScreen = function () {
 
 };
 
-DT.UI.prototype.hideLoaderScreen = function () {
+Game.UI.prototype.hideLoaderScreen = function () {
 
     setTimeout( function () {
 
@@ -347,7 +347,7 @@ DT.UI.prototype.hideLoaderScreen = function () {
 
 };
 
-DT.UI.prototype.showChoiceWindow = function () {
+Game.UI.prototype.showChoiceWindow = function () {
 
     $(".tank-skins").show();
     $("#signin-box").css("opacity", 0);
@@ -355,7 +355,7 @@ DT.UI.prototype.showChoiceWindow = function () {
 
 };
 
-DT.UI.prototype.closeChoiceWindow = function ( event ) {
+Game.UI.prototype.closeChoiceWindow = function ( event ) {
 
     if ( event ) {
 
@@ -369,7 +369,7 @@ DT.UI.prototype.closeChoiceWindow = function ( event ) {
 
 };
 
-DT.UI.prototype.selectTankAndcloseChoiceWindow = function () {
+Game.UI.prototype.selectTankAndcloseChoiceWindow = function () {
 
     $(".tank-skins").hide();
     $("#signin-box").css("opacity", 1);

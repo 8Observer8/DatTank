@@ -3,7 +3,7 @@
  * DatTank resource manager object
 */
 
-DT.ResourceManager = function () {
+Game.ResourceManager = function () {
 
     this.models = [];
     this.textures = [];
@@ -49,9 +49,9 @@ DT.ResourceManager = function () {
 
 };
 
-DT.ResourceManager.prototype = {};
+Game.ResourceManager.prototype = {};
 
-DT.ResourceManager.prototype.loadModel = function ( modelName, callback ) {
+Game.ResourceManager.prototype.loadModel = function ( modelName, callback ) {
 
     var scope = this;
     var loader = new THREE.JSONLoader();
@@ -74,7 +74,7 @@ DT.ResourceManager.prototype.loadModel = function ( modelName, callback ) {
 
 };
 
-DT.ResourceManager.prototype.loadTexture = function ( textureName, callback ) {
+Game.ResourceManager.prototype.loadTexture = function ( textureName, callback ) {
 
     var scope = this;
 
@@ -93,7 +93,7 @@ DT.ResourceManager.prototype.loadTexture = function ( textureName, callback ) {
 
 };
 
-DT.ResourceManager.prototype.loadSound = function ( soundName, callback ) {
+Game.ResourceManager.prototype.loadSound = function ( soundName, callback ) {
 
     var scope = this;
 
@@ -111,7 +111,7 @@ DT.ResourceManager.prototype.loadSound = function ( soundName, callback ) {
 
 };
 
-DT.ResourceManager.prototype.load = function ( onProgress, onEnd ) {
+Game.ResourceManager.prototype.load = function ( onProgress, onEnd ) {
 
     var progress = ( this.modelsLoaded + this.texturesLoaded + this.soundsLoaded ) / ( this.soundsLoaded + this.soundsList.length + this.modelsLoaded + this.modelList.length + this.texturesLoaded + this.texturesList.length )
 
@@ -166,7 +166,7 @@ DT.ResourceManager.prototype.load = function ( onProgress, onEnd ) {
 
 };
 
-DT.ResourceManager.prototype.getModel = function ( modelName ) {
+Game.ResourceManager.prototype.getModel = function ( modelName ) {
 
     for ( var i = 0, il = this.models.length; i < il; i ++ ) {
 
@@ -178,13 +178,13 @@ DT.ResourceManager.prototype.getModel = function ( modelName ) {
 
     }
 
-    console.warn( 'Model "' + modelName + '" was not found in DT.ResourceManager.' );
+    console.warn( 'Model "' + modelName + '" was not found in Game.ResourceManager.' );
 
     return false;
 
 };
 
-DT.ResourceManager.prototype.getTexture = function ( textureName ) {
+Game.ResourceManager.prototype.getTexture = function ( textureName ) {
 
     for ( var i = 0, il = this.textures.length; i < il; i ++ ) {
 
@@ -196,13 +196,13 @@ DT.ResourceManager.prototype.getTexture = function ( textureName ) {
 
     }
 
-    console.warn( 'Texture "' + textureName + '" was not found in DT.ResourceManager.' );
+    console.warn( 'Texture "' + textureName + '" was not found in Game.ResourceManager.' );
 
     return false;
 
 };
 
-DT.ResourceManager.prototype.getSound = function ( soundName ) {
+Game.ResourceManager.prototype.getSound = function ( soundName ) {
 
     for ( var i = 0, il = this.sounds.length; i < il; i ++ ) {
 
@@ -214,7 +214,7 @@ DT.ResourceManager.prototype.getSound = function ( soundName ) {
 
     }
 
-    console.warn( 'Sound "' + soundName + '" was not found in DT.ResourceManager.' );
+    console.warn( 'Sound "' + soundName + '" was not found in Game.ResourceManager.' );
 
     return false;
 

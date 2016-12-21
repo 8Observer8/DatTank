@@ -3,7 +3,7 @@
  * Game sound sys
 */
 
-DT.SoundSys = function () {
+Game.SoundSys = function () {
 
     this.menuSound = new Audio();
     this.menuSound.src = '/resources/sounds/menu_click.wav';
@@ -13,9 +13,9 @@ DT.SoundSys = function () {
 
 };
 
-DT.SoundSys.prototype = {};
+Game.SoundSys.prototype = {};
 
-DT.SoundSys.prototype.playMenuSound = function () {
+Game.SoundSys.prototype.playMenuSound = function () {
 
     if ( localStorage.getItem('sound') === 'true' ) {
 

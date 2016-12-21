@@ -3,7 +3,7 @@
  * DatTank Team object
 */
 
-DT.Team = function ( params ) {
+Game.Team = function ( params ) {
 
     this.id = params.id;
 
@@ -13,26 +13,26 @@ DT.Team = function ( params ) {
     this.towersCount = 0;
     this.spawnPosition = { x: params.spawnPosition.x, y: params.spawnPosition.y, z: params.spawnPosition.z };
 
-    this.color = DT.Team.colors[ this.id + '' ];
-    this.name = DT.Team.names[ this.id + '' ];
+    this.color = Game.Team.colors[ this.id + '' ];
+    this.name = Game.Team.names[ this.id + '' ];
 
 };
 
-DT.Team.prototype = {};
+Game.Team.prototype = {};
 
-DT.Team.prototype.addPlayer = function ( player ) {
+Game.Team.prototype.addPlayer = function ( player ) {
 
     // todo
 
 };
 
-DT.Team.prototype.removePlayer = function ( player ) {
+Game.Team.prototype.removePlayer = function ( player ) {
 
     // todo
 
 };
 
-DT.Team.colors = {
+Game.Team.colors = {
     '0':        '#ff0000',
     '1':        '#00ff00',
     '2':        '#0000ff',
@@ -40,7 +40,7 @@ DT.Team.colors = {
     '1000':     '#aaaaaa'
 };
 
-DT.Team.names = {
+Game.Team.names = {
     '0':        'Red',
     '1':        'Green',
     '2':        'Blue',

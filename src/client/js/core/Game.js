@@ -1,24 +1,40 @@
 /*
  * @author ohmed
- * DatTank core file
+ * DatTank game core file
 */
 
-DT.Core = function () {
+var Game = function () {
 
     this.arena = false;
 
 };
 
-DT.Core.prototype.init = function () {
+Game.Version = '2dev';
+Game.Build = 3;
+Game.local = false;
 
-    window.ui = new DT.UI();
-    window.network = new DT.Network();
-    window.view = new DT.View();
-    window.controls = new DT.Controls();
-    window.resourceManager = new DT.ResourceManager();
-    window.soundSys = new DT.SoundSys();
-    window.garage = new DT.Garage();
-    window.settings = new DT.Settings();
+if ( Game.local ) {
+
+    Game.socketHost = 'http://localhost:8085';
+
+} else {
+
+    Game.socketHost = 'http://188.166.164.236:8085';
+
+}
+
+Game.prototype = {};
+
+Game.prototype.init = function () {
+
+    window.ui = new Game.UI();
+    window.network = new Game.NetworkManager();
+    window.view = new Game.View();
+    window.controls = new Game.Controls();
+    window.resourceManager = new Game.ResourceManager();
+    window.soundSys = new Game.SoundSys();
+    window.garage = new Game.Garage();
+    window.settings = new Game.SettingsManager();
 
     //
 
@@ -39,7 +55,7 @@ DT.Core.prototype.init = function () {
 
 };
 
-DT.Core.prototype.play = function ( event ) {
+Game.prototype.play = function ( event ) {
 
     var scope = this;
 
@@ -112,7 +128,7 @@ DT.Core.prototype.play = function ( event ) {
 
 };
 
-DT.Core.prototype.joinArena = function ( params ) {
+Game.prototype.joinArena = function ( params ) {
 
     view.clean();
     view.setupScene();
@@ -121,8 +137,8 @@ DT.Core.prototype.joinArena = function ( params ) {
 
     //
 
-    DT.arena = new DT.Arena();
-    DT.arena.init( params );
+    Game.arena = new Game.Arena();
+    Game.arena.init( params );
 
     //
 
@@ -136,14 +152,14 @@ DT.Core.prototype.joinArena = function ( params ) {
 
     // change camera position
 
-    view.camera.position.set( DT.arena.me.position.x + 180, 400, DT.arena.me.position.z );
-    view.camera.lookAt( DT.arena.me.position );
+    view.camera.position.set( Game.arena.me.position.x + 180, 400, Game.arena.me.position.z );
+    view.camera.lookAt( Game.arena.me.position );
 
-    view.sunLight.position.set( DT.arena.me.position.x - 100, view.sunLight.position.y, DT.arena.me.position.z + 100 );
-    view.sunLight.target.position.set( DT.arena.me.position.x, 0, DT.arena.me.position.z );
+    view.sunLight.position.set( Game.arena.me.position.x - 100, view.sunLight.position.y, Game.arena.me.position.z + 100 );
+    view.sunLight.target.position.set( Game.arena.me.position.x, 0, Game.arena.me.position.z );
     view.sunLight.target.updateMatrixWorld();
 
-    ui.updateLeaderboard( DT.arena.players, DT.arena.me );
+    ui.updateLeaderboard( Game.arena.players, Game.arena.me );
 
     $('#gear_btn').click( ui.openSettings.bind( ui ) );  
     $('#exit-btn').click( ui.openSettings.bind( ui ) );
@@ -153,11 +169,3 @@ DT.Core.prototype.joinArena = function ( params ) {
     $('#leaderboard').click( ui.toggleLeaderboard.bind( ui ) );
 
 };
-
-// init services
-
-var core = new DT.Core();
-
-// page loaded
-
-$( document ).ready( core.init.bind( core ), false );

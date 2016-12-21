@@ -3,15 +3,15 @@
  * Logging sys
 */
 
-DT.Logger = function () {
+Game.Logger = function () {
 
     // todo
 
 };
 
-DT.Logger.prototype = {};
+Game.Logger.prototype = {};
 
-DT.Logger.prototype.init = function () {
+Game.Logger.prototype.init = function () {
 
     // todo
 

@@ -3,7 +3,7 @@
  * DatTank Player object
 */
 
-DT.Player = function ( arena, params ) {
+Game.Player = function ( arena, params ) {
 
     this.id = params.id;
     this.login = params.login || 'guest';
@@ -51,12 +51,12 @@ DT.Player = function ( arena, params ) {
 
         case 'USA-T54':
 
-            this.tank = new DT.Tank.USAT54({ player: this });
+            this.tank = new Game.Tank.USAT54({ player: this });
             break;
 
         case 'UK-BlackPrince':
 
-            this.tank = new DT.Tank.UKBlackPrince({ player: this });
+            this.tank = new Game.Tank.UKBlackPrince({ player: this });
             break;
 
     }
@@ -67,9 +67,9 @@ DT.Player = function ( arena, params ) {
 
 };
 
-DT.Player.prototype = {};
+Game.Player.prototype = {};
 
-DT.Player.prototype.init = function () {
+Game.Player.prototype.init = function () {
 
     this.tank.init();
 
@@ -78,7 +78,7 @@ DT.Player.prototype.init = function () {
 
 };
 
-DT.Player.prototype.respawn = function ( fromNetwork, params ) {
+Game.Player.prototype.respawn = function ( fromNetwork, params ) {
 
     if ( view.shakeInterval !== false ) {
 
@@ -109,7 +109,7 @@ DT.Player.prototype.respawn = function ( fromNetwork, params ) {
         this.rotDelta = 0;
         this.rotationTopTarget = false;
 
-        if ( this.id === DT.arena.me.id ) {
+        if ( this.id === Game.arena.me.id ) {
 
             view.camera.position.set( this.position.x + 180, view.camera.position.y, this.position.z );
             view.camera.lookAt( this.position );
@@ -130,7 +130,7 @@ DT.Player.prototype.respawn = function ( fromNetwork, params ) {
         this.moveSpeed = 0.09;
         this.moveSpeed = this.moveSpeed * this.tank.speed / 40;
 
-        if ( DT.arena.me.id === this.id ) {
+        if ( Game.arena.me.id === this.id ) {
 
             ui.updateHealth( this.health );
             ui.updateAmmo( this.ammo );
@@ -143,11 +143,11 @@ DT.Player.prototype.respawn = function ( fromNetwork, params ) {
 
         }
 
-        ui.updateLeaderboard( DT.arena.players, DT.arena.me );
+        ui.updateLeaderboard( Game.arena.players, Game.arena.me );
 
     } else {
 
-        if ( DT.arena.me.id === this.id ) {
+        if ( Game.arena.me.id === this.id ) {
 
             ga('send', {
                 hitType: 'event',
@@ -163,7 +163,7 @@ DT.Player.prototype.respawn = function ( fromNetwork, params ) {
 
 };
 
-DT.Player.prototype.move = function ( destination, fromServer ) {
+Game.Player.prototype.move = function ( destination, fromServer ) {
 
     var scope = this;
 
@@ -173,7 +173,7 @@ DT.Player.prototype.move = function ( destination, fromServer ) {
 
     }
 
-    DT.arena.pathFinder.findPath( this.position, destination, function ( path ) {
+    Game.arena.pathFinder.findPath( this.position, destination, function ( path ) {
 
         if ( path.length === 0 ) {
 
@@ -247,7 +247,7 @@ DT.Player.prototype.move = function ( destination, fromServer ) {
 
 };
 
-DT.Player.prototype.processPath = function ( path ) {
+Game.Player.prototype.processPath = function ( path ) {
 
     var scope = this;
 
@@ -277,7 +277,7 @@ DT.Player.prototype.processPath = function ( path ) {
 
 };
 
-DT.Player.prototype.rotateTop = (function () {
+Game.Player.prototype.rotateTop = (function () {
 
     var buffer = new ArrayBuffer( 6 );
     var bufferView = new Uint16Array( buffer );
@@ -302,7 +302,7 @@ DT.Player.prototype.rotateTop = (function () {
         this.topRotation = angle;
         this.tank.setTopRotation( angle );
 
-        if ( DT.arena.me.id === this.id ) {
+        if ( Game.arena.me.id === this.id ) {
 
             bufferView[ 1 ] = Math.floor( angle * 100 );
             bufferView[ 2 ] = Math.floor( scope.rotation * 100 );
@@ -324,7 +324,7 @@ DT.Player.prototype.rotateTop = (function () {
 
 }) ();
 
-DT.Player.prototype.shoot = (function () {
+Game.Player.prototype.shoot = (function () {
 
     var buffer = new ArrayBuffer( 8 );
     var bufferView = new Uint16Array( buffer );
@@ -346,7 +346,7 @@ DT.Player.prototype.shoot = (function () {
 
         }
 
-        if ( DT.arena.me.id === this.id && ( this.ammo <= 0 || Date.now() - this.lastShot < 1000 ) ) {
+        if ( Game.arena.me.id === this.id && ( this.ammo <= 0 || Date.now() - this.lastShot < 1000 ) ) {
 
             return;
 
@@ -354,7 +354,7 @@ DT.Player.prototype.shoot = (function () {
 
         //
 
-        if ( DT.arena.me.id === this.id ) {
+        if ( Game.arena.me.id === this.id ) {
 
             this.ammo = ammo;
             ui.updateAmmo( this.ammo );
@@ -387,7 +387,7 @@ DT.Player.prototype.shoot = (function () {
 
         //
 
-        if ( DT.arena.me.id === this.id ) {
+        if ( Game.arena.me.id === this.id ) {
 
             scope.lastShot = Date.now();
             var element = $('#empty-ammo-image');
@@ -409,7 +409,7 @@ DT.Player.prototype.shoot = (function () {
 
 }) ();
 
-DT.Player.prototype.gotBox = function ( box, value ) {
+Game.Player.prototype.gotBox = function ( box, value ) {
 
     soundSys.menuSound.play();
 
@@ -435,13 +435,13 @@ DT.Player.prototype.gotBox = function ( box, value ) {
 
 };
 
-DT.Player.prototype.updateHealth = function ( value ) {
+Game.Player.prototype.updateHealth = function ( value ) {
 
     value = ( value !== undefined ) ? value : this.health;
 
     //
 
-    if ( DT.arena && DT.arena.me.id === this.id ) {
+    if ( Game.arena && Game.arena.me.id === this.id ) {
 
         if ( value < this.health ) {
 
@@ -468,9 +468,9 @@ DT.Player.prototype.updateHealth = function ( value ) {
 
 };
 
-DT.Player.prototype.die = function ( killer ) {
+Game.Player.prototype.die = function ( killer ) {
 
-    if ( this.id === DT.arena.me.id ) {
+    if ( this.id === Game.arena.me.id ) {
 
         ga('send', {
             hitType: 'event',
@@ -482,7 +482,7 @@ DT.Player.prototype.die = function ( killer ) {
 
         setTimeout( function () {
 
-            if ( killer instanceof DT.Tower ) {
+            if ( killer instanceof Game.Tower ) {
 
                 ui.showContinueBox( '<br>' + killer.team.name + ' team tower', killer.team.color ); 
 
@@ -512,13 +512,13 @@ DT.Player.prototype.die = function ( killer ) {
     this.moveProgress = [];
     this.movementDurationMap = [];
 
-    ui.updateLeaderboard( DT.arena.players, DT.arena.me );
+    ui.updateLeaderboard( Game.arena.players, Game.arena.me );
 
     this.tank.destroy();
 
 };
 
-DT.Player.prototype.dispose = function () {
+Game.Player.prototype.dispose = function () {
 
     this.tank.dispose();
     this.tank = false;

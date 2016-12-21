@@ -3,7 +3,7 @@
  * DT PathFinder core
 */
 
-DT.PathFinder = function () {
+Game.PathFinder = function () {
 
     this.workers = [];
     this.maxWorkers = 2;
@@ -13,9 +13,9 @@ DT.PathFinder = function () {
 
 };
 
-DT.PathFinder.prototype = {};
+Game.PathFinder.prototype = {};
 
-DT.PathFinder.prototype.init = function () {
+Game.PathFinder.prototype.init = function () {
 
     var worker;
 
@@ -28,7 +28,7 @@ DT.PathFinder.prototype.init = function () {
 
 };
 
-DT.PathFinder.prototype.reset = function () {
+Game.PathFinder.prototype.reset = function () {
 
     for ( var i = 0, il = this.workers.length; i < il; i ++ ) {
 
@@ -44,7 +44,7 @@ DT.PathFinder.prototype.reset = function () {
 
 };
 
-DT.PathFinder.prototype.initWorker = function ( param ) {
+Game.PathFinder.prototype.initWorker = function ( param ) {
 
     var self = this;
 
@@ -79,7 +79,7 @@ DT.PathFinder.prototype.initWorker = function ( param ) {
 
 };
 
-DT.PathFinder.prototype.getFreeWorker = function () {
+Game.PathFinder.prototype.getFreeWorker = function () {
 
     for ( var i = 0, il = this.workers.length; i < il; i ++ ) {
 
@@ -95,7 +95,7 @@ DT.PathFinder.prototype.getFreeWorker = function () {
 
 };
 
-DT.PathFinder.prototype.placeObject = function ( position1, position2 ) {
+Game.PathFinder.prototype.placeObject = function ( position1, position2 ) {
 
     for ( var i = 0, il = this.workers.length; i < il; i ++ ) {
 
@@ -109,7 +109,7 @@ DT.PathFinder.prototype.placeObject = function ( position1, position2 ) {
 
 };
 
-DT.PathFinder.prototype.placeObjects = function ( params ) {
+Game.PathFinder.prototype.placeObjects = function ( params ) {
 
     for ( var i = 0, il = this.workers.length; i < il; i ++ ) {
 
@@ -122,7 +122,7 @@ DT.PathFinder.prototype.placeObjects = function ( params ) {
 
 };
 
-DT.PathFinder.prototype.findPath = function ( start, end, callback ) {
+Game.PathFinder.prototype.findPath = function ( start, end, callback ) {
 
     var worker = this.getFreeWorker();
 
@@ -152,7 +152,7 @@ DT.PathFinder.prototype.findPath = function ( start, end, callback ) {
 
 };
 
-DT.PathFinder.prototype.constructMap = function () {
+Game.PathFinder.prototype.constructMap = function () {
 
     for ( var i = 0, il = this.workers.length; i < il; i ++ ) {
 
@@ -164,7 +164,7 @@ DT.PathFinder.prototype.constructMap = function () {
 
 };
 
-DT.PathFinder.prototype.deCompressPath = function ( keyPath ) {
+Game.PathFinder.prototype.deCompressPath = function ( keyPath ) {
 
     var path = [];
     var s, e;

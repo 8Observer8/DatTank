@@ -3,27 +3,27 @@
  * Box ['Health' / 'Ammo'] boxes
 */
 
-DT.BoxManager = function () {
+Game.BoxManager = function () {
 
     this.boxes = [];
 
 };
 
-DT.BoxManager.prototype = {};
+Game.BoxManager.prototype = {};
 
-DT.BoxManager.prototype.init = function () {
+Game.BoxManager.prototype.init = function () {
 
     // todo
 
 };
 
-DT.BoxManager.prototype.reset = function () {
+Game.BoxManager.prototype.reset = function () {
 
     this.boxes.length = 0;
 
 };
 
-DT.BoxManager.prototype.addBox = function ( params ) {
+Game.BoxManager.prototype.addBox = function ( params ) {
 
     var box = false;
 
@@ -31,12 +31,12 @@ DT.BoxManager.prototype.addBox = function ( params ) {
 
         case 'Health':
 
-            box = new DT.Box.Health( params );
+            box = new Game.Box.Health( params );
             break;
 
         case 'Ammo':
 
-            box = new DT.Box.Ammo( params );
+            box = new Game.Box.Ammo( params );
             break;
 
         default:
@@ -47,13 +47,9 @@ DT.BoxManager.prototype.addBox = function ( params ) {
 
     this.boxes.push( box );
 
-    //
-
-    console.log('Added box [' + params.type + '] to the map.');
-
 };
 
-DT.BoxManager.prototype.removeBox = function ( boxId ) {
+Game.BoxManager.prototype.removeBox = function ( boxId ) {
 
     var box = this.getBoxById( boxId );
     box.remove();
@@ -72,13 +68,9 @@ DT.BoxManager.prototype.removeBox = function ( boxId ) {
 
     this.boxes = newBoxList;
 
-    //
-
-    console.log( 'Removed box from the map.' );
-
 };
 
-DT.BoxManager.prototype.getBoxById = function ( id ) {
+Game.BoxManager.prototype.getBoxById = function ( id ) {
 
     for ( var i = 0, il = this.boxes.length; i < il; i ++ ) {
 
@@ -94,7 +86,7 @@ DT.BoxManager.prototype.getBoxById = function ( id ) {
 
 };
 
-DT.BoxManager.prototype.update = function ( delta ) {
+Game.BoxManager.prototype.update = function ( delta ) {
 
     for ( var i = 0, il = this.boxes.length; i < il; i ++ ) {
 

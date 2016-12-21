@@ -3,7 +3,7 @@
  * Tank Garage
 */
 
-DT.Garage = function () {
+Game.Garage = function () {
 
     this.container = false;
     this.camera = false;
@@ -23,9 +23,9 @@ DT.Garage = function () {
 
 };
 
-DT.Garage.prototype = {};
+Game.Garage.prototype = {};
 
-DT.Garage.prototype.init = function () {
+Game.Garage.prototype.init = function () {
 
     soundSys.playMenuSound();
 
@@ -137,7 +137,7 @@ DT.Garage.prototype.init = function () {
 
 };
 
-DT.Garage.prototype.onProgress = function ( xhr ) {
+Game.Garage.prototype.onProgress = function ( xhr ) {
 
     if ( xhr.lengthComputable ) {
 
@@ -148,7 +148,7 @@ DT.Garage.prototype.onProgress = function ( xhr ) {
 
 };
 
-DT.Garage.prototype.onWindowResize = function ( event ) {
+Game.Garage.prototype.onWindowResize = function ( event ) {
 
     this.renderer.setSize( $('#skin').innerWidth(), $('#skin').innerHeight() );
 
@@ -157,14 +157,14 @@ DT.Garage.prototype.onWindowResize = function ( event ) {
 
 };
 
-DT.Garage.prototype.animate = function () {
+Game.Garage.prototype.animate = function () {
 
     requestAnimationFrame( this.animate );
     this.render();
 
 };
 
-DT.Garage.prototype.render = function () {
+Game.Garage.prototype.render = function () {
 
     this.onWindowResize();
 
@@ -179,14 +179,14 @@ DT.Garage.prototype.render = function () {
 
 // stop rendering
 
-DT.Garage.prototype.stop = function () {
+Game.Garage.prototype.stop = function () {
 
     this.renderer.domElement.remove();
     soundSys.playMenuSound();
 
 };
 
-DT.Garage.prototype.arrowForward = function () {
+Game.Garage.prototype.arrowForward = function () {
 
     if ( $('.choice-skins .tank.active').next().length ) {
 
@@ -200,7 +200,7 @@ DT.Garage.prototype.arrowForward = function () {
 
 };
 
-DT.Garage.prototype.arrowBack = function () {
+Game.Garage.prototype.arrowBack = function () {
 
     if ( $('.choice-skins .tank.active').prev().length ) {
 
@@ -214,18 +214,18 @@ DT.Garage.prototype.arrowBack = function () {
 
 };
 
-DT.Garage.prototype.selectTank = function ( event ) {
+Game.Garage.prototype.selectTank = function ( event ) {
 
     $('.choice-skins .tank.active').removeClass('active');
     $( event.currentTarget ).addClass( 'active' );
 
     var tankId = $( event.currentTarget ).attr('id');
 
-    $('.name-specifications').html( DT.Tank.list[ tankId ].title );
-    $('.specification-text#speed').html( '&#x2623;&nbsp;&nbsp;&nbsp;' + 'Speed: ' + DT.Tank.list[ tankId ].speed + 'km/h' );
-    $('.specification-text#range').html( '&#x2623;&nbsp;&nbsp;&nbsp;' + 'Range: ' + DT.Tank.list[ tankId ].range + 'km' );
-    $('.specification-text#armour').html( '&#x2623;&nbsp;&nbsp;&nbsp;' + 'Armour: ' + DT.Tank.list[ tankId ].armour + 'mm' );
-    $('.specification-text#bullet').html( '&#x2623;&nbsp;&nbsp;&nbsp;' + 'Bullet: ' + DT.Tank.list[ tankId ].bullet + 'mm' );
+    $('.name-specifications').html( Game.Tank.list[ tankId ].title );
+    $('.specification-text#speed').html( '&#x2623;&nbsp;&nbsp;&nbsp;' + 'Speed: ' + Game.Tank.list[ tankId ].speed + 'km/h' );
+    $('.specification-text#range').html( '&#x2623;&nbsp;&nbsp;&nbsp;' + 'Range: ' + Game.Tank.list[ tankId ].range + 'km' );
+    $('.specification-text#armour').html( '&#x2623;&nbsp;&nbsp;&nbsp;' + 'Armour: ' + Game.Tank.list[ tankId ].armour + 'mm' );
+    $('.specification-text#bullet').html( '&#x2623;&nbsp;&nbsp;&nbsp;' + 'Bullet: ' + Game.Tank.list[ tankId ].bullet + 'mm' );
     this.currentTank = tankId;
 
     for ( var modelName in this.models ) {
@@ -240,7 +240,7 @@ DT.Garage.prototype.selectTank = function ( event ) {
 
 };
 
-DT.Garage.prototype.pickTank = function () {
+Game.Garage.prototype.pickTank = function () {
 
     localStorage.setItem( 'currentTank', this.currentTank );
 

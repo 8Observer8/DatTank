@@ -3,9 +3,9 @@
  * AmmoBox main class
 */
 
-DT.Box.Ammo = function ( params ) {
+Game.Box.Ammo = function ( params ) {
 
-    DT.Box.call( this, params );
+    Game.Box.call( this, params );
 
     this.type = 'AmmoBox';
     this.animTime = 600 * Math.random() * Math.PI * 2;
@@ -16,9 +16,9 @@ DT.Box.Ammo = function ( params ) {
 
 };
 
-DT.Box.Ammo.prototype = Object.create( DT.Box.prototype );
+Game.Box.Ammo.prototype = Object.create( Game.Box.prototype );
 
-DT.Box.Ammo.prototype.init = function () {
+Game.Box.Ammo.prototype.init = function () {
 
     var boxModel = resourceManager.getModel( 'ammo_box.json' );
 
@@ -31,13 +31,13 @@ DT.Box.Ammo.prototype.init = function () {
 
 };
 
-DT.Box.Ammo.prototype.remove = function () {
+Game.Box.Ammo.prototype.remove = function () {
 
     view.scene.remove( this.mesh );
 
 };
 
-DT.Box.Ammo.prototype.update = function ( delta ) {
+Game.Box.Ammo.prototype.update = function ( delta ) {
 
     this.animTime += delta;
     this.mesh.rotation.y = Math.sin( this.animTime / 600 );

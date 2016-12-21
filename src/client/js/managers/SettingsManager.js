@@ -1,9 +1,9 @@
 /*
  * @author ohmed
- * Main game settings file
+ * Game settings manager
 */
 
-DT.Settings = function () {
+Game.SettingsManager = function () {
 
     if ( ! localStorage.getItem('hq') ) {
 
@@ -25,9 +25,9 @@ DT.Settings = function () {
 
 };
 
-DT.Settings.prototype = {};
+Game.SettingsManager.prototype = {};
 
-DT.Settings.prototype.init = function () {
+Game.SettingsManager.prototype.init = function () {
 
     // todo
 
