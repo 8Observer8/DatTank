@@ -16,6 +16,7 @@ var Arena = function () {
     this.towers = [];
 
     this.boxManager = new DT.BoxManager( this, {} );
+    this.pathFinder = new DT.PathManager( this, {} );
 
     this.updateInterval = false;
 
@@ -306,7 +307,7 @@ Arena.prototype.addPlayer = function ( player ) {
 
     player.arena = this;
     player.team = team;
-    player.position = [ team.spawnPosition.x, team.spawnPosition.y, team.spawnPosition.z ];
+    player.position.set( team.spawnPosition.x, team.spawnPosition.y, team.spawnPosition.z );
 
     var offsetX = 0;
     var offsetZ = 0;
@@ -318,8 +319,8 @@ Arena.prototype.addPlayer = function ( player ) {
 
     }
 
-    player.position[0] += offsetX;
-    player.position[2] += offsetZ;
+    player.position.x += offsetX;
+    player.position.z += offsetZ;
 
     //
 

@@ -16,7 +16,7 @@ var uglify = require('gulp-uglify');
 var imagemin = require('gulp-imagemin');
 var pngquant = require('imagemin-pngquant');
 var nodemon = require('gulp-nodemon');
-var order = require("gulp-order");
+var order = require('gulp-order');
 
 //
 
@@ -44,7 +44,7 @@ gulp.task( 'js', function () {
         .pipe(order([
             'libs/three.js',
             'libs/*.js',
-            'DT.js',
+            'core/Game.js',
             'core/**/*',
             'objects/core/**/*',
             '**/*'

@@ -1,11 +1,11 @@
 /*
  * @author: ohmed
- * DT PathFinder web worker
+ * Game Path manager
 */
 
-var Worker = {
+var PathManager = function () {
 
-    grid: {
+    this.grid = {
         worldMap:   [],
         data:       [],
         zoom:       10,
@@ -13,84 +13,18 @@ var Worker = {
         dz:         2000,
         width:      400,
         height:     400
-    }
+    };
+
+    //
+
+    this.init();
+    this.constructMap();
 
 };
 
-for ( var i = 0, il = 400 * 400; i < il; i ++ ) {
+PathManager.Position = function ( manager, param1, param2 ) {
 
-    Worker.grid.data.push( 1 );
-
-};
-
-self.addEventListener( 'message', function ( event ) {
-
-    var data = event.data;
-
-    switch ( data.method ) {
-
-        case 'findPath':
-
-            self.postMessage({
-                method: 'findPath',
-                path: Worker.aStarSearch( data.start, data.end )
-            });
-
-            break;
-
-        case 'placeObject':
-
-            Worker.placeObject( data.position1, data.position2 );
-            break;
-
-        case 'placeObjects':
-
-            data = data.params;
-
-            for ( var i = 0, il = data.length; i < il; i ++ ) {
-
-                Worker.placeObject( data[ i ][ 0 ], data[ i ][ 1 ] );
-
-            }
-
-            break;
-
-        case 'stop':
-
-            self.close();
-            break;
-
-        case 'constructMap':
-
-            Worker.constructMap();
-            break;
-
-    }
-
-    self.postMessage({ method: 'free' });
-
-});
-
-Worker.placeObject = function ( position1, position2 ) {
-
-    position1 = new Worker.Position( position1 );
-    position2 = new Worker.Position( position2 );
-
-    for ( var j = position1.y; j < position2.y; j ++ ) {
-
-        for ( var i = position1.x; i < position2.x; i ++ ) {
-
-            Worker.grid.data[ 400 * j + i ] = 0;
-
-        }
-
-    }
-
-};
-
-Worker.Position = function ( param1, param2 ) {
-
-    var grid = Worker.grid;
+    var grid = manager.grid;
 
     if ( typeof param1 === 'number' && typeof param2 === 'number' ) {
 
@@ -112,17 +46,46 @@ Worker.Position = function ( param1, param2 ) {
 
 };
 
-Worker.constructMap = function () {
+PathManager.prototype = {};
+
+PathManager.prototype.init = function () {
+
+    for ( var i = 0, il = 400 * 400; i < il; i ++ ) {
+
+        this.grid.data.push( 1 );
+
+    }
+
+};
+
+PathManager.prototype.placeObject = function ( position1, position2 ) {
+
+    position1 = new PathManager.Position( this, position1 );
+    position2 = new PathManager.Position( this, position2 );
+
+    for ( var j = position1.y; j < position2.y; j ++ ) {
+
+        for ( var i = position1.x; i < position2.x; i ++ ) {
+
+            this.grid.data[ 400 * j + i ] = 0;
+
+        }
+
+    }
+
+};
+
+PathManager.prototype.constructMap = function () {
 
     var k = 0;
 
-    for ( var i = 0; i < Worker.grid.width; i ++ ) {
+    for ( var i = 0; i < this.grid.width; i ++ ) {
 
-        Worker.grid.worldMap[ i ] = [];
+        this.grid.worldMap[ i ] = [];
 
-        for ( var j = 0; j < Worker.grid.height; j ++ ) {
+        for ( var j = 0; j < this.grid.height; j ++ ) {
 
-            Worker.grid.worldMap[ i ][ j ] = { x: j, y: i, walkable: !! Worker.grid.data[ k ] }
+            this.grid.worldMap[ i ][ j ] = { x: j, y: i, walkable: !! this.grid.data[ k ] }
             k ++;
 
         }
@@ -131,12 +94,12 @@ Worker.constructMap = function () {
 
 };
 
-Worker.aStarSearch = function ( from, to ) {
+PathManager.prototype.findPath = function ( from, to, callback ) {
 
-    from = new Worker.Position( from );
-    to = new Worker.Position( to );
+    from = new PathManager.Position( this, from );
+    to = new PathManager.Position( this, to );
 
-    var worldMap = Worker.grid.worldMap;
+    var worldMap = this.grid.worldMap;
 
     var ORTHOGONAL = 1.0;
     var DIAGONAL = 1.0;
@@ -336,7 +299,7 @@ Worker.aStarSearch = function ( from, to ) {
 
     } else {
 
-        return [];
+        return callback( [] );
 
     }
 
@@ -365,16 +328,16 @@ Worker.aStarSearch = function ( from, to ) {
 
                 while ( step.cost !== 0 ) {
 
-                    x = Math.round( Worker.grid.zoom * step.x - Worker.grid.dx );
-                    z = Math.round( Worker.grid.zoom * step.y - Worker.grid.dz );
+                    x = Math.round( this.grid.zoom * step.x - this.grid.dx );
+                    z = Math.round( this.grid.zoom * step.y - this.grid.dz );
 
                     path.push({ x: x, y: 0, z: z });
                     step = step.parent;
 
                 }
 
-                x = Math.round( Worker.grid.zoom * from.x - Worker.grid.dx );
-                z = Math.round( Worker.grid.zoom * from.y - Worker.grid.dz );
+                x = Math.round( this.grid.zoom * from.x - this.grid.dx );
+                z = Math.round( this.grid.zoom * from.y - this.grid.dz );
 
                 path.push({ x: x, y: 0, z: z });
 
@@ -398,7 +361,7 @@ Worker.aStarSearch = function ( from, to ) {
 
                 }
 
-                return path;
+                return callback( path );
 
             }
 
@@ -417,10 +380,94 @@ Worker.aStarSearch = function ( from, to ) {
 
     // Cannot find a path.
 
-    return [];
+    return callback( [] );
+
+};
+
+PathManager.prototype.deCompressPath = function ( keyPath ) {
+
+    var path = [];
+    var s, e;
+
+    for ( var i = 1, il = keyPath.length; i < il; i ++ ) {
+
+        if ( keyPath[ i - 1 ].x - keyPath[ i ].x === 0 ) {
+
+            if ( keyPath[ i - 1 ].z - keyPath[ i ].z < 0 ) s2 = 1; else s2 = -1;
+
+            for ( var k = keyPath[ i - 1 ].z; k != keyPath[ i ].z; k += s2 ) {
+
+                path.push( { x: keyPath[ i - 1 ].x, y: 0 - 5, z: k } );
+
+            }
+
+            continue;
+
+        }
+
+        if ( Math.abs( keyPath[ i - 1 ].z - keyPath[ i ].z ) === 0 ) {
+
+            if ( keyPath[ i - 1 ].x - keyPath[ i ].x < 0 ) s1 = 1; else s1 = -1;
+
+            for ( var k = keyPath[ i - 1 ].x; k != keyPath[ i ].x; k += s1 ) {
+
+                path.push( { x: k, y: 0 - 5, z: keyPath[ i - 1 ].z } );
+
+            }
+
+            continue;
+
+        }
+
+        if ( Math.abs( keyPath[ i - 1 ].z - keyPath[ i ].z ) === Math.abs( keyPath[ i - 1 ].x - keyPath[ i ].x ) ) {
+
+            var s1, s2;
+
+            if ( keyPath[ i - 1 ].x - keyPath[ i ].x < 0 ) s1 = 1; else s1 = -1;
+            if ( keyPath[ i - 1 ].z - keyPath[ i ].z < 0 ) s2 = 1; else s2 = -1;
+
+            var cord = [];
+
+            for ( var k = keyPath[ i - 1 ].x; k != keyPath[ i ].x; k += s1 ) {
+
+                cord.push( { x: k, y: 0 - 5, z: 0 } );
+
+            }
+
+            var p = 0;
+
+            for ( var k = keyPath[ i - 1 ].z; k != keyPath[ i ].z; k += s2 ) {
+
+                cord[ p ].z = k;
+                p ++;
+
+            }
+
+            for ( var k = 0, kl = cord.length; k < kl; k ++ ) {
+
+                path.push( cord[ k ] );
+
+            }
+
+            continue;
+
+        }
+
+    }
+
+    var newPath = [];
+
+    for ( var i = 0, il = path.length; i < il; i ++ ) {
+
+        newPath.push( path[ i ].x );
+        newPath.push( path[ i ].z );
+
+    }
+
+    return newPath;
 
 };
 
 //
 
-Worker.constructMap();
+module.exports = PathManager;

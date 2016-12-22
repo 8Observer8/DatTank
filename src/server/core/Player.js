@@ -29,7 +29,7 @@ var Player = function ( params ) {
     this.movementDurationMap = [];
     this.movementDuration = 0;
 
-    this.position = [ 0, 0, 0 ];
+    this.position = new DT.Vec3();
     this.rotation = 0;
     this.rotationTop = - Math.PI / 2;
 
@@ -50,7 +50,7 @@ Player.prototype.respawn = function () {
     this.health = 100;
     this.ammo = this.tank.maxShells;
     this.hits = {};
-    this.position = [ this.team.spawnPosition.x, this.team.spawnPosition.y, this.team.spawnPosition.z ];
+    this.position.set( this.team.spawnPosition.x, this.team.spawnPosition.y, this.team.spawnPosition.z );
     this.rotation = 0;
     this.rotationTop = 0;
 
@@ -66,8 +66,8 @@ Player.prototype.respawn = function () {
 
     }
 
-    this.position[0] += offsetX;
-    this.position[2] += offsetZ;
+    this.position.x += offsetX;
+    this.position.z += offsetZ;
 
     //
 
@@ -104,9 +104,9 @@ Player.prototype.selectTank = function ( tankName ) {
 Player.prototype.rotateTop = (function () {
 
     var buffer = new ArrayBuffer( 6 );
-    var bufferView = new Uint16Array( buffer );
+    var bufferView = new Int16Array( buffer );
 
-    return function ( params ) {
+    return function ( angle ) {
 
         if ( this.status !== Player.Alive ) {
 
@@ -114,20 +114,12 @@ Player.prototype.rotateTop = (function () {
 
         }
 
-        this.rotationTop = params.topAngle;
+        this.rotationTop = angle;
 
         bufferView[1] = this.id;
-        bufferView[2] = Math.floor( 100 * params.topAngle );
+        bufferView[2] = Math.floor( 10 * angle );
 
-        if ( this.socket ) {
-
-            DT.Network.broadcast( this.socket, this.arena, 'rotateTop', buffer, bufferView );
-
-        } else {
-
-            DT.Network.announce( this.arena, 'rotateTop', buffer, bufferView );
-
-        }
+        DT.Network.announce( this.arena, 'rotateTop', buffer, bufferView );
 
     };
 
@@ -189,6 +181,16 @@ Player.prototype.rotateBase = function ( direction ) {
 Player.prototype.move = function ( direction ) {
 
     this.moveDirection = direction;
+
+};
+
+Player.prototype.moveToPoint = function ( destination ) {
+
+    this.arena.pathFinder.findPath( this.position, destination, function ( path ) {
+
+        console.log( path );
+
+    });
 
 };
 
@@ -380,18 +382,18 @@ Player.prototype.update = (function () {
 
                 if ( player.movePath[ 2 * ( progress - 30 ) ] ) {
 
-                    dx = ( player.movePath[ 2 * ( progress - 30 ) + 0 ] + player.movePath[ 2 * ( progress - 29 ) + 0 ] + player.movePath[ 2 * ( progress - 28 ) + 0 ] ) / 3 - 2000 - player.position[0];
-                    dz = ( player.movePath[ 2 * ( progress - 30 ) + 1 ] + player.movePath[ 2 * ( progress - 29 ) + 1 ] + player.movePath[ 2 * ( progress - 28 ) + 1 ] ) / 3 - 2000 - player.position[2];
+                    dx = ( player.movePath[ 2 * ( progress - 30 ) + 0 ] + player.movePath[ 2 * ( progress - 29 ) + 0 ] + player.movePath[ 2 * ( progress - 28 ) + 0 ] ) / 3 - 2000 - player.position.x;
+                    dz = ( player.movePath[ 2 * ( progress - 30 ) + 1 ] + player.movePath[ 2 * ( progress - 29 ) + 1 ] + player.movePath[ 2 * ( progress - 28 ) + 1 ] ) / 3 - 2000 - player.position.z;
 
                 } else {
 
-                    dx = ( player.movePath[ 2 * progress + 0 ] - 2000 ) - player.position[0];
-                    dz = ( player.movePath[ 2 * progress + 1 ] - 2000 ) - player.position[2];
+                    dx = ( player.movePath[ 2 * progress + 0 ] - 2000 ) - player.position.x;
+                    dz = ( player.movePath[ 2 * progress + 1 ] - 2000 ) - player.position.z;
 
                 }
 
-                player.position[0] = player.movePath[ 2 * progress + 0 ] - 2000;
-                player.position[2] = player.movePath[ 2 * progress + 1 ] - 2000;
+                player.position.x = player.movePath[ 2 * progress + 0 ] - 2000;
+                player.position.z = player.movePath[ 2 * progress + 1 ] - 2000;
 
                 //
 

@@ -28,12 +28,12 @@ Game.prototype = {};
 Game.prototype.init = function () {
 
     window.ui = new Game.UI();
-    window.network = new Game.NetworkManager();
-    window.view = new Game.View();
-    window.controls = new Game.Controls();
-    window.resourceManager = new Game.ResourceManager();
-    window.soundSys = new Game.SoundSys();
     window.garage = new Game.Garage();
+    window.network = new Game.NetworkManager();
+    window.view = new Game.ViewManager();
+    window.controls = new Game.ControlsManager();
+    window.resourceManager = new Game.ResourceManager();
+    window.soundSys = new Game.SoundManager();
     window.settings = new Game.SettingsManager();
 
     //

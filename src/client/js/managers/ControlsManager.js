@@ -3,7 +3,7 @@
  * DatTank mouse/keys controls
 */
 
-Game.Controls = function () {
+Game.ControlsManager = function () {
 
     this.pressedKey = false;
     this.pressedMouseKey = false;
@@ -18,9 +18,9 @@ Game.Controls = function () {
 
 };
 
-Game.Controls.prototype = {};
+Game.ControlsManager.prototype = {};
 
-Game.Controls.prototype.mouseInit = function () {
+Game.ControlsManager.prototype.mouseInit = function () {
 
     var scope = this;
 
@@ -44,7 +44,7 @@ Game.Controls.prototype.mouseInit = function () {
 
             case 1:
 
-                Game.arena.me.shoot();
+                scope.shoot();
                 break;
 
             case 2:
@@ -59,7 +59,7 @@ Game.Controls.prototype.mouseInit = function () {
 
                 if ( intersections[0] && intersections[0].object.name === 'ground' ) {
 
-                    Game.arena.me.move( intersections[0].point );
+                    scope.moveToPoint( intersections[0].point );
                     view.showDestinationPoint( intersections[0].point );
 
                 }
@@ -96,7 +96,7 @@ Game.Controls.prototype.mouseInit = function () {
 
 };
 
-Game.Controls.prototype.keyInit = function () {
+Game.ControlsManager.prototype.keyInit = function () {
 
     var scope = this;
 
@@ -186,7 +186,32 @@ Game.Controls.prototype.keyInit = function () {
 
 //
 
-Game.Controls.prototype.rotateBase = ( function () {
+Game.ControlsManager.prototype.rotateTop = (function () {
+
+    var buffer = new ArrayBuffer( 4 );
+    var bufferView = new Int16Array( buffer );
+    var lastUpdateTime = Date.now();
+
+    return function ( angle ) {
+
+        var me = Game.arena.me;
+        if ( ! me.tank.object.top ) return;
+
+        if ( Date.now() - lastUpdateTime > 50 ) {
+
+            lastUpdateTime = Date.now();
+
+            bufferView[ 1 ] = Math.floor( angle * 10 );
+
+            network.send( 'rotateTop', buffer, bufferView );
+
+        }
+
+    };
+
+}) ();
+
+Game.ControlsManager.prototype.rotateBase = (function () {
 
     var buffer = new ArrayBuffer( 4 );
     var bufferView = new Int16Array( buffer );
@@ -202,7 +227,13 @@ Game.Controls.prototype.rotateBase = ( function () {
 
 }) ();
 
-Game.Controls.prototype.move = ( function () {
+Game.ControlsManager.prototype.shoot = function () {
+
+    network.send( 'shoot' );
+
+};
+
+Game.ControlsManager.prototype.move = (function () {
 
     var buffer = new ArrayBuffer( 4 );
     var bufferView = new Int16Array( buffer );
@@ -213,6 +244,28 @@ Game.Controls.prototype.move = ( function () {
         bufferView[ 1 ] = direction;
 
         network.send( 'PlayerTankMove', buffer, bufferView );
+
+    };
+
+}) ();
+
+Game.ControlsManager.prototype.moveToPoint = (function () {
+
+    var buffer = new ArrayBuffer( 6 );
+    var bufferView = new Int16Array( buffer );
+
+    return function ( destination ) {
+
+        if ( Game.arena.me.status !== 'alive' ) {
+
+            return;
+
+        }
+
+        bufferView[1] = destination.x;
+        bufferView[2] = destination.z;
+
+        network.send( 'PlayerTankMoveToPoint', buffer, bufferView );
 
     };
 

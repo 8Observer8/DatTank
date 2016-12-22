@@ -19,7 +19,7 @@ Game.Player = function ( arena, params ) {
 
     //
 
-    this.position = new THREE.Vector3( params.position[0], params.position[1], params.position[2] );
+    this.position = new THREE.Vector3( params.position.x, params.position.y, params.position.z );
     this.rotation = params.rotation;
     this.topRotation = params.rotationTop;
 
@@ -163,87 +163,9 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
 
 };
 
-Game.Player.prototype.move = function ( destination, fromServer ) {
+Game.Player.prototype.move = function ( compressedPath ) {
 
-    var scope = this;
-
-    if ( this.health <= 0 ) {
-
-        return;
-
-    }
-
-    Game.arena.pathFinder.findPath( this.position, destination, function ( path ) {
-
-        if ( path.length === 0 ) {
-
-            scope.move( { x: destination.x + 10, y: 0, z: destination.z + 10 }, fromServer );
-            return;
-
-        }
-
-        path.push( scope.position.x, scope.position.z );
-        path.unshift( destination.x, destination.z );
-        path.unshift( destination.x, destination.z );
-
-        //
-
-        var minDistIndex = 0;
-
-        for ( var i = path.length / 2 - 1; i > 0; i -- ) {
-
-            if ( Math.sqrt( Math.pow( scope.position.x - path[ 2 * i + 0 ], 2 ) + Math.pow( scope.position.z - path[ 2 * i + 1 ], 2 ) ) < 3 ) {
-
-                minDistIndex = i;
-
-            }
-
-        }
-
-        for ( var i = minDistIndex; i < path.length / 2; i ++ ) {
-
-            path.pop();
-            path.pop();
-
-        }
-
-        //
-
-        scope.processPath( path );
-
-        //
-
-        if ( ! fromServer ) {
-
-            var arrayBuffer = new ArrayBuffer( 2 * ( 1 + path.length ) );
-            var arrayBufferView = new Uint16Array( arrayBuffer );
-
-            for ( var i = 0, il = path.length; i < il; i ++ ) {
-
-                arrayBufferView[ i + 1 ] = path[ i ] + 2000;
-
-            }
-
-            network.send( 'move', arrayBuffer, arrayBufferView );
-
-        } else {
-
-            var arrayBuffer = new ArrayBuffer( 2 * ( 2 + path.length ) );
-            var arrayBufferView = new Uint16Array( arrayBuffer );
-
-            arrayBufferView[ 1 ] = scope.id;
-
-            for ( var i = 0, il = path.length; i < il; i ++ ) {
-
-                arrayBufferView[ i + 2 ] = path[ i ] + 2000;
-
-            }
-
-            network.send( 'move1', arrayBuffer, arrayBufferView );
-
-        }
-
-    });
+    // todo
 
 };
 
@@ -277,137 +199,88 @@ Game.Player.prototype.processPath = function ( path ) {
 
 };
 
-Game.Player.prototype.rotateTop = (function () {
+Game.Player.prototype.rotateTop = function ( angle ) {
 
-    var buffer = new ArrayBuffer( 6 );
-    var bufferView = new Uint16Array( buffer );
+    if ( ! this.tank.object.top ) return;
 
-    return function ( angle, fromNetwork ) {
+    angle = angle - this.tank.object.rotation.y;
+    angle = Utils.formatAngle( angle );
 
-        var scope = this;
+    this.rotationTopTarget = angle;
+    this.topRotation = angle;
+    this.tank.setTopRotation( angle );
 
-        if ( ! this.tank.object.top ) return;
+};
 
-        //
+Game.Player.prototype.shoot = function ( shootId, ammo ) {
 
-        if ( ! fromNetwork ) {
+    var scope = this;
 
-            angle = angle - this.tank.object.rotation.y;
+    if ( this.status !== 'alive' ) return;
 
-        }
+    if ( Game.arena.me.id === this.id && ( this.ammo <= 0 || Date.now() - this.lastShot < 1000 ) ) {
 
-        angle = Utils.formatAngle( angle );
+        return;
 
-        this.rotationTopTarget = angle;
-        this.topRotation = angle;
-        this.tank.setTopRotation( angle );
+    }
 
-        if ( Game.arena.me.id === this.id ) {
+    //
 
-            bufferView[ 1 ] = Math.floor( angle * 100 );
-            bufferView[ 2 ] = Math.floor( scope.rotation * 100 );
+    if ( Game.arena.me.id === this.id ) {
 
-            if ( ! this.rotateTopNetworkEmitTimeout ) {
+        this.ammo = ammo;
+        ui.updateAmmo( this.ammo );
 
-                this.rotateTopNetworkEmitTimeout = setTimeout( function () {
+    }
 
-                    network.send( 'rotateTop', buffer, bufferView );
-                    scope.rotateTopNetworkEmitTimeout = false;
+    this.tank.showBlastSmoke();
+    this.tank.shootBullet().onHit( function ( target ) {
 
-                }, 200 );
+        if ( scope.team !== target.owner.team ) {
 
-            }
+            var buffer = new ArrayBuffer( 8 );
+            var bufferView = new Int16Array( buffer );
 
-        }
+            bufferView[ 2 ] = shootId;
+            bufferView[ 3 ] = scope.id;
 
-    };
+            if ( target.name === 'tank' ) {
 
-}) ();
+                bufferView[ 1 ] = target.owner.id;
 
-Game.Player.prototype.shoot = (function () {
+            } else {
 
-    var buffer = new ArrayBuffer( 8 );
-    var bufferView = new Uint16Array( buffer );
-
-    return function ( shootId, ammo ) {
-
-        var scope = this;
-
-        if ( this.health <= 0 ) {
-
-            return;
-
-        }
-
-        if ( ! shootId ) {
-
-            network.send( 'shoot' );
-            return;
-
-        }
-
-        if ( Game.arena.me.id === this.id && ( this.ammo <= 0 || Date.now() - this.lastShot < 1000 ) ) {
-
-            return;
-
-        }
-
-        //
-
-        if ( Game.arena.me.id === this.id ) {
-
-            this.ammo = ammo;
-            ui.updateAmmo( this.ammo );
-
-        }
-
-        this.tank.showBlastSmoke();
-        this.tank.shootBullet().onHit( function ( target ) {
-
-            if ( scope.team !== target.owner.team ) {
-
-                bufferView[ 2 ] = shootId;
-                bufferView[ 3 ] = scope.id;
-
-                if ( target.name === 'tank' ) {
-
-                    bufferView[ 1 ] = target.owner.id;
-
-                } else {
-
-                    bufferView[ 1 ] = 10000 + target.owner.id;
-
-                }
-
-                network.send( 'hit', buffer, bufferView );
+                bufferView[ 1 ] = 10000 + target.owner.id;
 
             }
 
-        });
-
-        //
-
-        if ( Game.arena.me.id === this.id ) {
-
-            scope.lastShot = Date.now();
-            var element = $('#empty-ammo-image');
-            // -> removing the class
-            element.removeClass('ammo-animation');
-            element.css( 'height', '100%' );
-
-            // -> triggering reflow / The actual magic /
-            // without this it wouldn't work. Try uncommenting the line and the transition won't be retriggered.
-            element[0].offsetWidth;
-            element.css( 'background-image', 'url(../resources/img/ammo.png)' );
-
-            // -> and re-adding the class
-            element.addClass('ammo-animation');
+            network.send( 'hit', buffer, bufferView );
 
         }
 
-    };
+    });
 
-}) ();
+    //
+
+    if ( Game.arena.me.id === this.id ) {
+
+        scope.lastShot = Date.now();
+        var element = $('#empty-ammo-image');
+        // -> removing the class
+        element.removeClass('ammo-animation');
+        element.css( 'height', '100%' );
+
+        // -> triggering reflow / The actual magic /
+        // without this it wouldn't work. Try uncommenting the line and the transition won't be retriggered.
+        element[0].offsetWidth;
+        element.css( 'background-image', 'url(../resources/img/ammo.png)' );
+
+        // -> and re-adding the class
+        element.addClass('ammo-animation');
+
+    }
+
+};
 
 Game.Player.prototype.gotBox = function ( box, value ) {
 

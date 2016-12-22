@@ -64,14 +64,15 @@ Network.init = function () {
 
                 var ab = data.buffer.slice( data.byteOffset, data.byteOffset + data.byteLength );
                 var event = new Uint16Array( ab, 0, 1 )[ 0 ];
-                var data = new Uint16Array( ab, 2 );
+                var data = new Int16Array( ab, 2 );
 
                 switch ( event ) {
 
                     case 1:     // rotateTop
 
                         if ( ! socket.arena || ! socket.player ) return;
-                        socket.player.rotateTop({ topAngle: data[ 0 ] / 100, baseAngle: data[ 1 ] / 100 });
+                        var angle = data[ 0 ] / 10;
+                        socket.player.rotateTop( angle );
                         break;
 
                     case 2:     // move
@@ -159,7 +160,7 @@ Network.init = function () {
 
                         break;
 
-                    case 101: // 'PlayerTankMove':
+                    case 101: // 'PlayerTankMove'
 
                         if ( ! socket.arena || ! socket.player ) return;
 
@@ -167,6 +168,17 @@ Network.init = function () {
                         var direction = data[ 0 ];
 
                         player.move( direction );
+
+                        break;
+
+                    case 102: // 'PlayerTankMoveToPoint'
+
+                        if ( ! socket.arena || ! socket.player ) return;
+
+                        var player = socket.player;
+                        var destination = { x: data[ 0 ], y: 0, z: data[1] };
+
+                        player.moveToPoint( destination );
 
                         break;
 
@@ -330,11 +342,6 @@ Network.broadcast = function ( socket, arena, event, data, view ) {
         bin = true;
 
         switch ( event ) {
-
-            case 'rotateTop':
-
-                view[0] = 1;
-                break;
 
             case 'move':
 

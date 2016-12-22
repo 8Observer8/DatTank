@@ -156,14 +156,14 @@ Game.NetworkManager.prototype.message = function ( event ) {
     function parseBinMessage ( data ) {
 
         var event = new Uint16Array( data, 0, 2 )[0];
-        var data = new Uint16Array( data, 2 );
+        var data = new Int16Array( data, 2 );
 
         switch ( event ) {
 
             case 1:     // rotateTop
 
                 var playerId = data[0];
-                var topAngle = data[1] / 100;
+                var topAngle = data[1] / 10;
 
                 var player = Game.arena.getPlayerById( playerId );
 
@@ -174,7 +174,7 @@ Game.NetworkManager.prototype.message = function ( event ) {
 
                 }
 
-                player.rotateTop( topAngle, true );
+                player.rotateTop( topAngle );
 
                 break;
 
@@ -443,6 +443,11 @@ Game.NetworkManager.prototype.send = function ( event, data, view ) {
             case 'PlayerTankMove':
 
                 view[0] = 101;
+                break;
+
+            case 'PlayerTankMoveToPoint':
+
+                view[0] = 102;
                 break;
 
             default:

@@ -92,7 +92,7 @@ Bot.prototype.update = (function () {
 
             if ( player.team === this.player.team ) continue;
 
-            var distance = Math.sqrt( Math.pow( player.position[0] - this.player.position[0], 2 ) + Math.pow( player.position[2] - this.player.position[2], 2 ) );
+            var distance = Math.sqrt( Math.pow( player.position.x - this.player.position.x, 2 ) + Math.pow( player.position.z - this.player.position.z, 2 ) );
 
             if ( distance < minDist ) {
 
@@ -113,7 +113,7 @@ Bot.prototype.update = (function () {
 
                 if ( tower.team === this.player.team ) continue;
 
-                var distance = Math.sqrt( Math.pow( tower.position.x - this.player.position[0], 2 ) + Math.pow( tower.position.z - this.player.position[2], 2 ) );
+                var distance = Math.sqrt( Math.pow( tower.position.x - this.player.position.x, 2 ) + Math.pow( tower.position.z - this.player.position.z, 2 ) );
 
                 if ( distance < minDist ) {
 
@@ -126,7 +126,7 @@ Bot.prototype.update = (function () {
 
             if ( target && minDist < 200 ) {
 
-                var angle = Math.atan2( target.position.x - this.player.position[0], target.position.z - this.player.position[2] ) - Math.PI / 2;
+                var angle = Math.atan2( target.position.x - this.player.position.x, target.position.z - this.player.position.z ) - Math.PI / 2;
                 this.player.rotateTop({ topAngle: utils.formatAngle( angle - this.player.rotation ), baseAngle: this.player.rotation });
 
                 if ( Math.random() < 0.3 ) {
@@ -139,7 +139,7 @@ Bot.prototype.update = (function () {
 
         } else if ( target && minDist < 200 ) {
 
-            var angle = Math.atan2( target.position[0] - this.player.position[0], target.position[2] - this.player.position[2] ) - Math.PI / 2;
+            var angle = Math.atan2( target.position.x - this.player.position.x, target.position.z - this.player.position.z ) - Math.PI / 2;
             this.player.rotateTop({ topAngle: utils.formatAngle( angle - this.player.rotation ), baseAngle: this.player.rotation });
 
             if ( Math.random() < 0.3 ) {

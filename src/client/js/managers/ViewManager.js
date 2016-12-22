@@ -5,7 +5,7 @@
 
 var MOBILE;
 
-Game.View = function () {
+Game.ViewManager = function () {
 
     this.SCREEN_WIDTH = false;
     this.SCREEN_HEIGHT = false;
@@ -53,9 +53,9 @@ Game.View = function () {
 
 };
 
-Game.View.prototype = {};
+Game.ViewManager.prototype = {};
 
-Game.View.prototype.setupScene = function () {
+Game.ViewManager.prototype.setupScene = function () {
 
     this.SCREEN_WIDTH = window.innerWidth;
     this.SCREEN_HEIGHT = window.innerHeight;
@@ -160,7 +160,7 @@ Game.View.prototype.setupScene = function () {
 
 };
 
-Game.View.prototype.addObsticles = function ( obstacles ) {
+Game.ViewManager.prototype.addObsticles = function ( obstacles ) {
 
     var tree = resourceManager.getModel( 'tree.json' );
     tree.material[0].alphaTest = 0.5;
@@ -169,8 +169,6 @@ Game.View.prototype.addObsticles = function ( obstacles ) {
     var model;
     var mesh;
     var obstacle;
-
-    var placingObjects = [];
 
     for ( var i = 0, il = obstacles.length; i < il; i ++ ) {
 
@@ -202,17 +200,11 @@ Game.View.prototype.addObsticles = function ( obstacles ) {
         view.scene.add( mesh );
         view.scene.intersections.push( mesh );
 
-        placingObjects.push( [ new THREE.Vector3( mesh.position.x - sizeX / 2, 0, mesh.position.z - sizeZ / 2 ), new THREE.Vector3( mesh.position.x + sizeX / 2, 0, mesh.position.z + sizeZ / 2 ) ] );
-
     }
-
-    Game.arena.pathFinder.placeObjects( placingObjects );
-
-    setTimeout( Game.arena.pathFinder.constructMap.bind( Game.arena.pathFinder ), 1000 );
 
 };
 
-Game.View.prototype.addMap = function () {
+Game.ViewManager.prototype.addMap = function () {
 
     var groundTexture = resourceManager.getTexture( 'Ground.jpg' );
     groundTexture.wrapS = THREE.RepeatWrapping;
@@ -260,7 +252,7 @@ Game.View.prototype.addMap = function () {
 
 };
 
-Game.View.prototype.addTeamZone = function () {
+Game.ViewManager.prototype.addTeamZone = function () {
 
     for ( var i = 0, il = Game.arena.teams.length; i < il; i ++ ) {
 
@@ -283,7 +275,7 @@ Game.View.prototype.addTeamZone = function () {
 
 };
 
-Game.View.prototype.clean = function () {
+Game.ViewManager.prototype.clean = function () {
 
     if ( this.scene ) {
 
@@ -307,7 +299,7 @@ Game.View.prototype.clean = function () {
 
 };
 
-Game.View.prototype.resize = function () {
+Game.ViewManager.prototype.resize = function () {
 
     this.SCREEN_WIDTH = window.innerWidth;
     this.SCREEN_HEIGHT = window.innerHeight;
@@ -321,7 +313,7 @@ Game.View.prototype.resize = function () {
 
 };
 
-Game.View.prototype.showDestinationPoint = (function() {
+Game.ViewManager.prototype.showDestinationPoint = (function() {
 
     var interval;
 
@@ -365,7 +357,7 @@ Game.View.prototype.showDestinationPoint = (function() {
 
 var intersections = false;
 
-Game.View.prototype.animate = function ( delta ) {
+Game.ViewManager.prototype.animate = function ( delta ) {
 
     if ( ! Game.arena ) return;
 
@@ -404,7 +396,7 @@ Game.View.prototype.animate = function ( delta ) {
 
             if ( Math.abs( angle - me.topRotation ) > 0.03 ) {
 
-                me.rotateTop( angle );
+                controls.rotateTop( angle );
 
             }
 
@@ -414,7 +406,7 @@ Game.View.prototype.animate = function ( delta ) {
 
 };
 
-Game.View.prototype.updatePlayersPosition = function ( delta ) {
+Game.ViewManager.prototype.updatePlayersPosition = function ( delta ) {
 
     if ( ! Game.arena ) return;
 
@@ -566,7 +558,7 @@ Game.View.prototype.updatePlayersPosition = function ( delta ) {
 
 };
 
-Game.View.prototype.changeGraficQuality = function () {
+Game.ViewManager.prototype.changeGraficQuality = function () {
 
     var antialias = false;
     var quality = 0.7;
@@ -596,7 +588,7 @@ Game.View.prototype.changeGraficQuality = function () {
 
 };
 
-Game.View.prototype.addCameraShake = function ( duration, intencity ) {
+Game.ViewManager.prototype.addCameraShake = function ( duration, intencity ) {
 
     var iter = 0;
     var scope = this;
@@ -628,7 +620,7 @@ Game.View.prototype.addCameraShake = function ( duration, intencity ) {
 
 };
 
-Game.View.prototype.render = (function () {
+Game.ViewManager.prototype.render = (function () {
 
     var prevRenderTime;
 

@@ -64,8 +64,8 @@ Tower.prototype.shoot = (function () {
 
         //
 
-        var dx = this.position.x - target.position[0];
-        var dz = this.position.z - target.position[2];
+        var dx = this.position.x - target.position.x;
+        var dz = this.position.z - target.position.z;
         var rotation = ( dz === 0 && dx !== 0 ) ? ( Math.PI / 2 ) * Math.abs( dx ) / dx : Math.atan2( dx, dz );
         var delta;
 
@@ -166,7 +166,7 @@ Tower.prototype.checkForTarget = function ( players ) {
 
         //
 
-        dist = utils.getDistance( this.position, { x: players[ i ].position[0], y: players[ i ].position[1], z: players[ i ].position[2] });
+        dist = utils.getDistance( this.position, players[ i ].position );
 
         if ( dist > this.range ) continue;
 
@@ -192,8 +192,8 @@ Tower.prototype.rotateTop = (function () {
 
     return function ( target ) {
 
-        var dx = target.position[0] - this.position.x;
-        var dz = target.position[2] - this.position.z;
+        var dx = target.position.x - this.position.x;
+        var dz = target.position.z - this.position.z;
         var rotation, delta;
 
         if ( dz === 0 && dx !== 0 ) {
@@ -259,7 +259,7 @@ Tower.prototype.update = function () {
 
         if ( this.target.team.id !== this.team.id && this.target.status === DT.Player.Alive ) {
 
-            var dist = utils.getDistance( this.position, { x: this.target.position[0], y: this.target.position[1], z: this.target.position[2] });
+            var dist = utils.getDistance( this.position, this.target.position );
             if ( dist < this.range ) target = this.target;
 
         }

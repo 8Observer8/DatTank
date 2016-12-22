@@ -92,8 +92,8 @@ BoxManager.prototype.getBoxesInRange = function ( player ) {
 
     for ( var i = 0, il = this.boxes.length; i < il; i ++ ) {
 
-        dx = this.boxes[ i ].position[0] - player.position[0];
-        dz = this.boxes[ i ].position[2] - player.position[2];
+        dx = this.boxes[ i ].position.x - player.position.x;
+        dz = this.boxes[ i ].position.z - player.position.z;
 
         if ( Math.sqrt( Math.pow( dx, 2 ) + Math.pow( dz, 2 ) ) < range ) {
 
