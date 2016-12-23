@@ -104,7 +104,7 @@ Arena.prototype.addObstacles = function ( treeCount, rockCount ) {
 
     var x, z;
     var scale, scaleH;
-    var baseSize = 150;
+    var baseSize = 140;
 
     while ( treeCount ) {
 
@@ -117,6 +117,7 @@ Arena.prototype.addObstacles = function ( treeCount, rockCount ) {
         //
 
         var placedOnTower = false;
+        var placedOnBase = false;
 
         for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
 
@@ -133,10 +134,23 @@ Arena.prototype.addObstacles = function ( treeCount, rockCount ) {
 
         if ( placedOnTower ) continue;
 
-        if ( Math.sqrt( Math.pow( 500 - x, 2 ) + Math.pow( 500 - z, 2 ) ) < baseSize ) continue;
-        if ( Math.sqrt( Math.pow( - 500 - x, 2 ) + Math.pow( 500 - z, 2 ) ) < baseSize ) continue;
-        if ( Math.sqrt( Math.pow( 500 - x, 2 ) + Math.pow( - 500 - z, 2 ) ) < baseSize ) continue;
-        if ( Math.sqrt( Math.pow( - 500 - x, 2 ) + Math.pow( - 500 - z, 2 ) ) < baseSize ) continue;
+        //
+
+        for ( var i in DT.Team.StartPositions ) {
+
+            var pos = DT.Team.StartPositions[ i ];
+
+            if ( + i >= 1000 ) continue;
+            if ( Math.sqrt( Math.pow( pos.x - x, 2 ) + Math.pow( pos.z - z, 2 ) ) < baseSize ) {
+
+                placedOnBase = true;
+                break;
+
+            }
+
+        }
+
+        if ( placedOnBase ) continue;
 
         //
 

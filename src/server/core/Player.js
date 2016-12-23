@@ -59,10 +59,10 @@ Player.prototype.respawn = function () {
     var offsetX = 0;
     var offsetZ = 0;
 
-    while ( Math.abs( offsetX ) < 50 && Math.abs( offsetZ ) < 50 ) {
+    while ( Math.sqrt( offsetX * offsetX + offsetZ * offsetZ ) < 80 ) {
 
-        offsetX = ( Math.random() - 0.5 ) * 200;
-        offsetZ = ( Math.random() - 0.5 ) * 200;        
+        offsetX = ( Math.random() - 0.5 ) * 100;
+        offsetZ = ( Math.random() - 0.5 ) * 100;        
 
     }
 
@@ -139,15 +139,22 @@ Player.prototype.move = function ( direction ) {
 
 Player.prototype.moveToPoint = function ( destination ) {
 
-    if ( this.status !== Player.Alive ) {
-
-        return;
-
-    }
+    if ( this.status !== Player.Alive ) return;
 
     var scope = this;
 
     this.arena.pathManager.findPath( this.position, destination, function ( path ) {
+
+        if ( scope.status !== Player.Alive ) return;
+
+        if ( path.length === 0 ) {
+
+            destination.x += 10;
+            destination.z += 10;
+            scope.moveToPoint( destination );
+            return;
+
+        }
 
         var buffer = new ArrayBuffer( 2 * 2 * path.length + 2 + 2 + 2 * 2 );
         var bufferView = new Int16Array( buffer );
