@@ -23,13 +23,6 @@ Game.Player = function ( arena, params ) {
     this.rotation = params.rotation;
     this.topRotation = params.rotationTop;
 
-    // keyMovement 
-
-    this.moveForward = false;
-    this.moveLeft = false;
-    this.moveBackward = false;
-    this.moveRight = false;
-
     //
 
     this.moveProgress = false;
@@ -43,11 +36,29 @@ Game.Player = function ( arena, params ) {
     this.rotDelta = 0;
     this.rotationTopTarget = false;
 
-    //
-
     this.lastShot = Date.now();
 
-    switch ( params.tank ) {
+    //
+
+    this.init( params );
+
+};
+
+Game.Player.prototype = {};
+
+Game.Player.prototype.init = function ( params ) {
+
+    this.selectTank( params.tank );
+    this.tank.init();
+
+    this.tank.setRotation( this.rotation )
+    this.tank.setPosition( this.position.x, this.position.y, this.position.z );
+
+};
+
+Game.Player.prototype.selectTank = function ( tankName ) {
+
+    switch ( tankName ) {
 
         case 'USA-T54':
 
@@ -62,19 +73,6 @@ Game.Player = function ( arena, params ) {
     }
 
     this.moveSpeed = this.moveSpeed * this.tank.speed / 40;
-
-    this.init();
-
-};
-
-Game.Player.prototype = {};
-
-Game.Player.prototype.init = function () {
-
-    this.tank.init();
-
-    this.tank.setRotation( this.rotation )
-    this.tank.setPosition( this.position.x, this.position.y, this.position.z );
 
 };
 
@@ -163,9 +161,122 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
 
 };
 
-Game.Player.prototype.move = function ( compressedPath ) {
+Game.Player.prototype.moveByPath = function ( compressedPath, destination ) {
 
-    // todo
+    var path = this.decompressPath( compressedPath );
+
+    //
+
+    path.push( this.position.x, this.position.z );
+    path.unshift( destination.x, destination.z );
+    path.unshift( destination.x, destination.z );
+
+    var minDistIndex = 0;
+
+    for ( var i = path.length / 2 - 1; i > 0; i -- ) {
+
+        if ( Math.sqrt( Math.pow( this.position.x - path[ 2 * i + 0 ], 2 ) + Math.pow( this.position.z - path[ 2 * i + 1 ], 2 ) ) < 3 ) {
+
+            minDistIndex = i;
+
+        }
+
+    }
+
+    for ( var i = minDistIndex; i < path.length / 2; i ++ ) {
+
+        path.pop();
+        path.pop();
+
+    }
+
+    //
+
+    this.processPath( path );
+
+};
+
+Game.Player.prototype.decompressPath = function ( keyPath ) {
+
+    var path = [];
+    var s, e;
+
+    for ( var i = 1, il = keyPath.length; i < il; i ++ ) {
+
+        if ( keyPath[ i - 1 ].x - keyPath[ i ].x === 0 ) {
+
+            if ( keyPath[ i - 1 ].z - keyPath[ i ].z < 0 ) s2 = 1; else s2 = -1;
+
+            for ( var k = keyPath[ i - 1 ].z; k != keyPath[ i ].z; k += s2 ) {
+
+                path.push( { x: keyPath[ i - 1 ].x, y: 0 - 5, z: k } );
+
+            }
+
+            continue;
+
+        }
+
+        if ( Math.abs( keyPath[ i - 1 ].z - keyPath[ i ].z ) === 0 ) {
+
+            if ( keyPath[ i - 1 ].x - keyPath[ i ].x < 0 ) s1 = 1; else s1 = -1;
+
+            for ( var k = keyPath[ i - 1 ].x; k != keyPath[ i ].x; k += s1 ) {
+
+                path.push( { x: k, y: 0 - 5, z: keyPath[ i - 1 ].z } );
+
+            }
+
+            continue;
+
+        }
+
+        if ( Math.abs( keyPath[ i - 1 ].z - keyPath[ i ].z ) === Math.abs( keyPath[ i - 1 ].x - keyPath[ i ].x ) ) {
+
+            var s1, s2;
+
+            if ( keyPath[ i - 1 ].x - keyPath[ i ].x < 0 ) s1 = 1; else s1 = -1;
+            if ( keyPath[ i - 1 ].z - keyPath[ i ].z < 0 ) s2 = 1; else s2 = -1;
+
+            var cord = [];
+
+            for ( var k = keyPath[ i - 1 ].x; k != keyPath[ i ].x; k += s1 ) {
+
+                cord.push( { x: k, y: 0 - 5, z: 0 } );
+
+            }
+
+            var p = 0;
+
+            for ( var k = keyPath[ i - 1 ].z; k != keyPath[ i ].z; k += s2 ) {
+
+                cord[ p ].z = k;
+                p ++;
+
+            }
+
+            for ( var k = 0, kl = cord.length; k < kl; k ++ ) {
+
+                path.push( cord[ k ] );
+
+            }
+
+            continue;
+
+        }
+
+    }
+
+    var newPath = [];
+
+    for ( var i = 0, il = path.length; i < il; i ++ ) {
+
+        newPath.push( path[ i ].x );
+        newPath.push( path[ i ].z );
+
+    }
+
+    return newPath;
 
 };
 

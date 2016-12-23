@@ -16,7 +16,7 @@ var Arena = function () {
     this.towers = [];
 
     this.boxManager = new DT.BoxManager( this, {} );
-    this.pathFinder = new DT.PathManager( this, {} );
+    this.pathManager = new DT.PathManager( this, {} );
 
     this.updateInterval = false;
 

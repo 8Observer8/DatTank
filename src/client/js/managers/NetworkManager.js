@@ -279,7 +279,14 @@ Game.NetworkManager.prototype.message = function ( event ) {
                 var player = Game.arena.getPlayerById( playerId );
                 if ( ! player ) return;
 
-                player.move( new THREE.Vector3( data[1] - 1000, 0, data[2] - 1000 ), true );
+                var path = [];
+                for ( var i = 1, il = data.length - 2; i < il; i ++ ) {
+
+                    path.push({ x: data[ 1 + 2 * i + 0 ], y: 0, z: data[ 1 + 2 * i + 1 ] });
+
+                }
+
+                player.moveByPath( path, { x: data[ data.length - 2 ], y: 0, z: data[ data.length - 1 ] } );
                 break;
 
             case 200:

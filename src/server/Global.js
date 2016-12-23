@@ -31,7 +31,6 @@ global.DT.Vec3 = require('./utils/Vector3');
 global.DT.PathManager = require('./managers/PathManager');
 global.DT.BoxManager = require('./managers/BoxManager');
 global.DT.Network = require('./managers/NetworkManager');
-global.DT.PathManager = require('./managers/PathManager');
 global.DT.ArenaManager = require('./managers/ArenaManager');
 
 // import main objects

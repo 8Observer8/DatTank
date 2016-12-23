@@ -283,7 +283,7 @@ Network.announce = function ( arena, event, data, view ) {
                 view[0] = 3;
                 break;
 
-            case 'moveBot':
+            case 'MoveTankByPath':
 
                 view[0] = 100;
                 break;

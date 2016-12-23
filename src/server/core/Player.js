@@ -125,55 +125,8 @@ Player.prototype.rotateTop = (function () {
 
 }) ();
 
-Player.prototype.moveByPath = function ( path ) {
-
-    if ( this.status !== Player.Alive ) {
-
-        return;
-
-    }
-
-    var dx, dz;
-
-    this.movementDuration = 0;
-    this.movementDurationMap.length = 0;
-    this.movementStart = Date.now();
-
-    for ( var i = path.length / 2 - 1; i > 0; i -- ) {
-
-        dx = path[ 2 * ( i - 1 ) + 0 ] - path[ 2 * i + 0 ];
-        dz = path[ 2 * ( i - 1 ) + 1 ] - path[ 2 * i + 1 ];
-
-        this.movementDurationMap.push( this.movementDuration );
-        this.movementDuration += Math.sqrt( Math.pow( dx, 2 ) + Math.pow( dz, 2 ) ) / this.moveSpeed;
-
-    }
-
-    this.movePath = path;
-
-    //
-
-    var pathBuffer = new ArrayBuffer( 2 * ( path.length + 2 ) );
-    var pathBufferView = new Uint16Array( pathBuffer );
-
-    pathBufferView[ 1 ] = this.id;
-
-    for ( var i = 0, il = path.length; i < il; i ++ ) {
-
-        pathBufferView[ 2 + i ] = path[ i ];
-
-    }
-
-    if ( this.socket ) {
-
-        DT.Network.broadcast( this.socket, this.arena, 'move', pathBuffer, pathBufferView );
-
-    }
-
-};
-
 Player.prototype.rotateBase = function ( direction ) {
-        
+
     this.baseRotationDirection = direction;
 
 };
@@ -186,9 +139,81 @@ Player.prototype.move = function ( direction ) {
 
 Player.prototype.moveToPoint = function ( destination ) {
 
-    this.arena.pathFinder.findPath( this.position, destination, function ( path ) {
+    if ( this.status !== Player.Alive ) {
 
-        console.log( path );
+        return;
+
+    }
+
+    var scope = this;
+
+    this.arena.pathManager.findPath( this.position, destination, function ( path ) {
+
+        var buffer = new ArrayBuffer( 2 * 2 * path.length + 2 + 2 + 2 * 2 );
+        var bufferView = new Int16Array( buffer );
+
+        bufferView[1] = scope.id;
+
+        var offset = 2;
+
+        for ( var i = 0, il = path.length; i < il; i ++ ) {
+
+            bufferView[ 2 * i + 0 + offset ] = path[ i ].x;
+            bufferView[ 2 * i + 1 + offset ] = path[ i ].z;
+
+        }
+
+        bufferView[ bufferView.length - 2 ] = destination.x;
+        bufferView[ bufferView.length - 1 ] = destination.z;
+
+        DT.Network.announce( scope.arena, 'MoveTankByPath', buffer, bufferView );
+
+        //
+
+        path = scope.arena.pathManager.deCompressPath( path );
+
+        path.push( scope.position.x, scope.position.z );
+        path.unshift( destination.x, destination.z );
+        path.unshift( destination.x, destination.z );
+
+        var minDistIndex = 0;
+
+        for ( var i = path.length / 2 - 1; i > 0; i -- ) {
+
+            if ( Math.sqrt( Math.pow( scope.position.x - path[ 2 * i + 0 ], 2 ) + Math.pow( scope.position.z - path[ 2 * i + 1 ], 2 ) ) < 3 ) {
+
+                minDistIndex = i;
+
+            }
+
+        }
+
+        for ( var i = minDistIndex; i < path.length / 2; i ++ ) {
+
+            path.pop();
+            path.pop();
+
+        }
+
+        //
+
+        var dx, dz;
+
+        scope.movementDuration = 0;
+        scope.movementDurationMap.length = 0;
+        scope.movementStart = Date.now();
+
+        for ( var i = path.length / 2 - 1; i > 0; i -- ) {
+
+            dx = path[ 2 * ( i - 1 ) + 0 ] - path[ 2 * i + 0 ];
+            dz = path[ 2 * ( i - 1 ) + 1 ] - path[ 2 * i + 1 ];
+
+            scope.movementDurationMap.push( scope.movementDuration );
+            scope.movementDuration += Math.sqrt( Math.pow( dx, 2 ) + Math.pow( dz, 2 ) ) / scope.moveSpeed;
+
+        }
+
+        scope.movePath = path;
 
     });
 
@@ -382,18 +407,18 @@ Player.prototype.update = (function () {
 
                 if ( player.movePath[ 2 * ( progress - 30 ) ] ) {
 
-                    dx = ( player.movePath[ 2 * ( progress - 30 ) + 0 ] + player.movePath[ 2 * ( progress - 29 ) + 0 ] + player.movePath[ 2 * ( progress - 28 ) + 0 ] ) / 3 - 2000 - player.position.x;
-                    dz = ( player.movePath[ 2 * ( progress - 30 ) + 1 ] + player.movePath[ 2 * ( progress - 29 ) + 1 ] + player.movePath[ 2 * ( progress - 28 ) + 1 ] ) / 3 - 2000 - player.position.z;
+                    dx = ( player.movePath[ 2 * ( progress - 30 ) + 0 ] + player.movePath[ 2 * ( progress - 29 ) + 0 ] + player.movePath[ 2 * ( progress - 28 ) + 0 ] ) / 3 - player.position.x;
+                    dz = ( player.movePath[ 2 * ( progress - 30 ) + 1 ] + player.movePath[ 2 * ( progress - 29 ) + 1 ] + player.movePath[ 2 * ( progress - 28 ) + 1 ] ) / 3 - player.position.z;
 
                 } else {
 
-                    dx = ( player.movePath[ 2 * progress + 0 ] - 2000 ) - player.position.x;
-                    dz = ( player.movePath[ 2 * progress + 1 ] - 2000 ) - player.position.z;
+                    dx = player.movePath[ 2 * progress + 0 ] - player.position.x;
+                    dz = player.movePath[ 2 * progress + 1 ] - player.position.z;
 
                 }
 
-                player.position.x = player.movePath[ 2 * progress + 0 ] - 2000;
-                player.position.z = player.movePath[ 2 * progress + 1 ] - 2000;
+                player.position.x = player.movePath[ 2 * progress + 0 ];
+                player.position.z = player.movePath[ 2 * progress + 1 ];
 
                 //
 

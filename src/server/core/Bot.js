@@ -76,7 +76,7 @@ Bot.prototype.update = (function () {
             moveBufferView[ 2 ] = x;
             moveBufferView[ 3 ] = z;
 
-            DT.Network.announce( this.arena, 'moveBot', moveBuffer, moveBufferView );
+            // todo: change bot moving sys.
             return;
 
         }
