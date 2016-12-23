@@ -18,7 +18,6 @@ var PathManager = function () {
     //
 
     this.init();
-    this.constructMap();
 
 };
 

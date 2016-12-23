@@ -43,13 +43,22 @@ var Tower = function ( arena, params ) {
 
     }
 
+    //
+
+    this.init();
+
 };
 
 Tower.prototype = {};
 
 Tower.prototype.init = function () {
 
-    // todo
+    var position = this.position;
+    var sizeX = 130;
+    var sizeY = 130;
+    var sizeZ = 130;
+
+    this.arena.pathManager.placeObject( new DT.Vec3( position.x - sizeX / 2, 0, position.z - sizeZ / 2 ), new DT.Vec3( position.x + sizeX / 2, 0, position.z + sizeZ / 2 ) );
 
 };
 

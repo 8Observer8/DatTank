@@ -48,6 +48,11 @@ global.DT.Tank = require('./objects/core/Tank');
 global.DT.Tank.USAT54 = require('./objects/tanks/USA-T54');
 global.DT.Tank.UKBlackPrince = require('./objects/tanks/UK-BlackPrince');
 
+global.DT.Decoration = require('./objects/core/Decoration');
+
+global.DT.Decoration.Tree = require('./objects/decorations/Tree');
+global.DT.Decoration.Stones = require('./objects/decorations/Stones');
+
 // import Improvement boxes
 
 global.DT.Box = require('./objects/core/Box');

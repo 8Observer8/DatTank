@@ -11,7 +11,7 @@ var Arena = function () {
     this.teams = [];
     this.room = false;
 
-    this.obstacles = [];
+    this.decorations = [];
     this.bots = [];
     this.towers = [];
 
@@ -140,20 +140,13 @@ Arena.prototype.addObstacles = function ( treeCount, rockCount ) {
 
         //
 
-        this.obstacles.push({
-            type:   'tree',
-            position: {
-                x:  x,
-                y:  0,
-                z:  z
-            },
-            scale: {
-                x: scale,
-                y: scaleH,
-                z: scale
-            },
-            rotation: 2 * Math.PI * Math.random()
+        var tree = new DT.Decoration.Tree( this, {
+            position:   new DT.Vec3( x, 0, z ),
+            scale:      new DT.Vec3( scale, scaleH, scale ),
+            rotation:   2 * Math.PI * Math.random()
         });
+
+        this.decorations.push( tree );
 
         treeCount --;
 
@@ -191,24 +184,35 @@ Arena.prototype.addObstacles = function ( treeCount, rockCount ) {
         if ( Math.sqrt( Math.pow( 500 - x, 2 ) + Math.pow( - 500 - z, 2 ) ) < baseSize ) continue;
         if ( Math.sqrt( Math.pow( - 500 - x, 2 ) + Math.pow( - 500 - z, 2 ) ) < baseSize ) continue;
 
-        this.obstacles.push({
-            type:   'rock',
-            position: {
-                x:  x,
-                y:  0,
-                z:  z
-            },
-            scale: {
-                x: scale,
-                y: scale,
-                z: scale
-            },
-            rotation: 2 * Math.PI * Math.random()
+        var stones = new DT.Decoration.Stones( this, {
+            position:   new DT.Vec3( x, 0, z ),
+            scale:      new DT.Vec3( scale, scaleH, scale ),
+            rotation:   2 * Math.PI * Math.random()
         });
+
+        this.decorations.push( stones );
 
         rockCount --;
 
     }
+
+    //
+
+    this.pathManager.constructMap();
+
+};
+
+Arena.prototype.getDecorations = function () {
+
+    var decorations = [];
+
+    for ( var i = 0, il = this.decorations.length; i < il; i ++ ) {
+
+        decorations.push( this.decorations[ i ].toJSON() );
+
+    }
+
+    return decorations;
 
 };
 
@@ -429,7 +433,7 @@ Arena.prototype.toPublicJSON = function () {
     return {
 
         id:             this.id,
-        obstacles:      this.obstacles,
+        obstacles:      this.getDecorations(),
         towers:         towers,
         players:        players,
         teams:          teams,
