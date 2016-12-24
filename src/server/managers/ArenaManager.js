@@ -11,11 +11,16 @@ var ArenaManager = function () {
 
 ArenaManager.prototype = {};
 
-ArenaManager.prototype.addArena = function () {
+ArenaManager.prototype.addArena = function ( callback ) {
 
-    var arena = new DT.Arena();
+    var scope = this;
 
-    this.arenas.push( arena );
+    var arena = new DT.Arena( function ( arena ) {
+
+        scope.arenas.push( arena );
+        callback( arena );
+
+    });
 
     return arena;
 
@@ -44,6 +49,8 @@ ArenaManager.prototype.removeEmptyArenas = function () {
     var newArenaList = [];
     var arena = false;
 
+    if ( this.arenas.length === 1 ) return;
+
     for ( var i = 0, il = this.arenas.length; i < il; i ++ ) {
 
         arena = this.arenas[ i ];
@@ -58,7 +65,7 @@ ArenaManager.prototype.removeEmptyArenas = function () {
 
 };
 
-ArenaManager.prototype.findArena = function () {
+ArenaManager.prototype.findArena = function ( callback ) {
 
     var minArena = false;
     var avgArena = false;
@@ -90,7 +97,11 @@ ArenaManager.prototype.findArena = function () {
 
         if ( ! minArena ) {
 
-            arena = this.addArena();
+            return this.addArena( function ( arena ) {
+
+                callback( arena );
+
+            });
 
         } else {
 
@@ -104,7 +115,7 @@ ArenaManager.prototype.findArena = function () {
 
     }
 
-    return arena;
+    return callback( arena );
 
 };
 

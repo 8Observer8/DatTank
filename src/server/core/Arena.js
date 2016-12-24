@@ -3,7 +3,7 @@
  * DatTank Arena object
 */
 
-var Arena = function () {
+var Arena = function ( callback ) {
 
     this.id = Arena.numIds ++;
 
@@ -19,8 +19,34 @@ var Arena = function () {
     this.pathManager = new DT.PathManager( this, {} );
 
     this.updateInterval = false;
+    this.currentTime = false;
 
-    // add teams
+    //
+
+    this.init( callback );
+
+};
+
+Arena.prototype = {};
+
+Arena.prototype.init = function ( callback ) {
+
+    this.addTeams();
+    this.addTowers();
+    this.addObstacles( 190, 80 );
+    this.addBots();
+
+    //
+
+    this.updateInterval = setInterval( this.update.bind( this ), 20 );
+
+    //
+
+    callback( this ); // will be used in future
+
+};
+
+Arena.prototype.addTeams = function () {
 
     for ( var i = 0; i < 4; i ++ ) {
 
@@ -30,7 +56,9 @@ var Arena = function () {
 
     this.teams.push( new DT.Team( 1000 ) );
 
-    // add towers
+};
+
+Arena.prototype.addTowers = function () {
 
     for ( var i = 0; i < 5; i ++ ) {
 
@@ -45,46 +73,11 @@ var Arena = function () {
 
     }
 
-    //
-
-    this.currentTime = false;
-
 };
 
-Arena.prototype = {};
-
-Arena.prototype.reset = function ( isNew ) {
+Arena.prototype.addBots = function () {
 
     var scope = this;
-
-    clearInterval( this.updateInterval );
-    this.updateInterval = setInterval( this.update.bind( this ), 20 );
-
-    this.obstacles = [];
-
-    //
-
-    this.boxManager.reset();
-    this.addObstacles( 190, 80 );
-
-    //
-
-    for ( var i = 0, il = this.teams.length; i < il; i ++ ) {
-
-        this.teams[ i ].reset();
-
-    }
-
-    for ( var i = 0, il = this.bots.length; i < il; i ++ ) {
-
-        this.bots[ i ].dispose();
-
-    }
-
-    this.players = [];
-    this.bots = [];
-
-    //
 
     setTimeout( function () {
 
@@ -193,10 +186,23 @@ Arena.prototype.addObstacles = function ( treeCount, rockCount ) {
 
         if ( placedOnTower ) continue;
 
-        if ( Math.sqrt( Math.pow( 500 - x, 2 ) + Math.pow( 500 - z, 2 ) ) < baseSize ) continue;
-        if ( Math.sqrt( Math.pow( - 500 - x, 2 ) + Math.pow( 500 - z, 2 ) ) < baseSize ) continue;
-        if ( Math.sqrt( Math.pow( 500 - x, 2 ) + Math.pow( - 500 - z, 2 ) ) < baseSize ) continue;
-        if ( Math.sqrt( Math.pow( - 500 - x, 2 ) + Math.pow( - 500 - z, 2 ) ) < baseSize ) continue;
+        //
+
+        for ( var i in DT.Team.StartPositions ) {
+
+            var pos = DT.Team.StartPositions[ i ];
+
+            if ( + i >= 1000 ) continue;
+            if ( Math.sqrt( Math.pow( pos.x - x, 2 ) + Math.pow( pos.z - z, 2 ) ) < baseSize ) {
+
+                placedOnBase = true;
+                break;
+
+            }
+
+        }
+
+        if ( placedOnBase ) continue;
 
         var stones = new DT.Decoration.Stones( this, {
             position:   new DT.Vec3( x, 0, z ),
@@ -366,8 +372,7 @@ Arena.prototype.removeBot = function ( player ) {
 
     }
 
-    player.bot.dispose();
-
+    player.bot.removed = true;
     this.bots = newBotList;
 
 };

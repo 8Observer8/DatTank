@@ -29,27 +29,24 @@ Network.init = function () {
 
                     case 'joinArena':
 
-                        var arena = DT.ArenaManager.findArena();
-                        var player = new DT.Player({ login: data.login, tank: data.tank });
-                        player.socket = socket;
+                        DT.ArenaManager.findArena( function ( arena ) {
 
-                        if ( arena.players.length === 0 ) {
+                            var player = new DT.Player({ login: data.login, tank: data.tank });
+                            player.socket = socket;
 
-                            arena.reset( true );
+                            arena.addPlayer( player );
 
-                        }
+                            //
 
-                        arena.addPlayer( player );
+                            socket.arena = arena;
+                            socket.player = player;
 
-                        //
+                            var response = arena.toPublicJSON();
+                            response.me = player.id;
 
-                        socket.arena = arena;
-                        socket.player = player;
+                            scope.send( socket, 'joinArena', response );
 
-                        var response = arena.toPublicJSON();
-                        response.me = player.id;
-
-                        scope.send( socket, 'joinArena', response );
+                        });
 
                         break;
 

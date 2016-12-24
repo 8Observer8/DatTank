@@ -58,6 +58,13 @@ Bot.prototype.update = function () {
 
     var isMove = Math.random();
 
+    if ( this.removed ) {
+
+        this.dispose();
+        return;
+
+    }
+
     if ( this.player.health <= 0 ) return;
 
     //

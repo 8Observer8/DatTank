@@ -14,6 +14,10 @@ var BoxManager = function ( arena, params ) {
 
     this.time = 0;
 
+    //
+
+    this.init();
+
 };
 
 BoxManager.prototype = {};
@@ -21,15 +25,6 @@ BoxManager.prototype = {};
 BoxManager.prototype.init = function () {
 
     // todo
-
-};
-
-BoxManager.prototype.reset = function () {
-
-    this.boxes.length = 0;
-    this.time = 0;
-
-    this.init();
 
 };
 
