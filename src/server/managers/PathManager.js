@@ -76,14 +76,14 @@ PathManager.prototype.placeObject = function ( position1, position2 ) {
 
 PathManager.prototype.isPlaceFree = function ( position ) {
 
-    var delta = 2;
+    var delta = 4;
     position = new PathManager.Position( this, position );
 
-    for ( var j = position.y - delta; j < position.y + delta; j ++ ) {
+    for ( var j = position.y - delta; j <= position.y + delta; j ++ ) {
 
-        for ( var i = position.x - delta; i < position.x + delta; i ++ ) {
+        for ( var i = position.x - delta; i <= position.x + delta; i ++ ) {
 
-            if ( this.grid.data[ 400 * j + i ] === 1 ) {
+            if ( this.grid.data[ 400 * j + i ] === 0 ) {
 
                 return false;
 

@@ -54,90 +54,67 @@ Bot.prototype.init = function () {
 
 };
 
-Bot.prototype.update = (function () {
+Bot.prototype.update = function () {
 
-    var moveBuffer = new ArrayBuffer( 6 );
-    var moveBufferView = new Uint16Array( moveBuffer );
+    var isMove = Math.random();
 
-    return function () {
+    if ( this.player.health <= 0 ) return;
 
-        var isMove = Math.random();
+    //
 
-        if ( this.player.health <= 0 ) return;
+    if ( isMove < 0.02 ) {
 
-        //
+        var x = Math.floor( 2000 * ( Math.random() - 0.5 ) );
+        var z = Math.floor( 2000 * ( Math.random() - 0.5 ) );
+        this.player.moveToPoint({ x: x, y: 0, z: z });
+        return;
 
-        if ( isMove < 0.02 ) {
+    }
 
-            var x = Math.floor( 2000 * Math.random() );
-            var z = Math.floor( 2000 * Math.random() );
+    //
 
-            moveBufferView[ 1 ] = this.player.id;
-            moveBufferView[ 2 ] = x;
-            moveBufferView[ 3 ] = z;
+    var target = false;
+    var minDist = 100000;
 
-            // todo: change bot moving sys.
-            return;
+    for ( var i = 0, il = this.arena.players.length; i < il; i ++ ) {
+
+        var player = this.arena.players[ i ];
+
+        if ( player.team === this.player.team ) continue;
+
+        var distance = Math.sqrt( Math.pow( player.position.x - this.player.position.x, 2 ) + Math.pow( player.position.z - this.player.position.z, 2 ) );
+
+        if ( distance < minDist ) {
+
+            minDist = distance;
+            target = player;
 
         }
 
-        //
+    }
 
-        var target = false;
-        var minDist = 100000;
+    // todo: need to unificate next part of code someday.
 
-        for ( var i = 0, il = this.arena.players.length; i < il; i ++ ) {
+    if ( ! target || minDist > 200 ) {
 
-            var player = this.arena.players[ i ];
+        for ( var i = 0, il = this.arena.towers.length; i < il; i ++ ) {
 
-            if ( player.team === this.player.team ) continue;
+            var tower = this.arena.towers[ i ];
 
-            var distance = Math.sqrt( Math.pow( player.position.x - this.player.position.x, 2 ) + Math.pow( player.position.z - this.player.position.z, 2 ) );
+            if ( tower.team === this.player.team ) continue;
+
+            var distance = Math.sqrt( Math.pow( tower.position.x - this.player.position.x, 2 ) + Math.pow( tower.position.z - this.player.position.z, 2 ) );
 
             if ( distance < minDist ) {
 
                 minDist = distance;
-                target = player;
+                target = tower;
 
             }
 
         }
 
-        // todo: need to unificate next part of code someday.
-
-        if ( ! target || minDist > 200 ) {
-
-            for ( var i = 0, il = this.arena.towers.length; i < il; i ++ ) {
-
-                var tower = this.arena.towers[ i ];
-
-                if ( tower.team === this.player.team ) continue;
-
-                var distance = Math.sqrt( Math.pow( tower.position.x - this.player.position.x, 2 ) + Math.pow( tower.position.z - this.player.position.z, 2 ) );
-
-                if ( distance < minDist ) {
-
-                    minDist = distance;
-                    target = tower;
-
-                }
-
-            }
-
-            if ( target && minDist < 200 ) {
-
-                var angle = Math.atan2( target.position.x - this.player.position.x, target.position.z - this.player.position.z ) - Math.PI / 2;
-                this.player.rotateTop({ topAngle: utils.formatAngle( angle - this.player.rotation ), baseAngle: this.player.rotation });
-
-                if ( Math.random() < 0.3 ) {
-
-                    this.player.shoot();
-
-                }
-
-            }
-
-        } else if ( target && minDist < 200 ) {
+        if ( target && minDist < 200 ) {
 
             var angle = Math.atan2( target.position.x - this.player.position.x, target.position.z - this.player.position.z ) - Math.PI / 2;
             this.player.rotateTop({ topAngle: utils.formatAngle( angle - this.player.rotation ), baseAngle: this.player.rotation });
@@ -150,9 +127,20 @@ Bot.prototype.update = (function () {
 
         }
 
-    };
+    } else if ( target && minDist < 200 ) {
 
-}) ();
+        var angle = Math.atan2( target.position.x - this.player.position.x, target.position.z - this.player.position.z ) - Math.PI / 2;
+        this.player.rotateTop({ topAngle: utils.formatAngle( angle - this.player.rotation ), baseAngle: this.player.rotation });
+
+        if ( Math.random() < 0.3 ) {
+
+            this.player.shoot();
+
+        }
+
+    }
+
+};
 
 Bot.prototype.dispose = function () {
 

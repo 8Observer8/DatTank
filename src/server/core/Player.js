@@ -38,6 +38,8 @@ var Player = function ( params ) {
     this.baseRotationDirection = 0;
     this.moveDirection = 0;
 
+    this.pathFindIter = 0;
+
     this.selectTank( params.tank );
 
 };
@@ -61,8 +63,8 @@ Player.prototype.respawn = function () {
 
     while ( Math.sqrt( offsetX * offsetX + offsetZ * offsetZ ) < 80 ) {
 
-        offsetX = ( Math.random() - 0.5 ) * 100;
-        offsetZ = ( Math.random() - 0.5 ) * 100;        
+        offsetX = ( Math.random() - 0.5 ) * 150;
+        offsetZ = ( Math.random() - 0.5 ) * 150;        
 
     }
 
@@ -137,11 +139,13 @@ Player.prototype.move = function ( direction ) {
 
 };
 
-Player.prototype.moveToPoint = function ( destination ) {
+Player.prototype.moveToPoint = function ( destination, retry ) {
 
     if ( this.status !== Player.Alive ) return;
 
     var scope = this;
+
+    if ( ! retry ) this.pathFindIter = 0;
 
     this.arena.pathManager.findPath( this.position, destination, function ( path ) {
 
@@ -151,7 +155,14 @@ Player.prototype.moveToPoint = function ( destination ) {
 
             destination.x += 10;
             destination.z += 10;
-            scope.moveToPoint( destination );
+            scope.pathFindIter ++;
+
+            if ( scope.pathFindIter < 50 ) {
+
+                scope.moveToPoint( destination, true );
+
+            }
+
             return;
 
         }

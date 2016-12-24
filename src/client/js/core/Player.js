@@ -96,7 +96,7 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
         this.ammo = params.ammo;
         this.health = params.health;
 
-        this.position.set( params.position[0], params.position[1], params.position[2] );
+        this.position.set( params.position.x, params.position.y, params.position.z );
         this.rotation = params.rotation;
         this.topRotation = params.rotationTop;
 

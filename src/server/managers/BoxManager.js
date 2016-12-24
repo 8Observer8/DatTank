@@ -40,7 +40,7 @@ BoxManager.prototype.addBox = function ( params ) {
 
     params.type = params.type || 'Ammo';
 
-    while ( ! position || this.arena.pathManager.isPlaceFree( position ) ) {
+    while ( ! position || ! this.arena.pathManager.isPlaceFree( position ) ) {
 
         position = new DT.Vec3( Math.floor( 1500 * ( Math.random() - 0.5 ) ), 20, Math.floor( 1500 * ( Math.random() - 0.5 ) ) );
 
