@@ -29,7 +29,7 @@ Ammo.prototype.pickUp = function ( player ) {
 
     if ( player.socket ) {
 
-        DT.Network.send( player.socket, 'gotBox', { box: this.toPublicJSON(), value: player.ammo } );
+        DT.Network.send( player.socket, 'gotBox', { box: this.toJSON(), value: player.ammo } );
 
     }
 

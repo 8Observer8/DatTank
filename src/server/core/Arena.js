@@ -432,7 +432,7 @@ Arena.prototype.toPublicJSON = function () {
 
     for ( var i = 0, il = this.boxManager.boxes.length; i < il; i ++ ) {
 
-        boxes.push( this.boxManager.boxes[ i ].toPublicJSON() );
+        boxes.push( this.boxManager.boxes[ i ].toJSON() );
 
     }
 

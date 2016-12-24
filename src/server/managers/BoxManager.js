@@ -36,8 +36,17 @@ BoxManager.prototype.reset = function () {
 BoxManager.prototype.addBox = function ( params ) {
 
     var box = false;
+    var position = false;
 
     params.type = params.type || 'Ammo';
+
+    while ( ! position || this.arena.pathManager.isPlaceFree( position ) ) {
+
+        position = new DT.Vec3( Math.floor( 1500 * ( Math.random() - 0.5 ) ), 20, Math.floor( 1500 * ( Math.random() - 0.5 ) ) );
+
+    }
+
+    //
 
     switch ( params.type ) {
 
@@ -45,7 +54,7 @@ BoxManager.prototype.addBox = function ( params ) {
 
             box = new DT.Box.Health({
                 arena: this.arena,
-                position: [ Math.floor( 1500 * ( Math.random() - 0.5 ) ), 20, Math.floor( 1500 * ( Math.random() - 0.5 ) ) ]
+                position: position
             });
             break;
 
@@ -53,7 +62,7 @@ BoxManager.prototype.addBox = function ( params ) {
 
             box = new DT.Box.Ammo({
                 arena: this.arena,
-                position: [ Math.floor( 1500 * ( Math.random() - 0.5 ) ), 20, Math.floor( 1500 * ( Math.random() - 0.5 ) ) ]
+                position: position
             });
             break;
 

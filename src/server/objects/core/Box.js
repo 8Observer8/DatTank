@@ -10,7 +10,7 @@ var Box = function ( params ) {
     this.id = Box.numId ++;
     this.arena = params.arena;
 
-    this.position = params.position || [ 0, 20, 0 ];
+    this.position = new DT.Vec3( params.position.x, params.position.y, params.position.z ) || new DT.Vec3( 0, 20, 0 );
 
     this.amount = 0;
     this.duration = 0;
@@ -22,18 +22,18 @@ Box.prototype = {};
 
 Box.prototype.init = function () {
 
-    DT.Network.announce( this.arena, 'addBox', this.toPublicJSON() );
+    DT.Network.announce( this.arena, 'addBox', this.toJSON() );
 
 };
 
-Box.prototype.toPublicJSON = function () {
+Box.prototype.toJSON = function () {
 
     return {
         id:         this.id,
         type:       this.type,
         amount:     this.amount,
         duration:   this.duration,
-        position:   this.position
+        position:   this.position.toJSON()
     };
 
 };

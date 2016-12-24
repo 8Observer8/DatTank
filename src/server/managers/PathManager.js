@@ -74,6 +74,29 @@ PathManager.prototype.placeObject = function ( position1, position2 ) {
 
 };
 
+PathManager.prototype.isPlaceFree = function ( position ) {
+
+    var delta = 2;
+    position = new PathManager.Position( this, position );
+
+    for ( var j = position.y - delta; j < position.y + delta; j ++ ) {
+
+        for ( var i = position.x - delta; i < position.x + delta; i ++ ) {
+
+            if ( this.grid.data[ 400 * j + i ] === 1 ) {
+
+                return false;
+
+            }
+
+        }
+
+    }
+
+    return true;
+
+};
+
 PathManager.prototype.constructMap = function () {
 
     var k = 0;
