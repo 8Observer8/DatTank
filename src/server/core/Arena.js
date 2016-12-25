@@ -170,6 +170,7 @@ Arena.prototype.addObstacles = function ( treeCount, rockCount ) {
         //
 
         var placedOnTower = false;
+        var placedOnBase = false;
 
         for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
 

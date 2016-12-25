@@ -81,7 +81,9 @@ Bot.prototype.update = function () {
     //
 
     var target = false;
-    var minDist = 100000;
+    var minDist = 200;
+
+    // search for Player target
 
     for ( var i = 0, il = this.arena.players.length; i < il; i ++ ) {
 
@@ -91,7 +93,7 @@ Bot.prototype.update = function () {
 
         var distance = Math.sqrt( Math.pow( player.position.x - this.player.position.x, 2 ) + Math.pow( player.position.z - this.player.position.z, 2 ) );
 
-        if ( distance < minDist ) {
+        if ( distance <= minDist ) {
 
             minDist = distance;
             target = player;
@@ -100,9 +102,11 @@ Bot.prototype.update = function () {
 
     }
 
-    // todo: need to unificate next part of code someday.
+    // if ! target search for Tower target
 
-    if ( ! target || minDist > 200 ) {
+    if ( ! target ) {
+
+        minDist = 200;
 
         for ( var i = 0, il = this.arena.towers.length; i < il; i ++ ) {
 
@@ -112,7 +116,7 @@ Bot.prototype.update = function () {
 
             var distance = Math.sqrt( Math.pow( tower.position.x - this.player.position.x, 2 ) + Math.pow( tower.position.z - this.player.position.z, 2 ) );
 
-            if ( distance < minDist ) {
+            if ( distance <= minDist ) {
 
                 minDist = distance;
                 target = tower;
@@ -121,23 +125,12 @@ Bot.prototype.update = function () {
 
         }
 
-        if ( target && minDist < 200 ) {
+    }
 
-            var angle = Math.atan2( target.position.x - this.player.position.x, target.position.z - this.player.position.z ) - Math.PI / 2;
-            this.player.rotateTop({ topAngle: utils.formatAngle( angle - this.player.rotation ), baseAngle: this.player.rotation });
-
-            if ( Math.random() < 0.3 ) {
-
-                this.player.shoot();
-
-            }
-
-        }
-
-    } else if ( target && minDist < 200 ) {
+    if ( target ) {
 
         var angle = Math.atan2( target.position.x - this.player.position.x, target.position.z - this.player.position.z ) - Math.PI / 2;
-        this.player.rotateTop({ topAngle: utils.formatAngle( angle - this.player.rotation ), baseAngle: this.player.rotation });
+        this.player.rotateTop( utils.formatAngle( angle - this.player.rotation ) );
 
         if ( Math.random() < 0.3 ) {
 
