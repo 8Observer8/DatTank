@@ -163,7 +163,7 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
 
 Game.Player.prototype.moveByPath = function ( compressedPath, destination ) {
 
-    var path = this.decompressPath( compressedPath );
+    var path = this.deCompressPath( compressedPath );
 
     //
 
@@ -196,7 +196,7 @@ Game.Player.prototype.moveByPath = function ( compressedPath, destination ) {
 
 };
 
-Game.Player.prototype.decompressPath = function ( keyPath ) {
+Game.Player.prototype.deCompressPath = function ( keyPath ) {
 
     var path = [];
     var s, e;
@@ -302,11 +302,7 @@ Game.Player.prototype.processPath = function ( path ) {
 
     }
 
-    setTimeout( function () {
-
-        scope.movePath = path;
-
-    }, 10 );
+    scope.movePath = path;
 
 };
 
@@ -492,9 +488,9 @@ Game.Player.prototype.die = function ( killer ) {
     this.team.death ++;
     this.death ++;
 
-    this.movePath = [];
-    this.moveProgress = [];
-    this.movementDurationMap = [];
+    this.movePath = false;
+    this.moveProgress = false;
+    this.movementDurationMap = false;
 
     ui.updateLeaderboard( Game.arena.players, Game.arena.me );
 

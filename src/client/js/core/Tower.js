@@ -89,6 +89,7 @@ Game.Tower.prototype.init = function () {
     //
 
     this.updateHealthBar();
+    this.rotateTop( this.rotation );
 
 };
 

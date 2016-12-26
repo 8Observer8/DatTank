@@ -50,7 +50,7 @@ Bot.prototype.init = function () {
 
     this.player.bot = this;
 
-    this.updateInterval = setInterval( this.update.bind( this ), 100 );
+    this.updateInterval = setInterval( this.update.bind( this ), 40 );
 
 };
 
@@ -65,23 +65,22 @@ Bot.prototype.update = function () {
 
     }
 
-    if ( this.player.health <= 0 ) return;
+    if ( this.player.status !== DT.Player.Alive ) return;
 
     //
 
-    if ( isMove < 0.02 ) {
+    if ( isMove < 0.2 && this.player.movePath === false ) {
 
-        var x = Math.floor( 2000 * ( Math.random() - 0.5 ) );
-        var z = Math.floor( 2000 * ( Math.random() - 0.5 ) );
+        var x = Math.floor( 2200 * ( Math.random() - 0.5 ) );
+        var z = Math.floor( 2200 * ( Math.random() - 0.5 ) );
         this.player.moveToPoint({ x: x, y: 0, z: z });
-        return;
 
     }
 
     //
 
     var target = false;
-    var minDist = 200;
+    var minDist = 1000;
 
     // search for Player target
 
@@ -104,9 +103,9 @@ Bot.prototype.update = function () {
 
     // if ! target search for Tower target
 
-    if ( ! target ) {
+    if ( ! target || minDist > 280 ) {
 
-        minDist = 200;
+        minDist = 1000;
 
         for ( var i = 0, il = this.arena.towers.length; i < il; i ++ ) {
 
@@ -127,12 +126,49 @@ Bot.prototype.update = function () {
 
     }
 
-    if ( target ) {
+    if ( target && minDist < 280 ) {
 
-        var angle = Math.atan2( target.position.x - this.player.position.x, target.position.z - this.player.position.z ) - Math.PI / 2;
-        this.player.rotateTop( utils.formatAngle( angle - this.player.rotation ) );
+        var dx = target.position.x - this.player.position.x;
+        var dz = target.position.z - this.player.position.z;
+        var rotation, delta;
 
-        if ( Math.random() < 0.3 ) {
+        if ( dz === 0 && dx !== 0 ) {
+
+            rotation = ( dx > 0 ) ? - Math.PI : 0;
+
+        } else {
+
+            rotation = - Math.PI / 2 - Math.atan2( dz, dx );
+
+        }
+
+        rotation += Math.PI / 2;
+
+        delta = utils.formatAngle( rotation ) - utils.formatAngle( this.player.rotationTop );
+
+        if ( Math.abs( delta ) > Math.PI ) {
+
+            if ( delta > 0 ) {
+
+                delta = - 2 * Math.PI + delta;
+
+            } else {
+
+                delta = 2 * Math.PI + delta;
+
+            }
+
+        }
+
+        if ( Math.abs( delta / 2 ) > 0.1 ) {
+
+            this.player.rotationTop += delta / 2;
+            this.player.rotationTop = utils.formatAngle( this.player.rotationTop );
+            this.player.rotateTop( this.player.rotationTop );
+
+        }
+
+        if ( Math.random() < 0.3 && minDist < 280 ) {
 
             this.player.shoot();
 

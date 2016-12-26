@@ -69,17 +69,21 @@ Tower.prototype.shoot = (function () {
 
     return function ( target ) {
 
-        if ( ! target ) return;
+        var dx = target.position.x - this.position.x;
+        var dz = target.position.z - this.position.z;
+        var rotation, delta;
 
-        //
+        if ( dz === 0 && dx !== 0 ) {
 
-        var dx = this.position.x - target.position.x;
-        var dz = this.position.z - target.position.z;
-        var rotation = ( dz === 0 && dx !== 0 ) ? ( Math.PI / 2 ) * Math.abs( dx ) / dx : Math.atan2( dx, dz );
-        var delta;
+            rotation = ( dx > 0 ) ? - Math.PI : 0;
 
-        rotation = utils.formatAngle( rotation );
-        delta = rotation - this.rotation;
+        } else {
+
+            rotation = - Math.PI / 2 - Math.atan2( dz, dx );
+
+        }
+
+        delta = utils.formatAngle( rotation ) - utils.formatAngle( this.rotation );
 
         if ( Math.abs( delta ) > 0.5 ) return;
 
@@ -245,12 +249,30 @@ Tower.prototype.rotateTop = (function () {
 
             }
 
+        } else if ( Math.abs( delta ) > 0.05 ) {
+
+            if ( delta > 0 ) {
+
+                this.rotation += 0.005;
+
+            } else {
+
+                this.rotation -= 0.005;
+
+            }
+
+        } else {
+
+            delta = 0;
+
+        }
+
+        if ( delta !== 0 ) {
+
             this.rotation = utils.formatAngle( this.rotation );
 
-            //
-
             bufferView[1] = this.id;
-            bufferView[2] = Math.floor( 100 * this.rotation );
+            bufferView[2] = Math.floor( 1000 * this.rotation );
 
             DT.Network.announce( this.arena, 'TowerRotateTop', buffer, bufferView );
 

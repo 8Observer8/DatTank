@@ -97,7 +97,7 @@ Arena.prototype.addObstacles = function ( treeCount, rockCount ) {
 
     var x, z;
     var scale, scaleH;
-    var baseSize = 140;
+    var baseSize = 200;
 
     while ( treeCount ) {
 
@@ -164,8 +164,8 @@ Arena.prototype.addObstacles = function ( treeCount, rockCount ) {
     while ( rockCount ) {
 
         scale = 30 * Math.random() + 20;
-        x = 2000 * ( Math.random() - 0.5 );
-        z = 2000 * ( Math.random() - 0.5 );
+        x = 2350 * ( Math.random() - 0.5 );
+        z = 2350 * ( Math.random() - 0.5 );
 
         //
 
@@ -337,10 +337,10 @@ Arena.prototype.addPlayer = function ( player ) {
     var offsetX = 0;
     var offsetZ = 0;
 
-    while ( Math.abs( offsetX ) < 50 && Math.abs( offsetZ ) < 50 ) {
+    while ( Math.abs( offsetX ) < 65 || Math.abs( offsetZ ) < 65 ) {
 
         offsetX = ( Math.random() - 0.5 ) * 200;
-        offsetZ = ( Math.random() - 0.5 ) * 200;        
+        offsetZ = ( Math.random() - 0.5 ) * 200;
 
     }
 

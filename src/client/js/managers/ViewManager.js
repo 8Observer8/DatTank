@@ -44,10 +44,24 @@ Game.ViewManager = function () {
     //
 
     var scope = this;
+    var prevTime = Date.now();
+    var timeRemainder = 0;
+    var t = Date.now();
 
     this.gameLoopInterval = setInterval( function () {
 
-        scope.updatePlayersPosition( 20 );
+        var time = Date.now();
+        var delta = Date.now() - prevTime + timeRemainder;
+        timeRemainder = delta % 20;
+        delta = delta - timeRemainder;
+        prevTime = time;
+
+        for ( var i = 0, il = Math.floor( delta / 20 ); i < il; i ++ ) {
+
+            t += 20;
+            scope.updatePlayersPosition( t, 20 );
+
+        }
 
     }, 20 );
 
@@ -406,11 +420,10 @@ Game.ViewManager.prototype.animate = function ( delta ) {
 
 };
 
-Game.ViewManager.prototype.updatePlayersPosition = function ( delta ) {
+Game.ViewManager.prototype.updatePlayersPosition = function ( time, delta ) {
 
     if ( ! Game.arena ) return;
 
-    var time = Date.now();
     var abs = Math.abs;
 
     for ( var i = 0, il = Game.arena.players.length; i < il; i ++ ) {
@@ -420,21 +433,7 @@ Game.ViewManager.prototype.updatePlayersPosition = function ( delta ) {
 
         player.tank.update( delta );
 
-        if ( ! player.movePath || player.movePath.length === 0 ) {
-
-            player.movePath = false;
-
-            if ( tank.sounds.moving.source.buffer && tank.sounds.moving.isPlaying ) {
-
-                tank.sounds.moving.stop();
-                tank.sounds.moving.startTime = 0;
-                tank.sounds.moving.isPlaying = false;
-
-            }
-
-            continue;
-
-        }
+        if ( ! player.movePath ) continue;
 
         //
 
@@ -456,7 +455,12 @@ Game.ViewManager.prototype.updatePlayersPosition = function ( delta ) {
 
         if ( progress < 0 ) {
 
+            player.position.x = player.movePath[0];
+            player.position.z = player.movePath[1];
+            player.tank.setPosition( player.position.x, player.position.y, player.position.z );
+
             player.movePath = false;
+            player.movementDurationMap = false;
 
             if ( tank.sounds.moving.source.buffer && tank.sounds.moving.isPlaying ) {
 
@@ -477,8 +481,6 @@ Game.ViewManager.prototype.updatePlayersPosition = function ( delta ) {
             }
 
             if ( progress !== player.moveProgress ) {
-
-                // changing path point & counting delta
 
                 var dx, dz;
                 var dxr, dzr;

@@ -139,11 +139,6 @@ Game.NetworkManager.prototype.message = function ( event ) {
                 Game.arena.me.gotBox( data.box, data.value );
                 break;
 
-            case 'TowerRotateTop':
-
-                console.log( data );
-                break;
-
             default:
 
                 console.error( '[NETWORK:GOT_MESSAGE] Unknown event occurred.' );
@@ -163,7 +158,7 @@ Game.NetworkManager.prototype.message = function ( event ) {
             case 1:     // rotateTop
 
                 var playerId = data[0];
-                var topAngle = data[1] / 10;
+                var topAngle = data[1] / 1000;
 
                 var player = Game.arena.getPlayerById( playerId );
 
@@ -280,7 +275,7 @@ Game.NetworkManager.prototype.message = function ( event ) {
                 if ( ! player ) return;
 
                 var path = [];
-                for ( var i = 1, il = data.length - 2; i < il; i ++ ) {
+                for ( var i = 0, il = data.length / 2 - 2; i < il; i ++ ) {
 
                     path.push({ x: data[ 1 + 2 * i + 0 ], y: 0, z: data[ 1 + 2 * i + 1 ] });
 
@@ -293,7 +288,7 @@ Game.NetworkManager.prototype.message = function ( event ) {
 
                 var towerId = data[0];
                 var tower = Game.arena.getTowerById( towerId );
-                tower.rotateTop( data[1] / 100 );
+                tower.rotateTop( data[1] / 1000 );
                 break;
 
             case 210:

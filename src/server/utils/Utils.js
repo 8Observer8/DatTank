@@ -25,17 +25,9 @@ Utils.getDistance = function ( a, b ) {
 
 };
 
-Utils.formatAngle = function ( a ) {
+Utils.addAngle = function ( a1, a2 ) {
 
-    a = a % ( 2 * Math.PI );
-
-    if ( a < 0 ) {
-
-        a += 2 * Math.PI;
-
-    }
-
-    return a;
+    return Utils.formatAngle( a1 + a2 );
 
 };
 

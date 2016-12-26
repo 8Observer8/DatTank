@@ -91,7 +91,7 @@ BoxManager.prototype.removeBox = function ( box ) {
 BoxManager.prototype.getBoxesInRange = function ( player ) {
 
     var dx, dz;
-    var range = 50;
+    var range = 40;
     var result = [];
 
     for ( var i = 0, il = this.boxes.length; i < il; i ++ ) {
