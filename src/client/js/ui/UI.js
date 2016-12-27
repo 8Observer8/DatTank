@@ -15,7 +15,7 @@ Game.UI.prototype.init = function () {
 
     if ( localStorage.getItem('hq') === 'true' ) {
 
-        this.chageGameQuality( true, true );
+        this.chageQuality( true, true );
 
     }
 
@@ -34,11 +34,14 @@ Game.UI.prototype.init = function () {
 
 };
 
-Game.UI.prototype.chageGameQuality = function ( value, withoutSound ) {
+Game.UI.prototype.chageQuality = function ( value, withoutSound ) {
 
-    value = ( typeof value === 'boolean' ) ? value : $('#graphics-quality').attr('hq') !== 'true';
+    value = ( typeof value === 'boolean' ) ? value : $( event.currentTarget ).attr('hq') !== 'true';
     $('#graphics-quality').attr( 'hq', value );
+    $('#viewport-graphics-quality').attr( 'hq', value );
     localStorage.setItem( 'hq', value );
+
+    view.updateRenderer();
 
     if ( ! withoutSound ) {
 
@@ -50,8 +53,9 @@ Game.UI.prototype.chageGameQuality = function ( value, withoutSound ) {
 
 Game.UI.prototype.changeSound = function ( value, withoutSound ) {
 
-    value = ( typeof value === 'boolean' ) ? value : $('#sound-on-off').attr('sound') !== 'true';
+    value = ( typeof value === 'boolean' ) ? value : $( event.currentTarget ).attr('sound') !== 'true';
     $('#sound-on-off').attr( 'sound', value );
+    $('#viewport-sound-on-off').attr( 'sound', value );
     localStorage.setItem( 'sound', value );
 
     if ( ! withoutSound ) {
@@ -351,6 +355,8 @@ Game.UI.prototype.showChoiceWindow = function () {
 
     $('.tank-skins').show();
     $('#signin-box').css('opacity', 0);
+
+    garage.selectTank();
 
     soundSys.playMenuSound();
 

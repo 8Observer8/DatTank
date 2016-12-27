@@ -35,10 +35,6 @@ Game.ViewManager = function () {
 
     //
 
-    this.stats = false;
-
-    //
-
     this.raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3(), 0, 10000 );
 
     //
@@ -118,55 +114,14 @@ Game.ViewManager.prototype.setupScene = function () {
     this.sunLight.shadow.camera.bottom   = -1000;
     this.sunLight.shadow.camera.far      = 6000;
 
-    // add stats
-
-    var container;
-
-    container = document.createElement('div');
-    document.body.appendChild( container );
-
-    var stats = new Stats();
-    stats.domElement.style.position = 'absolute';
-    stats.domElement.style.left = '0px';
-    stats.domElement.style.top = '0px';
-    stats.domElement.style.display = 'none';
-    stats.domElement.style['z-index'] = 1000;
-    stats.domElement.style.zIndex = 1000;
-    document.body.appendChild( stats.domElement );
-
-    this.stats = stats;
+    this.quality = 1;
 
     // user event handlers
 
     window.addEventListener( 'resize', this.resize.bind( this ) );
 
-    // setup renderer
-
-    var antialias = false;
-    var quality = 0.7;
-
-    if ( localStorage.getItem('hq') === 'true' ) {
-
-        antialias = true;
-        quality = 1;
-
-    }
-
-    if ( ! this.renderer ) {
-
-        this.renderer = new THREE.WebGLRenderer({ canvas: Utils.ge('#renderport'), antialias: antialias });
-        this.renderer.setSize( quality * this.SCREEN_WIDTH, quality * this.SCREEN_HEIGHT );
-        this.renderer.setClearColor( 0x000000 );
-
-        if ( ! MOBILE ) {
-
-            // this.renderer.shadowMap.enabled = true;
-
-        }
-
-        this.render();
-
-    }
+    this.updateRenderer();
+    this.render();
 
     //
 
@@ -313,6 +268,30 @@ Game.ViewManager.prototype.clean = function () {
 
 };
 
+Game.ViewManager.prototype.updateRenderer = function () {
+
+    var antialias = false;
+    this.quality = 0.7;
+
+    if ( localStorage.getItem('hq') === 'true' ) {
+
+        antialias = true;
+        this.quality = 1;
+
+    }
+
+    this.renderer = new THREE.WebGLRenderer({ canvas: Utils.ge('#renderport'), antialias: antialias });
+    this.renderer.setSize( this.quality * this.SCREEN_WIDTH, this.quality * this.SCREEN_HEIGHT );
+    this.renderer.setClearColor( 0x000000 );
+
+    if ( ! MOBILE ) {
+
+        // this.renderer.shadowMap.enabled = true;
+
+    }
+
+};
+
 Game.ViewManager.prototype.resize = function () {
 
     this.SCREEN_WIDTH = window.innerWidth;
@@ -323,7 +302,7 @@ Game.ViewManager.prototype.resize = function () {
     this.camera.aspect = this.SCREEN_WIDTH / this.SCREEN_HEIGHT;
     this.camera.updateProjectionMatrix();
 
-    this.renderer.setSize( this.SCREEN_WIDTH, this.SCREEN_HEIGHT );
+    this.renderer.setSize( this.quality * this.SCREEN_WIDTH, this.quality * this.SCREEN_HEIGHT );
 
 };
 
@@ -634,8 +613,6 @@ Game.ViewManager.prototype.render = (function () {
         prevRenderTime = performance.now();
 
         //
-
-        this.stats.update();
 
         view.sunLight.target.updateMatrixWorld();
 

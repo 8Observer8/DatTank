@@ -204,9 +204,18 @@ Game.Garage.prototype.arrowBack = function () {
 Game.Garage.prototype.selectTank = function ( event ) {
 
     $('.choice-skins .tank.active').removeClass('active');
-    $( event.currentTarget ).addClass( 'active' );
+    var tankId;
 
-    var tankId = $( event.currentTarget ).attr('id');
+    if ( event ) {
+
+        var tankId = $( event.currentTarget ).attr('id');
+        $( event.currentTarget ).addClass( 'active' );
+
+    } else {
+
+        tankId = localStorage.getItem( 'currentTank' ) || 'USA-T54';
+
+    }
 
     $('.name-specifications').html( Game.Tank.list[ tankId ].title );
     $('.specification-text#speed').html( '&#x2623;&nbsp;&nbsp;&nbsp;' + 'Speed: ' + Game.Tank.list[ tankId ].speed + 'km/h' );

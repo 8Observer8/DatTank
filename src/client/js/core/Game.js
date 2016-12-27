@@ -48,10 +48,13 @@ Game.prototype.init = function () {
     $('#signin-box #username').focus();
     $('#play-btn').click( this.play.bind( this ) );
     $('.change-skin-btn').click( ui.showChoiceWindow.bind( ui ) );
-    $('.btn-pick').click(ui.selectTankAndcloseChoiceWindow.bind( ui ) )
+    $('.btn-pick').click(ui.selectTankAndcloseChoiceWindow.bind( ui ) );
 
-    $('#graphics-quality').click( ui.chageGameQuality.bind( ui ) );
+    $('#graphics-quality').click( ui.chageQuality.bind( ui ) );
     $('#sound-on-off').click( ui.changeSound.bind( ui ) );
+
+    $('#viewport-graphics-quality').click( ui.chageQuality.bind( ui ) );
+    $('#viewport-sound-on-off').click( ui.changeSound.bind( ui ) );
 
 };
 
@@ -164,7 +167,7 @@ Game.prototype.joinArena = function ( params ) {
     $('#gear_btn').click( ui.openSettings.bind( ui ) );  
     $('#exit-btn').click( ui.openSettings.bind( ui ) );
     $('#soundon').click( ui.changeSound.bind( ui ) );
-    $('#qualityon').click( ui.chageGameQuality.bind( ui ) );
+    $('#qualityon').click( ui.chageQuality.bind( ui ) );
 
     $('#leaderboard').click( ui.toggleLeaderboard.bind( ui ) );
 

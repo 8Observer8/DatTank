@@ -67,6 +67,8 @@ Tower.prototype.shoot = (function () {
     var buffer = new ArrayBuffer( 6 );
     var bufferView = new Uint16Array( buffer );
 
+    this.hits = {};
+
     return function ( target ) {
 
         var dx = target.position.x - this.position.x;
