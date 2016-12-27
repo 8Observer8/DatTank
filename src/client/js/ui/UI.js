@@ -349,9 +349,10 @@ Game.UI.prototype.hideLoaderScreen = function () {
 
 Game.UI.prototype.showChoiceWindow = function () {
 
-    $(".tank-skins").show();
-    $("#signin-box").css("opacity", 0);
-    garage.init();
+    $('.tank-skins').show();
+    $('#signin-box').css('opacity', 0);
+
+    soundSys.playMenuSound();
 
 };
 
@@ -363,16 +364,16 @@ Game.UI.prototype.closeChoiceWindow = function ( event ) {
 
     }
 
-    $(".tank-skins").hide();
-    $("#signin-box").css("opacity", 1); 
+    $('.tank-skins').hide();
+    $('#signin-box').css('opacity', 1); 
     garage.stop();
 
 };
 
 Game.UI.prototype.selectTankAndcloseChoiceWindow = function () {
 
-    $(".tank-skins").hide();
-    $("#signin-box").css("opacity", 1);
+    $('.tank-skins').hide();
+    $('#signin-box').css('opacity', 1);
     garage.pickTank();
     garage.stop();
 

@@ -21,16 +21,18 @@ Game.Garage = function () {
 
     this.clock = new THREE.Clock();
 
+    //
+
+    this.init();
+
 };
 
 Game.Garage.prototype = {};
 
 Game.Garage.prototype.init = function () {
 
-    soundSys.playMenuSound();
-
-    $('#arrow1').click( garage.arrowBack.bind( this ) );
-    $('#arrow2').click( garage.arrowForward.bind( this ) );
+    $('#arrow1').click( this.arrowBack.bind( this ) );
+    $('#arrow2').click( this.arrowForward.bind( this ) );
     $('.choice-skins .tank').click( this.selectTank.bind( this ) );
     $('.close-tank-skins').click( ui.closeChoiceWindow.bind( ui ) );
 
@@ -79,11 +81,6 @@ Game.Garage.prototype.init = function () {
         scope.models['USAT54'] = model;
 
         loaded ++;
-        if ( loaded === 3 ) {
-
-            $( '.choice-skins #' + localStorage.getItem('currentTank') ).click();
-
-        }
 
     });
 
@@ -100,11 +97,6 @@ Game.Garage.prototype.init = function () {
         scope.models['UKBlackPrince'] = model;
 
         loaded ++;
-        if ( loaded === 3 ) {
-
-            $( '.choice-skins #' + localStorage.getItem('currentTank') ).click();
-
-        }
 
     });
 
@@ -115,11 +107,6 @@ Game.Garage.prototype.init = function () {
         scope.scene.add( object );
 
         loaded ++;
-        if ( loaded === 3 ) {
-
-            $( '.choice-skins #' + localStorage.getItem('currentTank') ).click();
-
-        }
 
     }, scope.onProgress );
 
@@ -181,7 +168,7 @@ Game.Garage.prototype.render = function () {
 
 Game.Garage.prototype.stop = function () {
 
-    this.renderer.domElement.remove();
+    // this.renderer.domElement.remove();
     soundSys.playMenuSound();
 
 };
@@ -236,7 +223,11 @@ Game.Garage.prototype.selectTank = function ( event ) {
 
     this.models[ tankId ].visible = true;
 
-    soundSys.playMenuSound();
+    if ( event ) {
+
+        soundSys.playMenuSound();
+
+    }
 
 };
 
