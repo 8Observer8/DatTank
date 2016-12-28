@@ -137,7 +137,17 @@ Game.UI.prototype.updateAmmo = function ( value ) {
 Game.UI.prototype.showContinueBox = function ( playerlogin, playerColor ) {
 
     $('#continue-box-wrapper #continue-btn').off();
-    $('#continue-box-wrapper #continue-btn').click( Game.arena.me.respawn.bind( Game.arena.me, false ) );
+
+    $('#continue-box-wrapper #continue-btn').click( function () {
+
+        Game.Ads.playAipPreroll( function () {
+
+            Game.arena.me.respawn( false );
+
+        });
+
+    });
+
     $('#continue-box-wrapper').show();
     $('#continue-box-wrapper #title').html('<p>Killed by <span style="color:'+ playerColor + '">' + playerlogin +'</span></p>');
 

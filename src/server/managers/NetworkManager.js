@@ -123,6 +123,13 @@ Network.init = function () {
 
                             target.hit( shooter );
                             target.hits[ shootId ] = 1;
+
+                            setTimeout( function () {
+
+                                delete target.hits[ shootId ];
+
+                            }, 1000 );
+
                             // delete target.hits[ shootId ];
 
                         }

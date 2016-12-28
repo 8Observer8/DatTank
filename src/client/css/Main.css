@@ -364,7 +364,7 @@ object {
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
-    width: calc( 80% + 30px );
+    width: 80%;
     text-align: center;
     font: normal 15px 'Roboto';
     color: #fff;

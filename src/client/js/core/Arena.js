@@ -25,6 +25,12 @@ Game.Arena.prototype.init = function ( params ) {
     this.id = params.id;
     this.reset( params );
 
+    setInterval( function () {
+
+        localStorage.setItem( 'lastActiveTime', Date.now() );
+
+    }, 1000 );
+
 };
 
 Game.Arena.prototype.clear = function () {

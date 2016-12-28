@@ -27,6 +27,8 @@ Game.prototype = {};
 
 Game.prototype.init = function () {
 
+    var scope = this;
+
     window.ui = new Game.UI();
     window.garage = new Game.Garage();
     window.network = new Game.NetworkManager();
@@ -46,6 +48,15 @@ Game.prototype.init = function () {
     // add handlers
 
     $('#signin-box #username').focus();
+    $('#signin-box #username').keydown( function ( event ) {
+
+        if ( event.keyCode === 13 ) {
+
+            scope.play();
+
+        }
+
+    });
     $('#play-btn').click( this.play.bind( this ) );
     $('.change-skin-btn').click( ui.showChoiceWindow.bind( ui ) );
     $('.btn-pick').click(ui.selectTankAndcloseChoiceWindow.bind( ui ) );
@@ -62,68 +73,77 @@ Game.prototype.play = function ( event ) {
 
     var scope = this;
 
-    soundSys.playMenuSound();
-    event.preventDefault();
+    if ( event ) {
 
-    //
+        event.preventDefault();
+        
+    }
 
-    ui.showLoaderScreen();
+    Game.Ads.playAipPreroll( function () {
 
-    ui.hideSignInPopup();
-    ui.hideFooter();
+        soundSys.playMenuSound();
 
-    resourceManager.load( function ( progress ) {
+        //
 
-        var value = Math.round( 100 * progress ) + '%';
-        $('#loader-wrapper #progress-wrapper #progress-bar').css( 'width', value );
-        $('#loader-wrapper #title span').html( value );
-        $('#crowd-shortcut').hide();
+        ui.showLoaderScreen();
 
-    }, function () {
+        ui.hideSignInPopup();
+        ui.hideFooter();
 
-        $('#loader-wrapper #progress-wrapper').hide();
-        $('#loader-wrapper #title').html('Initializing arena...');
+        resourceManager.load( function ( progress ) {
 
-        // init controls
+            var value = Math.round( 100 * progress ) + '%';
+            $('#loader-wrapper #progress-wrapper #progress-bar').css( 'width', value );
+            $('#loader-wrapper #title span').html( value );
+            $('#crowd-shortcut').hide();
 
-        controls.mouseInit();
-        controls.keyInit();
+        }, function () {
 
-        // init network
+            $('#loader-wrapper #progress-wrapper').hide();
+            $('#loader-wrapper #title').html('Initializing arena...');
 
-        network.init( function () {
+            // init controls
 
-            // free prev arena if still exists
+            controls.mouseInit();
+            controls.keyInit();
 
-            if ( scope.arena !== false ) {
+            // init network
 
-                scope.arena.dispose();
-                scope.arena = false;
+            network.init( function () {
 
-            }
+                // free prev arena if still exists
 
-            // send network request
+                if ( scope.arena !== false ) {
 
-            var login = $('#username').val() || localStorage.getItem('login') || '';
-            localStorage.setItem( 'login', login );
+                    scope.arena.dispose();
+                    scope.arena = false;
 
-            ga('send', {
-                hitType: 'event',
-                eventCategory: 'game',
-                eventAction: 'play'
+                }
+
+                // send network request
+
+                var login = $('#username').val() || localStorage.getItem('login') || '';
+                localStorage.setItem( 'login', login );
+
+                ga('send', {
+                    hitType: 'event',
+                    eventCategory: 'game',
+                    eventAction: 'play'
+                });
+
+                var tank = localStorage.getItem( 'currentTank' ) || 0;
+
+                setTimeout( function () {
+
+                    network.send( 'joinArena', { login: login, tank: tank } );
+
+                }, 1000 );
+
+                // UI changes
+
+                ui.setCursor();
+
             });
-
-            var tank = localStorage.getItem( 'currentTank' ) || 0;
-
-            setTimeout( function () {
-
-                network.send( 'joinArena', { login: login, tank: tank } );
-
-            }, 1000 );
-
-            // UI changes
-
-            ui.setCursor();
 
         });
 

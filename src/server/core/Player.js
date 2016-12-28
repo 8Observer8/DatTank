@@ -277,6 +277,8 @@ Player.prototype.shoot = (function () {
 
         }, 1000 );
 
+        this.hits = {};
+
         if ( this.ammo <= 0 ) {
 
             return;
@@ -286,8 +288,10 @@ Player.prototype.shoot = (function () {
         this.ammo --;
 
         bufferView[ 1 ] = this.id;
-        bufferView[ 2 ] = Math.floor( 1000 * Math.random() );
+        bufferView[ 2 ] = Player.numShootId;
         bufferView[ 3 ] = this.ammo;
+
+        Player.numShootId = ( Player.numShootId > 1000 ) ? 0 : Player.numShootId + 1;
 
         DT.Network.announce( this.arena, 'shoot', buffer, bufferView );
 
@@ -564,6 +568,7 @@ Player.prototype.toPublicJSON = function () {
 };
 
 Player.numIds = 1;
+Player.numShootId = 0;
 Player.Alive = 100;
 Player.Dead = 110;
 Player.AFK = 120;
