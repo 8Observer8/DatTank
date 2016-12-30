@@ -74,6 +74,20 @@ TeamManager.prototype.getById = function ( teamId ) {
 
 };
 
+TeamManager.prototype.toJSON = function () {
+
+    var teams = [];
+
+    for ( var i = 0, il = this.teams.length; i < il; i ++ ) {
+
+        teams.push( this.teams[ i ].toPublicJSON() );
+
+    }
+
+    return teams;
+
+};
+
 //
 
 module.exports = TeamManager;

@@ -18,6 +18,7 @@ var Arena = function ( callback ) {
 
     this.updateInterval = false;
     this.currentTime = false;
+    this.prevUpdateTime = Date.now();
 
     //
 
@@ -32,7 +33,7 @@ Arena.prototype.init = function ( callback ) {
     this.teamManager.init( 4 );
     this.towerManager.init();
     this.decorationManager.init({
-        trees: { type: 'Tree' count: 190 },
+        trees: { type: 'Tree', count: 190 },
         rocks: { type: 'Stones', count: 80 }
     });
     this.botManager.init();
@@ -54,15 +55,11 @@ Arena.prototype.addPlayer = function ( params ) {
 
     //
 
-    if ( ! player.socket ) {
+    this.announce( 'playerJoined', player.toPublicJSON() );
 
-        Game.Network.announce( this, 'playerJoined', player.toPublicJSON() );
+    //
 
-    } else {
-
-        Game.Network.broadcast( player.socket, this, 'playerJoined', player.toPublicJSON() );
-
-    }
+    return player;
 
 };
 
@@ -71,7 +68,7 @@ Arena.prototype.removePlayer = function ( player ) {
     if ( this.playerManager.remove( playerManager ) ) {
 
         player.team.removePlayer( player );
-        Game.Network.announce( this, 'playerLeft', { id: player.id } );
+        this.announce( 'playerLeft', { id: player.id } );
 
     }
 
@@ -85,43 +82,36 @@ Arena.prototype.removePlayer = function ( player ) {
 
 };
 
+Arena.prototype.announce = function ( eventName, data, players ) {
+
+    players = players || this.playerManager.players;
+
+    for ( var i = 0, il = players.length; i < il; i ++ ) {
+
+        if ( players[ i ].socket ) {
+
+            Game.Network.send( players[ i ].socket, eventName, data );
+
+        }
+
+    }
+
+};
+
 Arena.prototype.toPublicJSON = function () {
 
-    var players = [];
-    var teams = [];
-    var boxes = [];
-    var towers = [];
-
-    for ( var i = 0, il = this.players.length; i < il; i ++ ) {
-
-        players.push( this.players[ i ].toPublicJSON() );
-
-    }
-
-    for ( var i = 0, il = this.teams.length; i < il; i ++ ) {
-
-        teams.push( this.teams[ i ].toPublicJSON() );
-
-    }
-
-    for ( var i = 0, il = this.boxManager.boxes.length; i < il; i ++ ) {
-
-        boxes.push( this.boxManager.boxes[ i ].toJSON() );
-
-    }
-
-    for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
-
-        towers.push( this.towers[ i ].toJSON() );
-
-    }
+    var players = this.playerManager.toJSON();
+    var teams = this.teamManager.toJSON();
+    var boxes = this.boxManager.toJSON();
+    var towers = this.towerManager.toJSON();
+    var decorations = this.decorationManager.toJSON();
 
     //
 
     return {
 
         id:             this.id,
-        obstacles:      this.getDecorations(),
+        obstacles:      decorations,
         towers:         towers,
         players:        players,
         teams:          teams,
@@ -132,37 +122,19 @@ Arena.prototype.toPublicJSON = function () {
 
 };
 
-Arena.prototype.update = (function () {
+Arena.prototype.update = function () {
 
-    var prevUpdateTime = false;
+    var time = Date.now();
+    var delta = time - this.prevUpdateTime;
+    this.prevUpdateTime = time;
 
-    return function () {
+    // update towers
 
-        var time = Date.now();
-        var delta = ( prevUpdateTime !== false ) ? time - prevUpdateTime : 0;
-        prevUpdateTime = time;
+    this.towerManager.update( delta );
+    this.playerManager.update( delta );
+    this.boxManager.update( delta );
 
-        // update towers
-
-        for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
-
-            this.towers[ i ].update( delta );
-
-        }
-
-        // update players position & rotation
-
-        for ( var i = 0, il = this.players.length; i < il; i ++ ) {
-
-            this.players[ i ].update( delta, time );
-
-        }
-
-        this.boxManager.update( delta, this.players );
-
-    };
-
-}) ();
+};
 
 Arena.numIds = 0;
 Arena.NeutralTeam = 1000;

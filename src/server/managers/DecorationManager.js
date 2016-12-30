@@ -73,7 +73,7 @@ DecorationManager.prototype.init = function ( params ) {
 
             //
 
-            var decoration = new Game.Decoration[ type ]( this, {
+            var decoration = new Game.Decoration[ type ]( this.arena, {
                 position:   new Game.Vec3( x, 0, z ),
                 scale:      new Game.Vec3( scale, scaleH, scale ),
                 rotation:   2 * Math.PI * Math.random()
@@ -89,7 +89,7 @@ DecorationManager.prototype.init = function ( params ) {
 
     //
 
-    this.pathManager.constructMap();
+    this.arena.pathManager.constructMap();
 
 };
 

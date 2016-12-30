@@ -5,18 +5,12 @@
 
 var BoxManager = function ( arena, params ) {
 
-    params = params || {};
-
     this.arena = arena;
     this.boxes = [];
 
     this.boxAVGCount = params.boxAVGCount || 25;
 
     this.time = 0;
-
-    //
-
-    this.init();
 
 };
 
@@ -28,7 +22,7 @@ BoxManager.prototype.init = function () {
 
 };
 
-BoxManager.prototype.addBox = function ( params ) {
+BoxManager.prototype.add = function ( params ) {
 
     var box = false;
     var position = false;
@@ -37,7 +31,7 @@ BoxManager.prototype.addBox = function ( params ) {
 
     while ( ! position || ! this.arena.pathManager.isPlaceFree( position ) ) {
 
-        position = new DT.Vec3( Math.floor( 1500 * ( Math.random() - 0.5 ) ), 20, Math.floor( 1500 * ( Math.random() - 0.5 ) ) );
+        position = new Game.Vec3( Math.floor( 1500 * ( Math.random() - 0.5 ) ), 20, Math.floor( 1500 * ( Math.random() - 0.5 ) ) );
 
     }
 
@@ -47,7 +41,7 @@ BoxManager.prototype.addBox = function ( params ) {
 
         case 'Health':
 
-            box = new DT.Box.Health({
+            box = new Game.Box.Health({
                 arena: this.arena,
                 position: position
             });
@@ -55,7 +49,7 @@ BoxManager.prototype.addBox = function ( params ) {
 
         case 'Ammo':
 
-            box = new DT.Box.Ammo({
+            box = new Game.Box.Ammo({
                 arena: this.arena,
                 position: position
             });
@@ -63,7 +57,7 @@ BoxManager.prototype.addBox = function ( params ) {
 
         default:
 
-            console.log('Unknown DT Box type.');
+            console.log('Unknown Game Box type.');
             break;
 
     }
@@ -72,7 +66,7 @@ BoxManager.prototype.addBox = function ( params ) {
 
 };
 
-BoxManager.prototype.removeBox = function ( box ) {
+BoxManager.prototype.remove = function ( box ) {
 
     var newBoxList = [];
 
@@ -88,7 +82,7 @@ BoxManager.prototype.removeBox = function ( box ) {
 
 };
 
-BoxManager.prototype.getBoxesInRange = function ( player ) {
+BoxManager.prototype.getInRange = function ( player ) {
 
     var dx, dz;
     var range = 40;
@@ -111,7 +105,9 @@ BoxManager.prototype.getBoxesInRange = function ( player ) {
 
 };
 
-BoxManager.prototype.update = function ( delay, players ) {
+BoxManager.prototype.update = function ( delay ) {
+
+    var players = this.arena.playerManager.players;
 
     this.time += delay;
 
@@ -139,6 +135,20 @@ BoxManager.prototype.update = function ( delay, players ) {
         }
 
     }
+
+};
+
+BoxManager.prototype.toJSON = function () {
+
+    var boxes = [];
+
+    for ( var i = 0, il = this.boxes.length; i < il; i ++ ) {
+
+        boxes.push( this.boxes[ i ].toJSON() );
+
+    }
+
+    return boxes;
 
 };
 

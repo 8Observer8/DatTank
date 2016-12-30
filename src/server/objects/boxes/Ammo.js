@@ -5,7 +5,7 @@
 
 var Ammo = function ( params ) {
 
-    DT.Box.call( this, params );
+    Game.Box.call( this, params );
 
     this.type = 'Ammo';
     this.amount = 40;
@@ -16,7 +16,7 @@ var Ammo = function ( params ) {
 
 };
 
-Ammo.prototype = Object.create( DT.Box.prototype );
+Ammo.prototype = Object.create( Game.Box.prototype );
 
 Ammo.prototype.pickUp = function ( player ) {
 
@@ -25,11 +25,11 @@ Ammo.prototype.pickUp = function ( player ) {
 
     //
 
-    DT.Network.announce( this.arena, 'pickedBox', { id: this.id } );
+    Game.Network.announce( this.arena, 'pickedBox', { id: this.id } );
 
     if ( player.socket ) {
 
-        DT.Network.send( player.socket, 'gotBox', { box: this.toJSON(), value: player.ammo } );
+        Game.Network.send( player.socket, 'gotBox', { box: this.toJSON(), value: player.ammo } );
 
     }
 

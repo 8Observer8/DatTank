@@ -15,7 +15,7 @@ ArenaManager.prototype.addArena = function ( callback ) {
 
     var scope = this;
 
-    var arena = new DT.Arena( function ( arena ) {
+    var arena = new Game.Arena( function ( arena ) {
 
         scope.arenas.push( arena );
         callback( arena );

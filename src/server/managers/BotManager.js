@@ -18,7 +18,7 @@ BotManager.prototype.init = function ( botNum ) {
 
     for ( var i = 0; i < botNum; i ++ ) {
 
-        this.add( new DT.Bot( this.arena ) );
+        this.add( new Game.Bot( this.arena ) );
 
     }
 

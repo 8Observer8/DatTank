@@ -5,7 +5,7 @@
 
 var Health = function ( params ) {
 
-    DT.Box.call( this, params );
+    Game.Box.call( this, params );
 
     this.type = 'Health';
     this.amount = 20;
@@ -16,7 +16,7 @@ var Health = function ( params ) {
 
 };
 
-Health.prototype = Object.create( DT.Box.prototype );
+Health.prototype = Object.create( Game.Box.prototype );
 
 Health.prototype.pickUp = function ( player ) {
 
@@ -27,11 +27,11 @@ Health.prototype.pickUp = function ( player ) {
 
     //
 
-    DT.Network.announce( this.arena, 'pickedBox', { id: this.id } );
+    Game.Network.announce( this.arena, 'pickedBox', { id: this.id } );
 
     if ( player.socket ) {
 
-        DT.Network.send( player.socket, 'gotBox', { box: this.toJSON(), value: player.health } );
+        Game.Network.send( player.socket, 'gotBox', { box: this.toJSON(), value: player.health } );
 
     }
 

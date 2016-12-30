@@ -29,14 +29,9 @@ Network.init = function () {
 
                     case 'joinArena':
 
-                        DT.ArenaManager.findArena( function ( arena ) {
+                        Game.ArenaManager.findArena( function ( arena ) {
 
-                            arena.addPlayer({ login: data.login, tank: data.tank, socket: socket });
-
-                            //
-
-                            socket.arena = arena;
-                            socket.player = player;
+                            var player = arena.addPlayer({ login: data.login, tank: data.tank, socket: socket });
 
                             var response = arena.toPublicJSON();
                             response.me = player.id;

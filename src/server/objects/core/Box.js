@@ -10,7 +10,7 @@ var Box = function ( params ) {
     this.id = Box.numId ++;
     this.arena = params.arena;
 
-    this.position = new DT.Vec3( params.position.x, params.position.y, params.position.z ) || new DT.Vec3( 0, 20, 0 );
+    this.position = new Game.Vec3( params.position.x, params.position.y, params.position.z ) || new Game.Vec3( 0, 20, 0 );
 
     this.amount = 0;
     this.duration = 0;
@@ -22,7 +22,7 @@ Box.prototype = {};
 
 Box.prototype.init = function () {
 
-    DT.Network.announce( this.arena, 'addBox', this.toJSON() );
+    Game.Network.announce( this.arena, 'addBox', this.toJSON() );
 
 };
 

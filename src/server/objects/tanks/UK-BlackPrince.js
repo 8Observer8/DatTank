@@ -5,7 +5,7 @@
 
 var UKBlackPrince = function ( params ) {
 
-    DT.Tank.call( this, params );
+    Game.Tank.call( this, params );
 
     this.title = 'UK-BlackPrince';
 
@@ -17,6 +17,6 @@ var UKBlackPrince = function ( params ) {
 
 };
 
-UKBlackPrince.prototype = Object.create( DT.Tank.prototype );
+UKBlackPrince.prototype = Object.create( Game.Tank.prototype );
 
 module.exports = UKBlackPrince;

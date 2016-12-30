@@ -58,12 +58,12 @@ app.get( '/api/info', function ( req, res ) {
 
     var players = 0;
     var bots = 0;
-    var arenas = DT.ArenaManager.arenas.length;
+    var arenas = Game.ArenaManager.arenas.length;
 
-    for ( var i = 0, il = DT.ArenaManager.arenas.length; i < il; i ++ ) {
+    for ( var i = 0, il = Game.ArenaManager.arenas.length; i < il; i ++ ) {
 
-        players += DT.ArenaManager.arenas[ i ].players.length - DT.ArenaManager.arenas[ i ].bots.length;
-        bots += DT.ArenaManager.arenas[ i ].bots.length;
+        players += Game.ArenaManager.arenas[ i ].players.length - Game.ArenaManager.arenas[ i ].bots.length;
+        bots += Game.ArenaManager.arenas[ i ].bots.length;
 
     }
 
@@ -93,7 +93,7 @@ app.use( '/*', express.static( __dirname + './../client/notfound.html') );
 //
 
 server.listen( PORT );
-DT.Network.init();
+Game.Network.init();
 
 //
 

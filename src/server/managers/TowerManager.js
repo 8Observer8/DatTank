@@ -23,7 +23,7 @@ TowerManager.prototype.init = function () {
             var x = ( 0.5 - i / 4 ) * 1900;
             var z = ( 0.5 - j / 4 ) * 1900;
 
-            this.add( new DT.Tower( this, { team: team, position: { x: x, y: 0, z: z } } ) );
+            this.add( new Game.Tower( this.arena, { team: team, position: { x: x, y: 0, z: z } } ) );
 
         }
 
@@ -56,6 +56,30 @@ TowerManager.prototype.getById = function ( towerId ) {
     }
 
     return false;
+
+};
+
+TowerManager.prototype.update = function ( delta ) {
+
+    for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
+
+        this.towers[ i ].update( delta );
+
+    }
+
+};
+
+TowerManager.prototype.toJSON = function () {
+
+    var towers = [];
+
+    for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
+
+        towers.push( this.towers[ i ].toJSON() );
+
+    }
+
+    return towers;
 
 };
 

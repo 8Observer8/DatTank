@@ -23,9 +23,9 @@ var Bot = function ( arena ) {
 
         this.login = logins[ Math.floor( logins.length * Math.random() ) ];
 
-        for ( var i = 0; i < this.arena.bots.length; i ++ ) {
+        for ( var i = 0; i < this.arena.botManager.bots.length; i ++ ) {
 
-            if ( this.login === this.arena.bots[ i ].login ) {
+            if ( this.login === this.arena.botManager.bots[ i ].login ) {
 
                 this.login = false;
 
@@ -44,7 +44,7 @@ Bot.prototype = {};
 Bot.prototype.init = function () {
 
     var tank = ( Math.random() < 0.5 ) ? 'USAT54' : 'UKBlackPrince';
-    this.player = new DT.Player({ login: this.login, tank: tank });
+    this.player = new Game.Player({ login: this.login, tank: tank });
     this.player.ammo = 10000000;
     this.arena.addPlayer( this.player );
 
@@ -65,7 +65,7 @@ Bot.prototype.update = function () {
 
     }
 
-    if ( this.player.status !== DT.Player.Alive ) return;
+    if ( this.player.status !== Game.Player.Alive ) return;
 
     //
 

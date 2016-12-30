@@ -5,6 +5,8 @@
 
 var Player = function ( arena, params ) {
 
+    params = params || {};
+
     if ( Player.numIds > 1000 ) Player.numIds = 0;
 
     this.id = Player.numIds ++;
@@ -18,7 +20,13 @@ var Player = function ( arena, params ) {
 
     this.socket = params.socket || false;
 
-    this.arena = false;
+    if ( this.socket ) {
+
+        this.socket = this;
+
+    }
+
+    this.arena = arena || false;
     this.team = false;
     this.health = 100;
     this.kills = 0;
@@ -31,7 +39,7 @@ var Player = function ( arena, params ) {
     this.movementDurationMap = false;
     this.movementDuration = 0;
 
-    this.position = new DT.Vec3();
+    this.position = new Game.Vec3();
     this.rotation = 0;
     this.rotationTop = - Math.PI / 2;
 
@@ -77,7 +85,7 @@ Player.prototype.respawn = function () {
 
     //
 
-    DT.Network.announce( this.arena, 'respawn', { player: this.toPrivateJSON() } );
+    Game.Network.announce( this.arena, 'respawn', { player: this.toPrivateJSON() } );
 
 };
 
@@ -87,17 +95,17 @@ Player.prototype.selectTank = function ( tankName ) {
 
         case 'USAT54':
 
-            this.tank = new DT.Tank.USAT54();
+            this.tank = new Game.Tank.USAT54();
             break;
 
         case 'UKBlackPrince':
 
-            this.tank = new DT.Tank.UKBlackPrince();
+            this.tank = new Game.Tank.UKBlackPrince();
             break;
 
         default:
 
-            this.tank = new DT.Tank.USAT54();
+            this.tank = new Game.Tank.USAT54();
             break;
 
     }
@@ -125,7 +133,7 @@ Player.prototype.rotateTop = (function () {
         bufferView[1] = this.id;
         bufferView[2] = Math.floor( 1000 * angle );
 
-        DT.Network.announce( this.arena, 'rotateTop', buffer, bufferView );
+        Game.Network.announce( this.arena, 'rotateTop', buffer, bufferView );
 
     };
 
@@ -188,7 +196,7 @@ Player.prototype.moveToPoint = function ( destination, retry ) {
         bufferView[ bufferView.length - 2 ] = destination.x;
         bufferView[ bufferView.length - 1 ] = destination.z;
 
-        DT.Network.announce( scope.arena, 'MoveTankByPath', buffer, bufferView );
+        Game.Network.announce( scope.arena, 'MoveTankByPath', buffer, bufferView );
 
         //
 
@@ -295,7 +303,7 @@ Player.prototype.shoot = (function () {
 
         Player.numShootId = ( Player.numShootId > 1000 ) ? 0 : Player.numShootId + 1;
 
-        DT.Network.announce( this.arena, 'shoot', buffer, bufferView );
+        Game.Network.announce( this.arena, 'shoot', buffer, bufferView );
 
     };
 
@@ -316,12 +324,12 @@ Player.prototype.hit = (function () {
 
         if ( killer ) {
 
-            if ( killer instanceof DT.Player ) {
+            if ( killer instanceof Game.Player ) {
 
                 this.health -= 40 * ( killer.tank.bullet / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
                 this.health = Math.max( Math.round( this.health ), 0 );
 
-            } else if ( killer instanceof DT.Tower ) {
+            } else if ( killer instanceof Game.Tower ) {
 
                 this.health -= 40 * ( 50 / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
                 this.health = Math.max( Math.round( this.health ), 0 );
@@ -333,7 +341,7 @@ Player.prototype.hit = (function () {
         bufferView[ 1 ] = this.id;
         bufferView[ 2 ] = this.health;
 
-        DT.Network.announce( this.arena, 'hit', buffer, bufferView );
+        Game.Network.announce( this.arena, 'hit', buffer, bufferView );
 
         if ( this.health <= 0 ) {
 
@@ -368,7 +376,7 @@ Player.prototype.die = (function () {
 
         bufferView[ 1 ] = this.id;
 
-        if ( killer instanceof DT.Tower ) {
+        if ( killer instanceof Game.Tower ) {
 
             bufferView[ 2 ] = killer.id + 10000;
 
@@ -380,7 +388,7 @@ Player.prototype.die = (function () {
 
         //
 
-        DT.Network.announce( this.arena, 'die', buffer, bufferView );
+        Game.Network.announce( this.arena, 'die', buffer, bufferView );
 
         //
 

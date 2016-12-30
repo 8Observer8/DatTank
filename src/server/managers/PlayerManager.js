@@ -20,7 +20,7 @@ PlayerManager.prototype.init = function () {
 
 PlayerManager.prototype.add = function ( player ) {
 
-    var team = this.arena.teamManager.detectWeakest();
+    var team = this.arena.teamManager.getWeakest();
     team.addPlayer( player );
     this.players.push( player );
 
@@ -63,6 +63,30 @@ PlayerManager.prototype.getById = function ( playerId ) {
     }
 
     return false;
+
+};
+
+PlayerManager.prototype.update = function ( delta ) {
+
+    for ( var i = 0, il = this.players.length; i < il; i ++ ) {
+
+        this.players[ i ].update( delta );
+
+    }
+
+};
+
+PlayerManager.prototype.toJSON = function () {
+
+    var players = [];
+
+    for ( var i = 0, il = this.players.length; i < il; i ++ ) {
+
+        players.push( this.players[ i ].toPublicJSON() );
+
+    }
+
+    return players;
 
 };
 

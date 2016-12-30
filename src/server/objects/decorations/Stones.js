@@ -5,7 +5,7 @@
 
 var Stones = function ( arena, params ) {
 
-    DT.Decoration.call( this, arena, params );
+    Game.Decoration.call( this, arena, params );
 
     this.size.set( 2.4, 2.4, 2.4 );
 
@@ -13,7 +13,7 @@ var Stones = function ( arena, params ) {
 
 };
 
-Stones.prototype = Object.create( DT.Decoration.prototype );
+Stones.prototype = Object.create( Game.Decoration.prototype );
 
 Stones.prototype.init = function () {
 
@@ -22,7 +22,7 @@ Stones.prototype.init = function () {
     var sizeY = this.size.y * this.scale.y;
     var sizeZ = this.size.z * this.scale.z;
 
-    this.arena.pathManager.placeObject( new DT.Vec3( position.x - sizeX / 2, 0, position.z - sizeZ / 2 ), new DT.Vec3( position.x + sizeX / 2, 0, position.z + sizeZ / 2 ) );
+    this.arena.pathManager.placeObject( new Game.Vec3( position.x - sizeX / 2, 0, position.z - sizeZ / 2 ), new Game.Vec3( position.x + sizeX / 2, 0, position.z + sizeZ / 2 ) );
 
 };
 

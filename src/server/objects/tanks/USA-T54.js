@@ -5,7 +5,7 @@
 
 var USAT54 = function ( params ) {
 
-    DT.Tank.call( this, params );
+    Game.Tank.call( this, params );
 
     this.title = 'USA-T54';
 
@@ -17,6 +17,6 @@ var USAT54 = function ( params ) {
 
 };
 
-USAT54.prototype = Object.create( DT.Tank.prototype );
+USAT54.prototype = Object.create( Game.Tank.prototype );
 
 module.exports = USAT54;

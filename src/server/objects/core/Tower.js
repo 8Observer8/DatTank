@@ -6,7 +6,6 @@
 var Tower = function ( arena, params ) {
 
     if ( Tower.numIds > 1000 ) Tower.numIds = 0;
-
     this.id = Tower.numIds ++;
 
     this.arena = arena;
@@ -58,7 +57,7 @@ Tower.prototype.init = function () {
     var sizeY = 130;
     var sizeZ = 130;
 
-    this.arena.pathManager.placeObject( new DT.Vec3( position.x - sizeX / 2, 0, position.z - sizeZ / 2 ), new DT.Vec3( position.x + sizeX / 2, 0, position.z + sizeZ / 2 ) );
+    this.arena.pathManager.placeObject( new Game.Vec3( position.x - sizeX / 2, 0, position.z - sizeZ / 2 ), new Game.Vec3( position.x + sizeX / 2, 0, position.z + sizeZ / 2 ) );
 
 };
 
@@ -104,7 +103,7 @@ Tower.prototype.shoot = (function () {
 
         Tower.numShootId = ( Tower.numShootId > 1000 ) ? 0 : Tower.numShootId + 1;
 
-        DT.Network.announce( this.arena, 'ShootTower', buffer, bufferView );
+        Game.Network.announce( this.arena, 'ShootTower', buffer, bufferView );
 
     };
 
@@ -138,7 +137,7 @@ Tower.prototype.hit = (function () {
         bufferView[ 1 ] = this.id + 10000;
         bufferView[ 2 ] = this.health;
 
-        DT.Network.announce( this.arena, 'hit', buffer, bufferView );
+        Game.Network.announce( this.arena, 'hit', buffer, bufferView );
 
     };
 
@@ -157,7 +156,7 @@ Tower.prototype.changeTeam = (function () {
         bufferView[ 1 ] = this.id;
         bufferView[ 2 ] = team.id;
 
-        DT.Network.announce( this.arena, 'TowerChangeTeam', buffer, bufferView );
+        Game.Network.announce( this.arena, 'TowerChangeTeam', buffer, bufferView );
 
     };
 
@@ -171,7 +170,7 @@ Tower.prototype.checkForTarget = function ( players ) {
 
     for ( var i = 0, il = players.length; i < il; i ++ ) {
 
-        if ( players[ i ].team.id === this.team.id || players[ i ].status !== DT.Player.Alive ) {
+        if ( players[ i ].team.id === this.team.id || players[ i ].status !== Game.Player.Alive ) {
 
             continue;
 
@@ -274,7 +273,7 @@ Tower.prototype.rotateTop = (function () {
             bufferView[1] = this.id;
             bufferView[2] = Math.floor( 1000 * this.rotation );
 
-            DT.Network.announce( this.arena, 'TowerRotateTop', buffer, bufferView );
+            Game.Network.announce( this.arena, 'TowerRotateTop', buffer, bufferView );
 
         }
 
@@ -288,7 +287,7 @@ Tower.prototype.update = function () {
 
     if ( this.target ) {
 
-        if ( this.target.team.id !== this.team.id && this.target.status === DT.Player.Alive ) {
+        if ( this.target.team.id !== this.team.id && this.target.status === Game.Player.Alive ) {
 
             var dist = utils.getDistance( this.position, this.target.position );
             if ( dist < this.range ) target = this.target;
