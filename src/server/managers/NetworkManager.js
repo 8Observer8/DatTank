@@ -31,10 +31,7 @@ Network.init = function () {
 
                         DT.ArenaManager.findArena( function ( arena ) {
 
-                            var player = new DT.Player({ login: data.login, tank: data.tank });
-                            player.socket = socket;
-
-                            arena.addPlayer( player );
+                            arena.addPlayer({ login: data.login, tank: data.tank, socket: socket });
 
                             //
 

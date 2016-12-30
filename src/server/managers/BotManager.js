@@ -32,13 +32,34 @@ BotManager.prototype.add = function ( bot ) {
 
 BotManager.prototype.remove = function ( bot ) {
 
-    // todo
+    var newBotList = [];
+
+    for ( var i = 0, il = this.bots.length; i < il; i ++ ) {
+
+        if ( this.bots[ i ].player.id === player.id ) continue;
+
+        newBotList.push( this.bots[ i ] );
+
+    }
+
+    player.bot.removed = true;
+    this.bots = newBotList;
 
 };
 
 BotManager.prototype.getById = function ( botId ) {
 
-    // todo
+    for ( var i = 0, il = this.bots.length; i < il; i ++ ) {
+
+        if ( this.bots[ i ].id === botId ) {
+
+            return this.bots[ i ];
+
+        }
+
+    }
+
+    return false;
 
 };
 

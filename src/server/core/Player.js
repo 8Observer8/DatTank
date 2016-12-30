@@ -3,18 +3,20 @@
  * DatTank Player object
 */
 
-var Player = function ( params ) {
+var Player = function ( arena, params ) {
 
     if ( Player.numIds > 1000 ) Player.numIds = 0;
 
     this.id = Player.numIds ++;
     this.login = params.login || 'guest';
 
+    this.arena = arena;
+
     this.moveSpeed = 0.09;
 
     this.status = Player.Alive;
 
-    this.socket = false;
+    this.socket = params.socket || false;
 
     this.arena = false;
     this.team = false;

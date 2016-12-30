@@ -32,6 +32,7 @@ global.Game.PathManager = require('./managers/PathManager');
 global.Game.BoxManager = require('./managers/BoxManager');
 global.Game.Network = require('./managers/NetworkManager');
 global.Game.PlayerManager = require('./managers/PlayerManager');
+global.Game.BotManager = require('./managers/BotManager');
 global.Game.TeamManager = require('./managers/TeamManager');
 global.Game.TowerManager = require('./managers/TowerManager');
 global.Game.ArenaManager = require('./managers/ArenaManager');

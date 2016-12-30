@@ -20,13 +20,33 @@ PlayerManager.prototype.init = function () {
 
 PlayerManager.prototype.add = function ( player ) {
 
-    // todo
+    var team = this.arena.teamManager.detectWeakest();
+    team.addPlayer( player );
+    this.players.push( player );
 
 };
 
 PlayerManager.prototype.remove = function ( player ) {
 
-    // todo
+    var newPlayersList = [];
+    var removed = true;
+
+    for ( var i = 0, il = this.players.length; i < il; i ++ ) {
+
+        if ( this.players[ i ].id === player.id ) {
+
+            removed = true;
+            continue;
+
+        }
+
+        newPlayersList.push( this.players[ i ] );
+
+    }
+
+    this.players = newPlayersList;
+
+    return removed;
 
 };
 
