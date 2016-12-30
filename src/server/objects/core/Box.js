@@ -22,7 +22,7 @@ Box.prototype = {};
 
 Box.prototype.init = function () {
 
-    Game.Network.announce( this.arena, 'addBox', this.toJSON() );
+    this.arena.announce( 'addBox', this.toJSON() );
 
 };
 

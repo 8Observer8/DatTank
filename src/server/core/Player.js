@@ -12,8 +12,6 @@ var Player = function ( arena, params ) {
     this.id = Player.numIds ++;
     this.login = params.login || 'guest';
 
-    this.arena = arena;
-
     this.moveSpeed = 0.09;
 
     this.status = Player.Alive;
@@ -22,7 +20,8 @@ var Player = function ( arena, params ) {
 
     if ( this.socket ) {
 
-        this.socket = this;
+        this.socket.player = this;
+        this.socket.arena = arena;
 
     }
 
@@ -85,7 +84,7 @@ Player.prototype.respawn = function () {
 
     //
 
-    Game.Network.announce( this.arena, 'respawn', { player: this.toPrivateJSON() } );
+    this.arena.announce( 'respawn', { player: this.toPrivateJSON() } );
 
 };
 
@@ -133,7 +132,7 @@ Player.prototype.rotateTop = (function () {
         bufferView[1] = this.id;
         bufferView[2] = Math.floor( 1000 * angle );
 
-        Game.Network.announce( this.arena, 'rotateTop', buffer, bufferView );
+        this.arena.announce( 'rotateTop', buffer, bufferView );
 
     };
 
@@ -196,7 +195,7 @@ Player.prototype.moveToPoint = function ( destination, retry ) {
         bufferView[ bufferView.length - 2 ] = destination.x;
         bufferView[ bufferView.length - 1 ] = destination.z;
 
-        Game.Network.announce( scope.arena, 'MoveTankByPath', buffer, bufferView );
+        scope.arena.announce( 'MoveTankByPath', buffer, bufferView );
 
         //
 
@@ -303,7 +302,7 @@ Player.prototype.shoot = (function () {
 
         Player.numShootId = ( Player.numShootId > 1000 ) ? 0 : Player.numShootId + 1;
 
-        Game.Network.announce( this.arena, 'shoot', buffer, bufferView );
+        this.arena.announce( 'shoot', buffer, bufferView );
 
     };
 
@@ -341,7 +340,7 @@ Player.prototype.hit = (function () {
         bufferView[ 1 ] = this.id;
         bufferView[ 2 ] = this.health;
 
-        Game.Network.announce( this.arena, 'hit', buffer, bufferView );
+        this.arena.announce( 'hit', buffer, bufferView );
 
         if ( this.health <= 0 ) {
 
@@ -388,7 +387,7 @@ Player.prototype.die = (function () {
 
         //
 
-        Game.Network.announce( this.arena, 'die', buffer, bufferView );
+        this.arena.announce( 'die', buffer, bufferView );
 
         //
 

@@ -115,7 +115,7 @@ BoxManager.prototype.update = function ( delay ) {
 
     if ( this.boxes.length < this.boxAVGCount ) {
 
-        this.addBox({
+        this.add({
             type: ( Math.random() > 0.4 ) ? 'Ammo' : 'Health'
         });
 
@@ -125,12 +125,12 @@ BoxManager.prototype.update = function ( delay ) {
 
     for ( var i = 0, il = players.length; i < il; i ++ ) {
 
-        var boxes = this.getBoxesInRange( players[ i ] );
+        var boxes = this.getInRange( players[ i ] );
 
         for ( var j = 0, jl = boxes.length; j < jl; j ++ ) {
 
             boxes[ j ].pickUp( players[ i ] );
-            this.removeBox( boxes[ j ] );
+            this.remove( boxes[ j ] );
 
         }
 

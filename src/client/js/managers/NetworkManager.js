@@ -60,7 +60,6 @@ Game.NetworkManager.prototype.message = function ( event ) {
 
     var data = event.data;
     var event = false;
-    var arena = Game.arena;
 
     if ( typeof data === 'string' ) {
 
@@ -79,6 +78,7 @@ Game.NetworkManager.prototype.message = function ( event ) {
         message = JSON.parse( message );
         data = message.data;
         event = message.event;
+        var arena = Game.arena;
 
         switch ( event ) {
 
@@ -89,6 +89,7 @@ Game.NetworkManager.prototype.message = function ( event ) {
 
             case 'playerJoined':
 
+                if ( ! arena ) return;
                 var player = new Game.Player( arena, data );
                 arena.playerManager.add( player );
                 break;
@@ -147,6 +148,7 @@ Game.NetworkManager.prototype.message = function ( event ) {
 
         var event = new Uint16Array( data, 0, 2 )[0];
         var data = new Int16Array( data, 2 );
+        var arena = Game.arena;
 
         switch ( event ) {
 

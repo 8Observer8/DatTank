@@ -70,6 +70,7 @@ ArenaManager.prototype.findArena = function ( callback ) {
     var minArena = false;
     var avgArena = false;
     var arena = false;
+    var players = false;
 
     this.removeEmptyArenas();
 
@@ -78,14 +79,15 @@ ArenaManager.prototype.findArena = function ( callback ) {
     for ( var i = 0, il = this.arenas.length; i < il; i ++ ) {
 
         arena = this.arenas[ i ];
+        players = arena.playerManager.players;
 
-        if ( arena.players.length < 16 && arena.players > 5 ) {
+        if ( players.length < 16 && players > 5 ) {
 
             avgArena = this.arenas[ i ];
 
         }
 
-        if ( ( ! minArena && arena.players.length < 16 ) || ( minArena && arena.players.length < minArena.players.length ) ) {
+        if ( ( ! minArena && players.length < 16 ) || ( minArena && players.length < minArena.players.length ) ) {
 
             minArena = arena;
 

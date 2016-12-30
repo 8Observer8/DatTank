@@ -29,13 +29,15 @@ var Tower = function ( arena, params ) {
 
     //
 
-    for ( var i in arena.teams ) {
+    var teams = arena.teamManager.teams;
 
-        if ( arena.teams[ i ].id >= 1000 ) continue;
+    for ( var i in teams ) {
 
-        if ( utils.getDistance( arena.teams[ i ].spawnPosition, this.position ) < 50 ) {
+        if ( teams[ i ].id >= 1000 ) continue;
 
-            this.team = arena.teams[ i ];
+        if ( utils.getDistance( teams[ i ].spawnPosition, this.position ) < 50 ) {
+
+            this.team = teams[ i ];
             break;
 
         }
@@ -103,7 +105,7 @@ Tower.prototype.shoot = (function () {
 
         Tower.numShootId = ( Tower.numShootId > 1000 ) ? 0 : Tower.numShootId + 1;
 
-        Game.Network.announce( this.arena, 'ShootTower', buffer, bufferView );
+        this.arena.announce( 'ShootTower', buffer, bufferView );
 
     };
 
@@ -137,7 +139,7 @@ Tower.prototype.hit = (function () {
         bufferView[ 1 ] = this.id + 10000;
         bufferView[ 2 ] = this.health;
 
-        Game.Network.announce( this.arena, 'hit', buffer, bufferView );
+        this.arena.announce( 'hit', buffer, bufferView );
 
     };
 
@@ -156,7 +158,7 @@ Tower.prototype.changeTeam = (function () {
         bufferView[ 1 ] = this.id;
         bufferView[ 2 ] = team.id;
 
-        Game.Network.announce( this.arena, 'TowerChangeTeam', buffer, bufferView );
+        this.arena.announce( 'TowerChangeTeam', buffer, bufferView );
 
     };
 
@@ -273,7 +275,7 @@ Tower.prototype.rotateTop = (function () {
             bufferView[1] = this.id;
             bufferView[2] = Math.floor( 1000 * this.rotation );
 
-            Game.Network.announce( this.arena, 'TowerRotateTop', buffer, bufferView );
+            this.arena.announce( 'TowerRotateTop', buffer, bufferView );
 
         }
 
@@ -298,7 +300,7 @@ Tower.prototype.update = function () {
 
     if ( ! target ) {
 
-        target = this.checkForTarget( this.arena.players );
+        target = this.checkForTarget( this.arena.playerManager.players );
         this.target = target;
 
     }

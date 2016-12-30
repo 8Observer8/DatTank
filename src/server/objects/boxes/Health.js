@@ -27,7 +27,7 @@ Health.prototype.pickUp = function ( player ) {
 
     //
 
-    Game.Network.announce( this.arena, 'pickedBox', { id: this.id } );
+    this.arena.announce( 'pickedBox', { id: this.id } );
 
     if ( player.socket ) {
 

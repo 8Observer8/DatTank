@@ -66,11 +66,11 @@ PlayerManager.prototype.getById = function ( playerId ) {
 
 };
 
-PlayerManager.prototype.update = function ( delta ) {
+PlayerManager.prototype.update = function ( delta, time ) {
 
     for ( var i = 0, il = this.players.length; i < il; i ++ ) {
 
-        this.players[ i ].update( delta );
+        this.players[ i ].update( delta, time );
 
     }
 

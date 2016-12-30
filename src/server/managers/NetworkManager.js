@@ -55,51 +55,54 @@ Network.init = function () {
                 var event = new Uint16Array( ab, 0, 1 )[ 0 ];
                 var data = new Int16Array( ab, 2 );
 
+                var arena = socket.arena;
+                var player = socket.player;
+
                 switch ( event ) {
 
                     case 1:     // rotateTop
 
-                        if ( ! socket.arena || ! socket.player ) return;
+                        if ( ! arena || ! player ) return;
                         var angle = data[ 0 ] / 10;
-                        socket.player.rotateTop( angle );
+                        player.rotateTop( angle );
                         break;
 
                     case 2:     // move
 
-                        if ( ! socket.arena || ! socket.player ) return;
-                        socket.player.moveByPath( data );
+                        if ( ! arena || ! player ) return;
+                        player.moveByPath( data );
                         break;
 
                     case 3:     // shoot
 
-                        if ( ! socket.arena || ! socket.player ) return;
-                        socket.player.shoot();
+                        if ( ! arena || ! player ) return;
+                        player.shoot();
                         break;
 
                     case 4:     // hit
 
-                        if ( ! socket.arena || ! socket.player ) return;
+                        if ( ! arena || ! player ) return;
 
                         var target;
                         var shooter;
 
                         if ( data[2] < 10000 ) {
 
-                            shooter = socket.arena.getPlayerById( data[ 2 ] );
+                            shooter = arena.playerManager.getById( data[ 2 ] );
 
                         } else {
 
-                            shooter = socket.arena.getTowerById( data[ 2 ] - 10000 );
+                            shooter = arena.towerManager.getById( data[ 2 ] - 10000 );
 
                         }
 
                         if ( data[0] >= 10000 ) {
 
-                            target = socket.arena.getTowerById( data[ 0 ] - 10000 );
+                            target = arena.towerManager.getById( data[ 0 ] - 10000 );
 
                         } else {
 
-                            target = socket.arena.getPlayerById( data[ 0 ] );
+                            target = arena.playerManager.getById( data[ 0 ] );
 
                         }
 
@@ -109,7 +112,7 @@ Network.init = function () {
 
                         // target.hits[ shootId ] = 1;//( target.hits[ shootId ] || 0 ) + 1;
 
-                        // if ( socket.arena.players.length - socket.arena.bots.length <= 3 * target.hits[ shootId ] ) {
+                        // if ( arena.players.length - arena.bots.length <= 3 * target.hits[ shootId ] ) {
 
                         if ( target.hits[ shootId ] !== 1 ) {
 
@@ -130,14 +133,14 @@ Network.init = function () {
 
                     case 6:     // respawn
 
-                        if ( ! socket.arena || ! socket.player ) return;
-                        socket.player.respawn();
+                        if ( ! arena || ! player ) return;
+                        player.respawn();
                         break;
 
                     case 7:     // move bot
 
-                        if ( ! socket.arena ) return;
-                        var player = socket.arena.getPlayerById( data[ 0 ] );
+                        if ( ! arena ) return;
+                        var player = arena.playerManager.getById( data[ 0 ] );
 
                         if ( ! player ) return;
 
@@ -147,9 +150,8 @@ Network.init = function () {
 
                     case 100: // 'PlayerTankRotateBase'
 
-                        if ( ! socket.arena || ! socket.player ) return;
+                        if ( ! arena || ! player ) return;
 
-                        var player = socket.player;
                         var direction = data[ 0 ];
 
                         player.rotateBase( direction );
@@ -158,9 +160,8 @@ Network.init = function () {
 
                     case 101: // 'PlayerTankMove'
 
-                        if ( ! socket.arena || ! socket.player ) return;
+                        if ( ! arena || ! player ) return;
 
-                        var player = socket.player;
                         var direction = data[ 0 ];
 
                         player.move( direction );
@@ -169,9 +170,8 @@ Network.init = function () {
 
                     case 102: // 'PlayerTankMoveToPoint'
 
-                        if ( ! socket.arena || ! socket.player ) return;
+                        if ( ! arena || ! player ) return;
 
-                        var player = socket.player;
                         var destination = { x: data[ 0 ], y: 0, z: data[1] };
 
                         player.moveToPoint( destination );
@@ -217,41 +217,9 @@ Network.init = function () {
 
 };
 
-Network.send = function ( socket, event, data ) {
+Network.send = function ( socket, event, data, view ) {
 
     var bin = true;
-
-    if ( data instanceof ArrayBuffer ) {
-
-        bin = true;
-
-    } else {
-
-        bin = false;
-        data.event = event;
-        data = JSON.stringify( { 'event': event, 'data': data } );
-
-    }
-
-    if ( socket ) {
-
-        try {
-
-            socket.send( data, { binary: bin } );
-
-        } catch ( e ) {
-
-            console.warn( e );
-
-        }
-
-    }
-
-};
-
-Network.announce = function ( arena, event, data, view ) {
-
-    var bin = false;
 
     if ( data instanceof ArrayBuffer ) {
 
@@ -310,68 +278,21 @@ Network.announce = function ( arena, event, data, view ) {
 
     } else {
 
+        bin = false;
         data.event = event;
         data = JSON.stringify( { 'event': event, 'data': data } );
 
     }
 
-    //
+    if ( socket ) {
 
-    for ( var i = 0, il = arena.players.length; i < il; i ++ ) {
+        try {
 
-        if ( arena.players[ i ].socket && arena.players[ i ].socket.readyState === 1 ) {
+            socket.send( data, { binary: bin } );
 
-            arena.players[ i ].socket.send( data, { binary: bin } );
+        } catch ( e ) {
 
-        }
-
-    }
-
-};
-
-Network.broadcast = function ( socket, arena, event, data, view ) {
-
-    var bin = false;
-
-    if ( data instanceof ArrayBuffer ) {
-
-        bin = true;
-
-        switch ( event ) {
-
-            case 'move':
-
-                view[0] = 2;
-                break;
-
-            case 'shoot':
-
-                view[0] = 3;
-                break;
-
-            default:
-
-                // nothing here
-                break;
-
-        }
-
-        data = new Buffer( data );
-
-    } else {
-
-        data.event = event;
-        data = JSON.stringify( { 'event': event, 'data': data } );
-
-    }
-
-    //
-
-    for ( var i = 0, il = arena.players.length; i < il; i ++ ) {
-
-        if ( arena.players[ i ].socket && arena.players[ i ].socket !== socket && arena.players[ i ].socket.readyState === 1 ) {
-
-            arena.players[ i ].socket.send( data, { binary: bin } );
+            // console.warn( e );
 
         }
 

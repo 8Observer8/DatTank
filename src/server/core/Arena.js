@@ -65,7 +65,7 @@ Arena.prototype.addPlayer = function ( params ) {
 
 Arena.prototype.removePlayer = function ( player ) {
 
-    if ( this.playerManager.remove( playerManager ) ) {
+    if ( this.playerManager.remove( player ) ) {
 
         player.team.removePlayer( player );
         this.announce( 'playerLeft', { id: player.id } );
@@ -74,15 +74,15 @@ Arena.prototype.removePlayer = function ( player ) {
 
     //
 
-    for ( var i = this.players.length; i < 8; i ++ ) {
+    for ( var i = this.playerManager.players.length; i < 8; i ++ ) {
 
-        this.bots.push( new Game.Bot( this ) );
+        this.botManager.bots.push( new Game.Bot( this ) );
 
     }
 
 };
 
-Arena.prototype.announce = function ( eventName, data, players ) {
+Arena.prototype.announce = function ( eventName, data, view, players ) {
 
     players = players || this.playerManager.players;
 
@@ -90,7 +90,7 @@ Arena.prototype.announce = function ( eventName, data, players ) {
 
         if ( players[ i ].socket ) {
 
-            Game.Network.send( players[ i ].socket, eventName, data );
+            Game.Network.send( players[ i ].socket, eventName, data, view );
 
         }
 
@@ -131,7 +131,7 @@ Arena.prototype.update = function () {
     // update towers
 
     this.towerManager.update( delta );
-    this.playerManager.update( delta );
+    this.playerManager.update( delta, time );
     this.boxManager.update( delta );
 
 };

@@ -44,7 +44,7 @@ Bot.prototype = {};
 Bot.prototype.init = function () {
 
     var tank = ( Math.random() < 0.5 ) ? 'USAT54' : 'UKBlackPrince';
-    this.player = new Game.Player({ login: this.login, tank: tank });
+    this.player = new Game.Player( this.arena, { login: this.login, tank: tank, socket: false });
     this.player.ammo = 10000000;
     this.arena.addPlayer( this.player );
 
@@ -81,12 +81,14 @@ Bot.prototype.update = function () {
 
     var target = false;
     var minDist = 1000;
+    var players = this.arena.playerManager.players;
+    var towers = this.arena.towerManager.towers;
 
     // search for Player target
 
-    for ( var i = 0, il = this.arena.players.length; i < il; i ++ ) {
+    for ( var i = 0, il = players.length; i < il; i ++ ) {
 
-        var player = this.arena.players[ i ];
+        var player = players[ i ];
 
         if ( player.team === this.player.team ) continue;
 
@@ -107,9 +109,9 @@ Bot.prototype.update = function () {
 
         minDist = 1000;
 
-        for ( var i = 0, il = this.arena.towers.length; i < il; i ++ ) {
+        for ( var i = 0, il = towers.length; i < il; i ++ ) {
 
-            var tower = this.arena.towers[ i ];
+            var tower = towers[ i ];
 
             if ( tower.team === this.player.team ) continue;
 
