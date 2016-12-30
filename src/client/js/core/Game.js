@@ -10,18 +10,6 @@ var Game = function () {
 };
 
 Game.Version = '2dev';
-Game.Build = 3;
-Game.local = false;
-
-if ( Game.local ) {
-
-    Game.socketHost = 'http://localhost:8085';
-
-} else {
-
-    Game.socketHost = 'http://188.166.164.236:8085';
-
-}
 
 Game.prototype = {};
 
@@ -35,7 +23,7 @@ Game.prototype.init = function () {
     window.view = new Game.ViewManager();
     window.controls = new Game.ControlsManager();
     window.resourceManager = new Game.ResourceManager();
-    window.soundSys = new Game.SoundManager();
+    window.soundManager = new Game.SoundManager();
     window.settings = new Game.SettingsManager();
 
     //
@@ -81,7 +69,7 @@ Game.prototype.play = function ( event ) {
 
     Game.Ads.playAipPreroll( function () {
 
-        soundSys.playMenuSound();
+        soundManager.playMenuSound();
 
         //
 
@@ -182,7 +170,7 @@ Game.prototype.joinArena = function ( params ) {
     view.sunLight.target.position.set( Game.arena.me.position.x, 0, Game.arena.me.position.z );
     view.sunLight.target.updateMatrixWorld();
 
-    ui.updateLeaderboard( Game.arena.players, Game.arena.me );
+    ui.updateLeaderboard( Game.arena.playerManager.players, Game.arena.me );
 
     $('#gear_btn').click( ui.openSettings.bind( ui ) );  
     $('#exit-btn').click( ui.openSettings.bind( ui ) );

@@ -3,10 +3,12 @@
  * Tower object class
 */
 
-Game.Tower = function ( params ) {
+Game.Tower = function ( arena, params ) {
+
+    this.arena = arena;
 
     this.id = params.id;
-    this.team = Game.arena.getTeamById( params.team ) || false;
+    this.team = this.arena.teamManager.getById( params.team ) || false;
     this.health = params.health;
 
     this.bullets = [];
@@ -277,12 +279,6 @@ Game.Tower.prototype.animate = function ( delta ) {
         this.mixer.update( delta / 1000 );
 
     }
-
-};
-
-Game.Tower.prototype.hit = function () {
-
-    // todo
 
 };
 

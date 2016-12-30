@@ -5,18 +5,19 @@
 
 var Arena = function ( callback ) {
 
+    if ( Arena.numIds > 1000 ) Arena.numIds = 0;
     this.id = Arena.numIds ++;
-
-    this.players = [];
-    this.teams = [];
-    this.room = false;
 
     this.decorations = [];
     this.bots = [];
     this.towers = [];
 
-    this.boxManager = new DT.BoxManager( this, {} );
-    this.pathManager = new DT.PathManager( this, {} );
+    this.teamManager = new Game.TeamManager( this, {} );
+    this.playerManager = new Game.PlayerManager( this, {} );
+    this.towerManager = new Game.TowerManager( this, {} );
+    this.decorationManager = new Game.DecorationManager( this, {} );
+    this.boxManager = new Game.BoxManager( this, {} );
+    this.pathManager = new Game.PathManager( this, {} );
 
     this.updateInterval = false;
     this.currentTime = false;
@@ -31,9 +32,13 @@ Arena.prototype = {};
 
 Arena.prototype.init = function ( callback ) {
 
-    this.addTeams();
-    this.addTowers();
-    this.addObstacles( 190, 80 );
+    this.teamManager.init( 4 );
+    this.towerManager.init();
+    this.decorationManager.init({
+        trees: { type: 'Tree' count: 190 },
+        rocks: { type: 'Stones', count: 80 }
+    });
+
     this.addBots();
 
     //
@@ -43,283 +48,6 @@ Arena.prototype.init = function ( callback ) {
     //
 
     callback( this ); // will be used in future
-
-};
-
-Arena.prototype.addTeams = function () {
-
-    for ( var i = 0; i < 4; i ++ ) {
-
-        this.teams.push( new DT.Team( i ) );
-
-    }
-
-    this.teams.push( new DT.Team( 1000 ) );
-
-};
-
-Arena.prototype.addTowers = function () {
-
-    for ( var i = 0; i < 5; i ++ ) {
-
-        for ( var j = 0; j < 5; j ++ ) {
-
-            var x = ( 0.5 - i / 4 ) * 1900;
-            var z = ( 0.5 - j / 4 ) * 1900;
-
-            this.towers.push( new DT.Tower( this, { team: this.getTeamById( Arena.NeutralTeam ), position: { x: x, y: 0, z: z } } ) );
-
-        }
-
-    }
-
-};
-
-Arena.prototype.addBots = function () {
-
-    var scope = this;
-
-    setTimeout( function () {
-
-        for ( var i = 0; i < 5 + Math.floor( Math.random() * 5 ); i ++ ) {
-
-            scope.bots.push( new DT.Bot( scope ) );
-
-        }
-
-    }, 1000 );
-
-};
-
-Arena.prototype.addObstacles = function ( treeCount, rockCount ) {
-
-    // tree obstacles
-
-    var x, z;
-    var scale, scaleH;
-    var baseSize = 200;
-
-    while ( treeCount ) {
-
-        scale = 20 * Math.random() + 25;
-        scaleH = 20 * Math.random() + 25;
-
-        x = 2350 * ( Math.random() - 0.5 );
-        z = 2350 * ( Math.random() - 0.5 );
-
-        //
-
-        var placedOnTower = false;
-        var placedOnBase = false;
-
-        for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
-
-            var tower = this.towers[ i ];
-
-            if ( Math.abs( x - tower.position.x ) + Math.abs( z - tower.position.z ) < 150 ) {
-
-                placedOnTower = true;
-                break;
-
-            }
-
-        }
-
-        if ( placedOnTower ) continue;
-
-        //
-
-        for ( var i in DT.Team.StartPositions ) {
-
-            var pos = DT.Team.StartPositions[ i ];
-
-            if ( + i >= 1000 ) continue;
-            if ( Math.sqrt( Math.pow( pos.x - x, 2 ) + Math.pow( pos.z - z, 2 ) ) < baseSize ) {
-
-                placedOnBase = true;
-                break;
-
-            }
-
-        }
-
-        if ( placedOnBase ) continue;
-
-        //
-
-        var tree = new DT.Decoration.Tree( this, {
-            position:   new DT.Vec3( x, 0, z ),
-            scale:      new DT.Vec3( scale, scaleH, scale ),
-            rotation:   2 * Math.PI * Math.random()
-        });
-
-        this.decorations.push( tree );
-
-        treeCount --;
-
-    }
-
-    // rock obstacles
-
-    while ( rockCount ) {
-
-        scale = 30 * Math.random() + 20;
-        x = 2350 * ( Math.random() - 0.5 );
-        z = 2350 * ( Math.random() - 0.5 );
-
-        //
-
-        var placedOnTower = false;
-        var placedOnBase = false;
-
-        for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
-
-            var tower = this.towers[ i ];
-
-            if ( Math.abs( x - tower.position.x ) + Math.abs( z - tower.position.z ) < 150 ) {
-
-                placedOnTower = true;
-                break;
-
-            }
-
-        }
-
-        if ( placedOnTower ) continue;
-
-        //
-
-        for ( var i in DT.Team.StartPositions ) {
-
-            var pos = DT.Team.StartPositions[ i ];
-
-            if ( + i >= 1000 ) continue;
-            if ( Math.sqrt( Math.pow( pos.x - x, 2 ) + Math.pow( pos.z - z, 2 ) ) < baseSize ) {
-
-                placedOnBase = true;
-                break;
-
-            }
-
-        }
-
-        if ( placedOnBase ) continue;
-
-        var stones = new DT.Decoration.Stones( this, {
-            position:   new DT.Vec3( x, 0, z ),
-            scale:      new DT.Vec3( scale, scaleH, scale ),
-            rotation:   2 * Math.PI * Math.random()
-        });
-
-        this.decorations.push( stones );
-
-        rockCount --;
-
-    }
-
-    //
-
-    this.pathManager.constructMap();
-
-};
-
-Arena.prototype.getDecorations = function () {
-
-    var decorations = [];
-
-    for ( var i = 0, il = this.decorations.length; i < il; i ++ ) {
-
-        decorations.push( this.decorations[ i ].toJSON() );
-
-    }
-
-    return decorations;
-
-};
-
-Arena.prototype.getWinnerTeamId = function () {
-
-    var winnerTeam = this.teams[0];
-
-    for ( var i = 1, il = this.teams.length; i < il; i ++ ) {
-
-        if ( winnerTeam.kills < this.teams[ i ].kills ) {
-
-            winnerTeam = this.teams[ i ];
-
-        }
-
-    }
-
-    return winnerTeam.id;
-
-};
-
-Arena.prototype.detectWeakestTeam = function () {
-
-    var weakestTeam = this.teams[0];
-
-    for ( var i = 1, il = this.teams.length; i < il; i ++ ) {
-
-        if ( this.teams[ i ].id >= 1000 ) continue;
-
-        if ( weakestTeam.players.length > this.teams[ i ].players.length ) {
-
-            weakestTeam = this.teams[ i ];
-
-        }
-
-    }
-
-    return weakestTeam;
-
-};
-
-Arena.prototype.getPlayerById = function ( playerId ) {
-
-    for ( var i = 0, il = this.players.length; i < il; i ++ ) {
-
-        if ( this.players[ i ].id === playerId ) {
-
-            return this.players[ i ];
-
-        }
-
-    }
-
-    return false;
-
-};
-
-Arena.prototype.getTeamById = function ( teamId ) {
-
-    for ( var i = 0, il = this.teams.length; i < il; i ++ ) {
-
-        if ( this.teams[ i ].id === teamId ) {
-
-            return this.teams[ i ];
-
-        }
-
-    }
-
-    return false;
-
-};
-
-Arena.prototype.getTowerById = function ( towerId ) {
-
-    for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
-
-        if ( this.towers[ i ].id === towerId ) {
-
-            return this.towers[ i ];
-
-        }
-
-    }
-
-    return false;
 
 };
 

@@ -12,8 +12,6 @@ Game.Ads.playAipPreroll = function ( endCallback ) {
 
     Game.Ads.count ++;
     Game.Ads.endCallback = endCallback;
-    endCallback();
-    return;
 
     var lastActiveTime = + localStorage.getItem( 'lastActiveTime' );
 

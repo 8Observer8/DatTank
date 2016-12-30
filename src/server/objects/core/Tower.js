@@ -167,7 +167,7 @@ Tower.prototype.checkForTarget = function ( players ) {
 
     var dist;
     var target = false;
-    var minDistance = false;
+    var minDistance = 240;
 
     for ( var i = 0, il = players.length; i < il; i ++ ) {
 
@@ -183,7 +183,7 @@ Tower.prototype.checkForTarget = function ( players ) {
 
         if ( dist > this.range ) continue;
 
-        if ( ! minDistance || dist < minDistance ) {
+        if ( dist < minDistance ) {
 
             minDistance = dist;
             target = players[ i ];

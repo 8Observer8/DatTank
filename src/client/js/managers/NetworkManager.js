@@ -60,6 +60,7 @@ Game.NetworkManager.prototype.message = function ( event ) {
 
     var data = event.data;
     var event = false;
+    var arena = Game.arena;
 
     if ( typeof data === 'string' ) {
 
@@ -88,13 +89,13 @@ Game.NetworkManager.prototype.message = function ( event ) {
 
             case 'playerJoined':
 
-                var player = new Game.Player( Game.arena, data );
-                Game.arena.addPlayer( player );
+                var player = new Game.Player( arena, data );
+                arena.playerManager.add( player );
                 break;
 
             case 'respawn':
 
-                var player = Game.arena.getPlayerById( data.player.id );
+                var player = arena.playerManager.getById( data.player.id );
 
                 if ( ! player ) {
 
@@ -107,36 +108,30 @@ Game.NetworkManager.prototype.message = function ( event ) {
 
                 break;
 
-            case 'resetArena':
-
-                Game.arena.clear();
-                ui.showWinners( data.winnerTeam );
-                break;
-
             case 'playerLeft':
 
-                if ( Game.arena.getPlayerById( data.id ) ) {
+                if ( arena.playerManager.getById( data.id ) ) {
 
-                    Game.arena.removePlayer( Game.arena.getPlayerById( data.id ) );
+                    arena.playerManager.remove( arena.playerManager.getById( data.id ) );
 
                 }
 
-                ui.updateLeaderboard( Game.arena.players, Game.arena.me );
+                ui.updateLeaderboard( arena.playerManager.players, arena.me );
                 break;
 
             case 'addBox':
 
-                Game.arena.boxManager.addBox( data );
+                arena.boxManager.add( data );
                 break;
 
             case 'pickedBox':
 
-                Game.arena.boxManager.removeBox( data.id );
+                arena.boxManager.remove( data.id );
                 break;
 
             case 'gotBox':
 
-                Game.arena.me.gotBox( data.box, data.value );
+                arena.me.gotBox( data.box, data.value );
                 break;
 
             default:
@@ -160,7 +155,7 @@ Game.NetworkManager.prototype.message = function ( event ) {
                 var playerId = data[0];
                 var topAngle = data[1] / 1000;
 
-                var player = Game.arena.getPlayerById( playerId );
+                var player = arena.playerManager.getById( playerId );
 
                 if ( ! player ) {
 
@@ -184,7 +179,7 @@ Game.NetworkManager.prototype.message = function ( event ) {
 
                 }
 
-                var player = Game.arena.getPlayerById( playerId );
+                var player = arena.playerManager.getById( playerId );
 
                 if ( ! player ) {
 
@@ -199,7 +194,7 @@ Game.NetworkManager.prototype.message = function ( event ) {
             case 3:     // shoot
 
                 var playerId = data[0];
-                var player = Game.arena.getPlayerById( playerId );
+                var player = arena.playerManager.getById( playerId );
 
                 if ( ! player ) {
 
@@ -217,7 +212,7 @@ Game.NetworkManager.prototype.message = function ( event ) {
 
                 if ( targetId < 10000 ) {
 
-                    var player = Game.arena.getPlayerById( targetId );
+                    var player = arena.playerManager.getById( targetId );
 
                     if ( ! player ) {
 
@@ -232,7 +227,7 @@ Game.NetworkManager.prototype.message = function ( event ) {
 
                     targetId -= 10000;
 
-                    var tower = Game.arena.getTowerById( targetId );
+                    var tower = arena.towerManager.getById( targetId );
                     tower.updateHealth( data[1] );
 
                 }
@@ -244,16 +239,16 @@ Game.NetworkManager.prototype.message = function ( event ) {
                 var playerId = data[0];
                 var killerId = data[1];
 
-                var player = Game.arena.getPlayerById( playerId );
+                var player = arena.playerManager.getById( playerId );
                 var killer;
 
                 if ( killerId < 10000 ) {
 
-                    killer = Game.arena.getPlayerById( killerId );
+                    killer = arena.playerManager.getById( killerId );
 
                 } else {
 
-                    killer = Game.arena.getTowerById( killerId - 10000 );
+                    killer = arena.towerManager.getById( killerId - 10000 );
 
                 }
 
@@ -271,7 +266,7 @@ Game.NetworkManager.prototype.message = function ( event ) {
 
                 var playerId = data[0];
 
-                var player = Game.arena.getPlayerById( playerId );
+                var player = arena.playerManager.getById( playerId );
                 if ( ! player ) return;
 
                 var path = [];
@@ -287,7 +282,7 @@ Game.NetworkManager.prototype.message = function ( event ) {
             case 200:
 
                 var towerId = data[0];
-                var tower = Game.arena.getTowerById( towerId );
+                var tower = arena.towerManager.getById( towerId );
                 tower.rotateTop( data[1] / 1000 );
                 break;
 
@@ -295,7 +290,7 @@ Game.NetworkManager.prototype.message = function ( event ) {
 
                 var towerId = data[0];
                 var shootId = data[1];
-                var tower = Game.arena.getTowerById( towerId );
+                var tower = arena.towerManager.getById( towerId );
 
                 if ( ! tower ) {
 
@@ -327,8 +322,8 @@ Game.NetworkManager.prototype.message = function ( event ) {
 
                 var towerId = data[0];
                 var teamId = data[1];
-                var tower = Game.arena.getTowerById( towerId );
-                var team = Game.arena.getTeamById( teamId );
+                var tower = arena.towerManager.getById( towerId );
+                var team = arena.teamManager.getById( teamId );
 
                 if ( ! tower ) {
 

@@ -223,14 +223,16 @@ Game.ViewManager.prototype.addMap = function () {
 
 Game.ViewManager.prototype.addTeamZone = function () {
 
-    for ( var i = 0, il = Game.arena.teams.length; i < il; i ++ ) {
+    for ( var i = 0, il = Game.arena.teamManager.teams.length; i < il; i ++ ) {
 
-        if ( Game.arena.teams[ i ].id >= 1000 ) continue;
+        if ( Game.arena.teamManager.teams[ i ].id >= 1000 ) continue;
 
-        var name = Game.arena.teams[ i ].name;
-        var color = + Game.arena.teams[ i ].color.replace('#', '0x');
-        var x = Game.arena.teams[ i ].spawnPosition.x;
-        var z = Game.arena.teams[ i ].spawnPosition.z;
+        var team = Game.arena.teamManager.teams[ i ];
+
+        var name = team.name;
+        var color = + team.color.replace('#', '0x');
+        var x = team.spawnPosition.x;
+        var z = team.spawnPosition.z;
 
         var plane = new THREE.Mesh( new THREE.PlaneGeometry( 200, 200 ), new THREE.MeshLambertMaterial({ color: color, transparent: true }) );
         plane.rotation.x = - Math.PI / 2;
@@ -369,9 +371,9 @@ Game.ViewManager.prototype.animate = function ( delta ) {
 
     }
 
-    for ( var i = 0, il = Game.arena.towers.length; i < il; i ++ ) {
+    for ( var i = 0, il = Game.arena.towerManager.towers.length; i < il; i ++ ) {
 
-        Game.arena.towers[ i ].update( delta );
+        Game.arena.towerManager.towers[ i ].update( delta );
 
     }
 
@@ -401,13 +403,15 @@ Game.ViewManager.prototype.animate = function ( delta ) {
 
 Game.ViewManager.prototype.updatePlayersPosition = function ( time, delta ) {
 
-    if ( ! Game.arena ) return;
+    var arena = Game.arena;
+
+    if ( ! arena ) return;
 
     var abs = Math.abs;
 
-    for ( var i = 0, il = Game.arena.players.length; i < il; i ++ ) {
+    for ( var i = 0, il = arena.playerManager.players.length; i < il; i ++ ) {
 
-        var player = Game.arena.players[ i ];
+        var player = arena.playerManager.players[ i ];
         var tank = player.tank;
 
         player.tank.update( delta );

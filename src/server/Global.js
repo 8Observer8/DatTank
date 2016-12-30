@@ -23,38 +23,46 @@ global.SOCKET_PORT = 8085;
 //
 
 global.utils = require('./utils/Utils');
-global.DT = require('./core/DT');
-global.DT.Vec3 = require('./utils/Vector3');
+global.Game = require('./core/Game');
+global.Game.Vec3 = require('./utils/Vector3');
 
 // import game managers
 
-global.DT.PathManager = require('./managers/PathManager');
-global.DT.BoxManager = require('./managers/BoxManager');
-global.DT.Network = require('./managers/NetworkManager');
-global.DT.ArenaManager = require('./managers/ArenaManager');
+global.Game.PathManager = require('./managers/PathManager');
+global.Game.BoxManager = require('./managers/BoxManager');
+global.Game.Network = require('./managers/NetworkManager');
+global.Game.PlayerManager = require('./managers/PlayerManager');
+global.Game.TeamManager = require('./managers/TeamManager');
+global.Game.TowerManager = require('./managers/TowerManager');
+global.Game.ArenaManager = require('./managers/ArenaManager');
 
 // import main objects
 
-global.DT.Arena = require('./core/Arena');
-global.DT.Team = require('./core/Team');
-global.DT.Tower = require('./core/Tower');
-global.DT.Player = require('./core/Player');
-global.DT.Bot = require('./core/Bot');
+global.Game.Arena = require('./core/Arena');
+global.Game.Team = require('./core/Team');
+global.Game.Player = require('./core/Player');
+global.Game.Bot = require('./core/Bot');
 
 // import tank units
 
-global.DT.Tank = require('./objects/core/Tank');
+global.Game.Tower = require('./objects/core/Tower');
 
-global.DT.Tank.USAT54 = require('./objects/tanks/USA-T54');
-global.DT.Tank.UKBlackPrince = require('./objects/tanks/UK-BlackPrince');
+global.Game.Tank = require('./objects/core/Tank');
 
-global.DT.Decoration = require('./objects/core/Decoration');
+global.Game.Tank.USAT54 = require('./objects/tanks/USA-T54');
+global.Game.Tank.UKBlackPrince = require('./objects/tanks/UK-BlackPrince');
 
-global.DT.Decoration.Tree = require('./objects/decorations/Tree');
-global.DT.Decoration.Stones = require('./objects/decorations/Stones');
+global.Game.Decoration = require('./objects/core/Decoration');
+
+global.Game.Decoration.Tree = require('./objects/decorations/Tree');
+global.Game.Decoration.Stones = require('./objects/decorations/Stones');
 
 // import Improvement boxes
 
-global.DT.Box = require('./objects/core/Box');
-global.DT.Box.Health = require('./objects/boxes/Health');
-global.DT.Box.Ammo = require('./objects/boxes/Ammo');
+global.Game.Box = require('./objects/core/Box');
+global.Game.Box.Health = require('./objects/boxes/Health');
+global.Game.Box.Ammo = require('./objects/boxes/Ammo');
+
+//
+
+global.game = new Game();

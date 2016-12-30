@@ -169,7 +169,7 @@ Game.Garage.prototype.render = function () {
 Game.Garage.prototype.stop = function () {
 
     // this.renderer.domElement.remove();
-    soundSys.playMenuSound();
+    soundManager.playMenuSound();
 
 };
 
@@ -234,7 +234,7 @@ Game.Garage.prototype.selectTank = function ( event ) {
 
     if ( event ) {
 
-        soundSys.playMenuSound();
+        soundManager.playMenuSound();
 
     }
 

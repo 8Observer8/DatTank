@@ -9,7 +9,7 @@ Game.Player = function ( arena, params ) {
     this.login = params.login || 'guest';
 
     this.status = 'alive';
-    this.team = arena.getTeamById( params.team ) || false;
+    this.team = arena.teamManager.getById( params.team ) || false;
 
     this.health = params.health;
     this.ammo = params.ammo;
@@ -141,7 +141,7 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
 
         }
 
-        ui.updateLeaderboard( Game.arena.players, Game.arena.me );
+        ui.updateLeaderboard( Game.arena.playerManager.players, Game.arena.me );
 
     } else {
 
@@ -391,7 +391,7 @@ Game.Player.prototype.shoot = function ( shootId, ammo ) {
 
 Game.Player.prototype.gotBox = function ( box, value ) {
 
-    soundSys.menuSound.play();
+    soundManager.menuSound.play();
 
     switch ( box.type ) {
 
@@ -492,7 +492,7 @@ Game.Player.prototype.die = function ( killer ) {
     this.moveProgress = false;
     this.movementDurationMap = false;
 
-    ui.updateLeaderboard( Game.arena.players, Game.arena.me );
+    ui.updateLeaderboard( Game.arena.playerManager.players, Game.arena.me );
 
     this.tank.destroy();
 

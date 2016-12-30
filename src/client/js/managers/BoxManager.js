@@ -11,9 +11,13 @@ Game.BoxManager = function () {
 
 Game.BoxManager.prototype = {};
 
-Game.BoxManager.prototype.init = function () {
+Game.BoxManager.prototype.init = function ( params ) {
 
-    // todo
+    for ( var i = 0, il = params.length; i < il; i ++ ) {
+
+        this.add( params[ i ] );
+
+    }
 
 };
 
@@ -23,7 +27,7 @@ Game.BoxManager.prototype.reset = function () {
 
 };
 
-Game.BoxManager.prototype.addBox = function ( params ) {
+Game.BoxManager.prototype.add = function ( params ) {
 
     var box = false;
 
@@ -49,7 +53,7 @@ Game.BoxManager.prototype.addBox = function ( params ) {
 
 };
 
-Game.BoxManager.prototype.removeBox = function ( boxId ) {
+Game.BoxManager.prototype.remove = function ( boxId ) {
 
     var box = this.getBoxById( boxId );
     box.remove();

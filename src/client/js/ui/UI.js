@@ -45,7 +45,7 @@ Game.UI.prototype.chageQuality = function ( value, withoutSound ) {
 
     if ( ! withoutSound ) {
 
-        soundSys.playMenuSound();
+        soundManager.playMenuSound();
 
     }
 
@@ -60,7 +60,7 @@ Game.UI.prototype.changeSound = function ( value, withoutSound ) {
 
     if ( ! withoutSound ) {
     
-        soundSys.playMenuSound();
+        soundManager.playMenuSound();
 
     }
 
@@ -81,7 +81,7 @@ Game.UI.prototype.openSettings = function (value) {
     value = ( typeof value === 'boolean' ) ? value : $('#gear_btn').attr('gear') !== 'true';
     $('#gear_btn').attr( 'gear', value );
     localStorage.setItem( 'gear', value );
-    soundSys.playMenuSound();
+    soundManager.playMenuSound();
 
     if ( localStorage.getItem( 'gear' ) === 'true' ) {
 
@@ -236,17 +236,17 @@ Game.UI.prototype.hideWinners = function () {
 
 Game.UI.prototype.updateTeamScore = function ( arena ) {
 
-    var totalTowerCount = arena.towers.length;
+    var totalTowerCount = arena.towerManager.towers.length;
 
-    for ( var i = 0; i < arena.teams.length; i ++ ) {
+    for ( var i = 0; i < arena.teamManager.teams.length; i ++ ) {
 
-        arena.teams[ i ].towersCount = 0;
+        arena.teamManager.teams[ i ].towersCount = 0;
 
     }
 
     for ( var i = 0; i < totalTowerCount; i ++ ) {
 
-        arena.towers[ i ].team.towersCount ++;
+        arena.towerManager.towers[ i ].team.towersCount ++;
 
     }
 
@@ -256,7 +256,7 @@ Game.UI.prototype.updateTeamScore = function ( arena ) {
 
     for ( var i = 0, il = list.length; i < il; i ++ ) {
 
-        $( list[ i ] ).html( Math.floor( 100 * arena.teams[ i ].towersCount / totalTowerCount ) + '%' );
+        $( list[ i ] ).html( Math.floor( 100 * arena.teamManager.teams[ i ].towersCount / totalTowerCount ) + '%' );
 
     }
 
@@ -368,7 +368,7 @@ Game.UI.prototype.showChoiceWindow = function () {
 
     garage.selectTank();
 
-    soundSys.playMenuSound();
+    soundManager.playMenuSound();
 
 };
 
