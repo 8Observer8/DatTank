@@ -38,6 +38,10 @@ gulp.task( 'js', function () {
 
     gulp.src([ './src/client/js/libs/*' ])
         .pipe( gulpif( argv.prod, uglify() ) )
+        .pipe(order([
+            'three.js',
+            '*'
+        ]))
         .pipe( concat('libs.js') )
         .pipe( gulp.dest('./bin/client/js/') )
         .pipe( connect.reload() );
