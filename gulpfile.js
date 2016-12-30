@@ -17,6 +17,8 @@ var imagemin = require('gulp-imagemin');
 var pngquant = require('imagemin-pngquant');
 var nodemon = require('gulp-nodemon');
 var order = require('gulp-order');
+var argv = require('yargs').argv;
+var gulpif = require('gulp-if');
 
 //
 
@@ -34,13 +36,14 @@ gulp.task( 'resources', function () {
 
 gulp.task( 'js', function () {
 
-    gulp.src([ './src/client/js/pathFinder/WebWorker.js' ])
-        .pipe( gulp.dest('./bin/client/js/pathFinder/') )
-        .pipe(uglify())
-        .pipe(connect.reload());
+    gulp.src([ './src/client/js/libs/*' ])
+        .pipe( gulpif( argv.prod, uglify() ) )
+        .pipe( concat('libs.js') )
+        .pipe( gulp.dest('./bin/client/js/') )
+        .pipe( connect.reload() );
 
-    gulp.src([ './src/client/js/**/*', '!./src/client/js/pathFinder/WebWorker.js' ])
-        //.pipe(uglify())
+    gulp.src([ './src/client/js/**/*', '!./src/client/js/libs/*' ])
+        .pipe( gulpif( argv.prod, uglify() ) )
         .pipe(order([
             'libs/three.js',
             'libs/*.js',
@@ -49,9 +52,9 @@ gulp.task( 'js', function () {
             'objects/core/**/*',
             '**/*'
         ]))
-        .pipe(concat('all.js'))
+        .pipe( concat('all.js') )
         .pipe( gulp.dest('./bin/client/js/') )
-        .pipe(connect.reload());
+        .pipe( connect.reload() );
 
 });
 
@@ -60,9 +63,9 @@ gulp.task( 'js', function () {
 gulp.task( 'css', function () {
 
     gulp.src('./src/client/css/*')
-        .pipe(concat('all.css'))
-        .pipe(gulp.dest('./bin/client/css/'))
-        .pipe(connect.reload());
+        .pipe( concat('all.css') )
+        .pipe( gulp.dest('./bin/client/css/') )
+        .pipe( connect.reload() );
 
 });
 
@@ -71,8 +74,8 @@ gulp.task( 'css', function () {
 gulp.task( 'html', function () {
 
     gulp.src('./src/client/*.html')
-        .pipe(gulp.dest('./bin/client/'))
-        .pipe(connect.reload());
+        .pipe( gulp.dest('./bin/client/') )
+        .pipe( connect.reload() );
 
 });
 
@@ -81,8 +84,8 @@ gulp.task( 'html', function () {
 gulp.task( 'server', function () {
 
     gulp.src('./src/server/**/*')
-        .pipe(gulp.dest('./bin/server/'))
-        .pipe(connect.reload());
+        .pipe( gulp.dest('./bin/server/') )
+        .pipe( connect.reload() );
 
 });
 
