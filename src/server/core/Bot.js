@@ -44,10 +44,8 @@ Bot.prototype = {};
 Bot.prototype.init = function () {
 
     var tank = ( Math.random() < 0.5 ) ? 'USAT54' : 'UKBlackPrince';
-    this.player = new Game.Player( this.arena, { login: this.login, tank: tank, socket: false });
+    this.player = this.arena.addPlayer({ login: this.login, tank: tank, socket: false });
     this.player.ammo = 10000000;
-    this.arena.addPlayer( this.player );
-
     this.player.bot = this;
 
     this.updateInterval = setInterval( this.update.bind( this ), 40 );

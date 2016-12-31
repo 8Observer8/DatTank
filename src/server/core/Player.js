@@ -420,122 +420,118 @@ Player.prototype.die = (function () {
 
 }) ();
 
-Player.prototype.update = (function () {
+Player.prototype.update = function ( delta, time ) {
 
-    return function ( delta, time ) {
+    var player = this;
 
-        var player = this;
+    // update player PATH movement
 
-        // update player PATH movement
+    if ( ! player.movePath.length ) return;
 
-        if ( ! player.movePath.length ) return;
+    var progress = player.movementDurationMap.length - 1;
 
-        var progress = player.movementDurationMap.length - 1;
+    for ( var j = 0, jl = player.movementDurationMap.length; j < jl; j ++ ) {
 
-        for ( var j = 0, jl = player.movementDurationMap.length; j < jl; j ++ ) {
+        if ( time - player.movementStart > player.movementDurationMap[ j ] ) {
 
-            if ( time - player.movementStart > player.movementDurationMap[ j ] ) {
-
-                progress --;
-
-            } else {
-
-                break;
-
-            }
-
-        }
-
-        if ( progress < 0 ) {
-
-            player.position.x = player.movePath[0];
-            player.position.z = player.movePath[1];
-            player.movePath = false;
-            player.movementDurationMap = false;
-            return;
+            progress --;
 
         } else {
 
-            if ( progress !== player.moveProgress ) {
-
-                var dx, dz;
-                var dxr, dzr;
-
-                if ( player.movePath[ 2 * ( progress - 30 ) ] ) {
-
-                    dxr = ( player.movePath[ 2 * ( progress - 30 ) + 0 ] + player.movePath[ 2 * ( progress - 29 ) + 0 ] + player.movePath[ 2 * ( progress - 28 ) + 0 ] ) / 3 - player.position.x;
-                    dzr = ( player.movePath[ 2 * ( progress - 30 ) + 1 ] + player.movePath[ 2 * ( progress - 29 ) + 1 ] + player.movePath[ 2 * ( progress - 28 ) + 1 ] ) / 3 - player.position.z;
-
-                } else {
-
-                    dxr = player.movePath[ 2 * progress + 0 ] - player.position.x;
-                    dzr = player.movePath[ 2 * progress + 1 ] - player.position.z;
-
-                }
-
-                dx = player.stepDx = player.movePath[ 2 * progress + 0 ] - player.position.x;
-                dz = player.stepDz = player.movePath[ 2 * progress + 1 ] - player.position.z;
-
-                player.moveDt = Math.sqrt( Math.pow( dx, 2 ) + Math.pow( dz, 2 ) ) / player.moveSpeed;
-
-                // count new player angle when moving
-
-                player.newRotation = ( dzr === 0 && dxr !== 0 ) ? ( Math.PI / 2 ) * Math.abs( dxr ) / dxr : Math.atan2( dxr, dzr );
-                player.newRotation = utils.formatAngle( player.newRotation );
-                player.dRotation = ( player.newRotation - player.rotation );
-
-                if ( isNaN( player.dRotation ) ) player.dRotation = 0;
-
-                if ( player.dRotation > Math.PI ) {
-
-                    player.dRotation -= 2 * Math.PI;
-
-                }
-
-                if ( player.dRotation < - Math.PI ) {
-
-                    player.dRotation += 2 * Math.PI;
-
-                }
-
-                player.dRotation /= 20;
-                player.dRotCount = 20;
-
-                //
-
-                player.moveProgress = progress;
-
-            }
-
-            if ( player.dRotCount > 0 ) {
-
-                player.rotation = utils.addAngle( player.rotation, player.dRotation );
-                player.dRotCount --;
-
-            }
-
-            // making transition movement between path points
-
-            var dx = delta * player.stepDx / player.moveDt;
-            var dz = delta * player.stepDz / player.moveDt;
-            var abs = Math.abs;
-
-            if ( abs( dx ) <= abs( player.stepDx ) && abs( dz ) <= abs( player.stepDz ) ) {
-
-                player.position.x += dx;
-                player.position.z += dz;
-
-            }
+            break;
 
         }
 
-        // update player AWSD movement
+    }
 
-        // todo
+    if ( progress < 0 ) {
 
-    };
+        player.position.x = player.movePath[0];
+        player.position.z = player.movePath[1];
+        player.movePath = false;
+        player.movementDurationMap = false;
+        return;
 
-}) ();
+    } else {
+
+        if ( progress !== player.moveProgress ) {
+
+            var dx, dz;
+            var dxr, dzr;
+
+            if ( player.movePath[ 2 * ( progress - 30 ) ] ) {
+
+                dxr = ( player.movePath[ 2 * ( progress - 30 ) + 0 ] + player.movePath[ 2 * ( progress - 29 ) + 0 ] + player.movePath[ 2 * ( progress - 28 ) + 0 ] ) / 3 - player.position.x;
+                dzr = ( player.movePath[ 2 * ( progress - 30 ) + 1 ] + player.movePath[ 2 * ( progress - 29 ) + 1 ] + player.movePath[ 2 * ( progress - 28 ) + 1 ] ) / 3 - player.position.z;
+
+            } else {
+
+                dxr = player.movePath[ 2 * progress + 0 ] - player.position.x;
+                dzr = player.movePath[ 2 * progress + 1 ] - player.position.z;
+
+            }
+
+            dx = player.stepDx = player.movePath[ 2 * progress + 0 ] - player.position.x;
+            dz = player.stepDz = player.movePath[ 2 * progress + 1 ] - player.position.z;
+
+            player.moveDt = Math.sqrt( Math.pow( dx, 2 ) + Math.pow( dz, 2 ) ) / player.moveSpeed;
+
+            // count new player angle when moving
+
+            player.newRotation = ( dzr === 0 && dxr !== 0 ) ? ( Math.PI / 2 ) * Math.abs( dxr ) / dxr : Math.atan2( dxr, dzr );
+            player.newRotation = utils.formatAngle( player.newRotation );
+            player.dRotation = ( player.newRotation - player.rotation );
+
+            if ( isNaN( player.dRotation ) ) player.dRotation = 0;
+
+            if ( player.dRotation > Math.PI ) {
+
+                player.dRotation -= 2 * Math.PI;
+
+            }
+
+            if ( player.dRotation < - Math.PI ) {
+
+                player.dRotation += 2 * Math.PI;
+
+            }
+
+            player.dRotation /= 20;
+            player.dRotCount = 20;
+
+            //
+
+            player.moveProgress = progress;
+
+        }
+
+        if ( player.dRotCount > 0 ) {
+
+            player.rotation = utils.addAngle( player.rotation, player.dRotation );
+            player.dRotCount --;
+
+        }
+
+        // making transition movement between path points
+
+        var dx = delta * player.stepDx / player.moveDt;
+        var dz = delta * player.stepDz / player.moveDt;
+        var abs = Math.abs;
+
+        if ( abs( dx ) <= abs( player.stepDx ) && abs( dz ) <= abs( player.stepDz ) ) {
+
+            player.position.x += dx;
+            player.position.z += dz;
+
+        }
+
+    }
+
+    // update player AWSD movement
+
+    // todo
+
+};
 
 Player.prototype.toPrivateJSON = function () {
 
