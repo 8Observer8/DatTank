@@ -23,7 +23,7 @@
         "mapDiffuse":"towerTexture.png",
         "depthTest":true,
         "shading":"basic",
-        "colorDiffuse":[0.64,0.64,0.64],
+        "colorDiffuse":[1,1,1],
         "visible":true,
         "mapDiffuseAnisotropy":1,
         "specularCoef":50,

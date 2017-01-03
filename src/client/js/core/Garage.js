@@ -210,6 +210,7 @@ Game.Garage.prototype.selectTank = function ( event ) {
     } else {
 
         tankId = localStorage.getItem( 'currentTank' ) || 'USA-T54';
+        $( '#' + tankId.replace('-', '') ).addClass( 'active' );
 
     }
 
