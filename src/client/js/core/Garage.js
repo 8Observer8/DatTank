@@ -129,7 +129,6 @@ Game.Garage.prototype.onProgress = function ( xhr ) {
     if ( xhr.lengthComputable ) {
 
         var percentComplete = xhr.loaded / xhr.total * 100;
-        console.log( Math.round( percentComplete, 2 ) + '% downloaded' );
 
     }
 
@@ -164,11 +163,8 @@ Game.Garage.prototype.render = function () {
 
 };
 
-// stop rendering
-
 Game.Garage.prototype.stop = function () {
 
-    // this.renderer.domElement.remove();
     soundManager.playMenuSound();
 
 };

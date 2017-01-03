@@ -3,9 +3,9 @@
  * HealthBox main class
 */
 
-var Health = function ( params ) {
+var Health = function ( arena, params ) {
 
-    Game.Box.call( this, params );
+    Game.Box.call( this, arena, params );
 
     this.type = 'Health';
     this.amount = 20;
@@ -31,7 +31,7 @@ Health.prototype.pickUp = function ( player ) {
 
     if ( player.socket ) {
 
-        Game.Network.send( player.socket, 'gotBox', { box: this.toJSON(), value: player.health } );
+        networkManager.send( player.socket, 'gotBox', { box: this.toJSON(), value: player.health } );
 
     }
 

@@ -90,7 +90,7 @@ Arena.prototype.announce = function ( eventName, data, view, players ) {
 
         if ( players[ i ].socket ) {
 
-            Game.Network.send( players[ i ].socket, eventName, data, view );
+            networkManager.send( players[ i ].socket, eventName, data, view );
 
         }
 
@@ -100,22 +100,14 @@ Arena.prototype.announce = function ( eventName, data, view, players ) {
 
 Arena.prototype.toPublicJSON = function () {
 
-    var players = this.playerManager.toJSON();
-    var teams = this.teamManager.toJSON();
-    var boxes = this.boxManager.toJSON();
-    var towers = this.towerManager.toJSON();
-    var decorations = this.decorationManager.toJSON();
-
-    //
-
     return {
 
         id:             this.id,
-        obstacles:      decorations,
-        towers:         towers,
-        players:        players,
-        teams:          teams,
-        boxes:          boxes,
+        decorations:    this.decorationManager.toJSON(),
+        towers:         this.towerManager.toJSON(),
+        players:        this.playerManager.toJSON(),
+        teams:          this.teamManager.toJSON(),
+        boxes:          this.boxManager.toJSON(),
         currentTime:    Date.now()
 
     };

@@ -41,16 +41,14 @@ BoxManager.prototype.add = function ( params ) {
 
         case 'Health':
 
-            box = new Game.Box.Health({
-                arena: this.arena,
+            box = new Game.Box.Health( this.arena, {
                 position: position
             });
             break;
 
         case 'Ammo':
 
-            box = new Game.Box.Ammo({
-                arena: this.arena,
+            box = new Game.Box.Ammo( this.arena, {
                 position: position
             });
             break;

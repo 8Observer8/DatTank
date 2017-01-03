@@ -36,7 +36,7 @@ Game.UI.prototype.init = function () {
 
 Game.UI.prototype.chageQuality = function ( value, withoutSound ) {
 
-    value = ( typeof value === 'boolean' ) ? value : $( event.currentTarget ).attr('hq') !== 'true';
+    value = ( typeof value === 'boolean' ) ? value : $( value.currentTarget ).attr('hq') !== 'true';
     $('#graphics-quality').attr( 'hq', value );
     $('#viewport-graphics-quality').attr( 'hq', value );
     localStorage.setItem( 'hq', value );
@@ -53,13 +53,13 @@ Game.UI.prototype.chageQuality = function ( value, withoutSound ) {
 
 Game.UI.prototype.changeSound = function ( value, withoutSound ) {
 
-    value = ( typeof value === 'boolean' ) ? value : $( event.currentTarget ).attr('sound') !== 'true';
+    value = ( typeof value === 'boolean' ) ? value : $( value.currentTarget ).attr('sound') !== 'true';
     $('#sound-on-off').attr( 'sound', value );
     $('#viewport-sound-on-off').attr( 'sound', value );
     localStorage.setItem( 'sound', value );
 
     if ( ! withoutSound ) {
-    
+
         soundManager.playMenuSound();
 
     }

@@ -14,28 +14,6 @@ global.server = http.createServer( app );
 
 //
 
-var parser = new argparse.ArgumentParser();
-
-parser.addArgument(['--debug'], {
-    action: 'storeTrue',
-    defaultValue: false
-});
-
-parser.addArgument(['--local'], {
-    action: 'storeTrue',
-    defaultValue: false
-});
-
-var args = parser.parseArgs();
-
-if ( args.debug ) {
-
-    // todo
-
-}
-
-//
-
 require('./Global');
 
 //
@@ -93,7 +71,7 @@ app.use( '/*', express.static( __dirname + './../client/notfound.html') );
 //
 
 server.listen( PORT );
-Game.Network.init();
+networkManager.init();
 
 //
 

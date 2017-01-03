@@ -15,7 +15,7 @@ Game.PlayerManager.prototype = {};
 Game.PlayerManager.prototype.init = function ( params ) {
 
     for ( var i = 0, il = params.length; i < il; i ++ ) {
-        
+
         var playerParams = params[ i ];
         this.add( new Game.Player( this.arena, playerParams ) );
 
@@ -28,10 +28,6 @@ Game.PlayerManager.prototype.add = function ( player ) {
     if ( player.id === Game.arena.me ) {
 
         Game.arena.me = player;
-
-        view.sunLight.position.set( player.position.x - 100, view.sunLight.position.y, player.position.z + 100 );
-        view.sunLight.target = player.tank.object;
-        view.sunLight.target.updateMatrixWorld();
 
     }
 

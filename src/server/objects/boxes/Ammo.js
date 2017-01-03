@@ -3,9 +3,9 @@
  * AmmoBox main class
 */
 
-var Ammo = function ( params ) {
+var Ammo = function ( arena, params ) {
 
-    Game.Box.call( this, params );
+    Game.Box.call( this, arena, params );
 
     this.type = 'Ammo';
     this.amount = 40;
@@ -25,11 +25,11 @@ Ammo.prototype.pickUp = function ( player ) {
 
     //
 
-    this.announce( 'pickedBox', { id: this.id } );
+    this.arena.announce( 'pickedBox', { id: this.id } );
 
     if ( player.socket ) {
 
-        Game.Network.send( player.socket, 'gotBox', { box: this.toJSON(), value: player.ammo } );
+        networkManager.send( player.socket, 'gotBox', { box: this.toJSON(), value: player.ammo } );
 
     }
 

@@ -31,7 +31,7 @@ global.Game.Vec3 = require('./utils/Vector3');
 global.Game.DecorationManager = require('./managers/DecorationManager');
 global.Game.PathManager = require('./managers/PathManager');
 global.Game.BoxManager = require('./managers/BoxManager');
-global.Game.Network = require('./managers/NetworkManager');
+global.Game.NetworkManager = require('./managers/NetworkManager');
 global.Game.PlayerManager = require('./managers/PlayerManager');
 global.Game.BotManager = require('./managers/BotManager');
 global.Game.TeamManager = require('./managers/TeamManager');
@@ -68,3 +68,4 @@ global.Game.Box.Ammo = require('./objects/boxes/Ammo');
 //
 
 global.game = new Game();
+global.networkManager = new Game.NetworkManager();

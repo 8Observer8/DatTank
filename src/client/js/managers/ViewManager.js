@@ -10,6 +10,8 @@ Game.ViewManager = function () {
     this.SCREEN_WIDTH = false;
     this.SCREEN_HEIGHT = false;
 
+    this.prevRenderTime = false;
+
     //
 
     MOBILE = new MobileDetect( window.navigator.userAgent );
@@ -37,36 +39,13 @@ Game.ViewManager = function () {
 
     this.raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3(), 0, 10000 );
 
-    //
-
-    var scope = this;
-    var prevTime = Date.now();
-    var timeRemainder = 0;
-    var t = Date.now();
-
-    this.gameLoopInterval = setInterval( function () {
-
-        var time = Date.now();
-        var delta = Date.now() - prevTime + timeRemainder;
-        timeRemainder = delta % 20;
-        delta = delta - timeRemainder;
-        prevTime = time;
-
-        for ( var i = 0, il = Math.floor( delta / 20 ); i < il; i ++ ) {
-
-            t += 20;
-            scope.updatePlayersPosition( t, 20 );
-
-        }
-
-    }, 20 );
-
 };
 
 Game.ViewManager.prototype = {};
 
 Game.ViewManager.prototype.setupScene = function () {
 
+    this.quality = 1;
     this.SCREEN_WIDTH = window.innerWidth;
     this.SCREEN_HEIGHT = window.innerHeight;
 
@@ -95,26 +74,7 @@ Game.ViewManager.prototype.setupScene = function () {
 
     // add light
 
-    this.scene.add( new THREE.AmbientLight( 0x444444 ) );
-    this.sunLight = new THREE.DirectionalLight( 0xaaaaaa, 2 );
-    this.sunLight.position.set( -30, 250, 30 );  
-    var target = new THREE.Object3D();
-    target.position.set( 0, 0, 0 );
-    this.sunLight.target = target;
-    this.scene.add( this.sunLight );
-
-    this.sunLight.castShadow = true;
-
-    this.sunLight.shadow.mapSize.width = 2048;
-    this.sunLight.shadow.mapSize.height = 2048;
-
-    this.sunLight.shadow.camera.right    =  1000;
-    this.sunLight.shadow.camera.left     = -1000;
-    this.sunLight.shadow.camera.top      =  1000;
-    this.sunLight.shadow.camera.bottom   = -1000;
-    this.sunLight.shadow.camera.far      = 6000;
-
-    this.quality = 1;
+    this.scene.add( new THREE.AmbientLight( 0xffffff ) );
 
     // user event handlers
 
@@ -129,7 +89,7 @@ Game.ViewManager.prototype.setupScene = function () {
 
 };
 
-Game.ViewManager.prototype.addObsticles = function ( obstacles ) {
+Game.ViewManager.prototype.addDecorations = function ( decorations ) {
 
     var tree = resourceManager.getModel( 'tree.json' );
     tree.material[0].alphaTest = 0.5;
@@ -137,35 +97,33 @@ Game.ViewManager.prototype.addObsticles = function ( obstacles ) {
     var stone = resourceManager.getModel( 'stone.json' );
     var model;
     var mesh;
-    var obstacle;
+    var decoration;
 
-    for ( var i = 0, il = obstacles.length; i < il; i ++ ) {
+    //
 
-        obstacle = obstacles[ i ];
+    for ( var i = 0, il = decorations.length; i < il; i ++ ) {
 
-        if ( obstacle.type === 'tree' ) {
+        decoration = decorations[ i ];
 
-            model = tree;
-            var sizeX = 1.5 * obstacle.scale.x;
-            var sizeZ = 1.5 * obstacle.scale.z;
-            var texturesOffset = 0;
+        switch ( decoration.type ) {
 
-        }
+            case 'tree':
+                model = tree;
+                break;
 
-        if ( obstacle.type === 'rock' ) {
+            case 'rock':
+                model = stone;
+                break;
 
-            model = stone;
-            var sizeX = 2.4 * obstacle.scale.x;
-            var sizeZ = 2.4 * obstacle.scale.z;
-            var texturesOffset = 2;
+            default:
+                console.log('No proper decoration model.');
 
         }
 
         mesh = new THREE.Mesh( model.geometry, new THREE.MultiMaterial( model.material ) );
-        mesh.scale.set( obstacle.scale.x, obstacle.scale.y, obstacle.scale.z );
-        mesh.castShadow = true;
-        mesh.position.set( obstacle.position.x, obstacle.position.y, obstacle.position.z );
-        mesh.name = obstacle.type;
+        mesh.scale.set( decoration.scale.x, decoration.scale.y, decoration.scale.z );
+        mesh.position.set( decoration.position.x, decoration.position.y, decoration.position.z );
+        mesh.name = decoration.type;
         view.scene.add( mesh );
         view.scene.intersections.push( mesh );
 
@@ -175,21 +133,31 @@ Game.ViewManager.prototype.addObsticles = function ( obstacles ) {
 
 Game.ViewManager.prototype.addMap = function () {
 
+    var size = 2430;
+    var offset = 100;
+    var wallWidth = 30;
+
     var groundTexture = resourceManager.getTexture( 'Ground.jpg' );
     groundTexture.wrapS = THREE.RepeatWrapping;
     groundTexture.wrapT = THREE.RepeatWrapping;
-    groundTexture.repeat.set( 10, 10 );
 
-    var ground = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2400, 2400 ), new THREE.MeshLambertMaterial({ map: groundTexture, color: 0x555555 }) );
+    if ( localStorage.getItem('hq') === 'true' ) {
+
+        groundTexture.repeat.set( 25, 25 );
+
+    } else {
+
+        groundTexture.repeat.set( 10, 10 );
+
+    }
+
+    var ground = new THREE.Mesh( new THREE.PlaneBufferGeometry( size + 1800, size + 1800 ), new THREE.MeshLambertMaterial({ map: groundTexture, color: 0x555555 }) );
     ground.rotation.x = - Math.PI / 2;
-    ground.receiveShadow = true;
     this.scene.add( ground );
     this.scene.ground = ground;
 
     ground.name = 'ground';
     this.ground = ground;
-
-    var size = 2430;
 
     var edgeTexture = resourceManager.getTexture( 'brick.jpg' );
     edgeTexture.wrapS = THREE.RepeatWrapping;
@@ -197,46 +165,45 @@ Game.ViewManager.prototype.addMap = function () {
     edgeTexture.repeat.set( 100, 1 );
     var material = new THREE.MeshLambertMaterial({ color: 0x999999, map: edgeTexture });
 
-    var border1 = new THREE.Mesh( new THREE.BoxGeometry ( size + 30, 30, 30), material );
-    border1.receiveShadow = true;
+    var border1 = new THREE.Mesh( new THREE.BoxGeometry( size + 2 * offset + wallWidth, wallWidth, wallWidth ), material );
     border1.rotation.y += Math.PI / 2;
-    border1.position.set( size / 2, 1, 0 );
+    border1.position.set( size / 2 + offset, 1, 0 );
     this.scene.add( border1 );
 
-    var border2 = new THREE.Mesh( new THREE.BoxGeometry ( size + 30, 30, 30 ), material );
-    border2.receiveShadow = true;
+    var border2 = new THREE.Mesh( new THREE.BoxGeometry( size + 2 * offset + wallWidth, wallWidth, wallWidth ), material );
     border2.rotation.y = - Math.PI / 2;
-    border2.position.set( - size / 2, 1, 0 );
+    border2.position.set( - size / 2 - offset, 1, 0 );
     this.scene.add( border2 );
 
-    var border3 = new THREE.Mesh( new THREE.BoxGeometry ( size + 30, 30, 30 ), material );
-    border3.receiveShadow = true;
-    border3.position.set( 0, 1, size / 2 );
+    var border3 = new THREE.Mesh( new THREE.BoxGeometry( size + 2 * offset - wallWidth, wallWidth, wallWidth ), material );
+    border3.position.set( 0, 1, size / 2 + offset );
     this.scene.add( border3 );
 
-    var border4 = new THREE.Mesh( new THREE.BoxGeometry ( size + 30, 30, 30 ), material );
-    border4.receiveShadow = true;
-    border4.position.set( 0, 1, - size / 2 );
+    var border4 = new THREE.Mesh( new THREE.BoxGeometry( size + 2 * offset - wallWidth, wallWidth, wallWidth ), material );
+    border4.position.set( 0, 1, - size / 2 - offset );
     this.scene.add( border4 );
 
 };
 
 Game.ViewManager.prototype.addTeamZone = function () {
 
+    var team;
+    var name, color, x, z;
+    var plane;
+
     for ( var i = 0, il = Game.arena.teamManager.teams.length; i < il; i ++ ) {
 
         if ( Game.arena.teamManager.teams[ i ].id >= 1000 ) continue;
 
-        var team = Game.arena.teamManager.teams[ i ];
+        team = Game.arena.teamManager.teams[ i ];
 
-        var name = team.name;
-        var color = + team.color.replace('#', '0x');
-        var x = team.spawnPosition.x;
-        var z = team.spawnPosition.z;
+        name = team.name;
+        color = + team.color.replace('#', '0x');
+        x = team.spawnPosition.x;
+        z = team.spawnPosition.z;
 
-        var plane = new THREE.Mesh( new THREE.PlaneGeometry( 200, 200 ), new THREE.MeshLambertMaterial({ color: color, transparent: true }) );
+        plane = new THREE.Mesh( new THREE.PlaneGeometry( 200, 200 ), new THREE.MeshLambertMaterial({ color: color, transparent: true }) );
         plane.rotation.x = - Math.PI / 2;
-        plane.receiveShadow = true;
         plane.material.opacity = 0.2;
         plane.position.set( x, 1, z );
         this.scene.add( plane );
@@ -285,12 +252,6 @@ Game.ViewManager.prototype.updateRenderer = function () {
     this.renderer = new THREE.WebGLRenderer({ canvas: Utils.ge('#renderport'), antialias: antialias });
     this.renderer.setSize( this.quality * this.SCREEN_WIDTH, this.quality * this.SCREEN_HEIGHT );
     this.renderer.setClearColor( 0x000000 );
-
-    if ( ! MOBILE ) {
-
-        // this.renderer.shadowMap.enabled = true;
-
-    }
 
 };
 
@@ -361,8 +322,6 @@ Game.ViewManager.prototype.animate = function ( delta ) {
     this.camera.position.set( Game.arena.me.position.x + 180 + this.cameraOffset.x, this.camera.position.y + this.cameraOffset.y, Game.arena.me.position.z + this.cameraOffset.z );
     this.camera.lookAt( Game.arena.me.position );
 
-    this.sunLight.position.set( Game.arena.me.position.x - 100, this.sunLight.position.y, Game.arena.me.position.z + 100 );
-
     //
 
     if ( Game.arena.boxManager ) {
@@ -401,148 +360,6 @@ Game.ViewManager.prototype.animate = function ( delta ) {
 
 };
 
-Game.ViewManager.prototype.updatePlayersPosition = function ( time, delta ) {
-
-    var arena = Game.arena;
-
-    if ( ! arena ) return;
-
-    var abs = Math.abs;
-
-    for ( var i = 0, il = arena.playerManager.players.length; i < il; i ++ ) {
-
-        var player = arena.playerManager.players[ i ];
-        var tank = player.tank;
-
-        player.tank.update( delta );
-
-        if ( ! player.movePath ) continue;
-
-        //
-
-        var progress = player.movementDurationMap.length - 1;
-
-        for ( var j = 0, jl = player.movementDurationMap.length; j < jl; j ++ ) {
-
-            if ( time - player.movementStart > player.movementDurationMap[ j ] ) {
-
-                progress --;
-
-            } else {
-
-                break;
-
-            }
-
-        }
-
-        if ( progress < 0 ) {
-
-            player.position.x = player.movePath[0];
-            player.position.z = player.movePath[1];
-            player.tank.setPosition( player.position.x, player.position.y, player.position.z );
-
-            player.movePath = false;
-            player.movementDurationMap = false;
-
-            if ( tank.sounds.moving.source.buffer && tank.sounds.moving.isPlaying ) {
-
-                tank.sounds.moving.stop();
-                tank.sounds.moving.startTime = false;
-                tank.sounds.moving.isPlaying = false;
-
-            }
-
-            continue;
-
-        } else {
-
-            if ( localStorage.getItem('sound') !== 'false' && tank.sounds.moving.source.buffer && ! tank.sounds.moving.isPlaying ) {
-
-                tank.sounds.moving.play();
-
-            }
-
-            if ( progress !== player.moveProgress ) {
-
-                var dx, dz;
-                var dxr, dzr;
-
-                if ( player.movePath[ 2 * ( progress - 30 ) ] ) {
-
-                    dxr = ( player.movePath[ 2 * ( progress - 30 ) + 0 ] + player.movePath[ 2 * ( progress - 29 ) + 0 ] + player.movePath[ 2 * ( progress - 28 ) + 0 ] ) / 3 - player.position.x;
-                    dzr = ( player.movePath[ 2 * ( progress - 30 ) + 1 ] + player.movePath[ 2 * ( progress - 29 ) + 1 ] + player.movePath[ 2 * ( progress - 28 ) + 1 ] ) / 3 - player.position.z;
-
-                } else {
-
-                    dxr = player.movePath[ 2 * progress + 0 ] - player.position.x;
-                    dzr = player.movePath[ 2 * progress + 1 ] - player.position.z;
-
-                }
-
-                dx = player.stepDx = player.movePath[ 2 * progress + 0 ] - player.position.x;
-                dz = player.stepDz = player.movePath[ 2 * progress + 1 ] - player.position.z;
-
-                player.moveDt = Math.sqrt( Math.pow( dx, 2 ) + Math.pow( dz, 2 ) ) / player.moveSpeed;
-
-                // count new player angle when moving
-
-                player.newRotation = ( dzr === 0 && dxr !== 0 ) ? ( Math.PI / 2 ) * Math.abs( dxr ) / dxr : Math.atan2( dxr, dzr );
-                player.newRotation = Utils.formatAngle( player.newRotation );
-                player.dRotation = ( player.newRotation - player.rotation );
-
-                if ( isNaN( player.dRotation ) ) player.dRotation = 0;
-
-                if ( player.dRotation > Math.PI ) {
-
-                    player.dRotation -= 2 * Math.PI;
-
-                }
-
-                if ( player.dRotation < - Math.PI ) {
-
-                    player.dRotation += 2 * Math.PI;
-
-                }
-
-                player.dRotation /= 20;
-                player.dRotCount = 20;
-
-                player.moveProgress = progress;
-
-            }
-
-            //
-
-            if ( player.dRotCount > 0 ) {
-
-                player.rotation = Utils.addAngle( player.rotation, player.dRotation );
-                player.tank.setRotation( player.rotation );
-
-                player.dRotCount --;
-
-            }
-
-            // making transition movement between path points
-
-            var dx = delta * player.stepDx / player.moveDt;
-            var dz = delta * player.stepDz / player.moveDt;
-
-            if ( abs( dx ) <= abs( player.stepDx ) && abs( dz ) <= abs( player.stepDz ) ) {
-
-                player.position.x += dx;
-                player.position.z += dz;
-
-                player.tank.setPosition( player.position.x, player.position.y, player.position.z );
-
-            }
-
-        }
-
-    }
-
-};
-
 Game.ViewManager.prototype.changeGraficQuality = function () {
 
     var antialias = false;
@@ -560,12 +377,6 @@ Game.ViewManager.prototype.changeGraficQuality = function () {
         this.renderer = new THREE.WebGLRenderer({ canvas: Utils.ge('#renderport'), antialias: antialias });
         this.renderer.setSize( quality * this.SCREEN_WIDTH, quality * this.SCREEN_HEIGHT );
         this.renderer.setClearColor( 0x000000 );
-
-        if ( ! MOBILE ) {
-
-            // this.renderer.shadowMap.enabled = true;
-
-        }
 
         this.render();
 
@@ -605,29 +416,19 @@ Game.ViewManager.prototype.addCameraShake = function ( duration, intencity ) {
 
 };
 
-Game.ViewManager.prototype.render = (function () {
+Game.ViewManager.prototype.render = function () {
 
-    var prevRenderTime;
+    if ( ! this.prevRenderTime ) this.prevRenderTime = performance.now();
 
-    return function () {
+    var delta = performance.now() - this.prevRenderTime;
+    this.prevRenderTime = performance.now();
 
-        if ( ! prevRenderTime ) prevRenderTime = performance.now();
+    this.animate( delta );
 
-        var delta = performance.now() - prevRenderTime;
-        prevRenderTime = performance.now();
+    this.renderer.render( this.scene, this.camera );
 
-        //
+    //
 
-        view.sunLight.target.updateMatrixWorld();
+    requestAnimationFrame( this.render.bind( this ) );
 
-        this.animate( delta );
-
-        this.renderer.render( this.scene, this.camera );
-
-        //
-
-        requestAnimationFrame( this.render.bind( this ) );
-
-    };
-
-}) ();
+};

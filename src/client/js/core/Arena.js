@@ -5,16 +5,16 @@
 
 Game.Arena = function () {
 
+    this.id = false;
     this.me = false;
+    this.currentTime = false;
+
+    //
 
     this.boxManager = new Game.BoxManager( this );
     this.playerManager = new Game.PlayerManager( this );
     this.teamManager = new Game.TeamManager( this );
     this.towerManager = new Game.TowerManager( this );
-
-    //
-
-    this.currentTime = false;
 
 };
 
@@ -23,25 +23,12 @@ Game.Arena.prototype = {};
 Game.Arena.prototype.init = function ( params ) {
 
     this.id = params.id;
-    this.reset( params );
+    this.me = params.me;
 
-    setInterval( function () {
-
-        localStorage.setItem( 'lastActiveTime', Date.now() );
-
-    }, 1000 );
-
-};
-
-Game.Arena.prototype.reset = function ( params ) {
-
-    this.me = ( params.me !== undefined ) ? params.me : false;
-
-    // init obstacles
+    //
 
     ui.clearKills();
-
-    view.addObsticles( params.obstacles );
+    view.addDecorations( params.decorations );
 
     this.teamManager.init( params.teams );
     this.playerManager.init( params.players );
@@ -59,5 +46,23 @@ Game.Arena.prototype.reset = function ( params ) {
 
     ui.updateAmmo( this.me.ammo );
     ui.updateHealth( this.me.health );
+
+    //
+
+    setInterval( function () {
+
+        localStorage.setItem( 'lastActiveTime', Date.now() );
+
+    }, 1000 );
+
+};
+
+Game.Arena.prototype.update = function ( time, delta ) {
+
+    for ( var i = 0, il = this.playerManager.players.length; i < il; i ++ ) {
+
+        this.playerManager.players[ i ].update( time, delta );
+
+    }
 
 };

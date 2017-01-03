@@ -429,11 +429,6 @@ Game.NetworkManager.prototype.send = function ( event, data, view ) {
                 view[0] = 6;
                 break;
 
-            case 'move1':
-
-                view[0] = 7;
-                break;
-
             case 'PlayerTankRotateBase':
 
                 view[0] = 100;

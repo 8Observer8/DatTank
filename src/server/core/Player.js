@@ -395,7 +395,7 @@ Player.prototype.die = (function () {
 
             var scope = this;
 
-            if ( this.arena.players.length - this.arena.bots.length < 5 ) {
+            if ( this.arena.playerManager.players.length - this.arena.botManager.bots.length < 5 ) {
 
                 setTimeout( this.respawn.bind( this ), 3000 );
 
@@ -403,7 +403,7 @@ Player.prototype.die = (function () {
 
                 setTimeout( function () {
 
-                    scope.arena.removeBot( scope );
+                    scope.arena.botManager.remove( scope );
                     scope.arena.removePlayer( scope );
 
                 }, 2000 );

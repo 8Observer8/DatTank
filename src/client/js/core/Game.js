@@ -7,6 +7,11 @@ var Game = function () {
 
     this.arena = false;
 
+    this.gameLoopInterval = false;
+    this.prevLoopTime = false;
+    this.loopTimeRemainder = 0;
+    this.time = false;
+
 };
 
 Game.Version = '2dev';
@@ -64,7 +69,7 @@ Game.prototype.play = function ( event ) {
     if ( event ) {
 
         event.preventDefault();
-        
+
     }
 
     Game.Ads.playAipPreroll( function () {
@@ -150,6 +155,7 @@ Game.prototype.joinArena = function ( params ) {
 
     Game.arena = new Game.Arena();
     Game.arena.init( params );
+    this.arena = Game.arena;
 
     //
 
@@ -166,10 +172,6 @@ Game.prototype.joinArena = function ( params ) {
     view.camera.position.set( Game.arena.me.position.x + 180, 400, Game.arena.me.position.z );
     view.camera.lookAt( Game.arena.me.position );
 
-    view.sunLight.position.set( Game.arena.me.position.x - 100, view.sunLight.position.y, Game.arena.me.position.z + 100 );
-    view.sunLight.target.position.set( Game.arena.me.position.x, 0, Game.arena.me.position.z );
-    view.sunLight.target.updateMatrixWorld();
-
     ui.updateLeaderboard( Game.arena.playerManager.players, Game.arena.me );
 
     $('#gear_btn').click( ui.openSettings.bind( ui ) );  
@@ -178,5 +180,30 @@ Game.prototype.joinArena = function ( params ) {
     $('#qualityon').click( ui.chageQuality.bind( ui ) );
 
     $('#leaderboard').click( ui.toggleLeaderboard.bind( ui ) );
+
+    //
+
+    this.prevLoopTime = Date.now();
+    this.time = Date.now();
+
+    this.gameLoopInterval = setInterval( this.loop.bind( this ), 20 );
+
+};
+
+Game.prototype.loop = function () {
+
+    var time = Date.now();
+    var delta = time - this.prevLoopTime + this.loopTimeRemainder;
+
+    this.loopTimeRemainder = delta % 20;
+    delta = delta - this.loopTimeRemainder;
+    this.prevLoopTime = time;
+
+    for ( var i = 0, il = Math.floor( delta / 20 ); i < il; i ++ ) {
+
+        this.time += 20;
+        this.arena.update( this.time, 20 );
+
+    }
 
 };

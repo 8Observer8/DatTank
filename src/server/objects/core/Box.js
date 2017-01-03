@@ -3,12 +3,12 @@
  * Box main class
 */
 
-var Box = function ( params ) {
+var Box = function ( arena, params ) {
 
     params = params || {};
 
     this.id = Box.numId ++;
-    this.arena = params.arena;
+    this.arena = arena;
 
     this.position = new Game.Vec3( params.position.x, params.position.y, params.position.z ) || new Game.Vec3( 0, 20, 0 );
 

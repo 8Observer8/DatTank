@@ -112,10 +112,6 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
             view.camera.position.set( this.position.x + 180, view.camera.position.y, this.position.z );
             view.camera.lookAt( this.position );
 
-            view.sunLight.position.set( this.position.x - 100, view.sunLight.position.y, this.position.z + 100 );
-            view.sunLight.target = this.tank.object;
-            view.sunLight.target.updateMatrixWorld();
-
         }
 
         this.lastShot = Date.now();
@@ -306,6 +302,141 @@ Game.Player.prototype.processPath = function ( path ) {
 
 };
 
+Game.Player.prototype.updateMovement = function ( time, delta ) {
+
+    var arena = this.arena;
+    var abs = Math.abs;
+
+    var player = this;
+    var tank = player.tank;
+
+    player.tank.update( delta );
+
+    if ( ! player.movePath ) return;
+
+    //
+
+    var progress = player.movementDurationMap.length - 1;
+
+    for ( var j = 0, jl = player.movementDurationMap.length; j < jl; j ++ ) {
+
+        if ( time - player.movementStart > player.movementDurationMap[ j ] ) {
+
+            progress --;
+
+        } else {
+
+            break;
+
+        }
+
+    }
+
+    if ( progress < 0 ) {
+
+        player.position.x = player.movePath[0];
+        player.position.z = player.movePath[1];
+        player.tank.setPosition( player.position.x, player.position.y, player.position.z );
+
+        player.movePath = false;
+        player.movementDurationMap = false;
+
+        if ( tank.sounds.moving.source.buffer && tank.sounds.moving.isPlaying ) {
+
+            tank.sounds.moving.stop();
+            tank.sounds.moving.startTime = false;
+            tank.sounds.moving.isPlaying = false;
+
+        }
+
+        return;
+
+    } else {
+
+        if ( localStorage.getItem('sound') !== 'false' && tank.sounds.moving.source.buffer && ! tank.sounds.moving.isPlaying ) {
+
+            tank.sounds.moving.play();
+
+        }
+
+        if ( progress !== player.moveProgress ) {
+
+            var dx, dz;
+            var dxr, dzr;
+
+            if ( player.movePath[ 2 * ( progress - 30 ) ] ) {
+
+                dxr = ( player.movePath[ 2 * ( progress - 30 ) + 0 ] + player.movePath[ 2 * ( progress - 29 ) + 0 ] + player.movePath[ 2 * ( progress - 28 ) + 0 ] ) / 3 - player.position.x;
+                dzr = ( player.movePath[ 2 * ( progress - 30 ) + 1 ] + player.movePath[ 2 * ( progress - 29 ) + 1 ] + player.movePath[ 2 * ( progress - 28 ) + 1 ] ) / 3 - player.position.z;
+
+            } else {
+
+                dxr = player.movePath[ 2 * progress + 0 ] - player.position.x;
+                dzr = player.movePath[ 2 * progress + 1 ] - player.position.z;
+
+            }
+
+            dx = player.stepDx = player.movePath[ 2 * progress + 0 ] - player.position.x;
+            dz = player.stepDz = player.movePath[ 2 * progress + 1 ] - player.position.z;
+
+            player.moveDt = Math.sqrt( Math.pow( dx, 2 ) + Math.pow( dz, 2 ) ) / player.moveSpeed;
+
+            // count new player angle when moving
+
+            player.newRotation = ( dzr === 0 && dxr !== 0 ) ? ( Math.PI / 2 ) * Math.abs( dxr ) / dxr : Math.atan2( dxr, dzr );
+            player.newRotation = Utils.formatAngle( player.newRotation );
+            player.dRotation = ( player.newRotation - player.rotation );
+
+            if ( isNaN( player.dRotation ) ) player.dRotation = 0;
+
+            if ( player.dRotation > Math.PI ) {
+
+                player.dRotation -= 2 * Math.PI;
+
+            }
+
+            if ( player.dRotation < - Math.PI ) {
+
+                player.dRotation += 2 * Math.PI;
+
+            }
+
+            player.dRotation /= 20;
+            player.dRotCount = 20;
+
+            player.moveProgress = progress;
+
+        }
+
+        //
+
+        if ( player.dRotCount > 0 ) {
+
+            player.rotation = Utils.addAngle( player.rotation, player.dRotation );
+            player.tank.setRotation( player.rotation );
+
+            player.dRotCount --;
+
+        }
+
+        // making transition movement between path points
+
+        var dx = delta * player.stepDx / player.moveDt;
+        var dz = delta * player.stepDz / player.moveDt;
+
+        if ( abs( dx ) <= abs( player.stepDx ) && abs( dz ) <= abs( player.stepDz ) ) {
+
+            player.position.x += dx;
+            player.position.z += dz;
+
+            player.tank.setPosition( player.position.x, player.position.y, player.position.z );
+
+        }
+
+    }
+
+};
+
 Game.Player.prototype.rotateTop = function ( angle ) {
 
     if ( ! this.tank.object.top ) return;
@@ -445,6 +576,12 @@ Game.Player.prototype.updateHealth = function ( value ) {
         this.tank.hideSmoke();
 
     }
+
+};
+
+Game.Player.prototype.update = function ( time, delta ) {
+
+    this.updateMovement( time, delta );
 
 };
 

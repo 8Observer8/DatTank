@@ -36,6 +36,10 @@ object {
     display: none;
 }
 
+#preroll object {
+    display: block;
+}
+
 /**/ 
 
 #graphics-quality {
