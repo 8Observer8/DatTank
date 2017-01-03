@@ -2,7 +2,7 @@
     "materials":[{
         "blending":"NormalBlending",
         "colorSpecular":[0.5,0.5,0.5],
-        "shading":"lambert",
+        "shading":"basic",
         "wireframe":false,
         "transparent":false,
         "specularCoef":50,

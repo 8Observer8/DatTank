@@ -31,7 +31,7 @@
         "DbgColor":15658734,
         "DbgName":"tank",
         "colorDiffuse":[0.64,0.64,0.64],
-        "shading":"lambert",
+        "shading":"basic",
         "depthWrite":true,
         "opacity":1,
         "wireframe":false,

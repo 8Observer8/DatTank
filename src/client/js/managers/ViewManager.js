@@ -151,7 +151,7 @@ Game.ViewManager.prototype.addMap = function () {
 
     }
 
-    var ground = new THREE.Mesh( new THREE.PlaneBufferGeometry( size + 1800, size + 1800 ), new THREE.MeshLambertMaterial({ map: groundTexture, color: 0x555555 }) );
+    var ground = new THREE.Mesh( new THREE.PlaneBufferGeometry( size + 1800, size + 1800 ), new THREE.MeshBasicMaterial({ map: groundTexture, color: 0x555555 }) );
     ground.rotation.x = - Math.PI / 2;
     this.scene.add( ground );
     this.scene.ground = ground;
@@ -163,7 +163,7 @@ Game.ViewManager.prototype.addMap = function () {
     edgeTexture.wrapS = THREE.RepeatWrapping;
     edgeTexture.wrapT = THREE.RepeatWrapping;
     edgeTexture.repeat.set( 100, 1 );
-    var material = new THREE.MeshLambertMaterial({ color: 0x999999, map: edgeTexture });
+    var material = new THREE.MeshBasicMaterial({ color: 0x999999, map: edgeTexture });
 
     var border1 = new THREE.Mesh( new THREE.BoxGeometry( size + 2 * offset + wallWidth, wallWidth, wallWidth ), material );
     border1.rotation.y += Math.PI / 2;
@@ -202,7 +202,7 @@ Game.ViewManager.prototype.addTeamZone = function () {
         x = team.spawnPosition.x;
         z = team.spawnPosition.z;
 
-        plane = new THREE.Mesh( new THREE.PlaneGeometry( 200, 200 ), new THREE.MeshLambertMaterial({ color: color, transparent: true }) );
+        plane = new THREE.Mesh( new THREE.PlaneGeometry( 200, 200 ), new THREE.MeshBasicMaterial({ color: color, transparent: true }) );
         plane.rotation.x = - Math.PI / 2;
         plane.material.opacity = 0.2;
         plane.position.set( x, 1, z );

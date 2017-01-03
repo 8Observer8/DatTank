@@ -62,7 +62,7 @@
 					"depthWrite": true,
 					"mapDiffuse": "Tank01.png",
 					"mapDiffuseWrap": ["repeat", "repeat"],
-					"shading": "Lambert",
+					"shading": "basic",
 					"specularCoef": 50,
 					"opacity": 1.0,
 					"transparent": false,

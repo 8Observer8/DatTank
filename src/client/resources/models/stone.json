@@ -17,7 +17,7 @@
         "mapDiffuseRepeat":[10,10],
         "transparent":false,
         "DbgColor":15658734,
-        "shading":"lambert",
+        "shading":"basic",
         "mapDiffuse":"stones.JPG",
         "mapDiffuseAnisotropy":1,
         "visible":true

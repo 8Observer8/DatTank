@@ -61,7 +61,7 @@
         "mapDiffuse":"Tank01.png",
         "depthTest":true,
         "colorSpecular":[0.5,0.5,0.5],
-        "shading":"lambert",
+        "shading":"basic",
         "DbgIndex":0,
         "depthWrite":true,
         "transparent":false,
