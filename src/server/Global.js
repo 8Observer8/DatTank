@@ -40,6 +40,7 @@ global.Game.ArenaManager = require('./managers/ArenaManager');
 
 // import main objects
 
+global.Game.EventDispatcher = require('./core/EventDispatcher');
 global.Game.Arena = require('./core/Arena');
 global.Game.Team = require('./core/Team');
 global.Game.Player = require('./core/Player');

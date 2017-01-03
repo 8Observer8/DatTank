@@ -11,6 +11,12 @@ var ArenaManager = function () {
 
 ArenaManager.prototype = {};
 
+ArenaManager.prototype.init = function () {
+
+    this.addNetworkListeners();
+
+};
+
 ArenaManager.prototype.addArena = function ( callback ) {
 
     var scope = this;
@@ -134,6 +140,49 @@ ArenaManager.prototype.getArenaById = function ( arenaId ) {
     }
 
     return false;
+
+};
+
+ArenaManager.prototype.proxyEventToPlayer = function ( data, socket, eventName ) {
+
+    if ( ! socket || ! socket.player ) return;
+
+    socket.player.dispatchEvent({ type: eventName, data: data });
+
+};
+
+ArenaManager.prototype.proxyEventToArena = function ( data, socket, eventName ) {
+
+    if ( ! socket || ! socket.arena ) return;
+
+    socket.arena.dispatchEvent({ type: eventName, data: data });
+
+};
+
+ArenaManager.prototype.addNetworkListeners = function () {
+
+    var scope = this;
+
+    // New player whants to JOIN to some arena
+
+    networkManager.addMessageListener( 'ArenaJoinRequest', function ( data, socket ) {
+
+        scope.findArena( function ( arena ) {
+
+            var player = arena.addPlayer({ login: data.login, tank: data.tank, socket: socket });
+
+            var response = arena.toPublicJSON();
+            response.me = player.id;
+
+            networkManager.send( 'ArenaJoinResponce', socket, false, response );
+
+        });
+
+    });
+
+    //
+
+    networkManager.addMessageListener( 'TankRotateTop', this.proxyEventToPlayer.bind( this ) );
 
 };
 

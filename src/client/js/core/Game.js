@@ -102,6 +102,12 @@ Game.prototype.play = function ( event ) {
 
             // init network
 
+            network.addMessageListener( 'ArenaJoinResponce', function ( data ) {
+
+                game.joinArena( data );
+
+            });
+
             network.init( function () {
 
                 // free prev arena if still exists
@@ -128,7 +134,7 @@ Game.prototype.play = function ( event ) {
 
                 setTimeout( function () {
 
-                    network.send( 'joinArena', { login: login, tank: tank } );
+                    network.send( 'ArenaJoinRequest', false, { login: login, tank: tank } );
 
                 }, 1000 );
 

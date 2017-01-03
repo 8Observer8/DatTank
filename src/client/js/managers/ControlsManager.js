@@ -209,7 +209,7 @@ Game.ControlsManager.prototype.rotateTop = (function () {
 
             bufferView[ 1 ] = Math.floor( angle * 10 );
 
-            network.send( 'rotateTop', buffer, bufferView );
+            network.send( 'TankRotateTop', buffer, bufferView );
 
         }
 

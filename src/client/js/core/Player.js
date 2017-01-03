@@ -5,6 +5,8 @@
 
 Game.Player = function ( arena, params ) {
 
+    EventDispatcher.call( this );
+
     this.id = params.id;
     this.login = params.login || 'guest';
 
@@ -44,7 +46,7 @@ Game.Player = function ( arena, params ) {
 
 };
 
-Game.Player.prototype = {};
+Game.Player.prototype = Object.create( EventDispatcher.prototype );
 
 Game.Player.prototype.init = function ( params ) {
 
@@ -53,6 +55,8 @@ Game.Player.prototype.init = function ( params ) {
 
     this.tank.setRotation( this.rotation )
     this.tank.setPosition( this.position.x, this.position.y, this.position.z );
+
+    this.addEventListeners();
 
 };
 
@@ -643,5 +647,13 @@ Game.Player.prototype.dispose = function () {
 
     this.tank.dispose();
     this.tank = false;
+
+};
+
+Game.Player.prototype.addEventListeners = function () {
+
+    var scope = this;
+
+    this.addEventListener( 'TankRotateTop', function ( event ) { scope.rotateTop( event.data[1] / 1000 ); });
 
 };

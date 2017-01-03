@@ -40,8 +40,8 @@ app.get( '/api/info', function ( req, res ) {
 
     for ( var i = 0, il = Game.ArenaManager.arenas.length; i < il; i ++ ) {
 
-        players += Game.ArenaManager.arenas[ i ].players.length - Game.ArenaManager.arenas[ i ].bots.length;
-        bots += Game.ArenaManager.arenas[ i ].bots.length;
+        players += Game.ArenaManager.arenas[ i ].playerManager.players.length - Game.ArenaManager.arenas[ i ].botManager.bots.length;
+        bots += Game.ArenaManager.arenas[ i ].botManager.bots.length;
 
     }
 
@@ -72,6 +72,7 @@ app.use( '/*', express.static( __dirname + './../client/notfound.html') );
 
 server.listen( PORT );
 networkManager.init();
+Game.ArenaManager.init();
 
 //
 

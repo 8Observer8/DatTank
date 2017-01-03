@@ -7,6 +7,8 @@ var Player = function ( arena, params ) {
 
     params = params || {};
 
+    Game.EventDispatcher.call( this );
+
     if ( Player.numIds > 1000 ) Player.numIds = 0;
 
     this.id = Player.numIds ++;
@@ -53,9 +55,13 @@ var Player = function ( arena, params ) {
 
     this.selectTank( params.tank );
 
+    //
+
+    this.addEventListeners();
+
 };
 
-Player.prototype = {};
+Player.prototype = Object.create( Game.EventDispatcher.prototype );
 
 Player.prototype.respawn = function () {
 
@@ -132,7 +138,7 @@ Player.prototype.rotateTop = (function () {
         bufferView[1] = this.id;
         bufferView[2] = Math.floor( 1000 * angle );
 
-        this.arena.announce( 'rotateTop', buffer, bufferView );
+        this.arena.announce( 'TankRotateTop', buffer, bufferView );
 
     };
 
@@ -530,6 +536,14 @@ Player.prototype.update = function ( delta, time ) {
     // update player AWSD movement
 
     // todo
+
+};
+
+Player.prototype.addEventListeners = function () {
+
+    var scope = this;
+
+    this.addEventListener( 'TankRotateTop', function ( event ) { scope.rotateTop( event.data[0] / 10 ); });
 
 };
 

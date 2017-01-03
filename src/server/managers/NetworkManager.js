@@ -3,15 +3,27 @@
  * DatTank Networking
 */
 
+var TextEncoder = require( './../utils/TextEncoder' );
 var WebSocketServer = require('ws').Server;
 
 var NetworkManager = function () {
 
     this.io = false;
+    this.messageListeners = {};
 
 };
 
 NetworkManager.prototype.init = function () {
+
+    // register events
+
+    this.registerEvent( 'ArenaJoinRequest', 'in', 'json', 0 );
+    this.registerEvent( 'ArenaJoinResponce', 'out', 'json', 1 );
+
+    this.registerEvent( 'TankRotateTop', 'out', 'bin', 100 );
+    this.registerEvent( 'TankRotateTop', 'in', 'bin', 101 );
+
+    // enable io
 
     this.io = new WebSocketServer({ port: SOCKET_PORT });
     this.io.on( 'connection', this.onConnect.bind( this ) );
@@ -19,6 +31,76 @@ NetworkManager.prototype.init = function () {
     //
 
     console.log( '> Socket network started on port ' + SOCKET_PORT );
+
+};
+
+NetworkManager.prototype.registerEvent = function ( eventName, ioType, dataType, eventId ) {
+
+    if ( ! this.events[ ioType ] ) {
+
+        console.error( 'Wrong event IO type.' );
+        return;
+
+    }
+
+    if ( ioType === 'out' ) {
+
+        this.events.out[ eventName ] = {
+            id:         eventId,
+            name:       eventName,
+            dataType:   dataType
+        };
+
+    } else {
+
+        this.events.in[ eventId ] = {
+            id:         eventId,
+            name:       eventName,
+            dataType:   dataType
+        };
+
+    }
+
+};
+
+NetworkManager.prototype.addMessageListener = function ( eventName, callback ) {
+
+    this.messageListeners[ eventName ] = this.messageListeners[ eventName ] || [];
+    this.messageListeners[ eventName ].push( callback );
+
+};
+
+NetworkManager.prototype.triggerMessageListener = function ( eventId, data, socket ) {
+
+    if ( ! this.events.in[ eventId ] ) {
+
+        console.warn( '[NETWORK] Event with ID:' + eventId + ' not found.' );
+        return;
+
+    }
+
+    //
+
+    var eventName = this.events.in[ eventId ].name;
+    var eventType = this.events.in[ eventId ].dataType;
+    var listeners = this.messageListeners[ eventName ] || [];
+
+    if ( eventType === 'json' ) {
+
+        data = TextEncoder.decode( data );
+        data = JSON.parse( data );
+
+    }
+
+    for ( var i = 0, il = listeners.length; i < il; i ++ ) {
+
+        if ( listeners[ i ] ) {
+
+            listeners[ i ]( data, socket, eventName );
+
+        }
+
+    }
 
 };
 
@@ -48,173 +130,124 @@ NetworkManager.prototype.onDisconnect = function ( socket ) {
 
 NetworkManager.prototype.onMessage = function ( socket, data ) {
 
-    var scope = this;
+    var arrayBuffer = data.buffer.slice( data.byteOffset, data.byteOffset + data.byteLength );
+    var eventId = new Int16Array( arrayBuffer, 0, 1 )[ 0 ];
+    var content = new Int16Array( arrayBuffer, 2 );
 
-    if ( typeof data === 'string' ) {
+    this.triggerMessageListener( eventId, content, socket );
 
-        data = JSON.parse( data );
+    //
 
-        switch ( data.event ) {
+    //     case 2:     // move
 
-            case 'joinArena':
+    //         if ( ! arena || ! player ) return;
+    //         player.moveByPath( data );
+    //         break;
 
-                Game.ArenaManager.findArena( function ( arena ) {
+    //     case 3:     // shoot
 
-                    var player = arena.addPlayer({ login: data.login, tank: data.tank, socket: socket });
+    //         if ( ! arena || ! player ) return;
+    //         player.shoot();
+    //         break;
 
-                    var response = arena.toPublicJSON();
-                    response.me = player.id;
+    //     case 4:     // hit
 
-                    scope.send( socket, 'joinArena', response );
+    //         if ( ! arena || ! player ) return;
 
-                });
+    //         var target;
+    //         var shooter;
 
-                break;
+    //         if ( data[2] < 10000 ) {
 
-            default:
+    //             shooter = arena.playerManager.getById( data[ 2 ] );
 
-                // nothig here
-                break;
+    //         } else {
 
-        }
+    //             shooter = arena.towerManager.getById( data[ 2 ] - 10000 );
 
-    } else {
+    //         }
 
-        var ab = data.buffer.slice( data.byteOffset, data.byteOffset + data.byteLength );
-        var event = new Uint16Array( ab, 0, 1 )[ 0 ];
-        var data = new Int16Array( ab, 2 );
+    //         if ( data[0] >= 10000 ) {
 
-        var arena = socket.arena;
-        var player = socket.player;
+    //             target = arena.towerManager.getById( data[ 0 ] - 10000 );
 
-        switch ( event ) {
+    //         } else {
 
-            case 1:     // rotateTop
+    //             target = arena.playerManager.getById( data[ 0 ] );
 
-                if ( ! arena || ! player ) return;
-                var angle = data[ 0 ] / 10;
-                player.rotateTop( angle );
-                break;
+    //         }
 
-            case 2:     // move
+    //         var shootId = data[ 1 ];
 
-                if ( ! arena || ! player ) return;
-                player.moveByPath( data );
-                break;
+    //         if ( ! target || ! shooter ) return;
 
-            case 3:     // shoot
+    //         // target.hits[ shootId ] = 1;//( target.hits[ shootId ] || 0 ) + 1;
 
-                if ( ! arena || ! player ) return;
-                player.shoot();
-                break;
+    //         // if ( arena.players.length - arena.bots.length <= 3 * target.hits[ shootId ] ) {
 
-            case 4:     // hit
+    //         if ( target.hits[ shootId ] !== 1 ) {
 
-                if ( ! arena || ! player ) return;
+    //             target.hit( shooter );
+    //             target.hits[ shootId ] = 1;
 
-                var target;
-                var shooter;
+    //             setTimeout( function () {
 
-                if ( data[2] < 10000 ) {
+    //                 delete target.hits[ shootId ];
 
-                    shooter = arena.playerManager.getById( data[ 2 ] );
+    //             }, 1000 );
 
-                } else {
+    //             // delete target.hits[ shootId ];
 
-                    shooter = arena.towerManager.getById( data[ 2 ] - 10000 );
+    //         }
 
-                }
+    //         break;
 
-                if ( data[0] >= 10000 ) {
+    //     case 6:     // respawn
 
-                    target = arena.towerManager.getById( data[ 0 ] - 10000 );
+    //         if ( ! arena || ! player ) return;
+    //         player.respawn();
+    //         break;
 
-                } else {
+    //     case 7:     // move bot
 
-                    target = arena.playerManager.getById( data[ 0 ] );
+    //         if ( ! arena ) return;
+    //         var player = arena.playerManager.getById( data[ 0 ] );
 
-                }
+    //         if ( ! player ) return;
 
-                var shootId = data[ 1 ];
+    //         data = new Uint16Array( ab, 4 );
+    //         player.moveByPath( data );
+    //         break;
 
-                if ( ! target || ! shooter ) return;
+    //     case 100: // 'PlayerTankRotateBase'
 
-                // target.hits[ shootId ] = 1;//( target.hits[ shootId ] || 0 ) + 1;
+    //         if ( ! arena || ! player ) return;
 
-                // if ( arena.players.length - arena.bots.length <= 3 * target.hits[ shootId ] ) {
+    //         var direction = data[ 0 ];
 
-                if ( target.hits[ shootId ] !== 1 ) {
+    //         player.rotateBase( direction );
 
-                    target.hit( shooter );
-                    target.hits[ shootId ] = 1;
+    //         break;
 
-                    setTimeout( function () {
+    //     case 101: // 'PlayerTankMove'
 
-                        delete target.hits[ shootId ];
+    //         if ( ! arena || ! player ) return;
 
-                    }, 1000 );
+    //         var direction = data[ 0 ];
 
-                    // delete target.hits[ shootId ];
+    //         player.move( direction );
 
-                }
+    //         break;
 
-                break;
+    //     case 102: // 'PlayerTankMoveToPoint'
 
-            case 6:     // respawn
+    //         if ( ! arena || ! player ) return;
 
-                if ( ! arena || ! player ) return;
-                player.respawn();
-                break;
+    //         var destination = { x: data[ 0 ], y: 0, z: data[1] };
 
-            case 7:     // move bot
+    //         player.moveToPoint( destination );
 
-                if ( ! arena ) return;
-                var player = arena.playerManager.getById( data[ 0 ] );
-
-                if ( ! player ) return;
-
-                data = new Uint16Array( ab, 4 );
-                player.moveByPath( data );
-                break;
-
-            case 100: // 'PlayerTankRotateBase'
-
-                if ( ! arena || ! player ) return;
-
-                var direction = data[ 0 ];
-
-                player.rotateBase( direction );
-
-                break;
-
-            case 101: // 'PlayerTankMove'
-
-                if ( ! arena || ! player ) return;
-
-                var direction = data[ 0 ];
-
-                player.move( direction );
-
-                break;
-
-            case 102: // 'PlayerTankMoveToPoint'
-
-                if ( ! arena || ! player ) return;
-
-                var destination = { x: data[ 0 ], y: 0, z: data[1] };
-
-                player.moveToPoint( destination );
-
-                break;
-
-            default:
-
-                // nothing here
-                break;
-
-        }
-
-    }
+    //         break;
 
 };
 
@@ -224,87 +257,46 @@ NetworkManager.prototype.onError = function ( socket, error ) {
 
 };
 
-NetworkManager.prototype.send = function ( socket, event, data, view ) {
+NetworkManager.prototype.send = function ( eventName, socket, data, view ) {
 
-    var bin = true;
+    if ( ! socket || socket.readyState !== 1 ) return;
 
-    if ( data instanceof ArrayBuffer ) {
+    if ( ! this.events.out[ eventName ] ) {
 
-        bin = true;
+        console.error( '[NETWORK:SEND_MESSAGE] No event "' + eventName + '" registered.' );
+        return false;
 
-        switch ( event ) {
+    }
 
-            case 'rotateTop':
+    if ( ! data ) {
 
-                view[0] = 1;
-                break;
+        data = JSON.stringify( view );
+        data = TextEncoder.encode( data );
 
-            case 'hit':
+        var newData = new Int16Array( data.length + 1 );
 
-                view[0] = 4;
-                break;
+        for ( var i = 0, il = data.length; i < il; i ++ ) {
 
-            case 'die':
-
-                view[0] = 5;
-                break;
-
-            case 'shoot':
-
-                view[0] = 3;
-                break;
-
-            case 'MoveTankByPath':
-
-                view[0] = 100;
-                break;
-
-            case 'TowerRotateTop':
-
-                view[0] = 200;
-                break;
-
-            case 'ShootTower':
-
-                view[0] = 210;
-                break;
-
-            case 'TowerChangeTeam':
-
-                view[0] = 400;
-                break;
-
-            default:
-
-                // nothing here
-                break;
+            newData[ i + 1 ] = data[ i ];
 
         }
 
-        data = new Buffer( data );
+        data = newData;
+        data[0] = this.events.out[ eventName ].id;
 
     } else {
 
-        bin = false;
-        data.event = event;
-        data = JSON.stringify( { 'event': event, 'data': data } );
+        view[0] = this.events.out[ eventName ].id;
 
     }
 
-    if ( socket ) {
+    socket.send( data, { binary: true } );
 
-        try {
+};
 
-            socket.send( data, { binary: bin } );
-
-        } catch ( e ) {
-
-            // console.warn( e );
-
-        }
-
-    }
-
+NetworkManager.prototype.events = {
+    in:     {},
+    out:    {}
 };
 
 module.exports = NetworkManager;

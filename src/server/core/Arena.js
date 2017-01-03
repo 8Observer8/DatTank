@@ -90,7 +90,7 @@ Arena.prototype.announce = function ( eventName, data, view, players ) {
 
         if ( players[ i ].socket ) {
 
-            networkManager.send( players[ i ].socket, eventName, data, view );
+            networkManager.send( eventName, players[ i ].socket, data, view );
 
         }
 

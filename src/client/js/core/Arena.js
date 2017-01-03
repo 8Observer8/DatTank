@@ -27,6 +27,10 @@ Game.Arena.prototype.init = function ( params ) {
 
     //
 
+    this.addNetworkListeners();
+
+    //
+
     ui.clearKills();
     view.addDecorations( params.decorations );
 
@@ -64,5 +68,24 @@ Game.Arena.prototype.update = function ( time, delta ) {
         this.playerManager.players[ i ].update( time, delta );
 
     }
+
+};
+
+Game.Arena.prototype.proxyEventToPlayer = function ( data, eventName ) {
+
+    var player = this.playerManager.getById( data[0] );
+    player.dispatchEvent({ type: eventName, data: data });
+
+};
+
+Game.Arena.prototype.proxyEventToTower = function ( data, eventName ) {
+
+    // todo
+
+};
+
+Game.Arena.prototype.addNetworkListeners = function () {
+
+    network.addMessageListener( 'TankRotateTop', this.proxyEventToPlayer.bind( this ) );
 
 };

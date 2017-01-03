@@ -179,37 +179,6 @@ Game.UI.prototype.clearKills = function () {
 
 };
 
-Game.UI.prototype.showWinners = function ( winner ) {
-
-    $('#winners #play-button').off();
-    $('#winners #play-button').click( function () {
-
-        $('#winners').hide();
-
-        var tank = localStorage.getItem( 'currentTank' ) || 0;
-
-        if ( ! network.send( 'joinArena', { login: localStorage.getItem('login') || '', tank: tank }, game.joinArena ) ) {
-
-            // :(
-
-            return;
-
-        }
-
-    });
-
-    $('#winners #team-color').css( 'background-color', winner.color );
-    $('#continue-box-wrapper').hide();
-    $('#winners').show();
-
-    setTimeout( function () {
-
-        $('#winners').css( 'opacity', 1 );
-
-    }, 100 );
-
-};
-
 Game.UI.prototype.hideContinueBox = function () {
 
     $('#continue-box-wrapper').css( 'opacity', 0 );
@@ -217,18 +186,6 @@ Game.UI.prototype.hideContinueBox = function () {
     setTimeout( function () {
 
         $('#continue-box-wrapper').hide();
-
-    }, 200);
-
-};
-
-Game.UI.prototype.hideWinners = function () {
-
-    $('#winners').css( 'opacity', 0 );
-
-    setTimeout( function () {
-
-        $('#winners').hide();
 
     }, 200);
 
