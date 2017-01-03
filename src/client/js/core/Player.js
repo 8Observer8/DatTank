@@ -587,6 +587,8 @@ Game.Player.prototype.update = function ( time, delta ) {
 
 Game.Player.prototype.die = function ( killer ) {
 
+    var scope = this;
+
     if ( this.id === Game.arena.me.id ) {
 
         ga('send', {
@@ -608,6 +610,8 @@ Game.Player.prototype.die = function ( killer ) {
                 ui.showContinueBox( killer.login, killer.team.color ); 
 
             }
+
+            scope.tank.object.visible = false;
 
         }, 1400 );
 

@@ -74,7 +74,7 @@ Game.ViewManager.prototype.setupScene = function () {
 
     // add light
 
-    this.scene.add( new THREE.AmbientLight( 0xffffff ) );
+    this.scene.add( new THREE.AmbientLight( 0xcccccc ) );
 
     // user event handlers
 

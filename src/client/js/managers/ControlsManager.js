@@ -59,6 +59,12 @@ Game.ControlsManager.prototype.mouseInit = function () {
 
                 if ( intersections[0] && intersections[0].object.name === 'ground' ) {
 
+                    if ( Math.abs( intersections[0].point.x ) > 2450 / 2 || Math.abs( intersections[0].point.z ) > 2450 / 2 ) {
+
+                        break;
+
+                    }
+
                     scope.moveToPoint( intersections[0].point );
                     view.showDestinationPoint( intersections[0].point );
 

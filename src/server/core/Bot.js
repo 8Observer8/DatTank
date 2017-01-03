@@ -88,7 +88,7 @@ Bot.prototype.update = function () {
 
         var player = players[ i ];
 
-        if ( player.team === this.player.team ) continue;
+        if ( player.team === this.player.team || player.status !== Game.Player.Alive ) continue;
 
         var distance = Math.sqrt( Math.pow( player.position.x - this.player.position.x, 2 ) + Math.pow( player.position.z - this.player.position.z, 2 ) );
 
