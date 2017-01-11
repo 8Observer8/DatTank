@@ -61,6 +61,25 @@ Game.Arena.prototype.init = function ( params ) {
 
 };
 
+Game.Arena.prototype.newPlayerJoined = function ( data ) {
+
+    var player = new Game.Player( this, data );
+    this.playerManager.add( player );
+
+};
+
+Game.Arena.prototype.playerLeft = function ( playerId ) {
+
+    if ( this.playerManager.getById( playerId ) ) {
+
+        this.playerManager.remove( this.playerManager.getById( playerId ) );
+
+    }
+
+    ui.updateLeaderboard( this.playerManager.players, this.me );
+
+};
+
 Game.Arena.prototype.update = function ( time, delta ) {
 
     for ( var i = 0, il = this.playerManager.players.length; i < il; i ++ ) {

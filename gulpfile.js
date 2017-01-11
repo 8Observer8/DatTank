@@ -19,8 +19,11 @@ var nodemon = require('gulp-nodemon');
 var order = require('gulp-order');
 var argv = require('yargs').argv;
 var gulpif = require('gulp-if');
+var spawn = require('child_process').spawn;
 
 //
+
+var nodeProcess;
 
 // Resources build
 
@@ -91,6 +94,10 @@ gulp.task( 'server', function () {
         .pipe( gulp.dest('./bin/server/') )
         .pipe( connect.reload() );
 
+    //
+
+    restartServer();
+
 });
 
 // Connect
@@ -108,18 +115,7 @@ gulp.task( 'connect', function () {
 
 gulp.task( 'run', [ 'resources', 'js', 'html', 'css', 'server' ], function () {
 
-    nodemon({
-        delay: 10,
-        script: './bin/server/server.js',
-        cwd: '',
-        args: [],
-        ext: 'html js css'
-    })
-    .on('restart', function () {
-
-        console.log('server restarted!');
-
-    });
+    restartServer();
 
 });
 
@@ -137,3 +133,28 @@ gulp.task( 'watch', function () {
 // Default
 
 gulp.task( 'default', [ 'watch', 'run' ] );
+
+//
+
+function restartServer () {
+
+    if ( nodeProcess ) nodeProcess.kill();
+    nodeProcess = spawn( 'node', [ './bin/server/Server.js' ], { stdio: 'inherit' } )
+
+    nodeProcess.on( 'close', function ( code ) {
+
+        if ( code === 8 ) {
+
+            gulp.log('Error detected, waiting for changes...');
+
+        }
+
+    });
+
+};
+
+process.on( 'exit', function () {
+
+    if ( nodeProcess ) nodeProcess.kill();
+
+});

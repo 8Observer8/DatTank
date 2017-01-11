@@ -17,24 +17,46 @@ Game.NetworkManager.prototype = {};
 
 Game.NetworkManager.prototype.init = function ( callback ) {
 
-    // register network events
-
-    this.registerEvent( 'ArenaJoinRequest', 'out', 'json', 0 );
-    this.registerEvent( 'ArenaJoinResponce', 'in', 'json', 1 );
-
-    this.registerEvent( 'TankRotateTop', 'in', 'bin', 100 );
-    this.registerEvent( 'TankRotateTop', 'out', 'bin', 101 );
-
-    //
-
-    this.initCallback = callback;
-
     if ( this.transport ) {
 
         console.error( '[NETWORK] Connection already established.' );
         return;
 
     }
+
+    this.initCallback = callback;
+
+    // register network events
+
+    this.registerEvent( 'ArenaJoinRequest', 'out', 'json', 0 );
+    this.registerEvent( 'ArenaJoinResponce', 'in', 'json', 1 );
+    this.registerEvent( 'RespawnPlayer', 'in', 'json', 2 );
+
+    //
+
+    this.registerEvent( 'TankRotateTop', 'in', 'bin', 100 );
+    this.registerEvent( 'TankRotateTop', 'out', 'bin', 101 );
+    this.registerEvent( 'TankMove', 'in', 'bin', 102 );
+    this.registerEvent( 'TankMove', 'out', 'bin', 103 );
+    this.registerEvent( 'TankShoot', 'in', 'bin', 104 );
+    this.registerEvent( 'TankShoot', 'out', 'bin', 105 );
+    this.registerEvent( 'TankHit', 'in', 'bin', 106 );
+    this.registerEvent( 'TankHit', 'out', 'bin', 107 );
+    this.registerEvent( 'TankDie', 'in', 'bin', 108 );
+
+    //
+
+    this.registerEvent( 'TowerRotateTop', 'in', 'bin', 200 );
+    this.registerEvent( 'TowerShoot', 'in', 'bin', 201 );
+    this.registerEvent( 'TowerHit', 'in', 'bin', 202 );
+    this.registerEvent( 'TowerHit', 'out', 'bin', 203 );
+    this.registerEvent( 'TowerChangeTeam', 'in', 'bin', 204 );
+
+    //
+
+    this.registerEvent( 'AddBox', 'in', 'bin', 300 );
+    this.registerEvent( 'RemoveBox', 'in', 'bin', 301 );
+    this.registerEvent( 'PickedBox', 'in', 'bin', 302 );
 
     // establish connection
 
@@ -67,245 +89,6 @@ Game.NetworkManager.prototype.onMessage = function ( event ) {
     var content = new Int16Array( event.data, 2 );
 
     this.triggerMessageListener( eventId, content );
-
-    // function parseStringMessage ( message ) {
-
-    //     switch ( event ) {
-
-    //         case 'playerJoined':
-
-    //             if ( ! arena ) return;
-    //             var player = new Game.Player( arena, data );
-    //             arena.playerManager.add( player );
-    //             break;
-
-    //         case 'respawn':
-
-    //             var player = arena.playerManager.getById( data.player.id );
-
-    //             if ( ! player ) {
-
-    //                 console.warn( '[Network:MOVE] Player not fond in list.' );
-    //                 return;
-
-    //             }
-
-    //             player.respawn( true, data.player );
-
-    //             break;
-
-    //         case 'playerLeft':
-
-    //             if ( arena.playerManager.getById( data.id ) ) {
-
-    //                 arena.playerManager.remove( arena.playerManager.getById( data.id ) );
-
-    //             }
-
-    //             ui.updateLeaderboard( arena.playerManager.players, arena.me );
-    //             break;
-
-    //         case 'addBox':
-
-    //             arena.boxManager.add( data );
-    //             break;
-
-    //         case 'pickedBox':
-
-    //             arena.boxManager.remove( data.id );
-    //             break;
-
-    //         case 'gotBox':
-
-    //             arena.me.gotBox( data.box, data.value );
-    //             break;
-
-    //     }
-
-    // };
-
-    // function parseBinMessage ( data ) {
-
-    //     switch ( event ) {
-
-    //         case 2:     // move
-
-    //             var playerId = data[0];
-    //             var path = [];
-
-    //             for ( var i = 1, il = data.length; i < il; i ++ ) {
-
-    //                 path.push( data[ i ] - 2000 );
-
-    //             }
-
-    //             var player = arena.playerManager.getById( playerId );
-
-    //             if ( ! player ) {
-
-    //                 console.warn( '[Network:MOVE] Player not fond in list.' );
-    //                 return;
-
-    //             }
-
-    //             player.processPath( path );
-    //             break;
-
-    //         case 3:     // shoot
-
-    //             var playerId = data[0];
-    //             var player = arena.playerManager.getById( playerId );
-
-    //             if ( ! player ) {
-
-    //                 console.warn( '[Network:SHOOT] Player not fond in list.' );
-    //                 return;
-
-    //             }
-
-    //             player.shoot( data[ 1 ], data[ 2 ] );
-    //             break;
-
-    //         case 4:     // hit
-
-    //             var targetId = data[0];
-
-    //             if ( targetId < 10000 ) {
-
-    //                 var player = arena.playerManager.getById( targetId );
-
-    //                 if ( ! player ) {
-
-    //                     console.warn( '[Network:HIT] Player not fond in list.' );
-    //                     return;
-
-    //                 }
-
-    //                 player.updateHealth( data[1] );
-
-    //             } else {
-
-    //                 targetId -= 10000;
-
-    //                 var tower = arena.towerManager.getById( targetId );
-    //                 tower.updateHealth( data[1] );
-
-    //             }
-
-    //             break;
-
-    //         case 5:     // die
-
-    //             var playerId = data[0];
-    //             var killerId = data[1];
-
-    //             var player = arena.playerManager.getById( playerId );
-    //             var killer;
-
-    //             if ( killerId < 10000 ) {
-
-    //                 killer = arena.playerManager.getById( killerId );
-
-    //             } else {
-
-    //                 killer = arena.towerManager.getById( killerId - 10000 );
-
-    //             }
-
-    //             if ( ! player ) {
-
-    //                 console.warn( '[Network:DIE] Player not fond in list.' );
-    //                 return;
-
-    //             }
-
-    //             player.die( killer );
-    //             break;
-
-    //         case 100:
-
-    //             var playerId = data[0];
-
-    //             var player = arena.playerManager.getById( playerId );
-    //             if ( ! player ) return;
-
-    //             var path = [];
-    //             for ( var i = 0, il = data.length / 2 - 2; i < il; i ++ ) {
-
-    //                 path.push({ x: data[ 1 + 2 * i + 0 ], y: 0, z: data[ 1 + 2 * i + 1 ] });
-
-    //             }
-
-    //             player.moveByPath( path, { x: data[ data.length - 2 ], y: 0, z: data[ data.length - 1 ] } );
-    //             break;
-
-    //         case 200:
-
-    //             var towerId = data[0];
-    //             var tower = arena.towerManager.getById( towerId );
-    //             tower.rotateTop( data[1] / 1000 );
-    //             break;
-
-    //         case 210:
-
-    //             var towerId = data[0];
-    //             var shootId = data[1];
-    //             var tower = arena.towerManager.getById( towerId );
-
-    //             if ( ! tower ) {
-
-    //                 console.warn( '[Network:TowerShoot] Tower not fond in list.' );
-    //                 return;
-
-    //             }
-
-    //             tower.shoot( shootId ).onHit( function ( target ) {
-
-    //                 if ( tower.team === 1000 || tower.team.id !== target.owner.team.id ) {
-
-    //                     var buffer = new ArrayBuffer( 8 );
-    //                     var bufferView = new Uint16Array( buffer );
-
-    //                     bufferView[ 1 ] = target.owner.id;
-    //                     bufferView[ 2 ] = shootId;
-    //                     bufferView[ 3 ] = 10000 + towerId;
-
-    //                     network.send( 'hit', buffer, bufferView );
-
-    //                 }
-
-    //             });
-
-    //             break;
-
-    //         case 400:
-
-    //             var towerId = data[0];
-    //             var teamId = data[1];
-    //             var tower = arena.towerManager.getById( towerId );
-    //             var team = arena.teamManager.getById( teamId );
-
-    //             if ( ! tower ) {
-
-    //                 console.warn( '[Network:TowerChangeTeam] Tower not fond in list.' );
-    //                 return;
-
-    //             }
-
-    //             if ( ! team ) {
-
-    //                 console.warn( '[Network:TowerChangeTeam] Team not fond in list.' );
-    //                 return;
-
-    //             }
-
-    //             tower.changeTeam( team );
-
-    //             break;
-
-    //     }
-
-    // };
 
 };
 
