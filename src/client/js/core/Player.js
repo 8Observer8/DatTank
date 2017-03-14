@@ -38,6 +38,8 @@ Game.Player = function ( arena, params ) {
     this.rotDelta = 0;
     this.rotationTopTarget = false;
 
+    this.moveDirection = new THREE.Vector2();
+
     this.lastShot = Date.now();
 
     //
@@ -134,7 +136,6 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
             ui.updateAmmo( this.ammo );
 
             ui.hideContinueBox();
-            ui.hideWinners();
 
             ui.updateHealth( this.health );
             ui.updateAmmo( this.ammo );
@@ -153,7 +154,10 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
                 eventAction: 'respown'
             });
 
-            network.send( 'respawn' );
+            var buffer = new ArrayBuffer( 2 );
+            var bufferView = new Int16Array( buffer );
+
+            network.send( 'ArenaPlayerRespawn', buffer, bufferView );
 
         }
 
@@ -209,7 +213,7 @@ Game.Player.prototype.deCompressPath = function ( keyPath ) {
 
             for ( var k = keyPath[ i - 1 ].z; k != keyPath[ i ].z; k += s2 ) {
 
-                path.push( { x: keyPath[ i - 1 ].x, y: 0 - 5, z: k } );
+                path.push({ x: keyPath[ i - 1 ].x, y: 0 - 5, z: k });
 
             }
 
@@ -223,7 +227,7 @@ Game.Player.prototype.deCompressPath = function ( keyPath ) {
 
             for ( var k = keyPath[ i - 1 ].x; k != keyPath[ i ].x; k += s1 ) {
 
-                path.push( { x: k, y: 0 - 5, z: keyPath[ i - 1 ].z } );
+                path.push({ x: k, y: 0 - 5, z: keyPath[ i - 1 ].z });
 
             }
 
@@ -242,7 +246,7 @@ Game.Player.prototype.deCompressPath = function ( keyPath ) {
 
             for ( var k = keyPath[ i - 1 ].x; k != keyPath[ i ].x; k += s1 ) {
 
-                cord.push( { x: k, y: 0 - 5, z: 0 } );
+                cord.push({ x: k, y: 0 - 5, z: 0 });
 
             }
 
@@ -306,7 +310,14 @@ Game.Player.prototype.processPath = function ( path ) {
 
 };
 
-Game.Player.prototype.updateMovement = function ( time, delta ) {
+Game.Player.prototype.move = function ( directionX, directionZ ) {
+
+    this.moveDirection.x = directionX;
+    this.moveDirection.y = directionZ;
+
+};
+
+Game.Player.prototype.updateMovementByPath = function ( time, delta ) {
 
     var arena = this.arena;
     var abs = Math.abs;
@@ -441,6 +452,45 @@ Game.Player.prototype.updateMovement = function ( time, delta ) {
 
 };
 
+Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
+
+    var player = this;
+
+    //
+
+    if ( player.moveDirection.x !== 0 || player.moveDirection.y !== 0 ) {
+
+        view.raycaster.ray.origin.set( player.position.x, 22, player.position.z );
+        view.raycaster.ray.direction.set( - player.moveDirection.x, 0, player.moveDirection.y ).normalize();
+        var intersections = view.raycaster.intersectObjects( view.scene.intersections );
+
+        if ( intersections.length && intersections[0].distance < 100 ) {
+        
+            if ( player.id === Game.arena.me.id && intersections[0].distance - 40 < 0 ) {
+
+                controls.stop();
+                return;
+
+            }
+
+        }
+
+        player.position.x -= 3 * player.moveDirection.x * delta / ( 1000 * player.moveSpeed );
+        player.position.z += 3 * player.moveDirection.y * delta / ( 1000 * player.moveSpeed );
+
+        var targetRotation = Math.atan2( player.moveDirection.y, player.moveDirection.x ) - Math.PI / 2;
+        var deltaRot = targetRotation - player.rotation;
+        if ( deltaRot > Math.PI ) deltaRot = deltaRot - 2 * Math.PI;
+        if ( deltaRot < - Math.PI ) deltaRot = deltaRot + 2 * Math.PI;
+        player.rotation = ( player.rotation + deltaRot / 10 ) % ( 2 * Math.PI );
+        player.tank.setRotation( player.rotation );
+
+    }
+
+    player.tank.setPosition( player.position.x, player.position.y, player.position.z );
+
+};
+
 Game.Player.prototype.rotateTop = function ( angle ) {
 
     if ( ! this.tank.object.top ) return;
@@ -483,20 +533,19 @@ Game.Player.prototype.shoot = function ( shootId, ammo ) {
             var buffer = new ArrayBuffer( 8 );
             var bufferView = new Int16Array( buffer );
 
+            bufferView[ 1 ] = target.owner.id;
             bufferView[ 2 ] = shootId;
             bufferView[ 3 ] = scope.id;
 
             if ( target.name === 'tank' ) {
 
-                bufferView[ 1 ] = target.owner.id;
+                network.send( 'PlayerTankHit', buffer, bufferView );
 
             } else {
 
-                bufferView[ 1 ] = 10000 + target.owner.id;
+                network.send( 'TowerHit', buffer, bufferView );
 
             }
-
-            network.send( 'hit', buffer, bufferView );
 
         }
 
@@ -585,13 +634,17 @@ Game.Player.prototype.updateHealth = function ( value ) {
 
 Game.Player.prototype.update = function ( time, delta ) {
 
-    this.updateMovement( time, delta );
+    this.updateMovementByPath( time, delta );
+    this.updateDirectionMovement( time, delta );
 
 };
 
 Game.Player.prototype.die = function ( killer ) {
 
     var scope = this;
+
+    killer = Game.arena.playerManager.getById( killer ) || Game.arena.towerManager.getById( killer );
+    if ( ! killer ) return;
 
     if ( this.id === Game.arena.me.id ) {
 
@@ -654,6 +707,28 @@ Game.Player.prototype.addEventListeners = function () {
 
     var scope = this;
 
-    this.addEventListener( 'TankRotateTop', function ( event ) { scope.rotateTop( event.data[1] / 1000 ); });
+    this.addEventListener( 'ArenaPlayerRespawn', function ( event ) { scope.respawn( true, event.data.player ); });
+
+    this.addEventListener( 'PlayerTankRotateTop', function ( event ) { scope.rotateTop( event.data[1] / 1000 ); });
+    this.addEventListener( 'PlayerTankMove', function ( event ) { scope.move( event.data[1], event.data[2] ); });
+    this.addEventListener( 'PlayerTankShoot', function ( event ) { scope.shoot( event.data[1], event.data[2] ); });
+    this.addEventListener( 'PlayerTankHit', function ( event ) { scope.updateHealth( event.data[1] ); });
+    this.addEventListener( 'PlayerTankDied', function ( event ) { scope.die( event.data[1] ); });
+    this.addEventListener( 'PlayerTankMoveByPath', function ( event ) {
+
+        var destination = { x: event.data[ event.data.length - 2 ], z: event.data[ event.data.length - 1 ] };
+        var keyPath = [];
+
+        for ( var i = 1, il = event.data.length - 3; i < il; i += 2 ) {
+
+            keyPath.push({ x: event.data[ i + 0 ], z: event.data[ i + 1 ] });
+
+        }
+
+        //
+
+        scope.moveByPath( keyPath, destination );
+
+    });
 
 };

@@ -30,27 +30,38 @@ Game.NetworkManager.prototype.init = function ( callback ) {
 
     this.registerEvent( 'ArenaJoinRequest', 'out', 'json', 0 );
     this.registerEvent( 'ArenaJoinResponce', 'in', 'json', 1 );
-    this.registerEvent( 'RespawnPlayer', 'in', 'json', 2 );
+    this.registerEvent( 'ArenaPlayerJoined', 'in', 'json', 2 );
+    this.registerEvent( 'ArenaPlayerRespawn', 'in', 'json', 3 );
+    this.registerEvent( 'ArenaPlayerRespawn', 'out', 'bin', 4 );
+
 
     //
 
-    this.registerEvent( 'TankRotateTop', 'in', 'bin', 100 );
-    this.registerEvent( 'TankRotateTop', 'out', 'bin', 101 );
-    this.registerEvent( 'TankMove', 'in', 'bin', 102 );
-    this.registerEvent( 'TankMove', 'out', 'bin', 103 );
-    this.registerEvent( 'TankShoot', 'in', 'bin', 104 );
-    this.registerEvent( 'TankShoot', 'out', 'bin', 105 );
-    this.registerEvent( 'TankHit', 'in', 'bin', 106 );
-    this.registerEvent( 'TankHit', 'out', 'bin', 107 );
-    this.registerEvent( 'TankDie', 'in', 'bin', 108 );
+    this.registerEvent( 'PlayerTankRotateTop', 'in', 'bin', 100 );
+    this.registerEvent( 'PlayerTankRotateTop', 'out', 'bin', 101 );
+
+    this.registerEvent( 'PlayerTankMove', 'in', 'bin', 111 );
+    this.registerEvent( 'PlayerTankMove', 'out', 'bin', 112 );
+
+    this.registerEvent( 'PlayerTankMoveByPath', 'in', 'bin', 113 );
+    this.registerEvent( 'PlayerTankMoveByPath', 'out', 'bin', 114 );
+
+    this.registerEvent( 'PlayerTankShoot', 'in', 'bin', 115 );
+    this.registerEvent( 'PlayerTankShoot', 'out', 'bin', 116 );
+
+    this.registerEvent( 'PlayerTankHit', 'in', 'bin', 117 );
+    this.registerEvent( 'PlayerTankHit', 'out', 'bin', 118 );
+
+    this.registerEvent( 'PlayerTankDied', 'in', 'bin', 119 );
 
     //
 
     this.registerEvent( 'TowerRotateTop', 'in', 'bin', 200 );
     this.registerEvent( 'TowerShoot', 'in', 'bin', 201 );
-    this.registerEvent( 'TowerHit', 'in', 'bin', 202 );
-    this.registerEvent( 'TowerHit', 'out', 'bin', 203 );
-    this.registerEvent( 'TowerChangeTeam', 'in', 'bin', 204 );
+    this.registerEvent( 'TowerChangeTeam', 'in', 'bin', 202 );
+
+    this.registerEvent( 'TowerHit', 'in', 'bin', 203 );
+    this.registerEvent( 'TowerHit', 'out', 'bin', 204 );
 
     //
 

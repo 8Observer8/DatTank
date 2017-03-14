@@ -8,7 +8,6 @@ var concatCss = require('gulp-concat-css');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var autoprefixer = require('gulp-autoprefixer');
-var livereload = require('gulp-livereload');
 var connect = require('gulp-connect');
 var sass = require('gulp-sass');
 var concat = require('gulp-concat');
@@ -39,29 +38,9 @@ gulp.task( 'resources', function () {
 
 gulp.task( 'js', function () {
 
-    gulp.src([ './src/client/js/libs/*' ])
+    gulp.src([ './src/client/js/**/*' ])
         .pipe( gulpif( argv.prod, uglify() ) )
-        .pipe(order([
-            'three.js',
-            '*'
-        ]))
-        .pipe( concat('libs.js') )
-        .pipe( gulp.dest('./bin/client/js/') )
-        .pipe( connect.reload() );
-
-    gulp.src([ './src/client/js/**/*', '!./src/client/js/libs/*' ])
-        .pipe( gulpif( argv.prod, uglify() ) )
-        .pipe(order([
-            'libs/three.js',
-            'libs/*.js',
-            'core/Game.js',
-            'core/**/*',
-            'objects/core/**/*',
-            '**/*'
-        ]))
-        .pipe( concat('all.js') )
-        .pipe( gulp.dest('./bin/client/js/') )
-        .pipe( connect.reload() );
+        .pipe( gulp.dest('./bin/client/js/') );
 
 });
 
@@ -71,8 +50,7 @@ gulp.task( 'css', function () {
 
     gulp.src('./src/client/css/*')
         .pipe( concat('all.css') )
-        .pipe( gulp.dest('./bin/client/css/') )
-        .pipe( connect.reload() );
+        .pipe( gulp.dest('./bin/client/css/') );
 
 });
 
@@ -81,8 +59,7 @@ gulp.task( 'css', function () {
 gulp.task( 'html', function () {
 
     gulp.src('./src/client/*.html')
-        .pipe( gulp.dest('./bin/client/') )
-        .pipe( connect.reload() );
+        .pipe( gulp.dest('./bin/client/') );
 
 });
 
@@ -91,23 +68,11 @@ gulp.task( 'html', function () {
 gulp.task( 'server', function () {
 
     gulp.src('./src/server/**/*')
-        .pipe( gulp.dest('./bin/server/') )
-        .pipe( connect.reload() );
+        .pipe( gulp.dest('./bin/server/') );
 
     //
 
     restartServer();
-
-});
-
-// Connect
-
-gulp.task( 'connect', function () {
-
-    connect.server({
-        root: 'public',
-        livereload: true
-    });
 
 });
 

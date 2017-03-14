@@ -23,8 +23,55 @@
 
         <link rel="stylesheet" type="text/css" href="css/all.css" />
 
-        <script src="/js/libs.js?rnd=11"></script>
-        <script src="/js/all.js?rnd=11"></script>
+        <!-- build:js /js/libs.js -->
+        <script src="/js/libs/three.js"></script>
+        <script src="/js/libs/three.projector.js"></script>
+        <script src="/js/libs/AssimpJSONLoader.js"></script>
+        <script src="/js/libs/jquery.js"></script>
+        <script src="/js/libs/TextEncoder.js"></script>
+        <script src="/js/libs/HackTimer.js"></script>
+        <script src="/js/libs/Detector.js"></script>
+        <script src="/js/libs/mobile-detect.js"></script>
+        <script src="/js/libs/Utils.js"></script>
+        <!-- endbuild -->
+
+        <!-- build:js /js/app.js -->
+
+        <script src="/js/core/EventDispatcher.js"></script>
+        <script src="/js/core/Game.js"></script>
+        <script src="/js/core/Arena.js"></script>
+        <script src="/js/core/Team.js"></script>
+        <script src="/js/core/Player.js"></script>
+        <script src="/js/core/Garage.js"></script>
+        <script src="/js/core/Logger.js"></script>
+
+        <script src="/js/managers/BoxManager.js"></script>
+        <script src="/js/managers/ControlsManager.js"></script>
+        <script src="/js/managers/NetworkManager.js"></script>
+        <script src="/js/managers/PlayerManager.js"></script>
+        <script src="/js/managers/ResourceManager.js"></script>
+        <script src="/js/managers/SettingsManager.js"></script>
+        <script src="/js/managers/SoundManager.js"></script>
+        <script src="/js/managers/TeamManager.js"></script>
+        <script src="/js/managers/TowerManager.js"></script>
+        <script src="/js/managers/ViewManager.js"></script>
+
+        <script src="/js/objects/core/Box.js"></script>
+        <script src="/js/objects/core/Tank.js"></script>
+        <script src="/js/objects/core/Tower.js"></script>
+
+        <script src="/js/objects/boxes/AmmoBox.js"></script>
+        <script src="/js/objects/boxes/HealthBox.js"></script>
+
+        <script src="/js/objects/tanks/UK-BlackPrince.js"></script>
+        <script src="/js/objects/tanks/USA-T54.js"></script>
+
+        <script src="/js/ui/UI.js"></script>
+        <script src="/js/ui/Ads.js"></script>
+
+        <script src="/js/Init.js"></script>
+
+        <!-- endbuild -->
 
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

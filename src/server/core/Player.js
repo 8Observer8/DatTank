@@ -14,6 +14,7 @@ var Player = function ( arena, params ) {
     this.id = Player.numIds ++;
     this.login = params.login || 'guest';
 
+    this.moveDirection = new Game.Vec2();
     this.moveSpeed = 0.09;
 
     this.status = Player.Alive;
@@ -45,9 +46,6 @@ var Player = function ( arena, params ) {
     this.rotationTop = - Math.PI / 2;
 
     this.afkTimeout = false;
-
-    this.baseRotationDirection = 0;
-    this.moveDirection = 0;
 
     this.moveDelay = false;
 
@@ -90,7 +88,7 @@ Player.prototype.respawn = function () {
 
     //
 
-    this.arena.announce( 'respawn', { player: this.toPrivateJSON() } );
+    this.arena.announce( 'ArenaPlayerRespawn', null, { player: this.toPrivateJSON() } );
 
 };
 
@@ -138,7 +136,7 @@ Player.prototype.rotateTop = (function () {
         bufferView[1] = this.id;
         bufferView[2] = Math.floor( 1000 * angle );
 
-        this.arena.announce( 'TankRotateTop', buffer, bufferView );
+        this.arena.announce( 'PlayerTankRotateTop', buffer, bufferView );
 
     };
 
@@ -150,11 +148,47 @@ Player.prototype.rotateBase = function ( direction ) {
 
 };
 
-Player.prototype.move = function ( direction ) {
+Player.prototype.move = (function () {
 
-    this.moveDirection = direction;
+    var buffer = new ArrayBuffer( 8 );
+    var bufferView = new Uint16Array( buffer );
 
-};
+    return function ( directionX, directionZ ) {
+
+        var scope = this;
+
+        if ( scope.status !== Player.Alive ) {
+
+            return;
+
+        }
+
+        scope.movePath = false;
+        scope.movementDurationMap = false;
+        scope.movementDuration = 0;
+
+        scope.moveDirection.x = directionX;
+        scope.moveDirection.y = directionZ;
+
+        if ( scope.moveDirection.x !== 0 || scope.moveDirection.y !== 0 ) {
+
+            var targetRotation = Math.atan2( scope.moveDirection.y, scope.moveDirection.x ) - Math.PI / 2;
+            var deltaRot = targetRotation - scope.rotation;
+            if ( deltaRot > Math.PI ) deltaRot = deltaRot - 2 * Math.PI;
+            if ( deltaRot < - Math.PI ) deltaRot = deltaRot + 2 * Math.PI;
+            scope.rotation = ( scope.rotation + deltaRot / 10 ) % ( 2 * Math.PI );
+
+        }
+
+        bufferView[ 1 ] = this.id;
+        bufferView[ 2 ] = directionX;
+        bufferView[ 3 ] = directionZ;
+
+        this.arena.announce( 'PlayerTankMove', buffer, bufferView );
+
+    };
+
+}) ();
 
 Player.prototype.moveToPoint = function ( destination, retry ) {
 
@@ -201,7 +235,7 @@ Player.prototype.moveToPoint = function ( destination, retry ) {
         bufferView[ bufferView.length - 2 ] = destination.x;
         bufferView[ bufferView.length - 1 ] = destination.z;
 
-        scope.arena.announce( 'MoveTankByPath', buffer, bufferView );
+        scope.arena.announce( 'PlayerTankMoveByPath', buffer, bufferView );
 
         //
 
@@ -308,7 +342,7 @@ Player.prototype.shoot = (function () {
 
         Player.numShootId = ( Player.numShootId > 1000 ) ? 0 : Player.numShootId + 1;
 
-        this.arena.announce( 'shoot', buffer, bufferView );
+        this.arena.announce( 'PlayerTankShoot', buffer, bufferView );
 
     };
 
@@ -319,13 +353,15 @@ Player.prototype.hit = (function () {
     var buffer = new ArrayBuffer( 6 );
     var bufferView = new Uint16Array( buffer );
 
-    return function ( killer ) {
+    return function ( shootId, killer ) {
 
         if ( this.status !== Player.Alive ) {
 
             return;
 
         }
+
+        killer = this.arena.playerManager.getById( killer ) || this.arena.towerManager.getById( killer );
 
         if ( killer ) {
 
@@ -346,7 +382,7 @@ Player.prototype.hit = (function () {
         bufferView[ 1 ] = this.id;
         bufferView[ 2 ] = this.health;
 
-        this.arena.announce( 'hit', buffer, bufferView );
+        this.arena.announce( 'PlayerTankHit', buffer, bufferView );
 
         if ( this.health <= 0 ) {
 
@@ -380,20 +416,9 @@ Player.prototype.die = (function () {
         this.movementDurationMap = false;
 
         bufferView[ 1 ] = this.id;
+        bufferView[ 2 ] = killer.id;
 
-        if ( killer instanceof Game.Tower ) {
-
-            bufferView[ 2 ] = killer.id + 10000;
-
-        } else {
-
-            bufferView[ 2 ] = killer.id;
-
-        }
-
-        //
-
-        this.arena.announce( 'die', buffer, bufferView );
+        this.arena.announce( 'PlayerTankDied', buffer, bufferView );
 
         //
 
@@ -429,6 +454,15 @@ Player.prototype.die = (function () {
 Player.prototype.update = function ( delta, time ) {
 
     var player = this;
+
+    // update player AWSD movement
+
+    if ( player.moveDirection.x !== 0 || player.moveDirection.y !== 0 ) {
+
+        player.position.x -= 3 * player.moveDirection.x * delta / ( 1000 * player.moveSpeed );
+        player.position.z += 3 * player.moveDirection.y * delta / ( 1000 * player.moveSpeed );
+
+    }
 
     // update player PATH movement
 
@@ -533,17 +567,18 @@ Player.prototype.update = function ( delta, time ) {
 
     }
 
-    // update player AWSD movement
-
-    // todo
-
 };
 
 Player.prototype.addEventListeners = function () {
 
     var scope = this;
 
-    this.addEventListener( 'TankRotateTop', function ( event ) { scope.rotateTop( event.data[0] / 10 ); });
+    this.addEventListener( 'ArenaPlayerRespawn', function ( event ) { scope.respawn(); });
+    this.addEventListener( 'PlayerTankRotateTop', function ( event ) { scope.rotateTop( event.data[0] / 10 ); });
+    this.addEventListener( 'PlayerTankMove', function ( event ) { scope.move( event.data[0], event.data[1] ); });
+    this.addEventListener( 'PlayerTankMoveByPath', function ( event ) { scope.moveToPoint({ x: event.data[0], z: event.data[1] }); });
+    this.addEventListener( 'PlayerTankShoot', function ( event ) { scope.shoot(); });
+    this.addEventListener( 'PlayerTankHit', function ( event ) { scope.hit( event.data[1], event.data[2] ); });
 
 };
 

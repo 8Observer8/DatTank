@@ -24,6 +24,7 @@ global.SOCKET_PORT = 8085;
 
 global.utils = require('./utils/Utils');
 global.Game = require('./core/Game');
+global.Game.Vec2 = require('./utils/Vector2');
 global.Game.Vec3 = require('./utils/Vector3');
 
 // import game managers

@@ -5,7 +5,9 @@
 
 var Tower = function ( arena, params ) {
 
-    if ( Tower.numIds > 1000 ) Tower.numIds = 0;
+    Game.EventDispatcher.call( this );
+
+    if ( Tower.numIds > 2000 ) Tower.numIds = 1000;
     this.id = Tower.numIds ++;
 
     this.arena = arena;
@@ -50,7 +52,7 @@ var Tower = function ( arena, params ) {
 
 };
 
-Tower.prototype = {};
+Tower.prototype = Object.create( Game.EventDispatcher.prototype );
 
 Tower.prototype.init = function () {
 
@@ -60,6 +62,8 @@ Tower.prototype.init = function () {
     var sizeZ = 130;
 
     this.arena.pathManager.placeObject( new Game.Vec3( position.x - sizeX / 2, 0, position.z - sizeZ / 2 ), new Game.Vec3( position.x + sizeX / 2, 0, position.z + sizeZ / 2 ) );
+
+    this.addEventListeners();
 
 };
 
@@ -105,7 +109,7 @@ Tower.prototype.shoot = (function () {
 
         Tower.numShootId = ( Tower.numShootId > 1000 ) ? 0 : Tower.numShootId + 1;
 
-        this.arena.announce( 'ShootTower', buffer, bufferView );
+        this.arena.announce( 'TowerShoot', buffer, bufferView );
 
     };
 
@@ -116,7 +120,11 @@ Tower.prototype.hit = (function () {
     var buffer = new ArrayBuffer( 6 );
     var bufferView = new Uint16Array( buffer );
 
-    return function ( killer ) {
+    return function ( shootId, killer ) {
+
+        killer = this.arena.playerManager.getById( killer );
+
+        if ( ! killer ) return;
 
         var amount = Math.floor( 57 * ( killer.tank.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ) );
 
@@ -136,10 +144,10 @@ Tower.prototype.hit = (function () {
 
         this.health -= amount;
 
-        bufferView[ 1 ] = this.id + 10000;
+        bufferView[ 1 ] = this.id;
         bufferView[ 2 ] = this.health;
 
-        this.arena.announce( 'hit', buffer, bufferView );
+        this.arena.announce( 'TowerHit', buffer, bufferView );
 
     };
 
@@ -168,7 +176,7 @@ Tower.prototype.checkForTarget = function ( players ) {
 
     var dist;
     var target = false;
-    var minDistance = 240;
+    var minDistance = 300;
 
     for ( var i = 0, il = players.length; i < il; i ++ ) {
 
@@ -250,7 +258,7 @@ Tower.prototype.rotateTop = (function () {
 
             }
 
-        } else if ( Math.abs( delta ) > 0.05 ) {
+        } else if ( Math.abs( delta ) > 0.01 ) {
 
             if ( delta > 0 ) {
 
@@ -305,7 +313,12 @@ Tower.prototype.update = function () {
 
     }
 
-    if ( ! target ) return;
+    if ( ! target ) {
+
+        this.target = false;
+        return;
+
+    }
 
     //
 
@@ -327,9 +340,17 @@ Tower.prototype.toJSON = function () {
 
 };
 
+Tower.prototype.addEventListeners = function () {
+
+    var scope = this;
+
+    this.addEventListener( 'TowerHit', function ( event ) { scope.hit( event.data[1], event.data[2] ); });
+
+};
+
 //
 
-Tower.numIds = 0;
+Tower.numIds = 1000;
 Tower.numShootId = 0;
 Tower.Alive = 100;
 Tower.Dead = 101;

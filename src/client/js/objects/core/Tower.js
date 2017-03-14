@@ -5,6 +5,8 @@
 
 Game.Tower = function ( arena, params ) {
 
+    EventDispatcher.call( this );
+
     this.arena = arena;
 
     this.id = params.id;
@@ -26,11 +28,11 @@ Game.Tower = function ( arena, params ) {
 
     //
 
-    this.changeTeam( this.team );
+    this.changeTeam( this.team.id );
 
 };
 
-Game.Tower.prototype = {};
+Game.Tower.prototype = Object.create( EventDispatcher.prototype );
 
 Game.Tower.prototype.init = function () {
 
@@ -93,6 +95,8 @@ Game.Tower.prototype.init = function () {
     this.updateHealthBar();
     this.rotateTop( this.rotation );
 
+    this.addEventListeners();
+
 };
 
 Game.Tower.prototype.initBullets = function () {
@@ -154,6 +158,7 @@ Game.Tower.prototype.shoot = function ( shootId ) {
 
     var bullet = false;
     var hitCallback = false;
+    var scope = this;
 
     for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
 
@@ -233,6 +238,19 @@ Game.Tower.prototype.shoot = function ( shootId ) {
 
                 }
 
+                //
+
+                var buffer = new ArrayBuffer( 8 );
+                var bufferView = new Uint16Array( buffer );
+
+                bufferView[ 1 ] = intersections[ 0 ].object.owner.id;
+                bufferView[ 2 ] = shootId;
+                bufferView[ 3 ] = scope.id;
+
+                network.send( 'PlayerTankHit', buffer, bufferView );
+
+                //
+
                 clearInterval( bullet.shotInterval );
                 bullet.visible = false;
                 bullet.active = false;
@@ -284,6 +302,9 @@ Game.Tower.prototype.animate = function ( delta ) {
 
 Game.Tower.prototype.changeTeam = function ( team ) {
 
+    team = this.arena.teamManager.getById( team );
+    if ( ! team ) return;
+
     this.team = team;
 
     this.object.top.material.materials[1].color.setHex( + team.color.replace('#', '0x') );
@@ -309,5 +330,16 @@ Game.Tower.prototype.updateHealth = function ( health ) {
 Game.Tower.prototype.update = function ( delta ) {
 
     this.animate( delta );
+
+};
+
+Game.Tower.prototype.addEventListeners = function () {
+
+    var scope = this;
+
+    this.addEventListener( 'TowerRotateTop', function ( event ) { scope.rotateTop( event.data[1] / 1000 ); });
+    this.addEventListener( 'TowerShoot', function ( event ) { scope.shoot( event.data[1] ); });
+    this.addEventListener( 'TowerChangeTeam', function ( event ) { scope.changeTeam( event.data[1] ); });
+    this.addEventListener( 'TowerHit', function ( event ) { scope.updateHealth( event.data[1] ); });
 
 };

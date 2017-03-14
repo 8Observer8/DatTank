@@ -11,10 +11,11 @@ Game.ControlsManager = function () {
     this.mousePos = new THREE.Vector2( 0.5, 0.5 );
     this.prevMousePos = new THREE.Vector2( 0.5, 0.5 );
 
-    this.moveForward = false;
-    this.moveBackward = false;
-    this.rotateLeft = false;
-    this.rotateRight = false;
+    this.moveX = 0;
+    this.moveZ = 0;
+
+    this.notMoveX = 0;
+    this.notMoveZ = 0;
 
 };
 
@@ -114,30 +115,30 @@ Game.ControlsManager.prototype.keyInit = function () {
 
             case 38: // up
             case 87: // w
-                if ( scope.moveForward ) break;
-                scope.moveForward = true;
-                scope.move( 1 );
+                if ( scope.moveX === 1 && ! scope.notMoveX ) break;
+                scope.moveX = 1;
+                scope.move();
                 break;
 
             case 37: // left
             case 65: // a
-                if ( scope.rotateLeft ) break;
-                scope.rotateLeft = true;
-                scope.rotateBase( 1 );
+                if ( scope.moveZ === 1 && ! scope.notMoveZ ) break;
+                scope.moveZ = 1;
+                scope.move();
                 break;
 
             case 40: // down
             case 83: // s
-                if ( scope.moveBackward ) break;
-                scope.moveBackward = true;
-                scope.move( -1 );
+                if ( scope.moveX === -1 && ! scope.notMoveX ) break;
+                scope.moveX = -1;
+                scope.move();
                 break;
 
             case 39: // right
             case 68: // d
-                if ( scope.rotateRight ) break;
-                scope.rotateRight = true;
-                scope.rotateBase( -1 );
+                if ( scope.moveZ === -1 && ! scope.notMoveZ ) break;
+                scope.moveZ = -1;
+                scope.move();
                 break;
 
             case 80: // 'p' key
@@ -155,26 +156,26 @@ Game.ControlsManager.prototype.keyInit = function () {
 
             case 38: // up
             case 87: // w
-                scope.moveForward = false;
-                scope.move( 0 );
+                scope.moveX = 0;
+                scope.move();
                 break;
 
             case 37: // left
             case 65: // a
-                scope.rotateLeft = false;
-                scope.rotateBase( 0 );
+                scope.moveZ = 0;
+                scope.move();
                 break;
 
             case 40: // down
             case 83: // s
-                scope.moveBackward = false;
-                scope.move( 0 );
+                scope.moveX = 0;
+                scope.move();
                 break;
 
             case 39: // right
             case 68: // d
-                scope.rotateRight = false;
-                scope.rotateBase( 0 );
+                scope.moveZ = 0;
+                scope.move();
                 break;
 
         }
@@ -209,7 +210,7 @@ Game.ControlsManager.prototype.rotateTop = (function () {
 
             bufferView[ 1 ] = Math.floor( angle * 10 );
 
-            network.send( 'TankRotateTop', buffer, bufferView );
+            network.send( 'PlayerTankRotateTop', buffer, bufferView );
 
         }
 
@@ -217,43 +218,51 @@ Game.ControlsManager.prototype.rotateTop = (function () {
 
 }) ();
 
-Game.ControlsManager.prototype.rotateBase = (function () {
-
-    var buffer = new ArrayBuffer( 4 );
-    var bufferView = new Int16Array( buffer );
-
-    return function ( direction ) {
-
-        bufferView[ 0 ] = 0;
-        bufferView[ 1 ] = direction;
-
-        network.send( 'PlayerTankRotateBase', buffer, bufferView );
-
-    };
-
-}) ();
-
 Game.ControlsManager.prototype.shoot = function () {
 
-    network.send( 'shoot' );
+    var buffer = new ArrayBuffer( 2 );
+    var bufferView = new Int16Array( buffer );
+
+    network.send( 'PlayerTankShoot', buffer, bufferView );
 
 };
 
-Game.ControlsManager.prototype.move = (function () {
+Game.ControlsManager.prototype.move = ( function () {
 
-    var buffer = new ArrayBuffer( 4 );
+    var buffer = new ArrayBuffer( 6 );
     var bufferView = new Int16Array( buffer );
 
-    return function ( direction ) {
+    return function () {
+
+        var scope = this; 
 
         bufferView[ 0 ] = 0;
-        bufferView[ 1 ] = direction;
+        bufferView[ 1 ] = scope.notMoveX ? 0 : scope.moveX;
+        bufferView[ 2 ] = scope.notMoveZ ? 0 : scope.moveZ;
+
+        Game.arena.me.moveProgress = false;
+        Game.arena.me.movePath = false;
+        Game.arena.me.movementStart = false;
 
         network.send( 'PlayerTankMove', buffer, bufferView );
 
     };
 
 }) ();
+
+Game.ControlsManager.prototype.stop = function () {
+
+    var scope = this;
+
+    scope.notMoveX = true;
+    scope.notMoveZ = true;
+
+    this.move();
+
+    scope.notMoveX = false;
+    scope.notMoveZ = false;
+
+};
 
 Game.ControlsManager.prototype.moveToPoint = (function () {
 
@@ -271,7 +280,7 @@ Game.ControlsManager.prototype.moveToPoint = (function () {
         bufferView[1] = destination.x;
         bufferView[2] = destination.z;
 
-        network.send( 'PlayerTankMoveToPoint', buffer, bufferView );
+        network.send( 'PlayerTankMoveByPath', buffer, bufferView );
 
     };
 

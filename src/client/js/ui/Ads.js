@@ -29,6 +29,9 @@ Game.Ads.playAipPreroll = function ( endCallback ) {
             eventAction: 'started'
         });
 
+        Game.Ads.endCallback();
+        return;
+
         adplayer.startPreRoll();
 
     } else {

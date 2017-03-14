@@ -55,7 +55,7 @@ Arena.prototype.addPlayer = function ( params ) {
 
     //
 
-    this.announce( 'playerJoined', player.toPublicJSON() );
+    this.announce( 'ArenaPlayerJoined', null, player.toPublicJSON() );
 
     //
 

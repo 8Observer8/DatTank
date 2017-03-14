@@ -74,7 +74,7 @@ Game.ViewManager.prototype.setupScene = function () {
 
     // add light
 
-    this.scene.add( new THREE.AmbientLight( 0xcccccc ) );
+    this.scene.add( new THREE.AmbientLight( 0xeeeeee ) );
 
     // user event handlers
 
@@ -122,10 +122,24 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
 
         mesh = new THREE.Mesh( model.geometry, new THREE.MultiMaterial( model.material ) );
         mesh.scale.set( decoration.scale.x, decoration.scale.y, decoration.scale.z );
+
+        var bbox = new THREE.Box3().setFromObject( mesh );
+
+        mesh.rotation.y = Math.random() * Math.PI;
+        var scale = Math.random() * 10;
+        if ( decoration.type === 'tree' ) mesh.scale.set( 20 + scale, 10 + Math.random() * 20, 20 + scale );
         mesh.position.set( decoration.position.x, decoration.position.y, decoration.position.z );
         mesh.name = decoration.type;
+
+        var box = new THREE.Mesh( new THREE.BoxGeometry( bbox.max.x - bbox.min.x, bbox.max.y - bbox.min.y, bbox.max.z - bbox.min.z ), new THREE.MeshBasicMaterial() );
+        box.position.copy( mesh.position );
+        box.rotation.copy( mesh.rotation );
+        box.position.y += 20;
+        box.material.visible = false;
+
         view.scene.add( mesh );
-        view.scene.intersections.push( mesh );
+        view.scene.add( box );
+        view.scene.intersections.push( box );
 
     }
 
@@ -143,11 +157,11 @@ Game.ViewManager.prototype.addMap = function () {
 
     if ( localStorage.getItem('hq') === 'true' ) {
 
-        groundTexture.repeat.set( 25, 25 );
+        groundTexture.repeat.set( 60, 60 );
 
     } else {
 
-        groundTexture.repeat.set( 10, 10 );
+        groundTexture.repeat.set( 50, 50 );
 
     }
 
@@ -158,6 +172,16 @@ Game.ViewManager.prototype.addMap = function () {
 
     ground.name = 'ground';
     this.ground = ground;
+
+    // add grass
+
+    for ( var i = 0; i < 20; i ++ ) {
+
+        this.addGrassZones();
+
+    }
+
+    // add edges
 
     var edgeTexture = resourceManager.getTexture( 'brick.jpg' );
     edgeTexture.wrapS = THREE.RepeatWrapping;
@@ -185,11 +209,27 @@ Game.ViewManager.prototype.addMap = function () {
 
 };
 
+Game.ViewManager.prototype.addGrassZones = function () {
+
+    var size = 2430;
+    var grassTexture = resourceManager.getTexture( 'Grass.png' );
+    var grass = new THREE.Mesh( new THREE.PlaneBufferGeometry( 240, 240 ), new THREE.MeshBasicMaterial({ map: grassTexture, color: 0x779977, transparent: true, depthWrite: false }) );
+    grass.rotation.x = - Math.PI / 2;
+    grass.rotation.z = Math.random() * Math.PI;
+    var scale = Math.random() / 2 + 0.8;
+    grass.scale.set( scale, scale, scale );
+    grass.material.transparent = true;
+    grass.position.set( ( Math.random() - 0.5 ) * size, 0.1 + Math.random() / 10, ( Math.random() - 0.5 ) * size );
+    this.scene.add( grass );
+
+};
+
 Game.ViewManager.prototype.addTeamZone = function () {
 
     var team;
     var name, color, x, z;
     var plane;
+    var baseTexture = resourceManager.getTexture( 'Base-ground.png' );
 
     for ( var i = 0, il = Game.arena.teamManager.teams.length; i < il; i ++ ) {
 
@@ -202,10 +242,14 @@ Game.ViewManager.prototype.addTeamZone = function () {
         x = team.spawnPosition.x;
         z = team.spawnPosition.z;
 
-        plane = new THREE.Mesh( new THREE.PlaneGeometry( 200, 200 ), new THREE.MeshBasicMaterial({ color: color, transparent: true }) );
+        plane = new THREE.Mesh( new THREE.PlaneGeometry( 200, 200 ), new THREE.MeshBasicMaterial({ map: baseTexture, color: color, transparent: true, opacity: 0.9, depthWrite: false }) );
+
+        plane.material.color.r = plane.material.color.r / 2 + 0.25;
+        plane.material.color.g = plane.material.color.g / 2 + 0.25;
+        plane.material.color.b = plane.material.color.b / 2 + 0.25;
+
         plane.rotation.x = - Math.PI / 2;
-        plane.material.opacity = 0.2;
-        plane.position.set( x, 1, z );
+        plane.position.set( x, 2, z );
         this.scene.add( plane );
         plane.name = 'team-spawn-plane-' + name;
 

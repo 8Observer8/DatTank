@@ -19,9 +19,35 @@ NetworkManager.prototype.init = function () {
 
     this.registerEvent( 'ArenaJoinRequest', 'in', 'json', 0 );
     this.registerEvent( 'ArenaJoinResponce', 'out', 'json', 1 );
+    this.registerEvent( 'ArenaPlayerJoined', 'out', 'json', 2 );
+    this.registerEvent( 'ArenaPlayerRespawn', 'out', 'json', 3 );
+    this.registerEvent( 'ArenaPlayerRespawn', 'in', 'bin', 4 );
 
-    this.registerEvent( 'TankRotateTop', 'out', 'bin', 100 );
-    this.registerEvent( 'TankRotateTop', 'in', 'bin', 101 );
+    this.registerEvent( 'PlayerTankRotateTop', 'out', 'bin', 100 );
+    this.registerEvent( 'PlayerTankRotateTop', 'in', 'bin', 101 );
+
+    this.registerEvent( 'PlayerTankMove', 'out', 'bin', 111 );
+    this.registerEvent( 'PlayerTankMove', 'in', 'bin', 112 );
+
+    this.registerEvent( 'PlayerTankMoveByPath', 'out', 'bin', 113 );
+    this.registerEvent( 'PlayerTankMoveByPath', 'in', 'bin', 114 );
+
+    this.registerEvent( 'PlayerTankShoot', 'out', 'bin', 115 );
+    this.registerEvent( 'PlayerTankShoot', 'in', 'bin', 116 );
+
+    this.registerEvent( 'PlayerTankHit', 'out', 'bin', 117 );
+    this.registerEvent( 'PlayerTankHit', 'in', 'bin', 118 );
+
+    this.registerEvent( 'PlayerTankDied', 'out', 'bin', 119 );
+
+    this.registerEvent( 'TowerRotateTop', 'out', 'bin', 200 );
+    this.registerEvent( 'TowerShoot', 'out', 'bin', 201 );
+    this.registerEvent( 'TowerChangeTeam', 'out', 'bin', 202 );
+
+    this.registerEvent( 'TowerHit', 'out', 'bin', 203 );
+    this.registerEvent( 'TowerHit', 'in', 'bin', 204 );
+
+    this.registerEvent( 'AddBox', 'out', 'json', 500 );
 
     // enable io
 

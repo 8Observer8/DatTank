@@ -92,19 +92,38 @@ Game.Arena.prototype.update = function ( time, delta ) {
 
 Game.Arena.prototype.proxyEventToPlayer = function ( data, eventName ) {
 
-    var player = this.playerManager.getById( data[0] );
+    var playerId = ( data.player ) ? data.player.id : data[0];
+    var player = this.playerManager.getById( playerId );
     player.dispatchEvent({ type: eventName, data: data });
 
 };
 
 Game.Arena.prototype.proxyEventToTower = function ( data, eventName ) {
 
-    // todo
+    var tower = this.towerManager.getById( data[0] );
+    tower.dispatchEvent({ type: eventName, data: data });
 
 };
 
 Game.Arena.prototype.addNetworkListeners = function () {
 
-    network.addMessageListener( 'TankRotateTop', this.proxyEventToPlayer.bind( this ) );
+    network.addMessageListener( 'ArenaPlayerJoined', this.newPlayerJoined.bind( this ) );
+    network.addMessageListener( 'ArenaPlayerRespawn', this.proxyEventToPlayer.bind( this ) );
+
+    //
+
+    network.addMessageListener( 'PlayerTankRotateTop', this.proxyEventToPlayer.bind( this ) );
+    network.addMessageListener( 'PlayerTankMove', this.proxyEventToPlayer.bind( this ) );
+    network.addMessageListener( 'PlayerTankMoveByPath', this.proxyEventToPlayer.bind( this ) );
+    network.addMessageListener( 'PlayerTankShoot', this.proxyEventToPlayer.bind( this ) );
+    network.addMessageListener( 'PlayerTankHit', this.proxyEventToPlayer.bind( this ) );
+    network.addMessageListener( 'PlayerTankDied', this.proxyEventToPlayer.bind( this ) );
+
+    //
+
+    network.addMessageListener( 'TowerRotateTop', this.proxyEventToTower.bind( this ) );
+    network.addMessageListener( 'TowerShoot', this.proxyEventToTower.bind( this ) );
+    network.addMessageListener( 'TowerChangeTeam', this.proxyEventToTower.bind( this ) );
+    network.addMessageListener( 'TowerHit', this.proxyEventToTower.bind( this ) );
 
 };

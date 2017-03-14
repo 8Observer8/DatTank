@@ -182,7 +182,29 @@ ArenaManager.prototype.addNetworkListeners = function () {
 
     //
 
-    networkManager.addMessageListener( 'TankRotateTop', this.proxyEventToPlayer.bind( this ) );
+    networkManager.addMessageListener( 'ArenaPlayerRespawn', this.proxyEventToPlayer.bind( this ) );
+    networkManager.addMessageListener( 'PlayerTankRotateTop', this.proxyEventToPlayer.bind( this ) );
+    networkManager.addMessageListener( 'PlayerTankMove', this.proxyEventToPlayer.bind( this ) );
+    networkManager.addMessageListener( 'PlayerTankMoveByPath', this.proxyEventToPlayer.bind( this ) );
+    networkManager.addMessageListener( 'PlayerTankShoot', this.proxyEventToPlayer.bind( this ) );
+
+    networkManager.addMessageListener( 'PlayerTankHit', function ( data, socket ) {
+
+        var player = socket.arena.playerManager.getById( data[0] );
+        if ( ! player ) return;
+
+        player.dispatchEvent({ type: 'PlayerTankHit', data: data });
+
+    });
+
+    networkManager.addMessageListener( 'TowerHit', function ( data, socket ) {
+
+        var tower = socket.arena.towerManager.getById( data[0] );
+        if ( ! tower ) return;
+
+        tower.dispatchEvent({ type: 'TowerHit', data: data });
+
+    });
 
 };
 

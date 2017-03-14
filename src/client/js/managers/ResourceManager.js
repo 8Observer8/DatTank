@@ -31,6 +31,8 @@ Game.ResourceManager = function () {
     this.texturesList = [
         'smoke.png',
         'Ground.jpg',
+        'Grass.png',
+        'Base-ground.png',
         'SelectionSprite.png',
         'brick.jpg'
     ];
