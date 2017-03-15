@@ -459,8 +459,10 @@ Player.prototype.update = function ( delta, time ) {
 
     if ( player.moveDirection.x !== 0 || player.moveDirection.y !== 0 ) {
 
-        player.position.x -= 3 * player.moveDirection.x * delta / ( 1000 * player.moveSpeed );
-        player.position.z += 3 * player.moveDirection.y * delta / ( 1000 * player.moveSpeed );
+        var moveDelta = Math.sqrt( Math.pow( player.moveDirection.x, 2 ) + Math.pow( player.moveDirection.y, 2 ) );
+
+        player.position.x -= Math.sign( player.moveDirection.x ) / moveDelta * player.moveSpeed * delta;
+        player.position.z += Math.sign( player.moveDirection.y ) / moveDelta * player.moveSpeed * delta;
 
     }
 

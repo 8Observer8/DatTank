@@ -5,7 +5,7 @@
 
 Game.ControlsManager = function () {
 
-    this.pressedKey = false;
+    this.pressedKey = {};
     this.pressedMouseKey = false;
 
     this.mousePos = new THREE.Vector2( 0.5, 0.5 );
@@ -109,34 +109,34 @@ Game.ControlsManager.prototype.keyInit = function () {
 
     function keyDown ( event ) {
 
-        scope.pressedKey[ event.keyCode ] = true;
+        scope.pressedKey[ '' + event.keyCode ] = true;
 
         switch ( event.keyCode ) {
 
             case 38: // up
             case 87: // w
-                if ( scope.moveX === 1 && ! scope.notMoveX ) break;
+                if ( scope.moveX === 1 || scope.notMoveX ) break;
                 scope.moveX = 1;
                 scope.move();
                 break;
 
             case 37: // left
             case 65: // a
-                if ( scope.moveZ === 1 && ! scope.notMoveZ ) break;
+                if ( scope.moveZ === 1 || scope.notMoveZ ) break;
                 scope.moveZ = 1;
                 scope.move();
                 break;
 
             case 40: // down
             case 83: // s
-                if ( scope.moveX === -1 && ! scope.notMoveX ) break;
+                if ( scope.moveX === -1 || scope.notMoveX ) break;
                 scope.moveX = -1;
                 scope.move();
                 break;
 
             case 39: // right
             case 68: // d
-                if ( scope.moveZ === -1 && ! scope.notMoveZ ) break;
+                if ( scope.moveZ === -1 || scope.notMoveZ ) break;
                 scope.moveZ = -1;
                 scope.move();
                 break;
@@ -152,35 +152,49 @@ Game.ControlsManager.prototype.keyInit = function () {
 
     function keyUp ( event ) {
 
+        var newDirection;
+
+        delete scope.pressedKey[ '' + event.keyCode ];
+
         switch ( event.keyCode ) {
 
             case 38: // up
             case 87: // w
-                scope.moveX = 0;
+
+                newDirection = ( scope.pressedKey[ 40 ] || scope.pressedKey[ 83 ] ) ? -1 : 0;
+                if ( scope.moveX === newDirection ) break;
+                scope.moveX = newDirection;
                 scope.move();
                 break;
 
             case 37: // left
             case 65: // a
-                scope.moveZ = 0;
+
+                newDirection = ( scope.pressedKey[ 39 ] || scope.pressedKey[ 68 ] ) ? -1 : 0;
+                if ( scope.moveZ === newDirection ) break;
+                scope.moveZ = newDirection;
                 scope.move();
                 break;
 
             case 40: // down
             case 83: // s
-                scope.moveX = 0;
+
+                newDirection = ( scope.pressedKey[ 38 ] || scope.pressedKey[ 87 ] ) ? 1 : 0;
+                if ( scope.moveX === newDirection ) break;
+                scope.moveX = newDirection;
                 scope.move();
                 break;
 
             case 39: // right
             case 68: // d
-                scope.moveZ = 0;
+
+                newDirection = ( scope.pressedKey[ 37 ] || scope.pressedKey[ 65 ] ) ? 1 : 0;
+                if ( scope.moveZ === newDirection ) break;
+                scope.moveZ = newDirection;
                 scope.move();
                 break;
 
         }
-
-        delete scope.pressedKey[ event.keyCode ];
 
     };
 
