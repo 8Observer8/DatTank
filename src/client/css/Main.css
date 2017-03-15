@@ -1091,7 +1091,7 @@ object {
     font-family: sans-serif;
 }
 
-.name-specifications {
+/*.name-specifications {
     position: absolute;
     right: 7%;
     top: 13%;
@@ -1099,9 +1099,9 @@ object {
     font-size: 30px;
     width: 212px;
     height: 30px;
-}
+}*/
 
-.specifications {
+/*.specifications {
     position: absolute;
     height: auto;
     width: 170px;
@@ -1114,6 +1114,62 @@ object {
     margin: 10px;
     font-size: 90%;
     color: #fff;
+}*/
+
+.container-specification  {
+    position: relative;
+    width: 242px;
+    height: 250px;
+    float: left;
+    top: calc(50% + -310px);
+    left: 5%;
+    background: #44403d;
+    border-radius: 7px;
+    box-shadow: 0px 5px 28px #171515;
+}
+
+.line-characteristics {
+    position: relative;
+    display: inline-flex;
+    width: 100%;
+    color: #a49999;
+    margin: 20px 0;
+}
+
+.specification-txt {
+    position: absolute;
+    right: 10px;
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 18px;
+}
+
+.specification-value {
+    position: absolute;
+    left: 10px;
+    margin: 0;
+}
+
+.counter-characteristicks {
+    position: absolute;
+    width: 90px;
+    height: 8px;
+    border-radius: 3px;
+    border: 1px solid #695e5e;
+    left: 70px;
+    top: 5px;
+}
+
+.counter-characteristicks .color {
+    background-color: #34b83c;
+    /*width: 90%;*/
+    height: 100%;
+    border-radius: inherit;
+}
+
+.skin-name {
+    color: #fffdfd;
+    margin: 20px 30px 14px;
 }
 
 .btn-pick {

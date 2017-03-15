@@ -19,6 +19,11 @@ Game.Garage = function () {
 
     this.currentTank = 0;
 
+    this.maxSpeed = 5;
+    this.maxRange = 21;
+    this.maxArmour = 30;
+    this.maxBullet = 12;
+
     this.clock = new THREE.Clock();
 
     //
@@ -209,16 +214,24 @@ Game.Garage.prototype.selectTank = function ( event ) {
 
     } else {
 
-        tankId = localStorage.getItem( 'currentTank' ) || 'USA-T54';
+        tankId = localStorage.getItem( 'currentTank' ) || 'USAT54';
         $( '#' + tankId.replace('-', '') ).addClass( 'active' );
 
     }
 
-    $('.name-specifications').html( Game.Tank.list[ tankId ].title );
-    $('.specification-text#speed').html( '&#x2623;&nbsp;&nbsp;&nbsp;' + 'Speed: ' + Game.Tank.list[ tankId ].speed + 'km/h' );
-    $('.specification-text#range').html( '&#x2623;&nbsp;&nbsp;&nbsp;' + 'Range: ' + Game.Tank.list[ tankId ].range + 'km' );
-    $('.specification-text#armour').html( '&#x2623;&nbsp;&nbsp;&nbsp;' + 'Armour: ' + Game.Tank.list[ tankId ].armour + 'mm' );
-    $('.specification-text#bullet').html( '&#x2623;&nbsp;&nbsp;&nbsp;' + 'Bullet: ' + Game.Tank.list[ tankId ].bullet + 'mm' );
+    tankId = ( Game.Tank.list[ tankId ] ) ? tankId : 'USAT54';
+
+    $('.skin-name').html( Game.Tank.list[ tankId ].title );
+    $('.specification-txt#speed').html( Game.Tank.list[ tankId ].speed + 'km/h');
+    $('.specification-txt#range').html( Game.Tank.list[ tankId ].range + 'km');
+    $('.specification-txt#armour').html( Game.Tank.list[ tankId ].armour + 'mm');
+    $('.specification-txt#bullet').html( Game.Tank.list[ tankId ].bullet + 'mm');
+
+    $('.counter-characteristicks#speed .color').css({'width': Math.round( 10 * Game.Tank.list[ tankId ].speed / this.maxSpeed ) +'%'});
+    $('.counter-characteristicks#range .color').css({'width': Math.round( 10 * Game.Tank.list[ tankId ].range / this.maxRange ) +'%'});
+    $('.counter-characteristicks#armour .color').css({'width': Math.round( 10 * Game.Tank.list[ tankId ].armour / this.maxArmour ) +'%'});
+    $('.counter-characteristicks#bullet .color').css({'width': Math.round( 10 * Game.Tank.list[ tankId ].bullet / this.maxBullet ) +'%'});
+
     this.currentTank = tankId;
 
     for ( var modelName in this.models ) {
