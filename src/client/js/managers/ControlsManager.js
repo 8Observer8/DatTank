@@ -54,22 +54,22 @@ Game.ControlsManager.prototype.mouseInit = function () {
 
             case 3:
 
-                view.raycaster.setFromCamera( scope.mousePos, view.camera );
+                // view.raycaster.setFromCamera( scope.mousePos, view.camera );
 
-                var intersections = view.raycaster.intersectObjects( [ view.scene.ground ] );
+                // var intersections = view.raycaster.intersectObjects( [ view.scene.ground ] );
 
-                if ( intersections[0] && intersections[0].object.name === 'ground' ) {
+                // if ( intersections[0] && intersections[0].object.name === 'ground' ) {
 
-                    if ( Math.abs( intersections[0].point.x ) > 2450 / 2 || Math.abs( intersections[0].point.z ) > 2450 / 2 ) {
+                //     if ( Math.abs( intersections[0].point.x ) > 2450 / 2 || Math.abs( intersections[0].point.z ) > 2450 / 2 ) {
 
-                        break;
+                //         break;
 
-                    }
+                //     }
 
-                    scope.moveToPoint( intersections[0].point );
-                    view.showDestinationPoint( intersections[0].point );
+                //     scope.moveToPoint( intersections[0].point );
+                //     view.showDestinationPoint( intersections[0].point );
 
-                }
+                // }
 
                 break;
 

@@ -121,20 +121,25 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
         }
 
         mesh = new THREE.Mesh( model.geometry, new THREE.MultiMaterial( model.material ) );
-        mesh.scale.set( decoration.scale.x, decoration.scale.y, decoration.scale.z );
 
         var bbox = new THREE.Box3().setFromObject( mesh );
+        var radius = Math.max( Math.abs( bbox.min.x ), Math.abs( bbox.min.z ), Math.abs( bbox.max.x ), Math.abs( bbox.max.z ) ) / 1.2;
 
+        mesh.scale.set( decoration.scale.x, decoration.scale.y, decoration.scale.z );
         mesh.rotation.y = Math.random() * Math.PI;
+
         var scale = Math.random() * 10;
         if ( decoration.type === 'tree' ) mesh.scale.set( 20 + scale, 10 + Math.random() * 20, 20 + scale );
         mesh.position.set( decoration.position.x, decoration.position.y, decoration.position.z );
         mesh.name = decoration.type;
 
-        var box = new THREE.Mesh( new THREE.BoxGeometry( bbox.max.x - bbox.min.x, bbox.max.y - bbox.min.y, bbox.max.z - bbox.min.z ), new THREE.MeshBasicMaterial() );
+        var box = new THREE.Mesh( new THREE.SphereGeometry( radius, 32, 32 ), new THREE.MeshBasicMaterial(/*{ transparent: true, opacity: 0.2 }*/) );
         box.position.copy( mesh.position );
         box.rotation.copy( mesh.rotation );
-        box.position.y += 20;
+        box.scale.copy( mesh.scale );
+        box.scale.y *= 1.5;
+
+        box.position.y += 15;
         box.material.visible = false;
 
         view.scene.add( mesh );

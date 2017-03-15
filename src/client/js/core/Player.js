@@ -475,8 +475,10 @@ Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
 
         }
 
-        player.position.x -= 3 * player.moveDirection.x * delta / ( 1000 * player.moveSpeed );
-        player.position.z += 3 * player.moveDirection.y * delta / ( 1000 * player.moveSpeed );
+        var moveDelta = Math.sqrt( Math.pow( player.moveDirection.x, 2 ) + Math.pow( player.moveDirection.y, 2 ) );
+
+        player.position.x -= Math.sign( player.moveDirection.x ) / moveDelta * player.moveSpeed * delta;
+        player.position.z += Math.sign( player.moveDirection.y ) / moveDelta * player.moveSpeed * delta;
 
         var targetRotation = Math.atan2( player.moveDirection.y, player.moveDirection.x ) - Math.PI / 2;
         var deltaRot = targetRotation - player.rotation;
