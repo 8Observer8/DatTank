@@ -27,11 +27,11 @@ Health.prototype.pickUp = function ( player ) {
 
     //
 
-    this.arena.announce( 'pickedBox', { id: this.id } );
+    this.arena.announce( 'PickedBox', null, { id: this.id } );
 
     if ( player.socket ) {
 
-        networkManager.send( player.socket, 'gotBox', { box: this.toJSON(), value: player.health } );
+        networkManager.send( 'PlayerGotBox', player.socket, null, { box: this.toJSON(), value: player.health } );
 
     }
 

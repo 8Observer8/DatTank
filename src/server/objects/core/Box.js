@@ -22,7 +22,7 @@ Box.prototype = {};
 
 Box.prototype.init = function () {
 
-    this.arena.announce( 'AddBox', null, this.toJSON() );
+    this.arena.announce( 'ArenaAddBox', null, this.toJSON() );
 
 };
 

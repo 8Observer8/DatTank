@@ -33,7 +33,7 @@ Game.NetworkManager.prototype.init = function ( callback ) {
     this.registerEvent( 'ArenaPlayerJoined', 'in', 'json', 2 );
     this.registerEvent( 'ArenaPlayerRespawn', 'in', 'json', 3 );
     this.registerEvent( 'ArenaPlayerRespawn', 'out', 'bin', 4 );
-
+    this.registerEvent( 'ArenaAddBox', 'in', 'json', 5 );
 
     //
 
@@ -53,6 +53,7 @@ Game.NetworkManager.prototype.init = function ( callback ) {
     this.registerEvent( 'PlayerTankHit', 'out', 'bin', 118 );
 
     this.registerEvent( 'PlayerTankDied', 'in', 'bin', 119 );
+    this.registerEvent( 'PlayerGotBox', 'in', 'json', 120 );
 
     //
 
@@ -65,9 +66,8 @@ Game.NetworkManager.prototype.init = function ( callback ) {
 
     //
 
-    this.registerEvent( 'AddBox', 'in', 'bin', 300 );
-    this.registerEvent( 'RemoveBox', 'in', 'bin', 301 );
-    this.registerEvent( 'PickedBox', 'in', 'bin', 302 );
+    this.registerEvent( 'RemoveBox', 'out', 'json', 301 );
+    this.registerEvent( 'PickedBox', 'in', 'json', 302 );
 
     // establish connection
 

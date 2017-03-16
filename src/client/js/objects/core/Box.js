@@ -7,6 +7,8 @@ Game.Box = function ( params ) {
 
     params = params || {};
 
+    EventDispatcher.call( this );
+
     this.id = params.id;
 
     this.position = new THREE.Vector3( params.position.x || 0, params.position.y || 0, params.position.z || 0 );
@@ -20,4 +22,4 @@ Game.Box = function ( params ) {
 
 };
 
-Game.Box.prototype = {};
+Game.Box.prototype = Object.create( EventDispatcher.prototype );

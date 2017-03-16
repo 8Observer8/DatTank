@@ -580,7 +580,10 @@ Game.Player.prototype.shoot = function ( shootId, ammo ) {
 
 };
 
-Game.Player.prototype.gotBox = function ( box, value ) {
+Game.Player.prototype.gotBox = function ( data ) {
+
+    var box = data.box;
+    var value = data.value;
 
     soundManager.menuSound.play();
 
@@ -721,6 +724,7 @@ Game.Player.prototype.addEventListeners = function () {
     this.addEventListener( 'PlayerTankShoot', function ( event ) { scope.shoot( event.data[1], event.data[2] ); });
     this.addEventListener( 'PlayerTankHit', function ( event ) { scope.updateHealth( event.data[1] ); });
     this.addEventListener( 'PlayerTankDied', function ( event ) { scope.die( event.data[1] ); });
+    this.addEventListener( 'PlayerGotBox', function ( event ) { scope.gotBox( event.data ); });
     this.addEventListener( 'PlayerTankMoveByPath', function ( event ) {
 
         var destination = { x: event.data[ event.data.length - 2 ], z: event.data[ event.data.length - 1 ] };

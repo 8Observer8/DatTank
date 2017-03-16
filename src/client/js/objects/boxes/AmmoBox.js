@@ -29,6 +29,8 @@ Game.Box.Ammo.prototype.init = function () {
 
     view.scene.add( this.mesh );
 
+    this.addEventListeners();
+
 };
 
 Game.Box.Ammo.prototype.remove = function () {
@@ -42,5 +44,14 @@ Game.Box.Ammo.prototype.update = function ( delta ) {
     this.animTime += delta;
     this.mesh.rotation.y = Math.sin( this.animTime / 600 );
     this.mesh.position.y = Math.sin( this.animTime / 300 ) + 20;
+
+};
+
+Game.Box.Ammo.prototype.addEventListeners = function () {
+
+    var scope = this;
+
+    this.addEventListener( 'PickedBox', function ( event ) { scope.remove(); });
+    this.addEventListener( 'RemoveBox', function ( event ) { scope.remove(); });
 
 };
