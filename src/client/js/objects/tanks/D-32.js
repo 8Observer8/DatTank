@@ -1,32 +1,28 @@
-/*
- * @author ohmed
- * Tank "USA-T54" unit class
-*/
 
-Game.Tank.UKBlackPrince = function ( params ) {
+Game.Tank.D32 = function ( params ) {
 
     Game.Tank.call( this, params );
 
     //
 
     this.model = {
-        top:    'Tank02_top.json',
-        base:   'Tank02_base.json'
+        top:    'Tank03_top.json',
+        base:   'Tank03_base.json'
     };
 
-    this.name = 'UK-Black-Prince';
+    this.name = 'D-32';
 
 };
 
-Game.Tank.UKBlackPrince.prototype = Object.create( Game.Tank.prototype );
+Game.Tank.D32.prototype = Object.create( Game.Tank.prototype );
 
-Game.Tank.UKBlackPrince.prototype.speed = 30;
-Game.Tank.UKBlackPrince.prototype.range = 160;
-Game.Tank.UKBlackPrince.prototype.armour = 252;
-Game.Tank.UKBlackPrince.prototype.bullet = 77;
-Game.Tank.UKBlackPrince.prototype.reloadTime = 40;
+Game.Tank.D32.prototype.speed = 50;
+Game.Tank.D32.prototype.range = 160;
+Game.Tank.D32.prototype.armour = 150;
+Game.Tank.D32.prototype.bullet = 77;
+Game.Tank.D32.prototype.reloadTime = 100;
 
-Game.Tank.UKBlackPrince.prototype.initModel = function () {
+Game.Tank.D32.prototype.initModel = function () {
 
     this.object = new THREE.Object3D();
 
@@ -98,7 +94,7 @@ Game.Tank.UKBlackPrince.prototype.initModel = function () {
 
 };
 
-Game.Tank.UKBlackPrince.prototype.destroy = function () {
+Game.Tank.D32.prototype.destroy = function () {
 
     var scope = this;
 
@@ -129,10 +125,10 @@ Game.Tank.UKBlackPrince.prototype.destroy = function () {
 
 //
 
-Game.Tank.list[ 'UKBlackPrince' ] = {
-    title:      'UK-Black-Prince',
-    speed:      Game.Tank.UKBlackPrince.prototype.speed,
-    range:      Game.Tank.UKBlackPrince.prototype.range,
-    armour:     Game.Tank.UKBlackPrince.prototype.armour,
-    bullet:     Game.Tank.UKBlackPrince.prototype.bullet
+Game.Tank.list[ 'D32' ] = {
+    title:      'D-32',
+    speed:      Game.Tank.D32.prototype.speed,
+    range:      Game.Tank.D32.prototype.range,
+    armour:     Game.Tank.D32.prototype.armour,
+    bullet:     Game.Tank.D32.prototype.bullet
 };

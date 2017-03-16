@@ -16,6 +16,7 @@ Game.Garage = function () {
     this.object = false;
     this.Tank_01 = false;
     this.Tank_02 = false;
+    this.Tank_03 = false;
 
     this.currentTank = 0;
 
@@ -102,6 +103,23 @@ Game.Garage.prototype.init = function () {
         scope.models['UKBlackPrince'] = model;
 
         loaded ++;
+
+    });
+
+    var loader3 = new THREE.JSONLoader();
+
+    loader3.load( 'resources/models/tank-demo-3.json', function ( geometry, materials ) {
+
+        var material = new THREE.MultiMaterial( materials );
+        model = new THREE.Mesh( geometry, material );
+        model.position.y += 0.3;
+        model.visible = false;
+
+        scope.scene.add( model );
+        scope.models['D32'] = model;
+
+        loaded ++;
+
 
     });
 

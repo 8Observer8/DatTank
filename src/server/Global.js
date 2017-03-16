@@ -55,6 +55,7 @@ global.Game.Tank = require('./objects/core/Tank');
 
 global.Game.Tank.USAT54 = require('./objects/tanks/USA-T54');
 global.Game.Tank.UKBlackPrince = require('./objects/tanks/UK-BlackPrince');
+global.Game.Tank.D32 = require('./objects/tanks/D-32');
 
 global.Game.Decoration = require('./objects/core/Decoration');
 

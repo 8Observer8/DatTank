@@ -24,6 +24,7 @@ Game.Tank.USAT54.prototype.speed = 43;
 Game.Tank.USAT54.prototype.range = 100;
 Game.Tank.USAT54.prototype.armour = 180;
 Game.Tank.USAT54.prototype.bullet = 105;
+Game.Tank.USAT54.prototype.reloadTime = 20;
 
 Game.Tank.USAT54.prototype.initModel = function () {
 

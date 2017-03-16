@@ -18,6 +18,9 @@ Game.ResourceManager = function () {
         'Tank02_base.json',
         'Tank02_top.json',
 
+        'Tank03_base.json',
+        'Tank03_top.json',
+
         'Tower_base.json',
         'Tower_top.json',
 

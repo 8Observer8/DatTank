@@ -76,6 +76,11 @@ Game.Player.prototype.selectTank = function ( tankName ) {
             this.tank = new Game.Tank.UKBlackPrince({ player: this });
             break;
 
+        case 'D-32':
+
+            this.tank = new Game.Tank.D32({ player: this });
+            break;
+
     }
 
     this.moveSpeed = this.moveSpeed * this.tank.speed / 40;

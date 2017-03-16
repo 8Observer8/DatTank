@@ -106,6 +106,11 @@ Player.prototype.selectTank = function ( tankName ) {
             this.tank = new Game.Tank.UKBlackPrince();
             break;
 
+        case 'D32':
+
+            this.tank = new Game.Tank.D32();
+            break;
+
         default:
 
             this.tank = new Game.Tank.USAT54();
