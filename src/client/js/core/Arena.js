@@ -90,10 +90,19 @@ Game.Arena.prototype.update = function ( time, delta ) {
 
 };
 
+Game.Arena.prototype.addBox = function ( data ) {
+
+    this.boxManager.add( data );
+
+};
+
 Game.Arena.prototype.proxyEventToPlayer = function ( data, eventName ) {
 
     var playerId = ( data.player ) ? data.player.id : data[0];
     var player = this.playerManager.getById( playerId );
+    player = ( ! player ) ? this.me : player;
+    if ( eventName === 'PlayerGotBox' ) console.log( data );
+
     player.dispatchEvent({ type: eventName, data: data });
 
 };
@@ -101,7 +110,19 @@ Game.Arena.prototype.proxyEventToPlayer = function ( data, eventName ) {
 Game.Arena.prototype.proxyEventToTower = function ( data, eventName ) {
 
     var tower = this.towerManager.getById( data[0] );
+    if ( ! tower ) return;
+
     tower.dispatchEvent({ type: eventName, data: data });
+
+};
+
+Game.Arena.prototype.proxyEventToBox = function ( data, eventName ) {
+
+    var boxId = ( data.id ) ? data.id : data[0];
+    var box = this.boxManager.getById( boxId );
+    if ( ! box ) return;
+
+    box.dispatchEvent({ type: eventName, data: data });
 
 };
 
@@ -109,6 +130,7 @@ Game.Arena.prototype.addNetworkListeners = function () {
 
     network.addMessageListener( 'ArenaPlayerJoined', this.newPlayerJoined.bind( this ) );
     network.addMessageListener( 'ArenaPlayerRespawn', this.proxyEventToPlayer.bind( this ) );
+    network.addMessageListener( 'ArenaAddBox', this.addBox.bind( this ) );
 
     //
 
@@ -118,6 +140,7 @@ Game.Arena.prototype.addNetworkListeners = function () {
     network.addMessageListener( 'PlayerTankShoot', this.proxyEventToPlayer.bind( this ) );
     network.addMessageListener( 'PlayerTankHit', this.proxyEventToPlayer.bind( this ) );
     network.addMessageListener( 'PlayerTankDied', this.proxyEventToPlayer.bind( this ) );
+    network.addMessageListener( 'PlayerGotBox', this.proxyEventToPlayer.bind( this ) );
 
     //
 
@@ -125,5 +148,10 @@ Game.Arena.prototype.addNetworkListeners = function () {
     network.addMessageListener( 'TowerShoot', this.proxyEventToTower.bind( this ) );
     network.addMessageListener( 'TowerChangeTeam', this.proxyEventToTower.bind( this ) );
     network.addMessageListener( 'TowerHit', this.proxyEventToTower.bind( this ) );
+
+    //
+
+    network.addMessageListener( 'RemoveBox', this.proxyEventToBox.bind( this ) );
+    network.addMessageListener( 'PickedBox', this.proxyEventToBox.bind( this ) );
 
 };

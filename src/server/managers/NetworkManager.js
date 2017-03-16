@@ -22,6 +22,7 @@ NetworkManager.prototype.init = function () {
     this.registerEvent( 'ArenaPlayerJoined', 'out', 'json', 2 );
     this.registerEvent( 'ArenaPlayerRespawn', 'out', 'json', 3 );
     this.registerEvent( 'ArenaPlayerRespawn', 'in', 'bin', 4 );
+    this.registerEvent( 'ArenaAddBox', 'out', 'json', 5 );
 
     this.registerEvent( 'PlayerTankRotateTop', 'out', 'bin', 100 );
     this.registerEvent( 'PlayerTankRotateTop', 'in', 'bin', 101 );
@@ -39,6 +40,7 @@ NetworkManager.prototype.init = function () {
     this.registerEvent( 'PlayerTankHit', 'in', 'bin', 118 );
 
     this.registerEvent( 'PlayerTankDied', 'out', 'bin', 119 );
+    this.registerEvent( 'PlayerGotBox', 'out', 'json', 120 );
 
     this.registerEvent( 'TowerRotateTop', 'out', 'bin', 200 );
     this.registerEvent( 'TowerShoot', 'out', 'bin', 201 );
@@ -47,7 +49,8 @@ NetworkManager.prototype.init = function () {
     this.registerEvent( 'TowerHit', 'out', 'bin', 203 );
     this.registerEvent( 'TowerHit', 'in', 'bin', 204 );
 
-    this.registerEvent( 'AddBox', 'out', 'json', 500 );
+    this.registerEvent( 'RemoveBox', 'out', 'json', 301 );
+    this.registerEvent( 'PickedBox', 'out', 'json', 302 );
 
     // enable io
 

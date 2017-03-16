@@ -74,7 +74,7 @@ Game.BoxManager.prototype.remove = function ( boxId ) {
 
 };
 
-Game.BoxManager.prototype.getBoxById = function ( id ) {
+Game.BoxManager.prototype.getById = function ( id ) {
 
     for ( var i = 0, il = this.boxes.length; i < il; i ++ ) {
 
