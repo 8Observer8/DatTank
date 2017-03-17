@@ -112,7 +112,7 @@ Game.Garage.prototype.init = function () {
 
         var material = new THREE.MultiMaterial( materials );
         model = new THREE.Mesh( geometry, material );
-        model.position.y += 0.3;
+        model.rotation.y += 80;
         model.visible = false;
 
         scope.scene.add( model );

@@ -50,7 +50,9 @@ Game.Tank.D32.prototype.initModel = function () {
     var top = new THREE.Mesh( tankTopModel.geometry, new THREE.MeshFaceMaterial( tankTopModel.material ) );
     top.castShadow = true;
     top.receiveShadow = true;
-    top.position.y = 0;
+    top.position.y = 20;
+    top.position.x = 0;
+    top.position.z = 7;
     top.scale.set( 20, 20, 20 );
 
     for ( var i = 0, il = top.material.materials.length; i < il; i ++ ) {
