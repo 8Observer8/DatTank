@@ -469,8 +469,32 @@ Player.prototype.update = function ( delta, time ) {
         player.position.x -= Math.sign( player.moveDirection.x ) / moveDelta * player.moveSpeed * delta;
         player.position.z += Math.sign( player.moveDirection.y ) / moveDelta * player.moveSpeed * delta;
 
+
+        if ( player.position.z > 1270 ) {
+
+            player.moveDirection.y = ( player.moveDirection.y !== 1 ) ? 0 : 0;
+            player.moveDirection.x = 0;
+
+        } else if ( player.position.z < -1270 ) {
+
+            player.moveDirection.y = ( player.moveDirection.y !== -1 ) ? 0 : 0;
+            player.moveDirection.x = 0;
+
+        } else if ( player.position.x > 1270 ) {
+
+            player.moveDirection.x = ( player.moveDirection.x !== 1 ) ? 0 : 0;
+            player.moveDirection.y = 0;
+
+        } else if ( player.position.x < -1270 ) {
+
+            player.moveDirection.x = ( player.moveDirection.x !== -1 ) ? 0 : 0;
+            player.moveDirection.y = 0;
+
+        }
+
     }
 
+    
     // update player PATH movement
 
     if ( ! player.movePath.length ) return;

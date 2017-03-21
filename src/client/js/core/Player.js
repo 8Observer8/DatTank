@@ -317,8 +317,10 @@ Game.Player.prototype.processPath = function ( path ) {
 
 Game.Player.prototype.move = function ( directionX, directionZ ) {
 
-    this.moveDirection.x = directionX;
-    this.moveDirection.y = directionZ;
+    var player = this;
+
+    player.moveDirection.x = directionX;
+    player.moveDirection.y = directionZ;
 
 };
 
@@ -491,6 +493,28 @@ Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
         if ( deltaRot < - Math.PI ) deltaRot = deltaRot + 2 * Math.PI;
         player.rotation = ( player.rotation + deltaRot / 10 ) % ( 2 * Math.PI );
         player.tank.setRotation( player.rotation );
+
+        if ( player.position.z > 1270 ) {
+
+            player.moveDirection.y = ( player.moveDirection.y !== 1 ) ? 0 : 0;
+            player.moveDirection.x = 0;
+
+        } else if ( player.position.z < -1270 ) {
+
+            player.moveDirection.y = ( player.moveDirection.y !== -1 ) ? 0 : 0;
+            player.moveDirection.x = 0;
+
+        } else if ( player.position.x > 1270 ) {
+
+            player.moveDirection.x = ( player.moveDirection.x !== 1 ) ? 0 : 0;
+            player.moveDirection.y = 0;
+
+        } else if ( player.position.x < -1270 ) {
+
+            player.moveDirection.x = ( player.moveDirection.x !== -1 ) ? 0 : 0;
+            player.moveDirection.y = 0;
+
+        }
 
     }
 
