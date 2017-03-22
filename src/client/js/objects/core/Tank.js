@@ -146,54 +146,54 @@ Game.Tank.prototype.setPosition = function ( x, y, z ) {
 
 };
 
-Game.Tank.prototype.showBlastSmoke = function () {
+// Game.Tank.prototype.showBlastSmoke = function () {
 
-    this.blastSmokeEnabled = true;
+//     this.blastSmokeEnabled = true;
 
-    var scale;
-    var sprite;
+//     var scale;
+//     var sprite;
 
-    if ( this.effects.blastSmoke ) {
+//     if ( this.effects.blastSmoke ) {
 
-        for ( var i = 0; i < this.effects.blastSmoke.length; i ++ ) {
+//         for ( var i = 0; i < this.effects.blastSmoke.length; i ++ ) {
 
-            sprite = this.effects.blastSmoke[ i ];
-            scale = 1 + i / 5;
+//             sprite = this.effects.blastSmoke[ i ];
+//             scale = 1 + i / 5;
 
-            sprite.scale.set( scale, scale, scale );
-            sprite.material.opacity = 0.8 - 0.8 / 5 * ( 5 - i );
-            sprite.visible = true;
+//             sprite.scale.set( scale, scale, scale );
+//             sprite.material.opacity = 0.8 - 0.8 / 5 * ( 5 - i );
+//             sprite.visible = true;
 
-        }
+//         }
 
-        return;
+//         return;
 
-    }
+//     }
 
-    var map = resourceManager.getTexture( 'smoke.png' );
-    var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff, fog: false, transparent: true } );
-    var sprite = new THREE.Sprite( material );
+//     var map = resourceManager.getTexture( 'smoke.png' );
+//     var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff, fog: false, transparent: true } );
+//     var sprite = new THREE.Sprite( material );
 
-    this.effects.blastSmoke = [];
-    material.depthTest = false;
-    material.depthWrite = false;
+//     this.effects.blastSmoke = [];
+//     material.depthTest = false;
+//     material.depthWrite = false;
 
-    for ( var i = 0; i <= 5; i ++ ) {
+//     for ( var i = 0; i <= 5; i ++ ) {
 
-        sprite = sprite.clone();
-        sprite.position.z = 0;
-        sprite.position.y = 0;
-        sprite.position.x = 2.9 + i / 7;
-        sprite.material = sprite.material.clone();
-        sprite.material.opacity = 0.8 - 0.8 / 5 * ( 5 - i );
-        scale = 1 + i / 5;
-        sprite.scale.set( scale, scale, scale );
-        this.object.top.add( sprite );        
-        this.effects.blastSmoke.push( sprite );
+//         sprite = sprite.clone();
+//         sprite.position.z = 0;
+//         sprite.position.y = 0;
+//         sprite.position.x = 1.9 + i / 7;
+//         sprite.material = sprite.material.clone();
+//         sprite.material.opacity = 0.8 - 0.8 / 5 * ( 5 - i );
+//         scale = 1 + i / 5;
+//         sprite.scale.set( scale, scale, scale );
+//         this.object.top.add( sprite );        
+//         this.effects.blastSmoke.push( sprite );
 
-    }
+//     }
 
-};
+// };
 
 Game.Tank.prototype.hideBlastSmoke = function () {
 

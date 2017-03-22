@@ -138,3 +138,52 @@ Game.Tank.list[ 'UKBlackPrince' ] = {
     armour:     Game.Tank.UKBlackPrince.prototype.armour,
     bullet:     Game.Tank.UKBlackPrince.prototype.bullet
 };
+
+Game.Tank.UKBlackPrince.prototype.showBlastSmoke = function () {
+
+    this.blastSmokeEnabled = true;
+
+    var scale;
+    var sprite;
+
+    if ( this.effects.blastSmoke ) {
+
+        for ( var i = 0; i < this.effects.blastSmoke.length; i ++ ) {
+
+            sprite = this.effects.blastSmoke[ i ];
+            scale = 1 + i / 5;
+
+            sprite.scale.set( scale, scale, scale );
+            sprite.material.opacity = 0.8 - 0.8 / 5 * ( 5 - i );
+            sprite.visible = true;
+
+        }
+
+        return;
+
+    }
+
+    var map = resourceManager.getTexture( 'smoke.png' );
+    var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff, fog: false, transparent: true } );
+    var sprite = new THREE.Sprite( material );
+
+    this.effects.blastSmoke = [];
+    material.depthTest = false;
+    material.depthWrite = false;
+
+    for ( var i = 0; i <= 5; i ++ ) {
+
+        sprite = sprite.clone();
+        sprite.position.z = 0;
+        sprite.position.y = 0;
+        sprite.position.x = 2.9 + i / 7;
+        sprite.material = sprite.material.clone();
+        sprite.material.opacity = 0.8 - 0.8 / 5 * ( 5 - i );
+        scale = 1 + i / 5;
+        sprite.scale.set( scale, scale, scale );
+        this.object.top.add( sprite );        
+        this.effects.blastSmoke.push( sprite );
+
+    }
+
+};

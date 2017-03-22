@@ -563,7 +563,7 @@ Game.Player.prototype.shoot = function ( shootId, ammo ) {
         ui.updateAmmo( this.ammo );
 
     }
-
+    
     this.tank.showBlastSmoke();
     this.tank.shootBullet().onHit( function ( target ) {
 
