@@ -483,9 +483,37 @@ Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
         }
 
         var moveDelta = Math.sqrt( Math.pow( player.moveDirection.x, 2 ) + Math.pow( player.moveDirection.y, 2 ) );
+        var newPositionX = player.position.x - Math.sign( player.moveDirection.x ) / moveDelta * player.moveSpeed * delta;
+        var newPositionZ = player.position.z + Math.sign( player.moveDirection.y ) / moveDelta * player.moveSpeed * delta;
 
-        player.position.x -= Math.sign( player.moveDirection.x ) / moveDelta * player.moveSpeed * delta;
-        player.position.z += Math.sign( player.moveDirection.y ) / moveDelta * player.moveSpeed * delta;
+        if ( newPositionZ > 1270 ) {
+
+            player.moveDirection.y = 0;
+            player.moveDirection.x = 0;
+            return;
+
+        } else if ( newPositionZ < -1270 ) {
+
+            player.moveDirection.y = 0;
+            player.moveDirection.x = 0;
+            return;
+
+        } else if ( newPositionX > 1270 ) {
+
+            player.moveDirection.x = 0;
+            player.moveDirection.y = 0;
+            return;
+
+        } else if ( newPositionX < -1270 ) {
+
+            player.moveDirection.x = 0;
+            player.moveDirection.y = 0;
+            return;
+
+        }
+
+        player.position.x = newPositionX;
+        player.position.z = newPositionZ;
 
         var targetRotation = Math.atan2( player.moveDirection.y, player.moveDirection.x ) - Math.PI / 2;
         var deltaRot = targetRotation - player.rotation;
@@ -494,27 +522,7 @@ Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
         player.rotation = ( player.rotation + deltaRot / 10 ) % ( 2 * Math.PI );
         player.tank.setRotation( player.rotation );
 
-        if ( player.position.z > 1270 ) {
 
-            player.moveDirection.y = ( player.moveDirection.y !== 1 ) ? 0 : 0;
-            player.moveDirection.x = 0;
-
-        } else if ( player.position.z < -1270 ) {
-
-            player.moveDirection.y = ( player.moveDirection.y !== -1 ) ? 0 : 0;
-            player.moveDirection.x = 0;
-
-        } else if ( player.position.x > 1270 ) {
-
-            player.moveDirection.x = ( player.moveDirection.x !== 1 ) ? 0 : 0;
-            player.moveDirection.y = 0;
-
-        } else if ( player.position.x < -1270 ) {
-
-            player.moveDirection.x = ( player.moveDirection.x !== -1 ) ? 0 : 0;
-            player.moveDirection.y = 0;
-
-        }
 
     }
 

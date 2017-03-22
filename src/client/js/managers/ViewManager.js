@@ -108,7 +108,7 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
         switch ( decoration.type ) {
 
             case 'tree':
-                model = tree;
+                model = tree || tree1;
                 break;
 
             case 'rock':

@@ -45,7 +45,14 @@ Game.ControlsManager.prototype.mouseInit = function () {
 
             case 1:
 
+                scope.fireTime = setInterval( function() {
+
+                    scope.shoot();
+
+                }, 500);
+                
                 scope.shoot();
+
                 break;
 
             case 2:
@@ -89,7 +96,24 @@ Game.ControlsManager.prototype.mouseInit = function () {
 
     function mouseUp ( event ) {
 
-        // todo
+        var mouseX = event.clientX;
+        var mouseY = event.clientY;
+
+        scope.mousePos.x = ( event.clientX / view.SCREEN_WIDTH ) * 2 - 1;
+        scope.mousePos.y = - ( event.clientY / view.SCREEN_HEIGHT ) * 2 + 1;
+
+        var mouseKeyPressed = event.which;
+
+        switch ( mouseKeyPressed ) {
+
+            case 1:
+
+                clearInterval( scope.fireTime );
+
+                break;
+
+        }
+
 
     };
 
