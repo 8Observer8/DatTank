@@ -60,7 +60,9 @@ global.Game.Tank.D32 = require('./objects/tanks/D-32');
 global.Game.Decoration = require('./objects/core/Decoration');
 
 global.Game.Decoration.Tree = require('./objects/decorations/Tree');
+global.Game.Decoration.Tree1 = require('./objects/decorations/Tree1');
 global.Game.Decoration.Stones = require('./objects/decorations/Stones');
+global.Game.Decoration.Stones1 = require('./objects/decorations/Stones1');
 
 // import Improvement boxes
 

@@ -94,7 +94,12 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
     var tree = resourceManager.getModel( 'tree.json' );
     tree.material[0].alphaTest = 0.5;
 
+    var tree1 = resourceManager.getModel( 'tree1.json' );
+    tree1.material[0].alphaTest = 0.5;
+
     var stone = resourceManager.getModel( 'stone.json' );
+    var stone1 = resourceManager.getModel( 'stone1.json' );
+    
     var model;
     var mesh;
     var decoration;
@@ -108,11 +113,19 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
         switch ( decoration.type ) {
 
             case 'tree':
-                model = tree || tree1;
+                model = tree;
+                break;
+
+            case 'tree1':
+                model = tree1;
                 break;
 
             case 'rock':
                 model = stone;
+                break;
+
+            case 'rock1':
+                model = stone1;
                 break;
 
             default:
@@ -129,7 +142,7 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
         mesh.rotation.y = Math.random() * Math.PI;
 
         var scale = Math.random() * 10;
-        if ( decoration.type === 'tree' ) mesh.scale.set( 20 + scale, 10 + Math.random() * 20, 20 + scale );
+        if ( decoration.type === 'tree' || decoration.type === 'tree1' ) mesh.scale.set( 20 + scale, 10 + Math.random() * 20, 20 + scale );
         mesh.position.set( decoration.position.x, decoration.position.y, decoration.position.z );
         mesh.name = decoration.type;
 

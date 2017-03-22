@@ -28,7 +28,10 @@ Game.ResourceManager = function () {
         'ammo_box.json',
 
         'tree.json',
-        'stone.json'
+        'tree1.json',
+        'stone.json',
+        'stone1.json',
+        'stone2.json'
     ];
 
     this.texturesList = [
