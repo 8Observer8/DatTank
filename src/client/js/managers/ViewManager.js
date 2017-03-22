@@ -97,9 +97,15 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
     var tree1 = resourceManager.getModel( 'tree1.json' );
     tree1.material[0].alphaTest = 0.5;
 
+    var tree2 = resourceManager.getModel( 'tree2.json' );
+    tree1.material[0].alphaTest = 0.5;
+
+    var tree3 = resourceManager.getModel( 'tree3.json' );
+    tree1.material[0].alphaTest = 0.5;
+
     var stone = resourceManager.getModel( 'stone.json' );
     var stone1 = resourceManager.getModel( 'stone1.json' );
-    
+
     var model;
     var mesh;
     var decoration;
@@ -118,6 +124,14 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
 
             case 'tree1':
                 model = tree1;
+                break;
+
+            case 'tree2':
+                model = tree2;
+                break;
+
+            case 'tree3':
+                model = tree3;
                 break;
 
             case 'rock':
