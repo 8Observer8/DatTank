@@ -385,7 +385,7 @@ Game.ViewManager.prototype.animate = function ( delta ) {
 
     }
 
-    if ( ! intersections || Game.arena.me.movePath.length || Math.abs( controls.mousePos.x - controls.prevMousePos.x ) > 0.02 || Math.abs( controls.mousePos.y - controls.prevMousePos.y ) > 0.02 ) {
+    if ( ! intersections || Game.arena.me.moveDirection.x || Game.arena.me.moveDirection.y || Math.abs( controls.mousePos.x - controls.prevMousePos.x ) > 0.02 || Math.abs( controls.mousePos.y - controls.prevMousePos.y ) > 0.02 ) {
 
         view.raycaster.setFromCamera( controls.mousePos, view.camera );
         intersections = view.raycaster.intersectObjects( [ view.ground ] );

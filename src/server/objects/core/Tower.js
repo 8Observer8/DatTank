@@ -122,6 +122,16 @@ Tower.prototype.hit = (function () {
 
     return function ( shootId, killer ) {
 
+        var scope = this;
+
+        if ( this.hits[ shootId ] ) return;
+        this.hits[ shootId ] = 1;
+        setTimeout( function () {
+
+            delete scope.hits[ shootId ];
+
+        }, 1000 );
+
         killer = this.arena.playerManager.getById( killer );
 
         if ( ! killer ) return;
