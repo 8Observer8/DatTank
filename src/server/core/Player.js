@@ -360,11 +360,21 @@ Player.prototype.hit = (function () {
 
     return function ( shootId, killer ) {
 
+        var scope = this;
+
         if ( this.status !== Player.Alive ) {
 
             return;
 
         }
+
+        if ( this.hits[ shootId ] ) return;
+        this.hits[ shootId ] = 1;
+        setTimeout( function () {
+
+            delete scope.hits[ shootId ];
+
+        }, 1000 );
 
         killer = this.arena.playerManager.getById( killer ) || this.arena.towerManager.getById( killer );
 
