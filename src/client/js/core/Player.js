@@ -549,11 +549,11 @@ Game.Player.prototype.shoot = function ( shootId, ammo ) {
 
     if ( this.status !== 'alive' ) return;
 
-    if ( Game.arena.me.id === this.id && ( this.ammo <= 0 || Date.now() - this.lastShot < 1000 ) ) {
+    // if ( Game.arena.me.id === this.id && ( this.ammo <= 0 || Date.now() - this.lastShot < 1000 ) ) {
 
-        return;
+    //     return;
 
-    }
+    // }
 
     //
 

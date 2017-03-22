@@ -10,7 +10,7 @@ var D32 = function ( params ) {
     this.armour = 150;
     this.bullet = 77;
     this.maxShells = 60;
-    this.reloadTime = 100;
+    this.reloadTime = 300;
 
 };
 
