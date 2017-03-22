@@ -156,7 +156,7 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
         mesh.rotation.y = Math.random() * Math.PI;
 
         var scale = Math.random() * 10;
-        if ( decoration.type === 'tree' || decoration.type === 'tree1' ) mesh.scale.set( 20 + scale, 10 + Math.random() * 20, 20 + scale );
+        if ( decoration.type === 'tree' || decoration.type === 'tree1' || decoration.type === 'tree2' || decoration.type === 'tree3' ) mesh.scale.set( 20 + scale, 10 + Math.random() * 20, 20 + scale );
         mesh.position.set( decoration.position.x, decoration.position.y, decoration.position.z );
         mesh.name = decoration.type;
 
