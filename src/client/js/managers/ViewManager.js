@@ -160,6 +160,8 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
         mesh.position.set( decoration.position.x, decoration.position.y, decoration.position.z );
         mesh.name = decoration.type;
 
+        this.addObjectShadow( decoration.type, mesh.position, mesh.scale, mesh.rotation );
+
         var box = new THREE.Mesh( new THREE.SphereGeometry( radius, 32, 32 ), new THREE.MeshBasicMaterial(/*{ transparent: true, opacity: 0.2 }*/) );
         box.position.copy( mesh.position );
         box.rotation.copy( mesh.rotation );
@@ -218,7 +220,7 @@ Game.ViewManager.prototype.addMap = function () {
     var edgeTexture = resourceManager.getTexture( 'brick.jpg' );
     edgeTexture.wrapS = THREE.RepeatWrapping;
     edgeTexture.wrapT = THREE.RepeatWrapping;
-    edgeTexture.repeat.set( 100, 1 );
+    edgeTexture.repeat.set( 50, 0.5 );
     var material = new THREE.MeshBasicMaterial({ color: 0x999999, map: edgeTexture });
 
     var border1 = new THREE.Mesh( new THREE.BoxGeometry( size + 2 * offset + wallWidth, wallWidth, wallWidth ), material );
@@ -238,6 +240,129 @@ Game.ViewManager.prototype.addMap = function () {
     var border4 = new THREE.Mesh( new THREE.BoxGeometry( size + 2 * offset - wallWidth, wallWidth, wallWidth ), material );
     border4.position.set( 0, 1, - size / 2 - offset );
     this.scene.add( border4 );
+
+};
+
+Game.ViewManager.prototype.addObjectShadow = function ( objectType, position, scale, rotation ) {
+
+    switch ( objectType ) {
+
+        case 'tree':
+
+            var treeShadowTexture = resourceManager.getTexture( 'treeshadow.png' );
+            var treeShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ map: treeShadowTexture, transparent: true, depthWrite: false, opacity: 0.4 }) );
+            treeShadow.material.transparent = true;
+            treeShadow.rotation.x = - Math.PI / 2;
+            treeShadow.position.copy( position );
+            treeShadow.position.y += 0.5;
+            treeShadow.scale.set( scale.y, scale.y, scale.y );
+            treeShadow.position.x += 2 * treeShadow.scale.y / 2 - 2;
+            treeShadow.position.z += 2 * treeShadow.scale.y / 2 - 4;
+            this.scene.add( treeShadow );
+
+            break;
+
+        case 'tree1':
+
+            var treeShadowTexture = resourceManager.getTexture( 'treeshadow1.png' );
+            var treeShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ map: treeShadowTexture, transparent: true, depthWrite: false, opacity: 0.4 }) );
+            treeShadow.material.transparent = true;
+            treeShadow.rotation.x = - Math.PI / 2;
+            treeShadow.position.copy( position );
+            treeShadow.position.y += 0.5;
+            treeShadow.scale.set( scale.y, scale.y, scale.y );
+            treeShadow.position.x += 2 * treeShadow.scale.y / 2 - 2;
+            treeShadow.position.z += 2 * treeShadow.scale.y / 2 - 4;
+            this.scene.add( treeShadow );
+
+            break;
+
+        case 'tree2':
+
+            var treeShadowTexture = resourceManager.getTexture( 'treeshadow2.png' );
+            var treeShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ map: treeShadowTexture, transparent: true, depthWrite: false, opacity: 0.4 }) );
+            treeShadow.material.transparent = true;
+            treeShadow.rotation.x = - Math.PI / 2;
+            treeShadow.position.copy( position );
+            treeShadow.position.y += 0.5;
+            treeShadow.scale.set( scale.y, scale.y, scale.y );
+            treeShadow.position.x += 2 * treeShadow.scale.y / 2 - 2;
+            treeShadow.position.z += 2 * treeShadow.scale.y / 2 - 4;
+            this.scene.add( treeShadow );
+
+            break;
+
+        case 'tree3':
+
+            var treeShadowTexture = resourceManager.getTexture( 'treeshadow3.png' );
+            var treeShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ map: treeShadowTexture, transparent: true, depthWrite: false, opacity: 0.4 }) );
+            treeShadow.material.transparent = true;
+            treeShadow.rotation.x = - Math.PI / 2;
+            treeShadow.position.copy( position );
+            treeShadow.position.y += 0.5;
+            treeShadow.scale.set( scale.y, scale.y, scale.y );
+            treeShadow.position.x += 2 * treeShadow.scale.y / 2 - 2;
+            treeShadow.position.z += 2 * treeShadow.scale.y / 2 - 4;
+            this.scene.add( treeShadow );
+
+            break;
+
+        case 'rock':
+
+            var rockShadowTexture = resourceManager.getTexture( 'stoneshadow.png' );
+            var rockShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture, transparent: true, depthWrite: false, opacity: 0.4 }) ); 
+            rockShadow.material.transparent = true;
+            rockShadow.rotation.x = - Math.PI / 2;
+            rockShadow.position.copy( position );
+            rockShadow.position.y += 0.5;
+            var scale = ( scale.x + scale.y + scale.z ) / 3;
+            rockShadow.scale.set( scale, scale, scale );
+            rockShadow.position.x += rockShadow.scale.y / 2;
+            rockShadow.position.z += rockShadow.scale.y / 2;
+            this.scene.add( rockShadow );
+
+            break;
+
+        case 'rock1':
+
+            var rockShadowTexture1 = resourceManager.getTexture( 'stoneshadow_1.png' );
+            var rockShadowTexture2 = resourceManager.getTexture( 'stoneshadow_2.png' );
+            var rockShadowTexture3 = resourceManager.getTexture( 'stoneshadow_3.png' );
+            var rockShadowTexture4 = resourceManager.getTexture( 'stoneshadow_4.png' );
+
+            if ( rotation.y < 0.9 ) {
+
+                var rockShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture1, transparent: true, depthWrite: false, opacity: 0.4 }) );
+
+            } else if ( rotation.y > 0.9 && rotation.y < 1.8 ) {
+
+                var rockShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture2, transparent: true, depthWrite: false, opacity: 0.4 }) );
+
+            } else if ( rotation.y > 1.8 && rotation.y < 2.7 ) {
+
+                var rockShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture3, transparent: true, depthWrite: false, opacity: 0.4 }) );
+
+            } else if ( rotation.y > 2.7 ) {
+
+                var rockShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture4, transparent: true, depthWrite: false, opacity: 0.4 }) );
+
+            }
+            
+            rockShadow.material.transparent = true;
+            rockShadow.rotation.x = - Math.PI / 2;
+            rockShadow.position.copy( position );
+            rockShadow.position.y += 0.5;
+            var scale = ( scale.x + scale.y + scale.z ) / 4;
+            rockShadow.scale.set( scale, scale, scale );
+            rockShadow.position.x += rockShadow.scale.y / 4;
+            rockShadow.position.z += rockShadow.scale.y / 4 + 2;
+            this.scene.add( rockShadow );
+
+            break;
+
+        default:
+
+    }
 
 };
 

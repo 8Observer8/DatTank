@@ -41,7 +41,19 @@ Game.ResourceManager = function () {
         'Grass.png',
         'Base-ground.png',
         'SelectionSprite.png',
-        'brick.jpg'
+        'brick.jpg',
+        'treeshadow.png',
+        'treeshadow1.png',
+        'treeshadow2.png',
+        'treeshadow3.png',
+
+        'stoneshadow.png',
+
+        'stoneshadow_1.png',
+        'stoneshadow_2.png',
+        'stoneshadow_3.png',
+        'stoneshadow_4.png'
+
     ];
 
     this.soundsList = [
