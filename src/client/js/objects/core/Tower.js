@@ -103,7 +103,8 @@ Game.Tower.prototype.initBullets = function () {
 
     for ( var i = 0; i < 5; i ++ ) {
 
-        var bullet = new THREE.Mesh( new THREE.BoxGeometry( 3, 3, 3 ), new THREE.MeshLambertMaterial({ color: 0xff0000 }) );
+        //var bullet = new THREE.Mesh( new THREE.BoxGeometry( 3, 3, 3 ), new THREE.MeshLambertMaterial({ color: 0xff0000 }) );
+        var bullet = new THREE.Mesh( new THREE.SphereGeometry( 3.4, 30, 30 ), new THREE.MeshLambertMaterial({ color: 0xff0000 }) );
         bullet.visible = false;
         bullet.active = false;
 
