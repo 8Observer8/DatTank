@@ -332,19 +332,19 @@ Game.ViewManager.prototype.addObjectShadow = function ( objectType, position, sc
 
             if ( rotation.y < 0.9 ) {
 
-                var rockShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture1, transparent: true, depthWrite: false, opacity: 0.4 }) );
+                var rockShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 5, 5 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture1, transparent: true, depthWrite: false, opacity: 0.4 }) );
 
             } else if ( rotation.y > 0.9 && rotation.y < 1.8 ) {
 
-                var rockShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture2, transparent: true, depthWrite: false, opacity: 0.4 }) );
+                var rockShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 5, 5 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture2, transparent: true, depthWrite: false, opacity: 0.4 }) );
 
             } else if ( rotation.y > 1.8 && rotation.y < 2.7 ) {
 
-                var rockShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture3, transparent: true, depthWrite: false, opacity: 0.4 }) );
+                var rockShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 5, 5 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture3, transparent: true, depthWrite: false, opacity: 0.4 }) );
 
             } else if ( rotation.y > 2.7 ) {
 
-                var rockShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture4, transparent: true, depthWrite: false, opacity: 0.4 }) );
+                var rockShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 5, 5 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture4, transparent: true, depthWrite: false, opacity: 0.4 }) );
 
             }
             
@@ -355,7 +355,7 @@ Game.ViewManager.prototype.addObjectShadow = function ( objectType, position, sc
             var scale = ( scale.x + scale.y + scale.z ) / 4;
             rockShadow.scale.set( scale, scale, scale );
             rockShadow.position.x += rockShadow.scale.y / 4;
-            rockShadow.position.z += rockShadow.scale.y / 4 + 2;
+            rockShadow.position.z += rockShadow.scale.y / 4;
             this.scene.add( rockShadow );
 
             break;
