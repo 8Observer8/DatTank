@@ -105,6 +105,7 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
 
     var stone = resourceManager.getModel( 'stone.json' );
     var stone1 = resourceManager.getModel( 'stone1.json' );
+    var stone2 = resourceManager.getModel( 'stone2.json' );
 
     var model;
     var mesh;
@@ -142,6 +143,10 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
                 model = stone1;
                 break;
 
+            case 'rock2':
+                model = stone2;
+                break;
+
             default:
                 console.log('No proper decoration model.');
 
@@ -157,6 +162,7 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
 
         var scale = Math.random() * 10;
         if ( decoration.type === 'tree' || decoration.type === 'tree1' || decoration.type === 'tree2' || decoration.type === 'tree3' ) mesh.scale.set( 20 + scale, 10 + Math.random() * 20, 20 + scale );
+
         mesh.position.set( decoration.position.x, decoration.position.y, decoration.position.z );
         mesh.name = decoration.type;
 
@@ -174,6 +180,13 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
         view.scene.add( mesh );
         view.scene.add( box );
         view.scene.intersections.push( box );
+
+        if ( decoration.type === 'rock2' ) {
+
+            view.scene.remove( box );
+            mesh.scale.set( 10 + scale, 10 + Math.random() * 5, 10 + scale);
+
+        }
 
     }
 

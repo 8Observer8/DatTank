@@ -32,7 +32,8 @@ Game.ResourceManager = function () {
         'tree2.json',
         'tree3.json',
         'stone.json',
-        'stone1.json'
+        'stone1.json',
+        'stone2.json'
     ];
 
     this.texturesList = [
