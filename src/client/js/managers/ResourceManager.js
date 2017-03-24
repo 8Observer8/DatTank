@@ -28,7 +28,12 @@ Game.ResourceManager = function () {
         'ammo_box.json',
 
         'tree.json',
-        'stone.json'
+        'tree1.json',
+        'tree2.json',
+        'tree3.json',
+        'stone.json',
+        'stone1.json',
+        'stone2.json'
     ];
 
     this.texturesList = [
@@ -37,7 +42,19 @@ Game.ResourceManager = function () {
         'Grass.png',
         'Base-ground.png',
         'SelectionSprite.png',
-        'brick.jpg'
+        'brick.jpg',
+        'treeshadow.png',
+        'treeshadow1.png',
+        'treeshadow2.png',
+        'treeshadow3.png',
+
+        'stoneshadow.png',
+
+        'stoneshadow_1.png',
+        'stoneshadow_2.png',
+        'stoneshadow_3.png',
+        'stoneshadow_4.png'
+
     ];
 
     this.soundsList = [

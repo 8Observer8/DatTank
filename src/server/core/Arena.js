@@ -33,8 +33,13 @@ Arena.prototype.init = function ( callback ) {
     this.teamManager.init( 4 );
     this.towerManager.init();
     this.decorationManager.init({
-        trees: { type: 'Tree', count: 190 },
-        rocks: { type: 'Stones', count: 80 }
+        trees: { type: 'Tree', count: 80 },
+        trees1: { type: 'Tree1', count: 60 },
+        trees2: { type: 'Tree2', count: 20 },
+        trees3: { type: 'Tree3', count: 20 },
+        rocks: { type: 'Stones', count: 40 },
+        rocks1: { type: 'Stones1', count: 20 },
+        rocks2: { type: 'Stones2', count: 20 }
     });
     this.botManager.init();
 
