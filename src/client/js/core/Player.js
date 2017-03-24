@@ -731,6 +731,8 @@ Game.Player.prototype.die = function ( killer ) {
     this.movePath = false;
     this.moveProgress = false;
     this.movementDurationMap = false;
+    this.moveDirection.x = 0;
+    this.moveDirection.y = 0;
 
     ui.updateLeaderboard( Game.arena.playerManager.players, Game.arena.me );
 
