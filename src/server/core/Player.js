@@ -431,6 +431,9 @@ Player.prototype.die = (function () {
         this.moveProgress = false;
         this.movementDurationMap = false;
 
+        this.moveDirection.x = 0;
+        this.moveDirection.y = 0;
+
         bufferView[ 1 ] = this.id;
         bufferView[ 2 ] = killer.id;
 
