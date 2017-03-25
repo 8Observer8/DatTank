@@ -451,6 +451,8 @@ Game.Player.prototype.updateMovementByPath = function ( time, delta ) {
             player.position.x += dx;
             player.position.z += dz;
 
+            player.tank.addTrack();
+
             player.tank.setPosition( player.position.x, player.position.y, player.position.z );
 
         }
@@ -511,6 +513,8 @@ Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
             return;
 
         }
+
+        player.tank.addTrack();
 
         player.position.x = newPositionX;
         player.position.z = newPositionZ;

@@ -23,6 +23,12 @@ Game.Tank = function ( params ) {
 
     //
 
+    this.prevPosition = new THREE.Vector3();
+    this.tracksOffset = 0;
+    this.tracks = [];
+
+    //
+
     this.type = 'tank';
     this.name = false;
 
@@ -35,6 +41,7 @@ Game.Tank.prototype.init = function () {
     this.initModel();
     this.initBullets();
     this.initSounds();
+    this.initTracks();
     this.initLabel();
 
 };
@@ -61,6 +68,31 @@ Game.Tank.prototype.initBullets = function () {
         if ( this.player.id !== Game.arena.me ) bullet.soundShooting.setVolume(0.4);
 
         this.object.add( bullet.soundShooting );
+
+    }
+
+};
+
+Game.Tank.prototype.initTracks = function () {
+
+    var material;
+    var plane1, plane2;
+
+    for ( var i = 0; i < 35; i ++ ) {
+
+        material = new THREE.MeshBasicMaterial({ color: 0x140a00, transparent: true, opacity: 0.7, depthWrite: false });
+        plane1 = new THREE.Mesh( new THREE.PlaneBufferGeometry( 6, 2 ), material );
+        plane2 = new THREE.Mesh( new THREE.PlaneBufferGeometry( 6, 2 ), material );
+        this.tracks.push({
+            left: plane1,
+            right: plane2,
+            material: material,
+            position: new THREE.Vector3(),
+            lastUpdate: 0
+        });
+
+        view.scene.add( plane1 );
+        view.scene.add( plane2 );
 
     }
 
@@ -127,6 +159,58 @@ Game.Tank.prototype.reset = function () {
 
     this.hideSmoke();
     this.hideBlastSmoke();
+
+};
+
+Game.Tank.prototype.addTrack = function () {
+
+    var rotation = this.object.rotation.y;
+    var position = this.object.position;
+
+    if ( Math.sqrt( Math.pow( this.prevPosition.x - position.x, 2 ) + Math.pow( this.prevPosition.z - position.z, 2 ) ) > 4 ) {
+
+        var dist = 12;
+        var plane1, plane2;
+
+        var track = this.tracks[ this.tracksOffset ];
+        plane1 = track.left;
+        plane2 = track.right;
+
+        track.lastUpdate = Date.now();
+
+        plane1.rotation.x = - Math.PI / 2;
+        plane1.rotation.z = rotation;
+        plane1.position.copy( position );
+        plane1.position.x += dist * Math.cos( - rotation );
+        plane1.position.z += dist * Math.sin( - rotation );
+        plane1.position.y = 2.2;
+
+        plane2.rotation.x = - Math.PI / 2;
+        plane2.position.copy( position );
+        plane2.rotation.z = rotation;
+        plane2.position.x -= ( dist - 5 ) * Math.cos( - rotation );
+        plane2.position.z -= ( dist - 5 ) * Math.sin( - rotation );
+        plane2.position.y = 2.2;
+
+        track.position.copy( position );
+
+        this.prevPosition.x = position.x;
+        this.prevPosition.z = position.z;
+
+        this.tracksOffset ++;
+        if ( this.tracksOffset === 35 ) this.tracksOffset = 0;
+
+    }
+
+};
+
+Game.Tank.prototype.updateTracks = function () {
+
+    for ( var i = 0; i < this.tracks.length; i ++ ) {
+
+        this.tracks[ i ].material.opacity = 1 - Math.min( Date.now() - this.tracks[ i ].lastUpdate, 2300 ) / 2300;
+
+    }
 
 };
 
@@ -500,6 +584,7 @@ Game.Tank.prototype.update = function ( delta ) {
     this.updateSmoke();
     this.updateBlastSmoke();
     this.updateBullets();
+    this.updateTracks();
     this.animate( delta );
 
 };
