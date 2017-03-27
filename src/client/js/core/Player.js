@@ -718,6 +718,8 @@ Game.Player.prototype.die = function ( killer ) {
 
         }, 1400 );
 
+        controls.stopShooting();
+
     }
 
     ui.showKills( killer, this );

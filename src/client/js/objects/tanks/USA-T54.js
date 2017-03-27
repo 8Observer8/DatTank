@@ -53,7 +53,7 @@ Game.Tank.USAT54.prototype.initModel = function () {
     //
 
     var tankShadowTexture = resourceManager.getTexture( 'shadowTank.png' );
-    var tankShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: tankShadowTexture, transparent: true, depthWrite: false, opacity: 0.4 }) );
+    var tankShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: tankShadowTexture, transparent: true, depthWrite: false, opacity: 0.7 }) );
     tankShadow.scale.set( 15, 17, 17 );
     tankShadow.rotation.x = - Math.PI / 2;
     tankShadow.position.y += 0.5;

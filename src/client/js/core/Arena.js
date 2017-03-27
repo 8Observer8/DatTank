@@ -15,6 +15,7 @@ Game.Arena = function () {
     this.playerManager = new Game.PlayerManager( this );
     this.teamManager = new Game.TeamManager( this );
     this.towerManager = new Game.TowerManager( this );
+    this.controlsManager = new Game.ControlsManager( this );
 
 };
 

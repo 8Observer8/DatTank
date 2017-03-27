@@ -45,6 +45,7 @@ Game.ControlsManager.prototype.mouseInit = function () {
 
             case 1:
 
+                clearInterval( scope.fireTime );
                 scope.fireTime = setInterval( function() {
 
                     scope.shoot();
@@ -108,7 +109,7 @@ Game.ControlsManager.prototype.mouseInit = function () {
 
             case 1:
 
-                clearInterval( scope.fireTime );
+                scope.stopShooting();
 
                 break;
 
@@ -124,6 +125,14 @@ Game.ControlsManager.prototype.mouseInit = function () {
     viewport.addEventListener( 'mousedown', mouseDown );
     viewport.addEventListener( 'mousemove', mouseMove );
     viewport.addEventListener( 'mouseup', mouseUp );
+
+};
+
+Game.ControlsManager.prototype.stopShooting = function () {
+
+    var scope = this;
+    clearInterval( scope.fireTime );
+    scope.fireTime = false;
 
 };
 
