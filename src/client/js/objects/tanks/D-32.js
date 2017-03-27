@@ -47,6 +47,16 @@ Game.Tank.D32.prototype.initModel = function () {
 
     //
 
+    var tankShadowTexture = resourceManager.getTexture( 'shadowTank.png' );
+    var tankShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: tankShadowTexture, transparent: true, depthWrite: false, opacity: 0.4 }) );
+    tankShadow.scale.set( 15, 17, 17 );
+    tankShadow.rotation.x = - Math.PI / 2;
+    tankShadow.position.y += 0.5;
+
+    this.object.add( tankShadow );
+
+    //
+
     var top = new THREE.Mesh( tankTopModel.geometry, new THREE.MeshFaceMaterial( tankTopModel.material ) );
     top.castShadow = true;
     top.receiveShadow = true;

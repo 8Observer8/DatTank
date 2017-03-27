@@ -43,7 +43,20 @@ Bot.prototype = {};
 
 Bot.prototype.init = function () {
 
-    var tank = ( Math.random() < 0.5 ) ? 'USAT54' : 'UKBlackPrince';
+    if ( Math.random() < 0.3 ) {
+
+        var tank = 'USAT54';
+
+    } else if ( Math.random() > 0.3 && Math.random() < 0.6 ) {
+
+        var tank = 'D32';
+
+    } else if ( Math.random() > 0.6 ) {
+
+        var tank = 'UKBlackPrince';
+
+    }
+
     this.player = this.arena.addPlayer({ login: this.login, tank: tank, socket: false });
     this.player.ammo = 10000000;
     this.player.bot = this;
