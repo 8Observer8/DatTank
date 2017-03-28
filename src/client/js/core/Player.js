@@ -451,6 +451,8 @@ Game.Player.prototype.updateMovementByPath = function ( time, delta ) {
             player.position.x += dx;
             player.position.z += dz;
 
+            player.tank.addTrack();
+
             player.tank.setPosition( player.position.x, player.position.y, player.position.z );
 
         }
@@ -511,6 +513,8 @@ Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
             return;
 
         }
+
+        player.tank.addTrack();
 
         player.position.x = newPositionX;
         player.position.z = newPositionZ;
@@ -714,6 +718,8 @@ Game.Player.prototype.die = function ( killer ) {
 
         }, 1400 );
 
+        controls.stopShooting();
+
     }
 
     ui.showKills( killer, this );
@@ -731,6 +737,8 @@ Game.Player.prototype.die = function ( killer ) {
     this.movePath = false;
     this.moveProgress = false;
     this.movementDurationMap = false;
+    this.moveDirection.x = 0;
+    this.moveDirection.y = 0;
 
     ui.updateLeaderboard( Game.arena.playerManager.players, Game.arena.me );
 

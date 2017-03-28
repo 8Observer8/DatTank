@@ -23,6 +23,12 @@ Game.Tank = function ( params ) {
 
     //
 
+    this.prevPosition = new THREE.Vector3();
+    this.tracksOffset = 0;
+    this.tracks = [];
+
+    //
+
     this.type = 'tank';
     this.name = false;
 
@@ -35,7 +41,10 @@ Game.Tank.prototype.init = function () {
     this.initModel();
     this.initBullets();
     this.initSounds();
+    this.initTracks();
     this.initLabel();
+
+    setTimeout( this.showExplosion.bind( this ), 4000 );
 
 };
 
@@ -61,6 +70,31 @@ Game.Tank.prototype.initBullets = function () {
         if ( this.player.id !== Game.arena.me ) bullet.soundShooting.setVolume(0.4);
 
         this.object.add( bullet.soundShooting );
+
+    }
+
+};
+
+Game.Tank.prototype.initTracks = function () {
+
+    var material;
+    var plane1, plane2;
+
+    for ( var i = 0; i < 35; i ++ ) {
+
+        material = new THREE.MeshBasicMaterial({ color: 0x140a00, transparent: true, opacity: 0.7, depthWrite: false });
+        plane1 = new THREE.Mesh( new THREE.PlaneBufferGeometry( 6, 2 ), material );
+        plane2 = new THREE.Mesh( new THREE.PlaneBufferGeometry( 6, 2 ), material );
+        this.tracks.push({
+            left: plane1,
+            right: plane2,
+            material: material,
+            position: new THREE.Vector3(),
+            lastUpdate: 0
+        });
+
+        view.scene.add( plane1 );
+        view.scene.add( plane2 );
 
     }
 
@@ -130,6 +164,58 @@ Game.Tank.prototype.reset = function () {
 
 };
 
+Game.Tank.prototype.addTrack = function () {
+
+    var rotation = this.object.rotation.y;
+    var position = this.object.position;
+
+    if ( Math.sqrt( Math.pow( this.prevPosition.x - position.x, 2 ) + Math.pow( this.prevPosition.z - position.z, 2 ) ) > 4 ) {
+
+        var dist = 12;
+        var plane1, plane2;
+
+        var track = this.tracks[ this.tracksOffset ];
+        plane1 = track.left;
+        plane2 = track.right;
+
+        track.lastUpdate = Date.now();
+
+        plane1.rotation.x = - Math.PI / 2;
+        plane1.rotation.z = rotation;
+        plane1.position.copy( position );
+        plane1.position.x += dist * Math.cos( - rotation );
+        plane1.position.z += dist * Math.sin( - rotation );
+        plane1.position.y = 2.2;
+
+        plane2.rotation.x = - Math.PI / 2;
+        plane2.position.copy( position );
+        plane2.rotation.z = rotation;
+        plane2.position.x -= ( dist - 5 ) * Math.cos( - rotation );
+        plane2.position.z -= ( dist - 5 ) * Math.sin( - rotation );
+        plane2.position.y = 2.2;
+
+        track.position.copy( position );
+
+        this.prevPosition.x = position.x;
+        this.prevPosition.z = position.z;
+
+        this.tracksOffset ++;
+        if ( this.tracksOffset === 35 ) this.tracksOffset = 0;
+
+    }
+
+};
+
+Game.Tank.prototype.updateTracks = function () {
+
+    for ( var i = 0; i < this.tracks.length; i ++ ) {
+
+        this.tracks[ i ].material.opacity = 1 - Math.min( Date.now() - this.tracks[ i ].lastUpdate, 2300 ) / 2300;
+
+    }
+
+};
+
 Game.Tank.prototype.setRotation = function ( angle ) {
 
     this.object.rotation.y = angle;
@@ -147,55 +233,6 @@ Game.Tank.prototype.setPosition = function ( x, y, z ) {
     this.object.position.set( x, y, z );
 
 };
-
-// Game.Tank.prototype.showBlastSmoke = function () {
-
-//     this.blastSmokeEnabled = true;
-
-//     var scale;
-//     var sprite;
-
-//     if ( this.effects.blastSmoke ) {
-
-//         for ( var i = 0; i < this.effects.blastSmoke.length; i ++ ) {
-
-//             sprite = this.effects.blastSmoke[ i ];
-//             scale = 1 + i / 5;
-
-//             sprite.scale.set( scale, scale, scale );
-//             sprite.material.opacity = 0.8 - 0.8 / 5 * ( 5 - i );
-//             sprite.visible = true;
-
-//         }
-
-//         return;
-
-//     }
-
-//     var map = resourceManager.getTexture( 'smoke.png' );
-//     var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff, fog: false, transparent: true } );
-//     var sprite = new THREE.Sprite( material );
-
-//     this.effects.blastSmoke = [];
-//     material.depthTest = false;
-//     material.depthWrite = false;
-
-//     for ( var i = 0; i <= 5; i ++ ) {
-
-//         sprite = sprite.clone();
-//         sprite.position.z = 0;
-//         sprite.position.y = 0;
-//         sprite.position.x = 1.9 + i / 7;
-//         sprite.material = sprite.material.clone();
-//         sprite.material.opacity = 0.8 - 0.8 / 5 * ( 5 - i );
-//         scale = 1 + i / 5;
-//         sprite.scale.set( scale, scale, scale );
-//         this.object.top.add( sprite );        
-//         this.effects.blastSmoke.push( sprite );
-
-//     }
-
-// };
 
 Game.Tank.prototype.hideBlastSmoke = function () {
 
@@ -239,6 +276,80 @@ Game.Tank.prototype.updateBlastSmoke = function () {
     if ( ! enabled ) {
 
         this.blastSmokeEnabled = false;
+
+    }
+
+};
+
+Game.Tank.prototype.showExplosion = function () {
+
+    var scale;
+
+    this.effects.explosion = [];
+    // material.depthTest = false;
+    // material.depthWrite = false;
+
+    for ( var i = 0; i < 1; i ++ ) {
+
+        var map = resourceManager.getTexture( 'explosion1.png' ).clone();
+        map.needsUpdate = true;
+        map.wrapS = THREE.RepeatWrapping;
+        map.wrapT = THREE.RepeatWrapping;
+        map.repeat.set( 0.2, 0.25 );
+        map.offset.set( 0, 0.75 );
+
+        var material = new THREE.SpriteMaterial({ map: map, color: 0xffffff });
+        var sprite = new THREE.Sprite( material );
+
+        sprite.position.z = -15;
+        sprite.position.y = 30 + 7 * i;
+        sprite.position.x = Math.random() * 3 - 1.5;
+        sprite.material = sprite.material.clone();
+        sprite.material.opacity = 0.8 - 0.8/5 * i;
+        scale = 50 + Math.random() * 30;
+        sprite.scale.set( scale, scale, scale );
+        sprite.visible = true;
+        this.object.add( sprite );        
+        this.effects.explosion.push( sprite );
+
+    }
+
+};
+
+Game.Tank.prototype.updateExplosion = function ( delta ) {
+
+    if ( ! this.effects.explosion || this.effects.explosion[0].material.map.offset.y <= 0 ) return;
+
+    for ( var i = 0, il = this.effects.explosion.length; i < il; i ++ ) {
+
+        this.effects.explosion[ i ].material.time = this.effects.explosion[ i ].material.time || 0;
+        this.effects.explosion[ i ].material.time += delta;
+
+        if ( this.effects.explosion[ i ].material.time > 50 ) {
+        
+            this.effects.explosion[ i ].material.map.offset.x += 0.2;
+
+            if ( this.effects.explosion[ i ].material.map.offset.x === 1 ) {
+
+                this.effects.explosion[ i ].material.map.offset.x = 0;
+                this.effects.explosion[ i ].material.map.offset.y -= 0.25;
+
+                if ( this.effects.explosion[ i ].material.map.offset.y === 0.5 ) {
+
+                    this.showSmoke();
+
+                }
+
+                // this.effects.explosion[ i ].material.map.offset.y %= 1;
+
+                this.effects.explosion[ i ].scale.x += 0.4;
+                this.effects.explosion[ i ].scale.y += 0.4;
+
+            }
+
+            this.effects.explosion[ i ].material.time = 0;
+
+        }
 
     }
 
@@ -500,6 +611,8 @@ Game.Tank.prototype.update = function ( delta ) {
     this.updateSmoke();
     this.updateBlastSmoke();
     this.updateBullets();
+    this.updateTracks();
+    this.updateExplosion( delta );
     this.animate( delta );
 
 };

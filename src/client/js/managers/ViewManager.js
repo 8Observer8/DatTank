@@ -168,7 +168,7 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
 
         this.addObjectShadow( decoration.type, mesh.position, mesh.scale, mesh.rotation );
 
-        var box = new THREE.Mesh( new THREE.SphereGeometry( radius, 32, 32 ), new THREE.MeshBasicMaterial(/*{ transparent: true, opacity: 0.2 }*/) );
+        var box = new THREE.Mesh( new THREE.CylinderBufferGeometry( radius, radius, 30, 8, 1 ), new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.2 }) );
         box.position.copy( mesh.position );
         box.rotation.copy( mesh.rotation );
         box.scale.copy( mesh.scale );
@@ -183,7 +183,7 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
 
         if ( decoration.type === 'rock2' ) {
 
-            view.scene.remove( box );
+            // view.scene.remove( box );
             mesh.scale.set( 10 + scale, 10 + Math.random() * 5, 10 + scale);
 
         }
