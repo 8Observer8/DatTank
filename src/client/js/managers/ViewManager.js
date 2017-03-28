@@ -183,7 +183,7 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
 
         if ( decoration.type === 'rock2' ) {
 
-            // view.scene.remove( box );
+            view.scene.remove( box );
             mesh.scale.set( 10 + scale, 10 + Math.random() * 5, 10 + scale);
 
         }
