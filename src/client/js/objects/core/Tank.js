@@ -44,8 +44,6 @@ Game.Tank.prototype.init = function () {
     this.initTracks();
     this.initLabel();
 
-    setTimeout( this.showExplosion.bind( this ), 4000 );
-
 };
 
 Game.Tank.prototype.initBullets = function () {
@@ -160,6 +158,7 @@ Game.Tank.prototype.reset = function () {
     this.object.rotation.y = 0;
 
     this.hideSmoke();
+    this.hideExplosion();
     this.hideBlastSmoke();
 
 };
@@ -286,8 +285,6 @@ Game.Tank.prototype.showExplosion = function () {
     var scale;
 
     this.effects.explosion = [];
-    // material.depthTest = false;
-    // material.depthWrite = false;
 
     for ( var i = 0; i < 1; i ++ ) {
 
@@ -306,7 +303,7 @@ Game.Tank.prototype.showExplosion = function () {
         sprite.position.x = Math.random() * 3 - 1.5;
         sprite.material = sprite.material.clone();
         sprite.material.opacity = 0.8 - 0.8/5 * i;
-        scale = 50 + Math.random() * 30;
+        scale = 80;
         sprite.scale.set( scale, scale, scale );
         sprite.visible = true;
         this.object.add( sprite );        
@@ -318,7 +315,7 @@ Game.Tank.prototype.showExplosion = function () {
 
 Game.Tank.prototype.updateExplosion = function ( delta ) {
 
-    if ( ! this.effects.explosion || this.effects.explosion[0].material.map.offset.y <= 0 ) return;
+    if ( ! this.effects.explosion ) return;
 
     for ( var i = 0, il = this.effects.explosion.length; i < il; i ++ ) {
 
@@ -326,28 +323,51 @@ Game.Tank.prototype.updateExplosion = function ( delta ) {
         this.effects.explosion[ i ].material.time += delta;
 
         if ( this.effects.explosion[ i ].material.time > 50 ) {
-        
-            this.effects.explosion[ i ].material.map.offset.x += 0.2;
 
-            if ( this.effects.explosion[ i ].material.map.offset.x === 1 ) {
+            if ( this.effects.explosion[0].material.map.offset.y > 0 ) {        
+            
+                this.effects.explosion[ i ].material.map.offset.x += 0.2;
+                this.effects.explosion[ i ].material.time = 0;
 
-                this.effects.explosion[ i ].material.map.offset.x = 0;
-                this.effects.explosion[ i ].material.map.offset.y -= 0.25;
+            } else {
 
-                if ( this.effects.explosion[ i ].material.map.offset.y === 0.5 ) {
+                this.effects.explosion[ i ].scale.x = 30 + 3 * Math.sin( this.effects.explosion[ i ].material.time / 1000 );
+                this.effects.explosion[ i ].scale.y = 30 + 3 * Math.sin( this.effects.explosion[ i ].material.time / 1000 );
 
-                    this.showSmoke();
+                if ( this.effects.explosion[ i ].material.time % 100 === 0 ) {
+
+                    this.effects.explosion[ i ].material.map.offset.x += 0.2;
+                    if ( this.effects.explosion[ i ].material.map.offset.x === 1 ) {
+
+                        this.effects.explosion[ i ].material.map.offset.x = 0.2;
+
+                    }
 
                 }
 
-                // this.effects.explosion[ i ].material.map.offset.y %= 1;
-
-                this.effects.explosion[ i ].scale.x += 0.4;
-                this.effects.explosion[ i ].scale.y += 0.4;
+                return;
 
             }
 
-            this.effects.explosion[ i ].material.time = 0;
+            if ( this.effects.explosion[ i ].material.map.offset.x === 1 ) {
+
+                if ( this.effects.explosion[0].material.map.offset.y > 0 ) {
+                
+                    this.effects.explosion[ i ].material.map.offset.x = 0;
+                    this.effects.explosion[ i ].material.map.offset.y -= 0.25;
+
+                    this.effects.explosion[ i ].scale.x += 0.4;
+                    this.effects.explosion[ i ].scale.y += 0.4;
+
+                }
+
+                if ( this.effects.explosion[ i ].material.map.offset.y === 0.5 ) {
+
+                    this.showSmoke( 1.2 );
+
+                }
+
+            }
 
         }
 
@@ -355,7 +375,21 @@ Game.Tank.prototype.updateExplosion = function ( delta ) {
 
 };
 
-Game.Tank.prototype.showSmoke = function () {
+Game.Tank.prototype.hideExplosion = function () {
+
+    if ( ! this.effects.explosion ) return;
+
+    for ( var i = 0; i < this.effects.explosion.length; i ++ ) {
+
+        this.effects.explosion[ i ].visible = false;
+
+    }
+
+};
+
+Game.Tank.prototype.showSmoke = function ( strength ) {
+
+    strength = strength || 1;
 
     this.smokeEnabled = true;
 
@@ -388,7 +422,7 @@ Game.Tank.prototype.showSmoke = function () {
         sprite.position.x = Math.random() * 3 - 1.5;
         sprite.material = sprite.material.clone();
         sprite.material.opacity = 0.8 - 0.8/5 * i;
-        scale = 10 + Math.random() * 30;
+        scale = strength * ( 10 + Math.random() * 30 );
         sprite.scale.set( scale, scale, scale );
         sprite.visible = false;
         this.object.add( sprite );        
