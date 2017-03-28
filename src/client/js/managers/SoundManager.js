@@ -20,7 +20,7 @@ Game.SoundManager.prototype.playMenuSound = function () {
     if ( localStorage.getItem('sound') === 'true' ) {
 
         this.menuSound.play();
-
+        
     };
 
 };

@@ -621,7 +621,11 @@ Game.Player.prototype.gotBox = function ( data ) {
     var box = data.box;
     var value = data.value;
 
-    soundManager.menuSound.play();
+    if ( localStorage.getItem('sound') === 'true' ) {
+
+        soundManager.menuSound.play();
+        
+    };
 
     switch ( box.type ) {
 
