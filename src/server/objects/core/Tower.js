@@ -316,12 +316,7 @@ Tower.prototype.update = function () {
 
     }
 
-    if ( ! target ) {
-
-        target = this.checkForTarget( this.arena.playerManager.players );
-        this.target = target;
-
-    }
+    target = target || this.checkForTarget( this.arena.playerManager.players );
 
     if ( ! target ) {
 
@@ -329,6 +324,8 @@ Tower.prototype.update = function () {
         return;
 
     }
+
+    this.target = target;
 
     //
 
