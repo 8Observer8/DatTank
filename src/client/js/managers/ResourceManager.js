@@ -54,12 +54,12 @@ Game.ResourceManager = function () {
         'stoneshadow_2.png',
         'stoneshadow_3.png',
         'stoneshadow_4.png',
-<<<<<<< HEAD
 
-        'shadowTank.png'
-=======
+
+        'shadowTank.png',
+
         'explosion1.png'
->>>>>>> ohmed
+
 
     ];
 
