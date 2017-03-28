@@ -109,6 +109,8 @@ Game.Tank.USAT54.prototype.destroy = function () {
     this.animations.deathAction2.stop();
     this.animations.deathAction2.play();
 
+    this.showExplosion();
+
     this.moveProgress = false;
     this.movementDurationMap = [];
     this.moveProgress = 0;
