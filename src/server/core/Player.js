@@ -155,7 +155,7 @@ Player.prototype.rotateBase = function ( direction ) {
 
 Player.prototype.move = (function () {
 
-    var buffer = new ArrayBuffer( 8 );
+    var buffer = new ArrayBuffer( 12 );
     var bufferView = new Uint16Array( buffer );
 
     return function ( directionX, directionZ ) {
@@ -188,8 +188,11 @@ Player.prototype.move = (function () {
         bufferView[ 1 ] = this.id;
         bufferView[ 2 ] = directionX;
         bufferView[ 3 ] = directionZ;
+        bufferView[ 4 ] = this.position.x;
+        bufferView[ 5 ] = this.position.z;
 
         this.arena.announce( 'PlayerTankMove', buffer, bufferView );
+        // console.log(bufferView);
 
     };
 
@@ -508,7 +511,6 @@ Player.prototype.update = function ( delta, time ) {
 
     }
 
-    
     // update player PATH movement
 
     if ( ! player.movePath.length ) return;

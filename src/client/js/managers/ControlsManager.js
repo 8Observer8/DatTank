@@ -17,6 +17,11 @@ Game.ControlsManager = function () {
     this.notMoveX = 0;
     this.notMoveZ = 0;
 
+    this.stopMovingUp = false;
+    this.stopMovingDown = false;
+    this.stopMovingLeft = false;
+    this.stopMovingRight = false;
+
 };
 
 Game.ControlsManager.prototype = {};
@@ -150,28 +155,48 @@ Game.ControlsManager.prototype.keyInit = function () {
             case 87: // w
                 if ( scope.moveX === 1 || scope.notMoveX ) break;
                 scope.moveX = 1;
-                scope.move();
+                scope.stopMovingDown = false;
+                scope.stopMovingLeft = false;
+                scope.stopMovingRight = false;
+                if ( Game.arena.me.position.x > -1267 && scope.stopMovingUp === false ) {
+                    scope.move(); 
+                }
                 break;
 
             case 37: // left
             case 65: // a
                 if ( scope.moveZ === 1 || scope.notMoveZ ) break;
                 scope.moveZ = 1;
-                scope.move();
+                scope.stopMovingUp = false;
+                scope.stopMovingDown = false;
+                scope.stopMovingRight = false;
+                if ( Game.arena.me.position.z < 1267 && scope.stopMovingLeft === false) {
+                    scope.move();     
+                }
                 break;
 
             case 40: // down
             case 83: // s
                 if ( scope.moveX === -1 || scope.notMoveX ) break;
                 scope.moveX = -1;
-                scope.move();
+                scope.stopMovingUp = false;
+                scope.stopMovingLeft = false;
+                scope.stopMovingRight = false;
+                if ( Game.arena.me.position.x < 1267 && scope.stopMovingDown === false ) {
+                    scope.move();
+                }
                 break;
 
             case 39: // right
             case 68: // d
                 if ( scope.moveZ === -1 || scope.notMoveZ ) break;
                 scope.moveZ = -1;
-                scope.move();
+                scope.stopMovingUp = false;
+                scope.stopMovingLeft = false;
+                scope.stopMovingDown = false;
+                if ( Game.arena.me.position.z > -1267 && scope.stopMovingRight === false ) {
+                    scope.move(); 
+                }
                 break;
 
             case 80: // 'p' key
@@ -281,7 +306,7 @@ Game.ControlsManager.prototype.move = ( function () {
 
     return function () {
 
-        var scope = this; 
+        var scope = this;
 
         bufferView[ 0 ] = 0;
         bufferView[ 1 ] = scope.notMoveX ? 0 : scope.moveX;
@@ -303,6 +328,11 @@ Game.ControlsManager.prototype.stop = function () {
 
     scope.notMoveX = true;
     scope.notMoveZ = true;
+
+    scope.stopMovingUp = true;
+    scope.stopMovingDown = true;
+    scope.stopMovingLeft = true;
+    scope.stopMovingRight = true;
 
     this.move();
 
