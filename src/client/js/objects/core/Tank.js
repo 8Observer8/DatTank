@@ -51,7 +51,7 @@ Game.Tank.prototype.initBullets = function () {
     for ( var i = 0; i < 5; i ++ ) {
 
         //var bullet = new THREE.Mesh( new THREE.BoxGeometry( 2, 2, 2 ), new THREE.MeshLambertMaterial({ color: 0xff0000 }) );
-        var bullet = new THREE.Mesh( new THREE.SphereGeometry( 2.5, 12, 12 ), new THREE.MeshLambertMaterial({ color: 0x66ff33 }) );
+        var bullet = new THREE.Mesh( new THREE.SphereGeometry( 2.5, 12, 12 ), new THREE.MeshLambertMaterial({ color: this.player.team.color }) );
         bullet.visible = false;
         
         bullet.active = false;
