@@ -54,7 +54,12 @@ Game.ResourceManager = function () {
         'stoneshadow_2.png',
         'stoneshadow_3.png',
         'stoneshadow_4.png',
+
+
+        'shadowTank.png',
+
         'explosion1.png'
+
 
     ];
 

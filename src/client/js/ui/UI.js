@@ -344,7 +344,16 @@ Game.UI.prototype.closeChoiceWindow = function ( event ) {
 
 Game.UI.prototype.selectTankAndcloseChoiceWindow = function () {
 
-    $('.tank-skins').hide();
+    if ( localStorage.getItem( 'currentTank' ) === 'D32' && localStorage.getItem( 'unblockedTank' ) !== 'true' ) {
+
+        $('.share-label').show();
+
+    } else {
+
+        $('.tank-skins').hide();
+
+    }
+
     $('#signin-box').css('opacity', 1);
     garage.pickTank();
     garage.stop();

@@ -15,6 +15,7 @@ Game.Arena = function () {
     this.playerManager = new Game.PlayerManager( this );
     this.teamManager = new Game.TeamManager( this );
     this.towerManager = new Game.TowerManager( this );
+    this.controlsManager = new Game.ControlsManager( this );
 
 };
 
@@ -101,7 +102,7 @@ Game.Arena.prototype.proxyEventToPlayer = function ( data, eventName ) {
     var playerId = ( data.player ) ? data.player.id : data[0];
     var player = this.playerManager.getById( playerId );
     player = ( ! player ) ? this.me : player;
-    if ( eventName === 'PlayerGotBox' ) console.log( data );
+    // if ( eventName === 'PlayerGotBox' ) console.log( data );
 
     player.dispatchEvent({ type: eventName, data: data });
 

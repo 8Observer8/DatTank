@@ -111,6 +111,11 @@
         </div>
 
         <div id="share-btn">
+            <div id="vk-btn">
+                <a class="btn-share-vk" href="https://vk.com/share.php?url=http%3A%2F%2Flocalhost%3A8082%2F">
+                    <img class="vk-picture-share" src="/resources/img/vk-btn.ico">
+                </a>
+            </div>
             <div id="f-btn">
                 <a class="btn-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fdattank.com">
                     <img class="fb-picture-share" src="/resources/img/facebook-btn.png">
@@ -150,6 +155,7 @@
                         <img class="tank-img" src="/resources/img/tank-ico-2.png">
                     </div>
                     <div class="tank" id="D32" >
+                        <img class="tank-img new-img" src="/resources/img/new_red.png">
                         <img class="tank-img" src="/resources/img/tank-ico-3.png">
                     </div>
                 </div>
@@ -193,6 +199,24 @@
                     <p class="specification-text" id="armour">&#x2623;&nbsp;&nbsp;&nbsp;Armour</p>
                     <p class="specification-text" id="bullet">&#x2623;&nbsp;&nbsp;&nbsp;Bullet</p>
                 </div> -->
+                <div class="share-label">
+                    <h3 class="share-title">Share to pick D-32</h3>
+                    <div id="vk-btn" class="unblockTank">
+                        <a class="btn-share-vk" href="https://vk.com/share.php?url=http%3A%2F%2Flocalhost%3A8082%2F">
+                            <img class="vk-picture-share" src="/resources/img/vk-btn.ico">
+                        </a>
+                    </div>
+                    <div id="f-btn" class="unblockTank">
+                        <a class="btn-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fdattank.com">
+                            <img class="fb-picture-share" src="/resources/img/facebook-btn.png">
+                        </a>
+                    </div>
+                    <div id="tw-btn" class="unblockTank">
+                        <a class="btn-share-tw" target="_top" href="https://twitter.com/intent/tweet?status=Come%20and%20play%20dattank.com%20%23dattank%20%23iogames&original_referer=http://dattank.com/">
+                            <img class="tw-picture-share" src="/resources/img/twitter-btn.png">
+                        </a>
+                    </div>
+                </div>
                 <div class="btn-pick">Pick</div>
             </div>
         </div>
@@ -336,9 +360,9 @@
             }(document, 'script', 'facebook-jssdk'));
         </script>
 
-        <script>
+<!--         <script>
             !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-        </script>
+        </script> -->
 
         <script type="text/javascript">
             window._urq = window._urq || [];
@@ -349,6 +373,8 @@
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ur, s);
             })();
         </script>
+
+        <script type="text/javascript" src="https://vk.com/js/api/share.js?93" charset="windows-1251"></script>
 
     </body>
 

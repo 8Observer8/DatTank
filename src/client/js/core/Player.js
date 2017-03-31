@@ -492,24 +492,28 @@ Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
 
             player.moveDirection.y = 0;
             player.moveDirection.x = 0;
+            controls.stop();
             return;
 
         } else if ( newPositionZ < -1270 ) {
 
             player.moveDirection.y = 0;
             player.moveDirection.x = 0;
+            controls.stop();
             return;
 
         } else if ( newPositionX > 1270 ) {
 
             player.moveDirection.x = 0;
             player.moveDirection.y = 0;
+            controls.stop();
             return;
 
         } else if ( newPositionX < -1270 ) {
 
             player.moveDirection.x = 0;
             player.moveDirection.y = 0;
+            controls.stop();
             return;
 
         }
@@ -525,8 +529,6 @@ Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
         if ( deltaRot < - Math.PI ) deltaRot = deltaRot + 2 * Math.PI;
         player.rotation = ( player.rotation + deltaRot / 10 ) % ( 2 * Math.PI );
         player.tank.setRotation( player.rotation );
-
-
 
     }
 
@@ -621,7 +623,11 @@ Game.Player.prototype.gotBox = function ( data ) {
     var box = data.box;
     var value = data.value;
 
-    soundManager.menuSound.play();
+    if ( localStorage.getItem('sound') === 'true' ) {
+
+        soundManager.menuSound.play();
+        
+    };
 
     switch ( box.type ) {
 
@@ -717,6 +723,8 @@ Game.Player.prototype.die = function ( killer ) {
             scope.tank.object.visible = false;
 
         }, 1400 );
+
+        controls.stopShooting();
 
     }
 
