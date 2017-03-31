@@ -224,6 +224,8 @@ Tower.prototype.rotateTop = (function () {
 
     return function ( target ) {
 
+        // if ( target.login !== 'oh' ) return;
+
         var dx = target.position.x - this.position.x;
         var dz = target.position.z - this.position.z;
         var rotation, delta;
@@ -240,6 +242,8 @@ Tower.prototype.rotateTop = (function () {
 
         delta = utils.formatAngle( rotation ) - utils.formatAngle( this.rotation );
 
+        //
+
         if ( Math.abs( delta ) > Math.PI ) {
 
             if ( delta > 0 ) {
@@ -251,6 +255,14 @@ Tower.prototype.rotateTop = (function () {
                 delta = 2 * Math.PI + delta;
 
             }
+
+        }
+
+        //
+
+        if ( Date.now() - this.shootTime > this.cooldown && Math.abs( delta ) < 0.5 ) {
+
+            this.shoot( target );
 
         }
 
@@ -288,7 +300,7 @@ Tower.prototype.rotateTop = (function () {
 
         if ( delta !== 0 ) {
 
-            this.rotation = utils.formatAngle( this.rotation );
+            // this.rotation = utils.formatAngle( this.rotation );
 
             bufferView[1] = this.id;
             bufferView[2] = Math.floor( 1000 * this.rotation );
@@ -330,7 +342,6 @@ Tower.prototype.update = function () {
     //
 
     this.rotateTop( target );
-    this.shoot( target );
 
 };
 

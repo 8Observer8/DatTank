@@ -19,6 +19,8 @@ var Arena = function ( callback ) {
     this.updateInterval = false;
     this.currentTime = false;
     this.prevUpdateTime = Date.now();
+    this.totalTime = 0;
+    this.loopIter = 0;
 
     //
 
@@ -124,12 +126,20 @@ Arena.prototype.update = function () {
     var time = Date.now();
     var delta = time - this.prevUpdateTime;
     this.prevUpdateTime = time;
+    this.totalTime += delta;
+    this.loopIter ++;
+    this.loopIter = ( this.loopIter > 1000000 ) ? 0 : this.loopIter;
 
-    // update towers
+    // update managers
 
-    this.towerManager.update( delta );
     this.playerManager.update( delta, time );
-    this.boxManager.update( delta );
+
+    if ( this.loopIter % 5 === 0 ) {
+    
+        this.towerManager.update( delta );
+        this.boxManager.update( delta );
+
+    }
 
 };
 
