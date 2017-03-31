@@ -1074,6 +1074,10 @@ object {
     height: 60px;
 }
 
+.choice-skins .new-img {
+    position: absolute;
+}
+
 .choice-skins .tank.active {
     opacity: 1;
 }
@@ -1090,6 +1094,68 @@ object {
     height: 6%;
     font-family: sans-serif;
 }
+
+.share-label {
+    display: none;
+    width: 325px;
+    height: 140px;
+    padding: 20px;
+
+    position: absolute;
+    background-color: white;
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+
+    margin: -90px 0 0 -185px;
+}
+
+.share-title {
+    position: absolute;
+    top: 0%;
+    left: 23%;
+    font-size: 24px;
+    margin-top: 15px;
+}
+
+.share-label #f-btn {
+    position: absolute;
+
+}
+.share-label #tw-btn {
+    position: absolute;
+}
+.share-label .vk-picture-share {
+    border: 0px;
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    top: 70px;
+    left: 45px;
+    margin: 0px;
+}
+.share-label .tw-picture-share {
+    border: 0px;
+    position: relative;
+    /*top: 60px;*/
+    right: 39px;
+}
+.share-label .fb-picture-share {
+    border: 0px;
+    position: relative;
+    /*top: 60px;*/
+    right: 20px;
+}
+
+.vk-picture-share {
+    border:0px;
+    width: 60px;
+    height: 60px;
+    float: right;
+    margin-right: 200px;
+    margin-top: 26px;
+}
+
 
 /*.name-specifications {
     position: absolute;

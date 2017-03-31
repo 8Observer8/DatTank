@@ -41,6 +41,7 @@ Game.Garage.prototype.init = function () {
     $('#arrow2').click( this.arrowForward.bind( this ) );
     $('.choice-skins .tank').click( this.selectTank.bind( this ) );
     $('.close-tank-skins').click( ui.closeChoiceWindow.bind( ui ) );
+    $('.unblockTank').click( this.unblockTank.bind( this ) );
 
     //
 
@@ -204,6 +205,8 @@ Game.Garage.prototype.arrowForward = function () {
 
     }
 
+    localStorage.setItem( 'currentTank', this.currentTank );
+
 };
 
 Game.Garage.prototype.arrowBack = function () {
@@ -217,6 +220,8 @@ Game.Garage.prototype.arrowBack = function () {
         $('.choice-skins .tank').last().click();
 
     }
+
+    localStorage.setItem( 'currentTank', this.currentTank );
 
 };
 
@@ -263,6 +268,13 @@ Game.Garage.prototype.selectTank = function ( event ) {
     if ( event ) {
 
         soundManager.playMenuSound();
+        localStorage.setItem( 'currentTank', this.currentTank );
+
+        if ( localStorage.getItem( 'currentTank' ) !== 'D32' ) {
+
+            $('.share-label').hide();
+
+        } 
 
     }
 
@@ -270,6 +282,16 @@ Game.Garage.prototype.selectTank = function ( event ) {
 
 Game.Garage.prototype.pickTank = function () {
 
-    localStorage.setItem( 'currentTank', this.currentTank );
+    if ( localStorage.getItem( 'currentTank' ) === 'D32' && localStorage.getItem( 'unblockedTank' ) !== 'true' ) {
+
+        $('.share-label').show();
+
+    }
+
+};
+
+Game.Garage.prototype.unblockTank = function () {
+
+    localStorage.setItem( 'unblockedTank', true );
 
 };
