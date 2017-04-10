@@ -194,7 +194,6 @@ Player.prototype.move = (function () {
         bufferView[ 5 ] = this.position.z;
 
         this.arena.announce( 'PlayerTankMove', buffer, bufferView );
-        // console.log(bufferView);
 
     };
 

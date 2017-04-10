@@ -257,9 +257,9 @@ Tower.prototype.rotateTop = (function () {
 
         }
 
-        if ( Math.abs( Math.sign( deltaRot ) / 30 * ( delta / 20 ) ) > 0.001 ) {
+        if ( Math.abs( deltaRot ) > 0.01 ) {
         
-            this.rotation = utils.formatAngle( this.rotation + Math.sign( deltaRot ) / 50 * ( delta / 20 ) );
+            this.rotation = utils.formatAngle( this.rotation + Math.sign( deltaRot ) / 30 * ( delta / 20 ) );
 
         }
 
@@ -269,7 +269,7 @@ Tower.prototype.rotateTop = (function () {
 
         deltaRot = utils.formatAngle( newRotation ) - utils.formatAngle( this.newRotation );
 
-        if ( Math.abs( deltaRot ) > 0.2 ) {
+        if ( Math.abs( deltaRot ) > 0.35 ) {
 
             this.newRotation = newRotation;
 

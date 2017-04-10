@@ -38,6 +38,8 @@ Game.Player = function ( arena, params ) {
     this.rotDelta = 0;
     this.rotationTopTarget = false;
 
+    this.positionCorrection = { x: 0, z: 0 };
+
     this.moveDirection = new THREE.Vector2();
 
     this.lastShot = Date.now();
@@ -315,12 +317,15 @@ Game.Player.prototype.processPath = function ( path ) {
 
 };
 
-Game.Player.prototype.move = function ( directionX, directionZ ) {
+Game.Player.prototype.move = function ( directionX, directionZ, positionX, positionZ ) {
 
     var player = this;
 
     player.moveDirection.x = directionX;
     player.moveDirection.y = directionZ;
+
+    player.positionCorrection.x = positionX - player.position.x;
+    player.positionCorrection.z = positionZ - player.position.z;
 
 };
 
@@ -689,6 +694,16 @@ Game.Player.prototype.update = function ( time, delta ) {
     this.updateMovementByPath( time, delta );
     this.updateDirectionMovement( time, delta );
 
+    if ( Math.abs( this.positionCorrection.x ) > 0.01 || Math.abs( this.positionCorrection.z ) > 0.01 ) {
+
+        this.position.x += this.positionCorrection.x / 10;
+        this.positionCorrection.x *= 0.9;
+
+        this.position.z += this.positionCorrection.z / 10;
+        this.positionCorrection.z *= 0.9;
+
+    }
+
 };
 
 Game.Player.prototype.die = function ( killer ) {
@@ -766,7 +781,7 @@ Game.Player.prototype.addEventListeners = function () {
     this.addEventListener( 'ArenaPlayerRespawn', function ( event ) { scope.respawn( true, event.data.player ); });
 
     this.addEventListener( 'PlayerTankRotateTop', function ( event ) { scope.rotateTop( event.data[1] / 1000 ); });
-    this.addEventListener( 'PlayerTankMove', function ( event ) { scope.move( event.data[1], event.data[2] ); });
+    this.addEventListener( 'PlayerTankMove', function ( event ) { scope.move( event.data[1], event.data[2], event.data[3], event.data[4] ); });
     this.addEventListener( 'PlayerTankShoot', function ( event ) { scope.shoot( event.data[1], event.data[2] ); });
     this.addEventListener( 'PlayerTankHit', function ( event ) { scope.updateHealth( event.data[1] ); });
     this.addEventListener( 'PlayerTankDied', function ( event ) { scope.die( event.data[1] ); });

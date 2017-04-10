@@ -35,6 +35,8 @@ var Bot = function ( arena ) {
 
     }
 
+    this.lastTopRotate = 0;
+
     this.init();
 
 };
@@ -173,11 +175,13 @@ Bot.prototype.update = function () {
 
         }
 
-        if ( Math.abs( delta / 2 ) > 0.1 ) {
+        if ( Math.abs( delta / 2 ) > 0.1 && Date.now() - this.lastTopRotate > 400 ) {
 
             this.player.rotationTop += delta / 2;
             this.player.rotationTop = utils.formatAngle( this.player.rotationTop );
             this.player.rotateTop( this.player.rotationTop );
+
+            this.lastTopRotate = Date.now();
 
         }
 

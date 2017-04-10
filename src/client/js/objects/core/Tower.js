@@ -351,9 +351,9 @@ Game.Tower.prototype.update = function ( delta ) {
 
     }
 
-    if ( Math.abs( Math.sign( deltaRot ) / 30 * ( delta / 20 ) ) > 0.001 ) {
+    if ( Math.abs( deltaRot ) > 0.01 ) {
         
-        this.rotation += Math.sign( deltaRot ) / 50 * ( delta / 20 );
+        this.rotation += Math.sign( deltaRot ) / 30 * ( delta / 20 );
         this.object.top.rotation.y = this.rotation;
 
     }
