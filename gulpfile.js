@@ -12,6 +12,7 @@ var connect = require('gulp-connect');
 var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
+var useref = require('gulp-useref');
 var imagemin = require('gulp-imagemin');
 var pngquant = require('imagemin-pngquant');
 var nodemon = require('gulp-nodemon');
@@ -59,6 +60,8 @@ gulp.task( 'css', function () {
 gulp.task( 'html', function () {
 
     gulp.src('./src/client/*.html')
+        .pipe( gulpif( argv.prod, useref() ) )
+        .pipe( gulpif( argv.prod, gulpif( '*.js', uglify() ) ) )
         .pipe( gulp.dest('./bin/client/') );
 
 });
