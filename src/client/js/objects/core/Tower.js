@@ -93,7 +93,7 @@ Game.Tower.prototype.init = function () {
     //
 
     this.updateHealthBar();
-    this.rotateTop( this.rotation );
+    this.rotateTop( this.rotation, this.rotation );
 
     this.addEventListeners();
 
@@ -103,8 +103,7 @@ Game.Tower.prototype.initBullets = function () {
 
     for ( var i = 0; i < 5; i ++ ) {
 
-        //var bullet = new THREE.Mesh( new THREE.BoxGeometry( 3, 3, 3 ), new THREE.MeshLambertMaterial({ color: 0xff0000 }) );
-        var bullet = new THREE.Mesh( new THREE.SphereGeometry( 3.4, 30, 30 ), new THREE.MeshLambertMaterial({ color: 0x7A3EA8 }) );
+        var bullet = new THREE.Mesh( new THREE.SphereGeometry( 3.4, 10, 10 ), new THREE.MeshLambertMaterial({ color: 0x7A3EA8 }) );
         bullet.visible = false;
         bullet.active = false;
 
@@ -148,10 +147,12 @@ Game.Tower.prototype.updateHealthBar = function () {
 
 };
 
-Game.Tower.prototype.rotateTop = function ( angle ) {
+Game.Tower.prototype.rotateTop = function ( oldAngle, newAngle ) {
 
-    this.rotation = angle;
-    this.object.top.rotation.y = angle;
+    this.newRotation = newAngle;
+
+    this.rotation = oldAngle;
+    this.object.top.rotation.y = oldAngle;
 
 };
 
@@ -332,13 +333,38 @@ Game.Tower.prototype.update = function ( delta ) {
 
     this.animate( delta );
 
+    //
+
+    var deltaRot = Utils.formatAngle( this.newRotation ) - Utils.formatAngle( this.rotation );
+
+    if ( deltaRot > Math.PI ) {
+
+        if ( deltaRot > 0 ) {
+
+            deltaRot = - 2 * Math.PI + deltaRot;
+
+        } else {
+
+            deltaRot = 2 * Math.PI + deltaRot;
+
+        }
+
+    }
+
+    if ( Math.abs( Math.sign( deltaRot ) / 30 * ( delta / 20 ) ) > 0.001 ) {
+        
+        this.rotation += Math.sign( deltaRot ) / 50 * ( delta / 20 );
+        this.object.top.rotation.y = this.rotation;
+
+    }
+
 };
 
 Game.Tower.prototype.addEventListeners = function () {
 
     var scope = this;
 
-    this.addEventListener( 'TowerRotateTop', function ( event ) { scope.rotateTop( event.data[1] / 1000 ); });
+    this.addEventListener( 'TowerRotateTop', function ( event ) { scope.rotateTop( event.data[1] / 1000, event.data[2] / 1000 ); });
     this.addEventListener( 'TowerShoot', function ( event ) { scope.shoot( event.data[1] ); });
     this.addEventListener( 'TowerChangeTeam', function ( event ) { scope.changeTeam( event.data[1] ); });
     this.addEventListener( 'TowerHit', function ( event ) { scope.updateHealth( event.data[1] ); });

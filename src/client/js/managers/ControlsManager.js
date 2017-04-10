@@ -120,7 +120,6 @@ Game.ControlsManager.prototype.mouseInit = function () {
 
         }
 
-
     };
 
     //
@@ -153,7 +152,7 @@ Game.ControlsManager.prototype.keyInit = function () {
 
             case 38: // up
             case 87: // w
-                // if ( scope.moveX === 1 || scope.notMoveX ) break;
+
                 scope.moveX = 1;
                 scope.stopMovingDown = false;
                 scope.stopMovingLeft = false;
@@ -165,7 +164,7 @@ Game.ControlsManager.prototype.keyInit = function () {
 
             case 37: // left
             case 65: // a
-                // if ( scope.moveZ === 1 || scope.notMoveZ ) break;
+
                 scope.moveZ = 1;
                 scope.stopMovingUp = false;
                 scope.stopMovingDown = false;
@@ -177,26 +176,33 @@ Game.ControlsManager.prototype.keyInit = function () {
 
             case 40: // down
             case 83: // s
-                // if ( scope.moveX === -1 || scope.notMoveX ) break;
+
                 scope.moveX = -1;
                 scope.stopMovingUp = false;
                 scope.stopMovingLeft = false;
                 scope.stopMovingRight = false;
+
                 if ( Game.arena.me.position.x < 1267 && scope.stopMovingDown === false ) {
+
                     scope.move();
+
                 }
                 break;
 
             case 39: // right
             case 68: // d
-                // if ( scope.moveZ === -1 || scope.notMoveZ ) break;
+
                 scope.moveZ = -1;
                 scope.stopMovingUp = false;
                 scope.stopMovingLeft = false;
                 scope.stopMovingDown = false;
+
                 if ( Game.arena.me.position.z > -1267 && scope.stopMovingRight === false ) {
+
                     scope.move(); 
+
                 }
+
                 break;
 
             case 80: // 'p' key
@@ -276,11 +282,11 @@ Game.ControlsManager.prototype.rotateTop = (function () {
         var me = Game.arena.me;
         if ( ! me.tank.object.top ) return;
 
-        if ( Date.now() - lastUpdateTime > 50 ) {
+        if ( Date.now() - lastUpdateTime > 100 ) {
 
             lastUpdateTime = Date.now();
 
-            bufferView[ 1 ] = Math.floor( angle * 10 );
+            bufferView[ 1 ] = Math.floor( angle * 1000 );
 
             network.send( 'PlayerTankRotateTop', buffer, bufferView );
 

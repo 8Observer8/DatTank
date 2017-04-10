@@ -20,6 +20,7 @@ var Tower = function ( arena, params ) {
     this.hits = {};
 
     this.rotation = 0;
+    this.newRotation = 0;
     this.position = {
         x: params.position.x || 0,
         y: params.position.y || 0,
@@ -219,93 +220,72 @@ Tower.prototype.checkForTarget = function ( players ) {
 
 Tower.prototype.rotateTop = (function () {
 
-    var buffer = new ArrayBuffer( 6 );
+    var buffer = new ArrayBuffer( 8 );
     var bufferView = new Uint16Array( buffer );
 
-    return function ( target ) {
-
-        // if ( target.login !== 'oh' ) return;
+    return function ( target, delta ) {
 
         var dx = target.position.x - this.position.x;
         var dz = target.position.z - this.position.z;
-        var rotation, delta;
+        var newRotation, deltaRot;
 
         if ( dz === 0 && dx !== 0 ) {
 
-            rotation = ( dx > 0 ) ? - Math.PI : 0;
+            newRotation = ( dx > 0 ) ? - Math.PI : 0;
 
         } else {
 
-            rotation = - Math.PI / 2 - Math.atan2( dz, dx );
-
-        }
-
-        delta = utils.formatAngle( rotation ) - utils.formatAngle( this.rotation );
-
-        //
-
-        if ( Math.abs( delta ) > Math.PI ) {
-
-            if ( delta > 0 ) {
-
-                delta = - 2 * Math.PI + delta;
-
-            } else {
-
-                delta = 2 * Math.PI + delta;
-
-            }
+            newRotation = - Math.PI / 2 - Math.atan2( dz, dx );
 
         }
 
         //
 
-        if ( Date.now() - this.shootTime > this.cooldown && Math.abs( delta ) < 0.5 ) {
+        deltaRot = utils.formatAngle( this.newRotation ) - utils.formatAngle( this.rotation );
 
-            this.shoot( target );
+        if ( deltaRot > Math.PI ) {
+
+            if ( delta > 0 ) {
+
+                deltaRot = - 2 * Math.PI + deltaRot;
+
+            } else {
+
+                deltaRot = 2 * Math.PI + deltaRot;
+
+            }
 
         }
+
+        if ( Math.abs( Math.sign( deltaRot ) / 30 * ( delta / 20 ) ) > 0.001 ) {
+        
+            this.rotation = utils.formatAngle( this.rotation + Math.sign( deltaRot ) / 50 * ( delta / 20 ) );
+
+        }
+
+        newRotation = utils.formatAngle( newRotation );
 
         //
 
-        if ( Math.abs( delta ) > 0.1 ) {
+        deltaRot = utils.formatAngle( newRotation ) - utils.formatAngle( this.newRotation );
 
-            if ( delta > 0 ) {
+        if ( Math.abs( deltaRot ) > 0.2 ) {
 
-                this.rotation += 0.05;
-
-            } else {
-
-                this.rotation -= 0.05;
-
-            }
-
-        } else if ( Math.abs( delta ) > 0.01 ) {
-
-            if ( delta > 0 ) {
-
-                this.rotation += 0.005;
-
-            } else {
-
-                this.rotation -= 0.005;
-
-            }
-
-        } else {
-
-            delta = 0;
-
-        }
-
-        if ( delta !== 0 ) {
-
-            // this.rotation = utils.formatAngle( this.rotation );
+            this.newRotation = newRotation;
 
             bufferView[1] = this.id;
             bufferView[2] = Math.floor( 1000 * this.rotation );
+            bufferView[3] = Math.floor( 1000 * this.newRotation );
 
             this.arena.announce( 'TowerRotateTop', buffer, bufferView );
+
+        }
+
+        //
+
+        if ( Date.now() - this.shootTime > this.cooldown && Math.abs( newRotation - this.rotation ) < 0.5 ) {
+
+            this.shoot( target );
 
         }
 
@@ -313,7 +293,7 @@ Tower.prototype.rotateTop = (function () {
 
 }) ();
 
-Tower.prototype.update = function () {
+Tower.prototype.update = function ( delta ) {
 
     var target = false;
 
@@ -341,7 +321,7 @@ Tower.prototype.update = function () {
 
     //
 
-    this.rotateTop( target );
+    this.rotateTop( target, delta );
 
 };
 

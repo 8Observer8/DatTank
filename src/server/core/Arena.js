@@ -133,10 +133,10 @@ Arena.prototype.update = function () {
     // update managers
 
     this.playerManager.update( delta, time );
+    this.towerManager.update( delta );
 
     if ( this.loopIter % 5 === 0 ) {
-    
-        this.towerManager.update( delta );
+
         this.boxManager.update( delta );
 
     }

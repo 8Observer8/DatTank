@@ -562,7 +562,7 @@ Game.ViewManager.prototype.animate = function ( delta ) {
             var me = Game.arena.me;
             var angle = Math.atan2( intersections[0].point.x - me.position.x, intersections[0].point.z - me.position.z ) - Math.PI / 2;
 
-            if ( Math.abs( angle - me.topRotation ) > 0.03 ) {
+            if ( Math.abs( angle - me.topRotation ) > 0.01 ) {
 
                 controls.rotateTop( angle );
 

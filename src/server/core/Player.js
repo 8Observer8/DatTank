@@ -44,6 +44,7 @@ var Player = function ( arena, params ) {
     this.position = new Game.Vec3();
     this.rotation = 0;
     this.rotationTop = - Math.PI / 2;
+    this.lastUpdatedTopRotation = - Math.PI / 2;
 
     this.afkTimeout = false;
 
@@ -142,6 +143,7 @@ Player.prototype.rotateTop = (function () {
         bufferView[2] = Math.floor( 1000 * angle );
 
         this.arena.announce( 'PlayerTankRotateTop', buffer, bufferView );
+        this.lastUpdatedTopRotation = angle;
 
     };
 
@@ -621,7 +623,7 @@ Player.prototype.addEventListeners = function () {
     var scope = this;
 
     this.addEventListener( 'ArenaPlayerRespawn', function ( event ) { scope.respawn(); });
-    this.addEventListener( 'PlayerTankRotateTop', function ( event ) { scope.rotateTop( event.data[0] / 10 ); });
+    this.addEventListener( 'PlayerTankRotateTop', function ( event ) { scope.rotateTop( event.data[0] / 1000 ); });
     this.addEventListener( 'PlayerTankMove', function ( event ) { scope.move( event.data[0], event.data[1] ); });
     this.addEventListener( 'PlayerTankMoveByPath', function ( event ) { scope.moveToPoint({ x: event.data[0], z: event.data[1] }); });
     this.addEventListener( 'PlayerTankShoot', function ( event ) { scope.shoot(); });

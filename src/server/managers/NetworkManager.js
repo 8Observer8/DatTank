@@ -184,7 +184,6 @@ NetworkManager.prototype.send = function ( eventName, socket, data, view ) {
 
     }
 
-    // console.log( eventName, this.events.out[ eventName ].id );
     if ( this.events.out[ eventName ].id === 500 ) x = 100 / a;
 
     if ( ! data ) {
