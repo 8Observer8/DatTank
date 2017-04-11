@@ -69,11 +69,11 @@ Game.Arena.prototype.newPlayerJoined = function ( data ) {
 
 };
 
-Game.Arena.prototype.playerLeft = function ( playerId ) {
+Game.Arena.prototype.playerLeft = function ( player ) {
 
-    if ( this.playerManager.getById( playerId ) ) {
+    if ( this.playerManager.getById( player.id ) ) {
 
-        this.playerManager.remove( this.playerManager.getById( playerId ) );
+        this.playerManager.remove( this.playerManager.getById( player.id ) );
 
     }
 
@@ -102,7 +102,6 @@ Game.Arena.prototype.proxyEventToPlayer = function ( data, eventName ) {
     var playerId = ( data.player ) ? data.player.id : data[0];
     var player = this.playerManager.getById( playerId );
     player = ( ! player ) ? this.me : player;
-    // if ( eventName === 'PlayerGotBox' ) console.log( data );
 
     player.dispatchEvent({ type: eventName, data: data });
 
@@ -132,6 +131,7 @@ Game.Arena.prototype.addNetworkListeners = function () {
     network.addMessageListener( 'ArenaPlayerJoined', this.newPlayerJoined.bind( this ) );
     network.addMessageListener( 'ArenaPlayerRespawn', this.proxyEventToPlayer.bind( this ) );
     network.addMessageListener( 'ArenaAddBox', this.addBox.bind( this ) );
+    network.addMessageListener( 'ArenaPlayerLeft', this.playerLeft.bind( this ) );
 
     //
 

@@ -193,6 +193,8 @@ Player.prototype.move = (function () {
         bufferView[ 4 ] = this.position.x;
         bufferView[ 5 ] = this.position.z;
 
+        // console.log(this.position);
+
         this.arena.announce( 'PlayerTankMove', buffer, bufferView );
 
     };
@@ -329,7 +331,7 @@ Player.prototype.shoot = (function () {
         }
 
         if ( this.shootTimeout ) return;
-        // console.log(this.tank.reloadTime);
+
         this.shootTimeout = setTimeout( function () {
 
             scope.shootTimeout = false;
