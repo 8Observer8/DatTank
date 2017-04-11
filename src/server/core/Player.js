@@ -331,7 +331,7 @@ Player.prototype.shoot = (function () {
         }
 
         if ( this.shootTimeout ) return;
-        // console.log(this.tank.reloadTime);
+
         this.shootTimeout = setTimeout( function () {
 
             scope.shootTimeout = false;
