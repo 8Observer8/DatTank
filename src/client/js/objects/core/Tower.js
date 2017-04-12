@@ -324,6 +324,8 @@ Game.Tower.prototype.changeTeam = function ( team ) {
 
 Game.Tower.prototype.updateHealth = function ( health ) {
 
+    //( health  < 50 ) ? console.log( health ) : console.log('lol');
+
     this.health = health;
     this.updateHealthBar();
 
