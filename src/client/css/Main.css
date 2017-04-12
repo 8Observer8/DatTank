@@ -1187,7 +1187,7 @@ object {
     width: 242px;
     height: 250px;
     float: left;
-    top: calc(50% + -310px);
+    top: calc(50% + -45%);
     left: 5%;
     background: #44403d;
     border-radius: 7px;
