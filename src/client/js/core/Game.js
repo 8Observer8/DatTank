@@ -60,6 +60,10 @@ Game.prototype.init = function () {
     $('#viewport-graphics-quality').click( ui.chageQuality.bind( ui ) );
     $('#viewport-sound-on-off').click( ui.changeSound.bind( ui ) );
 
+    $('#vk-btn').click( this.gaVk.bind( this ) );
+    $('#f-btn').click( this.gaFb.bind( this ) );
+    $('#tw-btn').click( this.gaTw.bind( this ) );
+
 };
 
 Game.prototype.play = function ( event ) {
@@ -211,5 +215,35 @@ Game.prototype.loop = function () {
         this.arena.update( this.time, 20 );
 
     }
+
+};
+
+Game.prototype.gaVk = function() {
+
+    ga('send', {
+        hitType: 'event',
+        eventCategory: 'game',
+        eventAction: 'shareVk'
+    });
+
+};
+
+Game.prototype.gaFb = function() {
+
+    ga('send', {
+        hitType: 'event',
+        eventCategory: 'game',
+        eventAction: 'shareFacebook'
+    });
+
+};
+
+Game.prototype.gaTw = function() {
+
+    ga('send', {
+        hitType: 'event',
+        eventCategory: 'game',
+        eventAction: 'shareTwiter'
+    });
 
 };
