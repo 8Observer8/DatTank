@@ -190,6 +190,7 @@ ArenaManager.prototype.addNetworkListeners = function () {
 
     networkManager.addMessageListener( 'PlayerTankHit', function ( data, socket ) {
 
+        if ( ! socket.arena ) return;
         var player = socket.arena.playerManager.getById( data[0] );
         if ( ! player ) return;
 
@@ -198,7 +199,8 @@ ArenaManager.prototype.addNetworkListeners = function () {
     });
 
     networkManager.addMessageListener( 'TowerHit', function ( data, socket ) {
-
+        
+        if ( ! socket.arena ) return;
         var tower = socket.arena.towerManager.getById( data[0] );
         if ( ! tower ) return;
 
