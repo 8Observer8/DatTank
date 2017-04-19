@@ -60,9 +60,11 @@ Game.prototype.init = function () {
     $('#viewport-graphics-quality').click( ui.chageQuality.bind( ui ) );
     $('#viewport-sound-on-off').click( ui.changeSound.bind( ui ) );
 
-    $('#vk-btn').click( this.gaVk.bind( this ) );
-    $('#f-btn').click( this.gaFb.bind( this ) );
-    $('#tw-btn').click( this.gaTw.bind( this ) );
+    $('.share-label').click( this.gaShareLabel.bind( this ) );
+
+    // $('#vk-btn').click( this.gaVk.bind( this ) );
+    // $('#f-btn').click( this.gaFb.bind( this ) );
+    // $('#tw-btn').click( this.gaTw.bind( this ) );
 
 };
 
@@ -218,32 +220,36 @@ Game.prototype.loop = function () {
 
 };
 
-Game.prototype.gaVk = function() {
+Game.prototype.gaShareLabel = function() {
 
     ga('send', {
         hitType: 'event',
         eventCategory: 'game',
-        eventAction: 'shareVk'
+        eventAction: 'shareLabel'
     });
 
 };
 
-Game.prototype.gaFb = function() {
+// Game.prototype.gaFb = function() {
 
-    ga('send', {
-        hitType: 'event',
-        eventCategory: 'game',
-        eventAction: 'shareFacebook'
-    });
+//     console.log("fb");
 
-};
+//     ga('send', {
+//         hitType: 'event',
+//         eventCategory: 'game',
+//         eventAction: 'shareFacebook'
+//     });
 
-Game.prototype.gaTw = function() {
+// };
 
-    ga('send', {
-        hitType: 'event',
-        eventCategory: 'game',
-        eventAction: 'shareTwiter'
-    });
+// Game.prototype.gaTw = function() {
 
-};
+//     console.log("tw");
+
+//     ga('send', {
+//         hitType: 'event',
+//         eventCategory: 'game',
+//         eventAction: 'shareTwiter'
+//     });
+
+// };
