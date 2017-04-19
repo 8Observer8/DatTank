@@ -60,9 +60,9 @@ Game.prototype.init = function () {
     $('#viewport-graphics-quality').click( ui.chageQuality.bind( ui ) );
     $('#viewport-sound-on-off').click( ui.changeSound.bind( ui ) );
 
-    $('#vk-btn').click( this.gaVk.bind( this ) );
-    $('#f-btn').click( this.gaFb.bind( this ) );
-    $('#tw-btn').click( this.gaTw.bind( this ) );
+    $('.share-vk').click( this.gaVk.bind( this ) );
+    $('.share-fb').click( this.gaFb.bind( this ) );
+    $('.share-tw').click( this.gaTw.bind( this ) );
 
 };
 
