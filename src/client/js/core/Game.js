@@ -60,7 +60,7 @@ Game.prototype.init = function () {
     $('#viewport-graphics-quality').click( ui.chageQuality.bind( ui ) );
     $('#viewport-sound-on-off').click( ui.changeSound.bind( ui ) );
 
-    $('.share-label').click( this.gaShareLabel.bind( this ) );
+    $('.unblockTank').click( this.gaShareLabel.bind( this ) );
 
     // $('#vk-btn').click( this.gaVk.bind( this ) );
     // $('#f-btn').click( this.gaFb.bind( this ) );
