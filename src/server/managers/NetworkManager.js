@@ -21,7 +21,7 @@ NetworkManager.prototype.init = function () {
     this.registerEvent( 'ArenaJoinResponce', 'out', 'json', 1 );
     this.registerEvent( 'ArenaPlayerJoined', 'out', 'json', 2 );
     this.registerEvent( 'ArenaPlayerRespawn', 'out', 'json', 3 );
-    this.registerEvent( 'ArenaPlayerRespawn', 'in', 'bin', 4 );
+    this.registerEvent( 'ArenaPlayerRespawn', 'in', 'json', 4 );
     this.registerEvent( 'ArenaAddBox', 'out', 'json', 5 );
     this.registerEvent( 'ArenaPlayerLeft', 'out', 'json', 6 );
 

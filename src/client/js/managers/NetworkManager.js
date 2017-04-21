@@ -32,7 +32,7 @@ Game.NetworkManager.prototype.init = function ( callback ) {
     this.registerEvent( 'ArenaJoinResponce', 'in', 'json', 1 );
     this.registerEvent( 'ArenaPlayerJoined', 'in', 'json', 2 );
     this.registerEvent( 'ArenaPlayerRespawn', 'in', 'json', 3 );
-    this.registerEvent( 'ArenaPlayerRespawn', 'out', 'bin', 4 );
+    this.registerEvent( 'ArenaPlayerRespawn', 'out', 'json', 4 );
     this.registerEvent( 'ArenaAddBox', 'in', 'json', 5 );
     this.registerEvent( 'ArenaPlayerLeft', 'in', 'json', 6 );
 
