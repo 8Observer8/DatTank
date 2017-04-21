@@ -33,6 +33,7 @@ Game.Player = function ( arena, params ) {
     this.stepDx = this.stepDy = this.stepDz = 0;
     this.moveDt = 0;
     this.moveSpeed = 0.09;
+    this.originalMoveSpead = this.moveSpeed;
     this.movementDurationMap = [];
 
     this.rotDelta = 0;
@@ -85,7 +86,7 @@ Game.Player.prototype.selectTank = function ( tankName ) {
 
     }
 
-    this.moveSpeed = this.moveSpeed * this.tank.speed / 40;
+    this.moveSpeed = this.originalMoveSpead * this.tank.speed / 40;
 
 };
 
@@ -147,6 +148,11 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
             ui.updateHealth( this.health );
             ui.updateAmmo( this.ammo );
 
+            var tankName = params.tank;
+            this.tank.dispose();
+            this.selectTank( tankName );
+            this.tank.init();
+
         }
 
         ui.updateLeaderboard( Game.arena.playerManager.players, Game.arena.me );
@@ -161,10 +167,8 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
                 eventAction: 'respown'
             });
 
-            var buffer = new ArrayBuffer( 2 );
-            var bufferView = new Int16Array( buffer );
-
-            network.send( 'ArenaPlayerRespawn', buffer, bufferView );
+            var tank = localStorage.getItem( 'currentTank' ) || 0;
+            network.send( 'ArenaPlayerRespawn', false, tank );
 
         }
 
