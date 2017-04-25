@@ -352,7 +352,7 @@ object {
 #signin-box-wrapper #signin-box .field {
     display: table;
     margin-top: 10px;
-    margin-left: auto;
+    margin-left: 16px;
     margin-right: auto;
     padding: 8px 15px;
     width: 80%;
@@ -361,26 +361,65 @@ object {
     outline: none;
 }
 
+#signin-box-wrapper #signin-box #play-change-btn{
+    position: relative;
+    margin-top: 8px;
+    width: 100%;
+    height: 41px;
+}
+
+#signin-box-wrapper #signin-box #play-btn #play-btn-text{
+    position: relative;
+    top: 10px;
+}
+
 #signin-box-wrapper #signin-box #play-btn {
-    display: table;
+    float: left;
+    /* display: table; */
     background-color: #00b6ff;
-    padding: 10px 16px;
-    margin-top: 10px;
-    margin-left: auto;
+    /* padding: 10px 16px; */
+    /* margin-top: 10px; */
+    height: 41px;
+    margin-left: 16px;
     margin-right: auto;
-    width: 80%;
+    width: 69%;
     text-align: center;
     font: normal 15px 'Roboto';
     color: #fff;
     border: 1px solid #0493CC;
     opacity: 0.8;
     transition: opacity 200ms ease;
-    cursor: url('../resources/img/cursor.png'), auto;
-    outline: none;
 }
 
 #signin-box-wrapper #signin-box #play-btn:hover {
     opacity: 1;
+}
+
+#signin-box-wrapper #change-tank{
+    position: relative;
+    border: 1px solid #0493CC;
+    height: 41px;
+    right: 5%;
+    float: right;
+    width: 20.5%;
+    background: #499898;
+    opacity: 0.75;
+}
+
+#signin-box-wrapper #change-tank:hover{
+    position: relative;
+    border: 1px solid #0493CC;
+    height: 41px;
+    right: 5%;
+    float: right;
+    width: 20.5%;
+    background: #499898;
+    opacity: 1;
+}
+
+#change-tank img {
+    width: 68px;
+    height: 40px;
 }
 
 #signin-box-wrapper #signin-box #instructions {
@@ -410,16 +449,16 @@ object {
     position: relative;
     margin-top: 10px;
     width: 100%;
-    height: 41px;
+    height: 43px;
 }
 
 #continue-box-wrapper #change-tank{
     position: relative;
     border: 1px solid #0493CC;
     height: 41px;
-    right: 1%;
+    right: 3%;
     float: right;
-    width: 21%;
+    width: 19%;
     background: #499898;
     opacity: 0.75;
 }
