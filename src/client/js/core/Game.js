@@ -53,6 +53,7 @@ Game.prototype.init = function () {
     $('#play-btn').click( this.play.bind( this ) );
     $('.change-skin-btn').click( ui.showChoiceWindow.bind( ui ) );
     $('.btn-pick').click( ui.selectTankAndcloseChoiceWindow.bind( ui ) );
+    $('#signin-box-wrapper #change-tank').click( ui.showChoiceWindow.bind( ui ) );
 
     $('#graphics-quality').click( ui.chageQuality.bind( ui ) );
     $('#sound-on-off').click( ui.changeSound.bind( ui ) );

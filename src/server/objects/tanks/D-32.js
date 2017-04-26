@@ -8,7 +8,7 @@ var D32 = function ( params ) {
     this.speed = 50;
     this.range = 160;
     this.armour = 150;
-    this.bullet = 77;
+    this.bullet = 67;
     this.maxShells = 60;
     this.reloadTime = 300;
 
