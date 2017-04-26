@@ -626,9 +626,9 @@ Game.Tank.prototype.dispose = function () {
     // todo: dispose effects
     // todo: dispose bullets
 
-    for ( var i = 0; i < view.scene.intersections.length; i++ ) {
+    for ( var i = 0; i < view.scene.intersections.length; i ++ ) {
 
-        if ( view.scene.intersections[ i ].uuid === this.object.children[3].uuid ) {
+        if ( view.scene.intersections[ i ].uuid === this.object.children[ 3 ].uuid ) {
 
             view.scene.intersections.splice(i, 1);
             break;

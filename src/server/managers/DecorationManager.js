@@ -37,6 +37,7 @@ DecorationManager.prototype.init = function ( params ) {
 
             var placedOnTower = false;
             var placedOnBase = false;
+            var placedOnMapDecor = false;
 
             for ( var i = 0, il = towers.length; i < il; i ++ ) {
 
@@ -79,7 +80,24 @@ DecorationManager.prototype.init = function ( params ) {
                 rotation:   2 * Math.PI * Math.random()
             });
 
+            for ( var i = 0, il = this.decorations.length; i < il; i ++ ) {
+
+                var decor = this.decorations[ i ];
+
+                if ( Math.abs( x - decor.position.x ) + Math.abs( z - decor.position.z ) < 100 ) {
+
+                    placedOnMapDecor = true;
+                    break;
+
+                }
+
+            }
+
+            if ( placedOnMapDecor ) continue;
+
             this.decorations.push( decoration );
+
+            //
 
             count --;
 

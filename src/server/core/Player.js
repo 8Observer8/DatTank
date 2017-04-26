@@ -16,6 +16,7 @@ var Player = function ( arena, params ) {
 
     this.moveDirection = new Game.Vec2();
     this.moveSpeed = 0.09;
+    this.originalMoveSpead = this.moveSpeed;
 
     this.status = Player.Alive;
 
@@ -62,7 +63,7 @@ var Player = function ( arena, params ) {
 
 Player.prototype = Object.create( Game.EventDispatcher.prototype );
 
-Player.prototype.respawn = function () {
+Player.prototype.respawn = function ( tankName ) {
 
     this.status = Player.Alive;
     this.health = 100;
@@ -86,6 +87,8 @@ Player.prototype.respawn = function () {
 
     this.position.x += offsetX;
     this.position.z += offsetZ;
+
+    this.selectTank( tankName );
 
     //
 
@@ -119,7 +122,7 @@ Player.prototype.selectTank = function ( tankName ) {
 
     }
 
-    this.moveSpeed = this.moveSpeed * this.tank.speed / 40;
+    this.moveSpeed = this.originalMoveSpead * this.tank.speed / 40;
     this.ammo = this.tank.maxShells;
 
 };
@@ -192,8 +195,6 @@ Player.prototype.move = (function () {
         bufferView[ 3 ] = directionZ;
         bufferView[ 4 ] = this.position.x;
         bufferView[ 5 ] = this.position.z;
-
-        // console.log(this.position);
 
         this.arena.announce( 'PlayerTankMove', buffer, bufferView );
 
@@ -623,7 +624,7 @@ Player.prototype.addEventListeners = function () {
 
     var scope = this;
 
-    this.addEventListener( 'ArenaPlayerRespawn', function ( event ) { scope.respawn(); });
+    this.addEventListener( 'ArenaPlayerRespawn', function ( event ) { scope.respawn( event.data ); });
     this.addEventListener( 'PlayerTankRotateTop', function ( event ) { scope.rotateTop( event.data[0] / 1000 ); });
     this.addEventListener( 'PlayerTankMove', function ( event ) { scope.move( event.data[0], event.data[1] ); });
     this.addEventListener( 'PlayerTankMoveByPath', function ( event ) { scope.moveToPoint({ x: event.data[0], z: event.data[1] }); });

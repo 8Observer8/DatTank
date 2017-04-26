@@ -52,13 +52,18 @@ Game.prototype.init = function () {
     });
     $('#play-btn').click( this.play.bind( this ) );
     $('.change-skin-btn').click( ui.showChoiceWindow.bind( ui ) );
-    $('.btn-pick').click(ui.selectTankAndcloseChoiceWindow.bind( ui ) );
+    $('.btn-pick').click( ui.selectTankAndcloseChoiceWindow.bind( ui ) );
+    $('#signin-box-wrapper #change-tank').click( ui.showChoiceWindow.bind( ui ) );
 
     $('#graphics-quality').click( ui.chageQuality.bind( ui ) );
     $('#sound-on-off').click( ui.changeSound.bind( ui ) );
 
     $('#viewport-graphics-quality').click( ui.chageQuality.bind( ui ) );
     $('#viewport-sound-on-off').click( ui.changeSound.bind( ui ) );
+
+    $('.share-vk').click( this.gaVk.bind( this ) );
+    $('.share-fb').click( this.gaFb.bind( this ) );
+    $('.share-tw').click( this.gaTw.bind( this ) );
 
 };
 
@@ -211,5 +216,35 @@ Game.prototype.loop = function () {
         this.arena.update( this.time, 20 );
 
     }
+
+};
+
+Game.prototype.gaVk = function() {
+
+    ga('send', {
+        hitType: 'event',
+        eventCategory: 'game',
+        eventAction: 'shareVk'
+    });
+
+};
+
+Game.prototype.gaFb = function() {
+
+    ga('send', {
+        hitType: 'event',
+        eventCategory: 'game',
+        eventAction: 'shareFacebook'
+    });
+
+};
+
+Game.prototype.gaTw = function() {
+
+    ga('send', {
+        hitType: 'event',
+        eventCategory: 'game',
+        eventAction: 'shareTwiter'
+    });
 
 };

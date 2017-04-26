@@ -33,7 +33,9 @@ Game.ResourceManager = function () {
         'tree3.json',
         'stone.json',
         'stone1.json',
-        'stone2.json'
+        'stone2.json',
+
+        'oldCastle.json'
     ];
 
     this.texturesList = [
@@ -55,6 +57,7 @@ Game.ResourceManager = function () {
         'stoneshadow_3.png',
         'stoneshadow_4.png',
 
+        'shadowHouse.png',
 
         'shadowTank.png',
 
