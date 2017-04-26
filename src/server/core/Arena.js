@@ -41,7 +41,8 @@ Arena.prototype.init = function ( callback ) {
         trees3: { type: 'Tree3', count: 20 },
         rocks: { type: 'Stones', count: 40 },
         rocks1: { type: 'Stones1', count: 20 },
-        rocks2: { type: 'Stones2', count: 20 }
+        rocks2: { type: 'Stones2', count: 20 },
+        oldCastle: { type: 'OldCastle', count: 3 }
     });
     this.botManager.init();
 

@@ -107,6 +107,8 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
     var stone1 = resourceManager.getModel( 'stone1.json' );
     var stone2 = resourceManager.getModel( 'stone2.json' );
 
+    var oldCastle = resourceManager.getModel( 'oldCastle.json' );
+
     var model;
     var mesh;
     var decoration;
@@ -147,6 +149,10 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
                 model = stone2;
                 break;
 
+            case 'oldCastle':
+                model = oldCastle;
+                break;
+
             default:
                 console.log('No proper decoration model.');
 
@@ -162,6 +168,8 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
 
         var scale = Math.random() * 10;
         if ( decoration.type === 'tree' || decoration.type === 'tree1' || decoration.type === 'tree2' || decoration.type === 'tree3' ) mesh.scale.set( 20 + scale, 10 + Math.random() * 20, 20 + scale );
+        // scale for old Castle
+        if ( decoration.type === 'oldCastle' ) mesh.scale.set( 20, 20, 20 );
 
         mesh.position.set( decoration.position.x, decoration.position.y, decoration.position.z );
         mesh.name = decoration.type;
@@ -370,6 +378,21 @@ Game.ViewManager.prototype.addObjectShadow = function ( objectType, position, sc
             rockShadow.position.x += rockShadow.scale.y / 4;
             rockShadow.position.z += rockShadow.scale.y / 4;
             this.scene.add( rockShadow );
+
+            break;
+
+        case 'oldCastle':
+
+            var shadowHouseTexture = resourceManager.getTexture( 'shadowHouse.png' );
+            var shadowHouse = new THREE.Mesh( new THREE.PlaneBufferGeometry( 6, 6 ), new THREE.MeshBasicMaterial({ map: shadowHouseTexture, transparent: true, depthWrite: false, opacity: 0.4 }) );
+            shadowHouse.material.transparent = true;
+            shadowHouse.rotation.x = - Math.PI / 2;
+            shadowHouse.position.copy( position );
+            shadowHouse.position.y += 0.5;
+            shadowHouse.scale.set( scale.y, scale.y, scale.y );
+            shadowHouse.position.x += 5 * shadowHouse.scale.y / 2 - 4;
+            shadowHouse.position.z += 3 * shadowHouse.scale.y / 2 - 4;
+            this.scene.add( shadowHouse );
 
             break;
 
