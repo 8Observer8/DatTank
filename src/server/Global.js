@@ -66,6 +66,7 @@ global.Game.Decoration.Tree3 = require('./objects/decorations/Tree3');
 global.Game.Decoration.Stones = require('./objects/decorations/Stones');
 global.Game.Decoration.Stones1 = require('./objects/decorations/Stones1');
 global.Game.Decoration.Stones2 = require('./objects/decorations/Stones2');
+global.Game.Decoration.OldCastle = require('./objects/decorations/OldCastle');
 
 // import Improvement boxes
 
