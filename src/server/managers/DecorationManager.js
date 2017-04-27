@@ -84,7 +84,7 @@ DecorationManager.prototype.init = function ( params ) {
 
                 var decor = this.decorations[ i ];
 
-                if ( Math.abs( x - decor.position.x ) + Math.abs( z - decor.position.z ) < 100 ) {
+                if ( Math.abs( x - decor.position.x ) + Math.abs( z - decor.position.z ) < 50 ) {
 
                     placedOnMapDecor = true;
                     break;
