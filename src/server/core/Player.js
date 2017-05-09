@@ -451,8 +451,9 @@ Player.prototype.die = (function () {
         if ( this.bot ) { // tmp hack for bot respown
 
             var scope = this;
+            var maxKills = Math.floor( Math.random() * ( 200 - 100 ) ) + 100;
 
-            if ( this.arena.playerManager.players.length - this.arena.botManager.bots.length < 5 ) {
+            if ( this.arena.playerManager.players.length - this.arena.botManager.bots.length < 5 && scope.kills < maxKills ) {
 
                 setTimeout( this.respawn.bind( this ), 3000 );
 
