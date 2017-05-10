@@ -274,7 +274,7 @@ Game.Garage.prototype.selectTank = function ( event ) {
 
             $('.share-label').hide();
 
-        } 
+        }
 
     }
 

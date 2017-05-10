@@ -81,7 +81,7 @@ Player.prototype.respawn = function ( tankName ) {
     while ( Math.sqrt( offsetX * offsetX + offsetZ * offsetZ ) < 80 ) {
 
         offsetX = ( Math.random() - 0.5 ) * 150;
-        offsetZ = ( Math.random() - 0.5 ) * 150;        
+        offsetZ = ( Math.random() - 0.5 ) * 150;
 
     }
 
@@ -336,7 +336,7 @@ Player.prototype.shoot = (function () {
         this.shootTimeout = setTimeout( function () {
 
             scope.shootTimeout = false;
-            
+
         }, this.tank.reloadTime );
 
         this.hits = {};

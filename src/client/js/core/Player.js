@@ -483,7 +483,7 @@ Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
         var intersections = view.raycaster.intersectObjects( view.scene.intersections );
 
         if ( intersections.length && intersections[0].distance < 100 ) {
-        
+
             if ( player.id === Game.arena.me.id && intersections[0].distance - 40 < 0 ) {
 
                 controls.stop();
@@ -564,21 +564,13 @@ Game.Player.prototype.shoot = function ( shootId, ammo ) {
 
     if ( this.status !== 'alive' ) return;
 
-    // if ( Game.arena.me.id === this.id && ( this.ammo <= 0 || Date.now() - this.lastShot < 1000 ) ) {
-
-    //     return;
-
-    // }
-
-    //
-
     if ( Game.arena.me.id === this.id ) {
 
         this.ammo = ammo;
         ui.updateAmmo( this.ammo );
 
     }
-    
+
     this.tank.showBlastSmoke();
     this.tank.shootBullet().onHit( function ( target ) {
 
@@ -635,7 +627,7 @@ Game.Player.prototype.gotBox = function ( data ) {
     if ( localStorage.getItem('sound') === 'true' ) {
 
         soundManager.menuSound.play();
-        
+
     };
 
     switch ( box.type ) {
@@ -731,11 +723,11 @@ Game.Player.prototype.die = function ( killer ) {
 
             if ( killer instanceof Game.Tower ) {
 
-                ui.showContinueBox( '<br>' + killer.team.name + ' team tower', killer.team.color ); 
+                ui.showContinueBox( '<br>' + killer.team.name + ' team tower', killer.team.color );
 
             } else {
 
-                ui.showContinueBox( killer.login, killer.team.color ); 
+                ui.showContinueBox( killer.login, killer.team.color );
 
             }
 

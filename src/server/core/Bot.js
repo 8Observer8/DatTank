@@ -29,9 +29,9 @@ var Bot = function ( arena ) {
 
                 this.login = false;
 
-            } 
+            }
 
-        } 
+        }
 
     }
 

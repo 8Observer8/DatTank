@@ -199,7 +199,7 @@ ArenaManager.prototype.addNetworkListeners = function () {
     });
 
     networkManager.addMessageListener( 'TowerHit', function ( data, socket ) {
-        
+
         if ( ! socket.arena ) return;
         var tower = socket.arena.towerManager.getById( data[0] );
         if ( ! tower ) return;

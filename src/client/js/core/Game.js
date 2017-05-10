@@ -185,7 +185,7 @@ Game.prototype.joinArena = function ( params ) {
 
     ui.updateLeaderboard( Game.arena.playerManager.players, Game.arena.me );
 
-    $('#gear_btn').click( ui.openSettings.bind( ui ) );  
+    $('#gear_btn').click( ui.openSettings.bind( ui ) );
     $('#exit-btn').click( ui.openSettings.bind( ui ) );
     $('#soundon').click( ui.changeSound.bind( ui ) );
     $('#qualityon').click( ui.chageQuality.bind( ui ) );

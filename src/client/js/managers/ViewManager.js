@@ -331,7 +331,7 @@ Game.ViewManager.prototype.addObjectShadow = function ( objectType, position, sc
         case 'rock':
 
             var rockShadowTexture = resourceManager.getTexture( 'stoneshadow.png' );
-            var rockShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture, transparent: true, depthWrite: false, opacity: 0.4 }) ); 
+            var rockShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture, transparent: true, depthWrite: false, opacity: 0.4 }) );
             rockShadow.material.transparent = true;
             rockShadow.rotation.x = - Math.PI / 2;
             rockShadow.position.copy( position );
@@ -368,7 +368,7 @@ Game.ViewManager.prototype.addObjectShadow = function ( objectType, position, sc
                 var rockShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 5, 5 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture4, transparent: true, depthWrite: false, opacity: 0.4 }) );
 
             }
-            
+
             rockShadow.material.transparent = true;
             rockShadow.rotation.x = - Math.PI / 2;
             rockShadow.position.copy( position );

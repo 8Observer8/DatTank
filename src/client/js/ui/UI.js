@@ -338,7 +338,7 @@ Game.UI.prototype.closeChoiceWindow = function ( event ) {
     }
 
     $('.tank-skins').hide();
-    $('#signin-box').css('opacity', 1); 
+    $('#signin-box').css('opacity', 1);
     garage.stop();
 
 };

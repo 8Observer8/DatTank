@@ -258,7 +258,7 @@ Tower.prototype.rotateTop = (function () {
         }
 
         if ( Math.abs( deltaRot ) > 0.01 ) {
-        
+
             this.rotation = utils.formatAngle( this.rotation + Math.sign( deltaRot ) / 30 * ( delta / 20 ) );
 
         }

@@ -50,10 +50,9 @@ Game.Tank.prototype.initBullets = function () {
 
     for ( var i = 0; i < 5; i ++ ) {
 
-        //var bullet = new THREE.Mesh( new THREE.BoxGeometry( 2, 2, 2 ), new THREE.MeshLambertMaterial({ color: 0xff0000 }) );
         var bullet = new THREE.Mesh( new THREE.SphereGeometry( 2.5, 12, 12 ), new THREE.MeshLambertMaterial({ color: this.player.team.color }) );
         bullet.visible = false;
-        
+
         bullet.active = false;
 
         this.bullets.push( bullet );
@@ -306,7 +305,7 @@ Game.Tank.prototype.showExplosion = function () {
         scale = 80;
         sprite.scale.set( scale, scale, scale );
         sprite.visible = true;
-        this.object.add( sprite );        
+        this.object.add( sprite );
         this.effects.explosion.push( sprite );
 
     }
@@ -325,7 +324,7 @@ Game.Tank.prototype.updateExplosion = function ( delta ) {
         if ( this.effects.explosion[ i ].material.time > 50 ) {
 
             if ( this.effects.explosion[0].material.map.offset.y > 0 ) {        
-            
+
                 this.effects.explosion[ i ].material.map.offset.x += 0.2;
                 this.effects.explosion[ i ].material.time = 0;
 
@@ -352,7 +351,7 @@ Game.Tank.prototype.updateExplosion = function ( delta ) {
             if ( this.effects.explosion[ i ].material.map.offset.x === 1 ) {
 
                 if ( this.effects.explosion[0].material.map.offset.y > 0 ) {
-                
+
                     this.effects.explosion[ i ].material.map.offset.x = 0;
                     this.effects.explosion[ i ].material.map.offset.y -= 0.25;
 
@@ -425,7 +424,7 @@ Game.Tank.prototype.showSmoke = function ( strength ) {
         scale = strength * ( 10 + Math.random() * 30 );
         sprite.scale.set( scale, scale, scale );
         sprite.visible = false;
-        this.object.add( sprite );        
+        this.object.add( sprite );
         this.effects.smoke.push( sprite );
 
     }
