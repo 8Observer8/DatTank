@@ -491,7 +491,6 @@ Player.prototype.update = function ( delta, time ) {
         player.position.x -= Math.sign( player.moveDirection.x ) / moveDelta * player.moveSpeed * delta;
         player.position.z += Math.sign( player.moveDirection.y ) / moveDelta * player.moveSpeed * delta;
 
-
         if ( player.position.z > 1270 ) {
 
             player.moveDirection.y = ( player.moveDirection.y !== 1 ) ? 0 : 0;

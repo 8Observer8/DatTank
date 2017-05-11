@@ -121,7 +121,6 @@ Game.Garage.prototype.init = function () {
 
         loaded ++;
 
-
     });
 
     var loaderscene = new THREE.AssimpJSONLoader();
