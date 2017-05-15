@@ -478,54 +478,9 @@ Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
 
     if ( player.moveDirection.x !== 0 || player.moveDirection.y !== 0 ) {
 
-        view.raycaster.ray.origin.set( player.position.x, 22, player.position.z );
-        view.raycaster.ray.direction.set( - player.moveDirection.x, 0, player.moveDirection.y ).normalize();
-        var intersections = view.raycaster.intersectObjects( view.scene.intersections );
-
-        if ( intersections.length && intersections[0].distance < 100 ) {
-
-            if ( player.id === Game.arena.me.id && intersections[0].distance - 40 < 0 ) {
-
-                controls.stop();
-                return;
-
-            }
-
-        }
-
         var moveDelta = Math.sqrt( Math.pow( player.moveDirection.x, 2 ) + Math.pow( player.moveDirection.y, 2 ) );
         var newPositionX = player.position.x - Math.sign( player.moveDirection.x ) / moveDelta * player.moveSpeed * delta;
         var newPositionZ = player.position.z + Math.sign( player.moveDirection.y ) / moveDelta * player.moveSpeed * delta;
-
-        if ( newPositionZ > 1270 ) {
-
-            player.moveDirection.y = 0;
-            player.moveDirection.x = 0;
-            controls.stop();
-            return;
-
-        } else if ( newPositionZ < -1270 ) {
-
-            player.moveDirection.y = 0;
-            player.moveDirection.x = 0;
-            controls.stop();
-            return;
-
-        } else if ( newPositionX > 1270 ) {
-
-            player.moveDirection.x = 0;
-            player.moveDirection.y = 0;
-            controls.stop();
-            return;
-
-        } else if ( newPositionX < -1270 ) {
-
-            player.moveDirection.x = 0;
-            player.moveDirection.y = 0;
-            controls.stop();
-            return;
-
-        }
 
         player.tank.addTrack();
 
@@ -572,30 +527,7 @@ Game.Player.prototype.shoot = function ( shootId, ammo ) {
     }
 
     this.tank.showBlastSmoke();
-    this.tank.shootBullet().onHit( function ( target ) {
-
-        if ( scope.team !== target.owner.team ) {
-
-            var buffer = new ArrayBuffer( 8 );
-            var bufferView = new Int16Array( buffer );
-
-            bufferView[ 1 ] = target.owner.id;
-            bufferView[ 2 ] = shootId;
-            bufferView[ 3 ] = scope.id;
-
-            if ( target.name === 'tank' ) {
-
-                network.send( 'PlayerTankHit', buffer, bufferView );
-
-            } else {
-
-                network.send( 'TowerHit', buffer, bufferView );
-
-            }
-
-        }
-
-    });
+    this.tank.shootBullet();
 
     //
 

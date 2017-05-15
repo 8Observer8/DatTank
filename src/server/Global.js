@@ -38,6 +38,7 @@ global.Game.BotManager = require('./managers/BotManager');
 global.Game.TeamManager = require('./managers/TeamManager');
 global.Game.TowerManager = require('./managers/TowerManager');
 global.Game.ArenaManager = require('./managers/ArenaManager');
+global.Game.CollisionManager = require('./managers/CollisionManager');
 
 // import main objects
 

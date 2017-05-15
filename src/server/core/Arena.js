@@ -15,6 +15,7 @@ var Arena = function ( callback ) {
     this.botManager = new Game.BotManager( this, {} );
     this.boxManager = new Game.BoxManager( this, {} );
     this.pathManager = new Game.PathManager( this, {} );
+    this.collisionManager = new Game.CollisionManager( this, {} );
 
     this.updateInterval = false;
     this.currentTime = false;
@@ -136,6 +137,7 @@ Arena.prototype.update = function () {
 
     this.playerManager.update( delta, time );
     this.towerManager.update( delta );
+    this.collisionManager.update( delta );
 
     if ( this.loopIter % 5 === 0 ) {
 

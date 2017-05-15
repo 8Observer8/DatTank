@@ -29,13 +29,17 @@ var Player = function ( arena, params ) {
 
     }
 
+    this.sizeX = 3;
+    this.sizeZ = 1;
+
+    this.bullets = [];
+
     this.arena = arena || false;
     this.team = false;
     this.health = 100;
     this.kills = 0;
     this.death = 0;
 
-    this.hits = {};
     this.shootTimeout = false;
 
     this.movePath = false;
@@ -68,10 +72,10 @@ Player.prototype.respawn = function ( tankName ) {
     this.status = Player.Alive;
     this.health = 100;
     this.ammo = this.tank.maxShells;
-    this.hits = {};
     this.position.set( this.team.spawnPosition.x, this.team.spawnPosition.y, this.team.spawnPosition.z );
     this.rotation = 0;
     this.rotationTop = 0;
+    this.bullets = [];
 
     //
 
@@ -339,15 +343,21 @@ Player.prototype.shoot = (function () {
 
         }, this.tank.reloadTime );
 
-        this.hits = {};
-
         if ( this.ammo <= 0 ) {
 
             return;
 
         }
 
+        this.bullets.push({
+            origPosition:   { x: this.position.x, y: 25, z: this.position.z },
+            position:       { x: this.position.x, y: 25, z: this.position.z },
+            angle:          this.rotateTop
+        });
+
         this.ammo --;
+
+        //
 
         bufferView[ 1 ] = this.id;
         bufferView[ 2 ] = Player.numShootId;
@@ -375,14 +385,6 @@ Player.prototype.hit = (function () {
             return;
 
         }
-
-        if ( this.hits[ shootId ] ) return;
-        this.hits[ shootId ] = 1;
-        setTimeout( function () {
-
-            delete scope.hits[ shootId ];
-
-        }, 1000 );
 
         killer = this.arena.playerManager.getById( killer ) || this.arena.towerManager.getById( killer );
 
@@ -478,40 +480,51 @@ Player.prototype.die = (function () {
 
 }) ();
 
+Player.prototype.bulletHit = (function () {
+
+    // todo
+
+}) ();
+
 Player.prototype.update = function ( delta, time ) {
 
     var player = this;
+
+    // update player shooted bullets
+
+    for ( var i = 0, il = player.bullets.length; i < il; i ++ ) {
+
+        var bulletCollisionResult = player.arena.collisionManager.moveBullet( player.bullets[ i ], delta );
+
+        if ( bulletCollisionResult ) {
+
+            //
+
+        } else {
+
+            //
+
+        }
+
+    }
 
     // update player AWSD movement
 
     if ( player.moveDirection.x !== 0 || player.moveDirection.y !== 0 ) {
 
+        if ( ! this.arena.collisionManager.moveTank( player.moveDirection, player, delta ) ) {
+
+            player.moveDirection.x = 0;
+            player.moveDirection.z = 0;
+            this.move( 0, 0 );
+            return;
+
+        }
+
         var moveDelta = Math.sqrt( Math.pow( player.moveDirection.x, 2 ) + Math.pow( player.moveDirection.y, 2 ) );
 
         player.position.x -= Math.sign( player.moveDirection.x ) / moveDelta * player.moveSpeed * delta;
         player.position.z += Math.sign( player.moveDirection.y ) / moveDelta * player.moveSpeed * delta;
-
-        if ( player.position.z > 1270 ) {
-
-            player.moveDirection.y = ( player.moveDirection.y !== 1 ) ? 0 : 0;
-            player.moveDirection.x = 0;
-
-        } else if ( player.position.z < -1270 ) {
-
-            player.moveDirection.y = ( player.moveDirection.y !== -1 ) ? 0 : 0;
-            player.moveDirection.x = 0;
-
-        } else if ( player.position.x > 1270 ) {
-
-            player.moveDirection.x = ( player.moveDirection.x !== 1 ) ? 0 : 0;
-            player.moveDirection.y = 0;
-
-        } else if ( player.position.x < -1270 ) {
-
-            player.moveDirection.x = ( player.moveDirection.x !== -1 ) ? 0 : 0;
-            player.moveDirection.y = 0;
-
-        }
 
     }
 
@@ -629,7 +642,6 @@ Player.prototype.addEventListeners = function () {
     this.addEventListener( 'PlayerTankMove', function ( event ) { scope.move( event.data[0], event.data[1] ); });
     this.addEventListener( 'PlayerTankMoveByPath', function ( event ) { scope.moveToPoint({ x: event.data[0], z: event.data[1] }); });
     this.addEventListener( 'PlayerTankShoot', function ( event ) { scope.shoot(); });
-    this.addEventListener( 'PlayerTankHit', function ( event ) { scope.hit( event.data[1], event.data[2] ); });
 
 };
 

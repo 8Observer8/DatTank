@@ -8,7 +8,7 @@ var Stones2 = function ( arena, params ) {
 
     Game.Decoration.call( this, arena, params );
 
-    this.size.set( 2.4, 2.4, 2.4 );
+    this.size.set( 0, 0, 0 );
 
     this.init();
 
@@ -24,6 +24,7 @@ Stones2.prototype.init = function () {
     var sizeZ = this.size.z * this.scale.z;
 
     this.arena.pathManager.placeObject( new Game.Vec3( position.x - sizeX / 2, 0, position.z - sizeZ / 2 ), new Game.Vec3( position.x + sizeX / 2, 0, position.z + sizeZ / 2 ) );
+    this.arena.collisionManager.addObject( position, sizeX, sizeY, sizeZ );
 
 };
 

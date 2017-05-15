@@ -330,8 +330,6 @@ Game.ControlsManager.prototype.move = ( function () {
         Game.arena.me.movePath = false;
         Game.arena.me.movementStart = false;
 
-        // console.log(Game.arena.me.position);
-
         network.send( 'PlayerTankMove', buffer, bufferView );
 
     };

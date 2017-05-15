@@ -524,55 +524,15 @@ Game.Tank.prototype.shootBullet = function () {
     //
 
     var angle = - this.object.top.rotation.y - this.object.rotation.y;
-    var direction = new THREE.Vector3( Math.cos( angle ), 0, Math.sin( angle ) ).normalize();
-
-    view.raycaster.ray.direction.set( direction.x, direction.y, direction.z );
-    view.raycaster.ray.origin.set( this.object.position.x, 22, this.object.position.z );
-
-    var intersections = view.raycaster.intersectObjects( view.scene.intersections );
 
     bullet.shotInterval = setInterval( function () {
 
-        for ( var j = 0; j < 10; j ++ ) {
-
-            var x = bullet.position.x + Math.cos( angle ) * 0.4;
-            var z = bullet.position.z + Math.sin( angle ) * 0.4;
-
-            bullet.position.set( x, bullet.position.y, z );
-
-            if ( intersections.length && intersections[ 0 ].object.name !== 'tank' && intersections[ 0 ].object.name !== 'tower' ) {
-
-                if ( Utils.getDistance( bullet.position, intersections[ 0 ].point ) < 9 ) {
-
-                    clearInterval( bullet.shotInterval );
-                    bullet.visible = false;
-                    bullet.active = false;
-                    return;
-
-                }
-
-            }
-
-            if ( ! ( intersections.length && ( intersections[ 0 ].object.name === 'tank' || intersections[ 0 ].object.name === 'tower' ) ) ) continue;
-
-            if ( Utils.getDistance( bullet.position, intersections[ 0 ].point ) < 9 ) {
-
-                if ( hitCallback ) {
-
-                    hitCallback( intersections[ 0 ].object );
-
-                }
-
-                clearInterval( bullet.shotInterval );
-                bullet.visible = false;
-                bullet.active = false;
-                return;
-
-            }
-
-        }
-
         bullet.flyTime ++;
+
+        var x = bullet.position.x + Math.cos( angle ) * 4;
+        var z = bullet.position.z + Math.sin( angle ) * 4;
+
+        bullet.position.set( x, bullet.position.y, z );
 
         if ( bullet.flyTime > 15 ) {
 
@@ -589,16 +549,6 @@ Game.Tank.prototype.shootBullet = function () {
         }
 
     }, 3 );
-
-    return {
-
-        onHit: function ( callback ) {
-
-            hitCallback = callback;
-
-        }
-
-    };
 
 };
 

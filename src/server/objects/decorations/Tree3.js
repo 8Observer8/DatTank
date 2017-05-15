@@ -7,7 +7,7 @@ var Tree3 = function ( arena, params ) {
 
     Game.Decoration.call( this, arena, params );
 
-    this.size.set( 1.5, 1.5, 1.5 );
+    this.size.set( 0.5, 0.5, 0.5 );
 
     this.init();
 
@@ -23,6 +23,7 @@ Tree3.prototype.init = function () {
     var sizeZ = this.size.z * this.scale.z;
 
     this.arena.pathManager.placeObject( new Game.Vec3( position.x - sizeX / 2, 0, position.z - sizeZ / 2 ), new Game.Vec3( position.x + sizeX / 2, 0, position.z + sizeZ / 2 ) );
+    this.arena.collisionManager.addObject( position, sizeX, sizeY, sizeZ );
 
 };
 
