@@ -64,6 +64,7 @@ Game.NetworkManager.prototype.init = function ( callback ) {
 
     this.registerEvent( 'TowerHit', 'in', 'bin', 203 );
     this.registerEvent( 'TowerHit', 'out', 'bin', 204 );
+    this.registerEvent( 'BulletHit', 'in', 'json', 205 );
 
     //
 

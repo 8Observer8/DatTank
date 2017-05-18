@@ -150,6 +150,8 @@ Game.Arena.prototype.addNetworkListeners = function () {
     network.addMessageListener( 'TowerChangeTeam', this.proxyEventToTower.bind( this ) );
     network.addMessageListener( 'TowerHit', this.proxyEventToTower.bind( this ) );
 
+    network.addMessageListener( 'BulletHit', this.proxyEventToPlayer.bind( this ) );
+
     //
 
     network.addMessageListener( 'RemoveBox', this.proxyEventToBox.bind( this ) );

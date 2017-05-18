@@ -45,6 +45,9 @@ Game.Player = function ( arena, params ) {
 
     this.lastShot = Date.now();
 
+    //temp
+    this.explosion = [];
+
     //
 
     this.init( params );
@@ -632,6 +635,9 @@ Game.Player.prototype.update = function ( time, delta ) {
 
     }
 
+    //temp
+    this.updateExplosion();
+
 };
 
 Game.Player.prototype.die = function ( killer ) {
@@ -702,6 +708,119 @@ Game.Player.prototype.dispose = function () {
 
 };
 
+Game.Player.prototype.bulletHit = function ( data ) {
+
+    view.addCameraShake( 1000, 1.5 );
+
+    this.showExplosion( data );
+
+};
+
+Game.Player.prototype.showExplosion = function ( data ) {
+
+    var scale;
+
+    for ( var i = 0; i < 1; i ++ ) {
+
+        var map = resourceManager.getTexture( 'explosion1.png' ).clone();
+        map.needsUpdate = true;
+        map.wrapS = THREE.RepeatWrapping;
+        map.wrapT = THREE.RepeatWrapping;
+        map.repeat.set( 0.2, 0.25 );
+        map.offset.set( 0, 0.75 );
+
+        var material = new THREE.SpriteMaterial({ map: map, color: 0xffffff });
+        var sprite = new THREE.Sprite( material );
+
+        sprite.position.z = data.position.z;
+        sprite.position.y = data.position.y;
+        sprite.position.x = data.position.x;
+        sprite.material = sprite.material.clone();
+        sprite.material.opacity = 0.8 - 0.8/5 * i;
+        scale = 80;
+        sprite.scale.set( scale, scale, scale );
+        sprite.visible = true;
+        view.scene.add( sprite );
+        this.explosion.push( sprite );
+
+    }
+
+};
+
+Game.Player.prototype.updateExplosion = function ( delta ) {
+
+    if ( ! this.explosion ) return;
+
+    for ( var i = 0, il = this.explosion.length; i < il; i ++ ) {
+
+        this.explosion[ i ].material.time = this.explosion[ i ].material.time || 0;
+        this.explosion[ i ].material.time += delta;
+
+        if ( true ) {
+
+            if ( this.explosion[0].material.map.offset.y > 0 ) {        
+
+                this.explosion[ i ].material.map.offset.x += 0.2;
+                this.explosion[ i ].material.time = 0;
+
+            } else {
+
+                this.explosion[ i ].scale.x = 30 + 3 * Math.sin( this.explosion[ i ].material.time / 1000 );
+                this.explosion[ i ].scale.y = 30 + 3 * Math.sin( this.explosion[ i ].material.time / 1000 );
+
+                if ( this.explosion[ i ].material.time % 100 === 0 ) {
+
+                    this.explosion[ i ].material.map.offset.x += 0.2;
+                    if ( this.explosion[ i ].material.map.offset.x === 1 ) {
+
+                        this.explosion[ i ].material.map.offset.x = 0.2;
+
+                    }
+
+                }
+
+                continue;
+
+            }
+
+            if ( this.explosion[ i ].material.map.offset.x === 1 ) {
+
+                if ( this.explosion[0].material.map.offset.y > 0 ) {
+
+                    this.explosion[ i ].material.map.offset.x = 0;
+                    this.explosion[ i ].material.map.offset.y -= 0.25;
+
+                    this.explosion[ i ].scale.x += 0.4;
+                    this.explosion[ i ].scale.y += 0.4;
+
+                }
+
+                if ( this.explosion[ i ].material.map.offset.y === 0.5 ) {
+
+                    // this.showSmoke( 1.2 );
+
+                }
+
+            }
+
+        }
+
+    }
+
+};
+
+Game.Player.prototype.hideExplosion = function () {
+
+    if ( ! this.explosion ) return;
+
+    for ( var i = 0; i < this.explosion.length; i ++ ) {
+
+        this.explosion[ i ].visible = false;
+
+    }
+
+};
+
 Game.Player.prototype.addEventListeners = function () {
 
     var scope = this;
@@ -730,5 +849,7 @@ Game.Player.prototype.addEventListeners = function () {
         scope.moveByPath( keyPath, destination );
 
     });
+
+    this.addEventListener( 'BulletHit', function ( event ) { scope.bulletHit( event.data ); });
 
 };

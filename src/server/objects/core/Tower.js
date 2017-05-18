@@ -58,11 +58,12 @@ Tower.prototype = Object.create( Game.EventDispatcher.prototype );
 Tower.prototype.init = function () {
 
     var position = this.position;
-    var sizeX = 130;
-    var sizeY = 130;
-    var sizeZ = 130;
+    var sizeX = 30;
+    var sizeY = 30;
+    var sizeZ = 30;
 
     this.arena.pathManager.placeObject( new Game.Vec3( position.x - sizeX / 2, 0, position.z - sizeZ / 2 ), new Game.Vec3( position.x + sizeX / 2, 0, position.z + sizeZ / 2 ) );
+    this.arena.collisionManager.addObject( position, sizeX, sizeY, sizeZ );
 
     this.addEventListeners();
 
@@ -74,7 +75,7 @@ Tower.prototype.shoot = (function () {
     var bufferView = new Uint16Array( buffer );
 
     return function ( target ) {
-
+return;
         var dx = target.position.x - this.position.x;
         var dz = target.position.z - this.position.z;
         var rotation, delta;

@@ -8,12 +8,13 @@ var CollisionManager = function ( arena, params ) {
     this.arena = arena;
 
     this.map = {};
-    this.bullets = [];
     this.objects = [];
 
 };
 
 CollisionManager.prototype.checkCollision = function ( objectA, objectB, newPosition ) {
+
+    if ( objectA.id === objectB.id ) return false;
 
     var r1 = Math.sqrt( 2 * Math.pow( Math.max( objectA.sizeX, objectA.sizeZ ), 2 ) );
     var r2 = Math.sqrt( 2 * Math.pow( Math.max( objectB.sizeX, objectB.sizeZ ), 2 ) );
@@ -34,6 +35,18 @@ CollisionManager.prototype.checkCollision = function ( objectA, objectB, newPosi
 
 };
 
+CollisionManager.prototype.checkBulletCollision = function ( object, bullet ) {
+
+    if( object.id === bullet.playerId ) return false;
+
+    var r = Math.sqrt( 2 * Math.pow( Math.max( object.sizeX, object.sizeZ ), 2 ) );
+
+    var dist = Math.sqrt( Math.pow( object.position.x - bullet.position.x, 2 ) + Math.pow( object.position.z - bullet.position.z, 2 ) );
+
+    return dist < r; 
+
+};
+
 CollisionManager.prototype.addObject = function ( position, sizeX, sizeY, sizeZ ) {
 
     this.objects.push({
@@ -41,6 +54,18 @@ CollisionManager.prototype.addObject = function ( position, sizeX, sizeY, sizeZ 
         sizeX:      sizeX,
         sizeY:      sizeY,
         sizeZ:      sizeZ
+    });
+
+};
+
+CollisionManager.prototype.addPlayer = function ( player ) {
+
+    this.objects.push({
+        position:   player.position,
+        sizeX:      player.sizeX,
+        sizeY:      player.sizeY,
+        sizeZ:      player.sizeZ,
+        id:         player.id,
     });
 
 };
@@ -74,13 +99,57 @@ CollisionManager.prototype.moveTank = function ( direction, player, delta ) {
 
     }
 
+    var playerCollisionObject = this.getPlayerById( player.id );
+    if ( playerCollisionObject ) playerCollisionObject.position = newPosition;
+
     return true;
 
 };
 
 CollisionManager.prototype.moveBullet = function ( bullet, delta ) {
 
-    return true;
+    for ( let j = 0; j < 4; j ++ ) {
+
+        var x = bullet.position.x + Math.cos( bullet.angle ) * delta;
+        var z = bullet.position.z - Math.sin( bullet.angle ) * delta;
+
+        bullet.position.x = x;
+        bullet.position.z = z;
+
+        for ( let i = 0; i < this.objects.length; i ++ ) {
+
+            if ( this.checkBulletCollision( this.objects[ i ], bullet ) )
+                return true;
+
+        }
+
+    }
+
+    return false;
+
+};
+
+CollisionManager.prototype.getPlayerById = function ( playerId ) {
+
+    for ( var i = 0, il = this.objects.length; i < il; i ++ ) {
+
+        if ( this.objects[ i ].id === playerId ) {
+
+            return this.objects[ i ];
+
+        }
+
+    }
+
+    return false;
+
+};
+
+CollisionManager.prototype.removePlayer = function ( playerId ) {
+
+    var object = this.getPlayerById( playerId );
+
+    if ( object ) this.objects.splice( this.objects.indexOf( object ), 1 );
 
 };
 

@@ -29,8 +29,8 @@ var Player = function ( arena, params ) {
 
     }
 
-    this.sizeX = 3;
-    this.sizeZ = 1;
+    this.sizeX = 25;
+    this.sizeZ = 15;
 
     this.bullets = [];
 
@@ -352,7 +352,9 @@ Player.prototype.shoot = (function () {
         this.bullets.push({
             origPosition:   { x: this.position.x, y: 25, z: this.position.z },
             position:       { x: this.position.x, y: 25, z: this.position.z },
-            angle:          this.rotateTop
+            angle:          this.rotationTop,
+            id:             Player.numShootId,
+            playerId:       this.id,
         });
 
         this.ammo --;
@@ -498,7 +500,11 @@ Player.prototype.update = function ( delta, time ) {
 
         if ( bulletCollisionResult ) {
 
-            //
+            var bullet = player.bullets.splice( i , 1 )[ 0 ];
+            i--;
+            il--;
+
+            this.arena.announce('BulletHit', null, { player: { id: player.id }, bulletId: bullet.id, position: bullet.position } );
 
         } else {
 

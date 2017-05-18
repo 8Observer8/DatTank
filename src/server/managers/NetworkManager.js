@@ -49,6 +49,7 @@ NetworkManager.prototype.init = function () {
 
     this.registerEvent( 'TowerHit', 'out', 'bin', 203 );
     this.registerEvent( 'TowerHit', 'in', 'bin', 204 );
+    this.registerEvent( 'BulletHit', 'out', 'json', 205 );
 
     this.registerEvent( 'RemoveBox', 'out', 'json', 301 );
     this.registerEvent( 'PickedBox', 'out', 'json', 302 );
