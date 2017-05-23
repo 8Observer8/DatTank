@@ -530,7 +530,7 @@ Game.Player.prototype.shoot = function ( shootId, ammo ) {
     }
 
     this.tank.showBlastSmoke();
-    this.tank.shootBullet();
+    this.tank.shootBullet( shootId );
 
     //
 
@@ -636,7 +636,7 @@ Game.Player.prototype.update = function ( time, delta ) {
     }
 
     //temp
-    this.updateExplosion();
+    this.updateExplosion( delta );
 
 };
 
@@ -713,6 +713,8 @@ Game.Player.prototype.bulletHit = function ( data ) {
     view.addCameraShake( 1000, 1.5 );
 
     this.showExplosion( data );
+    // 
+    this.tank.hideBullet( data );
 
 };
 
@@ -720,30 +722,26 @@ Game.Player.prototype.showExplosion = function ( data ) {
 
     var scale;
 
-    for ( var i = 0; i < 1; i ++ ) {
+    var map = resourceManager.getTexture( 'explosion2.png' ).clone();
+    map.needsUpdate = true;
+    map.wrapS = THREE.RepeatWrapping;
+    map.wrapT = THREE.RepeatWrapping;
+    map.repeat.set( 0.25, 0.25 );
+    map.offset.set( 0, 0.75 );
 
-        var map = resourceManager.getTexture( 'explosion1.png' ).clone();
-        map.needsUpdate = true;
-        map.wrapS = THREE.RepeatWrapping;
-        map.wrapT = THREE.RepeatWrapping;
-        map.repeat.set( 0.2, 0.25 );
-        map.offset.set( 0, 0.75 );
+    var material = new THREE.SpriteMaterial({ map: map, color: 0xffffff });
+    var sprite = new THREE.Sprite( material );
 
-        var material = new THREE.SpriteMaterial({ map: map, color: 0xffffff });
-        var sprite = new THREE.Sprite( material );
-
-        sprite.position.z = data.position.z;
-        sprite.position.y = data.position.y;
-        sprite.position.x = data.position.x;
-        sprite.material = sprite.material.clone();
-        sprite.material.opacity = 0.8 - 0.8/5 * i;
-        scale = 80;
-        sprite.scale.set( scale, scale, scale );
-        sprite.visible = true;
-        view.scene.add( sprite );
-        this.explosion.push( sprite );
-
-    }
+    sprite.position.z = data.position.z;
+    sprite.position.y = data.position.y;
+    sprite.position.x = data.position.x;
+    sprite.material = sprite.material.clone();
+    sprite.material.opacity = 0.7;
+    scale = 30;
+    sprite.scale.set( scale, scale, scale );
+    sprite.visible = true;
+    view.scene.add( sprite );
+    this.explosion.push( sprite );
 
 };
 
@@ -756,48 +754,32 @@ Game.Player.prototype.updateExplosion = function ( delta ) {
         this.explosion[ i ].material.time = this.explosion[ i ].material.time || 0;
         this.explosion[ i ].material.time += delta;
 
-        if ( true ) {
+        if ( this.explosion[ i ].material.time > 50 ) {
 
-            if ( this.explosion[0].material.map.offset.y > 0 ) {        
+            if ( this.explosion[ i ].material.map.offset.y > 0 ) {        
 
-                this.explosion[ i ].material.map.offset.x += 0.2;
+                this.explosion[ i ].material.map.offset.x += 0.25;
                 this.explosion[ i ].material.time = 0;
 
-            } else {
+                if ( this.explosion[ i ].material.map.offset.x === 1 ) {
 
-                this.explosion[ i ].scale.x = 30 + 3 * Math.sin( this.explosion[ i ].material.time / 1000 );
-                this.explosion[ i ].scale.y = 30 + 3 * Math.sin( this.explosion[ i ].material.time / 1000 );
-
-                if ( this.explosion[ i ].material.time % 100 === 0 ) {
-
-                    this.explosion[ i ].material.map.offset.x += 0.2;
-                    if ( this.explosion[ i ].material.map.offset.x === 1 ) {
-
-                        this.explosion[ i ].material.map.offset.x = 0.2;
-
-                    }
-
-                }
-
-                continue;
-
-            }
-
-            if ( this.explosion[ i ].material.map.offset.x === 1 ) {
-
-                if ( this.explosion[0].material.map.offset.y > 0 ) {
-
-                    this.explosion[ i ].material.map.offset.x = 0;
                     this.explosion[ i ].material.map.offset.y -= 0.25;
 
-                    this.explosion[ i ].scale.x += 0.4;
-                    this.explosion[ i ].scale.y += 0.4;
+                }
+
+                if ( this.explosion[ i ].material.map.offset.x === 2 ) {
+
+                    this.explosion[ i ].material.map.offset.y -= 0.25;
 
                 }
 
-                if ( this.explosion[ i ].material.map.offset.y === 0.5 ) {
+                if ( this.explosion[ i ].material.map.offset.x === 3 ) {
 
-                    // this.showSmoke( 1.2 );
+                    this.explosion[ i ].material.map.offset.y -= 0.25;
+                    this.explosion[ i ].scale.x = Math.sin( this.explosion[ i ].material.time / 1000 );
+                    this.explosion[ i ].scale.y = Math.sin( this.explosion[ i ].material.time / 1000 );
+
+                    this.hideExplosion();
 
                 }
 

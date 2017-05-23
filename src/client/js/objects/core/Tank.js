@@ -480,7 +480,7 @@ Game.Tank.prototype.updateSmoke = function () {
 
 };
 
-Game.Tank.prototype.shootBullet = function () {
+Game.Tank.prototype.shootBullet = function ( shootId, data ) {
 
     var bullet = false;
     var hitCallback = false;
@@ -540,17 +540,26 @@ Game.Tank.prototype.shootBullet = function () {
 
         }
 
-        if ( bullet.flyTime > 500 ) {
+        if ( bullet.flyTime > 50 ) {
 
             clearInterval( bullet.shotInterval );
             bullet.visible = false;
             bullet.active = false;
-
         }
 
     }, 3 );
 
 };
+
+Game.Tank.prototype.hideBullet = function ( data ) {
+
+    for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
+
+        bullet = this.bullets[ i ];
+
+    }
+
+}
 
 Game.Tank.prototype.updateBullets = function () {
 

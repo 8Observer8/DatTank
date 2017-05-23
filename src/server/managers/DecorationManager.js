@@ -27,8 +27,8 @@ DecorationManager.prototype.init = function ( params ) {
 
         while ( count ) {
 
-            scale = 20 * Math.random() + 25;
-            scaleH = 20 * Math.random() + 25;
+            scale = 5 * Math.random() + 5;
+            scaleH = 5 * Math.random() + 5;
 
             x = 2350 * ( Math.random() - 0.5 );
             z = 2350 * ( Math.random() - 0.5 );
@@ -96,6 +96,7 @@ DecorationManager.prototype.init = function ( params ) {
             if ( placedOnMapDecor ) continue;
 
             this.decorations.push( decoration );
+            // console.log( decoration.id, decoration.position, decoration.rotation, decoration.scale );
 
             //
 

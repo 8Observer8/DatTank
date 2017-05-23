@@ -119,6 +119,8 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
 
         decoration = decorations[ i ];
 
+// console.log(decoration);
+
         switch ( decoration.type ) {
 
             case 'tree':
@@ -167,7 +169,8 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
         mesh.rotation.y = Math.random() * Math.PI;
 
         var scale = Math.random() * 10;
-        if ( decoration.type === 'tree' || decoration.type === 'tree1' || decoration.type === 'tree2' || decoration.type === 'tree3' ) mesh.scale.set( 20 + scale, 10 + Math.random() * 20, 20 + scale );
+        if ( decoration.type === 'tree' || decoration.type === 'tree1' || decoration.type === 'tree2' || decoration.type === 'tree3' );
+        // mesh.scale.set( 20 + scale, 10 + Math.random() * 20, 20 + scale );
         // scale for old Castle
         if ( decoration.type === 'oldCastle' ) mesh.scale.set( 20, 20, 20 );
 
@@ -176,7 +179,8 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
 
         this.addObjectShadow( decoration.type, mesh.position, mesh.scale, mesh.rotation );
 
-        var box = new THREE.Mesh( new THREE.CylinderBufferGeometry( radius, radius, 30, 8, 1 ), new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.2 }) );
+        var box = new THREE.Mesh( new THREE.CylinderBufferGeometry( radius, radius, 30, 8, 1 ), new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.6 }) );
+
         box.position.copy( mesh.position );
         box.rotation.copy( mesh.rotation );
         box.scale.copy( mesh.scale );

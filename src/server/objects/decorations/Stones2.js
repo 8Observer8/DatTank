@@ -24,7 +24,7 @@ Stones2.prototype.init = function () {
     var sizeZ = this.size.z * this.scale.z;
 
     this.arena.pathManager.placeObject( new Game.Vec3( position.x - sizeX / 2, 0, position.z - sizeZ / 2 ), new Game.Vec3( position.x + sizeX / 2, 0, position.z + sizeZ / 2 ) );
-    this.arena.collisionManager.addObject( position, sizeX, sizeY, sizeZ );
+    // this.arena.collisionManager.addObject( position, sizeX, sizeY, sizeZ );
 
 };
 

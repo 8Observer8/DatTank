@@ -61,9 +61,10 @@ Tower.prototype.init = function () {
     var sizeX = 30;
     var sizeY = 30;
     var sizeZ = 30;
+    var id = this.id;
 
     this.arena.pathManager.placeObject( new Game.Vec3( position.x - sizeX / 2, 0, position.z - sizeZ / 2 ), new Game.Vec3( position.x + sizeX / 2, 0, position.z + sizeZ / 2 ) );
-    this.arena.collisionManager.addObject( position, sizeX, sizeY, sizeZ );
+    this.arena.collisionManager.addObject( position, sizeX, sizeY, sizeZ, id );
 
     this.addEventListeners();
 

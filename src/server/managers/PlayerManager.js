@@ -35,6 +35,7 @@ PlayerManager.prototype.remove = function ( player ) {
 
         if ( this.players[ i ].id === player.id ) {
 
+            this.arena.collisionManager.removePlayer( player );
             removed = true;
             continue;
 
