@@ -61,7 +61,8 @@ Game.ResourceManager = function () {
 
         'shadowTank.png',
 
-        'explosion1.png'
+        'explosion1.png', 
+        'explosion2.png'
     ];
 
     this.soundsList = [

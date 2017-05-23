@@ -16,8 +16,8 @@ CollisionManager.prototype.checkCollision = function ( objectA, objectB, newPosi
 
     if ( objectA.id === objectB.id ) return false;
 
-    var r1 = Math.sqrt( 2 * Math.pow( Math.max( objectA.sizeX, objectA.sizeZ ), 2 ) );
-    var r2 = Math.sqrt( 2 * Math.pow( Math.max( objectB.sizeX, objectB.sizeZ ), 2 ) );
+    var r1 = Math.sqrt( 0.8 * Math.pow( Math.max( objectA.sizeX, objectA.sizeZ ), 2 ) );
+    var r2 = Math.sqrt( 0.8 * Math.pow( Math.max( objectB.sizeX, objectB.sizeZ ), 2 ) );
 
     var dist = Math.sqrt( Math.pow( objectA.position.x - newPosition.x, 2 ) + Math.pow( objectA.position.z - newPosition.z, 2 ) );
 
@@ -47,13 +47,14 @@ CollisionManager.prototype.checkBulletCollision = function ( object, bullet ) {
 
 };
 
-CollisionManager.prototype.addObject = function ( position, sizeX, sizeY, sizeZ ) {
+CollisionManager.prototype.addObject = function ( position, sizeX, sizeY, sizeZ, id ) {
 
     this.objects.push({
         position:   { x: position.x, y: position.y, z: position.z },
         sizeX:      sizeX,
         sizeY:      sizeY,
-        sizeZ:      sizeZ
+        sizeZ:      sizeZ,
+        id:         id
     });
 
 };
@@ -108,7 +109,7 @@ CollisionManager.prototype.moveTank = function ( direction, player, delta ) {
 
 CollisionManager.prototype.moveBullet = function ( bullet, delta ) {
 
-    for ( let j = 0; j < 4; j ++ ) {
+    for ( var j = 0; j < 4; j ++ ) {
 
         var x = bullet.position.x + Math.cos( bullet.angle ) * delta;
         var z = bullet.position.z - Math.sin( bullet.angle ) * delta;
@@ -116,10 +117,13 @@ CollisionManager.prototype.moveBullet = function ( bullet, delta ) {
         bullet.position.x = x;
         bullet.position.z = z;
 
-        for ( let i = 0; i < this.objects.length; i ++ ) {
+        for ( var i = 0; i < this.objects.length; i ++ ) {
 
-            if ( this.checkBulletCollision( this.objects[ i ], bullet ) )
-                return true;
+            if ( this.checkBulletCollision( this.objects[ i ], bullet ) ) {
+
+                return this.objects[i];
+
+            }
 
         }
 
@@ -145,9 +149,9 @@ CollisionManager.prototype.getPlayerById = function ( playerId ) {
 
 };
 
-CollisionManager.prototype.removePlayer = function ( playerId ) {
+CollisionManager.prototype.removePlayer = function ( player ) {
 
-    var object = this.getPlayerById( playerId );
+    var object = this.getPlayerById( player.id );
 
     if ( object ) this.objects.splice( this.objects.indexOf( object ), 1 );
 
