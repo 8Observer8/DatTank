@@ -43,7 +43,6 @@ Game.ResourceManager = function () {
         'Ground.jpg',
         'Grass.png',
         'Base-ground.png',
-        'SelectionSprite.png',
         'brick.jpg',
         'treeshadow.png',
         'treeshadow1.png',
