@@ -19,6 +19,8 @@ var Tower = function ( arena, params ) {
     this.target = false;
     this.hits = {};
 
+    this.bullets = [];
+
     this.rotation = 0;
     this.newRotation = 0;
     this.position = {
@@ -76,7 +78,7 @@ Tower.prototype.shoot = (function () {
     var bufferView = new Uint16Array( buffer );
 
     return function ( target ) {
-return;
+
         var dx = target.position.x - this.position.x;
         var dz = target.position.z - this.position.z;
         var rotation, delta;
@@ -105,9 +107,18 @@ return;
 
         this.shootTime = Date.now();
 
-        //
+        // push tower bullet
+        this.bullets.push({
+            origPosition:   { x: this.position.x, y: 25, z: this.position.z },
+            position:       { x: this.position.x, y: 25, z: this.position.z },
+            angle:          this.rotation,
+            id:             Tower.numShootId,
+            playerId:       target.id,
+        });
 
-        bufferView[1] = this.id;
+        // console.log(this.bullets);
+
+        bufferView[1] = target.id;
         bufferView[2] = Tower.numShootId;
 
         Tower.numShootId = ( Tower.numShootId > 1000 ) ? 0 : Tower.numShootId + 1;
@@ -167,6 +178,8 @@ Tower.prototype.hit = (function () {
 }) ();
 
 Tower.prototype.changeTeam = (function () {
+
+    this.bullets = [];
 
     var buffer = new ArrayBuffer( 6 );
     var bufferView = new Uint16Array( buffer );
@@ -298,13 +311,40 @@ Tower.prototype.rotateTop = (function () {
 Tower.prototype.update = function ( delta ) {
 
     var target = false;
+    var tower = this;
+
+    // update tower shoted bullets
 
     if ( this.target ) {
 
         if ( this.target.team.id !== this.team.id && this.target.status === Game.Player.Alive ) {
 
             var dist = utils.getDistance( this.position, this.target.position );
-            if ( dist < this.range ) target = this.target;
+            if ( dist < this.range ) {
+
+                target = this.target;
+
+                // console.log(this.target.position);
+
+                for (var i = 0, il = tower.bullets.length; i < il; i++) {
+
+                    var bulletCollisionResult = tower.arena.collisionManager.moveBullet( tower.bullets[ i ], delta );
+
+                    // console.log(bulletCollisionResult);
+
+                    if ( bulletCollisionResult ) {
+
+                        var bullet = tower.bullets.splice( i , 1 )[ 0 ];
+                        i--;
+                        il--;
+
+                        this.arena.announce('BulletHit', null, { player: { id: tower.id }, bulletId: bullet.id, position: bullet.position } );
+
+                    }
+
+                }
+
+            }
 
         }
 

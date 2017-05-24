@@ -357,6 +357,8 @@ Player.prototype.shoot = (function () {
             playerId:       this.id,
         });
 
+        // console.log(this.bullets);
+
         this.ammo --;
 
         //
@@ -373,7 +375,7 @@ Player.prototype.shoot = (function () {
 
 }) ();
 
-Player.prototype.hit = function ( killer, target ) {
+Player.prototype.hit = function ( killer ) {
 
     var buffer = new ArrayBuffer( 6 );
     var bufferView = new Uint16Array( buffer );
@@ -387,11 +389,8 @@ Player.prototype.hit = function ( killer, target ) {
             return;
 
         }
-        // console.log(killer)
-        killer = this.arena.playerManager.getById( killer ) || this.arena.towerManager.getById( killer );
-        target = this.arena.playerManager.getById( target ) || this.arena.towerManager.getById( target );
 
-        // console.log(target.health);
+        killer = this.arena.playerManager.getById( killer ) || this.arena.towerManager.getById( killer );
 
         if ( killer ) {
 
@@ -409,8 +408,8 @@ Player.prototype.hit = function ( killer, target ) {
 
         }
 
-        bufferView[ 1 ] = killer.id;
-        bufferView[ 2 ] = killer.health;
+        bufferView[ 1 ] = this.id;
+        bufferView[ 2 ] = this.health;
 
         this.arena.announce( 'PlayerTankHit', buffer, bufferView );
 
@@ -487,15 +486,18 @@ Player.prototype.die = (function () {
 
 Player.prototype.bulletHit = function ( player, bullet ) {
 
+    // todo
+
 };
 
 Player.prototype.update = function ( delta, time ) {
 
     var player = this;
-
     // update player shooted bullets
 
     for ( var i = 0, il = player.bullets.length; i < il; i ++ ) {
+
+        // console.log(player.bullets[ i ]);
 
         var bulletCollisionResult = player.arena.collisionManager.moveBullet( player.bullets[ i ], delta );
 
@@ -505,13 +507,18 @@ Player.prototype.update = function ( delta, time ) {
             i--;
             il--;
 
-            var killer = player.id;
-            var target = bulletCollisionResult.id
-            // console.log(bulletCollisionResult.id);
-
-            this.hit( killer, target );
-
             this.arena.announce('BulletHit', null, { player: { id: player.id }, bulletId: bullet.id, position: bullet.position } );
+
+            var scope = this;
+
+            var killer = player.id;
+            var target = this.arena.playerManager.getById( bulletCollisionResult.id ) || this.arena.towerManager.getById( bulletCollisionResult.id );
+
+            if ( target && target.hit ) {
+            
+                target.hit( killer );
+
+            }
 
         } else {
 
