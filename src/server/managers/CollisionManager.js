@@ -37,7 +37,7 @@ CollisionManager.prototype.checkCollision = function ( objectA, objectB, newPosi
 
 CollisionManager.prototype.checkBulletCollision = function ( object, bullet ) {
 
-    if( object.id === bullet.playerId ) return false;
+    if ( object.id === bullet.playerId) return false;
 
     var r = Math.sqrt( 2 * Math.pow( Math.max( object.sizeX, object.sizeZ ), 2 ) );
 
@@ -121,7 +121,10 @@ CollisionManager.prototype.moveBullet = function ( bullet, delta ) {
 
             if ( this.checkBulletCollision( this.objects[ i ], bullet ) ) {
 
-                return this.objects[i];
+                // console.log( this.objects[ i ] );
+                // console.log("aa")
+
+                return this.objects[ i ];
 
             }
 
