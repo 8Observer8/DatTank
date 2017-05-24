@@ -102,7 +102,8 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
 
     }
 
-    view.camera.position.y = 400;
+    //console.log('respawn camera change');
+    //view.camera.position.y = 400;
     view.cameraOffset.set( 0, 0, 0 );
 
     //
@@ -126,6 +127,7 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
 
         if ( this.id === Game.arena.me.id ) {
 
+            console.log('camera change');
             view.camera.position.set( this.position.x + 180, view.camera.position.y, this.position.z );
             view.camera.lookAt( this.position );
 
