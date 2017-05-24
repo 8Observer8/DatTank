@@ -184,15 +184,15 @@ Player.prototype.move = (function () {
         scope.moveDirection.x = directionX;
         scope.moveDirection.y = directionZ;
 
-        if ( scope.moveDirection.x !== 0 || scope.moveDirection.y !== 0 ) {
+        // if ( scope.moveDirection.x !== 0 || scope.moveDirection.y !== 0 ) {
 
-            var targetRotation = Math.atan2( scope.moveDirection.y, scope.moveDirection.x ) - Math.PI / 2;
-            var deltaRot = targetRotation - scope.rotation;
-            if ( deltaRot > Math.PI ) deltaRot = deltaRot - 2 * Math.PI;
-            if ( deltaRot < - Math.PI ) deltaRot = deltaRot + 2 * Math.PI;
-            scope.rotation = ( scope.rotation + deltaRot / 10 ) % ( 2 * Math.PI );
+        //     var targetRotation = Math.atan2( scope.moveDirection.y, scope.moveDirection.x ) - Math.PI / 2;
+        //     var deltaRot = targetRotation - scope.rotation;
+        //     if ( deltaRot > Math.PI ) deltaRot = deltaRot - 2 * Math.PI;
+        //     if ( deltaRot < - Math.PI ) deltaRot = deltaRot + 2 * Math.PI;
+        //     scope.rotation = ( scope.rotation + deltaRot / 10 ) % ( 2 * Math.PI );
 
-        }
+        // }
 
         bufferView[ 1 ] = this.id;
         bufferView[ 2 ] = directionX;
@@ -536,8 +536,28 @@ Player.prototype.update = function ( delta, time ) {
 
         var moveDelta = Math.sqrt( Math.pow( player.moveDirection.x, 2 ) + Math.pow( player.moveDirection.y, 2 ) );
 
-        player.position.x -= Math.sign( player.moveDirection.x ) / moveDelta * player.moveSpeed * delta;
-        player.position.z += Math.sign( player.moveDirection.y ) / moveDelta * player.moveSpeed * delta;
+
+        if (  player.moveDirection.x > 0 ) {
+
+            player.position.x += ( player.moveSpeed  / moveDelta * Math.sin( player.rotation ) * 10 );
+            player.position.z += ( player.moveSpeed  / moveDelta * Math.cos( player.rotation ) * 10 );
+
+        } else if ( player.moveDirection.x < 0) {
+
+            player.position.x -= ( player.moveSpeed  / moveDelta * Math.sin( player.rotation )  * 10 );
+            player.position.z -= ( player.moveSpeed  / moveDelta * Math.cos( player.rotation )  * 10 );
+
+        }
+
+        if (  player.moveDirection.y > 0 ) {
+
+            player.rotation += 0.1;
+
+        } else if (  player.moveDirection.y < 0 ) {
+
+            player.rotation -= 0.1;
+
+        }
 
     }
 

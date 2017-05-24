@@ -483,20 +483,36 @@ Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
 
     if ( player.moveDirection.x !== 0 || player.moveDirection.y !== 0 ) {
 
+        
+
         var moveDelta = Math.sqrt( Math.pow( player.moveDirection.x, 2 ) + Math.pow( player.moveDirection.y, 2 ) );
-        var newPositionX = player.position.x - Math.sign( player.moveDirection.x ) / moveDelta * player.moveSpeed * delta;
-        var newPositionZ = player.position.z + Math.sign( player.moveDirection.y ) / moveDelta * player.moveSpeed * delta;
 
         player.tank.addTrack();
 
-        player.position.x = newPositionX;
-        player.position.z = newPositionZ;
 
-        var targetRotation = Math.atan2( player.moveDirection.y, player.moveDirection.x ) - Math.PI / 2;
-        var deltaRot = targetRotation - player.rotation;
-        if ( deltaRot > Math.PI ) deltaRot = deltaRot - 2 * Math.PI;
-        if ( deltaRot < - Math.PI ) deltaRot = deltaRot + 2 * Math.PI;
-        player.rotation = ( player.rotation + deltaRot / 10 ) % ( 2 * Math.PI );
+        if (  player.moveDirection.x > 0 ) {
+
+            player.position.x += ( player.moveSpeed  / moveDelta * Math.sin( player.rotation ) * 10 );
+            player.position.z += ( player.moveSpeed  / moveDelta * Math.cos( player.rotation ) * 10 );
+
+        } else if ( player.moveDirection.x < 0) {
+
+            player.position.x -= ( player.moveSpeed  / moveDelta * Math.sin( player.rotation ) * 10 );
+            player.position.z -= ( player.moveSpeed  / moveDelta * Math.cos( player.rotation ) * 10 );
+
+        }
+
+
+        if (  player.moveDirection.y > 0 ) {
+
+            player.rotation += 0.1;
+
+        } else if (  player.moveDirection.y < 0 ) {
+
+            player.rotation -= 0.1;
+
+        }
+
         player.tank.setRotation( player.rotation );
 
     }
