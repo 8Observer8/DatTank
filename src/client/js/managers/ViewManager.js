@@ -561,12 +561,12 @@ Game.ViewManager.prototype.animate = function ( delta ) {
     // update camera position
 
     // + shake camera 
-    this.camera.position.x = Game.arena.me.position.x - ( 75 * Math.sin( Game.arena.me.rotation ) );
-    this.camera.position.z = Game.arena.me.position.z - ( 75 * Math.cos( Game.arena.me.rotation ) );
-    this.camera.position.y = 40;
+    this.camera.position.x = Game.arena.me.position.x - ( 120 * Math.sin( Game.arena.me.rotation ) );
+    this.camera.position.z = Game.arena.me.position.z - ( 120 * Math.cos( Game.arena.me.rotation ) );
+    this.camera.position.y = 100;
 
 
-    var lookPos = new THREE.Vector3( Game.arena.me.position.x, Game.arena.me.position.y + 20, Game.arena.me.position.z );
+    var lookPos = new THREE.Vector3( Game.arena.me.position.x, Game.arena.me.position.y + 65, Game.arena.me.position.z );
 
     this.camera.lookAt( lookPos );
 
