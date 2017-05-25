@@ -356,10 +356,8 @@ Player.prototype.shoot = (function () {
             position:       { x: this.position.x, y: 25, z: this.position.z },
             angle:          this.rotationTop,
             id:             Player.numShootId,
-            playerId:       this.id,
+            ownerId:        this.id
         });
-
-        // console.log(this.bullets);
 
         this.ammo --;
 
@@ -404,14 +402,14 @@ Player.prototype.hit = function ( killer ) {
             } else if ( killer instanceof Game.Tower ) {
 
                 killer.health -= 40 * ( 50 / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
-                killer.health = Math.max( Math.round( target.health ), 0 );
+                killer.health = Math.max( Math.round( killer.health ), 0 );
 
             }
 
         }
 
-        bufferView[ 1 ] = this.id;
-        bufferView[ 2 ] = this.health;
+        bufferView[ 1 ] = killer.id;
+        bufferView[ 2 ] = killer.health;
 
         this.arena.announce( 'PlayerTankHit', buffer, bufferView );
 
@@ -499,8 +497,6 @@ Player.prototype.update = function ( delta, time ) {
 
     for ( var i = 0, il = player.bullets.length; i < il; i ++ ) {
 
-        // console.log(player.bullets[ i ]);
-
         var bulletCollisionResult = player.arena.collisionManager.moveBullet( player.bullets[ i ], delta );
 
         if ( bulletCollisionResult ) {
@@ -510,8 +506,6 @@ Player.prototype.update = function ( delta, time ) {
             il--;
 
             this.arena.announce('BulletHit', null, { player: { id: player.id }, bulletId: bullet.id, position: bullet.position } );
-
-            var scope = this;
 
             var killer = player.id;
             var target = this.arena.playerManager.getById( bulletCollisionResult.id ) || this.arena.towerManager.getById( bulletCollisionResult.id );
