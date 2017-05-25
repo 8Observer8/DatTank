@@ -564,13 +564,14 @@ Game.ViewManager.prototype.animate = function ( delta ) {
 
 
     // + shake camera 
-    this.camera.position.x = Game.arena.me.position.x - ( 100 * Math.sin( Game.arena.me.rotation ) );
-    this.camera.position.z = Game.arena.me.position.z - ( 100 * Math.cos( Game.arena.me.rotation ) );
-    this.camera.position.y = 50;
+    this.camera.position.x = Game.arena.me.position.x - ( 90 * Math.sin( Game.arena.me.rotation ) );
+    this.camera.position.z = Game.arena.me.position.z - ( 90 * Math.cos( Game.arena.me.rotation ) );
+    this.camera.position.y = 25;
 
     // + y to position for correct camera angle
     this.camera.lookAt( Game.arena.me.position );
 
+    //this.camera.rotation.y = 0.2;
 
     if ( Game.arena.boxManager ) {
 

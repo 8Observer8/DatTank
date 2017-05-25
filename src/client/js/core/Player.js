@@ -127,7 +127,7 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
 
         if ( this.id === Game.arena.me.id ) {
 
-            console.log('camera change');
+            //console.log('camera change');
             view.camera.position.set( this.position.x + 180, view.camera.position.y, this.position.z );
             view.camera.lookAt( this.position );
 
@@ -326,16 +326,34 @@ Game.Player.prototype.processPath = function ( path ) {
 
 };
 
-Game.Player.prototype.move = function ( directionX, directionZ, positionX, positionZ ) {
+Game.Player.prototype.move = function ( directionX, directionZ, positionX, positionZ, rotation ) {
 
     var player = this;
 
     player.moveDirection.x = directionX;
     player.moveDirection.y = directionZ;
 
+    //console.log(rotation);
+    //player.rotation = rotation;
+
+    if (  player.moveDirection.y > 0 ) {
+
+        player.rotation += 0.1;
+
+    } else if (  player.moveDirection.y < 0 ) {
+
+        player.rotation -= 0.1;
+
+    }
+
     player.positionCorrection.x = positionX - player.position.x;
     player.positionCorrection.z = positionZ - player.position.z;
 
+
+    player.tank.setRotation( player.rotation );
+    player.tank.setPosition( player.position.x, player.position.y, player.position.z);
+
+ 
 };
 
 Game.Player.prototype.updateMovementByPath = function ( time, delta ) {
@@ -492,26 +510,26 @@ Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
 
         if (  player.moveDirection.x > 0 ) {
 
-            player.position.x += ( player.moveSpeed  / moveDelta * Math.sin( player.rotation ) * 10 );
-            player.position.z += ( player.moveSpeed  / moveDelta * Math.cos( player.rotation ) * 10 );
+            player.position.x += ( player.moveSpeed  / moveDelta * Math.sin( player.rotation ) * 50 );
+            player.position.z += ( player.moveSpeed  / moveDelta * Math.cos( player.rotation ) * 50 );
 
         } else if ( player.moveDirection.x < 0) {
 
-            player.position.x -= ( player.moveSpeed  / moveDelta * Math.sin( player.rotation ) * 10 );
-            player.position.z -= ( player.moveSpeed  / moveDelta * Math.cos( player.rotation ) * 10 );
+            player.position.x -= ( player.moveSpeed  / moveDelta * Math.sin( player.rotation ) * 50 );
+            player.position.z -= ( player.moveSpeed  / moveDelta * Math.cos( player.rotation ) * 50 );
 
         }
 
 
-        if (  player.moveDirection.y > 0 ) {
+        // if (  player.moveDirection.y > 0 ) {
 
-            player.rotation += 0.1;
+        //     player.rotation += 0.1;
 
-        } else if (  player.moveDirection.y < 0 ) {
+        // } else if (  player.moveDirection.y < 0 ) {
 
-            player.rotation -= 0.1;
+        //     player.rotation -= 0.1;
 
-        }
+        // }
 
         player.tank.setRotation( player.rotation );
 
@@ -643,15 +661,15 @@ Game.Player.prototype.update = function ( time, delta ) {
     this.updateMovementByPath( time, delta );
     this.updateDirectionMovement( time, delta );
 
-    if ( Math.abs( this.positionCorrection.x ) > 0.01 || Math.abs( this.positionCorrection.z ) > 0.01 ) {
+    // if ( Math.abs( this.positionCorrection.x ) > 0.01 || Math.abs( this.positionCorrection.z ) > 0.01 ) {
 
-        this.position.x += this.positionCorrection.x / 10;
-        this.positionCorrection.x *= 0.9;
+    //     this.position.x += this.positionCorrection.x / 10;
+    //     this.positionCorrection.x *= 0.9;
 
-        this.position.z += this.positionCorrection.z / 10;
-        this.positionCorrection.z *= 0.9;
+    //     this.position.z += this.positionCorrection.z / 10;
+    //     this.positionCorrection.z *= 0.9;
 
-    }
+    // }
 
     //temp
     this.updateExplosion( delta );
@@ -828,7 +846,7 @@ Game.Player.prototype.addEventListeners = function () {
     this.addEventListener( 'ArenaPlayerRespawn', function ( event ) { scope.respawn( true, event.data.player ); });
 
     this.addEventListener( 'PlayerTankRotateTop', function ( event ) { scope.rotateTop( event.data[1] / 1000 ); });
-    this.addEventListener( 'PlayerTankMove', function ( event ) { scope.move( event.data[1], event.data[2], event.data[3], event.data[4] ); });
+    this.addEventListener( 'PlayerTankMove', function ( event ) { scope.move( event.data[1], event.data[2], event.data[3], event.data[4],  event.data[5] ); });
     this.addEventListener( 'PlayerTankShoot', function ( event ) { scope.shoot( event.data[1], event.data[2] ); });
     this.addEventListener( 'PlayerTankHit', function ( event ) { scope.updateHealth( event.data[1] ); });
     this.addEventListener( 'PlayerTankDied', function ( event ) { scope.die( event.data[1] ); });

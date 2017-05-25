@@ -164,7 +164,7 @@ Player.prototype.rotateBase = function ( direction ) {
 
 Player.prototype.move = (function () {
 
-    var buffer = new ArrayBuffer( 12 );
+    var buffer = new ArrayBuffer( 14 );
     var bufferView = new Uint16Array( buffer );
 
     return function ( directionX, directionZ ) {
@@ -194,11 +194,41 @@ Player.prototype.move = (function () {
 
         // }
 
+        //console.log( this.rotation);
+
+        if (  this.moveDirection.y > 0 ) {
+
+            this.rotation += 0.1;
+
+        } else if (  this.moveDirection.y < 0 ) {
+
+            this.rotation -= 0.1;
+
+        }
+
+
+        // if (  this.moveDirection.x > 0 ) {
+
+        //     this.position.x += ( this.moveSpeed  * Math.sin( this.rotation ) * 50 );
+        //     this.position.z += ( this.moveSpeed  * Math.cos( this.rotation ) * 50 );
+
+        // } else if ( this.moveDirection.x < 0) {
+
+        //     this.position.x -= ( this.moveSpeed   * Math.sin( this.rotation )  * 50 );
+        //     this.position.z -= ( this.moveSpeed   * Math.cos( this.rotation )  * 50 );
+
+        // }
+
+
+
         bufferView[ 1 ] = this.id;
         bufferView[ 2 ] = directionX;
         bufferView[ 3 ] = directionZ;
         bufferView[ 4 ] = this.position.x;
         bufferView[ 5 ] = this.position.z;
+        bufferView[ 6 ] = this.rotation;
+
+        //console.log(bufferView[6]);
 
         this.arena.announce( 'PlayerTankMove', buffer, bufferView );
 
@@ -532,39 +562,30 @@ Player.prototype.update = function ( delta, time ) {
 
     if ( player.moveDirection.x !== 0 || player.moveDirection.y !== 0 ) {
 
-        if ( ! this.arena.collisionManager.moveTank( player.moveDirection, player, delta ) ) {
+        // if ( ! this.arena.collisionManager.moveTank( player.moveDirection, player, delta ) ) {
 
-            player.moveDirection.x = 0;
-            player.moveDirection.z = 0;
-            this.move( 0, 0 );
-            return;
+        //     player.moveDirection.x = 0;
+        //     player.moveDirection.z = 0;
+        //     this.move( 0, 0 );
+        //     return;
 
-        }
+        // }
 
         var moveDelta = Math.sqrt( Math.pow( player.moveDirection.x, 2 ) + Math.pow( player.moveDirection.y, 2 ) );
 
 
         if (  player.moveDirection.x > 0 ) {
 
-            player.position.x += ( player.moveSpeed  / moveDelta * Math.sin( player.rotation ) * 10 );
-            player.position.z += ( player.moveSpeed  / moveDelta * Math.cos( player.rotation ) * 10 );
+            player.position.x += ( player.moveSpeed  * Math.sin( player.rotation ) * 50 );
+            player.position.z += ( player.moveSpeed  * Math.cos( player.rotation ) * 50 );
 
         } else if ( player.moveDirection.x < 0) {
 
-            player.position.x -= ( player.moveSpeed  / moveDelta * Math.sin( player.rotation )  * 10 );
-            player.position.z -= ( player.moveSpeed  / moveDelta * Math.cos( player.rotation )  * 10 );
+            player.position.x -= ( player.moveSpeed   * Math.sin( player.rotation )  * 50 );
+            player.position.z -= ( player.moveSpeed   * Math.cos( player.rotation )  * 50 );
 
         }
 
-        if (  player.moveDirection.y > 0 ) {
-
-            player.rotation += 0.1;
-
-        } else if (  player.moveDirection.y < 0 ) {
-
-            player.rotation -= 0.1;
-
-        }
 
     }
 
