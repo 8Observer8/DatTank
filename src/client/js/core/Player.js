@@ -335,11 +335,11 @@ Game.Player.prototype.move = function ( directionX, directionZ, positionX, posit
 
     if (  player.moveDirection.y > 0 ) {
 
-        player.rotation += 0.1;
+        player.rotation += 0.03;
 
     } else if (  player.moveDirection.y < 0 ) {
 
-        player.rotation -= 0.1;
+        player.rotation -= 0.03;
 
     }
 

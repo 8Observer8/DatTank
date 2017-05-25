@@ -187,11 +187,11 @@ Player.prototype.move = (function () {
 
         if (  this.moveDirection.y > 0 ) {
 
-            this.rotation += 0.1;
+            this.rotation += 0.03;
 
         } else if (  this.moveDirection.y < 0 ) {
 
-            this.rotation -= 0.1;
+            this.rotation -= 0.03;
 
         }
 
