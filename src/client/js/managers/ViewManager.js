@@ -560,18 +560,16 @@ Game.ViewManager.prototype.animate = function ( delta ) {
 
     // update camera position
 
-    //this.camera.position.set( Game.arena.me.position.x + 180 + this.cameraOffset.x, this.camera.position.y + this.cameraOffset.y, Game.arena.me.position.z + this.cameraOffset.z );
-
-
     // + shake camera 
-    this.camera.position.x = Game.arena.me.position.x - ( 90 * Math.sin( Game.arena.me.rotation ) );
-    this.camera.position.z = Game.arena.me.position.z - ( 90 * Math.cos( Game.arena.me.rotation ) );
-    this.camera.position.y = 25;
+    this.camera.position.x = Game.arena.me.position.x - ( 75 * Math.sin( Game.arena.me.rotation ) );
+    this.camera.position.z = Game.arena.me.position.z - ( 75 * Math.cos( Game.arena.me.rotation ) );
+    this.camera.position.y = 40;
 
-    // + y to position for correct camera angle
-    this.camera.lookAt( Game.arena.me.position );
 
-    //this.camera.rotation.y = 0.2;
+    var lookPos = new THREE.Vector3( Game.arena.me.position.x, Game.arena.me.position.y + 20, Game.arena.me.position.z );
+
+    this.camera.lookAt( lookPos );
+
 
     if ( Game.arena.boxManager ) {
 

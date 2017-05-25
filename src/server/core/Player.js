@@ -184,17 +184,6 @@ Player.prototype.move = (function () {
         scope.moveDirection.x = directionX;
         scope.moveDirection.y = directionZ;
 
-        // if ( scope.moveDirection.x !== 0 || scope.moveDirection.y !== 0 ) {
-
-        //     var targetRotation = Math.atan2( scope.moveDirection.y, scope.moveDirection.x ) - Math.PI / 2;
-        //     var deltaRot = targetRotation - scope.rotation;
-        //     if ( deltaRot > Math.PI ) deltaRot = deltaRot - 2 * Math.PI;
-        //     if ( deltaRot < - Math.PI ) deltaRot = deltaRot + 2 * Math.PI;
-        //     scope.rotation = ( scope.rotation + deltaRot / 10 ) % ( 2 * Math.PI );
-
-        // }
-
-        //console.log( this.rotation);
 
         if (  this.moveDirection.y > 0 ) {
 
@@ -207,28 +196,11 @@ Player.prototype.move = (function () {
         }
 
 
-        // if (  this.moveDirection.x > 0 ) {
-
-        //     this.position.x += ( this.moveSpeed  * Math.sin( this.rotation ) * 50 );
-        //     this.position.z += ( this.moveSpeed  * Math.cos( this.rotation ) * 50 );
-
-        // } else if ( this.moveDirection.x < 0) {
-
-        //     this.position.x -= ( this.moveSpeed   * Math.sin( this.rotation )  * 50 );
-        //     this.position.z -= ( this.moveSpeed   * Math.cos( this.rotation )  * 50 );
-
-        // }
-
-
-
         bufferView[ 1 ] = this.id;
         bufferView[ 2 ] = directionX;
         bufferView[ 3 ] = directionZ;
         bufferView[ 4 ] = this.position.x;
         bufferView[ 5 ] = this.position.z;
-        bufferView[ 6 ] = this.rotation;
-
-        //console.log(bufferView[6]);
 
         this.arena.announce( 'PlayerTankMove', buffer, bufferView );
 
@@ -573,7 +545,7 @@ Player.prototype.update = function ( delta, time ) {
 
         var moveDelta = Math.sqrt( Math.pow( player.moveDirection.x, 2 ) + Math.pow( player.moveDirection.y, 2 ) );
 
-
+        // change 50 for correct delta
         if (  player.moveDirection.x > 0 ) {
 
             player.position.x += ( player.moveSpeed  * Math.sin( player.rotation ) * 50 );
