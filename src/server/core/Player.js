@@ -400,14 +400,14 @@ Player.prototype.hit = function ( killer ) {
             } else if ( killer instanceof Game.Tower ) {
 
                 killer.health -= 40 * ( 50 / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
-                killer.health = Math.max( Math.round( target.health ), 0 );
+                killer.health = Math.max( Math.round( killer.health ), 0 );
 
             }
 
         }
 
-        bufferView[ 1 ] = this.id;
-        bufferView[ 2 ] = this.health;
+        bufferView[ 1 ] = killer.id;
+        bufferView[ 2 ] = killer.health;
 
         this.arena.announce( 'PlayerTankHit', buffer, bufferView );
 

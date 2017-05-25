@@ -332,7 +332,7 @@ Tower.prototype.update = function ( delta ) {
 
                         this.arena.announce('BulletHit', null, { player: { id: tower.id }, bulletId: bullet.id, position: bullet.position } );
 
-                        var killer = bulletCollisionResult.id;
+                        var killer = tower.id;
                         var target = this.arena.playerManager.getById( bulletCollisionResult.id );
 
                         if ( target && target.hit ) {
