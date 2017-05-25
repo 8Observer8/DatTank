@@ -55,12 +55,16 @@ Game.ViewManager.prototype.setupScene = function () {
     this.scene.intersections = [];
     this.camera = new THREE.PerspectiveCamera( 60, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 1, 10000 );
 
+
+    this.scene.add( Game.Skybox() );
+
+
     this.camera.position.set( 180, 400, 0 );
     this.camera.lookAt( new THREE.Vector3() );
 
     this.scene.add( this.camera );
 
-    this.scene.fog = new THREE.Fog( 0x050303, 350, 1900 );
+    //this.scene.fog = new THREE.Fog( 0x050303, 350, 600 );
 
     // setup sound listener
 
