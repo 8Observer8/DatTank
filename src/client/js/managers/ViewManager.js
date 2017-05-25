@@ -64,7 +64,7 @@ Game.ViewManager.prototype.setupScene = function () {
 
     this.scene.add( this.camera );
 
-    //this.scene.fog = new THREE.Fog( 0x050303, 350, 600 );
+    this.scene.fog = new THREE.Fog( 0xa9a6a6, 350, 900 );
 
     // setup sound listener
 
