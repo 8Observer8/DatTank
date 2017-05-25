@@ -147,6 +147,7 @@ Tower.prototype.hit = function ( killer, shootId ) {
         killer = this.arena.playerManager.getById( killer );
 
         if ( ! killer ) return;
+        if ( killer.team.id === this.team.id ) return;
 
         var amount = Math.floor( 57 * ( killer.tank.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ) );
 
