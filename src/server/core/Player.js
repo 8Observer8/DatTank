@@ -354,10 +354,8 @@ Player.prototype.shoot = (function () {
             position:       { x: this.position.x, y: 25, z: this.position.z },
             angle:          this.rotationTop,
             id:             Player.numShootId,
-            playerId:       this.id,
+            ownerId:        this.id
         });
-
-        // console.log(this.bullets);
 
         this.ammo --;
 
@@ -497,8 +495,6 @@ Player.prototype.update = function ( delta, time ) {
 
     for ( var i = 0, il = player.bullets.length; i < il; i ++ ) {
 
-        // console.log(player.bullets[ i ]);
-
         var bulletCollisionResult = player.arena.collisionManager.moveBullet( player.bullets[ i ], delta );
 
         if ( bulletCollisionResult ) {
@@ -508,8 +504,6 @@ Player.prototype.update = function ( delta, time ) {
             il--;
 
             this.arena.announce('BulletHit', null, { player: { id: player.id }, bulletId: bullet.id, position: bullet.position } );
-
-            var scope = this;
 
             var killer = player.id;
             var target = this.arena.playerManager.getById( bulletCollisionResult.id ) || this.arena.towerManager.getById( bulletCollisionResult.id );
