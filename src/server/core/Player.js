@@ -415,7 +415,7 @@ Player.prototype.hit = function ( killer ) {
 
         if ( killer.health <= 0 ) {
 
-            //this.die( killer );
+            this.die( killer );
 
         }
 
