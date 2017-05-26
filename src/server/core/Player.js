@@ -415,7 +415,7 @@ Player.prototype.hit = function ( killer ) {
 
         if ( killer.health <= 0 ) {
 
-            this.die( killer );
+            //this.die( killer );
 
         }
 
@@ -528,30 +528,34 @@ Player.prototype.update = function ( delta, time ) {
 
     if ( player.moveDirection.x !== 0 || player.moveDirection.y !== 0 ) {
 
-        // if ( ! this.arena.collisionManager.moveTank( player.moveDirection, player, delta ) ) {
+        if ( ! this.arena.collisionManager.moveTank( player.moveDirection, player, delta ) ) {
 
-        //     player.moveDirection.x = 0;
-        //     player.moveDirection.z = 0;
-        //     this.move( 0, 0 );
-        //     return;
+            player.moveDirection.x = 0;
+            player.moveDirection.z = 0;
+            this.move( 0, 0 );
+            return;
 
-        // }
+        }
 
         var moveDelta = Math.sqrt( Math.pow( player.moveDirection.x, 2 ) + Math.pow( player.moveDirection.y, 2 ) );
+
+
 
         // change 50 for correct delta
         if (  player.moveDirection.x > 0 ) {
 
-            player.position.x += ( player.moveSpeed  * Math.sin( player.rotation ) * 50 );
-            player.position.z += ( player.moveSpeed  * Math.cos( player.rotation ) * 50 );
+            player.position.x += ( player.moveSpeed  * Math.sin( player.rotation ) * delta);
+            player.position.z += ( player.moveSpeed  * Math.cos( player.rotation ) * delta);
 
         } else if ( player.moveDirection.x < 0) {
 
-            player.position.x -= ( player.moveSpeed   * Math.sin( player.rotation )  * 50 );
-            player.position.z -= ( player.moveSpeed   * Math.cos( player.rotation )  * 50 );
+            player.position.x -= ( player.moveSpeed   * Math.sin( player.rotation ) * delta);
+            player.position.z -= ( player.moveSpeed   * Math.cos( player.rotation ) * delta);
 
         }
 
+        // console.log(player.rotation);
+        // console.log(player.position);
 
     }
 

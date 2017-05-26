@@ -343,6 +343,11 @@ Game.Player.prototype.move = function ( directionX, directionZ, positionX, posit
 
     }
 
+    player.position.x = positionX;
+    player.position.z = positionZ;
+
+    // console.log('move');
+
     player.tank.setRotation( player.rotation );
     player.tank.setPosition( player.position.x, player.position.y, player.position.z);
 
@@ -502,15 +507,18 @@ Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
         // change 50 for correct delta
         if (  player.moveDirection.x > 0 ) {
 
-            player.position.x += ( player.moveSpeed  / moveDelta * Math.sin( player.rotation ) * 50 );
-            player.position.z += ( player.moveSpeed  / moveDelta * Math.cos( player.rotation ) * 50 );
+            player.position.x += ( player.moveSpeed   * Math.sin( player.rotation )  * delta);
+            player.position.z += ( player.moveSpeed   * Math.cos( player.rotation )  * delta);
 
         } else if ( player.moveDirection.x < 0) {
 
-            player.position.x -= ( player.moveSpeed  / moveDelta * Math.sin( player.rotation ) * 50 );
-            player.position.z -= ( player.moveSpeed  / moveDelta * Math.cos( player.rotation ) * 50 );
+            player.position.x -= ( player.moveSpeed   * Math.sin( player.rotation )  * delta);
+            player.position.z -= ( player.moveSpeed   * Math.cos( player.rotation )  * delta);
 
         }
+
+        // console.log(player.rotation);
+        // console.log(player.position);
 
 
         player.tank.setRotation( player.rotation );
