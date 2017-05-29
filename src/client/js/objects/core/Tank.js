@@ -523,6 +523,11 @@ Game.Tank.prototype.shootBullet = function ( shootId, data ) {
 
     //
 
+    // console.log(data);
+
+    // var hidebulletId = this.tank.hidebullet();
+    // console.log(this.tank.hidebullet());
+
     var angle = - this.object.top.rotation.y - this.object.rotation.y;
 
     bullet.shotInterval = setInterval( function () {
@@ -534,7 +539,7 @@ Game.Tank.prototype.shootBullet = function ( shootId, data ) {
 
         bullet.position.set( x, bullet.position.y, z );
 
-        if ( bullet.flyTime > 15 ) {
+        if ( bullet.flyTime > 5 ) {
 
             bullet.visible = true;
 
@@ -549,13 +554,16 @@ Game.Tank.prototype.shootBullet = function ( shootId, data ) {
 
     }, 3 );
 
+    // console.log(bullet)
+
 };
 
 Game.Tank.prototype.hideBullet = function ( data ) {
 
     for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
 
-        bullet = this.bullets[ i ];
+        hidebullet = this.bullets[ i ];
+        console.log(hidebullet);
 
     }
 

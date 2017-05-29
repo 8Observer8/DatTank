@@ -354,7 +354,8 @@ Player.prototype.shoot = (function () {
             position:       { x: this.position.x, y: 25, z: this.position.z },
             angle:          this.rotationTop,
             id:             Player.numShootId,
-            ownerId:        this.id
+            ownerId:        this.id,
+            flytime:        5
         });
 
         this.ammo --;
@@ -495,30 +496,38 @@ Player.prototype.update = function ( delta, time ) {
 
     for ( var i = 0, il = player.bullets.length; i < il; i ++ ) {
 
-        var bulletCollisionResult = player.arena.collisionManager.moveBullet( player.bullets[ i ], delta );
+        player.bullets[ i ].flytime --;
 
-        if ( bulletCollisionResult ) {
+        if ( player.bullets[ i ].flytime > 0 ) {
 
-            var bullet = player.bullets.splice( i , 1 )[ 0 ];
-            i--;
-            il--;
+            var bulletCollisionResult = player.arena.collisionManager.moveBullet( player.bullets[ i ], delta );
 
-            this.arena.announce('BulletHit', null, { player: { id: player.id }, bulletId: bullet.id, position: bullet.position } );
+            if ( bulletCollisionResult ) {
 
-            var killer = player.id;
-            var target = this.arena.playerManager.getById( bulletCollisionResult.id ) || this.arena.towerManager.getById( bulletCollisionResult.id );
+                var bullet = player.bullets.splice( i , 1 )[ 0 ];
+                i--;
+                il--;
 
-            if ( target && target.hit ) {
-            
-                target.hit( killer );
+                this.arena.announce('BulletHit', null, { player: { id: player.id }, bulletId: bullet.id, position: bullet.position } );
+
+                var killer = player.id;
+                var target = this.arena.playerManager.getById( bulletCollisionResult.id ) || this.arena.towerManager.getById( bulletCollisionResult.id );
+
+                if ( target && target.hit ) {
+                
+                    target.hit( killer );
+
+                }
+
+            } else {
+
+                //
 
             }
 
-        } else {
-
-            //
-
         }
+
+
 
     }
 
