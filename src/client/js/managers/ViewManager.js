@@ -28,6 +28,11 @@ Game.ViewManager = function () {
 
     this.scene = false;
     this.camera = false;
+    
+    this.skyboxScene = false;
+    this.skyBoxCamera = false;
+
+
     this.renderer = false;
 
     this.selectionCircle = false;
@@ -53,14 +58,29 @@ Game.ViewManager.prototype.setupScene = function () {
 
     this.scene = new THREE.Scene();
     this.scene.intersections = [];
-    this.camera = new THREE.PerspectiveCamera( 60, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 1, 10000 );
+    this.camera = new THREE.PerspectiveCamera( 60, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 1, 1000 );
+
+    this.skyboxScene = new THREE.Scene();
+    this.skyboxScene.intersections = [];
+    this.skyBoxCamera = new THREE.PerspectiveCamera( 60, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 1, 5000 );
+
+    this.skybox = Game.Skybox();
+
+    this.skyboxScene.add( this.skybox );
 
     this.camera.position.set( 180, 400, 0 );
     this.camera.lookAt( new THREE.Vector3() );
 
+
+
+    this.skyBoxCamera.position.set( 180, 400, 0 );
+    this.skyBoxCamera.lookAt( new THREE.Vector3() );
+    this.skyboxScene.add( this.skyBoxCamera );
+
     this.scene.add( this.camera );
 
-    this.scene.fog = new THREE.Fog( 0x050303, 350, 1900 );
+    this.scene.fog = new THREE.Fog( 0xa9a6a6, 400, 700 );
+    this.skyboxScene.fog = new THREE.Fog( 0xa9a6a6, 700, 4000 );
 
     // setup sound listener
 
@@ -560,10 +580,23 @@ Game.ViewManager.prototype.animate = function ( delta ) {
 
     // update camera position
 
-    this.camera.position.set( Game.arena.me.position.x + 180 + this.cameraOffset.x, this.camera.position.y + this.cameraOffset.y, Game.arena.me.position.z + this.cameraOffset.z );
-    this.camera.lookAt( Game.arena.me.position );
+    // + shake camera 
+    this.camera.position.x = Game.arena.me.position.x - ( 120 * Math.sin( Game.arena.me.rotation ) );
+    this.camera.position.z = Game.arena.me.position.z - ( 120 * Math.cos( Game.arena.me.rotation ) );
+    this.camera.position.y = 100;
 
-    //
+    var lookPos = new THREE.Vector3( Game.arena.me.position.x, Game.arena.me.position.y + 65, Game.arena.me.position.z );
+
+    this.camera.lookAt( lookPos );
+
+    this.skyBoxCamera.position.x = Game.arena.me.position.x - ( 120 * Math.sin( Game.arena.me.rotation ) );
+    this.skyBoxCamera.position.z = Game.arena.me.position.z - ( 120 * Math.cos( Game.arena.me.rotation ) );
+    this.skyBoxCamera.position.y = 100;
+
+
+    this.skyBoxCamera.lookAt( lookPos );
+
+
 
     if ( Game.arena.boxManager ) {
 
@@ -666,7 +699,13 @@ Game.ViewManager.prototype.render = function () {
 
     this.animate( delta );
 
+
+    this.renderer.render( this.skyboxScene, this.skyBoxCamera );
+    this.renderer.autoClear = false;
     this.renderer.render( this.scene, this.camera );
+    
+    
+
 
     //
 

@@ -164,7 +164,7 @@ Player.prototype.rotateBase = function ( direction ) {
 
 Player.prototype.move = (function () {
 
-    var buffer = new ArrayBuffer( 12 );
+    var buffer = new ArrayBuffer( 14 );
     var bufferView = new Uint16Array( buffer );
 
     return function ( directionX, directionZ ) {
@@ -184,21 +184,15 @@ Player.prototype.move = (function () {
         scope.moveDirection.x = directionX;
         scope.moveDirection.y = directionZ;
 
-        if ( scope.moveDirection.x !== 0 || scope.moveDirection.y !== 0 ) {
-
-            var targetRotation = Math.atan2( scope.moveDirection.y, scope.moveDirection.x ) - Math.PI / 2;
-            var deltaRot = targetRotation - scope.rotation;
-            if ( deltaRot > Math.PI ) deltaRot = deltaRot - 2 * Math.PI;
-            if ( deltaRot < - Math.PI ) deltaRot = deltaRot + 2 * Math.PI;
-            scope.rotation = ( scope.rotation + deltaRot / 10 ) % ( 2 * Math.PI );
-
-        }
 
         bufferView[ 1 ] = this.id;
         bufferView[ 2 ] = directionX;
         bufferView[ 3 ] = directionZ;
         bufferView[ 4 ] = this.position.x;
         bufferView[ 5 ] = this.position.z;
+        bufferView[ 6 ] = this.rotation * 1000;
+
+        //console.log(this.rotation);
 
         this.arena.announce( 'PlayerTankMove', buffer, bufferView );
 
@@ -546,8 +540,33 @@ Player.prototype.update = function ( delta, time ) {
 
         var moveDelta = Math.sqrt( Math.pow( player.moveDirection.x, 2 ) + Math.pow( player.moveDirection.y, 2 ) );
 
-        player.position.x -= Math.sign( player.moveDirection.x ) / moveDelta * player.moveSpeed * delta;
-        player.position.z += Math.sign( player.moveDirection.y ) / moveDelta * player.moveSpeed * delta;
+
+
+        // change 50 for correct delta
+        if (  player.moveDirection.x > 0 ) {
+
+            player.position.x += ( player.moveSpeed  * Math.sin( player.rotation ) * delta);
+            player.position.z += ( player.moveSpeed  * Math.cos( player.rotation ) * delta);
+
+        } else if ( player.moveDirection.x < 0) {
+
+            player.position.x -= ( player.moveSpeed   * Math.sin( player.rotation ) * delta);
+            player.position.z -= ( player.moveSpeed   * Math.cos( player.rotation ) * delta);
+
+        }
+
+        if (  this.moveDirection.y > 0 ) {
+
+            this.rotation += 0.001 * delta;
+
+        } else if (  this.moveDirection.y < 0 ) {
+
+            this.rotation -= 0.001 * delta;
+
+        }
+
+        // console.log(player.rotation);
+        // console.log(player.position);
 
     }
 

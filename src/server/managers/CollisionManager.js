@@ -75,10 +75,16 @@ CollisionManager.prototype.moveTank = function ( direction, player, delta ) {
 
     var moveDelta = Math.sqrt( Math.pow( player.moveDirection.x, 2 ) + Math.pow( player.moveDirection.y, 2 ) );
     var newPosition = {
-        x:  player.position.x - Math.sign( player.moveDirection.x ) / moveDelta * player.moveSpeed * delta,
+
+
+        x:  player.moveDirection.x > 0 ? player.position.x + ( player.moveSpeed  * Math.sin( player.rotation )  * delta) : player.position.x - ( player.moveSpeed  * Math.sin( player.rotation ) * delta) ,/* - Math.sign( player.moveDirection.x ) / moveDelta * player.moveSpeed * delta,*/
         y:  0,
-        z:  player.position.z + Math.sign( player.moveDirection.y ) / moveDelta * player.moveSpeed * delta
+        z:  player.moveDirection.z > 0 ? player.position.z + ( player.moveSpeed  * Math.sin( player.rotation )  * delta) : player.position.z - ( player.moveSpeed  * Math.sin( player.rotation ) * delta) /*+ Math.sign( player.moveDirection.y ) / moveDelta * player.moveSpeed * delta*/
+
+        
     };
+    
+    //var newPosition = player.position.clone();
 
     //
 
@@ -93,6 +99,8 @@ CollisionManager.prototype.moveTank = function ( direction, player, delta ) {
     for ( var i = 0, il = this.objects.length; i < il; i ++ ) {
 
         if ( this.checkCollision( this.objects[ i ], player, newPosition ) ) {
+
+            //console.log(newPosition);
 
             return false;
 

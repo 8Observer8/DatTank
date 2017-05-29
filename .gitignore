@@ -1,3 +1,4 @@
 /src/server/node_modules/
 /bin/
 /node_modules/
+/.vscode

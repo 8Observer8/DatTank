@@ -27,8 +27,8 @@ DecorationManager.prototype.init = function ( params ) {
 
         while ( count ) {
 
-            scale = 5 * Math.random() + 5;
-            scaleH = 5 * Math.random() + 5;
+            scale = 5 * Math.random() + 25;
+            scaleH = 5 * Math.random() + 50;
 
             x = 2350 * ( Math.random() - 0.5 );
             z = 2350 * ( Math.random() - 0.5 );
