@@ -185,22 +185,14 @@ Player.prototype.move = (function () {
         scope.moveDirection.y = directionZ;
 
 
-        if (  this.moveDirection.y > 0 ) {
-
-            this.rotation += 0.05;
-
-        } else if (  this.moveDirection.y < 0 ) {
-
-            this.rotation -= 0.05;
-
-        }
-
-
         bufferView[ 1 ] = this.id;
         bufferView[ 2 ] = directionX;
         bufferView[ 3 ] = directionZ;
         bufferView[ 4 ] = this.position.x;
         bufferView[ 5 ] = this.position.z;
+        bufferView[ 6 ] = this.rotation * 1000;
+
+        //console.log(this.rotation);
 
         this.arena.announce( 'PlayerTankMove', buffer, bufferView );
 
@@ -551,6 +543,16 @@ Player.prototype.update = function ( delta, time ) {
 
             player.position.x -= ( player.moveSpeed   * Math.sin( player.rotation ) * delta);
             player.position.z -= ( player.moveSpeed   * Math.cos( player.rotation ) * delta);
+
+        }
+
+        if (  this.moveDirection.y > 0 ) {
+
+            this.rotation += 0.001 * delta;
+
+        } else if (  this.moveDirection.y < 0 ) {
+
+            this.rotation -= 0.001 * delta;
 
         }
 
