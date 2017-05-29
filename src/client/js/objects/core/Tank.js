@@ -135,7 +135,7 @@ Game.Tank.prototype.initLabel = function () {
 
     //
 
-    var material = new THREE.SpriteMaterial({ map: new THREE.Texture( canvas ), color: 0xffffff });
+    var material = new THREE.SpriteMaterial({ map: new THREE.Texture( canvas ), color: 0xffffff, fog: true });
     material.map.needsUpdate = true;
 
     var sprite = new THREE.Sprite( material );
@@ -294,7 +294,7 @@ Game.Tank.prototype.showExplosion = function () {
         map.repeat.set( 0.2, 0.25 );
         map.offset.set( 0, 0.75 );
 
-        var material = new THREE.SpriteMaterial({ map: map, color: 0xffffff });
+        var material = new THREE.SpriteMaterial({ map: map, color: 0xffffff, fog: true });
         var sprite = new THREE.Sprite( material );
 
         sprite.position.z = -15;
@@ -405,7 +405,7 @@ Game.Tank.prototype.showSmoke = function ( strength ) {
     }
 
     var map = resourceManager.getTexture( 'smoke.png' );
-    var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff, fog: false, transparent: true } );
+    var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff, fog: true, transparent: true } );
     var sprite = new THREE.Sprite( material );
     var scale;
 
