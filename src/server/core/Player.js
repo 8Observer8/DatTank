@@ -393,28 +393,31 @@ Player.prototype.hit = function ( killer ) {
 
         killer = this.arena.playerManager.getById( killer ) || this.arena.towerManager.getById( killer );
 
+        if ( ! killer ) return;
+        if ( killer.team.id === this.team.id ) return;
+
         if ( killer ) {
 
             if ( killer instanceof Game.Player ) {
 
-                killer.health -= 40 * ( killer.tank.bullet / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
-                killer.health = Math.max( Math.round( killer.health ), 0 );
+                this.health -= 40 * ( killer.tank.bullet / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
+                this.health = Math.max( Math.round( this.health ), 0 );
 
             } else if ( killer instanceof Game.Tower ) {
 
-                killer.health -= 40 * ( 50 / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
-                killer.health = Math.max( Math.round( killer.health ), 0 );
+                this.health -= 40 * ( 50 / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
+                this.health = Math.max( Math.round( this.health ), 0 );
 
             }
 
         }
 
-        bufferView[ 1 ] = killer.id;
-        bufferView[ 2 ] = killer.health;
+        bufferView[ 1 ] = this.id;
+        bufferView[ 2 ] = this.health;
 
         this.arena.announce( 'PlayerTankHit', buffer, bufferView );
 
-        if ( killer.health <= 0 ) {
+        if ( this.health <= 0 ) {
 
             this.die( killer );
 

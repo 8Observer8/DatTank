@@ -343,7 +343,4 @@ Game.Tower.prototype.addEventListeners = function () {
     this.addEventListener( 'TowerChangeTeam', function ( event ) { scope.changeTeam( event.data[1] ); });
     this.addEventListener( 'TowerHit', function ( event ) { scope.updateHealth( event.data[1] ); });
 
-    // 
-    this.addEventListener( 'BulletHit', function ( event ) { console.log("aagg") });
-
 };

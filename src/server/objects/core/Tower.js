@@ -334,7 +334,8 @@ Tower.prototype.update = function ( delta ) {
                             i--;
                             il--;
 
-                            this.arena.announce('BulletHit', null, { id: tower.id , bulletId: bullet.id, position: bullet.position } );
+                            this.arena.announce('BulletHit', null, { tower: { id: tower.id }, bulletId: bullet.id, position: bullet.position } );
+
 
                             var killer = tower.id;
                             var target = this.arena.playerManager.getById( bulletCollisionResult.id );
