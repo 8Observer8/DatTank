@@ -34,6 +34,8 @@ var Player = function ( arena, params ) {
 
     this.bullets = [];
 
+    this.disable = false;
+
     this.arena = arena || false;
     this.team = false;
     this.health = 100;
@@ -348,7 +350,8 @@ Player.prototype.shoot = (function () {
             position:       { x: this.position.x, y: 25, z: this.position.z },
             angle:          this.rotationTop,
             id:             Player.numShootId,
-            ownerId:        this.id
+            ownerId:        this.id,
+            flytime:        5
         });
 
         this.ammo --;
@@ -384,28 +387,31 @@ Player.prototype.hit = function ( killer ) {
 
         killer = this.arena.playerManager.getById( killer ) || this.arena.towerManager.getById( killer );
 
+        if ( ! killer ) return;
+        if ( killer.team.id === this.team.id ) return;
+
         if ( killer ) {
 
             if ( killer instanceof Game.Player ) {
 
-                killer.health -= 40 * ( killer.tank.bullet / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
-                killer.health = Math.max( Math.round( killer.health ), 0 );
+                this.health -= 40 * ( killer.tank.bullet / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
+                this.health = Math.max( Math.round( this.health ), 0 );
 
             } else if ( killer instanceof Game.Tower ) {
 
-                killer.health -= 40 * ( 50 / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
-                killer.health = Math.max( Math.round( killer.health ), 0 );
+                this.health -= 40 * ( 50 / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
+                this.health = Math.max( Math.round( this.health ), 0 );
 
             }
 
         }
 
-        bufferView[ 1 ] = killer.id;
-        bufferView[ 2 ] = killer.health;
+        bufferView[ 1 ] = this.id;
+        bufferView[ 2 ] = this.health;
 
         this.arena.announce( 'PlayerTankHit', buffer, bufferView );
 
-        if ( killer.health <= 0 ) {
+        if ( this.health <= 0 ) {
 
             this.die( killer );
 
@@ -489,30 +495,38 @@ Player.prototype.update = function ( delta, time ) {
 
     for ( var i = 0, il = player.bullets.length; i < il; i ++ ) {
 
-        var bulletCollisionResult = player.arena.collisionManager.moveBullet( player.bullets[ i ], delta );
+        player.bullets[ i ].flytime --;
 
-        if ( bulletCollisionResult ) {
+        if ( player.bullets[ i ].flytime > 0 ) {
 
-            var bullet = player.bullets.splice( i , 1 )[ 0 ];
-            i--;
-            il--;
+            var bulletCollisionResult = player.arena.collisionManager.moveBullet( player.bullets[ i ], delta );
 
-            this.arena.announce('BulletHit', null, { player: { id: player.id }, bulletId: bullet.id, position: bullet.position } );
+            if ( bulletCollisionResult ) {
 
-            var killer = player.id;
-            var target = this.arena.playerManager.getById( bulletCollisionResult.id ) || this.arena.towerManager.getById( bulletCollisionResult.id );
+                var bullet = player.bullets.splice( i , 1 )[ 0 ];
+                i--;
+                il--;
 
-            if ( target && target.hit ) {
-            
-                target.hit( killer );
+                this.arena.announce('BulletHit', null, { player: { id: player.id }, bulletId: bullet.id, position: bullet.position } );
+
+                var killer = player.id;
+                var target = this.arena.playerManager.getById( bulletCollisionResult.id ) || this.arena.towerManager.getById( bulletCollisionResult.id );
+
+                if ( target && target.hit ) {
+                
+                    target.hit( killer );
+
+                }
+
+            } else {
+
+                //
 
             }
 
-        } else {
-
-            //
-
         }
+
+
 
     }
 

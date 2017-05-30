@@ -65,6 +65,14 @@ Game.prototype.init = function () {
     $('.share-fb').click( this.gaFb.bind( this ) );
     $('.share-tw').click( this.gaTw.bind( this ) );
 
+    //  reload or leave page
+    window.onbeforeunload = function () {
+        var buffer = new ArrayBuffer( 2 );
+        var bufferView = new Int16Array( buffer );
+
+        network.send( 'PlayerTankShoot', buffer, bufferView );
+    };
+
 };
 
 Game.prototype.play = function ( event ) {
