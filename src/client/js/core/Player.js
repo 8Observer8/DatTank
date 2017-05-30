@@ -638,6 +638,38 @@ Game.Player.prototype.update = function ( time, delta ) {
     //temp
     this.updateExplosion( delta );
 
+    for ( var bullet of this.tank.bullets ) {
+
+        if  ( bullet.active === true ) {
+
+            var angle = - this.tank.object.top.rotation.y - this.tank.object.rotation.y;
+
+            bullet.flytime --;
+
+            if ( bullet.flytime > 0 ) {
+
+                for ( var j = 0; j < 4; j ++ ) {
+
+                    var x = bullet.position.x + Math.cos( angle ) * delta;
+                    var z = bullet.position.z + Math.sin( angle ) * delta;
+
+                    bullet.position.set( x, bullet.position.y, z );
+
+                    bullet.visible = true;
+
+                }
+
+            } else {
+
+                bullet.visible = false;
+                bullet.active = false;
+
+            }
+        }
+    }
+
+
+
 };
 
 Game.Player.prototype.die = function ( killer ) {

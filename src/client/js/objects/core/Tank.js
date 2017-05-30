@@ -501,7 +501,6 @@ Game.Tank.prototype.shootBullet = function ( shootId, data ) {
 
     bullet.position.set( this.object.position.x, 25, this.object.position.z );
     bullet.active = true;
-    bullet.flyTime = 0;
 
     if ( bullet.soundShooting.source.buffer ) {
 
@@ -521,49 +520,24 @@ Game.Tank.prototype.shootBullet = function ( shootId, data ) {
 
     }
 
-    //
-
-    // console.log(data);
-
-    // var hidebulletId = this.tank.hidebullet();
-    // console.log(this.tank.hidebullet());
-
-    var angle = - this.object.top.rotation.y - this.object.rotation.y;
-
-    bullet.shotInterval = setInterval( function () {
-
-        bullet.flyTime ++;
-
-        var x = bullet.position.x + Math.cos( angle ) * 4;
-        var z = bullet.position.z + Math.sin( angle ) * 4;
-
-        bullet.position.set( x, bullet.position.y, z );
-
-        if ( bullet.flyTime > 5 ) {
-
-            bullet.visible = true;
-
-        }
-
-        if ( bullet.flyTime > 50 ) {
-
-            clearInterval( bullet.shotInterval );
-            bullet.visible = false;
-            bullet.active = false;
-        }
-
-    }, 3 );
-
-    // console.log(bullet)
+    bullet['shotId'] = shootId;
+    bullet['flytime'] = 5;
 
 };
+
 
 Game.Tank.prototype.hideBullet = function ( data ) {
 
     for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
 
         hidebullet = this.bullets[ i ];
-        console.log(hidebullet);
+
+        if ( data.bulletId === hidebullet.shotId ) {
+
+            this.bullets[ i ].active = false;
+            this.bullets[ i ].visible = false;
+
+        }
 
     }
 

@@ -34,6 +34,8 @@ var Player = function ( arena, params ) {
 
     this.bullets = [];
 
+    this.disable = false;
+
     this.arena = arena || false;
     this.team = false;
     this.health = 100;
