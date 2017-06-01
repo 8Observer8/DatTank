@@ -25,6 +25,39 @@ CollisionManager.prototype.checkCollision = function ( objectA, objectB, newPosi
 
     if ( dist < r1 + r2 ) {
 
+        if ( objectB.position.x > objectA.position.x) {
+
+            if ( objectB.position.z > objectA.position.z){
+
+                console.log('x1 > x2   z1 > z2');
+                console.log('We are right');
+
+            } else {
+
+                console.log('x1 > x2   z1 < z2');
+                console.log('We are left');
+
+            }
+
+        } else {
+
+            if ( objectB.position.z > objectA.position.z){
+
+                console.log('x1 < x2   z1 > z2');
+                console.log('We are left');
+
+            } else {
+
+                console.log('x1 < x2   z1 < z2');
+                console.log('We are right');
+
+            }
+
+        }
+
+        //console.log('objA', objectA.position.x, objectA.position.z);
+        //console.log('objB', objectB.position.x, objectB.position.z);
+
         return true;
 
     } else {
