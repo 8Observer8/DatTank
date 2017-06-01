@@ -423,7 +423,7 @@ Player.prototype.hit = function ( killer ) {
 
 Player.prototype.die = (function () {
 
-    var buffer = new ArrayBuffer( 6 );
+    var buffer = new ArrayBuffer( 8 );
     var bufferView = new Uint16Array( buffer );
 
     return function ( killer ) {
@@ -447,6 +447,7 @@ Player.prototype.die = (function () {
 
         bufferView[ 1 ] = this.id;
         bufferView[ 2 ] = killer.id;
+        bufferView[ 3 ] = killer.kills;
 
         this.arena.announce( 'PlayerTankDied', buffer, bufferView );
 

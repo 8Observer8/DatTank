@@ -155,8 +155,8 @@ Tower.prototype.hit = function ( killer, shootId ) {
             this.health = 0;
             this.changeTeam( killer.team );
 
-            killer.team.kills ++;
-            killer.kills ++;
+            // killer.team.kills ++;
+            // killer.kills ++;
 
             return;
 

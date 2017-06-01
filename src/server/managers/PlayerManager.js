@@ -69,8 +69,6 @@ PlayerManager.prototype.update = function ( delta, time ) {
 
             this.players.splice( i, 1 );
 
-            console.log(this.players.length);
-
             break;
 
         }
