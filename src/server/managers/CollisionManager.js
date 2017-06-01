@@ -25,6 +25,39 @@ CollisionManager.prototype.checkCollision = function ( objectA, objectB, newPosi
 
     if ( dist < r1 + r2 ) {
 
+        if ( objectB.position.x > objectA.position.x) {
+
+            if ( objectB.position.z > objectA.position.z){
+
+                console.log('x1 > x2   z1 > z2');
+                console.log('We are right');
+
+            } else {
+
+                console.log('x1 > x2   z1 < z2');
+                console.log('We are left');
+
+            }
+
+        } else {
+
+            if ( objectB.position.z > objectA.position.z){
+
+                console.log('x1 < x2   z1 > z2');
+                console.log('We are left');
+
+            } else {
+
+                console.log('x1 < x2   z1 < z2');
+                console.log('We are right');
+
+            }
+
+        }
+
+        //console.log('objA', objectA.position.x, objectA.position.z);
+        //console.log('objB', objectB.position.x, objectB.position.z);
+
         return true;
 
     } else {
@@ -90,6 +123,18 @@ CollisionManager.prototype.moveTank = function ( direction, player, delta ) {
 
     if ( Math.abs( newPosition.x ) > 1270 || Math.abs( newPosition.z ) > 1270 ) {
 
+        if (  player.moveDirection.x > 0 ) {
+
+            player.position.x -= ( player.moveSpeed  * Math.sin( player.rotation ) * delta);
+            player.position.z -= ( player.moveSpeed  * Math.cos( player.rotation ) * delta);
+        
+        } else if ( player.moveDirection.x < 0) {
+                    
+            player.position.x += ( player.moveSpeed   * Math.sin( player.rotation ) * delta);
+            player.position.z += ( player.moveSpeed   * Math.cos( player.rotation ) * delta);
+            
+        }
+
         return false;
 
     }
@@ -108,8 +153,8 @@ CollisionManager.prototype.moveTank = function ( direction, player, delta ) {
 
     }
 
-    var playerCollisionObject = this.getPlayerById( player.id );
-    if ( playerCollisionObject ) playerCollisionObject.position = newPosition;
+    //var playerCollisionObject = this.getPlayerById( player.id );
+    //if ( playerCollisionObject ) playerCollisionObject.position = newPosition;
 
     return true;
 

@@ -34,6 +34,8 @@ var Player = function ( arena, params ) {
 
     this.bullets = [];
 
+    this.disable = false;
+
     this.arena = arena || false;
     this.team = false;
     this.health = 100;
@@ -385,28 +387,31 @@ Player.prototype.hit = function ( killer ) {
 
         killer = this.arena.playerManager.getById( killer ) || this.arena.towerManager.getById( killer );
 
+        if ( ! killer ) return;
+        if ( killer.team.id === this.team.id ) return;
+
         if ( killer ) {
 
             if ( killer instanceof Game.Player ) {
 
-                killer.health -= 40 * ( killer.tank.bullet / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
-                killer.health = Math.max( Math.round( killer.health ), 0 );
+                this.health -= 40 * ( killer.tank.bullet / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
+                this.health = Math.max( Math.round( this.health ), 0 );
 
             } else if ( killer instanceof Game.Tower ) {
 
-                killer.health -= 40 * ( 50 / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
-                killer.health = Math.max( Math.round( killer.health ), 0 );
+                this.health -= 40 * ( 50 / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
+                this.health = Math.max( Math.round( this.health ), 0 );
 
             }
 
         }
 
-        bufferView[ 1 ] = killer.id;
-        bufferView[ 2 ] = killer.health;
+        bufferView[ 1 ] = this.id;
+        bufferView[ 2 ] = this.health;
 
         this.arena.announce( 'PlayerTankHit', buffer, bufferView );
 
-        if ( killer.health <= 0 ) {
+        if ( this.health <= 0 ) {
 
             this.die( killer );
 
@@ -418,7 +423,7 @@ Player.prototype.hit = function ( killer ) {
 
 Player.prototype.die = (function () {
 
-    var buffer = new ArrayBuffer( 6 );
+    var buffer = new ArrayBuffer( 8 );
     var bufferView = new Uint16Array( buffer );
 
     return function ( killer ) {
@@ -442,6 +447,7 @@ Player.prototype.die = (function () {
 
         bufferView[ 1 ] = this.id;
         bufferView[ 2 ] = killer.id;
+        bufferView[ 3 ] = killer.kills;
 
         this.arena.announce( 'PlayerTankDied', buffer, bufferView );
 
@@ -531,10 +537,22 @@ Player.prototype.update = function ( delta, time ) {
 
         if ( ! this.arena.collisionManager.moveTank( player.moveDirection, player, delta ) ) {
 
-            player.moveDirection.x = 0;
-            player.moveDirection.z = 0;
+                    if (  player.moveDirection.x > 0 ) {
+
+                        player.position.x -= ( player.moveSpeed  * Math.sin( player.rotation ) * delta);
+                        player.position.z -= ( player.moveSpeed  * Math.cos( player.rotation ) * delta);
+                    
+                    } else if ( player.moveDirection.x < 0) {
+                                
+                        player.position.x += ( player.moveSpeed   * Math.sin( player.rotation ) * delta);
+                        player.position.z += ( player.moveSpeed   * Math.cos( player.rotation ) * delta);
+
+                    }
+
+
+
             this.move( 0, 0 );
-            return;
+            //return;
 
         }
 

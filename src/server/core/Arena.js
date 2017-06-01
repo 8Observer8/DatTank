@@ -60,6 +60,7 @@ Arena.prototype.init = function ( callback ) {
 Arena.prototype.addPlayer = function ( params ) {
 
     var player = new Game.Player( this, { login: params.login, tank: params.tank, socket: params.socket });
+    
     this.playerManager.add( player );
     this.collisionManager.addPlayer( player );
 
@@ -78,6 +79,8 @@ Arena.prototype.removePlayer = function ( player ) {
     if ( this.playerManager.remove( player ) ) {
 
         player.team.removePlayer( player );
+
+        this.playerManager.remove( player );
 
         this.announce( 'ArenaPlayerLeft', null, { id: player.id } );
 

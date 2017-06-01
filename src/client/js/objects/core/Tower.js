@@ -177,8 +177,6 @@ Game.Tower.prototype.shoot = function ( shootId ) {
     //
 
     bullet.position.set( this.object.position.x, 25, this.object.position.z );
-    bullet.active = true;
-    bullet.flyTime = 0;
 
     if ( bullet.soundShooting.source.buffer ) {
 
@@ -200,85 +198,9 @@ Game.Tower.prototype.shoot = function ( shootId ) {
 
     //
 
-    var angle = - Math.PI / 2 - this.object.top.rotation.y;
-    var direction = new THREE.Vector3( Math.cos( angle ), 0, Math.sin( angle ) ).normalize();
-
-    view.raycaster.ray.direction.set( direction.x, direction.y, direction.z );
-    view.raycaster.ray.origin.set( this.object.position.x, 22, this.object.position.z );
-
-    var intersections = view.raycaster.intersectObjects( view.scene.intersections );
-
-    bullet.shotInterval = setInterval( function () {
-
-        for ( var j = 0; j < 10; j ++ ) {
-
-            var x = bullet.position.x + Math.cos( angle ) * 0.4;
-            var z = bullet.position.z + Math.sin( angle ) * 0.4;
-
-            bullet.position.set( x, bullet.position.y, z );
-
-            if ( intersections.length && intersections[ 0 ].object.name !== 'tank' ) {
-
-                if ( Utils.getDistance( bullet.position, intersections[ 0 ].point ) < 9 ) {
-
-                    clearInterval( bullet.shotInterval );
-                    bullet.visible = false;
-                    bullet.active = false;
-                    return;
-
-                }
-
-            }
-
-            if ( ! ( intersections.length && intersections[ 0 ].object.name === 'tank' ) ) continue;
-
-            if ( Utils.getDistance( bullet.position, intersections[ 0 ].point ) < 9 ) {
-
-                if ( hitCallback ) {
-
-                    hitCallback( intersections[ 0 ].object );
-
-                }
-
-                //
-
-                var buffer = new ArrayBuffer( 8 );
-                var bufferView = new Uint16Array( buffer );
-
-                bufferView[ 1 ] = intersections[ 0 ].object.owner.id;
-                bufferView[ 2 ] = shootId;
-                bufferView[ 3 ] = scope.id;
-
-                network.send( 'PlayerTankHit', buffer, bufferView );
-
-                //
-
-                clearInterval( bullet.shotInterval );
-                bullet.visible = false;
-                bullet.active = false;
-                return;
-
-            }
-
-        }
-
-        bullet.flyTime ++;
-
-        if ( bullet.flyTime > 15 ) {
-
-            bullet.visible = true;
-
-        }
-
-        if ( bullet.flyTime > 500 ) {
-
-            clearInterval( bullet.shotInterval );
-            bullet.visible = false;
-            bullet.active = false;
-
-        }
-
-    }, 3 );
+    bullet.active = true;
+    bullet['shotId'] = shootId;
+    bullet['flytime'] = 5;
 
     return {
 
@@ -331,6 +253,23 @@ Game.Tower.prototype.updateHealth = function ( health ) {
 
 };
 
+Game.Tower.prototype.hideBullet = function ( data ) {
+
+    for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
+
+        hidebullet = this.bullets[ i ];
+
+        if ( data.bulletId === hidebullet.shotId ) {
+
+            this.bullets[ i ].active = false;
+            this.bullets[ i ].visible = false;
+
+        }
+
+    }
+
+}
+
 Game.Tower.prototype.update = function ( delta ) {
 
     this.animate( delta );
@@ -358,6 +297,39 @@ Game.Tower.prototype.update = function ( delta ) {
         this.rotation += Math.sign( deltaRot ) / 30 * ( delta / 20 );
         this.object.top.rotation.y = this.rotation;
 
+    }
+
+
+    for ( var bullet of this.bullets ) {
+
+        if  ( bullet.active === true ) {
+
+            var angle = - this.object.top.rotation.y - this.object.rotation.y - 1.57;
+
+            bullet.flytime --;
+
+            if ( bullet.flytime > 0 ) {
+
+                for ( var j = 0; j < 4; j ++ ) {
+
+                    var x = bullet.position.x + Math.cos( angle ) * delta;
+                    var z = bullet.position.z + Math.sin( angle ) * delta;
+
+                    console.log();
+
+                    bullet.position.set( x, bullet.position.y, z );
+
+                    bullet.visible = true;
+
+                }
+
+            } else {
+
+                bullet.visible = false;
+                bullet.active = false;
+
+            }
+        }
     }
 
 };

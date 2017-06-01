@@ -617,7 +617,7 @@ Game.Player.prototype.gotBox = function ( data ) {
 
 };
 
-Game.Player.prototype.updateHealth = function ( value ) {
+Game.Player.prototype.updateHealth = function ( value, playerId ) {
 
     value = ( value !== undefined ) ? value : this.health;
 
@@ -658,9 +658,41 @@ Game.Player.prototype.update = function ( time, delta ) {
     //temp
     this.updateExplosion( delta );
 
+    for ( var bullet of this.tank.bullets ) {
+
+        if  ( bullet.active === true ) {
+
+            var angle = - this.tank.object.top.rotation.y - this.tank.object.rotation.y;
+
+            bullet.flytime --;
+
+            if ( bullet.flytime > 0 ) {
+
+                for ( var j = 0; j < 4; j ++ ) {
+
+                    var x = bullet.position.x + Math.cos( angle ) * delta;
+                    var z = bullet.position.z + Math.sin( angle ) * delta;
+
+                    bullet.position.set( x, bullet.position.y, z );
+
+                    bullet.visible = true;
+
+                }
+
+            } else {
+
+                bullet.visible = false;
+                bullet.active = false;
+
+            }
+        }
+    }
+
+
+
 };
 
-Game.Player.prototype.die = function ( killer ) {
+Game.Player.prototype.die = function ( killer, killerKills ) {
 
     var scope = this;
 
@@ -702,7 +734,7 @@ Game.Player.prototype.die = function ( killer ) {
     if ( killer ) {
 
         killer.team.kills ++;
-        killer.kills ++;
+        killer.kills = killerKills;
 
     }
 
@@ -730,7 +762,13 @@ Game.Player.prototype.dispose = function () {
 
 Game.Player.prototype.bulletHit = function ( data ) {
 
-    view.addCameraShake( 1000, 1.5 );
+    if(this.id === Game.arena.playerManager.players[0].id)
+
+    for ( tower of Game.arena.towerManager.towers ) {
+
+        tower.hideBullet(data);
+
+    }
 
     this.showExplosion( data );
     // 
@@ -832,8 +870,8 @@ Game.Player.prototype.addEventListeners = function () {
     this.addEventListener( 'PlayerTankRotateTop', function ( event ) { scope.rotateTop( event.data[1] / 1000 ); });
     this.addEventListener( 'PlayerTankMove', function ( event ) { scope.move( event.data[1], event.data[2], event.data[3], event.data[4], event.data[5] ); });
     this.addEventListener( 'PlayerTankShoot', function ( event ) { scope.shoot( event.data[1], event.data[2] ); });
-    this.addEventListener( 'PlayerTankHit', function ( event ) { scope.updateHealth( event.data[1] ); });
-    this.addEventListener( 'PlayerTankDied', function ( event ) { scope.die( event.data[1] ); });
+    this.addEventListener( 'PlayerTankHit', function ( event ) { scope.updateHealth( event.data[1], event.data[0] ); });
+    this.addEventListener( 'PlayerTankDied', function ( event ) { scope.die( event.data[1] , event.data[ 2 ] ); });
     this.addEventListener( 'PlayerGotBox', function ( event ) { scope.gotBox( event.data ); });
     this.addEventListener( 'PlayerTankMoveByPath', function ( event ) {
 

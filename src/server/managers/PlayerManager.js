@@ -28,7 +28,6 @@ PlayerManager.prototype.add = function ( player ) {
 
 PlayerManager.prototype.remove = function ( player ) {
 
-    var newPlayersList = [];
     var removed = true;
 
     for ( var i = 0, il = this.players.length; i < il; i ++ ) {
@@ -36,16 +35,11 @@ PlayerManager.prototype.remove = function ( player ) {
         if ( this.players[ i ].id === player.id ) {
 
             this.arena.collisionManager.removePlayer( player );
-            removed = true;
-            continue;
+            this.players[ i ].disable = true;
 
         }
 
-        newPlayersList.push( this.players[ i ] );
-
     }
-
-    this.players = newPlayersList;
 
     return removed;
 
@@ -68,6 +62,18 @@ PlayerManager.prototype.getById = function ( playerId ) {
 };
 
 PlayerManager.prototype.update = function ( delta, time ) {
+
+    for ( var i = 0, il = this.players.length; i < il; i ++ ) {
+
+        if ( this.players[ i ].disable === true ) {
+
+            this.players.splice( i, 1 );
+
+            break;
+
+        }
+
+    }
 
     for ( var i = 0, il = this.players.length; i < il; i ++ ) {
 
