@@ -537,10 +537,22 @@ Player.prototype.update = function ( delta, time ) {
 
         if ( ! this.arena.collisionManager.moveTank( player.moveDirection, player, delta ) ) {
 
-            player.moveDirection.x = 0;
-            player.moveDirection.z = 0;
+                    if (  player.moveDirection.x > 0 ) {
+
+                        player.position.x -= ( player.moveSpeed  * Math.sin( player.rotation ) * delta);
+                        player.position.z -= ( player.moveSpeed  * Math.cos( player.rotation ) * delta);
+                    
+                    } else if ( player.moveDirection.x < 0) {
+                                
+                        player.position.x += ( player.moveSpeed   * Math.sin( player.rotation ) * delta);
+                        player.position.z += ( player.moveSpeed   * Math.cos( player.rotation ) * delta);
+
+                    }
+
+
+
             this.move( 0, 0 );
-            return;
+            //return;
 
         }
 

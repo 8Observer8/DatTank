@@ -108,8 +108,8 @@ CollisionManager.prototype.moveTank = function ( direction, player, delta ) {
 
     }
 
-    var playerCollisionObject = this.getPlayerById( player.id );
-    if ( playerCollisionObject ) playerCollisionObject.position = newPosition;
+    //var playerCollisionObject = this.getPlayerById( player.id );
+    //if ( playerCollisionObject ) playerCollisionObject.position = newPosition;
 
     return true;
 
