@@ -82,6 +82,13 @@ Game.ViewManager.prototype.setupScene = function () {
     this.scene.fog = new THREE.Fog( 0xa9a6a6, 400, 700 );
     this.skyboxScene.fog = new THREE.Fog( 0xa9a6a6, 700, 4000 );
 
+    var axisHelper = new THREE.AxisHelper( 5000 );
+
+    axisHelper.position.y += 10;
+
+    this.skyboxScene.add( axisHelper );
+
+
     // setup sound listener
 
     if ( ! this.sound ) {
