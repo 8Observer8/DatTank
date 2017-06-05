@@ -18,16 +18,10 @@ CollisionManager.prototype.checkCollision = function ( objectA, objectB, newPosi
 
     if ( objectA.id === objectB.id ) return false;
 
-    var r1 = Math.sqrt( 0.8 * Math.pow( Math.max( objectA.sizeX, objectA.sizeZ ), 2 ) );
+    var r1 = Math.sqrt( Math.pow( Math.max( objectA.sizeX, objectA.sizeZ ), 2 ) );
 
-    // var r2 = Math.sqrt( 2 * Math.pow( Math.max( objectB.sizeX, objectB.sizeZ ), 2 ) );
-
-    // var dist = Math.sqrt( Math.pow( objectA.position.x - newPosition.x, 2 ) + Math.pow( objectA.position.z - newPosition.z, 2 ) );
-
-    // console.log(SAT);
-
-    var objAsat = new  SAT.Circle(new SAT.Vector(objectA.position.x,objectA.position.z ), r1);
-    var objBsat = new  SAT.Box(new SAT.Vector(objectB.position.x,objectB.position.z),  objectB.sizeX, objectB.sizeZ).toPolygon();
+    var objAsat = new SAT.Circle(new SAT.Vector(objectA.position.x,objectA.position.z ), r1);
+    var objBsat = new SAT.Box(new SAT.Vector(objectB.position.x,objectB.position.z), 20, 20).toPolygon();
     objBsat.setAngle(objectB.rotation);
 
     var response = new SAT.Response();
@@ -35,8 +29,8 @@ CollisionManager.prototype.checkCollision = function ( objectA, objectB, newPosi
 
     if ( collided ) {
 
-        objectB.position.x -= response.overlapV.x * 3;
-        objectB.position.z -= response.overlapV.y * 3;
+        objectB.position.x -= response.overlapV.x;
+        objectB.position.z -= response.overlapV.y;
         return true;
 
     } else {
@@ -44,60 +38,6 @@ CollisionManager.prototype.checkCollision = function ( objectA, objectB, newPosi
         return false;
 
     }
-
-
-
-
-    //
-
-    // if ( dist < r1 + r2 ) {
-
-        // if ( objectB.position.x > objectA.position.x) {
-
-        //     if ( objectB.position.z > objectA.position.z){
-
-        //         console.log('x1 > x2   z1 > z2');
-        //         console.log('We are right');
-
-        //     } else {
-
-        //         console.log('x1 > x2   z1 < z2');
-        //         console.log('We are left');
-
-        //     }
-
-        // } else {
-
-        //     if ( objectB.position.z > objectA.position.z){
-
-        //         console.log('x1 < x2   z1 > z2');
-        //         console.log('We are right');
-
-        //     } else {
-
-        //         console.log('x1 < x2   z1 < z2');
-        //         console.log('We are left');
-
-        //     }
-
-        // }
-
-        // console.log('target', objectA.position.x, objectA.position.z);
-        // console.log('me', objectB.position.x, objectB.position.z);
-
-        // if ( objectA.position.x > objectB.position.x &&  ) {
-
-
-
-        // }
-
-    //     return true;
-
-    // } else {
-
-    //     return false;
-
-    // }
 
 };
 
@@ -149,10 +89,6 @@ CollisionManager.prototype.moveTank = function ( direction, player, delta ) {
 
         
     };
-    
-    //var newPosition = player.position.clone();
-
-    // console.log(Math.sin( player.rotation ));
 
     if ( Math.abs( newPosition.x ) > 1270 || Math.abs( newPosition.z ) > 1270 ) {
 
@@ -178,16 +114,11 @@ CollisionManager.prototype.moveTank = function ( direction, player, delta ) {
 
         if ( this.checkCollision( this.objects[ i ], player, newPosition ) ) {
 
-            //console.log(newPosition);
-
             return false;
 
         }
 
     }
-
-    //var playerCollisionObject = this.getPlayerById( player.id );
-    //if ( playerCollisionObject ) playerCollisionObject.position = newPosition;
 
     return true;
 

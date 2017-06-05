@@ -96,7 +96,6 @@ DecorationManager.prototype.init = function ( params ) {
             if ( placedOnMapDecor ) continue;
 
             this.decorations.push( decoration );
-            // console.log( decoration.id, decoration.position, decoration.rotation, decoration.scale );
 
             //
 

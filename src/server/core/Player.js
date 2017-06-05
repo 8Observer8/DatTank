@@ -194,8 +194,6 @@ Player.prototype.move = (function () {
         bufferView[ 5 ] = this.position.z;
         bufferView[ 6 ] = this.rotation * 1000;
 
-        //console.log(this.rotation);
-
         this.arena.announce( 'PlayerTankMove', buffer, bufferView );
 
     };
@@ -527,25 +525,23 @@ Player.prototype.update = function ( delta, time ) {
 
         }
 
-
-
     }
 
     // update player AWSD movement
 
     if ( player.moveDirection.x !== 0 || player.moveDirection.y !== 0 ) {
 
-        if ( ! this.arena.collisionManager.moveTank( player.moveDirection, player, delta ) ) {
+        if ( !this.arena.collisionManager.moveTank( player.moveDirection, player, delta ) ) {
 
                     if (  player.moveDirection.x > 0 ) {
 
-                        player.position.x -= ( player.moveSpeed  * Math.sin( player.rotation ) * delta);
-                        player.position.z -= ( player.moveSpeed  * Math.cos( player.rotation ) * delta);
+                        player.position.x -= ( player.moveSpeed * Math.sin( player.rotation ) * delta);
+                        player.position.z -= ( player.moveSpeed * Math.cos( player.rotation ) * delta);
                     
                     } else if ( player.moveDirection.x < 0) {
                                 
-                        player.position.x += ( player.moveSpeed   * Math.sin( player.rotation ) * delta);
-                        player.position.z += ( player.moveSpeed   * Math.cos( player.rotation ) * delta);
+                        player.position.x += ( player.moveSpeed * Math.sin( player.rotation ) * delta);
+                        player.position.z += ( player.moveSpeed * Math.cos( player.rotation ) * delta);
 
                     }
 
@@ -558,33 +554,28 @@ Player.prototype.update = function ( delta, time ) {
 
         var moveDelta = Math.sqrt( Math.pow( player.moveDirection.x, 2 ) + Math.pow( player.moveDirection.y, 2 ) );
 
-
-
         // change 50 for correct delta
-        if (  player.moveDirection.x > 0 ) {
+        if ( player.moveDirection.x > 0 ) {
 
-            player.position.x += ( player.moveSpeed  * Math.sin( player.rotation ) * delta);
-            player.position.z += ( player.moveSpeed  * Math.cos( player.rotation ) * delta);
+            player.position.x += ( player.moveSpeed * Math.sin( player.rotation ) * delta);
+            player.position.z += ( player.moveSpeed * Math.cos( player.rotation ) * delta);
 
         } else if ( player.moveDirection.x < 0) {
 
-            player.position.x -= ( player.moveSpeed   * Math.sin( player.rotation ) * delta);
-            player.position.z -= ( player.moveSpeed   * Math.cos( player.rotation ) * delta);
+            player.position.x -= ( player.moveSpeed * Math.sin( player.rotation ) * delta);
+            player.position.z -= ( player.moveSpeed * Math.cos( player.rotation ) * delta);
 
         }
 
-        if (  this.moveDirection.y > 0 ) {
+        if ( this.moveDirection.y > 0 ) {
 
             this.rotation += 0.001 * delta;
 
-        } else if (  this.moveDirection.y < 0 ) {
+        } else if ( this.moveDirection.y < 0 ) {
 
             this.rotation -= 0.001 * delta;
 
         }
-
-        // console.log(player.rotation);
-        // console.log(player.position);
 
     }
 

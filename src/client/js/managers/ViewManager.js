@@ -82,11 +82,11 @@ Game.ViewManager.prototype.setupScene = function () {
     this.scene.fog = new THREE.Fog( 0xa9a6a6, 400, 700 );
     this.skyboxScene.fog = new THREE.Fog( 0xa9a6a6, 700, 4000 );
 
-    var axisHelper = new THREE.AxisHelper( 5000 );
+    // var axisHelper = new THREE.AxisHelper( 5000 );
 
-    axisHelper.position.y += 10;
+    // axisHelper.position.y += 10;
 
-    this.skyboxScene.add( axisHelper );
+    // this.skyboxScene.add( axisHelper );
 
 
     // setup sound listener
@@ -145,8 +145,6 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
     for ( var i = 0, il = decorations.length; i < il; i ++ ) {
 
         decoration = decorations[ i ];
-
-// console.log(decoration);
 
         switch ( decoration.type ) {
 
@@ -600,10 +598,7 @@ Game.ViewManager.prototype.animate = function ( delta ) {
     this.skyBoxCamera.position.z = Game.arena.me.position.z - ( 120 * Math.cos( Game.arena.me.rotation ) );
     this.skyBoxCamera.position.y = 100;
 
-
     this.skyBoxCamera.lookAt( lookPos );
-
-
 
     if ( Game.arena.boxManager ) {
 
@@ -710,9 +705,6 @@ Game.ViewManager.prototype.render = function () {
     this.renderer.render( this.skyboxScene, this.skyBoxCamera );
     this.renderer.autoClear = false;
     this.renderer.render( this.scene, this.camera );
-    
-    
-
 
     //
 
