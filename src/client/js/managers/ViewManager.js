@@ -591,9 +591,9 @@ Game.ViewManager.prototype.animate = function ( delta ) {
     // update camera position
 
     // + shake camera 
-    this.camera.position.x = Game.arena.me.position.x - ( 120 * Math.sin( Game.arena.me.rotation ) );
-    this.camera.position.z = Game.arena.me.position.z - ( 120 * Math.cos( Game.arena.me.rotation ) );
-    this.camera.position.y = 100;
+    this.camera.position.x = Game.arena.me.position.x - ( 170 * Math.sin( Game.arena.me.rotation ) );
+    this.camera.position.z = Game.arena.me.position.z - ( 170 * Math.cos( Game.arena.me.rotation ) );
+    this.camera.position.y = 120;
 
     var lookPos = new THREE.Vector3( Game.arena.me.position.x, Game.arena.me.position.y + 65, Game.arena.me.position.z );
 
