@@ -33,6 +33,18 @@ DecorationManager.prototype.init = function ( params ) {
             x = 2350 * ( Math.random() - 0.5 );
             z = 2350 * ( Math.random() - 0.5 );
 
+            if ( type === 'OldCastle' ) {
+
+                scale = 5 * Math.random() + 50;
+
+            }
+
+            if ( type === 'Stone1' ) {
+
+                scale = 5 * Math.random() + 30;
+
+            }
+
             //
 
             var placedOnTower = false;

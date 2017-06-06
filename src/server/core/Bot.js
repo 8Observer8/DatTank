@@ -59,7 +59,7 @@ Bot.prototype.init = function () {
 
     }
 
-    // this.player = this.arena.addPlayer({ login: this.login, tank: tank, socket: false });
+    this.player = this.arena.addPlayer({ login: this.login, tank: tank, socket: false });
     this.player.ammo = 10000000;
     this.player.bot = this;
 

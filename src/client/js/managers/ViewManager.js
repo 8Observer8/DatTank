@@ -197,7 +197,12 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
         if ( decoration.type === 'tree' || decoration.type === 'tree1' || decoration.type === 'tree2' || decoration.type === 'tree3' );
         // mesh.scale.set( 20 + scale, 10 + Math.random() * 20, 20 + scale );
         // scale for old Castle
-        if ( decoration.type === 'oldCastle' ) mesh.scale.set( 20, 20, 20 );
+        if ( decoration.type === 'oldCastle' ) {
+
+            mesh.scale.set( 20, 20, 20 );
+
+        }
+
 
         mesh.position.set( decoration.position.x, decoration.position.y, decoration.position.z );
         mesh.name = decoration.type;
