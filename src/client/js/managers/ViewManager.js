@@ -82,6 +82,13 @@ Game.ViewManager.prototype.setupScene = function () {
     this.scene.fog = new THREE.Fog( 0xa9a6a6, 400, 700 );
     this.skyboxScene.fog = new THREE.Fog( 0xa9a6a6, 700, 4000 );
 
+    // var axisHelper = new THREE.AxisHelper( 5000 );
+
+    // axisHelper.position.y += 10;
+
+    // this.skyboxScene.add( axisHelper );
+
+
     // setup sound listener
 
     if ( ! this.sound ) {
@@ -139,8 +146,6 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
 
         decoration = decorations[ i ];
 
-// console.log(decoration);
-
         switch ( decoration.type ) {
 
             case 'tree':
@@ -192,7 +197,12 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
         if ( decoration.type === 'tree' || decoration.type === 'tree1' || decoration.type === 'tree2' || decoration.type === 'tree3' );
         // mesh.scale.set( 20 + scale, 10 + Math.random() * 20, 20 + scale );
         // scale for old Castle
-        if ( decoration.type === 'oldCastle' ) mesh.scale.set( 20, 20, 20 );
+        if ( decoration.type === 'oldCastle' ) {
+
+            mesh.scale.set( 20, 20, 20 );
+
+        }
+
 
         mesh.position.set( decoration.position.x, decoration.position.y, decoration.position.z );
         mesh.name = decoration.type;
@@ -581,9 +591,9 @@ Game.ViewManager.prototype.animate = function ( delta ) {
     // update camera position
 
     // + shake camera 
-    this.camera.position.x = Game.arena.me.position.x - ( 120 * Math.sin( Game.arena.me.rotation ) );
-    this.camera.position.z = Game.arena.me.position.z - ( 120 * Math.cos( Game.arena.me.rotation ) );
-    this.camera.position.y = 100;
+    this.camera.position.x = Game.arena.me.position.x - ( 170 * Math.sin( Game.arena.me.rotation ) );
+    this.camera.position.z = Game.arena.me.position.z - ( 170 * Math.cos( Game.arena.me.rotation ) );
+    this.camera.position.y = 120;
 
     var lookPos = new THREE.Vector3( Game.arena.me.position.x, Game.arena.me.position.y + 65, Game.arena.me.position.z );
 
@@ -593,10 +603,7 @@ Game.ViewManager.prototype.animate = function ( delta ) {
     this.skyBoxCamera.position.z = Game.arena.me.position.z - ( 120 * Math.cos( Game.arena.me.rotation ) );
     this.skyBoxCamera.position.y = 100;
 
-
     this.skyBoxCamera.lookAt( lookPos );
-
-
 
     if ( Game.arena.boxManager ) {
 
@@ -703,9 +710,6 @@ Game.ViewManager.prototype.render = function () {
     this.renderer.render( this.skyboxScene, this.skyBoxCamera );
     this.renderer.autoClear = false;
     this.renderer.render( this.scene, this.camera );
-    
-    
-
 
     //
 
