@@ -595,6 +595,8 @@ Game.ViewManager.prototype.animate = function ( delta ) {
     this.camera.position.z = Game.arena.me.position.z - ( 170 * Math.cos( Game.arena.me.rotation ) );
     this.camera.position.y = 120;
 
+    this.camera.position.set( this.camera.position.x + this.cameraOffset.x, this.camera.position.y + this.cameraOffset.y, this.camera.position.z + this.cameraOffset.z );
+
     var lookPos = new THREE.Vector3( Game.arena.me.position.x, Game.arena.me.position.y + 65, Game.arena.me.position.z );
 
     this.camera.lookAt( lookPos );

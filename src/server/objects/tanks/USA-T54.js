@@ -11,9 +11,9 @@ var USAT54 = function ( params ) {
 
     this.speed = 43;
     this.range = 100;
-    this.armour = 180;
+    this.armour = 360;
     this.bullet = 155;
-    this.maxShells = 70;
+    this.maxShells = 80;
     this.reloadTime = 700;
 
 };
