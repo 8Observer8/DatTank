@@ -627,6 +627,11 @@ Game.Player.prototype.updateHealth = function ( value, playerId ) {
         ui.updateHealth( this.health );
         this.updateHealthBar( this.health );
 
+    } else {
+
+        this.health = value;
+        this.updateHealthBar( this.health );
+
     }
 
     this.health = value;
