@@ -684,6 +684,16 @@ Player.prototype.update = function ( delta, time ) {
 
 };
 
+Player.prototype.sendChatMessage = function ( data ) {
+
+    var login = data.login;
+    var message = data.message;
+    var teamId = this.team.id; 
+
+    this.arena.announce('SendChatMessage', null, { login: login, message: message, teamId: teamId } );
+
+};
+
 Player.prototype.addEventListeners = function () {
 
     var scope = this;
@@ -693,6 +703,8 @@ Player.prototype.addEventListeners = function () {
     this.addEventListener( 'PlayerTankMove', function ( event ) { scope.move( event.data[0], event.data[1] ); });
     this.addEventListener( 'PlayerTankMoveByPath', function ( event ) { scope.moveToPoint({ x: event.data[0], z: event.data[1] }); });
     this.addEventListener( 'PlayerTankShoot', function ( event ) { scope.shoot(); });
+
+    this.addEventListener( 'SendChatMessage', function( event ) { scope.sendChatMessage( event.data ) });
 
 };
 

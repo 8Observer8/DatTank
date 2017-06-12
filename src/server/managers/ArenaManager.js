@@ -187,7 +187,9 @@ ArenaManager.prototype.addNetworkListeners = function () {
     networkManager.addMessageListener( 'PlayerTankMove', this.proxyEventToPlayer.bind( this ) );
     networkManager.addMessageListener( 'PlayerTankMoveByPath', this.proxyEventToPlayer.bind( this ) );
     networkManager.addMessageListener( 'PlayerTankShoot', this.proxyEventToPlayer.bind( this ) );
-
+    // Chat event
+    networkManager.addMessageListener( 'SendChatMessage', this.proxyEventToPlayer.bind( this ) );
+    // 
     networkManager.addMessageListener( 'PlayerTankHit', function ( data, socket ) {
 
         if ( ! socket.arena ) return;
