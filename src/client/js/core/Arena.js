@@ -16,6 +16,7 @@ Game.Arena = function () {
     this.teamManager = new Game.TeamManager( this );
     this.towerManager = new Game.TowerManager( this );
     this.controlsManager = new Game.ControlsManager( this );
+    this.chatManager = new Game.ChatManager( this );
 
 };
 
@@ -156,5 +157,9 @@ Game.Arena.prototype.addNetworkListeners = function () {
 
     network.addMessageListener( 'RemoveBox', this.proxyEventToBox.bind( this ) );
     network.addMessageListener( 'PickedBox', this.proxyEventToBox.bind( this ) );
+
+    // chatMessage
+
+    network.addMessageListener( 'SendChatMessage', this.proxyEventToPlayer.bind( this ) ); 
 
 };

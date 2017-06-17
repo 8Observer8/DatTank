@@ -66,6 +66,9 @@ Game.Player.prototype.init = function ( params ) {
 
     this.addEventListeners();
 
+    this.healthBar = false;
+    this.updateHealthBar();
+
 };
 
 Game.Player.prototype.selectTank = function ( tankName ) {
@@ -102,8 +105,6 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
 
     }
 
-    //console.log('respawn camera change');
-    //view.camera.position.y = 400;
     view.cameraOffset.set( 0, 0, 0 );
 
     //
@@ -149,14 +150,15 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
             ui.updateAmmo( this.ammo );
 
             ui.hideContinueBox();
-
-            ui.updateHealth( this.health );
             ui.updateAmmo( this.ammo );
 
             var tankName = params.tank;
             this.tank.dispose();
             this.selectTank( tankName );
             this.tank.init();
+
+            this.healthBar = false;
+            this.updateHealthBar();
 
         }
 
@@ -338,10 +340,6 @@ Game.Player.prototype.move = function ( directionX, directionZ, positionX, posit
 
     player.rotation = rotation / 1000.0;
 
-    // console.log('move');
-
-    //console.log( player.rotation);
-
     player.tank.setRotation( player.rotation );
     player.tank.setPosition( player.position.x, player.position.y, player.position.z);
 
@@ -490,9 +488,7 @@ Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
 
     //
 
-    if ( player.moveDirection.x !== 0 || player.moveDirection.y !== 0 ) {
-
-        
+    if ( player.moveDirection.x !== 0 || player.moveDirection.y !== 0 ) { 
 
         var moveDelta = Math.sqrt( Math.pow( player.moveDirection.x, 2 ) + Math.pow( player.moveDirection.y, 2 ) );
 
@@ -520,10 +516,6 @@ Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
             player.rotation -= 0.001* delta;
 
         }
-
-        // console.log(player.rotation);
-        // console.log(player.position);
-
 
         player.tank.setRotation( player.rotation );
 
@@ -627,12 +619,18 @@ Game.Player.prototype.updateHealth = function ( value, playerId ) {
 
         if ( value < this.health ) {
 
-            view.addCameraShake( 400, 3 );
+            view.addCameraShake( 300, 3 );
 
         }
 
         this.health = value;
         ui.updateHealth( this.health );
+        this.updateHealthBar( this.health );
+
+    } else {
+
+        this.health = value;
+        this.updateHealthBar( this.health );
 
     }
 
@@ -647,6 +645,30 @@ Game.Player.prototype.updateHealth = function ( value, playerId ) {
         this.tank.hideSmoke();
 
     }
+
+};
+
+Game.Player.prototype.updateHealthBar = function ( value ) {
+
+    value = ( value !== undefined ) ? value : this.health;
+
+    if ( ! this.healthBar ) {
+
+        var bg = new THREE.Sprite( new THREE.SpriteMaterial( { color: 0xffffff, fog: true } ) );
+        var healthBar = new THREE.Sprite( new THREE.SpriteMaterial( { color: 0x00ff00, fog: true } ) );
+            healthBar.position.set( 0, 60, 0 );
+            healthBar.scale.set( 50, 2, 1 );
+
+            this.healthBar = {
+                bg:     bg,
+                health: healthBar
+            };
+
+            this.tank.object.add( this.healthBar.health );
+
+    }
+
+    this.healthBar.health.scale.x = 50 * this.health / 100;
 
 };
 
@@ -861,6 +883,16 @@ Game.Player.prototype.hideExplosion = function () {
 
 };
 
+Game.Player.prototype.sendChatMessage = function ( data ) {
+
+    var login = data.login;
+    var message = data.message;
+    var teamId = data.teamId;
+
+    chatManager.newMessage( login, message, teamId );
+
+}
+
 Game.Player.prototype.addEventListeners = function () {
 
     var scope = this;
@@ -891,5 +923,7 @@ Game.Player.prototype.addEventListeners = function () {
     });
 
     this.addEventListener( 'BulletHit', function ( event ) { scope.bulletHit( event.data ); });
+
+    this.addEventListener( 'SendChatMessage', function ( event ) { scope.sendChatMessage( event.data ) } )
 
 };
