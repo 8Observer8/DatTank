@@ -30,10 +30,12 @@ Game.prototype.init = function () {
     window.resourceManager = new Game.ResourceManager();
     window.soundManager = new Game.SoundManager();
     window.settings = new Game.SettingsManager();
+    window.chatManager = new Game.ChatManager();
 
     //
 
     ui.init();
+    chatManager.init();
 
     var login = $('#username').val() || localStorage.getItem('login') || '';
     $('#username').val( login );
@@ -227,7 +229,7 @@ Game.prototype.loop = function () {
 
 };
 
-Game.prototype.gaVk = function() {
+Game.prototype.gaVk = function () {
 
     ga('send', {
         hitType: 'event',
@@ -237,7 +239,7 @@ Game.prototype.gaVk = function() {
 
 };
 
-Game.prototype.gaFb = function() {
+Game.prototype.gaFb = function () {
 
     ga('send', {
         hitType: 'event',
@@ -247,7 +249,7 @@ Game.prototype.gaFb = function() {
 
 };
 
-Game.prototype.gaTw = function() {
+Game.prototype.gaTw = function () {
 
     ga('send', {
         hitType: 'event',

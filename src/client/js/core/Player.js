@@ -45,7 +45,6 @@ Game.Player = function ( arena, params ) {
 
     this.lastShot = Date.now();
 
-    //temp
     this.explosion = [];
 
     //
@@ -65,6 +64,9 @@ Game.Player.prototype.init = function ( params ) {
     this.tank.setPosition( this.position.x, this.position.y, this.position.z );
 
     this.addEventListeners();
+
+    this.healthBar = false;
+    this.updateHealthBar();
 
 };
 
@@ -102,8 +104,6 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
 
     }
 
-    //console.log('respawn camera change');
-    //view.camera.position.y = 400;
     view.cameraOffset.set( 0, 0, 0 );
 
     //
@@ -127,7 +127,6 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
 
         if ( this.id === Game.arena.me.id ) {
 
-            //console.log('camera change');
             view.camera.position.set( this.position.x + 180, view.camera.position.y, this.position.z );
             view.camera.lookAt( this.position );
 
@@ -149,14 +148,15 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
             ui.updateAmmo( this.ammo );
 
             ui.hideContinueBox();
-
-            ui.updateHealth( this.health );
             ui.updateAmmo( this.ammo );
 
             var tankName = params.tank;
             this.tank.dispose();
             this.selectTank( tankName );
             this.tank.init();
+
+            this.healthBar = false;
+            this.updateHealthBar();
 
         }
 
@@ -338,12 +338,8 @@ Game.Player.prototype.move = function ( directionX, directionZ, positionX, posit
 
     player.rotation = rotation / 1000.0;
 
-    // console.log('move');
-
-    //console.log( player.rotation);
-
     player.tank.setRotation( player.rotation );
-    player.tank.setPosition( player.position.x, player.position.y, player.position.z);
+    player.tank.setPosition( player.position.x, player.position.y, player.position.z );
 
 };
 
@@ -492,38 +488,32 @@ Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
 
     if ( player.moveDirection.x !== 0 || player.moveDirection.y !== 0 ) {
 
-        
-
         var moveDelta = Math.sqrt( Math.pow( player.moveDirection.x, 2 ) + Math.pow( player.moveDirection.y, 2 ) );
 
         player.tank.addTrack();
 
         // change 50 for correct delta
-        if (  player.moveDirection.x > 0 ) {
+        if ( player.moveDirection.x > 0 ) {
 
-            player.position.x += ( player.moveSpeed   * Math.sin( player.rotation )  * delta);
-            player.position.z += ( player.moveSpeed   * Math.cos( player.rotation )  * delta);
+            player.position.x += ( player.moveSpeed * Math.sin( player.rotation ) * delta );
+            player.position.z += ( player.moveSpeed * Math.cos( player.rotation ) * delta );
 
-        } else if ( player.moveDirection.x < 0) {
+        } else if ( player.moveDirection.x < 0 ) {
 
-            player.position.x -= ( player.moveSpeed   * Math.sin( player.rotation )  * delta);
-            player.position.z -= ( player.moveSpeed   * Math.cos( player.rotation )  * delta);
+            player.position.x -= ( player.moveSpeed * Math.sin( player.rotation ) * delta );
+            player.position.z -= ( player.moveSpeed * Math.cos( player.rotation ) * delta );
 
         }
 
-        if (  player.moveDirection.y > 0 ) {
+        if ( player.moveDirection.y > 0 ) {
 
             player.rotation += 0.001 * delta;
 
-        } else if (  player.moveDirection.y < 0 ) {
+        } else if ( player.moveDirection.y < 0 ) {
 
             player.rotation -= 0.001* delta;
 
         }
-
-        // console.log(player.rotation);
-        // console.log(player.position);
-
 
         player.tank.setRotation( player.rotation );
 
@@ -627,12 +617,18 @@ Game.Player.prototype.updateHealth = function ( value, playerId ) {
 
         if ( value < this.health ) {
 
-            view.addCameraShake( 400, 3 );
+            view.addCameraShake( 300, 3 );
 
         }
 
         this.health = value;
         ui.updateHealth( this.health );
+        this.updateHealthBar( this.health );
+
+    } else {
+
+        this.health = value;
+        this.updateHealthBar( this.health );
 
     }
 
@@ -650,17 +646,42 @@ Game.Player.prototype.updateHealth = function ( value, playerId ) {
 
 };
 
+Game.Player.prototype.updateHealthBar = function ( value ) {
+
+    value = ( value !== undefined ) ? value : this.health;
+
+    if ( ! this.healthBar ) {
+
+        var bg = new THREE.Sprite( new THREE.SpriteMaterial( { color: 0xffffff, fog: true } ) );
+        var healthBar = new THREE.Sprite( new THREE.SpriteMaterial( { color: 0x00ff00, fog: true } ) );
+
+        healthBar.position.set( 0, 60, 0 );
+        healthBar.scale.set( 50, 2, 1 );
+
+        this.healthBar = {
+            bg:     bg,
+            health: healthBar
+        };
+
+        this.tank.object.add( this.healthBar.health );
+
+    }
+
+    this.healthBar.health.scale.x = 50 * this.health / 100;
+
+};
+
 Game.Player.prototype.update = function ( time, delta ) {
 
     this.updateMovementByPath( time, delta );
     this.updateDirectionMovement( time, delta );
-
-    //temp
     this.updateExplosion( delta );
 
-    for ( var bullet of this.tank.bullets ) {
+    for ( var bulletId in this.tank.bullets ) {
 
-        if  ( bullet.active === true ) {
+        var bullet = this.tank.bullets[ bulletId ];
+
+        if ( bullet.active === true ) {
 
             var angle = - this.tank.object.top.rotation.y - this.tank.object.rotation.y;
 
@@ -685,10 +706,10 @@ Game.Player.prototype.update = function ( time, delta ) {
                 bullet.active = false;
 
             }
+
         }
+
     }
-
-
 
 };
 
@@ -762,16 +783,18 @@ Game.Player.prototype.dispose = function () {
 
 Game.Player.prototype.bulletHit = function ( data ) {
 
-    if(this.id === Game.arena.playerManager.players[0].id)
+    if ( this.id === Game.arena.playerManager.players[0].id ) {
 
-    for ( tower of Game.arena.towerManager.towers ) {
+        for ( var towerId in Game.arena.towerManager.towers ) {
 
-        tower.hideBullet(data);
+            var tower = Game.arena.towerManager.towers[ towerId ];
+            tower.hideBullet( data );
+
+        }
 
     }
 
     this.showExplosion( data );
-    // 
     this.tank.hideBullet( data );
 
 };
@@ -814,7 +837,7 @@ Game.Player.prototype.updateExplosion = function ( delta ) {
 
         if ( this.explosion[ i ].material.time > 50 ) {
 
-            if ( this.explosion[ i ].material.map.offset.y > 0 ) {        
+            if ( this.explosion[ i ].material.map.offset.y > 0 ) {
 
                 this.explosion[ i ].material.map.offset.x += 0.25;
                 this.explosion[ i ].material.time = 0;
@@ -861,6 +884,16 @@ Game.Player.prototype.hideExplosion = function () {
 
 };
 
+Game.Player.prototype.sendChatMessage = function ( data ) {
+
+    var login = data.login;
+    var message = data.message;
+    var teamId = data.teamId;
+
+    chatManager.newMessage( login, message, teamId );
+
+};
+
 Game.Player.prototype.addEventListeners = function () {
 
     var scope = this;
@@ -891,5 +924,7 @@ Game.Player.prototype.addEventListeners = function () {
     });
 
     this.addEventListener( 'BulletHit', function ( event ) { scope.bulletHit( event.data ); });
+
+    this.addEventListener( 'SendChatMessage', function ( event ) { scope.sendChatMessage( event.data ) } )
 
 };

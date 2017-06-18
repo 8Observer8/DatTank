@@ -323,7 +323,7 @@ Game.Tank.prototype.updateExplosion = function ( delta ) {
 
         if ( this.effects.explosion[ i ].material.time > 50 ) {
 
-            if ( this.effects.explosion[0].material.map.offset.y > 0 ) {        
+            if ( this.effects.explosion[0].material.map.offset.y > 0 ) {
 
                 this.effects.explosion[ i ].material.map.offset.x += 0.2;
                 this.effects.explosion[ i ].material.time = 0;
@@ -525,7 +525,6 @@ Game.Tank.prototype.shootBullet = function ( shootId, data ) {
 
 };
 
-
 Game.Tank.prototype.hideBullet = function ( data ) {
 
     for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
@@ -541,7 +540,7 @@ Game.Tank.prototype.hideBullet = function ( data ) {
 
     }
 
-}
+};
 
 Game.Tank.prototype.updateBullets = function () {
 

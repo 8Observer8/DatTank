@@ -6,6 +6,8 @@
 var TextEncoder = require( './../utils/TextEncoder' );
 var WebSocketServer = require('ws').Server;
 
+//
+
 var NetworkManager = function () {
 
     this.io = false;
@@ -53,6 +55,11 @@ NetworkManager.prototype.init = function () {
 
     this.registerEvent( 'RemoveBox', 'out', 'json', 301 );
     this.registerEvent( 'PickedBox', 'out', 'json', 302 );
+
+    // register chat event
+
+    this.registerEvent( 'SendChatMessage', 'out', 'json', 501 );
+    this.registerEvent( 'SendChatMessage', 'in', 'json', 502 );
 
     // enable io
 

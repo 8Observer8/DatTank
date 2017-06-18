@@ -38,6 +38,7 @@ Game.Tank.UKBlackPrince.prototype.initModel = function () {
     var base = new THREE.Mesh( tankBaseModel.geometry, new THREE.MeshFaceMaterial( tankBaseModel.material ) );
     base.castShadow = true;
     base.rotation.y = 0;
+    base.position.y = 5;
     base.receiveShadow = true;
     base.scale.set( 20, 20, 20 );
     this.object.add( base );
@@ -63,7 +64,7 @@ Game.Tank.UKBlackPrince.prototype.initModel = function () {
     var top = new THREE.Mesh( tankTopModel.geometry, new THREE.MeshFaceMaterial( tankTopModel.material ) );
     top.castShadow = true;
     top.receiveShadow = true;
-    top.position.y = 15;
+    top.position.y = 20;
     top.position.x = 2;
     top.position.z = 2;
     top.scale.set( 20, 20, 20 );
@@ -192,7 +193,7 @@ Game.Tank.UKBlackPrince.prototype.showBlastSmoke = function () {
         sprite.material.opacity = 0.8 - 0.8 / 5 * ( 5 - i );
         scale = 1 + i / 5;
         sprite.scale.set( scale, scale, scale );
-        this.object.top.add( sprite );        
+        this.object.top.add( sprite );
         this.effects.blastSmoke.push( sprite );
 
     }

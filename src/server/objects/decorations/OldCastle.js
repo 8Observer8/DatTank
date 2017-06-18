@@ -5,6 +5,8 @@
 
 var OldCastle = function ( arena, params ) {
 
+    this.id = OldCastle.numIds ++;
+
     Game.Decoration.call( this, arena, params );
 
     this.size.set( 1, 1, 1 );
@@ -21,8 +23,10 @@ OldCastle.prototype.init = function () {
     var sizeX = this.size.x * this.scale.x;
     var sizeY = this.size.y * this.scale.y;
     var sizeZ = this.size.z * this.scale.z;
+    var id = this.id;
 
     this.arena.pathManager.placeObject( new Game.Vec3( position.x - sizeX / 2, 0, position.z - sizeZ / 2 ), new Game.Vec3( position.x + sizeX / 2, 0, position.z + sizeZ / 2 ) );
+    this.arena.collisionManager.addObject( position, sizeX, sizeY, sizeZ, id );
 
 };
 
