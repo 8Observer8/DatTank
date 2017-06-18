@@ -28,10 +28,9 @@ Game.ViewManager = function () {
 
     this.scene = false;
     this.camera = false;
-    
+
     this.skyboxScene = false;
     this.skyBoxCamera = false;
-
 
     this.renderer = false;
 
@@ -58,7 +57,7 @@ Game.ViewManager.prototype.setupScene = function () {
 
     this.scene = new THREE.Scene();
     this.scene.intersections = [];
-    this.camera = new THREE.PerspectiveCamera( 60, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 1, 1000 );
+    this.camera = new THREE.PerspectiveCamera( 60, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 1, 1300 );
 
     this.skyboxScene = new THREE.Scene();
     this.skyboxScene.intersections = [];
@@ -66,28 +65,19 @@ Game.ViewManager.prototype.setupScene = function () {
 
     this.skybox = Game.Skybox();
 
-    this.skyboxScene.add( this.skybox );
+    // this.skyboxScene.add( this.skybox );
 
     this.camera.position.set( 180, 400, 0 );
     this.camera.lookAt( new THREE.Vector3() );
 
-
-
-    this.skyBoxCamera.position.set( 180, 400, 0 );
-    this.skyBoxCamera.lookAt( new THREE.Vector3() );
-    this.skyboxScene.add( this.skyBoxCamera );
+    // this.skyBoxCamera.position.set( 180, 400, 0 );
+    // this.skyBoxCamera.lookAt( new THREE.Vector3() );
+    // this.skyboxScene.add( this.skyBoxCamera );
 
     this.scene.add( this.camera );
 
-    this.scene.fog = new THREE.Fog( 0xa9a6a6, 400, 700 );
-    this.skyboxScene.fog = new THREE.Fog( 0xa9a6a6, 700, 4000 );
-
-    // var axisHelper = new THREE.AxisHelper( 5000 );
-
-    // axisHelper.position.y += 10;
-
-    // this.skyboxScene.add( axisHelper );
-
+    this.scene.fog = new THREE.Fog( 0xa9a6a6, 100, 700 );
+    // this.skyboxScene.fog = new THREE.Fog( 0xa9a6a6, 700, 4000 );
 
     // setup sound listener
 
@@ -194,15 +184,17 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
         mesh.rotation.y = Math.random() * Math.PI;
 
         var scale = Math.random() * 10;
-        if ( decoration.type === 'tree' || decoration.type === 'tree1' || decoration.type === 'tree2' || decoration.type === 'tree3' );
-        // mesh.scale.set( 20 + scale, 10 + Math.random() * 20, 20 + scale );
-        // scale for old Castle
+        if ( decoration.type === 'tree' || decoration.type === 'tree1' || decoration.type === 'tree2' || decoration.type === 'tree3' ) {
+
+            mesh.scale.y /= 1.7;
+
+        }
+
         if ( decoration.type === 'oldCastle' ) {
 
             mesh.scale.set( 20, 20, 20 );
 
         }
-
 
         mesh.position.set( decoration.position.x, decoration.position.y, decoration.position.z );
         mesh.name = decoration.type;
@@ -264,7 +256,7 @@ Game.ViewManager.prototype.addMap = function () {
 
     // add grass
 
-    for ( var i = 0; i < 20; i ++ ) {
+    for ( var i = 0; i < 50; i ++ ) {
 
         this.addGrassZones();
 
@@ -443,7 +435,7 @@ Game.ViewManager.prototype.addGrassZones = function () {
     var grass = new THREE.Mesh( new THREE.PlaneBufferGeometry( 240, 240 ), new THREE.MeshBasicMaterial({ map: grassTexture, color: 0x779977, transparent: true, depthWrite: false }) );
     grass.rotation.x = - Math.PI / 2;
     grass.rotation.z = Math.random() * Math.PI;
-    var scale = Math.random() / 2 + 0.8;
+    var scale = Math.random() / 2 + 0.3;
     grass.scale.set( scale, scale, scale );
     grass.material.transparent = true;
     grass.position.set( ( Math.random() - 0.5 ) * size, 0.1 + Math.random() / 10, ( Math.random() - 0.5 ) * size );
@@ -522,7 +514,7 @@ Game.ViewManager.prototype.updateRenderer = function () {
 
     this.renderer = new THREE.WebGLRenderer({ canvas: Utils.ge('#renderport'), antialias: antialias });
     this.renderer.setSize( this.quality * this.SCREEN_WIDTH, this.quality * this.SCREEN_HEIGHT );
-    this.renderer.setClearColor( 0x000000 );
+    this.renderer.setClearColor( 0xa9a6a6 );
 
 };
 
@@ -590,7 +582,7 @@ Game.ViewManager.prototype.animate = function ( delta ) {
 
     // update camera position
 
-    // + shake camera 
+    // + shake camera
     this.camera.position.x = Game.arena.me.position.x - ( 170 * Math.sin( Game.arena.me.rotation ) );
     this.camera.position.z = Game.arena.me.position.z - ( 170 * Math.cos( Game.arena.me.rotation ) );
     this.camera.position.y = 120;
@@ -659,7 +651,7 @@ Game.ViewManager.prototype.changeGraficQuality = function () {
 
         this.renderer = new THREE.WebGLRenderer({ canvas: Utils.ge('#renderport'), antialias: antialias });
         this.renderer.setSize( quality * this.SCREEN_WIDTH, quality * this.SCREEN_HEIGHT );
-        this.renderer.setClearColor( 0x000000 );
+        this.renderer.setClearColor( 0xa9a6a6 );
 
         this.render();
 
@@ -708,9 +700,8 @@ Game.ViewManager.prototype.render = function () {
 
     this.animate( delta );
 
-
-    this.renderer.render( this.skyboxScene, this.skyBoxCamera );
-    this.renderer.autoClear = false;
+    // this.renderer.render( this.skyboxScene, this.skyBoxCamera );
+    // this.renderer.autoClear = false;
     this.renderer.render( this.scene, this.camera );
 
     //

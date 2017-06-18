@@ -186,7 +186,6 @@ Player.prototype.move = (function () {
         scope.moveDirection.x = directionX;
         scope.moveDirection.y = directionZ;
 
-
         bufferView[ 1 ] = this.id;
         bufferView[ 2 ] = directionX;
         bufferView[ 3 ] = directionZ;
@@ -503,8 +502,8 @@ Player.prototype.update = function ( delta, time ) {
             if ( bulletCollisionResult ) {
 
                 var bullet = player.bullets.splice( i , 1 )[ 0 ];
-                i--;
-                il--;
+                i --;
+                il --;
 
                 this.arena.announce('BulletHit', null, { player: { id: player.id }, bulletId: bullet.id, position: bullet.position } );
 
@@ -512,7 +511,7 @@ Player.prototype.update = function ( delta, time ) {
                 var target = this.arena.playerManager.getById( bulletCollisionResult.id ) || this.arena.towerManager.getById( bulletCollisionResult.id );
 
                 if ( target && target.hit ) {
-                
+
                     target.hit( killer );
 
                 }
@@ -531,24 +530,21 @@ Player.prototype.update = function ( delta, time ) {
 
     if ( player.moveDirection.x !== 0 || player.moveDirection.y !== 0 ) {
 
-        if ( !this.arena.collisionManager.moveTank( player.moveDirection, player, delta ) ) {
+        if ( ! this.arena.collisionManager.moveTank( player.moveDirection, player, delta ) ) {
 
-                    if (  player.moveDirection.x > 0 ) {
+            if (  player.moveDirection.x > 0 ) {
 
-                        player.position.x -= ( player.moveSpeed * Math.sin( player.rotation ) * delta);
-                        player.position.z -= ( player.moveSpeed * Math.cos( player.rotation ) * delta);
-                    
-                    } else if ( player.moveDirection.x < 0) {
-                                
-                        player.position.x += ( player.moveSpeed * Math.sin( player.rotation ) * delta);
-                        player.position.z += ( player.moveSpeed * Math.cos( player.rotation ) * delta);
+                player.position.x -= ( player.moveSpeed * Math.sin( player.rotation ) * delta );
+                player.position.z -= ( player.moveSpeed * Math.cos( player.rotation ) * delta );
 
-                    }
+            } else if ( player.moveDirection.x < 0 ) {
 
+                player.position.x += ( player.moveSpeed * Math.sin( player.rotation ) * delta );
+                player.position.z += ( player.moveSpeed * Math.cos( player.rotation ) * delta );
 
+            }
 
             this.move( 0, 0 );
-            //return;
 
         }
 
@@ -557,13 +553,13 @@ Player.prototype.update = function ( delta, time ) {
         // change 50 for correct delta
         if ( player.moveDirection.x > 0 ) {
 
-            player.position.x += ( player.moveSpeed * Math.sin( player.rotation ) * delta);
-            player.position.z += ( player.moveSpeed * Math.cos( player.rotation ) * delta);
+            player.position.x += ( player.moveSpeed * Math.sin( player.rotation ) * delta );
+            player.position.z += ( player.moveSpeed * Math.cos( player.rotation ) * delta );
 
-        } else if ( player.moveDirection.x < 0) {
+        } else if ( player.moveDirection.x < 0 ) {
 
-            player.position.x -= ( player.moveSpeed * Math.sin( player.rotation ) * delta);
-            player.position.z -= ( player.moveSpeed * Math.cos( player.rotation ) * delta);
+            player.position.x -= ( player.moveSpeed * Math.sin( player.rotation ) * delta );
+            player.position.z -= ( player.moveSpeed * Math.cos( player.rotation ) * delta );
 
         }
 
@@ -688,9 +684,9 @@ Player.prototype.sendChatMessage = function ( data ) {
 
     var login = data.login;
     var message = data.message;
-    var teamId = this.team.id; 
+    var teamId = this.team.id;
 
-    this.arena.announce('SendChatMessage', null, { login: login, message: message, teamId: teamId } );
+    this.arena.announce( 'SendChatMessage', null, { login: login, message: message, teamId: teamId } );
 
 };
 
@@ -704,7 +700,7 @@ Player.prototype.addEventListeners = function () {
     this.addEventListener( 'PlayerTankMoveByPath', function ( event ) { scope.moveToPoint({ x: event.data[0], z: event.data[1] }); });
     this.addEventListener( 'PlayerTankShoot', function ( event ) { scope.shoot(); });
 
-    this.addEventListener( 'SendChatMessage', function( event ) { scope.sendChatMessage( event.data ) });
+    this.addEventListener( 'SendChatMessage', function ( event ) { scope.sendChatMessage( event.data ) });
 
 };
 

@@ -229,7 +229,7 @@ Game.prototype.loop = function () {
 
 };
 
-Game.prototype.gaVk = function() {
+Game.prototype.gaVk = function () {
 
     ga('send', {
         hitType: 'event',
@@ -239,7 +239,7 @@ Game.prototype.gaVk = function() {
 
 };
 
-Game.prototype.gaFb = function() {
+Game.prototype.gaFb = function () {
 
     ga('send', {
         hitType: 'event',
@@ -249,7 +249,7 @@ Game.prototype.gaFb = function() {
 
 };
 
-Game.prototype.gaTw = function() {
+Game.prototype.gaTw = function () {
 
     ga('send', {
         hitType: 'event',

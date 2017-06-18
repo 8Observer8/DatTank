@@ -160,6 +160,6 @@ Game.Arena.prototype.addNetworkListeners = function () {
 
     // chatMessage
 
-    network.addMessageListener( 'SendChatMessage', this.proxyEventToPlayer.bind( this ) ); 
+    network.addMessageListener( 'SendChatMessage', this.proxyEventToPlayer.bind( this ) );
 
 };

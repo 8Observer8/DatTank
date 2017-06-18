@@ -52,15 +52,15 @@ Arena.prototype.init = function ( callback ) {
     this.updateInterval = setInterval( this.update.bind( this ), 20 );
 
     //
-    
-    callback( this ); // will be used in future
+
+    callback( this );
 
 };
 
 Arena.prototype.addPlayer = function ( params ) {
 
     var player = new Game.Player( this, { login: params.login, tank: params.tank, socket: params.socket });
-    
+
     this.playerManager.add( player );
     this.collisionManager.addPlayer( player );
 

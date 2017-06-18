@@ -6,6 +6,8 @@
 var TextEncoder = require( './../utils/TextEncoder' );
 var WebSocketServer = require('ws').Server;
 
+//
+
 var NetworkManager = function () {
 
     this.io = false;

@@ -246,8 +246,6 @@ Game.Tower.prototype.changeTeam = function ( team ) {
 
 Game.Tower.prototype.updateHealth = function ( health ) {
 
-    //( health  < 50 ) ? console.log( health ) : console.log('lol');
-
     this.health = health;
     this.updateHealthBar();
 
@@ -268,7 +266,7 @@ Game.Tower.prototype.hideBullet = function ( data ) {
 
     }
 
-}
+};
 
 Game.Tower.prototype.update = function ( delta ) {
 
@@ -299,10 +297,11 @@ Game.Tower.prototype.update = function ( delta ) {
 
     }
 
+    for ( var bulletId in this.bullets ) {
 
-    for ( var bullet of this.bullets ) {
+        var bullet = this.bullets[ bulletId ];
 
-        if  ( bullet.active === true ) {
+        if ( bullet.active === true ) {
 
             var angle = - this.object.top.rotation.y - this.object.rotation.y - 1.57;
 
@@ -315,10 +314,7 @@ Game.Tower.prototype.update = function ( delta ) {
                     var x = bullet.position.x + Math.cos( angle ) * delta;
                     var z = bullet.position.z + Math.sin( angle ) * delta;
 
-                    console.log();
-
                     bullet.position.set( x, bullet.position.y, z );
-
                     bullet.visible = true;
 
                 }
@@ -329,7 +325,9 @@ Game.Tower.prototype.update = function ( delta ) {
                 bullet.active = false;
 
             }
+
         }
+
     }
 
 };

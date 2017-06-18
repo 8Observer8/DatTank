@@ -193,7 +193,7 @@ Game.Tank.UKBlackPrince.prototype.showBlastSmoke = function () {
         sprite.material.opacity = 0.8 - 0.8 / 5 * ( 5 - i );
         scale = 1 + i / 5;
         sprite.scale.set( scale, scale, scale );
-        this.object.top.add( sprite );        
+        this.object.top.add( sprite );
         this.effects.blastSmoke.push( sprite );
 
     }

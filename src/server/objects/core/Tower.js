@@ -77,54 +77,52 @@ Tower.prototype.shoot = function ( target ) {
     var buffer = new ArrayBuffer( 6 );
     var bufferView = new Uint16Array( buffer );
 
-    // return function ( target ) {
+    var dx = target.position.x - this.position.x;
+    var dz = target.position.z - this.position.z;
+    var rotation, delta;
 
-        var dx = target.position.x - this.position.x;
-        var dz = target.position.z - this.position.z;
-        var rotation, delta;
+    if ( dz === 0 && dx !== 0 ) {
 
-        if ( dz === 0 && dx !== 0 ) {
+        rotation = ( dx > 0 ) ? - Math.PI : 0;
 
-            rotation = ( dx > 0 ) ? - Math.PI : 0;
+    } else {
 
-        } else {
+        rotation = - Math.PI / 2 - Math.atan2( dz, dx );
 
-            rotation = - Math.PI / 2 - Math.atan2( dz, dx );
+    }
 
-        }
+    delta = utils.formatAngle( rotation ) - utils.formatAngle( this.rotation );
 
-        delta = utils.formatAngle( rotation ) - utils.formatAngle( this.rotation );
+    if ( Math.abs( delta ) > 0.5 ) return;
 
-        if ( Math.abs( delta ) > 0.5 ) return;
+    //
 
-        //
+    if ( Date.now() - this.shootTime < this.cooldown ) {
 
-        if ( Date.now() - this.shootTime < this.cooldown ) {
+        return;
 
-            return;
+    }
 
-        }
+    this.shootTime = Date.now();
 
-        this.shootTime = Date.now();
+    this.rotation = this.rotation + 1.57;
 
-        this.rotation = this.rotation + 1.57;
+    // push tower bullet
+    this.bullets.push({
+        origPosition:   { x: this.position.x, y: 25, z: this.position.z },
+        position:       { x: this.position.x, y: 25, z: this.position.z },
+        angle:          this.rotation,
+        id:             Tower.numShootId,
+        ownerId:        this.id,
+        flytime:        5
+    });
 
-        // push tower bullet
-        this.bullets.push({
-            origPosition:   { x: this.position.x, y: 25, z: this.position.z },
-            position:       { x: this.position.x, y: 25, z: this.position.z },
-            angle:          this.rotation,
-            id:             Tower.numShootId,
-            ownerId:        this.id,
-            flytime:        5
-        });
+    bufferView[1] = this.id;
+    bufferView[2] = Tower.numShootId;
 
-        bufferView[1] = this.id;
-        bufferView[2] = Tower.numShootId;
+    Tower.numShootId = ( Tower.numShootId > 1000 ) ? 0 : Tower.numShootId + 1;
 
-        Tower.numShootId = ( Tower.numShootId > 1000 ) ? 0 : Tower.numShootId + 1;
-
-        this.arena.announce( 'TowerShoot', buffer, bufferView );
+    this.arena.announce( 'TowerShoot', buffer, bufferView );
 
 };
 
@@ -133,43 +131,40 @@ Tower.prototype.hit = function ( killer, shootId ) {
     var buffer = new ArrayBuffer( 6 );
     var bufferView = new Uint16Array( buffer );
 
-        var scope = this;
+    var scope = this;
 
-        if ( this.hits[ shootId ] ) return;
-        // this.hits[ shootId ] = 1;
-        setTimeout( function () {
+    if ( this.hits[ shootId ] ) return;
 
-            delete scope.hits[ shootId ];
+    setTimeout( function () {
 
-        }, 1000 );
+        delete scope.hits[ shootId ];
 
-        killer = this.arena.playerManager.getById( killer );
+    }, 1000 );
 
-        if ( ! killer ) return;
-        if ( killer.team.id === this.team.id ) return;
+    killer = this.arena.playerManager.getById( killer );
 
-        var amount = Math.floor( 57 * ( killer.tank.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ) );
+    if ( ! killer ) return;
+    if ( killer.team.id === this.team.id ) return;
 
-        if ( this.health - amount <= 0 ) {
+    var amount = Math.floor( 57 * ( killer.tank.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ) );
 
-            this.health = 0;
-            this.changeTeam( killer.team );
+    if ( this.health - amount <= 0 ) {
 
-            // killer.team.kills ++;
-            // killer.kills ++;
+        this.health = 0;
+        this.changeTeam( killer.team );
 
-            return;
+        return;
 
-        }
+    }
 
-        //
+    //
 
-        this.health -= amount;
+    this.health -= amount;
 
-        bufferView[ 1 ] = this.id;
-        bufferView[ 2 ] = this.health;
+    bufferView[ 1 ] = this.id;
+    bufferView[ 2 ] = this.health;
 
-        this.arena.announce( 'TowerHit', buffer, bufferView );
+    this.arena.announce( 'TowerHit', buffer, bufferView );
 
 };
 
@@ -320,7 +315,7 @@ Tower.prototype.update = function ( delta ) {
 
                 target = this.target;
 
-                for (var i = 0, il = tower.bullets.length; i < il; i++) {
+                for ( var i = 0, il = tower.bullets.length; i < il; i ++ ) {
 
                     tower.bullets[ i ].flytime --;
 
@@ -331,17 +326,16 @@ Tower.prototype.update = function ( delta ) {
                         if ( bulletCollisionResult ) {
 
                             var bullet = tower.bullets.splice( i , 1 )[ 0 ];
-                            i--;
-                            il--;
+                            i --;
+                            il --;
 
-                            this.arena.announce('BulletHit', null, { tower: { id: tower.id }, bulletId: bullet.id, position: bullet.position } );
-
+                            this.arena.announce( 'BulletHit', null, { tower: { id: tower.id }, bulletId: bullet.id, position: bullet.position } );
 
                             var killer = tower.id;
                             var target = this.arena.playerManager.getById( bulletCollisionResult.id );
 
                             if ( target && target.hit ) {
-                            
+
                                 target.hit( killer );
 
                             }
