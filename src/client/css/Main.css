@@ -1,4 +1,5 @@
 /* global */
+
 @import url(ChatSys.css);
 
 body {
@@ -41,7 +42,7 @@ object {
     display: block;
 }
 
-/**/ 
+/**/
 
 #graphics-quality {
     position: absolute;
@@ -69,8 +70,7 @@ object {
     background-position: 0% 100%;
 }
 
-/**/ 
-/*sound-on-off*/
+/* sound-on-off */
 
 #sound-on-off {
     position: absolute;
@@ -98,8 +98,7 @@ object {
     background-position: 0% 100%;
 }
 
-/**/
-/*GEAR BTN*/
+/* GEAR BTN */
 #gear_btn {
     position: absolute;
     display: none;
@@ -148,7 +147,7 @@ object {
 }
 
 #settings-wrapper #settings-nickname {
-    position:relative;
+    position: relative;
     color: black;
     margin-left: 5px;
     font: normal 17px 'Roboto';
@@ -376,10 +375,7 @@ object {
 
 #signin-box-wrapper #signin-box #play-btn {
     float: left;
-    /* display: table; */
     background-color: #00b6ff;
-    /* padding: 10px 16px; */
-    /* margin-top: 10px; */
     height: 41px;
     margin-left: 16px;
     margin-right: auto;
@@ -522,10 +518,7 @@ object {
 
 #continue-box-wrapper #continue-box #continue-btn {
     float: left;
-    /* display: table; */
     background-color: #00b6ff;
-    /* padding: 10px 16px; */
-    /* margin-top: 10px; */
     height: 41px;
     margin-left: 10px;
     margin-right: auto;
@@ -670,7 +663,7 @@ object {
 .ammo-animation {
     animation-name: reload;
     animation-duration: 1s;
-    animation-fill-mode: forwards;   
+    animation-fill-mode: forwards;
 }
 
 #ammo-number {
@@ -939,10 +932,6 @@ object {
     float: left;
 }
 
-/*#team-color-killed {
-    
-}*/
-
 #winner-label {
     display: inline-block;
     height: 70px;
@@ -1017,9 +1006,9 @@ object {
 }
 
 #tw-btn {
-    position: fixed; 
-    bottom: 37px; 
-    z-index: 20; 
+    position: fixed;
+    bottom: 37px;
+    z-index: 20;
     right: 104px;
 }
 
@@ -1218,13 +1207,11 @@ object {
 .share-label .tw-picture-share {
     border: 0px;
     position: relative;
-    /*top: 60px;*/
     right: 39px;
 }
 .share-label .fb-picture-share {
     border: 0px;
     position: relative;
-    /*top: 60px;*/
     right: 20px;
 }
 
@@ -1236,32 +1223,6 @@ object {
     margin-right: 200px;
     margin-top: 26px;
 }
-
-
-/*.name-specifications {
-    position: absolute;
-    right: 7%;
-    top: 13%;
-    color: #fff;
-    font-size: 30px;
-    width: 212px;
-    height: 30px;
-}*/
-
-/*.specifications {
-    position: absolute;
-    height: auto;
-    width: 170px;
-    top: 22%;
-    right: 10%;
-}
-
-.specification-text {
-    position: initial;
-    margin: 10px;
-    font-size: 90%;
-    color: #fff;
-}*/
 
 .container-specification  {
     position: relative;
@@ -1309,7 +1270,6 @@ object {
 
 .counter-characteristicks .color {
     background-color: #34b83c;
-    /*width: 90%;*/
     height: 100%;
     border-radius: inherit;
 }
@@ -1332,12 +1292,12 @@ object {
     padding: 8px;
     min-width: 64px;
     min-height: 18px;
-} 
+}
 
 .tw-picture-share {
-    border:0px; 
-    width:80px; 
-    height:74px;
+    border: 0px;
+    width: 80px;
+    height: 74px;
 }
 
 .top-left-like-btns {

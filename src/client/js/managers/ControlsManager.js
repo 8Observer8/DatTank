@@ -51,7 +51,7 @@ Game.ControlsManager.prototype.mouseInit = function () {
             case 1:
 
                 clearInterval( scope.fireTime );
-                scope.fireTime = setInterval( function() {
+                scope.fireTime = setInterval( function () {
 
                     scope.shoot();
 

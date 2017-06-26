@@ -52,6 +52,7 @@ Game.prototype.init = function () {
         }
 
     });
+
     $('#play-btn').click( this.play.bind( this ) );
     $('.change-skin-btn').click( ui.showChoiceWindow.bind( ui ) );
     $('.btn-pick').click( ui.selectTankAndcloseChoiceWindow.bind( ui ) );
@@ -66,14 +67,6 @@ Game.prototype.init = function () {
     $('.share-vk').click( this.gaVk.bind( this ) );
     $('.share-fb').click( this.gaFb.bind( this ) );
     $('.share-tw').click( this.gaTw.bind( this ) );
-
-    //  reload or leave page
-    window.onbeforeunload = function () {
-        var buffer = new ArrayBuffer( 2 );
-        var bufferView = new Int16Array( buffer );
-
-        network.send( 'PlayerTankShoot', buffer, bufferView );
-    };
 
 };
 

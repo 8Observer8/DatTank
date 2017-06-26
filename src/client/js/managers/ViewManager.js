@@ -532,7 +532,7 @@ Game.ViewManager.prototype.resize = function () {
 
 };
 
-Game.ViewManager.prototype.showDestinationPoint = (function() {
+Game.ViewManager.prototype.showDestinationPoint = ( function () {
 
     var interval;
 
