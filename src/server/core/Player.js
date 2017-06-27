@@ -42,8 +42,11 @@ var Player = function ( arena, params ) {
     this.kills = 0;
     this.death = 0;
 
+    this.afkTimeout = false;
+    this.moveDelay = false;
     this.shootTimeout = false;
 
+    this.pathFindIter = 0;
     this.movePath = false;
     this.movementDurationMap = false;
     this.movementDuration = 0;
@@ -53,13 +56,11 @@ var Player = function ( arena, params ) {
     this.rotationTop = - Math.PI / 2;
     this.lastUpdatedTopRotation = - Math.PI / 2;
 
-    this.afkTimeout = false;
-
-    this.moveDelay = false;
-
-    this.pathFindIter = 0;
-
     this.selectTank( params.tank );
+
+    this.networkBuffers = {};
+    this.inRangeOf = {};
+    this.viewRange = 700;
 
     //
 
@@ -96,10 +97,6 @@ Player.prototype.respawn = function ( tankName ) {
 
     this.selectTank( tankName );
 
-    //
-
-    this.arena.announce( 'ArenaPlayerRespawn', null, { player: this.toPrivateJSON() } );
-
 };
 
 Player.prototype.selectTank = function ( tankName ) {
@@ -133,30 +130,33 @@ Player.prototype.selectTank = function ( tankName ) {
 
 };
 
-Player.prototype.rotateTop = (function () {
+Player.prototype.rotateTop = function ( angle ) {
 
-    var buffer = new ArrayBuffer( 6 );
-    var bufferView = new Int16Array( buffer );
+    var scope = this;
 
-    return function ( angle ) {
+    scope.networkBuffers['rotateTop'] = scope.networkBuffers['rotateTop'] || {};
+    var buffer = scope.networkBuffers['rotateTop'].buffer || new ArrayBuffer( 6 );
+    var bufferView = scope.networkBuffers['rotateTop'].bufferView || new Uint16Array( buffer );
+    scope.networkBuffers['rotateTop'].buffer = buffer;
+    scope.networkBuffers['rotateTop'].bufferView = bufferView;
 
-        if ( this.status !== Player.Alive ) {
+    //
 
-            return;
+    if ( scope.status !== Player.Alive ) {
 
-        }
+        return;
 
-        this.rotationTop = angle;
+    }
 
-        bufferView[1] = this.id;
-        bufferView[2] = Math.floor( 1000 * angle );
+    scope.rotationTop = angle;
 
-        this.arena.announce( 'PlayerTankRotateTop', buffer, bufferView );
-        this.lastUpdatedTopRotation = angle;
+    bufferView[1] = scope.id;
+    bufferView[2] = Math.floor( 1000 * angle );
 
-    };
+    scope.sendEventToPlayersInRange( 'PlayerTankRotateTop', buffer, bufferView );
+    scope.lastUpdatedTopRotation = angle;
 
-}) ();
+};
 
 Player.prototype.rotateBase = function ( direction ) {
 
@@ -164,40 +164,39 @@ Player.prototype.rotateBase = function ( direction ) {
 
 };
 
-Player.prototype.move = (function () {
+Player.prototype.move = function ( directionX, directionZ ) {
 
-    var buffer = new ArrayBuffer( 14 );
-    var bufferView = new Uint16Array( buffer );
+    var scope = this;
 
-    return function ( directionX, directionZ ) {
+    scope.networkBuffers['move'] = scope.networkBuffers['move'] || {};
+    var buffer = scope.networkBuffers['move'].buffer || new ArrayBuffer( 14 );
+    var bufferView = scope.networkBuffers['move'].bufferView || new Uint16Array( buffer );
+    scope.networkBuffers['move'].buffer = buffer;
+    scope.networkBuffers['move'].bufferView = bufferView;
 
-        var scope = this;
+    if ( scope.status !== Player.Alive ) {
 
-        if ( scope.status !== Player.Alive ) {
+        return;
 
-            return;
+    }
 
-        }
+    scope.movePath = false;
+    scope.movementDurationMap = false;
+    scope.movementDuration = 0;
 
-        scope.movePath = false;
-        scope.movementDurationMap = false;
-        scope.movementDuration = 0;
+    scope.moveDirection.x = directionX;
+    scope.moveDirection.y = directionZ;
 
-        scope.moveDirection.x = directionX;
-        scope.moveDirection.y = directionZ;
+    bufferView[ 1 ] = scope.id;
+    bufferView[ 2 ] = directionX;
+    bufferView[ 3 ] = directionZ;
+    bufferView[ 4 ] = scope.position.x;
+    bufferView[ 5 ] = scope.position.z;
+    bufferView[ 6 ] = scope.rotation * 1000;
 
-        bufferView[ 1 ] = this.id;
-        bufferView[ 2 ] = directionX;
-        bufferView[ 3 ] = directionZ;
-        bufferView[ 4 ] = this.position.x;
-        bufferView[ 5 ] = this.position.z;
-        bufferView[ 6 ] = this.rotation * 1000;
+    scope.sendEventToPlayersInRange( 'PlayerTankMove', buffer, bufferView );
 
-        this.arena.announce( 'PlayerTankMove', buffer, bufferView );
-
-    };
-
-}) ();
+};
 
 Player.prototype.moveToPoint = function ( destination, retry ) {
 
@@ -244,7 +243,7 @@ Player.prototype.moveToPoint = function ( destination, retry ) {
         bufferView[ bufferView.length - 2 ] = destination.x;
         bufferView[ bufferView.length - 1 ] = destination.z;
 
-        scope.arena.announce( 'PlayerTankMoveByPath', buffer, bufferView );
+        scope.sendEventToPlayersInRange( 'PlayerTankMoveByPath', buffer, bufferView );
 
         //
 
@@ -313,212 +312,267 @@ Player.prototype.processPath = function ( path ) {
 
 };
 
-Player.prototype.shoot = (function () {
+Player.prototype.shoot = function () {
 
-    var buffer = new ArrayBuffer( 8 );
-    var bufferView = new Uint16Array( buffer );
+    var scope = this;
 
-    return function () {
+    scope.networkBuffers['shoot'] = scope.networkBuffers['shoot'] || {};
+    var buffer = scope.networkBuffers['shoot'].buffer || new ArrayBuffer( 14 );
+    var bufferView = scope.networkBuffers['shoot'].bufferView || new Uint16Array( buffer );
+    scope.networkBuffers['shoot'].buffer = buffer;
+    scope.networkBuffers['shoot'].bufferView = bufferView;
 
-        var scope = this;
+    if ( scope.status !== Player.Alive ) {
 
-        if ( this.status !== Player.Alive ) {
+        return;
 
-            return;
+    }
 
-        }
+    if ( scope.shootTimeout ) return;
 
-        if ( this.shootTimeout ) return;
+    scope.shootTimeout = setTimeout( function () {
 
-        this.shootTimeout = setTimeout( function () {
+        scope.shootTimeout = false;
 
-            scope.shootTimeout = false;
+    }, scope.tank.reloadTime );
 
-        }, this.tank.reloadTime );
+    if ( scope.ammo <= 0 ) {
 
-        if ( this.ammo <= 0 ) {
+        return;
 
-            return;
+    }
 
-        }
+    scope.bullets.push({
+        origPosition:   { x: scope.position.x, y: 25, z: scope.position.z },
+        position:       { x: scope.position.x, y: 25, z: scope.position.z },
+        angle:          scope.rotationTop,
+        id:             Player.numShootId,
+        ownerId:        scope.id,
+        flytime:        5
+    });
 
-        this.bullets.push({
-            origPosition:   { x: this.position.x, y: 25, z: this.position.z },
-            position:       { x: this.position.x, y: 25, z: this.position.z },
-            angle:          this.rotationTop,
-            id:             Player.numShootId,
-            ownerId:        this.id,
-            flytime:        5
-        });
+    scope.ammo --;
 
-        this.ammo --;
+    //
 
-        //
+    bufferView[ 1 ] = scope.id;
+    bufferView[ 2 ] = Player.numShootId;
+    bufferView[ 3 ] = scope.ammo;
 
-        bufferView[ 1 ] = this.id;
-        bufferView[ 2 ] = Player.numShootId;
-        bufferView[ 3 ] = this.ammo;
+    Player.numShootId = ( Player.numShootId > 1000 ) ? 0 : Player.numShootId + 1;
 
-        Player.numShootId = ( Player.numShootId > 1000 ) ? 0 : Player.numShootId + 1;
-
-        this.arena.announce( 'PlayerTankShoot', buffer, bufferView );
-
-    };
-
-}) ();
-
-Player.prototype.hit = function ( killer ) {
-
-    var buffer = new ArrayBuffer( 6 );
-    var bufferView = new Uint16Array( buffer );
-
-    // return function ( killer ) {
-
-        var scope = this;
-
-        if ( this.status !== Player.Alive ) {
-
-            return;
-
-        }
-
-        killer = this.arena.playerManager.getById( killer ) || this.arena.towerManager.getById( killer );
-
-        if ( ! killer ) return;
-        if ( killer.team.id === this.team.id ) return;
-
-        if ( killer ) {
-
-            if ( killer instanceof Game.Player ) {
-
-                this.health -= 40 * ( killer.tank.bullet / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
-                this.health = Math.max( Math.round( this.health ), 0 );
-
-            } else if ( killer instanceof Game.Tower ) {
-
-                this.health -= 40 * ( 50 / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
-                this.health = Math.max( Math.round( this.health ), 0 );
-
-            }
-
-        }
-
-        bufferView[ 1 ] = this.id;
-        bufferView[ 2 ] = this.health;
-
-        this.arena.announce( 'PlayerTankHit', buffer, bufferView );
-
-        if ( this.health <= 0 ) {
-
-            this.die( killer );
-
-        }
-
-    // };
+    scope.sendEventToPlayersInRange( 'PlayerTankShoot', buffer, bufferView );
 
 };
 
-Player.prototype.die = (function () {
+Player.prototype.hit = function ( killer ) {
 
-    var buffer = new ArrayBuffer( 8 );
-    var bufferView = new Uint16Array( buffer );
+    var scope = this;
 
-    return function ( killer ) {
+    scope.networkBuffers['hit'] = scope.networkBuffers['hit'] || {};
+    var buffer = scope.networkBuffers['hit'].buffer || new ArrayBuffer( 6 );
+    var bufferView = scope.networkBuffers['hit'].bufferView || new Uint16Array( buffer );
+    scope.networkBuffers['hit'].buffer = buffer;
+    scope.networkBuffers['hit'].bufferView = bufferView;
 
-        if ( this.status === Player.Dead ) return;
+    //
 
-        this.status = Player.Dead;
+    if ( scope.status !== Player.Alive ) {
 
-        killer.kills ++;
-        this.death ++;
+        return;
 
-        killer.team.kills ++;
-        this.team.death ++;
+    }
 
-        this.movePath = false;
-        this.moveProgress = false;
-        this.movementDurationMap = false;
+    killer = scope.arena.playerManager.getById( killer ) || scope.arena.towerManager.getById( killer );
 
-        this.moveDirection.x = 0;
-        this.moveDirection.y = 0;
+    if ( ! killer ) return;
+    if ( killer.team.id === scope.team.id ) return;
 
-        bufferView[ 1 ] = this.id;
-        bufferView[ 2 ] = killer.id;
-        bufferView[ 3 ] = killer.kills;
+    if ( killer ) {
 
-        this.arena.announce( 'PlayerTankDied', buffer, bufferView );
+        if ( killer instanceof Game.Player ) {
 
-        //
+            scope.health -= 40 * ( killer.tank.bullet / scope.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
+            scope.health = Math.max( Math.round( scope.health ), 0 );
 
-        if ( this.bot ) { // tmp hack for bot respown
+        } else if ( killer instanceof Game.Tower ) {
 
-            var scope = this;
-            var maxKills = Math.floor( Math.random() * ( 200 - 100 ) ) + 100;
-
-            if ( this.arena.playerManager.players.length - this.arena.botManager.bots.length < 5 && scope.kills < maxKills ) {
-
-                setTimeout( this.respawn.bind( this ), 3000 );
-
-            } else {
-
-                setTimeout( function () {
-
-                    scope.arena.botManager.remove( scope );
-                    scope.arena.removePlayer( scope );
-
-                }, 2000 );
-
-            }
-
-        } else if ( ! this.socket ) {
-
-            this.arena.removePlayer( this );
+            scope.health -= 40 * ( 50 / scope.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
+            scope.health = Math.max( Math.round( scope.health ), 0 );
 
         }
 
-    };
+    }
 
-}) ();
+    bufferView[ 1 ] = scope.id;
+    bufferView[ 2 ] = scope.health;
 
-Player.prototype.bulletHit = function ( player, bullet ) {
+    scope.sendEventToPlayersInRange( 'PlayerTankHit', buffer, bufferView );
 
-    // todo
+    if ( scope.health <= 0 ) {
+
+        scope.die( killer );
+
+    }
+
+};
+
+Player.prototype.die = function ( killer ) {
+
+    var scope = this;
+
+    scope.networkBuffers['die'] = scope.networkBuffers['die'] || {};
+    var buffer = scope.networkBuffers['die'].buffer || new ArrayBuffer( 8 );
+    var bufferView = scope.networkBuffers['die'].bufferView || new Uint16Array( buffer );
+    scope.networkBuffers['die'].buffer = buffer;
+    scope.networkBuffers['die'].bufferView = bufferView;
+
+    //
+
+    if ( scope.status === Player.Dead ) return;
+
+    scope.status = Player.Dead;
+
+    killer.kills ++;
+    scope.death ++;
+
+    killer.team.kills ++;
+    scope.team.death ++;
+
+    scope.movePath = false;
+    scope.moveProgress = false;
+    scope.movementDurationMap = false;
+
+    scope.moveDirection.x = 0;
+    scope.moveDirection.y = 0;
+
+    bufferView[ 1 ] = scope.id;
+    bufferView[ 2 ] = killer.id;
+    bufferView[ 3 ] = killer.kills;
+
+    scope.sendEventToPlayersInRange( 'PlayerTankDied', buffer, bufferView );
+
+    //
+
+    if ( scope.bot ) { // tmp hack for bot respown
+
+        var maxKills = Math.floor( Math.random() * ( 200 - 100 ) ) + 100;
+
+        if ( scope.arena.playerManager.players.length - scope.arena.botManager.bots.length < 5 && scope.kills < maxKills ) {
+
+            setTimeout( scope.respawn.bind( scope ), 3000 );
+
+        } else {
+
+            setTimeout( function () {
+
+                scope.arena.botManager.remove( scope );
+                scope.arena.removePlayer( scope );
+
+            }, 2000 );
+
+        }
+
+    } else if ( ! scope.socket ) {
+
+        scope.arena.removePlayer( scope );
+
+    }
 
 };
 
 Player.prototype.update = function ( delta, time ) {
 
-    var player = this;
-    // update player shooted bullets
+    var scope = this;
 
-    for ( var i = 0, il = player.bullets.length; i < il; i ++ ) {
+    // check new towers in range
 
-        player.bullets[ i ].flytime --;
+    var newTowersInRange = [];
 
-        if ( player.bullets[ i ].flytime > 0 ) {
+    for ( var i = 0, il = scope.arena.towerManager.towers.length; i < il; i ++ ) {
 
-            var bulletCollisionResult = player.arena.collisionManager.moveBullet( player.bullets[ i ], delta );
+        var tower = scope.arena.towerManager.towers[ i ];
+
+        if ( scope.isObjectInRange( tower ) ) {
+
+            if ( scope.inRangeOf[ 't-' + tower.id ] ) continue;
+
+            scope.inRangeOf[ 't-' + tower.id ] = tower;
+            tower.inRangeOf[ 'p-' + scope.id ] = scope;
+            newTowersInRange.push( tower.toJSON() );
+
+        } else {
+
+            scope.inRangeOf[ 't-' + tower.id ] = false;
+            tower.inRangeOf[ 'p-' + scope.id ] = false;
+
+        }
+
+    }
+
+    if ( newTowersInRange.length ) {
+
+        networkManager.send( 'TowersInRange', scope.socket, false, newTowersInRange );
+
+    }
+
+    // check new players in range
+
+    var newPlayersInRange = [];
+
+    for ( var i = 0, il = scope.arena.playerManager.players.length; i < il; i ++ ) {
+
+        var player = scope.arena.playerManager.players[ i ];
+
+        if ( scope.id === player.id ) continue;
+
+        if ( scope.isObjectInRange( player ) ) {
+
+            if ( scope.inRangeOf[ 'p-' + player.id ] ) continue;
+
+            scope.inRangeOf[ 'p-' + player.id ] = player;
+            newPlayersInRange.push( player.toPublicJSON() );
+
+        } else {
+
+            scope.inRangeOf[ 'p-' + player.id ] = false;
+
+        }
+
+    }
+
+    if ( newPlayersInRange.length ) {
+
+        networkManager.send( 'PlayersInRange', scope.socket, false, newPlayersInRange );
+
+    }
+
+    // compute bullet positions & collisions
+
+    for ( var i = 0, il = scope.bullets.length; i < il; i ++ ) {
+
+        scope.bullets[ i ].flytime --;
+
+        if ( scope.bullets[ i ].flytime > 0 ) {
+
+            var bulletCollisionResult = scope.arena.collisionManager.moveBullet( scope.bullets[ i ], delta );
 
             if ( bulletCollisionResult ) {
 
-                var bullet = player.bullets.splice( i , 1 )[ 0 ];
+                var bullet = scope.bullets.splice( i, 1 )[ 0 ];
                 i --;
                 il --;
 
-                this.arena.announce('BulletHit', null, { player: { id: player.id }, bulletId: bullet.id, position: bullet.position } );
+                scope.sendEventToPlayersInRange('BulletHit', null, { scope: { id: scope.id }, bulletId: bullet.id, position: bullet.position } );
 
-                var killer = player.id;
-                var target = this.arena.playerManager.getById( bulletCollisionResult.id ) || this.arena.towerManager.getById( bulletCollisionResult.id );
+                var killer = scope.id;
+                var target = scope.arena.playerManager.getById( bulletCollisionResult.id ) || scope.arena.towerManager.getById( bulletCollisionResult.id );
 
                 if ( target && target.hit ) {
 
                     target.hit( killer );
 
                 }
-
-            } else {
-
-                //
 
             }
 
@@ -528,19 +582,19 @@ Player.prototype.update = function ( delta, time ) {
 
     // update player AWSD movement
 
-    if ( player.moveDirection.x !== 0 || player.moveDirection.y !== 0 ) {
+    if ( scope.moveDirection.x !== 0 || scope.moveDirection.y !== 0 ) {
 
-        if ( ! this.arena.collisionManager.moveTank( player.moveDirection, player, delta ) ) {
+        if ( ! this.arena.collisionManager.moveTank( scope.moveDirection, scope, delta ) ) {
 
-            if (  player.moveDirection.x > 0 ) {
+            if ( scope.moveDirection.x > 0 ) {
 
-                player.position.x -= ( player.moveSpeed * Math.sin( player.rotation ) * delta );
-                player.position.z -= ( player.moveSpeed * Math.cos( player.rotation ) * delta );
+                scope.position.x -= ( scope.moveSpeed * Math.sin( scope.rotation ) * delta );
+                scope.position.z -= ( scope.moveSpeed * Math.cos( scope.rotation ) * delta );
 
-            } else if ( player.moveDirection.x < 0 ) {
+            } else if ( scope.moveDirection.x < 0 ) {
 
-                player.position.x += ( player.moveSpeed * Math.sin( player.rotation ) * delta );
-                player.position.z += ( player.moveSpeed * Math.cos( player.rotation ) * delta );
+                scope.position.x += ( scope.moveSpeed * Math.sin( scope.rotation ) * delta );
+                scope.position.z += ( scope.moveSpeed * Math.cos( scope.rotation ) * delta );
 
             }
 
@@ -548,28 +602,29 @@ Player.prototype.update = function ( delta, time ) {
 
         }
 
-        var moveDelta = Math.sqrt( Math.pow( player.moveDirection.x, 2 ) + Math.pow( player.moveDirection.y, 2 ) );
+        var moveDelta = Math.sqrt( Math.pow( scope.moveDirection.x, 2 ) + Math.pow( scope.moveDirection.y, 2 ) );
 
         // change 50 for correct delta
-        if ( player.moveDirection.x > 0 ) {
 
-            player.position.x += ( player.moveSpeed * Math.sin( player.rotation ) * delta );
-            player.position.z += ( player.moveSpeed * Math.cos( player.rotation ) * delta );
+        if ( scope.moveDirection.x > 0 ) {
+
+            scope.position.x += ( scope.moveSpeed * Math.sin( scope.rotation ) * delta );
+            scope.position.z += ( scope.moveSpeed * Math.cos( scope.rotation ) * delta );
 
         } else if ( player.moveDirection.x < 0 ) {
 
-            player.position.x -= ( player.moveSpeed * Math.sin( player.rotation ) * delta );
-            player.position.z -= ( player.moveSpeed * Math.cos( player.rotation ) * delta );
+            scope.position.x -= ( scope.moveSpeed * Math.sin( scope.rotation ) * delta );
+            scope.position.z -= ( scope.moveSpeed * Math.cos( scope.rotation ) * delta );
 
         }
 
-        if ( this.moveDirection.y > 0 ) {
+        if ( scope.moveDirection.y > 0 ) {
 
-            this.rotation += 0.001 * delta;
+            scope.rotation += 0.001 * delta;
 
-        } else if ( this.moveDirection.y < 0 ) {
+        } else if ( scope.moveDirection.y < 0 ) {
 
-            this.rotation -= 0.001 * delta;
+            scope.rotation -= 0.001 * delta;
 
         }
 
@@ -577,13 +632,13 @@ Player.prototype.update = function ( delta, time ) {
 
     // update player PATH movement
 
-    if ( ! player.movePath.length ) return;
+    if ( ! scope.movePath.length ) return;
 
-    var progress = player.movementDurationMap.length - 1;
+    var progress = scope.movementDurationMap.length - 1;
 
-    for ( var j = 0, jl = player.movementDurationMap.length; j < jl; j ++ ) {
+    for ( var j = 0, jl = scope.movementDurationMap.length; j < jl; j ++ ) {
 
-        if ( time - player.movementStart > player.movementDurationMap[ j ] ) {
+        if ( time - scope.movementStart > scope.movementDurationMap[ j ] ) {
 
             progress --;
 
@@ -597,82 +652,82 @@ Player.prototype.update = function ( delta, time ) {
 
     if ( progress < 0 ) {
 
-        player.position.x = player.movePath[0];
-        player.position.z = player.movePath[1];
-        player.movePath = false;
-        player.movementDurationMap = false;
+        scope.position.x = scope.movePath[0];
+        scope.position.z = scope.movePath[1];
+        scope.movePath = false;
+        scope.movementDurationMap = false;
         return;
 
     } else {
 
-        if ( progress !== player.moveProgress ) {
+        if ( progress !== scope.moveProgress ) {
 
             var dx, dz;
             var dxr, dzr;
 
-            if ( player.movePath[ 2 * ( progress - 30 ) ] ) {
+            if ( scope.movePath[ 2 * ( progress - 30 ) ] ) {
 
-                dxr = ( player.movePath[ 2 * ( progress - 30 ) + 0 ] + player.movePath[ 2 * ( progress - 29 ) + 0 ] + player.movePath[ 2 * ( progress - 28 ) + 0 ] ) / 3 - player.position.x;
-                dzr = ( player.movePath[ 2 * ( progress - 30 ) + 1 ] + player.movePath[ 2 * ( progress - 29 ) + 1 ] + player.movePath[ 2 * ( progress - 28 ) + 1 ] ) / 3 - player.position.z;
+                dxr = ( scope.movePath[ 2 * ( progress - 30 ) + 0 ] + scope.movePath[ 2 * ( progress - 29 ) + 0 ] + scope.movePath[ 2 * ( progress - 28 ) + 0 ] ) / 3 - scope.position.x;
+                dzr = ( scope.movePath[ 2 * ( progress - 30 ) + 1 ] + scope.movePath[ 2 * ( progress - 29 ) + 1 ] + scope.movePath[ 2 * ( progress - 28 ) + 1 ] ) / 3 - scope.position.z;
 
             } else {
 
-                dxr = player.movePath[ 2 * progress + 0 ] - player.position.x;
-                dzr = player.movePath[ 2 * progress + 1 ] - player.position.z;
+                dxr = scope.movePath[ 2 * progress + 0 ] - scope.position.x;
+                dzr = scope.movePath[ 2 * progress + 1 ] - scope.position.z;
 
             }
 
-            dx = player.stepDx = player.movePath[ 2 * progress + 0 ] - player.position.x;
-            dz = player.stepDz = player.movePath[ 2 * progress + 1 ] - player.position.z;
+            dx = scope.stepDx = scope.movePath[ 2 * progress + 0 ] - scope.position.x;
+            dz = scope.stepDz = scope.movePath[ 2 * progress + 1 ] - scope.position.z;
 
-            player.moveDt = Math.sqrt( Math.pow( dx, 2 ) + Math.pow( dz, 2 ) ) / player.moveSpeed;
+            scope.moveDt = Math.sqrt( Math.pow( dx, 2 ) + Math.pow( dz, 2 ) ) / scope.moveSpeed;
 
             // count new player angle when moving
 
-            player.newRotation = ( dzr === 0 && dxr !== 0 ) ? ( Math.PI / 2 ) * Math.abs( dxr ) / dxr : Math.atan2( dxr, dzr );
-            player.newRotation = utils.formatAngle( player.newRotation );
-            player.dRotation = ( player.newRotation - player.rotation );
+            scope.newRotation = ( dzr === 0 && dxr !== 0 ) ? ( Math.PI / 2 ) * Math.abs( dxr ) / dxr : Math.atan2( dxr, dzr );
+            scope.newRotation = utils.formatAngle( scope.newRotation );
+            scope.dRotation = ( scope.newRotation - scope.rotation );
 
-            if ( isNaN( player.dRotation ) ) player.dRotation = 0;
+            if ( isNaN( scope.dRotation ) ) scope.dRotation = 0;
 
-            if ( player.dRotation > Math.PI ) {
+            if ( scope.dRotation > Math.PI ) {
 
-                player.dRotation -= 2 * Math.PI;
-
-            }
-
-            if ( player.dRotation < - Math.PI ) {
-
-                player.dRotation += 2 * Math.PI;
+                scope.dRotation -= 2 * Math.PI;
 
             }
 
-            player.dRotation /= 20;
-            player.dRotCount = 20;
+            if ( scope.dRotation < - Math.PI ) {
+
+                scope.dRotation += 2 * Math.PI;
+
+            }
+
+            scope.dRotation /= 20;
+            scope.dRotCount = 20;
 
             //
 
-            player.moveProgress = progress;
+            scope.moveProgress = progress;
 
         }
 
-        if ( player.dRotCount > 0 ) {
+        if ( scope.dRotCount > 0 ) {
 
-            player.rotation = utils.addAngle( player.rotation, player.dRotation );
-            player.dRotCount --;
+            scope.rotation = utils.addAngle( scope.rotation, scope.dRotation );
+            scope.dRotCount --;
 
         }
 
         // making transition movement between path points
 
-        var dx = delta * player.stepDx / player.moveDt;
-        var dz = delta * player.stepDz / player.moveDt;
+        var dx = delta * scope.stepDx / scope.moveDt;
+        var dz = delta * scope.stepDz / scope.moveDt;
         var abs = Math.abs;
 
-        if ( abs( dx ) <= abs( player.stepDx ) && abs( dz ) <= abs( player.stepDz ) ) {
+        if ( abs( dx ) <= abs( scope.stepDx ) && abs( dz ) <= abs( scope.stepDz ) ) {
 
-            player.position.x += dx;
-            player.position.z += dz;
+            scope.position.x += dx;
+            scope.position.z += dz;
 
         }
 
@@ -704,6 +759,41 @@ Player.prototype.addEventListeners = function () {
 
 };
 
+Player.prototype.isObjectInRange = function ( object ) {
+
+    var scope = this;
+    var distance = Math.sqrt( Math.pow( scope.position.x - object.position.x, 2 ) + Math.pow( scope.position.z - object.position.z, 2 ) );
+
+    return ( distance < scope.viewRange );
+
+};
+
+Player.prototype.sendEventToPlayersInRange = function ( event, buffer, bufferView ) {
+
+    var scope = this;
+
+    //
+
+    if ( scope.socket ) {
+
+        networkManager.send( event, scope.socket, buffer, bufferView );
+
+    }
+
+    for ( var i in scope.inRangeOf ) {
+
+        if ( i[0] === 'p' ) {
+
+            var player = scope.inRangeOf[ i ];
+            if ( ! player || ! player.socket ) continue;
+            networkManager.send( event, player.socket, buffer, bufferView );
+
+        }
+
+    }
+
+};
+
 Player.prototype.toPrivateJSON = function () {
 
     return {
@@ -732,12 +822,9 @@ Player.prototype.toPublicJSON = function () {
         team:           this.team.id,
         tank:           this.tank.title,
         health:         this.health,
-        ammo:           this.ammo,
         rotation:       this.rotation,
         rotationTop:    this.rotationTop,
-        position:       this.position,
-        kills:          this.kills,
-        death:          this.death
+        position:       this.position
 
     };
 

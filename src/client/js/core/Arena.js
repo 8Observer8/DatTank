@@ -25,7 +25,6 @@ Game.Arena.prototype = {};
 Game.Arena.prototype.init = function ( params ) {
 
     this.id = params.id;
-    this.me = params.me;
 
     //
 
@@ -37,13 +36,14 @@ Game.Arena.prototype.init = function ( params ) {
     view.addDecorations( params.decorations );
 
     this.teamManager.init( params.teams );
-    this.playerManager.init( params.players );
+    this.playerManager.init();
     this.boxManager.init( params.boxes );
-    this.towerManager.init( params.towers );
+    this.towerManager.init();
 
     //
 
     this.currentTime = params.currentTime;
+    this.me = this.addPlayer( params.me );
 
     //
 
@@ -63,10 +63,36 @@ Game.Arena.prototype.init = function ( params ) {
 
 };
 
-Game.Arena.prototype.newPlayerJoined = function ( data ) {
+Game.Arena.prototype.addPlayer = function ( data ) {
 
     var player = new Game.Player( this, data );
     this.playerManager.add( player );
+
+    return player;
+
+};
+
+Game.Arena.prototype.newPlayersInRange = function ( players ) {
+
+    var scope = this;
+
+    for ( var i = 0, il = players.length; i < il; i ++ ) {
+
+        scope.addPlayer( players[ i ] );
+
+    }
+
+};
+
+Game.Arena.prototype.newTowersInRange = function ( towers ) {
+
+    var scope = this;
+
+    for ( var i = 0, il = towers.length; i < il; i ++ ) {
+
+        scope.towerManager.add( new Game.Tower( scope, towers[ i ] ) );
+
+    }
 
 };
 
@@ -102,6 +128,8 @@ Game.Arena.prototype.proxyEventToPlayer = function ( data, eventName ) {
 
     var playerId = ( data.player ) ? data.player.id : data[0];
     var player = this.playerManager.getById( playerId );
+
+    if ( ! player ) return;
     player = ( ! player ) ? this.me : player;
 
     player.dispatchEvent({ type: eventName, data: data });
@@ -129,10 +157,11 @@ Game.Arena.prototype.proxyEventToBox = function ( data, eventName ) {
 
 Game.Arena.prototype.addNetworkListeners = function () {
 
-    network.addMessageListener( 'ArenaPlayerJoined', this.newPlayerJoined.bind( this ) );
-    network.addMessageListener( 'ArenaPlayerRespawn', this.proxyEventToPlayer.bind( this ) );
     network.addMessageListener( 'ArenaAddBox', this.addBox.bind( this ) );
     network.addMessageListener( 'ArenaPlayerLeft', this.playerLeft.bind( this ) );
+
+    network.addMessageListener( 'PlayersInRange', this.newPlayersInRange.bind( this ) );
+    network.addMessageListener( 'TowersInRange', this.newTowersInRange.bind( this ) );
 
     //
 

@@ -38,6 +38,9 @@ Game.NetworkManager.prototype.init = function ( callback ) {
 
     //
 
+    this.registerEvent( 'PlayersInRange', 'in', 'json', 50 );
+    this.registerEvent( 'TowersInRange', 'in', 'json', 60 );
+
     this.registerEvent( 'PlayerTankRotateTop', 'in', 'bin', 100 );
     this.registerEvent( 'PlayerTankRotateTop', 'out', 'bin', 101 );
 

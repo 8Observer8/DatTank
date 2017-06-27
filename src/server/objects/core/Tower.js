@@ -32,6 +32,9 @@ var Tower = function ( arena, params ) {
     this.range = 300;
     this.armour = 350;
 
+    this.networkBuffers = {};
+    this.inRangeOf = {};
+
     //
 
     var teams = arena.teamManager.teams;
@@ -74,11 +77,18 @@ Tower.prototype.init = function () {
 
 Tower.prototype.shoot = function ( target ) {
 
-    var buffer = new ArrayBuffer( 6 );
-    var bufferView = new Uint16Array( buffer );
+    var scope = this;
 
-    var dx = target.position.x - this.position.x;
-    var dz = target.position.z - this.position.z;
+    scope.networkBuffers['shoot'] = scope.networkBuffers['shoot'] || {};
+    var buffer = scope.networkBuffers['shoot'].buffer || new ArrayBuffer( 6 );
+    var bufferView = scope.networkBuffers['shoot'].bufferView || new Uint16Array( buffer );
+    scope.networkBuffers['shoot'].buffer = buffer;
+    scope.networkBuffers['shoot'].bufferView = bufferView;
+
+    //
+
+    var dx = target.position.x - scope.position.x;
+    var dz = target.position.z - scope.position.z;
     var rotation, delta;
 
     if ( dz === 0 && dx !== 0 ) {
@@ -91,67 +101,62 @@ Tower.prototype.shoot = function ( target ) {
 
     }
 
-    delta = utils.formatAngle( rotation ) - utils.formatAngle( this.rotation );
+    delta = utils.formatAngle( rotation ) - utils.formatAngle( scope.rotation );
 
     if ( Math.abs( delta ) > 0.5 ) return;
 
     //
 
-    if ( Date.now() - this.shootTime < this.cooldown ) {
+    if ( Date.now() - scope.shootTime < scope.cooldown ) {
 
         return;
 
     }
 
-    this.shootTime = Date.now();
+    scope.shootTime = Date.now();
+    scope.rotation = scope.rotation + 1.57;
 
-    this.rotation = this.rotation + 1.57;
-
-    // push tower bullet
-    this.bullets.push({
-        origPosition:   { x: this.position.x, y: 25, z: this.position.z },
-        position:       { x: this.position.x, y: 25, z: this.position.z },
-        angle:          this.rotation,
+    scope.bullets.push({
+        origPosition:   { x: scope.position.x, y: 25, z: scope.position.z },
+        position:       { x: scope.position.x, y: 25, z: scope.position.z },
+        angle:          scope.rotation,
         id:             Tower.numShootId,
-        ownerId:        this.id,
+        ownerId:        scope.id,
         flytime:        5
     });
 
-    bufferView[1] = this.id;
+    bufferView[1] = scope.id;
     bufferView[2] = Tower.numShootId;
 
     Tower.numShootId = ( Tower.numShootId > 1000 ) ? 0 : Tower.numShootId + 1;
 
-    this.arena.announce( 'TowerShoot', buffer, bufferView );
+    scope.sendEventToPlayersInRange( 'TowerShoot', buffer, bufferView );
 
 };
 
 Tower.prototype.hit = function ( killer, shootId ) {
 
-    var buffer = new ArrayBuffer( 6 );
-    var bufferView = new Uint16Array( buffer );
-
     var scope = this;
 
-    if ( this.hits[ shootId ] ) return;
+    scope.networkBuffers['hit'] = scope.networkBuffers['hit'] || {};
+    var buffer = scope.networkBuffers['hit'].buffer || new ArrayBuffer( 6 );
+    var bufferView = scope.networkBuffers['hit'].bufferView || new Uint16Array( buffer );
+    scope.networkBuffers['hit'].buffer = buffer;
+    scope.networkBuffers['hit'].bufferView = bufferView;
 
-    setTimeout( function () {
+    //
 
-        delete scope.hits[ shootId ];
-
-    }, 1000 );
-
-    killer = this.arena.playerManager.getById( killer );
+    killer = scope.arena.playerManager.getById( killer );
 
     if ( ! killer ) return;
-    if ( killer.team.id === this.team.id ) return;
+    if ( killer.team.id === scope.team.id ) return;
 
-    var amount = Math.floor( 57 * ( killer.tank.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ) );
+    var amount = Math.floor( 57 * ( killer.tank.bullet / scope.armour ) * ( 0.5 * Math.random() + 0.5 ) );
 
-    if ( this.health - amount <= 0 ) {
+    if ( scope.health - amount <= 0 ) {
 
-        this.health = 0;
-        this.changeTeam( killer.team );
+        scope.health = 0;
+        scope.changeTeam( killer.team );
 
         return;
 
@@ -159,35 +164,36 @@ Tower.prototype.hit = function ( killer, shootId ) {
 
     //
 
-    this.health -= amount;
+    scope.health -= amount;
 
-    bufferView[ 1 ] = this.id;
-    bufferView[ 2 ] = this.health;
+    bufferView[ 1 ] = scope.id;
+    bufferView[ 2 ] = scope.health;
 
-    this.arena.announce( 'TowerHit', buffer, bufferView );
+    scope.sendEventToPlayersInRange( 'TowerHit', buffer, bufferView );
 
 };
 
-Tower.prototype.changeTeam = (function () {
+Tower.prototype.changeTeam = function ( team ) {
 
-    this.bullets = [];
+    var scope = this;
 
-    var buffer = new ArrayBuffer( 6 );
-    var bufferView = new Uint16Array( buffer );
+    scope.networkBuffers['changeTeam'] = scope.networkBuffers['changeTeam'] || {};
+    var buffer = scope.networkBuffers['changeTeam'].buffer || new ArrayBuffer( 6 );
+    var bufferView = scope.networkBuffers['changeTeam'].bufferView || new Uint16Array( buffer );
+    scope.networkBuffers['changeTeam'].buffer = buffer;
+    scope.networkBuffers['changeTeam'].bufferView = bufferView;
 
-    return function ( team ) {
+    //
 
-        this.team = team;
-        this.health = 100;
+    scope.team = team;
+    scope.health = 100;
 
-        bufferView[ 1 ] = this.id;
-        bufferView[ 2 ] = team.id;
+    bufferView[ 1 ] = scope.id;
+    bufferView[ 2 ] = team.id;
 
-        this.arena.announce( 'TowerChangeTeam', buffer, bufferView );
+    scope.sendEventToPlayersInRange( 'TowerChangeTeam', buffer, bufferView );
 
-    };
-
-}) ();
+};
 
 Tower.prototype.checkForTarget = function ( players ) {
 
@@ -224,80 +230,83 @@ Tower.prototype.checkForTarget = function ( players ) {
 
 };
 
-Tower.prototype.rotateTop = (function () {
+Tower.prototype.rotateTop = function ( target, delta ) {
 
-    var buffer = new ArrayBuffer( 8 );
-    var bufferView = new Uint16Array( buffer );
+    var scope = this;
 
-    return function ( target, delta ) {
+    scope.networkBuffers['rotateTop'] = scope.networkBuffers['rotateTop'] || {};
+    var buffer = scope.networkBuffers['rotateTop'].buffer || new ArrayBuffer( 6 );
+    var bufferView = scope.networkBuffers['rotateTop'].bufferView || new Uint16Array( buffer );
+    scope.networkBuffers['rotateTop'].buffer = buffer;
+    scope.networkBuffers['rotateTop'].bufferView = bufferView;
 
-        var dx = target.position.x - this.position.x;
-        var dz = target.position.z - this.position.z;
-        var newRotation, deltaRot;
+    //
 
-        if ( dz === 0 && dx !== 0 ) {
+    var dx = target.position.x - scope.position.x;
+    var dz = target.position.z - scope.position.z;
+    var newRotation, deltaRot;
 
-            newRotation = ( dx > 0 ) ? - Math.PI : 0;
+    if ( dz === 0 && dx !== 0 ) {
+
+        newRotation = ( dx > 0 ) ? - Math.PI : 0;
+
+    } else {
+
+        newRotation = - Math.PI / 2 - Math.atan2( dz, dx );
+
+    }
+
+    //
+
+    deltaRot = utils.formatAngle( scope.newRotation ) - utils.formatAngle( scope.rotation );
+
+    if ( deltaRot > Math.PI ) {
+
+        if ( delta > 0 ) {
+
+            deltaRot = - 2 * Math.PI + deltaRot;
 
         } else {
 
-            newRotation = - Math.PI / 2 - Math.atan2( dz, dx );
+            deltaRot = 2 * Math.PI + deltaRot;
 
         }
 
-        //
+    }
 
-        deltaRot = utils.formatAngle( this.newRotation ) - utils.formatAngle( this.rotation );
+    if ( Math.abs( deltaRot ) > 0.01 ) {
 
-        if ( deltaRot > Math.PI ) {
+        scope.rotation = utils.formatAngle( scope.rotation + Math.sign( deltaRot ) / 30 * ( delta / 20 ) );
 
-            if ( delta > 0 ) {
+    }
 
-                deltaRot = - 2 * Math.PI + deltaRot;
+    newRotation = utils.formatAngle( newRotation );
 
-            } else {
+    //
 
-                deltaRot = 2 * Math.PI + deltaRot;
+    deltaRot = utils.formatAngle( newRotation ) - utils.formatAngle( scope.newRotation );
 
-            }
+    if ( Math.abs( deltaRot ) > 0.35 ) {
 
-        }
+        scope.newRotation = newRotation;
 
-        if ( Math.abs( deltaRot ) > 0.01 ) {
+        bufferView[1] = scope.id;
+        bufferView[2] = Math.floor( 1000 * scope.rotation );
+        bufferView[3] = Math.floor( 1000 * scope.newRotation );
 
-            this.rotation = utils.formatAngle( this.rotation + Math.sign( deltaRot ) / 30 * ( delta / 20 ) );
+        scope.sendEventToPlayersInRange( 'TowerRotateTop', buffer, bufferView );
 
-        }
+    }
 
-        newRotation = utils.formatAngle( newRotation );
+    //
 
-        //
+    if ( Date.now() - scope.shootTime > scope.cooldown && Math.abs( newRotation - scope.rotation ) < 0.5 ) {
 
-        deltaRot = utils.formatAngle( newRotation ) - utils.formatAngle( this.newRotation );
+        scope.shoot( target );
 
-        if ( Math.abs( deltaRot ) > 0.35 ) {
+    }
 
-            this.newRotation = newRotation;
-
-            bufferView[1] = this.id;
-            bufferView[2] = Math.floor( 1000 * this.rotation );
-            bufferView[3] = Math.floor( 1000 * this.newRotation );
-
-            this.arena.announce( 'TowerRotateTop', buffer, bufferView );
-
-        }
-
-        //
-
-        if ( Date.now() - this.shootTime > this.cooldown && Math.abs( newRotation - this.rotation ) < 0.5 ) {
-
-            this.shoot( target );
-
-        }
-
-    };
-
-}) ();
+};
 
 Tower.prototype.update = function ( delta ) {
 
@@ -329,7 +338,7 @@ Tower.prototype.update = function ( delta ) {
                             i --;
                             il --;
 
-                            this.arena.announce( 'BulletHit', null, { tower: { id: tower.id }, bulletId: bullet.id, position: bullet.position } );
+                            this.sendEventToPlayersInRange( 'BulletHit', null, { tower: { id: tower.id }, bulletId: bullet.id, position: bullet.position } );
 
                             var killer = tower.id;
                             var target = this.arena.playerManager.getById( bulletCollisionResult.id );
@@ -387,6 +396,26 @@ Tower.prototype.addEventListeners = function () {
     var scope = this;
 
     this.addEventListener( 'TowerHit', function ( event ) { scope.hit( event.data[1], event.data[2] ); });
+
+};
+
+Tower.prototype.sendEventToPlayersInRange = function ( event, buffer, bufferView ) {
+
+    var scope = this;
+
+    //
+
+    for ( var i in scope.inRangeOf ) {
+
+        if ( i[0] === 'p' ) {
+
+            var player = scope.inRangeOf[ i ];
+            if ( ! player.socket ) continue;
+            networkManager.send( event, player.socket, buffer, bufferView );
+
+        }
+
+    }
 
 };
 

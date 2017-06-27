@@ -12,15 +12,7 @@ Game.TowerManager = function ( arena ) {
 
 Game.TowerManager.prototype = {};
 
-Game.TowerManager.prototype.init = function ( params ) {
-
-    for ( var i = 0, il = params.length; i < il; i ++ ) {
-
-        this.add( new Game.Tower( this.arena, params[ i ] ) );
-
-    }
-
-};
+Game.TowerManager.prototype.init = function () {};
 
 Game.TowerManager.prototype.add = function ( tower ) {
 

@@ -171,8 +171,8 @@ ArenaManager.prototype.addNetworkListeners = function () {
 
             var player = arena.addPlayer({ login: data.login, tank: data.tank, socket: socket });
 
-            var response = arena.toPublicJSON();
-            response.me = player.id;
+            var response = arena.toJSON();
+            response.me = player.toPrivateJSON();
 
             networkManager.send( 'ArenaJoinResponce', socket, false, response );
 

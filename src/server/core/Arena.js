@@ -66,10 +66,6 @@ Arena.prototype.addPlayer = function ( params ) {
 
     //
 
-    this.announce( 'ArenaPlayerJoined', null, player.toPublicJSON() );
-
-    //
-
     return player;
 
 };
@@ -112,14 +108,12 @@ Arena.prototype.announce = function ( eventName, data, view, players ) {
 
 };
 
-Arena.prototype.toPublicJSON = function () {
+Arena.prototype.toJSON = function () {
 
     return {
 
         id:             this.id,
         decorations:    this.decorationManager.toJSON(),
-        towers:         this.towerManager.toJSON(),
-        players:        this.playerManager.toJSON(),
         teams:          this.teamManager.toJSON(),
         boxes:          this.boxManager.toJSON(),
         currentTime:    Date.now()

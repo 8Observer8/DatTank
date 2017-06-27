@@ -80,77 +80,73 @@ Game.prototype.play = function ( event ) {
 
     }
 
-    Game.Ads.playAipPreroll( function () {
+    soundManager.playMenuSound();
 
-        soundManager.playMenuSound();
+    //
 
-        //
+    ui.showLoaderScreen();
 
-        ui.showLoaderScreen();
+    ui.hideSignInPopup();
+    ui.hideFooter();
 
-        ui.hideSignInPopup();
-        ui.hideFooter();
+    resourceManager.load( function ( progress ) {
 
-        resourceManager.load( function ( progress ) {
+        var value = Math.round( 100 * progress ) + '%';
+        $('#loader-wrapper #progress-wrapper #progress-bar').css( 'width', value );
+        $('#loader-wrapper #title span').html( value );
+        $('#crowd-shortcut').hide();
 
-            var value = Math.round( 100 * progress ) + '%';
-            $('#loader-wrapper #progress-wrapper #progress-bar').css( 'width', value );
-            $('#loader-wrapper #title span').html( value );
-            $('#crowd-shortcut').hide();
+    }, function () {
 
-        }, function () {
+        $('#loader-wrapper #progress-wrapper').hide();
+        $('#loader-wrapper #title').html('Initializing arena...');
 
-            $('#loader-wrapper #progress-wrapper').hide();
-            $('#loader-wrapper #title').html('Initializing arena...');
+        // init controls
 
-            // init controls
+        controls.mouseInit();
+        controls.keyInit();
 
-            controls.mouseInit();
-            controls.keyInit();
+        // init network
 
-            // init network
+        network.addMessageListener( 'ArenaJoinResponce', function ( data ) {
 
-            network.addMessageListener( 'ArenaJoinResponce', function ( data ) {
+            game.joinArena( data );
 
-                game.joinArena( data );
+        });
 
+        network.init( function () {
+
+            // free prev arena if still exists
+
+            if ( scope.arena !== false ) {
+
+                scope.arena.dispose();
+                scope.arena = false;
+
+            }
+
+            // send network request
+
+            var login = $('#username').val() || localStorage.getItem('login') || '';
+            localStorage.setItem( 'login', login );
+
+            ga('send', {
+                hitType: 'event',
+                eventCategory: 'game',
+                eventAction: 'play'
             });
 
-            network.init( function () {
+            var tank = localStorage.getItem( 'currentTank' ) || 0;
 
-                // free prev arena if still exists
+            setTimeout( function () {
 
-                if ( scope.arena !== false ) {
+                network.send( 'ArenaJoinRequest', false, { login: login, tank: tank } );
 
-                    scope.arena.dispose();
-                    scope.arena = false;
+            }, 1000 );
 
-                }
+            // UI changes
 
-                // send network request
-
-                var login = $('#username').val() || localStorage.getItem('login') || '';
-                localStorage.setItem( 'login', login );
-
-                ga('send', {
-                    hitType: 'event',
-                    eventCategory: 'game',
-                    eventAction: 'play'
-                });
-
-                var tank = localStorage.getItem( 'currentTank' ) || 0;
-
-                setTimeout( function () {
-
-                    network.send( 'ArenaJoinRequest', false, { login: login, tank: tank } );
-
-                }, 1000 );
-
-                // UI changes
-
-                ui.setCursor();
-
-            });
+            ui.setCursor();
 
         });
 
