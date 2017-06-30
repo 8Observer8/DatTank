@@ -51,8 +51,8 @@ Game.Tank.prototype.initBullets = function () {
     for ( var i = 0; i < 5; i ++ ) {
 
         var bullet = new THREE.Mesh( new THREE.SphereGeometry( 2.5, 12, 12 ), new THREE.MeshLambertMaterial({ color: this.player.team.color }) );
-        bullet.visible = false;
 
+        bullet.visible = false;
         bullet.active = false;
 
         this.bullets.push( bullet );
@@ -562,17 +562,29 @@ Game.Tank.prototype.rotateTop = function () {
 
 Game.Tank.prototype.dispose = function () {
 
-    // todo: dispose effects
-    // todo: dispose bullets
+    if ( this.effects.explosion ) {
 
-    for ( var i = 0; i < view.scene.intersections.length; i ++ ) {
+        for ( var i = 0, il = this.effects.explosion.length; i < il; i ++ ) {
 
-        if ( view.scene.intersections[ i ].uuid === this.object.children[ 3 ].uuid ) {
-
-            view.scene.intersections.splice(i, 1);
-            break;
+            view.scene.remove( this.effects.explosion[ i ] );
 
         }
+
+    }
+
+    if ( this.effects.blastSmoke && this.effects.blastSmoke.length ) {
+
+        for ( var i = 0, il = this.effects.blastSmoke.length; i < il; i ++ ) {
+
+            view.scene.remove( this.effects.blastSmoke[ i ] );
+
+        }
+
+    }
+
+    for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
+
+        view.scene.remove( this.bullets[ i ] );
 
     }
 

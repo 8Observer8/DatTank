@@ -84,6 +84,18 @@ Game.Arena.prototype.newPlayersInRange = function ( players ) {
 
 };
 
+Game.Arena.prototype.playersOutOfRange = function ( players ) {
+
+    var scope = this;
+
+    for ( var i = 0, il = players.length; i < il; i ++ ) {
+
+        scope.playerManager.remove( players[ i ] );
+
+    }
+
+};
+
 Game.Arena.prototype.newTowersInRange = function ( towers ) {
 
     var scope = this;
@@ -91,6 +103,18 @@ Game.Arena.prototype.newTowersInRange = function ( towers ) {
     for ( var i = 0, il = towers.length; i < il; i ++ ) {
 
         scope.towerManager.add( new Game.Tower( scope, towers[ i ] ) );
+
+    }
+
+};
+
+Game.Arena.prototype.towersOutOfRange = function ( towers ) {
+
+    var scope = this;
+
+    for ( var i = 0, il = towers.length; i < il; i ++ ) {
+
+        scope.towerManager.remove( towers[ i ] );
 
     }
 
@@ -162,6 +186,8 @@ Game.Arena.prototype.addNetworkListeners = function () {
 
     network.addMessageListener( 'PlayersInRange', this.newPlayersInRange.bind( this ) );
     network.addMessageListener( 'TowersInRange', this.newTowersInRange.bind( this ) );
+    network.addMessageListener( 'PlayersOutOfRange', this.playersOutOfRange.bind( this ) );
+    network.addMessageListener( 'TowersOutOfRange', this.towersOutOfRange.bind( this ) );
 
     //
 

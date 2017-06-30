@@ -33,6 +33,7 @@ Game.PlayerManager.prototype.add = function ( player ) {
 Game.PlayerManager.prototype.remove = function ( player ) {
 
     var newPlayersList = [];
+    player = this.getById( player.id );
 
     for ( var i = 0, il = this.players.length; i < il; i ++ ) {
 
@@ -42,7 +43,7 @@ Game.PlayerManager.prototype.remove = function ( player ) {
 
     }
 
-    player.dispose();
+    player.tank.dispose();
 
     this.players = newPlayersList;
 

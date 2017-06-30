@@ -63,7 +63,7 @@ Bot.prototype.init = function () {
     this.player.ammo = 10000000;
     this.player.bot = this;
 
-    this.updateInterval = setInterval( this.update.bind( this ), 40 );
+    // this.updateInterval = setInterval( this.update.bind( this ), 40 );
 
 };
 

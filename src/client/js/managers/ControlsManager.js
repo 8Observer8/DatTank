@@ -129,6 +129,7 @@ Game.ControlsManager.prototype.keyInit = function () {
 
     function keyDown ( event ) {
 
+        if ( scope.pressedKey[ '' + event.keyCode ] === true ) return;
         scope.pressedKey[ '' + event.keyCode ] = true;
 
         switch ( event.keyCode ) {
@@ -140,7 +141,7 @@ Game.ControlsManager.prototype.keyInit = function () {
                 scope.stopMovingDown = false;
                 scope.stopMovingLeft = false;
                 scope.stopMovingRight = false;
-
+console.log( 'zzz' );
                 if ( Game.arena.me.position.x > -1267 && Game.arena.me.position.z > -1267 && Game.arena.me.position.z < 1267 && scope.stopMovingUp === false ) {
 
                     scope.move();
@@ -195,11 +196,6 @@ Game.ControlsManager.prototype.keyInit = function () {
 
                 }
 
-                break;
-
-            case 80: // 'p' key
-
-                Utils.ge('#stats').style['display'] = 'block';
                 break;
 
         }

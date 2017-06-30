@@ -68,16 +68,6 @@ Game.Tower.prototype.init = function () {
 
     //
 
-    var box = new THREE.Mesh( new THREE.BoxGeometry( 30, 40, 60 ), new THREE.MeshLambertMaterial({ transparent: true, opacity: 0 }) );
-    box.position.y = 10;
-    box.name = 'tower';
-    box.owner = this;
-    box.material.visible = false;
-    this.object.add( box );
-    view.scene.intersections.push( box );
-
-    //
-
     view.scene.add( this.object );
 
     this.object.position.set( this.position.x, this.position.y, this.position.z );
@@ -329,6 +319,12 @@ Game.Tower.prototype.update = function ( delta ) {
         }
 
     }
+
+};
+
+Game.Tower.prototype.dispose = function () {
+
+    view.scene.remove( this.object );
 
 };
 

@@ -60,7 +60,6 @@ Game.ViewManager.prototype.setupScene = function () {
     this.camera = new THREE.PerspectiveCamera( 60, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 1, 1300 );
 
     this.skyboxScene = new THREE.Scene();
-    this.skyboxScene.intersections = [];
     this.skyBoxCamera = new THREE.PerspectiveCamera( 60, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 1, 5000 );
 
     this.skybox = Game.Skybox();

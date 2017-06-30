@@ -22,7 +22,20 @@ Game.TowerManager.prototype.add = function ( tower ) {
 
 Game.TowerManager.prototype.remove = function ( tower ) {
 
-    // todo
+    var newTowerList = [];
+    tower = this.getById( tower.id );
+
+    for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
+
+        if ( this.towers[ i ].id === tower.id ) continue;
+
+        newTowerList.push( this.towers[ i ] );
+
+    }
+
+    tower.dispose();
+
+    this.towers = newTowerList;
 
 };
 

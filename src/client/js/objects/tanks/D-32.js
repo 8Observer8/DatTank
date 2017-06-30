@@ -72,16 +72,6 @@ Game.Tank.D32.prototype.initModel = function () {
     }
 
     this.object.add( top );
-
-    //
-
-    var box = new THREE.Mesh( new THREE.BoxGeometry( 30, 40, 60 ), new THREE.MeshLambertMaterial({ transparent: true, opacity: 0 }) );
-    box.position.y = 10;
-    box.name = 'tank';
-    box.owner = this.player;
-    box.material.visible = false;
-    this.object.add( box );
-    view.scene.intersections.push( box );
     this.object.top = top;
 
     //

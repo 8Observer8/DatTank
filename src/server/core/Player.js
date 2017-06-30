@@ -60,7 +60,7 @@ var Player = function ( arena, params ) {
 
     this.networkBuffers = {};
     this.inRangeOf = {};
-    this.viewRange = 700;
+    this.viewRange = 300;
 
     //
 
@@ -488,6 +488,7 @@ Player.prototype.update = function ( delta, time ) {
     // check new towers in range
 
     var newTowersInRange = [];
+    var towersOutOfRange = [];
 
     for ( var i = 0, il = scope.arena.towerManager.towers.length; i < il; i ++ ) {
 
@@ -503,6 +504,12 @@ Player.prototype.update = function ( delta, time ) {
 
         } else {
 
+            if ( scope.inRangeOf[ 't-' + tower.id ] ) {
+
+                towersOutOfRange.push( tower.toJSON() );
+
+            }
+
             scope.inRangeOf[ 't-' + tower.id ] = false;
             tower.inRangeOf[ 'p-' + scope.id ] = false;
 
@@ -516,9 +523,16 @@ Player.prototype.update = function ( delta, time ) {
 
     }
 
+    if ( towersOutOfRange.length ) {
+
+        networkManager.send( 'TowersOutOfRange', scope.socket, false, towersOutOfRange );
+
+    }
+
     // check new players in range
 
     var newPlayersInRange = [];
+    var playersOutOfRange = [];
 
     for ( var i = 0, il = scope.arena.playerManager.players.length; i < il; i ++ ) {
 
@@ -535,6 +549,12 @@ Player.prototype.update = function ( delta, time ) {
 
         } else {
 
+            if ( scope.inRangeOf[ 'p-' + player.id ] ) {
+
+                playersOutOfRange.push( player.toPublicJSON() );
+
+            }
+
             scope.inRangeOf[ 'p-' + player.id ] = false;
 
         }
@@ -544,6 +564,12 @@ Player.prototype.update = function ( delta, time ) {
     if ( newPlayersInRange.length ) {
 
         networkManager.send( 'PlayersInRange', scope.socket, false, newPlayersInRange );
+
+    }
+
+    if ( playersOutOfRange.length ) {
+
+        networkManager.send( 'PlayersOutOfRange', scope.socket, false, playersOutOfRange );
 
     }
 
@@ -807,7 +833,7 @@ Player.prototype.toPrivateJSON = function () {
         ammo:           this.ammo,
         rotation:       this.rotation,
         rotationTop:    this.rotationTop,
-        position:       this.position
+        position:       this.position,
 
     };
 
