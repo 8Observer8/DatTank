@@ -28,7 +28,7 @@
         "visible":true,
         "mapDiffuseAnisotropy":1,
         "mapDiffuseRepeat":[1,1],
-        "shading":"phong",
+        "shading":"basic",
         "specularCoef":50,
         "vertexColors":false,
         "wireframe":false,

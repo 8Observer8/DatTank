@@ -16,7 +16,7 @@
         "depthTest":true,
         "mapDiffuseRepeat":[1,1],
         "mapDiffuseWrap":["RepeatWrapping","RepeatWrapping"],
-        "shading":"phong",
+        "shading":"basic",
         "mapDiffuse":"cc9284c3.jpg",
         "wireframe":false,
         "DbgColor":15658734,

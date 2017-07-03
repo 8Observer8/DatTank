@@ -15,7 +15,7 @@
     "materials":[{
         "mapDiffuseRepeat":[1,1],
         "blending":"NormalBlending",
-        "shading":"phong",
+        "shading":"lambert",
         "depthTest":true,
         "DbgName":"leaves",
         "colorSpecular":[0.5,0.5,0.5],
@@ -36,7 +36,7 @@
     },{
         "mapDiffuseRepeat":[1,1],
         "blending":"NormalBlending",
-        "shading":"phong",
+        "shading":"lambert",
         "depthTest":true,
         "DbgName":"trunk",
         "colorSpecular":[0.5,0.5,0.5],

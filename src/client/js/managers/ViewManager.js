@@ -59,6 +59,12 @@ Game.ViewManager.prototype.setupScene = function () {
     this.scene.intersections = [];
     this.camera = new THREE.PerspectiveCamera( 60, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 1, 1300 );
 
+    this.sun = new THREE.DirectionalLight( 0xffffff, 0.5 );
+    this.sun.position.set( 0, 100, 0 );
+    this.sun.target = new THREE.Object3D();
+    this.sun.target.position.set( 50, 0, 50 );
+    this.scene.add ( this.sun );
+
     this.skyboxScene = new THREE.Scene();
     this.skyBoxCamera = new THREE.PerspectiveCamera( 60, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 1, 5000 );
 
@@ -182,7 +188,7 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
         mesh.scale.set( decoration.scale.x, decoration.scale.y, decoration.scale.z );
         mesh.rotation.y = Math.random() * Math.PI;
 
-        var scale = Math.random() * 10;
+        var scale = Math.random() * 15;
         if ( decoration.type === 'tree' || decoration.type === 'tree1' || decoration.type === 'tree2' || decoration.type === 'tree3' ) {
 
             mesh.scale.y /= 1.7;
