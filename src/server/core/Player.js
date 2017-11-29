@@ -60,7 +60,7 @@ var Player = function ( arena, params ) {
 
     this.networkBuffers = {};
     this.inRangeOf = {};
-    this.viewRange = 300;
+    this.viewRange = 500;
 
     //
 
@@ -158,19 +158,13 @@ Player.prototype.rotateTop = function ( angle ) {
 
 };
 
-Player.prototype.rotateBase = function ( direction ) {
-
-    this.baseRotationDirection = direction;
-
-};
-
 Player.prototype.move = function ( directionX, directionZ ) {
 
     var scope = this;
 
     scope.networkBuffers['move'] = scope.networkBuffers['move'] || {};
     var buffer = scope.networkBuffers['move'].buffer || new ArrayBuffer( 14 );
-    var bufferView = scope.networkBuffers['move'].bufferView || new Uint16Array( buffer );
+    var bufferView = scope.networkBuffers['move'].bufferView || new Int16Array( buffer );
     scope.networkBuffers['move'].buffer = buffer;
     scope.networkBuffers['move'].bufferView = bufferView;
 
@@ -179,10 +173,6 @@ Player.prototype.move = function ( directionX, directionZ ) {
         return;
 
     }
-
-    scope.movePath = false;
-    scope.movementDurationMap = false;
-    scope.movementDuration = 0;
 
     scope.moveDirection.x = directionX;
     scope.moveDirection.y = directionZ;
@@ -195,120 +185,6 @@ Player.prototype.move = function ( directionX, directionZ ) {
     bufferView[ 6 ] = scope.rotation * 1000;
 
     scope.sendEventToPlayersInRange( 'PlayerTankMove', buffer, bufferView );
-
-};
-
-Player.prototype.moveToPoint = function ( destination, retry ) {
-
-    if ( this.status !== Player.Alive ) return;
-
-    var scope = this;
-
-    if ( ! retry ) this.pathFindIter = 0;
-
-    this.arena.pathManager.findPath( this.position, destination, function ( path ) {
-
-        if ( scope.status !== Player.Alive ) return;
-
-        if ( path.length === 0 ) {
-
-            destination.x += 10;
-            destination.z += 10;
-            scope.pathFindIter ++;
-
-            if ( scope.pathFindIter < 50 ) {
-
-                scope.moveToPoint( destination, true );
-
-            }
-
-            return;
-
-        }
-
-        var buffer = new ArrayBuffer( 2 * 2 * path.length + ( 1 + 1 + 2 ) * 2 );
-        var bufferView = new Int16Array( buffer );
-
-        bufferView[1] = scope.id;
-
-        var offset = 2;
-
-        for ( var i = 0, il = path.length; i < il; i ++ ) {
-
-            bufferView[ 2 * i + 0 + offset ] = path[ i ].x;
-            bufferView[ 2 * i + 1 + offset ] = path[ i ].z;
-
-        }
-
-        bufferView[ bufferView.length - 2 ] = destination.x;
-        bufferView[ bufferView.length - 1 ] = destination.z;
-
-        scope.sendEventToPlayersInRange( 'PlayerTankMoveByPath', buffer, bufferView );
-
-        //
-
-        path = scope.arena.pathManager.deCompressPath( path );
-
-        path.push( scope.position.x, scope.position.z );
-        path.unshift( destination.x, destination.z );
-        path.unshift( destination.x, destination.z );
-
-        var minDistIndex = 0;
-
-        for ( var i = path.length / 2 - 1; i > 0; i -- ) {
-
-            if ( Math.sqrt( Math.pow( scope.position.x - path[ 2 * i + 0 ], 2 ) + Math.pow( scope.position.z - path[ 2 * i + 1 ], 2 ) ) < 3 ) {
-
-                minDistIndex = i;
-
-            }
-
-        }
-
-        for ( var i = minDistIndex; i < path.length / 2; i ++ ) {
-
-            path.pop();
-            path.pop();
-
-        }
-
-        //
-
-        scope.processPath( path );
-
-    });
-
-};
-
-Player.prototype.processPath = function ( path ) {
-
-    var scope = this;
-
-    this.movementStart = Date.now();
-    this.movementDuration = 0;
-    this.movementDurationMap = [];
-    this.moveProgress = path.length / 2;
-
-    var dx, dz;
-
-    for ( var i = path.length / 2 - 1; i > 0; i -- ) {
-
-        dx = path[ 2 * ( i - 1 ) + 0 ] - path[ 2 * i + 0 ];
-        dz = path[ 2 * ( i - 1 ) + 1 ] - path[ 2 * i + 1 ];
-
-        this.movementDurationMap.push( this.movementDuration );
-        this.movementDuration += Math.sqrt( Math.pow( dx, 2 ) + Math.pow( dz, 2 ) ) / this.moveSpeed;
-
-    }
-
-    //
-
-    clearTimeout( this.moveDelay );
-    this.moveDelay = setTimeout( function () {
-
-        scope.movePath = path;
-
-    }, 20 );
 
 };
 
@@ -624,7 +500,7 @@ Player.prototype.update = function ( delta, time ) {
 
             }
 
-            this.move( 0, 0 );
+            scope.move( 0, scope.moveDirection.y );
 
         }
 
@@ -637,7 +513,7 @@ Player.prototype.update = function ( delta, time ) {
             scope.position.x += ( scope.moveSpeed * Math.sin( scope.rotation ) * delta );
             scope.position.z += ( scope.moveSpeed * Math.cos( scope.rotation ) * delta );
 
-        } else if ( player.moveDirection.x < 0 ) {
+        } else if ( scope.moveDirection.x < 0 ) {
 
             scope.position.x -= ( scope.moveSpeed * Math.sin( scope.rotation ) * delta );
             scope.position.z -= ( scope.moveSpeed * Math.cos( scope.rotation ) * delta );
@@ -651,109 +527,6 @@ Player.prototype.update = function ( delta, time ) {
         } else if ( scope.moveDirection.y < 0 ) {
 
             scope.rotation -= 0.001 * delta;
-
-        }
-
-    }
-
-    // update player PATH movement
-
-    if ( ! scope.movePath.length ) return;
-
-    var progress = scope.movementDurationMap.length - 1;
-
-    for ( var j = 0, jl = scope.movementDurationMap.length; j < jl; j ++ ) {
-
-        if ( time - scope.movementStart > scope.movementDurationMap[ j ] ) {
-
-            progress --;
-
-        } else {
-
-            break;
-
-        }
-
-    }
-
-    if ( progress < 0 ) {
-
-        scope.position.x = scope.movePath[0];
-        scope.position.z = scope.movePath[1];
-        scope.movePath = false;
-        scope.movementDurationMap = false;
-        return;
-
-    } else {
-
-        if ( progress !== scope.moveProgress ) {
-
-            var dx, dz;
-            var dxr, dzr;
-
-            if ( scope.movePath[ 2 * ( progress - 30 ) ] ) {
-
-                dxr = ( scope.movePath[ 2 * ( progress - 30 ) + 0 ] + scope.movePath[ 2 * ( progress - 29 ) + 0 ] + scope.movePath[ 2 * ( progress - 28 ) + 0 ] ) / 3 - scope.position.x;
-                dzr = ( scope.movePath[ 2 * ( progress - 30 ) + 1 ] + scope.movePath[ 2 * ( progress - 29 ) + 1 ] + scope.movePath[ 2 * ( progress - 28 ) + 1 ] ) / 3 - scope.position.z;
-
-            } else {
-
-                dxr = scope.movePath[ 2 * progress + 0 ] - scope.position.x;
-                dzr = scope.movePath[ 2 * progress + 1 ] - scope.position.z;
-
-            }
-
-            dx = scope.stepDx = scope.movePath[ 2 * progress + 0 ] - scope.position.x;
-            dz = scope.stepDz = scope.movePath[ 2 * progress + 1 ] - scope.position.z;
-
-            scope.moveDt = Math.sqrt( Math.pow( dx, 2 ) + Math.pow( dz, 2 ) ) / scope.moveSpeed;
-
-            // count new player angle when moving
-
-            scope.newRotation = ( dzr === 0 && dxr !== 0 ) ? ( Math.PI / 2 ) * Math.abs( dxr ) / dxr : Math.atan2( dxr, dzr );
-            scope.newRotation = utils.formatAngle( scope.newRotation );
-            scope.dRotation = ( scope.newRotation - scope.rotation );
-
-            if ( isNaN( scope.dRotation ) ) scope.dRotation = 0;
-
-            if ( scope.dRotation > Math.PI ) {
-
-                scope.dRotation -= 2 * Math.PI;
-
-            }
-
-            if ( scope.dRotation < - Math.PI ) {
-
-                scope.dRotation += 2 * Math.PI;
-
-            }
-
-            scope.dRotation /= 20;
-            scope.dRotCount = 20;
-
-            //
-
-            scope.moveProgress = progress;
-
-        }
-
-        if ( scope.dRotCount > 0 ) {
-
-            scope.rotation = utils.addAngle( scope.rotation, scope.dRotation );
-            scope.dRotCount --;
-
-        }
-
-        // making transition movement between path points
-
-        var dx = delta * scope.stepDx / scope.moveDt;
-        var dz = delta * scope.stepDz / scope.moveDt;
-        var abs = Math.abs;
-
-        if ( abs( dx ) <= abs( scope.stepDx ) && abs( dz ) <= abs( scope.stepDz ) ) {
-
-            scope.position.x += dx;
-            scope.position.z += dz;
 
         }
 

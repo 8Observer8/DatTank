@@ -45,11 +45,11 @@ Bot.prototype = {};
 
 Bot.prototype.init = function () {
 
-    if ( Math.random() < 0.3 ) {
+    if ( Math.random() <= 0.3 ) {
 
         var tank = 'USAT54';
 
-    } else if ( Math.random() > 0.3 && Math.random() < 0.6 ) {
+    } else if ( Math.random() > 0.3 && Math.random() <= 0.6 ) {
 
         var tank = 'D32';
 
@@ -63,13 +63,14 @@ Bot.prototype.init = function () {
     this.player.ammo = 10000000;
     this.player.bot = this;
 
-    // this.updateInterval = setInterval( this.update.bind( this ), 40 );
+    this.updateInterval = setInterval( this.update.bind( this ), 40 );
 
 };
 
 Bot.prototype.update = function () {
 
     var isMove = Math.random();
+    var scope = this;
 
     if ( this.removed ) {
 
@@ -82,11 +83,42 @@ Bot.prototype.update = function () {
 
     //
 
-    if ( isMove < 0.2 && this.player.movePath === false ) {
+    if ( this.player.moveDirection.x === 0 && this.player.moveDirection.y === 0 ) {
 
-        var x = Math.floor( 2200 * ( Math.random() - 0.5 ) );
-        var z = Math.floor( 2200 * ( Math.random() - 0.5 ) );
-        this.player.moveToPoint({ x: x, y: 0, z: z });
+        if ( isMove < 0.2 ) {
+
+            var x = Math.floor( 3 * Math.random() ) - 1;
+            var y = Math.floor( 3 * Math.random() ) - 1;
+
+            var rotateBaseDuration = Math.floor( 50 * Math.random() ) + 500;
+            var moveDuration = Math.floor( 8000 * Math.random() ) + 1000;
+
+            if ( x !== 0 || y !== 0 ) {
+
+                this.player.move( x, y );
+                this.moveDuration = moveDuration;
+                this.rotateBaseDuration = rotateBaseDuration;
+
+            }
+
+        }
+
+    } else {
+
+        this.moveDuration -= 40;
+        this.rotateBaseDuration -= 40;
+
+        if ( this.moveDuration <= 0 ) {
+
+            this.player.move( 0, this.player.moveDirection.y );
+
+        }
+
+        if ( this.rotateBaseDuration <= 0 ) {
+
+            this.player.move( this.player.moveDirection.x, 0 );
+
+        }
 
     }
 

@@ -49,7 +49,7 @@ Arena.prototype.init = function ( callback ) {
 
     //
 
-    this.updateInterval = setInterval( this.update.bind( this ), 20 );
+    this.updateInterval = setInterval( this.update.bind( this ), 50 );
 
     //
 

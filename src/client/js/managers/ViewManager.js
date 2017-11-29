@@ -615,16 +615,20 @@ Game.ViewManager.prototype.animate = function ( delta ) {
         view.raycaster.setFromCamera( controls.mousePos, view.camera );
         intersections = view.raycaster.intersectObjects( [ view.ground ] );
 
-        controls.prevMousePos.set( controls.mousePos.x, controls.mousePos.y );
+        if ( controls.prevMousePos.distanceTo( controls.mousePos ) > 0.05 ) {
 
-        if ( intersections.length ) {
+            controls.prevMousePos.set( controls.mousePos.x, controls.mousePos.y );
 
-            var me = Game.arena.me;
-            var angle = Math.atan2( intersections[0].point.x - me.position.x, intersections[0].point.z - me.position.z ) - Math.PI / 2;
+            if ( intersections.length ) {
 
-            if ( Math.abs( angle - me.topRotation ) > 0.01 ) {
+                var me = Game.arena.me;
+                var angle = Math.atan2( intersections[0].point.x - me.position.x, intersections[0].point.z - me.position.z ) - Math.PI / 2;
 
-                controls.rotateTop( angle );
+                if ( Math.abs( angle - me.topRotation ) > 0.01 ) {
+
+                    controls.rotateTop( angle );
+
+                }
 
             }
 

@@ -86,7 +86,7 @@ CollisionManager.prototype.moveTank = function ( direction, player, delta ) {
 
     if ( Math.abs( newPosition.x ) > 1270 || Math.abs( newPosition.z ) > 1270 ) {
 
-        if (  player.moveDirection.x > 0 ) {
+        if ( player.moveDirection.x > 0 ) {
 
             player.position.x -= ( player.moveSpeed * Math.sin( player.rotation ) * delta );
             player.position.z -= ( player.moveSpeed * Math.cos( player.rotation ) * delta );

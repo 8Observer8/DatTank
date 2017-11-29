@@ -137,11 +137,12 @@ Game.ControlsManager.prototype.keyInit = function () {
             case 38: // up
             case 87: // w
 
+                if ( scope.moveX === 1 ) return;
                 scope.moveX = 1;
                 scope.stopMovingDown = false;
                 scope.stopMovingLeft = false;
                 scope.stopMovingRight = false;
-console.log( 'zzz' );
+
                 if ( Game.arena.me.position.x > -1267 && Game.arena.me.position.z > -1267 && Game.arena.me.position.z < 1267 && scope.stopMovingUp === false ) {
 
                     scope.move();
@@ -153,6 +154,7 @@ console.log( 'zzz' );
             case 37: // left
             case 65: // a
 
+                if ( scope.moveZ === 1 ) return;
                 scope.moveZ = 1;
                 scope.stopMovingUp = false;
                 scope.stopMovingDown = false;
@@ -169,7 +171,8 @@ console.log( 'zzz' );
             case 40: // down
             case 83: // s
 
-                scope.moveX = -1;
+                if ( scope.moveX === - 1 ) return;
+                scope.moveX = - 1;
                 scope.stopMovingUp = false;
                 scope.stopMovingLeft = false;
                 scope.stopMovingRight = false;
@@ -185,6 +188,7 @@ console.log( 'zzz' );
             case 39: // right
             case 68: // d
 
+                if ( scope.moveZ === - 1 ) return;
                 scope.moveZ = -1;
                 scope.stopMovingUp = false;
                 scope.stopMovingLeft = false;
@@ -289,9 +293,7 @@ Game.ControlsManager.prototype.rotateTop = (function () {
         if ( Date.now() - lastUpdateTime > 100 ) {
 
             lastUpdateTime = Date.now();
-
             bufferView[ 1 ] = Math.floor( angle * 1000 );
-
             network.send( 'PlayerTankRotateTop', buffer, bufferView );
 
         }
