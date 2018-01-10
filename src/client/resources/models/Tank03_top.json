@@ -16,7 +16,7 @@
         "colorEmissive":[0,0,0],
         "colorDiffuse":[0.64,0.64,0.64],
         "mapDiffuseRepeat":[1,1],
-        "shading":"phong",
+        "shading":"basic",
         "specularCoef":50,
         "depthWrite":true,
         "colorSpecular":[0.5,0.5,0.5]

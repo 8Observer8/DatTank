@@ -17,7 +17,7 @@
         "mapDiffuseWrap":["RepeatWrapping","RepeatWrapping"],
         "mapDiffuseRepeat":[1,1],
         "DbgIndex":0,
-        "shading":"phong",
+        "shading":"lambert",
         "mapDiffuseAnisotropy":1,
         "opacity":1,
         "vertexColors":false,
