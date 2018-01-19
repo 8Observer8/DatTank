@@ -191,6 +191,8 @@ Game.Arena.prototype.addNetworkListeners = function () {
 
     //
 
+    network.addMessageListener( 'ArenaPlayerRespawn', this.proxyEventToPlayer.bind( this ) );
+
     network.addMessageListener( 'PlayerTankRotateTop', this.proxyEventToPlayer.bind( this ) );
     network.addMessageListener( 'PlayerTankMove', this.proxyEventToPlayer.bind( this ) );
     network.addMessageListener( 'PlayerTankMoveByPath', this.proxyEventToPlayer.bind( this ) );

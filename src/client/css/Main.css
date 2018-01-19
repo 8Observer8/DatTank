@@ -392,7 +392,7 @@ object {
     opacity: 1;
 }
 
-#signin-box-wrapper #change-tank {
+#change-tank {
     position: relative;
     border: 1px solid #0493CC;
     height: 41px;
@@ -403,7 +403,7 @@ object {
     opacity: 0.75;
 }
 
-#signin-box-wrapper #change-tank:hover {
+#change-tank:hover {
     position: relative;
     height: 41px;
     right: 5%;
@@ -441,33 +441,11 @@ object {
     z-index: 10;
 }
 
-#continue-change-btn{
+#continue-change-btn {
     position: relative;
     margin-top: 10px;
     width: 100%;
     height: 43px;
-}
-
-#continue-box-wrapper #change-tank{
-    position: relative;
-    border: 1px solid #0493CC;
-    height: 41px;
-    right: 3%;
-    float: right;
-    width: 19%;
-    background: #499898;
-    opacity: 0.75;
-}
-
-#continue-box-wrapper #change-tank:hover{
-    position: relative;
-    border: 1px solid #0493CC;
-    height: 41px;
-    right: 1%;
-    float: right;
-    width: 21%;
-    background: #499898;
-    opacity: 1;
 }
 
 #continue-box-wrapper #continue-box {
@@ -516,7 +494,7 @@ object {
     height: 41px;
     margin-left: 10px;
     margin-right: auto;
-    width: 74%;
+    width: calc( 90% - 37px );
     text-align: center;
     font: normal 15px 'Roboto';
     color: #fff;

@@ -97,6 +97,10 @@ Player.prototype.respawn = function ( tankName ) {
 
     this.selectTank( tankName );
 
+    //
+
+    networkManager.send( 'ArenaPlayerRespawn', this.socket, false, { player: this.toPrivateJSON() } );
+
 };
 
 Player.prototype.selectTank = function ( tankName ) {

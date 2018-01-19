@@ -140,11 +140,7 @@ Game.UI.prototype.showContinueBox = function ( playerlogin, playerColor ) {
 
     $('#continue-box-wrapper #continue-btn').click( function () {
 
-        Game.Ads.playAipPreroll( function () {
-
-            Game.arena.me.respawn( false );
-
-        });
+        Game.arena.me.respawn( false );
 
     });
 
