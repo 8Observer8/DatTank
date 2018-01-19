@@ -578,6 +578,16 @@ object {
     border-top: 1px solid #444;
 }
 
+#footer #dt-version {
+    position: absolute;
+    top: 12px;
+    left: 25px;
+    color: #fff;
+    cursor: default;
+    font-size: 11px;
+    opacity: 0.2;
+}
+
 #footer a {
     float: right;
     margin-top: 9px;
