@@ -25,10 +25,13 @@ Utils.getDistance = function ( v1, v2 ) {
 
 Utils.getScreenPos = (function () {
 
-    var point = new THREE.Vector3();
-    var result = new THREE.Vector2();
+    var point = false;
+    var result = false;
 
     return function ( x, y, z, camera ) {
+
+        point = point || new THREE.Vector3();
+        result = result || new THREE.Vector2();
 
         point.set( x, y, z );
 

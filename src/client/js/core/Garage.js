@@ -27,10 +27,6 @@ Game.Garage = function () {
 
     this.clock = new THREE.Clock();
 
-    //
-
-    this.init();
-
 };
 
 Game.Garage.prototype = {};

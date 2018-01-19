@@ -32,6 +32,8 @@ Game.prototype.init = function () {
     window.settings = new Game.SettingsManager();
     window.chatManager = new Game.ChatManager();
 
+    window.garage.init();
+
     //
 
     ui.init();
