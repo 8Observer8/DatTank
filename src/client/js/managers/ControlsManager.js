@@ -49,6 +49,8 @@ Game.ControlsManager.prototype.mouseInit = function () {
         switch ( mouseKeyPressed ) {
 
             case 1:
+            case 2:
+            case 3:
 
                 clearInterval( scope.fireTime );
                 scope.fireTime = setInterval( function () {
@@ -58,14 +60,6 @@ Game.ControlsManager.prototype.mouseInit = function () {
                 }, 100);
 
                 scope.shoot();
-
-                break;
-
-            case 2:
-
-                break;
-
-            case 3:
 
                 break;
 

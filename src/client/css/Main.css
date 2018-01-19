@@ -379,7 +379,7 @@ object {
     height: 41px;
     margin-left: 16px;
     margin-right: auto;
-    width: 69%;
+    width: calc( 90% - 42px );
     text-align: center;
     font: normal 15px 'Roboto';
     color: #fff;
@@ -392,31 +392,30 @@ object {
     opacity: 1;
 }
 
-#signin-box-wrapper #change-tank{
+#signin-box-wrapper #change-tank {
     position: relative;
     border: 1px solid #0493CC;
     height: 41px;
     right: 5%;
     float: right;
-    width: 20.5%;
-    background: #499898;
+    width: 40px;
+    background: #9a9a9a;
     opacity: 0.75;
 }
 
-#signin-box-wrapper #change-tank:hover{
+#signin-box-wrapper #change-tank:hover {
     position: relative;
-    border: 1px solid #0493CC;
     height: 41px;
     right: 5%;
     float: right;
-    width: 20.5%;
-    background: #499898;
-    opacity: 1;
+    opacity: 0.85;
 }
 
 #change-tank img {
-    width: 68px;
-    height: 40px;
+    margin-top: 6px;
+    margin-left: 5px;
+    width: 30px;
+    height: 30px;
 }
 
 #signin-box-wrapper #signin-box #instructions {
@@ -469,11 +468,6 @@ object {
     width: 21%;
     background: #499898;
     opacity: 1;
-}
-
-#change-tank img {
-    width: 68px;
-    height: 40px;
 }
 
 #continue-box-wrapper #continue-box {
