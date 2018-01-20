@@ -41,7 +41,7 @@ Game.Tower.prototype.init = function () {
 
     //
 
-    var base = new THREE.Mesh( towerBaseModel.geometry, new THREE.MeshFaceMaterial( towerBaseModel.material ).clone() );
+    var base = new THREE.Mesh( towerBaseModel.geometry, towerBaseModel.material );
     base.castShadow = true;
     base.rotation.y = 0;
     base.receiveShadow = true;
@@ -49,19 +49,27 @@ Game.Tower.prototype.init = function () {
     this.object.add( base );
     this.object.base = base;
 
+    for ( var i = 0, il = base.material.length; i < il; i ++ ) {
+
+        base.material[ i ] = base.material[ i ].clone();
+
+    }
+
     //
 
-    var top = new THREE.Mesh( towerTopModel.geometry, new THREE.MeshFaceMaterial( towerTopModel.material ).clone() );
+    var materials = [];
+    for ( var i = 0, il = towerTopModel.material.length; i < il; i ++ ) {
+
+        materials.push( towerTopModel.material[ i ].clone() );
+        materials[ materials.length - 1 ].morphTargets = true;
+
+    }
+
+    var top = new THREE.Mesh( towerTopModel.geometry, materials );
     top.castShadow = true;
     top.receiveShadow = true;
     top.position.y = 0;
     top.scale.set( 27, 27, 27 );
-
-    for ( var i = 0, il = top.material.materials.length; i < il; i ++ ) {
-
-        top.material.materials[ i ].morphTargets = true;
-
-    }
 
     this.object.add( top );
     this.object.top = top;
@@ -168,7 +176,7 @@ Game.Tower.prototype.shoot = function ( shootId ) {
 
     bullet.position.set( this.object.position.x, 25, this.object.position.z );
 
-    if ( bullet.soundShooting.source.buffer ) {
+    if ( bullet.soundShooting.buffer ) {
 
         if ( bullet.soundShooting.isPlaying ) {
 
@@ -221,8 +229,8 @@ Game.Tower.prototype.changeTeam = function ( team, init ) {
 
     this.team = team;
 
-    this.object.top.material.materials[1].color.setHex( + team.color.replace('#', '0x') );
-    this.object.base.material.materials[1].color.setHex( + team.color.replace('#', '0x') );
+    this.object.top.material[1].color.setHex( + team.color.replace('#', '0x') );
+    this.object.base.material[1].color.setHex( + team.color.replace('#', '0x') );
 
     if ( ! init ) this.health = 100;
 

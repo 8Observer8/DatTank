@@ -31,19 +31,21 @@ Game.Tank.D32.prototype.initModel = function () {
 
     //
 
-    var base = new THREE.Mesh( tankBaseModel.geometry, new THREE.MeshFaceMaterial( tankBaseModel.material ) );
+    var materials = [];
+    for ( var i = 0, il = tankBaseModel.material.length; i < il; i ++ ) {
+
+        materials.push( tankBaseModel.material[ i ].clone() );
+        materials[ materials.length - 1 ].morphTargets = true;
+
+    }
+
+    var base = new THREE.Mesh( tankBaseModel.geometry, materials );
     base.castShadow = true;
     base.rotation.y = 0;
     base.receiveShadow = true;
     base.scale.set( 20, 20, 20 );
     this.object.add( base );
     this.object.base = base;
-
-    for ( var i = 0, il = base.material.materials.length; i < il; i ++ ) {
-
-        base.material.materials[ i ].morphTargets = true;
-
-    }
 
     //
 
@@ -57,19 +59,21 @@ Game.Tank.D32.prototype.initModel = function () {
 
     //
 
-    var top = new THREE.Mesh( tankTopModel.geometry, new THREE.MeshFaceMaterial( tankTopModel.material ) );
+    var materials = [];
+    for ( var i = 0, il = tankTopModel.material.length; i < il; i ++ ) {
+
+        materials.push( tankTopModel.material[ i ].clone() );
+        materials[ materials.length - 1 ].morphTargets = true;
+
+    }
+
+    var top = new THREE.Mesh( tankTopModel.geometry, materials );
     top.castShadow = true;
     top.receiveShadow = true;
     top.position.y = 20;
     top.position.x = 0;
     top.position.z = 7;
     top.scale.set( 20, 20, 20 );
-
-    for ( var i = 0, il = top.material.materials.length; i < il; i ++ ) {
-
-        top.material.materials[ i ].morphTargets = true;
-
-    }
 
     this.object.add( top );
     this.object.top = top;

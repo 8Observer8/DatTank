@@ -35,7 +35,17 @@ Game.Tank.USAT54.prototype.initModel = function () {
 
     //
 
-    var base = new THREE.Mesh( tankBaseModel.geometry, new THREE.MultiMaterial( tankBaseModel.material ) );
+    var materials = [];
+    for ( var i = 0, il = tankBaseModel.material.length; i < il; i ++ ) {
+
+        materials.push( tankBaseModel.material[ i ].clone() );
+        materials[ materials.length - 1 ].morphTargets = true;
+
+    }
+
+    //
+
+    var base = new THREE.Mesh( tankBaseModel.geometry, materials );
     base.castShadow = true;
     base.rotation.y = 0;
     base.receiveShadow = true;
@@ -43,12 +53,6 @@ Game.Tank.USAT54.prototype.initModel = function () {
     base.material.morphTargets = true;
     this.object.add( base );
     this.object.base = base;
-
-    for ( var i = 0, il = base.material.materials.length; i < il; i ++ ) {
-
-        base.material.materials[ i ].morphTargets = true;
-
-    }
 
     //
 
@@ -62,17 +66,19 @@ Game.Tank.USAT54.prototype.initModel = function () {
 
     //
 
-    var top = new THREE.Mesh( tankTopModel.geometry, new THREE.MultiMaterial( tankTopModel.material ) );
+    var materials = [];
+    for ( var i = 0, il = tankTopModel.material.length; i < il; i ++ ) {
+
+        materials.push( tankTopModel.material[ i ].clone() );
+        materials[ materials.length - 1 ].morphTargets = true;
+
+    }
+
+    var top = new THREE.Mesh( tankTopModel.geometry, materials );
     top.castShadow = true;
     top.receiveShadow = true;
     top.position.y = 0;
     top.scale.set( 20, 20, 20 );
-
-    for ( var i = 0, il = top.material.materials.length; i < il; i ++ ) {
-
-        top.material.materials[ i ].morphTargets = true;
-
-    }
 
     this.object.add( top );
     this.object.top = top;

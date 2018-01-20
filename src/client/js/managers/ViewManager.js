@@ -28,13 +28,7 @@ Game.ViewManager = function () {
 
     this.scene = false;
     this.camera = false;
-
-    this.skyboxScene = false;
-    this.skyBoxCamera = false;
-
     this.renderer = false;
-
-    this.selectionCircle = false;
 
     this.cameraOffset = new THREE.Vector3();
     this.shakeInterval = false;
@@ -65,24 +59,11 @@ Game.ViewManager.prototype.setupScene = function () {
     this.sun.target.position.set( 50, 0, 50 );
     this.scene.add ( this.sun );
 
-    this.skyboxScene = new THREE.Scene();
-    this.skyBoxCamera = new THREE.PerspectiveCamera( 60, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 1, 5000 );
-
-    this.skybox = Game.Skybox();
-
-    // this.skyboxScene.add( this.skybox );
-
     this.camera.position.set( 180, 400, 0 );
     this.camera.lookAt( new THREE.Vector3() );
-
-    // this.skyBoxCamera.position.set( 180, 400, 0 );
-    // this.skyBoxCamera.lookAt( new THREE.Vector3() );
-    // this.skyboxScene.add( this.skyBoxCamera );
-
     this.scene.add( this.camera );
 
     this.scene.fog = new THREE.Fog( 0xa9a6a6, 100, 700 );
-    // this.skyboxScene.fog = new THREE.Fog( 0xa9a6a6, 700, 4000 );
 
     // setup sound listener
 
@@ -180,7 +161,7 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
 
         }
 
-        mesh = new THREE.Mesh( model.geometry, new THREE.MultiMaterial( model.material ) );
+        mesh = new THREE.Mesh( model.geometry, model.material );
 
         var bbox = new THREE.Box3().setFromObject( mesh );
         var radius = Math.max( Math.abs( bbox.min.x ), Math.abs( bbox.min.z ), Math.abs( bbox.max.x ), Math.abs( bbox.max.z ) ) / 1.2;
@@ -598,12 +579,6 @@ Game.ViewManager.prototype.animate = function ( delta ) {
 
     this.camera.lookAt( lookPos );
 
-    this.skyBoxCamera.position.x = Game.arena.me.position.x - ( 120 * Math.sin( Game.arena.me.rotation ) );
-    this.skyBoxCamera.position.z = Game.arena.me.position.z - ( 120 * Math.cos( Game.arena.me.rotation ) );
-    this.skyBoxCamera.position.y = 100;
-
-    this.skyBoxCamera.lookAt( lookPos );
-
     if ( Game.arena.boxManager ) {
 
         Game.arena.boxManager.update( delta );
@@ -708,9 +683,6 @@ Game.ViewManager.prototype.render = function () {
     this.prevRenderTime = performance.now();
 
     this.animate( delta );
-
-    // this.renderer.render( this.skyboxScene, this.skyBoxCamera );
-    // this.renderer.autoClear = false;
     this.renderer.render( this.scene, this.camera );
 
     //

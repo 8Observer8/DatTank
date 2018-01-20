@@ -22,7 +22,7 @@ Game.Box.Health.prototype.init = function () {
 
     var boxModel = resourceManager.getModel( 'health_box.json' );
 
-    this.mesh = new THREE.Mesh( boxModel.geometry, new THREE.MeshFaceMaterial( boxModel.material ) );
+    this.mesh = new THREE.Mesh( boxModel.geometry, boxModel.material );
     this.mesh.name = 'HealthBox';
     this.mesh.scale.set( 31, 31, 31 );
     this.mesh.rotation.z = Math.PI / 2;

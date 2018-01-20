@@ -502,7 +502,7 @@ Game.Tank.prototype.shootBullet = function ( shootId, data ) {
     bullet.position.set( this.object.position.x, 25, this.object.position.z );
     bullet.active = true;
 
-    if ( bullet.soundShooting.source.buffer ) {
+    if ( bullet.soundShooting.buffer ) {
 
         if ( bullet.soundShooting.isPlaying ) {
 

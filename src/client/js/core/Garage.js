@@ -79,8 +79,7 @@ Game.Garage.prototype.init = function () {
 
     loader1.load( 'resources/models/tank-demo-1.json', function ( geometry, materials ) {
 
-        var material = new THREE.MultiMaterial( materials );
-        var model = new THREE.Mesh( geometry, material );
+        var model = new THREE.Mesh( geometry, materials );
         model.position.y += 0.6;
         model.position.x += 1;
         model.position.z -= 1.5;
@@ -100,8 +99,7 @@ Game.Garage.prototype.init = function () {
 
     loader2.load( 'resources/models/tank-demo-2.json', function ( geometry, materials ) {
 
-        var material = new THREE.MultiMaterial( materials );
-        var model = new THREE.Mesh( geometry, material );
+        var model = new THREE.Mesh( geometry, materials );
         model.position.y += 0.6;
         model.visible = false;
         model.castShadow = true;
@@ -118,8 +116,7 @@ Game.Garage.prototype.init = function () {
 
     loader3.load( 'resources/models/tank-demo-3.json', function ( geometry, materials ) {
 
-        var material = new THREE.MultiMaterial( materials );
-        var model = new THREE.Mesh( geometry, material );
+        var model = new THREE.Mesh( geometry, materials );
         model.rotation.y = - Math.PI / 2;
         model.position.y += 0.3;
         model.visible = false;
@@ -137,8 +134,7 @@ Game.Garage.prototype.init = function () {
 
     loader4.load( 'resources/models/garage.json', function ( geometry, materials ) {
 
-        var material = new THREE.MultiMaterial( materials );
-        var model = new THREE.Mesh( geometry, material );
+        var model = new THREE.Mesh( geometry, materials );
         model.castShadow = true;
         model.receiveShadow = true;
         model.position.y += 0.4;
