@@ -59,10 +59,19 @@ Arena.prototype.init = function ( callback ) {
 
 Arena.prototype.addPlayer = function ( params ) {
 
+    var scope = this;
     var player = new Game.Player( this, { login: params.login, tank: params.tank, socket: params.socket });
 
     this.playerManager.add( player );
     this.collisionManager.addPlayer( player );
+
+    //
+
+    setTimeout( function () {
+
+        scope.updateLeaderboard();
+
+    }, 1000 );
 
     //
 
@@ -71,6 +80,8 @@ Arena.prototype.addPlayer = function ( params ) {
 };
 
 Arena.prototype.removePlayer = function ( player ) {
+
+    var scope = this;
 
     if ( this.playerManager.remove( player ) ) {
 
@@ -90,6 +101,14 @@ Arena.prototype.removePlayer = function ( player ) {
 
     }
 
+    //
+
+    setTimeout( function () {
+
+        scope.updateLeaderboard();
+
+    }, 1000 );
+
 };
 
 Arena.prototype.announce = function ( eventName, data, view, players ) {
@@ -107,6 +126,71 @@ Arena.prototype.announce = function ( eventName, data, view, players ) {
     }
 
 };
+
+Arena.prototype.updateLeaderboard = function () {
+
+    var players = [];
+    var teams = [];
+
+    //
+
+    function sortByProperty ( array, property ) {
+
+        for ( var i = 0; i < array.length; i ++ ) {
+
+            for ( var j = i; j < array.length; j ++ ) {
+
+                if ( array[ i ][ property ] < array[ j ][ property ] ) {
+
+                    var tmp = array[ i ][ property ];
+                    array[ i ][ property ] = array[ j ][ property ];
+                    array[ j ][ property ] = tmp;
+
+                }
+
+            }
+
+        }
+
+        return array;
+
+    };
+
+    //
+
+    sortByProperty( this.playerManager.players, 'kills' );
+
+    for ( var i = 0, il = this.playerManager.players.length; i < il; i ++ ) {
+
+        players.push({
+            id:         this.playerManager.players[ i ].id,
+            login:      this.playerManager.players[ i ].login,
+            team:       this.playerManager.players[ i ].team.id,
+            kills:      this.playerManager.players[ i ].kills,
+            death:      this.playerManager.players[ i ].death
+        });
+
+    }
+
+    //
+
+    for ( var i = 0, il = this.teamManager.teams.length; i < il; i ++ ) {
+
+        if ( this.teamManager.teams[ i ].id === 1000 ) continue;
+
+        teams.push({
+            id:         this.teamManager.teams[ i ].id,
+            towers:     Math.floor( 100 * this.teamManager.teams[ i ].towers / this.towerManager.towers.length )
+        });
+
+    }
+
+    //
+
+    this.announce( 'ArenaLeaderboardUpdate', null, { players: players, teams: teams } );
+
+};
+
 
 Arena.prototype.toJSON = function () {
 

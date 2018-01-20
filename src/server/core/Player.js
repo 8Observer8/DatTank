@@ -96,6 +96,7 @@ Player.prototype.respawn = function ( tankName ) {
     this.position.z += offsetZ;
 
     this.selectTank( tankName );
+    this.arena.updateLeaderboard();
 
     //
 
@@ -358,6 +359,10 @@ Player.prototype.die = function ( killer ) {
         scope.arena.removePlayer( scope );
 
     }
+
+    //
+
+    scope.arena.updateLeaderboard();
 
 };
 

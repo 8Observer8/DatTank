@@ -47,9 +47,7 @@ Game.Arena.prototype.init = function ( params ) {
 
     //
 
-    ui.updateLeaderboard( this.playerManager.players, this.me );
     ui.updateTeamScore( this );
-
     ui.updateAmmo( this.me.ammo );
     ui.updateHealth( this.me.health );
 
@@ -128,8 +126,6 @@ Game.Arena.prototype.playerLeft = function ( player ) {
 
     }
 
-    ui.updateLeaderboard( this.playerManager.players, this.me );
-
 };
 
 Game.Arena.prototype.update = function ( time, delta ) {
@@ -147,6 +143,15 @@ Game.Arena.prototype.addBox = function ( data ) {
     this.boxManager.add( data );
 
 };
+
+Game.Arena.prototype.updateLeaderboard = function ( data ) {
+
+    // todo
+    console.log( data );
+
+};
+
+//
 
 Game.Arena.prototype.proxyEventToPlayer = function ( data, eventName ) {
 
@@ -183,6 +188,7 @@ Game.Arena.prototype.addNetworkListeners = function () {
 
     network.addMessageListener( 'ArenaAddBox', this.addBox.bind( this ) );
     network.addMessageListener( 'ArenaPlayerLeft', this.playerLeft.bind( this ) );
+    network.addMessageListener( 'ArenaLeaderboardUpdate', this.updateLeaderboard.bind( this ) );
 
     network.addMessageListener( 'PlayersInRange', this.newPlayersInRange.bind( this ) );
     network.addMessageListener( 'TowersInRange', this.newTowersInRange.bind( this ) );

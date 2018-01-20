@@ -41,6 +41,8 @@ PlayerManager.prototype.remove = function ( player ) {
 
     }
 
+    //
+
     return removed;
 
 };
@@ -94,12 +96,6 @@ PlayerManager.prototype.toJSON = function () {
     }
 
     return players;
-
-};
-
-PlayerManager.prototype.getLeaderboard = function () {
-
-    // todo
 
 };
 

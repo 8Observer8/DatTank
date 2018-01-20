@@ -10,6 +10,7 @@ var Team = function ( id ) {
     this.players = [];
     this.kills = 0;
     this.death = 0;
+    this.towers = 1;
 
     this.spawnPosition = Team.StartPositions[ this.id + '' ];
 

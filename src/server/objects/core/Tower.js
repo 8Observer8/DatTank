@@ -184,11 +184,24 @@ Tower.prototype.changeTeam = function ( team ) {
 
     //
 
+    team.towers ++;
+    scope.team.towers --;
+
+    //
+
     scope.team = team;
     scope.health = 100;
 
+    //
+
     bufferView[ 1 ] = scope.id;
     bufferView[ 2 ] = team.id;
+
+    //
+
+    scope.arena.updateLeaderboard();
+
+    //
 
     scope.sendEventToPlayersInRange( 'TowerChangeTeam', buffer, bufferView );
 

@@ -35,6 +35,7 @@ Game.NetworkManager.prototype.init = function ( callback ) {
     this.registerEvent( 'ArenaPlayerRespawn', 'out', 'json', 4 );
     this.registerEvent( 'ArenaAddBox', 'in', 'json', 5 );
     this.registerEvent( 'ArenaPlayerLeft', 'in', 'json', 6 );
+    this.registerEvent( 'ArenaLeaderboardUpdate', 'in', 'json', 7 );
 
     //
 
