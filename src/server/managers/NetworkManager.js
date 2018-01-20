@@ -68,12 +68,12 @@ NetworkManager.prototype.init = function () {
 
     // enable io
 
-    this.io = new WebSocketServer({ port: SOCKET_PORT });
+    this.io = new WebSocketServer({ port: environment.web.socketPort });
     this.io.on( 'connection', this.onConnect.bind( this ) );
 
     //
 
-    console.log( '> Socket network started on port ' + SOCKET_PORT );
+    console.log( '> Socket network started on port ' + environment.web.socketPort );
 
 };
 

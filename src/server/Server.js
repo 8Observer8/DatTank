@@ -72,10 +72,10 @@ app.use( '/*', express.static( __dirname + './../client/notfound.html') );
 
 //
 
-server.listen( PORT );
+server.listen( environment.web.port );
 networkManager.init();
 Game.ArenaManager.init();
 
 //
 
-console.log( '> Started server on port ' + PORT );
+console.log( '> Started server on port ' + environment.web.port );

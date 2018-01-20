@@ -97,6 +97,12 @@ PlayerManager.prototype.toJSON = function () {
 
 };
 
+PlayerManager.prototype.getLeaderboard = function () {
+
+    // todo
+
+};
+
 //
 
 module.exports = PlayerManager;
