@@ -346,25 +346,3 @@ Game.ControlsManager.prototype.stop = function () {
     scope.notMoveZ = false;
 
 };
-
-Game.ControlsManager.prototype.moveToPoint = (function () {
-
-    var buffer = new ArrayBuffer( 6 );
-    var bufferView = new Int16Array( buffer );
-
-    return function ( destination ) {
-
-        if ( Game.arena.me.status !== 'alive' ) {
-
-            return;
-
-        }
-
-        bufferView[1] = destination.x;
-        bufferView[2] = destination.z;
-
-        network.send( 'PlayerTankMoveByPath', buffer, bufferView );
-
-    };
-
-}) ();

@@ -114,12 +114,11 @@ Tower.prototype.shoot = function ( target ) {
     }
 
     scope.shootTime = Date.now();
-    scope.rotation = scope.rotation + 1.57;
 
     scope.bullets.push({
         origPosition:   { x: scope.position.x, y: 25, z: scope.position.z },
         position:       { x: scope.position.x, y: 25, z: scope.position.z },
-        angle:          scope.rotation,
+        angle:          scope.rotation + Math.PI / 2,
         id:             Tower.numShootId,
         ownerId:        scope.id,
         flytime:        5
@@ -235,7 +234,7 @@ Tower.prototype.rotateTop = function ( target, delta ) {
     var scope = this;
 
     scope.networkBuffers['rotateTop'] = scope.networkBuffers['rotateTop'] || {};
-    var buffer = scope.networkBuffers['rotateTop'].buffer || new ArrayBuffer( 6 );
+    var buffer = scope.networkBuffers['rotateTop'].buffer || new ArrayBuffer( 8 );
     var bufferView = scope.networkBuffers['rotateTop'].bufferView || new Uint16Array( buffer );
     scope.networkBuffers['rotateTop'].buffer = buffer;
     scope.networkBuffers['rotateTop'].bufferView = bufferView;
@@ -256,9 +255,11 @@ Tower.prototype.rotateTop = function ( target, delta ) {
 
     }
 
+    newRotation = utils.formatAngle( newRotation );
+
     //
 
-    deltaRot = utils.formatAngle( scope.newRotation ) - utils.formatAngle( scope.rotation );
+    deltaRot = scope.newRotation - scope.rotation;
 
     if ( deltaRot > Math.PI ) {
 
@@ -276,17 +277,13 @@ Tower.prototype.rotateTop = function ( target, delta ) {
 
     if ( Math.abs( deltaRot ) > 0.01 ) {
 
-        scope.rotation = utils.formatAngle( scope.rotation + Math.sign( deltaRot ) / 30 * ( delta / 20 ) );
+        scope.rotation = utils.formatAngle( scope.rotation + Math.sign( deltaRot ) / 30 * ( delta / 50 ) );
 
     }
 
-    newRotation = utils.formatAngle( newRotation );
-
     //
 
-    deltaRot = utils.formatAngle( newRotation ) - utils.formatAngle( scope.newRotation );
-
-    if ( Math.abs( deltaRot ) > 0.35 ) {
+    if ( Math.abs( newRotation - scope.newRotation ) > 0.15 ) {
 
         scope.newRotation = newRotation;
 
@@ -300,7 +297,7 @@ Tower.prototype.rotateTop = function ( target, delta ) {
 
     //
 
-    if ( Date.now() - scope.shootTime > scope.cooldown && Math.abs( newRotation - scope.rotation ) < 0.5 ) {
+    if ( Date.now() - scope.shootTime > scope.cooldown && deltaRot < 0.5 ) {
 
         scope.shoot( target );
 
