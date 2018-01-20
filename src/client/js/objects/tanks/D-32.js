@@ -10,6 +10,8 @@ Game.Tank.D32 = function ( params ) {
         base:   'Tank03_base.json'
     };
 
+    this.trackOffset = { l: -3, r: -8 };
+
     this.name = 'D-32';
 
 };

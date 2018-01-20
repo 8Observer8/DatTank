@@ -181,15 +181,15 @@ Game.Tank.prototype.addTrack = function () {
         plane1.rotation.x = - Math.PI / 2;
         plane1.rotation.z = rotation;
         plane1.position.copy( position );
-        plane1.position.x += dist * Math.cos( - rotation );
-        plane1.position.z += dist * Math.sin( - rotation );
+        plane1.position.x += ( dist - this.trackOffset.l ) * Math.cos( - rotation );
+        plane1.position.z += ( dist - this.trackOffset.l ) * Math.sin( - rotation );
         plane1.position.y = 2.2;
 
         plane2.rotation.x = - Math.PI / 2;
         plane2.position.copy( position );
         plane2.rotation.z = rotation;
-        plane2.position.x -= ( dist - 5 ) * Math.cos( - rotation );
-        plane2.position.z -= ( dist - 5 ) * Math.sin( - rotation );
+        plane2.position.x -= ( dist - 5 - this.trackOffset.r ) * Math.cos( - rotation );
+        plane2.position.z -= ( dist - 5 - this.trackOffset.r ) * Math.sin( - rotation );
         plane2.position.y = 2.2;
 
         track.position.copy( position );

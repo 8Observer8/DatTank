@@ -14,6 +14,8 @@ Game.Tank.USAT54 = function ( params ) {
         base:   'Tank01_base.json'
     };
 
+    this.trackOffset = { l: -1, r: -9 };
+
     this.name = 'USA-T54';
 
 };

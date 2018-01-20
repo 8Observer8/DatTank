@@ -90,9 +90,10 @@ Game.ControlsManager.prototype.mouseInit = function () {
         switch ( mouseKeyPressed ) {
 
             case 1:
+            case 2:
+            case 3:
 
                 scope.stopShooting();
-
                 break;
 
         }

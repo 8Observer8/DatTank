@@ -14,6 +14,8 @@ Game.Tank.UKBlackPrince = function ( params ) {
         base:   'Tank02_base.json'
     };
 
+    this.trackOffset = { l: -3, r: -6 };
+
     this.name = 'UK-Black-Prince';
 
 };
