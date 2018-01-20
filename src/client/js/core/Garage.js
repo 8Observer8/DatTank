@@ -25,8 +25,6 @@ Game.Garage = function () {
     this.maxArmour = 30;
     this.maxBullet = 12;
 
-    this.clock = new THREE.Clock();
-
 };
 
 Game.Garage.prototype = {};
@@ -41,7 +39,6 @@ Game.Garage.prototype.init = function () {
 
     //
 
-    this.animate = this.animate.bind( this );
     this.container = document.getElementById( 'skin' );
 
     this.camera = new THREE.PerspectiveCamera( 50, $('#skin').innerWidth() / $('#skin').innerHeight(), 1, 2000 );
@@ -55,11 +52,21 @@ Game.Garage.prototype.init = function () {
     var ambientlight = new THREE.AmbientLight( 0xeeeeee );
     this.scene.add( ambientlight );
 
+    this.spotLight = new THREE.SpotLight( 0xaaaaaa, 0.5, 10, Math.PI / 4, 0.4 );
+    this.spotLight.position.set( 2, 5, 2 );
+    this.spotLight.lookAt( this.scene.position );
+    this.spotLight.castShadow = true;
+    this.spotLight.shadow.mapSize.width = 1024;
+    this.spotLight.shadow.mapSize.height = 1024;
+    this.scene.add( this.spotLight );
+
     // Renderer
 
     this.renderer = new THREE.WebGLRenderer( { antialias: true } );
-    this.renderer.setPixelRatio( window.devicePixelRatio );
     this.renderer.setSize( $('#skin').innerWidth() , $('#skin').innerHeight() );
+    this.renderer.autoClear = false;
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = THREE.PCFShadowMap;
 
     this.container.appendChild( this.renderer.domElement );
 
@@ -74,11 +81,13 @@ Game.Garage.prototype.init = function () {
 
         var material = new THREE.MultiMaterial( materials );
         var model = new THREE.Mesh( geometry, material );
-        model.position.y += 0.3;
+        model.position.y += 0.6;
         model.position.x += 1;
         model.position.z -= 1.5;
         model.rotation.y = - Math.PI / 2;
         model.visible = true;
+        model.castShadow = true;
+        model.receiveShadow = true;
 
         scope.scene.add( model );
         scope.models['USAT54'] = model;
@@ -92,9 +101,11 @@ Game.Garage.prototype.init = function () {
     loader2.load( 'resources/models/tank-demo-2.json', function ( geometry, materials ) {
 
         var material = new THREE.MultiMaterial( materials );
-        model = new THREE.Mesh( geometry, material );
-        model.position.y += 0.3;
+        var model = new THREE.Mesh( geometry, material );
+        model.position.y += 0.6;
         model.visible = false;
+        model.castShadow = true;
+        model.receiveShadow = true;
 
         scope.scene.add( model );
         scope.models['UKBlackPrince'] = model;
@@ -108,9 +119,12 @@ Game.Garage.prototype.init = function () {
     loader3.load( 'resources/models/tank-demo-3.json', function ( geometry, materials ) {
 
         var material = new THREE.MultiMaterial( materials );
-        model = new THREE.Mesh( geometry, material );
-        model.rotation.y += 80;
+        var model = new THREE.Mesh( geometry, material );
+        model.rotation.y = - Math.PI / 2;
+        model.position.y += 0.3;
         model.visible = false;
+        model.castShadow = true;
+        model.receiveShadow = true;
 
         scope.scene.add( model );
         scope.models['D32'] = model;
@@ -119,15 +133,22 @@ Game.Garage.prototype.init = function () {
 
     });
 
-    var loaderscene = new THREE.AssimpJSONLoader();
+    var loader4 = new THREE.JSONLoader();
 
-    loaderscene.load( 'resources/models/assimp/interior/interior.assimp.json', function ( object ) {
+    loader4.load( 'resources/models/garage.json', function ( geometry, materials ) {
 
-        scope.scene.add( object );
+        var material = new THREE.MultiMaterial( materials );
+        var model = new THREE.Mesh( geometry, material );
+        model.castShadow = true;
+        model.receiveShadow = true;
+        model.position.y += 0.4;
+        scope.scene.add( model );
 
         loaded ++;
 
-    }, scope.onProgress );
+    });
+
+    //
 
     $( document ).keydown( function ( event ) {
 
@@ -139,7 +160,11 @@ Game.Garage.prototype.init = function () {
 
     });
 
-    this.animate();
+    //
+
+    window.addEventListener( 'resize', this.resize.bind( this ) );
+    this.render = this.render.bind( this );
+    this.render();
 
 };
 
@@ -153,27 +178,20 @@ Game.Garage.prototype.onProgress = function ( xhr ) {
 
 };
 
-Game.Garage.prototype.onWindowResize = function ( event ) {
+Game.Garage.prototype.resize = function ( event ) {
 
     this.renderer.setSize( $('#skin').innerWidth(), $('#skin').innerHeight() );
-
     this.camera.aspect = $('#skin').innerWidth() / $('#skin').innerHeight();
     this.camera.updateProjectionMatrix();
 
 };
 
-Game.Garage.prototype.animate = function () {
-
-    requestAnimationFrame( this.animate );
-    this.render();
-
-};
-
 Game.Garage.prototype.render = function () {
 
-    this.onWindowResize();
-
+    requestAnimationFrame( this.render );
     var timer = Date.now() * 0.00015;
+
+    //
 
     this.camera.position.set( Math.cos( timer ) * 10, 4, Math.sin( timer ) * 10 );
     this.camera.lookAt( this.scene.position );
@@ -222,6 +240,7 @@ Game.Garage.prototype.arrowBack = function () {
 
 Game.Garage.prototype.selectTank = function ( event ) {
 
+    this.resize();
     $('.choice-skins .tank.active').removeClass('active');
     var tankId;
 

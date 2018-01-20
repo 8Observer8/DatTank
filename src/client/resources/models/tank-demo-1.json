@@ -16,7 +16,7 @@
         "opacity":1,
         "mapDiffuseAnisotropy":1,
         "specularCoef":50,
-        "shading":"phong",
+        "shading":"lambert",
         "DbgName":"TankMaterial.001",
         "DbgColor":15658734,
         "blending":"NormalBlending",

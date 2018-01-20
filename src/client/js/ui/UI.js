@@ -213,7 +213,7 @@ Game.UI.prototype.updateLeaderboard = function ( players, me ) {
     var meInTop = false;
 
     for ( var i = 0; i < 5; i ++ ) {
-// console.log( players[i].login, players[i].kills );
+
         if ( i < players.length ) {
 
             $( names[ i ] ).html( players[ i ].login );
