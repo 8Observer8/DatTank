@@ -486,7 +486,7 @@ Player.prototype.update = function ( delta, time ) {
                 i --;
                 il --;
 
-                scope.sendEventToPlayersInRange('BulletHit', null, { scope: { id: scope.id }, bulletId: bullet.id, position: bullet.position } );
+                scope.sendEventToPlayersInRange('BulletHit', null, { player: { id: scope.id }, bulletId: bullet.id, position: bullet.position } );
 
                 var killer = scope.id;
                 var target = scope.arena.playerManager.getById( bulletCollisionResult.id ) || scope.arena.towerManager.getById( bulletCollisionResult.id );
