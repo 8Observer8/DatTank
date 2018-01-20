@@ -160,8 +160,6 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
 
         }
 
-        ui.updateLeaderboard( Game.arena.playerManager.players, Game.arena.me );
-
     } else {
 
         if ( Game.arena.me.id === this.id ) {
@@ -767,8 +765,6 @@ Game.Player.prototype.die = function ( killer, killerKills ) {
     this.movementDurationMap = false;
     this.moveDirection.x = 0;
     this.moveDirection.y = 0;
-
-    ui.updateLeaderboard( Game.arena.playerManager.players, Game.arena.me );
 
     this.tank.destroy();
 

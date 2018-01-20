@@ -47,7 +47,6 @@ Game.Arena.prototype.init = function ( params ) {
 
     //
 
-    ui.updateTeamScore( this );
     ui.updateAmmo( this.me.ammo );
     ui.updateHealth( this.me.health );
 
@@ -146,8 +145,8 @@ Game.Arena.prototype.addBox = function ( data ) {
 
 Game.Arena.prototype.updateLeaderboard = function ( data ) {
 
-    // todo
-    console.log( data );
+    ui.updateLeaderboard( data.players, this.me );
+    ui.updateTeamScore( data.teams );
 
 };
 

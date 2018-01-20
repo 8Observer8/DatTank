@@ -180,7 +180,7 @@ Arena.prototype.updateLeaderboard = function () {
 
         teams.push({
             id:         this.teamManager.teams[ i ].id,
-            towers:     Math.floor( 100 * this.teamManager.teams[ i ].towers / this.towerManager.towers.length )
+            score:      Math.floor( 100 * this.teamManager.teams[ i ].towers / this.towerManager.towers.length )
         });
 
     }

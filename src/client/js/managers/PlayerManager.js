@@ -24,10 +24,6 @@ Game.PlayerManager.prototype.add = function ( player ) {
 
     this.players.push( player );
 
-    //
-
-    ui.updateLeaderboard( this.players, this.me );
-
 };
 
 Game.PlayerManager.prototype.remove = function ( player ) {

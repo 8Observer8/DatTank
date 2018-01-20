@@ -230,7 +230,6 @@ Game.Tower.prototype.changeTeam = function ( team ) {
     //
 
     team.kills ++;
-    ui.updateTeamScore( Game.arena );
 
 };
 

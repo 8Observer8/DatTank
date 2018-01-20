@@ -184,8 +184,6 @@ Game.prototype.joinArena = function ( params ) {
     view.camera.position.set( Game.arena.me.position.x + 180, 400, Game.arena.me.position.z );
     view.camera.lookAt( Game.arena.me.position );
 
-    ui.updateLeaderboard( Game.arena.playerManager.players, Game.arena.me );
-
     $('#gear_btn').click( ui.openSettings.bind( ui ) );
     $('#exit-btn').click( ui.openSettings.bind( ui ) );
     $('#soundon').click( ui.changeSound.bind( ui ) );

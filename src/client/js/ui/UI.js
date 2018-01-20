@@ -188,37 +188,19 @@ Game.UI.prototype.hideContinueBox = function () {
 
 };
 
-Game.UI.prototype.updateTeamScore = function ( arena ) {
-
-    var totalTowerCount = arena.towerManager.towers.length;
-
-    for ( var i = 0; i < arena.teamManager.teams.length; i ++ ) {
-
-        arena.teamManager.teams[ i ].towersCount = 0;
-
-    }
-
-    for ( var i = 0; i < totalTowerCount; i ++ ) {
-
-        arena.towerManager.towers[ i ].team.towersCount ++;
-
-    }
-
-    //
+Game.UI.prototype.updateTeamScore = function ( teams ) {
 
     var list = $( '#team-params .team-number' );
 
     for ( var i = 0, il = list.length; i < il; i ++ ) {
 
-        $( list[ i ] ).html( Math.floor( 100 * arena.teamManager.teams[ i ].towersCount / totalTowerCount ) + '%' );
+        $( list[ i ] ).html( teams[ i ].score + '%' );
 
     }
 
 };
 
 Game.UI.prototype.updateLeaderboard = function ( players, me ) {
-
-    players.sort( function ( a, b ) { return ( b.kills - a.kills ); });
 
     var names = $('#top-killers .player-name');
     var kills = $('#top-killers .kills');
