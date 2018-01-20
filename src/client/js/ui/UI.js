@@ -213,12 +213,12 @@ Game.UI.prototype.updateLeaderboard = function ( players, me ) {
     var meInTop = false;
 
     for ( var i = 0; i < 5; i ++ ) {
-
+// console.log( players[i].login, players[i].kills );
         if ( i < players.length ) {
 
             $( names[ i ] ).html( players[ i ].login );
             $( kills[ i ] ).html( players[ i ].kills );
-            $( teams[ i ] ).css( 'background-color', players[ i ].team.color );
+            $( teams[ i ] ).css( 'background-color', Game.Team.colors[ players[ i ].team ] );
 
             $( rows[ i ] ).show();
 

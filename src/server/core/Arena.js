@@ -142,9 +142,9 @@ Arena.prototype.updateLeaderboard = function () {
 
                 if ( array[ i ][ property ] < array[ j ][ property ] ) {
 
-                    var tmp = array[ i ][ property ];
-                    array[ i ][ property ] = array[ j ][ property ];
-                    array[ j ][ property ] = tmp;
+                    var tmp = array[ i ];
+                    array[ i ] = array[ j ];
+                    array[ j ] = tmp;
 
                 }
 

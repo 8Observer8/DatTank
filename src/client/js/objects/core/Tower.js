@@ -28,7 +28,7 @@ Game.Tower = function ( arena, params ) {
 
     //
 
-    this.changeTeam( this.team.id );
+    this.changeTeam( this.team.id, true );
 
 };
 
@@ -214,7 +214,7 @@ Game.Tower.prototype.animate = function ( delta ) {
 
 };
 
-Game.Tower.prototype.changeTeam = function ( team ) {
+Game.Tower.prototype.changeTeam = function ( team, init ) {
 
     team = this.arena.teamManager.getById( team );
     if ( ! team ) return;
@@ -224,7 +224,8 @@ Game.Tower.prototype.changeTeam = function ( team ) {
     this.object.top.material.materials[1].color.setHex( + team.color.replace('#', '0x') );
     this.object.base.material.materials[1].color.setHex( + team.color.replace('#', '0x') );
 
-    this.health = 100;
+    if ( ! init ) this.health = 100;
+
     this.updateHealthBar();
 
     //

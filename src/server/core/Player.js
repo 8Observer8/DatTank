@@ -362,7 +362,11 @@ Player.prototype.die = function ( killer ) {
 
     //
 
-    scope.arena.updateLeaderboard();
+    setTimeout( function () {
+
+        scope.arena.updateLeaderboard();
+
+    }, 1000 );
 
 };
 
@@ -402,15 +406,19 @@ Player.prototype.update = function ( delta, time ) {
 
     }
 
-    if ( newTowersInRange.length ) {
+    if ( this.socket ) {
 
-        networkManager.send( 'TowersInRange', scope.socket, false, newTowersInRange );
+        if ( newTowersInRange.length ) {
 
-    }
+            networkManager.send( 'TowersInRange', scope.socket, false, newTowersInRange );
 
-    if ( towersOutOfRange.length ) {
+        }
 
-        networkManager.send( 'TowersOutOfRange', scope.socket, false, towersOutOfRange );
+        if ( towersOutOfRange.length ) {
+
+            networkManager.send( 'TowersOutOfRange', scope.socket, false, towersOutOfRange );
+
+        }
 
     }
 
@@ -446,15 +454,19 @@ Player.prototype.update = function ( delta, time ) {
 
     }
 
-    if ( newPlayersInRange.length ) {
+    if ( this.socket ) {
 
-        networkManager.send( 'PlayersInRange', scope.socket, false, newPlayersInRange );
+        if ( newPlayersInRange.length ) {
 
-    }
+            networkManager.send( 'PlayersInRange', scope.socket, false, newPlayersInRange );
 
-    if ( playersOutOfRange.length ) {
+        }
 
-        networkManager.send( 'PlayersOutOfRange', scope.socket, false, playersOutOfRange );
+        if ( playersOutOfRange.length ) {
+
+            networkManager.send( 'PlayersOutOfRange', scope.socket, false, playersOutOfRange );
+
+        }
 
     }
 
