@@ -31,7 +31,7 @@ Health.prototype.pickUp = function ( player ) {
 
     if ( player.socket ) {
 
-        networkManager.send( 'PlayerGotBox', player.socket, null, { box: this.toJSON(), value: player.health } );
+        networkManager.send( 'PlayerGotBox', player.socket, null, { player: { id: player.id }, box: this.toJSON(), value: player.health } );
 
     }
 

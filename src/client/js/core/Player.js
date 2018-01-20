@@ -581,7 +581,7 @@ Game.Player.prototype.gotBox = function ( data ) {
 
         soundManager.menuSound.play();
 
-    };
+    }
 
     switch ( box.type ) {
 
@@ -600,6 +600,7 @@ Game.Player.prototype.gotBox = function ( data ) {
         default:
 
             console.log('Unknown box type[' + box.type + '].');
+            break;
 
     }
 
