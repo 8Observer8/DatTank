@@ -48,11 +48,8 @@ Game.Tank.USAT54.prototype.initModel = function () {
     //
 
     var base = new THREE.Mesh( tankBaseModel.geometry, materials );
-    base.castShadow = true;
     base.rotation.y = 0;
-    base.receiveShadow = true;
     base.scale.set( 20, 20, 20 );
-    base.material.morphTargets = true;
     this.object.add( base );
     this.object.base = base;
 
@@ -63,6 +60,7 @@ Game.Tank.USAT54.prototype.initModel = function () {
     tankShadow.scale.set( 15, 17, 17 );
     tankShadow.rotation.x = - Math.PI / 2;
     tankShadow.position.y += 0.5;
+    tankShadow.renderOrder = 2;
 
     this.object.add( tankShadow );
 

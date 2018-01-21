@@ -291,6 +291,7 @@ Game.ViewManager.prototype.addObjectShadow = function ( objectType, position, sc
             treeShadow.scale.set( scale.y, scale.y, scale.y );
             treeShadow.position.x += 2 * treeShadow.scale.y / 2 - 2;
             treeShadow.position.z += 2 * treeShadow.scale.y / 2 - 4;
+            treeShadow.renderOrder = 2;
             this.scene.add( treeShadow );
 
             break;
@@ -306,6 +307,7 @@ Game.ViewManager.prototype.addObjectShadow = function ( objectType, position, sc
             treeShadow.scale.set( scale.y, scale.y, scale.y );
             treeShadow.position.x += 2 * treeShadow.scale.y / 2 - 2;
             treeShadow.position.z += 2 * treeShadow.scale.y / 2 - 4;
+            treeShadow.renderOrder = 2;
             this.scene.add( treeShadow );
 
             break;
@@ -321,6 +323,7 @@ Game.ViewManager.prototype.addObjectShadow = function ( objectType, position, sc
             treeShadow.scale.set( scale.y, scale.y, scale.y );
             treeShadow.position.x += 2 * treeShadow.scale.y / 2 - 2;
             treeShadow.position.z += 2 * treeShadow.scale.y / 2 - 4;
+            treeShadow.renderOrder = 2;
             this.scene.add( treeShadow );
 
             break;
@@ -336,6 +339,7 @@ Game.ViewManager.prototype.addObjectShadow = function ( objectType, position, sc
             treeShadow.scale.set( scale.y, scale.y, scale.y );
             treeShadow.position.x += 2 * treeShadow.scale.y / 2 - 2;
             treeShadow.position.z += 2 * treeShadow.scale.y / 2 - 4;
+            treeShadow.renderOrder = 2;
             this.scene.add( treeShadow );
 
             break;
@@ -352,6 +356,7 @@ Game.ViewManager.prototype.addObjectShadow = function ( objectType, position, sc
             rockShadow.scale.set( scale, scale, scale );
             rockShadow.position.x += rockShadow.scale.y / 2;
             rockShadow.position.z += rockShadow.scale.y / 2;
+            rockShadow.renderOrder = 2;
             this.scene.add( rockShadow );
 
             break;
@@ -389,6 +394,7 @@ Game.ViewManager.prototype.addObjectShadow = function ( objectType, position, sc
             rockShadow.scale.set( scale, scale, scale );
             rockShadow.position.x += rockShadow.scale.y / 4;
             rockShadow.position.z += rockShadow.scale.y / 4;
+            rockShadow.renderOrder = 2;
             this.scene.add( rockShadow );
 
             break;
@@ -404,6 +410,7 @@ Game.ViewManager.prototype.addObjectShadow = function ( objectType, position, sc
             shadowHouse.scale.set( scale.y, scale.y, scale.y );
             shadowHouse.position.x += 5 * shadowHouse.scale.y / 2 - 4;
             shadowHouse.position.z += 3 * shadowHouse.scale.y / 2 - 4;
+            shadowHouse.renderOrder = 2;
             this.scene.add( shadowHouse );
 
             break;
@@ -425,6 +432,7 @@ Game.ViewManager.prototype.addGrassZones = function () {
     grass.scale.set( scale, scale, scale );
     grass.material.transparent = true;
     grass.position.set( ( Math.random() - 0.5 ) * size, 0.1 + Math.random() / 10, ( Math.random() - 0.5 ) * size );
+    grass.renderOrder = 0;
     this.scene.add( grass );
 
 };

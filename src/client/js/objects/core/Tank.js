@@ -90,6 +90,9 @@ Game.Tank.prototype.initTracks = function () {
             lastUpdate: 0
         });
 
+        plane1.renderOrder = 1;
+        plane2.renderOrder = 1;
+
         view.scene.add( plane1 );
         view.scene.add( plane2 );
 
@@ -542,24 +545,6 @@ Game.Tank.prototype.hideBullet = function ( data ) {
 
 };
 
-Game.Tank.prototype.updateBullets = function () {
-
-    // todo
-
-};
-
-Game.Tank.prototype.setDamage = function () {
-
-    // todo
-
-};
-
-Game.Tank.prototype.rotateTop = function () {
-
-    // todo
-
-};
-
 Game.Tank.prototype.dispose = function () {
 
     if ( this.effects.explosion ) {
@@ -606,7 +591,6 @@ Game.Tank.prototype.update = function ( delta ) {
 
     this.updateSmoke();
     this.updateBlastSmoke();
-    this.updateBullets();
     this.updateTracks();
     this.updateExplosion( delta );
     this.animate( delta );

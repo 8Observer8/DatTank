@@ -42,9 +42,7 @@ Game.Tower.prototype.init = function () {
     //
 
     var base = new THREE.Mesh( towerBaseModel.geometry, towerBaseModel.material );
-    base.castShadow = true;
     base.rotation.y = 0;
-    base.receiveShadow = true;
     base.scale.set( 27, 27, 27 );
     this.object.add( base );
     this.object.base = base;
@@ -66,8 +64,6 @@ Game.Tower.prototype.init = function () {
     }
 
     var top = new THREE.Mesh( towerTopModel.geometry, materials );
-    top.castShadow = true;
-    top.receiveShadow = true;
     top.position.y = 0;
     top.scale.set( 27, 27, 27 );
 

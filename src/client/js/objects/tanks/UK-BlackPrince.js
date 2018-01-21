@@ -46,10 +46,8 @@ Game.Tank.UKBlackPrince.prototype.initModel = function () {
     }
 
     var base = new THREE.Mesh( tankBaseModel.geometry, materials );
-    base.castShadow = true;
     base.rotation.y = 0;
     base.position.y = 5;
-    base.receiveShadow = true;
     base.scale.set( 20, 20, 20 );
     this.object.add( base );
     this.object.base = base;
@@ -69,6 +67,7 @@ Game.Tank.UKBlackPrince.prototype.initModel = function () {
     tankShadow.scale.set( 15, 17, 17 );
     tankShadow.rotation.x = - Math.PI / 2;
     tankShadow.position.y += 0.5;
+    tankShadow.renderOrder = 2;
 
     this.object.add( tankShadow );
 
