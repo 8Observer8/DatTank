@@ -90,7 +90,7 @@ Bot.prototype.update = function () {
             var x = Math.floor( 3 * Math.random() ) - 1;
             var y = Math.floor( 3 * Math.random() ) - 1;
 
-            var rotateBaseDuration = Math.floor( 50 * Math.random() ) + 500;
+            var rotateBaseDuration = Math.floor( 500 * Math.random() ) + 500;
             var moveDuration = Math.floor( 8000 * Math.random() ) + 1000;
 
             if ( x !== 0 || y !== 0 ) {
@@ -105,18 +105,20 @@ Bot.prototype.update = function () {
 
     } else {
 
-        this.moveDuration -= 40;
-        this.rotateBaseDuration -= 40;
+        this.moveDuration = ( this.moveDuration !== false ) ? moveDuration - 40 : false;
+        this.rotateBaseDuration = ( this.rotateBaseDuration !== false ) ? this.rotateBaseDuration - 40 : false;
 
-        if ( this.moveDuration <= 0 ) {
+        if ( this.moveDuration <= 0 && this.moveDuration !== false ) {
 
             this.player.move( 0, this.player.moveDirection.y );
+            this.moveDuration = false;
 
         }
 
-        if ( this.rotateBaseDuration <= 0 ) {
+        if ( this.rotateBaseDuration <= 0 && this.rotateBaseDuration !== false ) {
 
             this.player.move( this.player.moveDirection.x, 0 );
+            this.rotateBaseDuration = false;
 
         }
 

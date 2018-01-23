@@ -60,7 +60,7 @@ var Player = function ( arena, params ) {
 
     this.networkBuffers = {};
     this.inRangeOf = {};
-    this.viewRange = 500;
+    this.viewRange = 550;
 
     //
 
