@@ -14,7 +14,7 @@ var Tower = function ( arena, params ) {
     this.team = params.team || false;
     this.health = 100;
     this.shootTime = Date.now();
-    this.cooldown = 1500;
+    this.cooldown = 1300;
 
     this.target = false;
     this.hits = {};
@@ -348,7 +348,7 @@ Tower.prototype.update = function ( delta ) {
                             i --;
                             il --;
 
-                            this.sendEventToPlayersInRange( 'BulletHit', null, { tower: { id: tower.id }, bulletId: bullet.id, position: bullet.position } );
+                            this.sendEventToPlayersInRange( 'BulletHit', null, { bulletId: bullet.id, position: bullet.position } );
 
                             var killer = tower.id;
                             var target = this.arena.playerManager.getById( bulletCollisionResult.id );

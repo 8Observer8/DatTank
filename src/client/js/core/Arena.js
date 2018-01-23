@@ -11,6 +11,12 @@ Game.Arena = function () {
 
     //
 
+    this.effects = {
+        explosions:     []
+    };
+
+    //
+
     this.boxManager = new Game.BoxManager( this );
     this.playerManager = new Game.PlayerManager( this );
     this.teamManager = new Game.TeamManager( this );
@@ -35,6 +41,7 @@ Game.Arena.prototype.init = function ( params ) {
     ui.clearKills();
     view.addDecorations( params.decorations );
 
+    this.initExplosions();
     this.teamManager.init( params.teams );
     this.playerManager.init();
     this.boxManager.init( params.boxes );
@@ -57,6 +64,88 @@ Game.Arena.prototype.init = function ( params ) {
         localStorage.setItem( 'lastActiveTime', Date.now() );
 
     }, 1000 );
+
+};
+
+Game.Arena.prototype.initExplosions = function () {
+
+    for ( var i = 0; i < 30; i ++ ) {
+
+        var map = resourceManager.getTexture( 'explosion2.png' ).clone();
+        map.needsUpdate = true;
+        map.wrapS = THREE.RepeatWrapping;
+        map.wrapT = THREE.RepeatWrapping;
+        map.repeat.set( 0.25, 0.25 );
+        map.offset.set( 0, 0.75 );
+
+        var material = new THREE.SpriteMaterial({ map: map, color: 0xffffff, opacity: 0.7, fog: true });
+        var sprite = new THREE.Sprite( material );
+
+        sprite.scale.set( 80, 80, 80 );
+        sprite.visible = false;
+        view.scene.add( sprite );
+        this.effects.explosions.push( sprite );
+
+    }
+
+};
+
+Game.Arena.prototype.showExplosion = function ( params ) {
+
+    for ( var i = 0; i < this.effects.explosions.length; i ++ ) {
+
+        var explosion = this.effects.explosions[ i ];
+
+        if ( ! explosion.visible ) {
+
+            explosion.position.set( params.position.x, params.position.y, params.position.z );
+            explosion.scale.set( 80, 80, 80 );
+            explosion.visible = true;
+            break;
+
+        }
+
+    }
+
+};
+
+Game.Arena.prototype.updateExplosions = function ( delta ) {
+
+    for ( var i = 0; i < this.effects.explosions.length; i ++ ) {
+
+        var explosion = this.effects.explosions[ i ];
+
+        if ( ! explosion.visible ) continue;
+        explosion.time = explosion.time || 0;
+        explosion.time += delta;
+
+        if ( explosion.time > 50 ) {
+
+            if ( explosion.material.map.offset.y >= 0 ) {
+
+                explosion.material.map.offset.x += 0.25;
+                explosion.time = 0;
+
+                if ( explosion.material.map.offset.x === 1 && explosion.material.map.offset.y !== 0 ) {
+
+                    explosion.material.map.offset.x = 0;
+                    explosion.material.map.offset.y -= 0.25;
+
+                } else if ( explosion.material.map.offset.y === 0 && explosion.material.map.offset.x === 1 ) {
+
+                    explosion.scale.x = 80;
+                    explosion.scale.y = 80;
+                    explosion.visible = false;
+                    explosion.time = 0;
+                    explosion.material.map.offset.set( 0, 1 );
+
+                }
+
+            }
+
+        }
+
+    }
 
 };
 
@@ -128,6 +217,10 @@ Game.Arena.prototype.playerLeft = function ( player ) {
 };
 
 Game.Arena.prototype.update = function ( time, delta ) {
+
+    this.updateExplosions( delta );
+
+    //
 
     for ( var i = 0, il = this.playerManager.players.length; i < il; i ++ ) {
 
@@ -213,7 +306,7 @@ Game.Arena.prototype.addNetworkListeners = function () {
     network.addMessageListener( 'TowerChangeTeam', this.proxyEventToTower.bind( this ) );
     network.addMessageListener( 'TowerHit', this.proxyEventToTower.bind( this ) );
 
-    network.addMessageListener( 'BulletHit', this.proxyEventToPlayer.bind( this ) );
+    network.addMessageListener( 'BulletHit', this.showExplosion.bind( this ) );
 
     //
 
