@@ -506,7 +506,9 @@ Game.ViewManager.prototype.updateRenderer = function () {
 
     }
 
-    this.renderer = new THREE.WebGLRenderer({ canvas: Utils.ge('#renderport'), antialias: antialias });
+    $('#renderport').remove();
+    $('#viewport').prepend('<canvas id="renderport"></canvas>');
+    this.renderer = new THREE.WebGLRenderer({ canvas: $('#renderport')[0], antialias: antialias });
     this.renderer.setSize( this.quality * this.SCREEN_WIDTH, this.quality * this.SCREEN_HEIGHT );
     this.renderer.setClearColor( 0xa9a6a6 );
 
@@ -622,30 +624,6 @@ Game.ViewManager.prototype.animate = function ( delta ) {
             }
 
         }
-
-    }
-
-};
-
-Game.ViewManager.prototype.changeGraficQuality = function () {
-
-    var antialias = false;
-    var quality = 0.7;
-
-    if ( localStorage.getItem('hq') === 'true' ) {
-
-        antialias = true;
-        quality = 1;
-
-    }
-
-    if ( ! this.renderer ) {
-
-        this.renderer = new THREE.WebGLRenderer({ canvas: Utils.ge('#renderport'), antialias: antialias });
-        this.renderer.setSize( quality * this.SCREEN_WIDTH, quality * this.SCREEN_HEIGHT );
-        this.renderer.setClearColor( 0xa9a6a6 );
-
-        this.render();
 
     }
 

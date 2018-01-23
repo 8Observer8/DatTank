@@ -113,7 +113,7 @@ Game.Tank.prototype.initSounds = function () {
 
     this.sounds.explosion = new THREE.PositionalAudio( view.sound.listener );
     this.sounds.explosion.setBuffer( resourceManager.getSound('tank_explosion.wav') );
-    this.sounds.explosion.loop = true;
+    this.sounds.explosion.loop = false;
     this.sounds.explosion.setRefDistance( 15 );
     this.sounds.explosion.autoplay = false;
     if ( this.player.id !== Game.arena.me ) this.sounds.explosion.setVolume(0.4);

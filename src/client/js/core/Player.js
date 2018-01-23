@@ -353,8 +353,12 @@ Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
 
         if ( player.tank.sounds.moving.buffer && ! player.tank.sounds.moving.isPlaying ) {
 
-            player.tank.sounds.moving.play();
-            player.tank.sounds.moving.isPlaying = true;
+            if ( localStorage.getItem('sound') !== 'false' ) {
+            
+                player.tank.sounds.moving.play();
+                player.tank.sounds.moving.isPlaying = true;
+
+            }
 
         }
 
@@ -362,7 +366,6 @@ Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
 
         player.tank.addTrack();
 
-        // change 50 for correct delta
         if ( player.moveDirection.x > 0 ) {
 
             player.position.x += ( player.moveSpeed * Math.sin( player.rotation ) * delta );
@@ -381,7 +384,7 @@ Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
 
         } else if ( player.moveDirection.y < 0 ) {
 
-            player.rotation -= 0.001* delta;
+            player.rotation -= 0.001 * delta;
 
         }
 
