@@ -32,7 +32,7 @@ var Player = function ( arena, params ) {
     this.sizeX = 25;
     this.sizeZ = 7;
 
-    this.bullets = [];
+    this.bulletsPool = [];
 
     this.disable = false;
 
@@ -45,11 +45,6 @@ var Player = function ( arena, params ) {
     this.afkTimeout = false;
     this.moveDelay = false;
     this.shootTimeout = false;
-
-    this.pathFindIter = 0;
-    this.movePath = false;
-    this.movementDurationMap = false;
-    this.movementDuration = 0;
 
     this.position = new Game.Vec3();
     this.rotation = 0;
@@ -64,6 +59,7 @@ var Player = function ( arena, params ) {
 
     //
 
+    this.initBulletPool();
     this.addEventListeners();
 
 };
@@ -71,6 +67,38 @@ var Player = function ( arena, params ) {
 Player.prototype = Object.create( Game.EventDispatcher.prototype );
 
 //
+
+Player.prototype.initBulletPool = function () {
+
+    for ( var i = 0; i < 10; i ++ ) {
+
+        this.bulletsPool.push({
+            active:         false,
+            origPosition:   { x: 0, y: 25, z: 0 },
+            position:       { x: 0, y: 25, z: 0 },
+            angle:          false,
+            id:             false,
+            ownerId:        this.id,
+            flytime:        5
+        });
+
+    }
+
+};
+
+Player.prototype.getInactiveBullet = function () {
+
+    for ( var i = 0; i < this.bulletsPool.length; i ++ ) {
+
+        if ( ! this.bulletsPool[ i ].active ) {
+
+            return this.bulletsPool[ i ];
+
+        }
+
+    }
+
+};
 
 Player.prototype.respawn = function ( tankName ) {
 
@@ -225,14 +253,19 @@ Player.prototype.shoot = function () {
 
     }
 
-    scope.bullets.push({
-        origPosition:   { x: scope.position.x, y: 25, z: scope.position.z },
-        position:       { x: scope.position.x, y: 25, z: scope.position.z },
-        angle:          scope.rotationTop,
-        id:             Player.numShootId,
-        ownerId:        scope.id,
-        flytime:        5
-    });
+    //
+
+    var bullet = this.getInactiveBullet();
+    bullet.active = true;
+    bullet.origPosition.x = scope.position.x;
+    bullet.origPosition.y = 25;
+    bullet.origPosition.z = scope.position.z;
+    bullet.position.x = scope.position.x;
+    bullet.position.y = 25;
+    bullet.position.z = scope.position.z;
+    bullet.angle = scope.rotationTop;
+    bullet.flytime = 5;
+    bullet.id = Player.numShootId;
 
     scope.ammo --;
 
@@ -474,30 +507,31 @@ Player.prototype.update = function ( delta, time ) {
 
     // compute bullet positions & collisions
 
-    for ( var i = 0, il = scope.bullets.length; i < il; i ++ ) {
+    for ( var i = 0, il = scope.bulletsPool.length; i < il; i ++ ) {
 
-        scope.bullets[ i ].flytime --;
+        var bullet = scope.bulletsPool[ i ];
+        if ( ! bullet.active ) continue;
+        bullet.flytime --;
 
-        if ( scope.bullets[ i ].flytime > 0 ) {
+        if ( bullet.flytime < 0 ) {
 
-            var bulletCollisionResult = scope.arena.collisionManager.moveBullet( scope.bullets[ i ], delta );
+            bullet.active = false;
+            continue;
 
-            if ( bulletCollisionResult ) {
+        }
 
-                var bullet = scope.bullets.splice( i, 1 )[ 0 ];
-                i --;
-                il --;
+        var bulletCollisionResult = scope.arena.collisionManager.moveBullet( bullet, delta );
 
-                scope.sendEventToPlayersInRange( 'BulletHit', null, { bulletId: bullet.id, position: bullet.position } );
+        if ( bulletCollisionResult ) {
 
-                var killer = scope.id;
-                var target = scope.arena.playerManager.getById( bulletCollisionResult.id ) || scope.arena.towerManager.getById( bulletCollisionResult.id );
+            scope.sendEventToPlayersInRange( 'BulletHit', null, { bulletId: bullet.id, position: bullet.position } );
 
-                if ( target && target.hit ) {
+            var killer = scope.id;
+            var target = scope.arena.playerManager.getById( bulletCollisionResult.id ) || scope.arena.towerManager.getById( bulletCollisionResult.id );
 
-                    target.hit( killer );
+            if ( target && target.hit ) {
 
-                }
+                target.hit( killer );
 
             }
 

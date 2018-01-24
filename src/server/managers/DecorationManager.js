@@ -19,13 +19,13 @@ DecorationManager.prototype.init = function ( params ) {
     var x, z;
     var scale, scaleH;
     var baseSize = 200;
-
+    var count, type;
     var towers = this.arena.towerManager.towers;
 
     for ( var decorationName in params ) {
 
-        var count = params[ decorationName ].count;
-        var type = params[ decorationName ].type;
+        count = params[ decorationName ].count;
+        type = params[ decorationName ].type;
 
         while ( count ) {
 
