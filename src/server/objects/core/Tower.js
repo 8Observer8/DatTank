@@ -31,6 +31,7 @@ var Tower = function ( arena, params ) {
 
     this.range = 300;
     this.armour = 350;
+    this.bullet = 100;
 
     this.networkBuffers = {};
     this.inRangeOf = {};

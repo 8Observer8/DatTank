@@ -61,6 +61,7 @@ ArenaManager.prototype.removeEmptyArenas = function () {
 
         arena = this.arenas[ i ];
 
+        if ( ! arena || ! arena.players ) continue;
         if ( arena.players.length - arena.bots.length === 0 ) continue;
 
         newArenaList.push( arena );

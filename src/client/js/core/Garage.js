@@ -22,7 +22,7 @@ Game.Garage = function () {
 
     this.maxSpeed = 5;
     this.maxRange = 21;
-    this.maxArmour = 30;
+    this.maxArmour = 70;
     this.maxBullet = 12;
 
 };

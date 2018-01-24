@@ -278,7 +278,7 @@ Player.prototype.hit = function ( killer ) {
 
         } else if ( killer instanceof Game.Tower ) {
 
-            scope.health -= 60 * ( 50 / scope.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
+            scope.health -= 60 * ( killer.bullet / scope.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
             scope.health = Math.max( Math.round( scope.health ), 0 );
 
         }

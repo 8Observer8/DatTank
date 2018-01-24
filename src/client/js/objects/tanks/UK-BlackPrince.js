@@ -24,7 +24,7 @@ Game.Tank.UKBlackPrince.prototype = Object.create( Game.Tank.prototype );
 
 Game.Tank.UKBlackPrince.prototype.speed = 30;
 Game.Tank.UKBlackPrince.prototype.range = 160;
-Game.Tank.UKBlackPrince.prototype.armour = 252;
+Game.Tank.UKBlackPrince.prototype.armour = 700;
 Game.Tank.UKBlackPrince.prototype.bullet = 77;
 Game.Tank.UKBlackPrince.prototype.reloadTime = 40;
 

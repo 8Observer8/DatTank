@@ -11,7 +11,7 @@ var UKBlackPrince = function ( params ) {
 
     this.speed = 30;
     this.range = 160;
-    this.armour = 500;
+    this.armour = 700;
     this.bullet = 77;
     this.maxShells = 70;
     this.reloadTime = 1200;

@@ -14,7 +14,7 @@ BotManager.prototype = {};
 
 BotManager.prototype.init = function ( botNum ) {
 
-    botNum = botNum || 40 + Math.floor( Math.random() * 4 );
+    botNum = botNum || 5 + Math.floor( Math.random() * 4 );
 
     for ( var i = 0; i < botNum; i ++ ) {
 
