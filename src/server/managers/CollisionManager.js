@@ -5,6 +5,8 @@
 
 var SAT = require('sat');
 
+//
+
 var CollisionManager = function ( arena, params ) {
 
     this.arena = arena;
@@ -13,6 +15,10 @@ var CollisionManager = function ( arena, params ) {
     this.objects = [];
 
 };
+
+CollisionManager.prototype = {};
+
+//
 
 CollisionManager.prototype.checkCollision = function ( objectA, objectB, newPosition ) {
 
@@ -163,14 +169,7 @@ CollisionManager.prototype.getPlayerById = function ( playerId ) {
 CollisionManager.prototype.removePlayer = function ( player ) {
 
     var object = this.getPlayerById( player.id );
-
     if ( object ) this.objects.splice( this.objects.indexOf( object ), 1 );
-
-};
-
-CollisionManager.prototype.update = function ( delta ) {
-
-    // todo
 
 };
 

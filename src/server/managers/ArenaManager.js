@@ -11,6 +11,8 @@ var ArenaManager = function () {
 
 ArenaManager.prototype = {};
 
+//
+
 ArenaManager.prototype.init = function () {
 
     this.addNetworkListeners();
@@ -144,6 +146,21 @@ ArenaManager.prototype.getArenaById = function ( arenaId ) {
 
 };
 
+ArenaManager.prototype.playerJoin = function ( data, socket ) {
+
+    this.findArena( function ( arena ) {
+
+        var player = arena.addPlayer({ login: data.login, tank: data.tank, socket: socket });
+
+        var response = arena.toJSON();
+        response.me = player.toPrivateJSON();
+
+        networkManager.send( 'ArenaJoinResponce', socket, false, response );
+
+    });
+
+};
+
 ArenaManager.prototype.proxyEventToPlayer = function ( data, socket, eventName ) {
 
     if ( ! socket || ! socket.player ) return;
@@ -162,53 +179,13 @@ ArenaManager.prototype.proxyEventToArena = function ( data, socket, eventName ) 
 
 ArenaManager.prototype.addNetworkListeners = function () {
 
-    var scope = this;
-
-    // New player whants to JOIN to some arena
-
-    networkManager.addMessageListener( 'ArenaJoinRequest', function ( data, socket ) {
-
-        scope.findArena( function ( arena ) {
-
-            var player = arena.addPlayer({ login: data.login, tank: data.tank, socket: socket });
-
-            var response = arena.toJSON();
-            response.me = player.toPrivateJSON();
-
-            networkManager.send( 'ArenaJoinResponce', socket, false, response );
-
-        });
-
-    });
-
-    //
-
+    networkManager.addMessageListener( 'ArenaJoinRequest', this.playerJoin.bind( this ) );
     networkManager.addMessageListener( 'ArenaPlayerRespawn', this.proxyEventToPlayer.bind( this ) );
     networkManager.addMessageListener( 'PlayerTankRotateTop', this.proxyEventToPlayer.bind( this ) );
     networkManager.addMessageListener( 'PlayerTankMove', this.proxyEventToPlayer.bind( this ) );
     networkManager.addMessageListener( 'PlayerTankMoveByPath', this.proxyEventToPlayer.bind( this ) );
     networkManager.addMessageListener( 'PlayerTankShoot', this.proxyEventToPlayer.bind( this ) );
     networkManager.addMessageListener( 'SendChatMessage', this.proxyEventToPlayer.bind( this ) );
-
-    networkManager.addMessageListener( 'PlayerTankHit', function ( data, socket ) {
-
-        if ( ! socket.arena ) return;
-        var player = socket.arena.playerManager.getById( data[0] );
-        if ( ! player ) return;
-
-        player.dispatchEvent({ type: 'PlayerTankHit', data: data });
-
-    });
-
-    networkManager.addMessageListener( 'TowerHit', function ( data, socket ) {
-
-        if ( ! socket.arena ) return;
-        var tower = socket.arena.towerManager.getById( data[0] );
-        if ( ! tower ) return;
-
-        tower.dispatchEvent({ type: 'TowerHit', data: data });
-
-    });
 
 };
 

@@ -12,6 +12,8 @@ var TeamManager = function ( arena, params ) {
 
 TeamManager.prototype = {};
 
+//
+
 TeamManager.prototype.init = function ( teamNum ) {
 
     teamNum = teamNum || 4;
@@ -29,12 +31,6 @@ TeamManager.prototype.init = function ( teamNum ) {
 TeamManager.prototype.add = function ( team ) {
 
     this.teams.push( team );
-
-};
-
-TeamManager.prototype.remove = function ( team ) {
-
-    // todo
 
 };
 

@@ -31,6 +31,8 @@ var Arena = function ( callback ) {
 
 Arena.prototype = {};
 
+//
+
 Arena.prototype.init = function ( callback ) {
 
     this.teamManager.init( 4 );
@@ -191,6 +193,27 @@ Arena.prototype.updateLeaderboard = function () {
 
 };
 
+Arena.prototype.update = function () {
+
+    var time = Date.now();
+    var delta = time - this.prevUpdateTime;
+    this.prevUpdateTime = time;
+    this.totalTime += delta;
+    this.loopIter ++;
+    this.loopIter = ( this.loopIter > 1000000 ) ? 0 : this.loopIter;
+
+    // update managers
+
+    this.playerManager.update( delta, time );
+    this.towerManager.update( delta );
+
+    if ( this.loopIter % 5 === 0 ) {
+
+        this.boxManager.update( delta );
+
+    }
+
+};
 
 Arena.prototype.toJSON = function () {
 
@@ -206,28 +229,7 @@ Arena.prototype.toJSON = function () {
 
 };
 
-Arena.prototype.update = function () {
-
-    var time = Date.now();
-    var delta = time - this.prevUpdateTime;
-    this.prevUpdateTime = time;
-    this.totalTime += delta;
-    this.loopIter ++;
-    this.loopIter = ( this.loopIter > 1000000 ) ? 0 : this.loopIter;
-
-    // update managers
-
-    this.playerManager.update( delta, time );
-    this.towerManager.update( delta );
-    this.collisionManager.update( delta );
-
-    if ( this.loopIter % 5 === 0 ) {
-
-        this.boxManager.update( delta );
-
-    }
-
-};
+//
 
 Arena.numIds = 0;
 Arena.NeutralTeam = 1000;

@@ -16,11 +16,7 @@ var BoxManager = function ( arena, params ) {
 
 BoxManager.prototype = {};
 
-BoxManager.prototype.init = function () {
-
-    // todo
-
-};
+//
 
 BoxManager.prototype.add = function ( params ) {
 

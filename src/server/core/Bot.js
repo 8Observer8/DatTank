@@ -45,6 +45,8 @@ var Bot = function ( arena ) {
 
 Bot.prototype = {};
 
+//
+
 Bot.prototype.init = function () {
 
     if ( Math.random() <= 0.3 ) {

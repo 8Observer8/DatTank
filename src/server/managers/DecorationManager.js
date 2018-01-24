@@ -12,6 +12,8 @@ var DecorationManager = function ( arena, params ) {
 
 DecorationManager.prototype = {};
 
+//
+
 DecorationManager.prototype.init = function ( params ) {
 
     var x, z;
@@ -126,18 +128,6 @@ DecorationManager.prototype.init = function ( params ) {
 DecorationManager.prototype.add = function ( decoration ) {
 
     this.decorations.push( decoration );
-
-};
-
-DecorationManager.prototype.remove = function ( decoration ) {
-
-    // todo
-
-};
-
-DecorationManager.prototype.getById = function ( decorationId ) {
-
-    // todo
 
 };
 

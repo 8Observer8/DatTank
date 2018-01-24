@@ -18,10 +18,11 @@ var Team = function ( id ) {
 
 Team.prototype = {};
 
+//
+
 Team.prototype.reset = function () {
 
     this.players = [];
-
     this.kills = 0;
     this.death = 0;
 

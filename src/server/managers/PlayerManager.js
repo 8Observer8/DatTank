@@ -12,11 +12,7 @@ var PlayerManager = function ( arena, params ) {
 
 PlayerManager.prototype = {};
 
-PlayerManager.prototype.init = function () {
-
-    // todo
-
-};
+//
 
 PlayerManager.prototype.add = function ( player ) {
 

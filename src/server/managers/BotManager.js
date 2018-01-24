@@ -12,6 +12,8 @@ var BotManager = function ( arena, params ) {
 
 BotManager.prototype = {};
 
+//
+
 BotManager.prototype.init = function ( botNum ) {
 
     botNum = botNum || 5 + Math.floor( Math.random() * 4 );

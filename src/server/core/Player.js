@@ -70,6 +70,8 @@ var Player = function ( arena, params ) {
 
 Player.prototype = Object.create( Game.EventDispatcher.prototype );
 
+//
+
 Player.prototype.respawn = function ( tankName ) {
 
     this.status = Player.Alive;

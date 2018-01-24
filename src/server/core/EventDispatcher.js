@@ -5,9 +5,13 @@
 
 function EventDispatcher () {
 
+    // nothing here
+
 };
 
 EventDispatcher.prototype = {};
+
+//
 
 EventDispatcher.prototype.addEventListener = function ( type, listener ) {
 

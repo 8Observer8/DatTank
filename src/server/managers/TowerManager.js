@@ -12,6 +12,8 @@ var TowerManager = function ( arena, params ) {
 
 TowerManager.prototype = {};
 
+//
+
 TowerManager.prototype.init = function () {
 
     var team = this.arena.teamManager.getById( Game.Arena.NeutralTeam );
@@ -34,12 +36,6 @@ TowerManager.prototype.init = function () {
 TowerManager.prototype.add = function ( tower ) {
 
     this.towers.push( tower );
-
-};
-
-TowerManager.prototype.remove = function ( tower ) {
-
-    // todo
 
 };
 
