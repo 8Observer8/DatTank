@@ -65,7 +65,7 @@ Arena.prototype.addPlayer = function ( params ) {
     var player = new Game.Player( this, { login: params.login, tank: params.tank, socket: params.socket });
 
     this.playerManager.add( player );
-    this.collisionManager.addPlayer( player );
+    this.collisionManager.addObject( player, 'box' );
 
     //
 
@@ -206,6 +206,7 @@ Arena.prototype.update = function () {
 
     this.playerManager.update( delta, time );
     this.towerManager.update( delta );
+    this.collisionManager.update( delta );
 
     if ( this.loopIter % 5 === 0 ) {
 

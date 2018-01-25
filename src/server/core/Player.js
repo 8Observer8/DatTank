@@ -29,8 +29,8 @@ var Player = function ( arena, params ) {
 
     }
 
-    this.sizeX = 25;
-    this.sizeZ = 7;
+    this.sizeX = 40;
+    this.sizeZ = 50;
 
     this.bulletsPool = [];
 
@@ -42,11 +42,14 @@ var Player = function ( arena, params ) {
     this.kills = 0;
     this.death = 0;
 
+    this.collisionBox = false;
+
     this.afkTimeout = false;
     this.moveDelay = false;
     this.shootTimeout = false;
 
     this.position = new Game.Vec3();
+    this.deltaPosition = new Game.Vec3();
     this.rotation = 0;
     this.rotationTop = - Math.PI / 2;
     this.lastUpdatedTopRotation = - Math.PI / 2;
@@ -61,6 +64,8 @@ var Player = function ( arena, params ) {
 
     this.initBulletPool();
     this.addEventListeners();
+
+    this.type = 'Player';
 
 };
 
@@ -355,10 +360,6 @@ Player.prototype.die = function ( killer ) {
     killer.team.kills ++;
     scope.team.death ++;
 
-    scope.movePath = false;
-    scope.moveProgress = false;
-    scope.movementDurationMap = false;
-
     scope.moveDirection.x = 0;
     scope.moveDirection.y = 0;
 
@@ -543,39 +544,19 @@ Player.prototype.update = function ( delta, time ) {
 
     if ( scope.moveDirection.x !== 0 || scope.moveDirection.y !== 0 ) {
 
-        if ( ! this.arena.collisionManager.moveTank( scope.moveDirection, scope, delta ) ) {
-
-            if ( scope.moveDirection.x > 0 ) {
-
-                scope.position.x -= ( scope.moveSpeed * Math.sin( scope.rotation ) * delta );
-                scope.position.z -= ( scope.moveSpeed * Math.cos( scope.rotation ) * delta );
-
-            } else if ( scope.moveDirection.x < 0 ) {
-
-                scope.position.x += ( scope.moveSpeed * Math.sin( scope.rotation ) * delta );
-                scope.position.z += ( scope.moveSpeed * Math.cos( scope.rotation ) * delta );
-
-            }
-
-            scope.move( 0, scope.moveDirection.y );
-
-        }
-
-        var moveDelta = Math.sqrt( Math.pow( scope.moveDirection.x, 2 ) + Math.pow( scope.moveDirection.y, 2 ) );
-
-        // change 50 for correct delta
-
         if ( scope.moveDirection.x > 0 ) {
 
-            scope.position.x += ( scope.moveSpeed * Math.sin( scope.rotation ) * delta );
-            scope.position.z += ( scope.moveSpeed * Math.cos( scope.rotation ) * delta );
+            scope.deltaPosition.x = + scope.moveSpeed * Math.sin( scope.rotation ) * delta;
+            scope.deltaPosition.z = + scope.moveSpeed * Math.cos( scope.rotation ) * delta;
 
         } else if ( scope.moveDirection.x < 0 ) {
 
-            scope.position.x -= ( scope.moveSpeed * Math.sin( scope.rotation ) * delta );
-            scope.position.z -= ( scope.moveSpeed * Math.cos( scope.rotation ) * delta );
+            scope.deltaPosition.x = - scope.moveSpeed * Math.sin( scope.rotation ) * delta;
+            scope.deltaPosition.z = - scope.moveSpeed * Math.cos( scope.rotation ) * delta;
 
         }
+
+        //
 
         if ( scope.moveDirection.y > 0 ) {
 

@@ -30,7 +30,7 @@ PlayerManager.prototype.remove = function ( player ) {
 
         if ( this.players[ i ].id === player.id ) {
 
-            this.arena.collisionManager.removePlayer( player );
+            this.arena.collisionManager.removeObject( player.id );
             this.players[ i ].disable = true;
 
         }

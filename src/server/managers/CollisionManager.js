@@ -3,16 +3,62 @@
  * Arena collision manager
 */
 
-var SAT = require('sat');
+var p2 = require('p2');
 
 //
 
 var CollisionManager = function ( arena, params ) {
 
-    this.arena = arena;
+    var scope = this;
 
-    this.map = {};
-    this.objects = [];
+    scope.arena = arena;
+
+    scope.map = {};
+    scope.objects = [];
+
+    //
+
+    scope.world = new p2.World({ gravity: [ 0, 0 ] });
+
+    scope.world.on( 'beginContact', function ( event ) {
+
+        for ( var i = 0; i < scope.objects.length; i ++ ) {
+
+            var object = scope.objects[ i ];
+
+            if ( event.bodyA == object.body || event.bodyB == object.body ) {
+
+                if ( object.parent.type === 'Player' ) {
+
+                    object.collision = true;
+
+                }
+
+            }
+
+        }
+
+    });
+
+    scope.world.on( 'endContact', function ( event ) {
+
+        for ( var i = 0; i < scope.objects.length; i ++ ) {
+
+            var object = scope.objects[ i ];
+
+            if ( event.bodyA == object.body || event.bodyB == object.body ) {
+
+                if ( object.parent.type === 'Player' ) {
+
+                    object.collision = false;
+
+                }
+
+            }
+
+        }
+
+    });
 
 };
 
@@ -20,33 +66,9 @@ CollisionManager.prototype = {};
 
 //
 
-CollisionManager.prototype.checkCollision = function ( objectA, objectB, newPosition ) {
-
-    if ( objectA.id === objectB.id ) return false;
-
-    var r1 = Math.sqrt( Math.pow( Math.max( objectA.sizeX, objectA.sizeZ ), 2 ) );
-    var objAsat = new SAT.Circle( new SAT.Vector(objectA.position.x,objectA.position.z ), r1 );
-    var objBsat = new SAT.Box( new SAT.Vector( objectB.position.x,objectB.position.z ), 20, 20 ).toPolygon();
-    objBsat.setAngle( objectB.rotation );
-
-    var response = new SAT.Response();
-    var collided = SAT.testPolygonCircle(objBsat, objAsat, response );
-
-    if ( collided ) {
-
-        objectB.position.x -= response.overlapV.x;
-        objectB.position.z -= response.overlapV.y;
-        return true;
-
-    } else {
-
-        return false;
-
-    }
-
-};
-
 CollisionManager.prototype.checkBulletCollision = function ( object, bullet ) {
+
+    return false;
 
     if ( object.id === bullet.ownerId ) return false;
 
@@ -57,70 +79,39 @@ CollisionManager.prototype.checkBulletCollision = function ( object, bullet ) {
 
 };
 
-CollisionManager.prototype.addObject = function ( position, sizeX, sizeY, sizeZ, id ) {
+CollisionManager.prototype.addObject = function ( object, type ) {
 
-    this.objects.push({
-        position:   { x: position.x, y: position.y, z: position.z },
-        sizeX:      sizeX,
-        sizeY:      sizeY,
-        sizeZ:      sizeZ,
-        id:         id
-    });
+    type = type || 'circle';
+    var shape;
 
-};
-
-CollisionManager.prototype.addPlayer = function ( player ) {
-
-    this.objects.push({
-        position:   player.position,
-        sizeX:      player.sizeX,
-        sizeY:      player.sizeY,
-        sizeZ:      player.sizeZ,
-        id:         player.id,
-    });
-
-};
-
-CollisionManager.prototype.moveTank = function ( direction, player, delta ) {
-
-    var moveDelta = Math.sqrt( Math.pow( player.moveDirection.x, 2 ) + Math.pow( player.moveDirection.y, 2 ) );
-    var newPosition = {
-        x:  player.moveDirection.x > 0 ? player.position.x + ( player.moveSpeed  * Math.sin( player.rotation )  * delta ) : player.position.x - ( player.moveSpeed  * Math.sin( player.rotation ) * delta ),
-        y:  0,
-        z:  player.moveDirection.z > 0 ? player.position.z + ( player.moveSpeed  * Math.sin( player.rotation )  * delta ) : player.position.z - ( player.moveSpeed  * Math.sin( player.rotation ) * delta )
+    var collisionBox = {
+        parent:     object,
+        type:       type,
+        body:       new p2.Body({ mass: 1000, position: [ object.position.x, object.position.z ] }),
+        sensor:     false,
+        collision:  false
     };
 
-    if ( Math.abs( newPosition.x ) > 1270 || Math.abs( newPosition.z ) > 1270 ) {
+    if ( type === 'box' ) {
 
-        if ( player.moveDirection.x > 0 ) {
+        shape = new p2.Box({ width: object.sizeX, height: object.sizeZ });
 
-            player.position.x -= ( player.moveSpeed * Math.sin( player.rotation ) * delta );
-            player.position.z -= ( player.moveSpeed * Math.cos( player.rotation ) * delta );
+    } else if ( type === 'circle' ) {
 
-        } else if ( player.moveDirection.x < 0 ) {
-
-            player.position.x += ( player.moveSpeed * Math.sin( player.rotation ) * delta );
-            player.position.z += ( player.moveSpeed * Math.cos( player.rotation ) * delta );
-
-        }
-
-        return false;
+        shape = new p2.Circle({ radius: object.radius });
 
     }
+
+    collisionBox.body.damping = 0;
+    collisionBox.sensor = shape;
+    shape.sensor = true;
+    collisionBox.body.addShape( shape );
 
     //
 
-    for ( var i = 0, il = this.objects.length; i < il; i ++ ) {
-
-        if ( this.checkCollision( this.objects[ i ], player, newPosition ) ) {
-
-            return false;
-
-        }
-
-    }
-
-    return true;
+    this.world.addBody( collisionBox.body );
+    this.objects.push( collisionBox );
+    object.collisionBox = collisionBox;
 
 };
 
@@ -134,7 +125,7 @@ CollisionManager.prototype.moveBullet = function ( bullet, delta ) {
         bullet.position.x = x;
         bullet.position.z = z;
 
-        for ( var i = 0; i < this.objects.length; i ++ ) {
+        for ( var i = 0, il = this.objects.length; i < il; i ++ ) {
 
             if ( this.checkBulletCollision( this.objects[ i ], bullet ) ) {
 
@@ -150,11 +141,11 @@ CollisionManager.prototype.moveBullet = function ( bullet, delta ) {
 
 };
 
-CollisionManager.prototype.getPlayerById = function ( playerId ) {
+CollisionManager.prototype.getObjectById = function ( id ) {
 
     for ( var i = 0, il = this.objects.length; i < il; i ++ ) {
 
-        if ( this.objects[ i ].id === playerId ) {
+        if ( this.objects[ i ].parent.id === id ) {
 
             return this.objects[ i ];
 
@@ -166,9 +157,52 @@ CollisionManager.prototype.getPlayerById = function ( playerId ) {
 
 };
 
-CollisionManager.prototype.removePlayer = function ( player ) {
+CollisionManager.prototype.update = function ( delta ) {
 
-    var object = this.getPlayerById( player.id );
+    for ( var i = 0, il = this.objects.length; i < il; i ++ ) {
+
+        var object = this.objects[ i ];
+
+        object.body.position[0] = ( object.parent.deltaPosition ) ? object.parent.position.x + 3 * object.parent.deltaPosition.x : object.parent.position.x;
+        object.body.position[1] = ( object.parent.deltaPosition ) ? object.parent.position.z + 3 * object.parent.deltaPosition.z : object.parent.position.z;
+        object.body.angle = object.parent.rotation;
+
+    }
+
+    this.world.step( delta / 1000 );
+
+    for ( var i = 0, il = this.objects.length; i < il; i ++ ) {
+
+        var object = this.objects[ i ];
+
+        if ( Math.abs( object.body.position[0] ) > 1270 || Math.abs( object.body.position[1] ) > 1270 ) {
+
+            object.parent.move( 0, object.parent.moveDirection.y );
+            continue;
+            
+        }
+
+        if ( ! object.collision && object.parent.deltaPosition ) {
+
+            object.parent.position.x += object.parent.deltaPosition.x;
+            object.parent.position.z += object.parent.deltaPosition.z;
+
+            object.parent.deltaPosition.x = 0;
+            object.parent.deltaPosition.z = 0;
+
+        } else if ( object.parent.type === 'Player' ) {
+
+            object.parent.move( 0, object.parent.moveDirection.y );
+
+        }
+
+    }
+
+};
+
+CollisionManager.prototype.removeObject = function ( id ) {
+
+    var object = this.getObjectById( id );
     if ( object ) this.objects.splice( this.objects.indexOf( object ), 1 );
 
 };

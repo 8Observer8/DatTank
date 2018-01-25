@@ -15,6 +15,8 @@ var Decoration = function ( arena, params ) {
     this.size = params.size || new Game.Vec3();
     this.scale = params.scale || new Game.Vec3();
 
+    this.collisionBox = false;
+
     this.name = params.name || '';
 
 };

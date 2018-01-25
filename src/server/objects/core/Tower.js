@@ -36,6 +36,8 @@ var Tower = function ( arena, params ) {
     this.networkBuffers = {};
     this.inRangeOf = {};
 
+    this.collisionBox = false;
+
     //
 
     var teams = arena.teamManager.teams;
@@ -66,13 +68,13 @@ Tower.prototype = Object.create( Game.EventDispatcher.prototype );
 Tower.prototype.init = function () {
 
     var position = this.position;
-    var sizeX = 30;
-    var sizeY = 30;
-    var sizeZ = 30;
+    this.sizeX = 35;
+    this.sizeY = 35;
+    this.sizeZ = 35;
     var id = this.id;
 
-    this.arena.pathManager.placeObject( new Game.Vec3( position.x - sizeX / 2, 0, position.z - sizeZ / 2 ), new Game.Vec3( position.x + sizeX / 2, 0, position.z + sizeZ / 2 ) );
-    this.arena.collisionManager.addObject( position, sizeX, sizeY, sizeZ, id );
+    this.arena.pathManager.placeObject( new Game.Vec3( position.x - this.sizeX / 2, 0, position.z - this.sizeZ / 2 ), new Game.Vec3( position.x + this.sizeX / 2, 0, position.z + this.sizeZ / 2 ) );
+    this.arena.collisionManager.addObject( this, 'box' );
 
     this.initBulletPool();
     this.addEventListeners();
