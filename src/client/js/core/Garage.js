@@ -29,6 +29,8 @@ Game.Garage = function () {
 
 Game.Garage.prototype = {};
 
+//
+
 Game.Garage.prototype.init = function () {
 
     $('#arrow1').click( this.arrowBack.bind( this ) );

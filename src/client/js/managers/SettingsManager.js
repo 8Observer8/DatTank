@@ -27,6 +27,8 @@ Game.SettingsManager = function () {
 
 Game.SettingsManager.prototype = {};
 
+//
+
 Game.SettingsManager.prototype.init = function () {
 
     // todo

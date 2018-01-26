@@ -3,13 +3,15 @@
  * DatTank UI file
 */
 
-'use strict';
-
 Game.UI = function () {
 
     // nothing here
 
 };
+
+Game.UI.prototype = {};
+
+//
 
 Game.UI.prototype.init = function () {
 

@@ -20,6 +20,8 @@ Game.Team = function ( params ) {
 
 Game.Team.prototype = {};
 
+//
+
 Game.Team.prototype.addPlayer = function ( player ) {
 
     this.players = player;

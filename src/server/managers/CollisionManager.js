@@ -194,7 +194,7 @@ CollisionManager.prototype.update = function ( delta ) {
 
             object.parent.move( 0, object.parent.moveDirection.y );
             continue;
-            
+
         }
 
         if ( ! object.collision && object.parent.deltaPosition ) {

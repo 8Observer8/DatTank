@@ -12,6 +12,8 @@ Game.TowerManager = function ( arena ) {
 
 Game.TowerManager.prototype = {};
 
+//
+
 Game.TowerManager.prototype.init = function () {};
 
 Game.TowerManager.prototype.add = function ( tower ) {

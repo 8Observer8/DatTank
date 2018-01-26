@@ -26,6 +26,8 @@ Game.ControlsManager = function () {
 
 Game.ControlsManager.prototype = {};
 
+//
+
 Game.ControlsManager.prototype.mouseInit = function () {
 
     var scope = this;

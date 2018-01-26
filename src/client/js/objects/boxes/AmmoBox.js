@@ -18,6 +18,8 @@ Game.Box.Ammo = function ( params ) {
 
 Game.Box.Ammo.prototype = Object.create( Game.Box.prototype );
 
+//
+
 Game.Box.Ammo.prototype.init = function () {
 
     var boxModel = resourceManager.getModel( 'ammo_box.json' );

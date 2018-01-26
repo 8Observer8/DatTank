@@ -11,6 +11,8 @@ Game.Logger = function () {
 
 Game.Logger.prototype = {};
 
+//
+
 Game.Logger.prototype.init = function () {
 
     // todo

@@ -1,3 +1,7 @@
+/*
+ * @author ohmed
+ * Tank "D-32" unit class
+*/
 
 Game.Tank.D32 = function ( params ) {
 
@@ -23,6 +27,8 @@ Game.Tank.D32.prototype.range = 160;
 Game.Tank.D32.prototype.armour = 150;
 Game.Tank.D32.prototype.bullet = 77;
 Game.Tank.D32.prototype.reloadTime = 100;
+
+//
 
 Game.Tank.D32.prototype.initModel = function () {
 

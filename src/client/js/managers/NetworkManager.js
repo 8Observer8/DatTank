@@ -15,6 +15,8 @@ Game.NetworkManager = function () {
 
 Game.NetworkManager.prototype = {};
 
+//
+
 Game.NetworkManager.prototype.init = function ( callback ) {
 
     if ( this.transport ) {

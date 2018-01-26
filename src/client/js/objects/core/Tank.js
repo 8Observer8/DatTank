@@ -36,6 +36,8 @@ Game.Tank = function ( params ) {
 
 Game.Tank.prototype = {};
 
+//
+
 Game.Tank.prototype.init = function () {
 
     this.initModel();

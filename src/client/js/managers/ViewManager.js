@@ -41,6 +41,8 @@ Game.ViewManager = function () {
 
 Game.ViewManager.prototype = {};
 
+//
+
 Game.ViewManager.prototype.setupScene = function () {
 
     this.quality = 1;

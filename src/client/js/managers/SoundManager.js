@@ -15,6 +15,8 @@ Game.SoundManager = function () {
 
 Game.SoundManager.prototype = {};
 
+//
+
 Game.SoundManager.prototype.playMenuSound = function () {
 
     if ( localStorage.getItem('sound') === 'true' ) {

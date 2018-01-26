@@ -80,6 +80,8 @@ Game.ResourceManager = function () {
 
 Game.ResourceManager.prototype = {};
 
+//
+
 Game.ResourceManager.prototype.loadModel = function ( modelName, callback ) {
 
     var scope = this;

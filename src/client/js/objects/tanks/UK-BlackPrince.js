@@ -28,6 +28,8 @@ Game.Tank.UKBlackPrince.prototype.armour = 700;
 Game.Tank.UKBlackPrince.prototype.bullet = 77;
 Game.Tank.UKBlackPrince.prototype.reloadTime = 40;
 
+//
+
 Game.Tank.UKBlackPrince.prototype.initModel = function () {
 
     this.object = new THREE.Object3D();

@@ -12,6 +12,8 @@ Game.TeamManager = function ( arena ) {
 
 Game.TeamManager.prototype = {};
 
+//
+
 Game.TeamManager.prototype.init = function ( params ) {
 
     for ( var i = 0, il = params.length; i < il; i ++ ) {

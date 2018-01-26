@@ -28,6 +28,8 @@ Game.Tank.USAT54.prototype.armour = 180;
 Game.Tank.USAT54.prototype.bullet = 105;
 Game.Tank.USAT54.prototype.reloadTime = 20;
 
+//
+
 Game.Tank.USAT54.prototype.initModel = function () {
 
     this.object = new THREE.Object3D();

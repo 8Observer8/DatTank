@@ -14,9 +14,11 @@ var Game = function () {
 
 };
 
-Game.Version = '2dev';
+Game.Version = '3dev';
 
 Game.prototype = {};
+
+//
 
 Game.prototype.init = function () {
 

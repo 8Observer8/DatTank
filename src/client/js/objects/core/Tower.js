@@ -34,6 +34,8 @@ Game.Tower = function ( arena, params ) {
 
 Game.Tower.prototype = Object.create( EventDispatcher.prototype );
 
+//
+
 Game.Tower.prototype.init = function () {
 
     var towerBaseModel = resourceManager.getModel('Tower_base.json');

@@ -18,6 +18,8 @@ Game.Box.Health = function ( params ) {
 
 Game.Box.Health.prototype = Object.create( Game.Box.prototype );
 
+//
+
 Game.Box.Health.prototype.init = function () {
 
     var boxModel = resourceManager.getModel( 'health_box.json' );

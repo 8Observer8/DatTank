@@ -11,6 +11,8 @@ Game.BoxManager = function () {
 
 Game.BoxManager.prototype = {};
 
+//
+
 Game.BoxManager.prototype.init = function ( params ) {
 
     for ( var i = 0, il = params.length; i < il; i ++ ) {

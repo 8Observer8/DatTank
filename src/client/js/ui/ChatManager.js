@@ -1,5 +1,7 @@
-// ChatManager.js
-'use strict';
+/*
+ * @author ohmed, biven
+ * DatTank UI file
+*/
 
 Game.ChatManager = function () {
 
@@ -7,14 +9,15 @@ Game.ChatManager = function () {
 
 };
 
+Game.ChatManager.prototype = {};
+
+//
+
 Game.ChatManager.prototype.init = function () {
 
     this.openedMenu = false;
 
-    // $('.chatter').hide();
-
     $('.input-message').keypress( this.typingMessage.bind( this ) );
-
     $( document ).keypress( this.openCloseMessage.bind( this ) );
 
 };

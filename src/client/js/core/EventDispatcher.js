@@ -9,6 +9,8 @@ function EventDispatcher () {
 
 EventDispatcher.prototype = {};
 
+//
+
 EventDispatcher.prototype.addEventListener = function ( type, listener ) {
 
     if ( this._listeners === undefined ) this._listeners = {};

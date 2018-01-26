@@ -12,6 +12,8 @@ Game.PlayerManager = function ( arena ) {
 
 Game.PlayerManager.prototype = {};
 
+//
+
 Game.PlayerManager.prototype.init = function () {};
 
 Game.PlayerManager.prototype.add = function ( player ) {

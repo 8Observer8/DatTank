@@ -47,6 +47,8 @@ Game.Player = function ( arena, params ) {
 
 Game.Player.prototype = Object.create( EventDispatcher.prototype );
 
+//
+
 Game.Player.prototype.init = function ( params ) {
 
     this.selectTank( params.tank );
@@ -196,7 +198,7 @@ Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
         if ( player.tank.sounds.moving.buffer && ! player.tank.sounds.moving.isPlaying ) {
 
             if ( localStorage.getItem('sound') !== 'false' ) {
-            
+
                 player.tank.sounds.moving.play();
                 player.tank.sounds.moving.isPlaying = true;
 

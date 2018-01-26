@@ -28,6 +28,8 @@ Game.Arena = function () {
 
 Game.Arena.prototype = {};
 
+//
+
 Game.Arena.prototype.init = function ( params ) {
 
     this.id = params.id;
