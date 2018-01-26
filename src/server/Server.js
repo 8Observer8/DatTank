@@ -27,7 +27,7 @@ app.use( '/changelog', express.static( __dirname + './../client/changelog.html')
 
 app.get( '/api/info', function ( req, res ) {
 
-    if ( req.param( 'auth' ) !== 'ohmed' ) {
+    if ( req.query.auth !== 'ohmed' ) {
 
         res.send('Bad auth.');
         return;

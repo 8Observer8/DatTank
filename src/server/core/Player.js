@@ -383,6 +383,7 @@ Player.prototype.die = function ( killer ) {
 
     setTimeout( function () {
 
+        scope.arena.collisionManager.removeObject( scope.id );
         scope.arena.updateLeaderboard();
 
     }, 1000 );

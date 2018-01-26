@@ -234,16 +234,6 @@ Game.Arena.prototype.towersOutOfRange = function ( towers ) {
 
 };
 
-Game.Arena.prototype.playerLeft = function ( player ) {
-
-    if ( this.playerManager.getById( player.id ) ) {
-
-        this.playerManager.remove( this.playerManager.getById( player.id ) );
-
-    }
-
-};
-
 Game.Arena.prototype.update = function ( time, delta ) {
 
     this.updateExplosions( delta );

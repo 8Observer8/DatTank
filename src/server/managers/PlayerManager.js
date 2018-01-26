@@ -43,6 +43,8 @@ PlayerManager.prototype.remove = function ( player ) {
 
     }
 
+    this.players = newPlayerList;
+
     return removed;
 
 };
