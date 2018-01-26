@@ -432,7 +432,7 @@ Game.ViewManager.prototype.addGrassZones = function () {
     grass.scale.set( scale, scale, scale );
     grass.material.transparent = true;
     grass.position.set( ( Math.random() - 0.5 ) * size, 0.1 + Math.random() / 10, ( Math.random() - 0.5 ) * size );
-    grass.renderOrder = 0;
+    grass.renderOrder = 1;
     this.scene.add( grass );
 
 };
@@ -455,14 +455,15 @@ Game.ViewManager.prototype.addTeamZone = function () {
         x = team.spawnPosition.x;
         z = team.spawnPosition.z;
 
-        plane = new THREE.Mesh( new THREE.PlaneGeometry( 200, 200 ), new THREE.MeshBasicMaterial({ map: baseTexture, color: color, transparent: true, opacity: 0.9, depthWrite: false }) );
+        plane = new THREE.Mesh( new THREE.PlaneBufferGeometry( 200, 200 ), new THREE.MeshBasicMaterial({ map: baseTexture, color: color, transparent: true, opacity: 0.9, depthWrite: false }) );
 
-        plane.material.color.r = plane.material.color.r / 2 + 0.25;
-        plane.material.color.g = plane.material.color.g / 2 + 0.25;
-        plane.material.color.b = plane.material.color.b / 2 + 0.25;
+        plane.material.color.r = plane.material.color.r / 3 + 0.4;
+        plane.material.color.g = plane.material.color.g / 3 + 0.4;
+        plane.material.color.b = plane.material.color.b / 3 + 0.4;
 
         plane.rotation.x = - Math.PI / 2;
         plane.position.set( x, 2, z );
+        plane.renderOrder = 0;
         this.scene.add( plane );
         plane.name = 'team-spawn-plane-' + name;
 

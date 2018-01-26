@@ -88,7 +88,6 @@ Arena.prototype.removePlayer = function ( player ) {
     if ( this.playerManager.remove( player ) ) {
 
         player.team.removePlayer( player );
-
         this.playerManager.remove( player );
 
         this.announce( 'ArenaPlayerLeft', null, { id: player.id } );
