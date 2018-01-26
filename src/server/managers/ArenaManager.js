@@ -6,6 +6,7 @@
 var ArenaManager = function () {
 
     this.arenas = [];
+    this.maxPlayersInArena = 25;
 
 };
 
@@ -64,7 +65,12 @@ ArenaManager.prototype.removeEmptyArenas = function () {
         arena = this.arenas[ i ];
 
         if ( ! arena || ! arena.players ) continue;
-        if ( arena.players.length - arena.bots.length === 0 ) continue;
+        if ( arena.players.length - arena.bots.length === 0 ) {
+
+            arena.clear();
+            continue;
+
+        }
 
         newArenaList.push( arena );
 
@@ -90,13 +96,13 @@ ArenaManager.prototype.findArena = function ( callback ) {
         arena = this.arenas[ i ];
         players = arena.playerManager.players;
 
-        if ( players.length < 16 && players > 5 ) {
+        if ( players.length < this.maxPlayersInArena && players > 5 ) {
 
             avgArena = this.arenas[ i ];
 
         }
 
-        if ( ( ! minArena && players.length < 16 ) || ( minArena && players.length < minArena.players.length ) ) {
+        if ( ( ! minArena && players.length < this.maxPlayersInArena ) || ( minArena && players.length < minArena.players.length ) ) {
 
             minArena = arena;
 

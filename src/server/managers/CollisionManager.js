@@ -9,73 +9,88 @@ var p2 = require('p2');
 
 var CollisionManager = function ( arena, params ) {
 
-    var scope = this;
-
-    scope.arena = arena;
-
-    scope.map = {};
-    scope.objects = [];
+    this.arena = arena;
+    this.objects = [];
+    this.world = false;
 
     //
 
-    scope.world = new p2.World({ gravity: [ 0, 0 ] });
-
-    scope.world.on( 'beginContact', function ( event ) {
-
-        for ( var i = 0; i < scope.objects.length; i ++ ) {
-
-            var object = scope.objects[ i ];
-
-            if ( event.bodyA == object.body || event.bodyB == object.body ) {
-
-                var obstacle = ( event.bodyA == object.body ) ? event.bodyB : event.bodyA;
-
-                if ( object.parent.type === 'Player' && obstacle.parent.type !== 'Bullet' ) {
-
-                    object.collision = true;
-
-                } else if ( object.parent.type === 'Bullet' && object.parent.active ) {
-
-                    var target = ( event.bodyA == object.body ) ? event.bodyB : event.bodyA;
-                    if ( target.parent.type !== 'Bullet' ) {
-                    
-                        object.parent.explode( target.parent );
-
-                    }
-
-                }
-
-            }
-
-        }
-
-    });
-
-    scope.world.on( 'endContact', function ( event ) {
-
-        for ( var i = 0; i < scope.objects.length; i ++ ) {
-
-            var object = scope.objects[ i ];
-
-            if ( event.bodyA == object.body || event.bodyB == object.body ) {
-
-                if ( object.parent.type === 'Player' ) {
-
-                    object.collision = false;
-
-                }
-
-            }
-
-        }
-
-    });
+    this.init();
 
 };
 
 CollisionManager.prototype = {};
 
 //
+
+CollisionManager.prototype.init = function () {
+
+    this.world = new p2.World({ gravity: [ 0, 0 ] });
+    this.world.on( 'beginContact', this.collisionStart.bind( this ) );
+    this.world.on( 'endContact', this.collisionEnd.bind( this ) );
+
+};
+
+CollisionManager.prototype.collisionStart = function ( event ) {
+
+    var object;
+    var target;
+    var obstacle;
+
+    //
+
+    for ( var i = 0; i < this.objects.length; i ++ ) {
+
+        object = this.objects[ i ];
+
+        if ( event.bodyA == object.body || event.bodyB == object.body ) {
+
+            obstacle = ( event.bodyA == object.body ) ? event.bodyB : event.bodyA;
+
+            if ( object.parent.type === 'Player' && obstacle.parent.type !== 'Bullet' ) {
+
+                object.collision = true;
+
+            } else if ( object.parent.type === 'Bullet' && object.parent.active ) {
+
+                target = ( event.bodyA == object.body ) ? event.bodyB : event.bodyA;
+                if ( target.parent.type !== 'Bullet' ) {
+
+                    object.parent.explode( target.parent );
+
+                }
+
+            }
+
+        }
+
+    }
+
+};
+
+CollisionManager.prototype.collisionEnd = function ( event ) {
+
+    var object;
+
+    //
+
+    for ( var i = 0; i < this.objects.length; i ++ ) {
+
+        object = this.objects[ i ];
+
+        if ( event.bodyA == object.body || event.bodyB == object.body ) {
+
+            if ( object.parent.type === 'Player' ) {
+
+                object.collision = false;
+
+            }
+
+        }
+
+    }
+
+};
 
 CollisionManager.prototype.addObject = function ( object, type ) {
 
@@ -220,6 +235,13 @@ CollisionManager.prototype.update = function ( delta ) {
         }
 
     }
+
+};
+
+CollisionManager.prototype.clear = function () {
+
+    this.world.clear();
+    this.objects = false;
 
 };
 

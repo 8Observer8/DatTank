@@ -247,6 +247,23 @@ Arena.prototype.toJSON = function () {
 
 };
 
+Arena.prototype.clear = function () {
+
+    this.collisionManager.clear();
+
+    //
+
+    this.teamManager = false;
+    this.playerManager = false;
+    this.towerManager = false;
+    this.decorationManager = false;
+    this.botManager = false;
+    this.boxManager = false;
+    this.pathManager = false;
+    this.collisionManager = false;
+
+};
+
 //
 
 Arena.numIds = 0;
