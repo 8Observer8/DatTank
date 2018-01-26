@@ -157,6 +157,21 @@ CollisionManager.prototype.getObjectById = function ( id ) {
 
 };
 
+CollisionManager.prototype.removeObject = function ( id ) {
+
+    var newObjectList = [];
+
+    for ( var i = 0, il = this.objects.length; i < il; i ++ ) {
+
+        if ( this.objects[ i ].parent.id === id ) continue;
+        newObjectList.push( this.objects[ i ] );
+
+    }
+
+    this.objects = newObjectList;
+
+};
+
 CollisionManager.prototype.update = function ( delta ) {
 
     for ( var i = 0, il = this.objects.length; i < il; i ++ ) {
@@ -197,13 +212,6 @@ CollisionManager.prototype.update = function ( delta ) {
         }
 
     }
-
-};
-
-CollisionManager.prototype.removeObject = function ( id ) {
-
-    var object = this.getObjectById( id );
-    if ( object ) this.objects.splice( this.objects.indexOf( object ), 1 );
 
 };
 

@@ -27,20 +27,12 @@ Game.Player = function ( arena, params ) {
 
     //
 
-    this.moveProgress = false;
-    this.movePath = false;
-    this.movementStart = false;
-    this.stepDx = this.stepDy = this.stepDz = 0;
-    this.moveDt = 0;
     this.moveSpeed = 0.09;
     this.originalMoveSpead = this.moveSpeed;
-    this.movementDurationMap = [];
 
     this.rotDelta = 0;
     this.rotationTopTarget = false;
-
     this.positionCorrection = { x: 0, z: 0 };
-
     this.moveDirection = new THREE.Vector2();
 
     this.lastShot = Date.now();
@@ -134,11 +126,6 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
 
         this.lastShot = Date.now();
 
-        this.moveProgress = false;
-        this.movePath = false;
-        this.movementStart = false;
-        this.stepDx = this.stepDy = this.stepDz = 0;
-        this.moveDt = 0;
         this.moveSpeed = 0.09;
         this.moveSpeed = this.moveSpeed * this.tank.speed / 40;
 
@@ -176,151 +163,6 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
         }
 
     }
-
-};
-
-Game.Player.prototype.moveByPath = function ( compressedPath, destination ) {
-
-    var path = this.deCompressPath( compressedPath );
-
-    //
-
-    path.push( this.position.x, this.position.z );
-    path.unshift( destination.x, destination.z );
-    path.unshift( destination.x, destination.z );
-
-    var minDistIndex = 0;
-
-    for ( var i = path.length / 2 - 1; i > 0; i -- ) {
-
-        if ( Math.sqrt( Math.pow( this.position.x - path[ 2 * i + 0 ], 2 ) + Math.pow( this.position.z - path[ 2 * i + 1 ], 2 ) ) < 3 ) {
-
-            minDistIndex = i;
-
-        }
-
-    }
-
-    for ( var i = minDistIndex; i < path.length / 2; i ++ ) {
-
-        path.pop();
-        path.pop();
-
-    }
-
-    //
-
-    this.processPath( path );
-
-};
-
-Game.Player.prototype.deCompressPath = function ( keyPath ) {
-
-    var path = [];
-    var s, e;
-
-    for ( var i = 1, il = keyPath.length; i < il; i ++ ) {
-
-        if ( keyPath[ i - 1 ].x - keyPath[ i ].x === 0 ) {
-
-            if ( keyPath[ i - 1 ].z - keyPath[ i ].z < 0 ) s2 = 1; else s2 = -1;
-
-            for ( var k = keyPath[ i - 1 ].z; k != keyPath[ i ].z; k += s2 ) {
-
-                path.push({ x: keyPath[ i - 1 ].x, y: 0 - 5, z: k });
-
-            }
-
-            continue;
-
-        }
-
-        if ( Math.abs( keyPath[ i - 1 ].z - keyPath[ i ].z ) === 0 ) {
-
-            if ( keyPath[ i - 1 ].x - keyPath[ i ].x < 0 ) s1 = 1; else s1 = -1;
-
-            for ( var k = keyPath[ i - 1 ].x; k != keyPath[ i ].x; k += s1 ) {
-
-                path.push({ x: k, y: 0 - 5, z: keyPath[ i - 1 ].z });
-
-            }
-
-            continue;
-
-        }
-
-        if ( Math.abs( keyPath[ i - 1 ].z - keyPath[ i ].z ) === Math.abs( keyPath[ i - 1 ].x - keyPath[ i ].x ) ) {
-
-            var s1, s2;
-
-            if ( keyPath[ i - 1 ].x - keyPath[ i ].x < 0 ) s1 = 1; else s1 = -1;
-            if ( keyPath[ i - 1 ].z - keyPath[ i ].z < 0 ) s2 = 1; else s2 = -1;
-
-            var cord = [];
-
-            for ( var k = keyPath[ i - 1 ].x; k != keyPath[ i ].x; k += s1 ) {
-
-                cord.push({ x: k, y: 0 - 5, z: 0 });
-
-            }
-
-            var p = 0;
-
-            for ( var k = keyPath[ i - 1 ].z; k != keyPath[ i ].z; k += s2 ) {
-
-                cord[ p ].z = k;
-                p ++;
-
-            }
-
-            for ( var k = 0, kl = cord.length; k < kl; k ++ ) {
-
-                path.push( cord[ k ] );
-
-            }
-
-            continue;
-
-        }
-
-    }
-
-    var newPath = [];
-
-    for ( var i = 0, il = path.length; i < il; i ++ ) {
-
-        newPath.push( path[ i ].x );
-        newPath.push( path[ i ].z );
-
-    }
-
-    return newPath;
-
-};
-
-Game.Player.prototype.processPath = function ( path ) {
-
-    var scope = this;
-
-    this.movementStart = Date.now();
-    this.movementDuration = 0;
-    this.moveProgress = false;
-    this.movementDurationMap = [];
-    this.moveProgress = path.length / 2;
-
-    var dx, dz;
-
-    for ( var i = path.length / 2 - 1; i > 0; i -- ) {
-
-        dx = path[ 2 * ( i - 1 ) + 0 ] - path[ 2 * i + 0 ];
-        dz = path[ 2 * ( i - 1 ) + 1 ] - path[ 2 * i + 1 ];
-
-        this.movementDurationMap.push( this.movementDuration );
-        this.movementDuration += Math.sqrt( Math.pow( dx, 2 ) + Math.pow( dz, 2 ) ) / this.moveSpeed;
-
-    }
-
-    scope.movePath = path;
 
 };
 
@@ -645,9 +487,6 @@ Game.Player.prototype.die = function ( killer, killerKills ) {
     this.team.death ++;
     this.death ++;
 
-    this.movePath = false;
-    this.moveProgress = false;
-    this.movementDurationMap = false;
     this.moveDirection.x = 0;
     this.moveDirection.y = 0;
 
@@ -777,25 +616,8 @@ Game.Player.prototype.addEventListeners = function () {
     this.addEventListener( 'PlayerTankHit', function ( event ) { scope.updateHealth( event.data[1], event.data[0] ); });
     this.addEventListener( 'PlayerTankDied', function ( event ) { scope.die( event.data[1] , event.data[ 2 ] ); });
     this.addEventListener( 'PlayerGotBox', function ( event ) { scope.gotBox( event.data ); });
-    this.addEventListener( 'PlayerTankMoveByPath', function ( event ) {
-
-        var destination = { x: event.data[ event.data.length - 2 ], z: event.data[ event.data.length - 1 ] };
-        var keyPath = [];
-
-        for ( var i = 1, il = event.data.length - 3; i < il; i += 2 ) {
-
-            keyPath.push({ x: event.data[ i + 0 ], z: event.data[ i + 1 ] });
-
-        }
-
-        //
-
-        scope.moveByPath( keyPath, destination );
-
-    });
 
     this.addEventListener( 'BulletHit', function ( event ) { scope.bulletHit( event.data ); });
-
     this.addEventListener( 'SendChatMessage', function ( event ) { scope.sendChatMessage( event.data ) } )
 
 };

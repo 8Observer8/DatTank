@@ -50,6 +50,7 @@ global.Game.Arena = require('./core/Arena');
 global.Game.Team = require('./core/Team');
 global.Game.Player = require('./core/Player');
 global.Game.Bot = require('./core/Bot');
+global.Game.Bullet = require('./core/Bullet');
 
 // import tank units
 

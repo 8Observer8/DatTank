@@ -77,15 +77,7 @@ Player.prototype.initBulletPool = function () {
 
     for ( var i = 0; i < 10; i ++ ) {
 
-        this.bulletsPool.push({
-            active:         false,
-            origPosition:   { x: 0, y: 25, z: 0 },
-            position:       { x: 0, y: 25, z: 0 },
-            angle:          false,
-            id:             false,
-            ownerId:        this.id,
-            flytime:        5
-        });
+        this.bulletsPool.push( new Game.Bullet() );
 
     }
 
