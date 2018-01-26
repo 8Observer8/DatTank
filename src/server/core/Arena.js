@@ -249,6 +249,7 @@ Arena.prototype.toJSON = function () {
 
 Arena.prototype.clear = function () {
 
+    clearInterval( this.updateInterval );
     this.collisionManager.clear();
 
     //
