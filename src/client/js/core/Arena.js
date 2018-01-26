@@ -103,6 +103,32 @@ Game.Arena.prototype.showExplosion = function ( params ) {
             explosion.position.set( params.position.x, params.position.y, params.position.z );
             explosion.scale.set( 80, 80, 80 );
             explosion.visible = true;
+
+            var shooter = this.playerManager.getById( params.ownerId );
+            if ( shooter ) {
+
+                shooter = shooter.tank;
+
+            } else {
+
+                shooter = this.towerManager.getById( params.ownerId );
+
+            }
+
+            if ( ! shooter ) continue;
+
+            var bulletsPool = shooter.bullets;
+            for ( var i = 0, il = bulletsPool.length; i < il; i ++ ) {
+
+                if ( bulletsPool[ i ].id === params.id ) {
+
+                    bulletsPool[ i ].visible = false;
+                    break;
+
+                }
+
+            }
+
             break;
 
         }

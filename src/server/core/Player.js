@@ -77,7 +77,7 @@ Player.prototype.initBulletPool = function () {
 
     for ( var i = 0; i < 10; i ++ ) {
 
-        this.bulletsPool.push( new Game.Bullet() );
+        this.bulletsPool.push( new Game.Bullet( this.arena, this.id ) );
 
     }
 
@@ -122,7 +122,7 @@ Player.prototype.respawn = function ( tankName ) {
     this.position.x += offsetX;
     this.position.z += offsetZ;
 
-    this.selectTank( tankName );
+    if ( tankName ) this.selectTank( tankName );
     this.arena.updateLeaderboard();
 
     //
@@ -253,16 +253,7 @@ Player.prototype.shoot = function () {
     //
 
     var bullet = this.getInactiveBullet();
-    bullet.active = true;
-    bullet.origPosition.x = scope.position.x;
-    bullet.origPosition.y = 25;
-    bullet.origPosition.z = scope.position.z;
-    bullet.position.x = scope.position.x;
-    bullet.position.y = 25;
-    bullet.position.z = scope.position.z;
-    bullet.angle = scope.rotationTop;
-    bullet.flytime = 5;
-    bullet.id = Player.numShootId;
+    bullet.activate( scope.position, scope.rotationTop );
 
     scope.ammo --;
 
@@ -493,40 +484,6 @@ Player.prototype.update = function ( delta, time ) {
         if ( playersOutOfRange.length ) {
 
             networkManager.send( 'PlayersOutOfRange', scope.socket, false, playersOutOfRange );
-
-        }
-
-    }
-
-    // compute bullet positions & collisions
-
-    for ( var i = 0, il = scope.bulletsPool.length; i < il; i ++ ) {
-
-        var bullet = scope.bulletsPool[ i ];
-        if ( ! bullet.active ) continue;
-        bullet.flytime --;
-
-        if ( bullet.flytime < 0 ) {
-
-            bullet.active = false;
-            continue;
-
-        }
-
-        var bulletCollisionResult = scope.arena.collisionManager.moveBullet( bullet, delta );
-
-        if ( bulletCollisionResult ) {
-
-            scope.sendEventToPlayersInRange( 'BulletHit', null, { bulletId: bullet.id, position: bullet.position } );
-
-            var killer = scope.id;
-            var target = scope.arena.playerManager.getById( bulletCollisionResult.id ) || scope.arena.towerManager.getById( bulletCollisionResult.id );
-
-            if ( target && target.hit ) {
-
-                target.hit( killer );
-
-            }
 
         }
 

@@ -51,7 +51,7 @@ Arena.prototype.init = function ( callback ) {
 
     //
 
-    this.updateInterval = setInterval( this.update.bind( this ), 50 );
+    this.updateInterval = setInterval( this.update.bind( this ), 40 );
 
     //
 
@@ -107,6 +107,20 @@ Arena.prototype.removePlayer = function ( player ) {
         scope.updateLeaderboard();
 
     }, 1000 );
+
+};
+
+Arena.prototype.sendEventToPlayersInRange = function ( position, event, buffer, bufferView ) {
+
+    for ( var i = 0, il = this.playerManager.players.length; i < il; i ++ ) {
+
+        var player = this.playerManager.players[ i ];
+
+        if ( Math.abs( position.x - player.position.x ) + Math.abs( position.y - player.position.y ) > 800 ) continue;
+        if ( ! player.socket ) continue;
+        networkManager.send( event, player.socket, buffer, bufferView );
+
+    }
 
 };
 
@@ -202,12 +216,15 @@ Arena.prototype.update = function () {
     // update managers
 
     this.playerManager.update( delta, time );
-    this.towerManager.update( delta );
-    this.collisionManager.update( delta );
+    this.towerManager.update( delta, time );
+
+    this.collisionManager.update( delta / 3, time );
+    this.collisionManager.update( delta / 3, time );
+    this.collisionManager.update( delta / 3, time );
 
     if ( this.loopIter % 5 === 0 ) {
 
-        this.boxManager.update( delta );
+        this.boxManager.update( delta, time );
 
     }
 

@@ -55,6 +55,8 @@ var Tower = function ( arena, params ) {
 
     }
 
+    this.type = 'Tower';
+
     //
 
     this.init();
@@ -85,7 +87,7 @@ Tower.prototype.initBulletPool = function () {
 
     for ( var i = 0; i < 10; i ++ ) {
 
-        this.bulletsPool.push( new Game.Bullet() );
+        this.bulletsPool.push( new Game.Bullet( this.arena, this.id ) );
 
     }
 
@@ -148,16 +150,7 @@ Tower.prototype.shoot = function ( target ) {
     //
 
     var bullet = this.getInactiveBullet();
-    bullet.active = true;
-    bullet.origPosition.x = scope.position.x;
-    bullet.origPosition.y = 25;
-    bullet.origPosition.z = scope.position.z;
-    bullet.position.x = scope.position.x;
-    bullet.position.y = 25;
-    bullet.position.z = scope.position.z;
-    bullet.angle = scope.rotation + Math.PI / 2;
-    bullet.flytime = 5;
-    bullet.id = Tower.numShootId;
+    bullet.activate( this.position, this.rotation + Math.PI / 2 );
 
     //
 
@@ -355,45 +348,9 @@ Tower.prototype.rotateTop = function ( target, delta ) {
 
 };
 
-Tower.prototype.update = function ( delta ) {
+Tower.prototype.update = function ( delta, time ) {
 
     var target = false;
-
-    // update tower shoted bullets
-
-    for ( var i = 0, il = this.bulletsPool.length; i < il; i ++ ) {
-
-        var bullet = this.bulletsPool[ i ];
-        if ( ! bullet.active ) continue;
-        bullet.flytime --;
-
-        if ( bullet.flytime < 0 ) {
-
-            bullet.active = false;
-            continue;
-
-        }
-
-        var bulletCollisionResult = this.arena.collisionManager.moveBullet( bullet, delta );
-
-        if ( bulletCollisionResult ) {
-
-            bullet.active = false;
-
-            this.sendEventToPlayersInRange( 'BulletHit', null, { bulletId: bullet.id, position: bullet.position } );
-
-            var killer = this.id;
-            target = this.arena.playerManager.getById( bulletCollisionResult.id );
-
-            if ( target && target.hit ) {
-
-                target.hit( killer );
-
-            }
-
-        }
-
-    }
 
     //
 

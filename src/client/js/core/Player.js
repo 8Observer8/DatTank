@@ -38,6 +38,7 @@ Game.Player = function ( arena, params ) {
     this.lastShot = Date.now();
 
     this.explosion = [];
+    this.bulletSpeed = 0.6;
 
     //
 
@@ -418,8 +419,8 @@ Game.Player.prototype.update = function ( time, delta ) {
 
                 for ( var j = 0; j < 4; j ++ ) {
 
-                    var x = bullet.position.x + Math.cos( angle ) * delta;
-                    var z = bullet.position.z + Math.sin( angle ) * delta;
+                    var x = bullet.position.x + this.bulletSpeed * Math.cos( angle ) * delta;
+                    var z = bullet.position.z + this.bulletSpeed * Math.sin( angle ) * delta;
 
                     bullet.position.set( x, bullet.position.y, z );
 

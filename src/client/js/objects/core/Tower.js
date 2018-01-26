@@ -20,6 +20,7 @@ Game.Tower = function ( arena, params ) {
 
     this.animations = {};
     this.healthBar = false;
+    this.bulletSpeed = 0.6;
 
     //
 
@@ -307,8 +308,8 @@ Game.Tower.prototype.update = function ( delta ) {
 
                 for ( var j = 0; j < 4; j ++ ) {
 
-                    var x = bullet.position.x + Math.cos( angle ) * delta;
-                    var z = bullet.position.z + Math.sin( angle ) * delta;
+                    var x = bullet.position.x + this.bulletSpeed * Math.cos( angle ) * delta;
+                    var z = bullet.position.z + this.bulletSpeed * Math.sin( angle ) * delta;
 
                     bullet.position.set( x, bullet.position.y, z );
                     bullet.visible = true;

@@ -28,10 +28,20 @@ var CollisionManager = function ( arena, params ) {
 
             if ( event.bodyA == object.body || event.bodyB == object.body ) {
 
-                if ( object.parent.type === 'Player' ) {
+                var obstacle = ( event.bodyA == object.body ) ? event.bodyB : event.bodyA;
 
-                    if ( object.parent.socket ) console.log( event.bodyA.parent, event.bodyB.parent )
+                if ( object.parent.type === 'Player' && obstacle.parent.type !== 'Bullet' ) {
+
                     object.collision = true;
+
+                } else if ( object.parent.type === 'Bullet' && object.parent.active ) {
+
+                    var target = ( event.bodyA == object.body ) ? event.bodyB : event.bodyA;
+                    if ( target.parent.type !== 'Bullet' ) {
+                    
+                        object.parent.explode( target.parent );
+
+                    }
 
                 }
 
@@ -67,19 +77,6 @@ CollisionManager.prototype = {};
 
 //
 
-CollisionManager.prototype.checkBulletCollision = function ( object, bullet ) {
-
-    return false;
-
-    if ( object.id === bullet.ownerId ) return false;
-
-    var r = Math.sqrt( 2 * Math.pow( Math.max( object.sizeX, object.sizeZ ), 2 ) );
-    var dist = Math.sqrt( Math.pow( object.position.x - bullet.position.x, 2 ) + Math.pow( object.position.z - bullet.position.z, 2 ) );
-
-    return dist < r;
-
-};
-
 CollisionManager.prototype.addObject = function ( object, type ) {
 
     type = type || 'circle';
@@ -101,6 +98,10 @@ CollisionManager.prototype.addObject = function ( object, type ) {
 
         shape = new p2.Circle({ radius: object.radius });
 
+    } else if ( type === 'particle' ) {
+
+        shape = new p2.Particle({});
+
     }
 
     collisionBox.body.parent = object;
@@ -114,32 +115,6 @@ CollisionManager.prototype.addObject = function ( object, type ) {
     this.world.addBody( collisionBox.body );
     this.objects.push( collisionBox );
     object.collisionBox = collisionBox;
-
-};
-
-CollisionManager.prototype.moveBullet = function ( bullet, delta ) {
-
-    for ( var j = 0; j < 4; j ++ ) {
-
-        var x = bullet.position.x + Math.cos( bullet.angle ) * delta;
-        var z = bullet.position.z - Math.sin( bullet.angle ) * delta;
-
-        bullet.position.x = x;
-        bullet.position.z = z;
-
-        for ( var i = 0, il = this.objects.length; i < il; i ++ ) {
-
-            if ( this.checkBulletCollision( this.objects[ i ], bullet ) ) {
-
-                return this.objects[ i ];
-
-            }
-
-        }
-
-    }
-
-    return false;
 
 };
 
@@ -186,17 +161,42 @@ CollisionManager.prototype.update = function ( delta ) {
 
         var object = this.objects[ i ];
 
-        object.body.position[0] = ( object.parent.deltaPosition ) ? object.parent.position.x + 3 * object.parent.deltaPosition.x : object.parent.position.x;
-        object.body.position[1] = ( object.parent.deltaPosition ) ? object.parent.position.z + 3 * object.parent.deltaPosition.z : object.parent.position.z;
-        object.body.angle = object.parent.rotation;
+        if ( object.parent.type === 'Player' ) {
+
+            object.body.position[0] = ( object.parent.deltaPosition ) ? object.parent.position.x + 3 * object.parent.deltaPosition.x : object.parent.position.x;
+            object.body.position[1] = ( object.parent.deltaPosition ) ? object.parent.position.z + 3 * object.parent.deltaPosition.z : object.parent.position.z;
+            object.body.angle = object.parent.rotation;
+
+        } else if ( object.parent.type === 'Bullet' ) {
+
+            if ( object.parent.active ) {
+
+                object.parent.update( delta );
+                object.body.position[0] = object.parent.position.x;
+                object.body.position[1] = object.parent.position.z;
+                object.body.wakeUp();
+
+            } else {
+
+                object.body.sleep();
+
+            }
+
+        }
 
     }
 
+    //
+
     this.world.step( delta / 1000 );
+
+    //
 
     for ( var i = 0, il = this.objects.length; i < il; i ++ ) {
 
         var object = this.objects[ i ];
+
+        if ( object.parent.type !== 'Player' ) continue;
 
         if ( Math.abs( object.body.position[0] ) > 1270 || Math.abs( object.body.position[1] ) > 1270 ) {
 
@@ -213,7 +213,7 @@ CollisionManager.prototype.update = function ( delta ) {
             object.parent.deltaPosition.x = 0;
             object.parent.deltaPosition.z = 0;
 
-        } else if ( object.parent.type === 'Player' ) {
+        } else {
 
             object.parent.move( 0, object.parent.moveDirection.y );
 

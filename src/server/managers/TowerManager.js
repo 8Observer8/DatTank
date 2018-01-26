@@ -55,11 +55,11 @@ TowerManager.prototype.getById = function ( towerId ) {
 
 };
 
-TowerManager.prototype.update = function ( delta ) {
+TowerManager.prototype.update = function ( delta, time ) {
 
     for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
 
-        this.towers[ i ].update( delta );
+        this.towers[ i ].update( delta, time );
 
     }
 
