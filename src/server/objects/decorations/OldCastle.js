@@ -9,7 +9,7 @@ var OldCastle = function ( arena, params ) {
 
     Game.Decoration.call( this, arena, params );
 
-    this.size.set( 5, 5, 5 );
+    this.size.set( 2, 2, 2 );
 
     this.init();
 

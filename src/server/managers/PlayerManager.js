@@ -24,20 +24,24 @@ PlayerManager.prototype.add = function ( player ) {
 
 PlayerManager.prototype.remove = function ( player ) {
 
-    var removed = true;
+    var newPlayerList = [];
+    var removed = false;
+    this.arena.collisionManager.removeObject( player.id );
+
+    //
 
     for ( var i = 0, il = this.players.length; i < il; i ++ ) {
 
         if ( this.players[ i ].id === player.id ) {
 
-            this.arena.collisionManager.removeObject( player.id );
-            this.players[ i ].disable = true;
+            removed = true;
+            continue;
 
         }
 
-    }
+        newPlayerList.push( this.players[ i ] );
 
-    //
+    }
 
     return removed;
 
@@ -60,18 +64,6 @@ PlayerManager.prototype.getById = function ( playerId ) {
 };
 
 PlayerManager.prototype.update = function ( delta, time ) {
-
-    for ( var i = 0, il = this.players.length; i < il; i ++ ) {
-
-        if ( this.players[ i ].disable === true ) {
-
-            this.players.splice( i, 1 );
-
-            break;
-
-        }
-
-    }
 
     for ( var i = 0, il = this.players.length; i < il; i ++ ) {
 

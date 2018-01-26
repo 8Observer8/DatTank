@@ -30,6 +30,7 @@ var CollisionManager = function ( arena, params ) {
 
                 if ( object.parent.type === 'Player' ) {
 
+                    if ( object.parent.socket ) console.log( event.bodyA.parent, event.bodyB.parent )
                     object.collision = true;
 
                 }
@@ -102,6 +103,7 @@ CollisionManager.prototype.addObject = function ( object, type ) {
 
     }
 
+    collisionBox.body.parent = object;
     collisionBox.body.damping = 0;
     collisionBox.sensor = shape;
     shape.sensor = true;
@@ -163,7 +165,13 @@ CollisionManager.prototype.removeObject = function ( id ) {
 
     for ( var i = 0, il = this.objects.length; i < il; i ++ ) {
 
-        if ( this.objects[ i ].parent.id === id ) continue;
+        if ( this.objects[ i ].parent.id === id ) {
+
+            this.world.removeBody( this.objects[ i ].body );
+            continue;
+
+        }
+
         newObjectList.push( this.objects[ i ] );
 
     }
