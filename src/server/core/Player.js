@@ -95,6 +95,8 @@ Player.prototype.getInactiveBullet = function () {
 
     }
 
+    return false;
+
 };
 
 Player.prototype.respawn = function ( tankName ) {
@@ -253,6 +255,7 @@ Player.prototype.shoot = function () {
     //
 
     var bullet = this.getInactiveBullet();
+    if ( ! bullet ) return;
     bullet.activate( scope.position, scope.rotationTop );
 
     scope.ammo --;
@@ -383,7 +386,6 @@ Player.prototype.die = function ( killer ) {
 
     setTimeout( function () {
 
-        scope.arena.collisionManager.removeObject( scope.id );
         scope.arena.updateLeaderboard();
 
     }, 1000 );

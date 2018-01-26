@@ -87,6 +87,7 @@ Arena.prototype.removePlayer = function ( player ) {
 
     if ( this.playerManager.remove( player ) ) {
 
+        scope.collisionManager.removeObject( player.id );
         player.team.removePlayer( player );
         this.announce( 'ArenaPlayerLeft', null, { id: player.id } );
 
@@ -115,8 +116,10 @@ Arena.prototype.sendEventToPlayersInRange = function ( position, event, buffer, 
     for ( var i = 0, il = this.playerManager.players.length; i < il; i ++ ) {
 
         var player = this.playerManager.players[ i ];
+        var dx = position.x - player.position.x;
+        var dy = position.z - player.position.z;
 
-        if ( Math.abs( position.x - player.position.x ) + Math.abs( position.y - player.position.y ) > 800 ) continue;
+        if ( Math.sqrt( dx * dx + dy * dy ) > 600 ) continue;
         if ( ! player.socket ) continue;
         networkManager.send( event, player.socket, buffer, bufferView );
 
