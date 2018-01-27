@@ -78,6 +78,12 @@ Bullet.prototype.update = function ( delta, time ) {
 
 };
 
+Bullet.prototype.dispose = function () {
+
+    this.arena.collisionManager.removeObject( this );
+
+};
+
 //
 
 Bullet.numIds = 1;

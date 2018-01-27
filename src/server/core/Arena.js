@@ -87,8 +87,8 @@ Arena.prototype.removePlayer = function ( player ) {
 
     if ( this.playerManager.remove( player ) ) {
 
-        scope.collisionManager.removeObject( player.id );
         player.team.removePlayer( player );
+        player.dispose();
         this.announce( 'ArenaPlayerLeft', null, { id: player.id } );
 
     }

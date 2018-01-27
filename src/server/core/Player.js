@@ -534,6 +534,18 @@ Player.prototype.sendChatMessage = function ( data ) {
 
 };
 
+Player.prototype.dispose = function () {
+
+    this.arena.collisionManager.removeObject( this );
+
+    for ( var i = 0, il = this.bulletsPool.length; i < il; i ++ ) {
+
+        this.bulletsPool[ i ].dispose();
+
+    }
+
+};
+
 Player.prototype.addEventListeners = function () {
 
     var scope = this;

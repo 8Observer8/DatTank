@@ -38,16 +38,18 @@ app.get( '/api/info', function ( req, res ) {
 
     var players = 0;
     var bots = 0;
+    var objectsInCollision = 0;
     var arenas = Game.ArenaManager.arenas.length;
 
     for ( var i = 0, il = Game.ArenaManager.arenas.length; i < il; i ++ ) {
 
         players += Game.ArenaManager.arenas[ i ].playerManager.players.length - Game.ArenaManager.arenas[ i ].botManager.bots.length;
         bots += Game.ArenaManager.arenas[ i ].botManager.bots.length;
+        objectsInCollision += Game.ArenaManager.arenas[ i ].collisionManager.world.bodies.length;
 
     }
 
-    res.send({ info: { arenas: arenas, players: players, bots: bots } });
+    res.send({ info: { arenas: arenas, players: players, bots: bots, objectsInCollision: objectsInCollision } });
 
 });
 

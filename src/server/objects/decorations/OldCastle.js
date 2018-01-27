@@ -6,11 +6,10 @@
 var OldCastle = function ( arena, params ) {
 
     this.id = OldCastle.numIds ++;
-
     Game.Decoration.call( this, arena, params );
 
     this.size.set( 2, 2, 2 );
-
+    this.type = 'OldCastle';
     this.init();
 
 };

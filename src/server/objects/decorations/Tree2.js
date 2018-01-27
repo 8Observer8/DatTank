@@ -6,11 +6,10 @@
 var Tree2 = function ( arena, params ) {
 
     this.id = Tree2.numIds ++;
-
     Game.Decoration.call( this, arena, params );
 
     this.size.set( 0.8, 0.8, 0.8 );
-
+    this.type = 'Tree2';
     this.init();
 
 };

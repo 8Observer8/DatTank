@@ -43,9 +43,9 @@ CollisionManager.prototype.collisionStart = function ( event ) {
 
         object = this.objects[ i ];
 
-        if ( event.bodyA == object.body || event.bodyB == object.body ) {
+        if ( event.bodyA === object.body || event.bodyB === object.body ) {
 
-            obstacle = ( event.bodyA == object.body ) ? event.bodyB : event.bodyA;
+            obstacle = ( event.bodyA === object.body ) ? event.bodyB : event.bodyA;
 
             if ( object.parent.type === 'Player' && obstacle.parent.type !== 'Bullet' ) {
 
@@ -133,29 +133,13 @@ CollisionManager.prototype.addObject = function ( object, type ) {
 
 };
 
-CollisionManager.prototype.getObjectById = function ( id ) {
-
-    for ( var i = 0, il = this.objects.length; i < il; i ++ ) {
-
-        if ( this.objects[ i ].parent.id === id ) {
-
-            return this.objects[ i ];
-
-        }
-
-    }
-
-    return false;
-
-};
-
-CollisionManager.prototype.removeObject = function ( id ) {
+CollisionManager.prototype.removeObject = function ( object ) {
 
     var newObjectList = [];
 
     for ( var i = 0, il = this.objects.length; i < il; i ++ ) {
 
-        if ( this.objects[ i ].parent.id === id ) {
+        if ( this.objects[ i ].parent.type + this.objects[ i ].parent.id === object.type + object.id ) {
 
             this.world.removeBody( this.objects[ i ].body );
             continue;

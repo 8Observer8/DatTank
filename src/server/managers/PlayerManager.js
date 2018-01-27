@@ -26,7 +26,6 @@ PlayerManager.prototype.remove = function ( player ) {
 
     var newPlayerList = [];
     var removed = false;
-    this.arena.collisionManager.removeObject( player.id );
 
     //
 
@@ -34,6 +33,7 @@ PlayerManager.prototype.remove = function ( player ) {
 
         if ( this.players[ i ].id === player.id ) {
 
+            this.arena.collisionManager.removeObject( player );
             removed = true;
             continue;
 

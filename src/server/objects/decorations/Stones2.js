@@ -6,11 +6,10 @@
 var Stones2 = function ( arena, params ) {
 
     this.id = Stones2.numIds ++;
-
     Game.Decoration.call( this, arena, params );
 
     this.size.set( 0.8, 0.8, 0.8 );
-
+    this.type = 'Stones2';
     this.init();
 
 };

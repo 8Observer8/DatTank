@@ -88,12 +88,6 @@ DecorationManager.prototype.init = function ( params ) {
 
             //
 
-            var decoration = new Game.Decoration[ type ]( this.arena, {
-                position:   new Game.Vec3( x, 0, z ),
-                scale:      new Game.Vec3( scale, scaleH, scale ),
-                rotation:   2 * Math.PI * Math.random()
-            });
-
             for ( var i = 0, il = this.decorations.length; i < il; i ++ ) {
 
                 var decor = this.decorations[ i ];
@@ -108,6 +102,12 @@ DecorationManager.prototype.init = function ( params ) {
             }
 
             if ( placedOnMapDecor ) continue;
+
+            var decoration = new Game.Decoration[ type ]( this.arena, {
+                position:   new Game.Vec3( x, 0, z ),
+                scale:      new Game.Vec3( scale, scaleH, scale ),
+                rotation:   2 * Math.PI * Math.random()
+            });
 
             this.decorations.push( decoration );
 
