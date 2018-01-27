@@ -39,9 +39,6 @@ NetworkManager.prototype.init = function () {
     this.registerEvent( 'PlayerTankMove', 'out', 'bin', 111 );
     this.registerEvent( 'PlayerTankMove', 'in', 'bin', 112 );
 
-    this.registerEvent( 'PlayerTankMoveByPath', 'out', 'bin', 113 );
-    this.registerEvent( 'PlayerTankMoveByPath', 'in', 'bin', 114 );
-
     this.registerEvent( 'PlayerTankShoot', 'out', 'bin', 115 );
     this.registerEvent( 'PlayerTankShoot', 'in', 'bin', 116 );
 

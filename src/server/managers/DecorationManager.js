@@ -49,59 +49,7 @@ DecorationManager.prototype.init = function ( params ) {
 
             //
 
-            var placedOnTower = false;
-            var placedOnBase = false;
-            var placedOnMapDecor = false;
-
-            for ( var i = 0, il = towers.length; i < il; i ++ ) {
-
-                var tower = towers[ i ];
-
-                if ( Math.abs( x - tower.position.x ) + Math.abs( z - tower.position.z ) < 150 ) {
-
-                    placedOnTower = true;
-                    break;
-
-                }
-
-            }
-
-            if ( placedOnTower ) continue;
-
-            //
-
-            for ( var i in Game.Team.StartPositions ) {
-
-                var pos = Game.Team.StartPositions[ i ];
-
-                if ( + i >= 1000 ) continue;
-                if ( Math.sqrt( Math.pow( pos.x - x, 2 ) + Math.pow( pos.z - z, 2 ) ) < baseSize ) {
-
-                    placedOnBase = true;
-                    break;
-
-                }
-
-            }
-
-            if ( placedOnBase ) continue;
-
-            //
-
-            for ( var i = 0, il = this.decorations.length; i < il; i ++ ) {
-
-                var decor = this.decorations[ i ];
-
-                if ( Math.abs( x - decor.position.x ) + Math.abs( z - decor.position.z ) < 50 ) {
-
-                    placedOnMapDecor = true;
-                    break;
-
-                }
-
-            }
-
-            if ( placedOnMapDecor ) continue;
+            if ( ! this.arena.collisionManager.isPlaceFree( { x: x, y: z }, 20, 0 ) ) continue;
 
             var decoration = new Game.Decoration[ type ]( this.arena, {
                 position:   new Game.Vec3( x, 0, z ),
@@ -118,10 +66,6 @@ DecorationManager.prototype.init = function ( params ) {
         }
 
     }
-
-    //
-
-    this.arena.pathManager.constructMap();
 
 };
 

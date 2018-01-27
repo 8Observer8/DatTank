@@ -14,7 +14,6 @@ var Arena = function ( callback ) {
     this.decorationManager = new Game.DecorationManager( this, {} );
     this.botManager = new Game.BotManager( this, {} );
     this.boxManager = new Game.BoxManager( this, {} );
-    this.pathManager = new Game.PathManager( this, {} );
     this.collisionManager = new Game.CollisionManager( this, {} );
 
     this.updateInterval = false;
@@ -38,10 +37,10 @@ Arena.prototype.init = function ( callback ) {
     this.teamManager.init( 4 );
     this.towerManager.init();
     this.decorationManager.init({
-        trees: { type: 'Tree', count: 20 },
-        trees1: { type: 'Tree1', count: 10 },
-        trees2: { type: 'Tree2', count: 5 },
-        trees3: { type: 'Tree3', count: 12 },
+        trees: { type: 'Tree', count: 40 },
+        trees1: { type: 'Tree1', count: 20 },
+        trees2: { type: 'Tree2', count: 10 },
+        trees3: { type: 'Tree3', count: 20 },
         rocks: { type: 'Stones', count: 20 },
         rocks1: { type: 'Stones1', count: 10 },
         rocks2: { type: 'Stones2', count: 10 },
@@ -63,9 +62,7 @@ Arena.prototype.addPlayer = function ( params ) {
 
     var scope = this;
     var player = new Game.Player( this, { login: params.login, tank: params.tank, socket: params.socket });
-
     this.playerManager.add( player );
-    this.collisionManager.addObject( player, 'box', true );
 
     //
 
@@ -260,7 +257,6 @@ Arena.prototype.clear = function () {
     this.decorationManager = false;
     this.botManager = false;
     this.boxManager = false;
-    this.pathManager = false;
     this.collisionManager = false;
 
 };

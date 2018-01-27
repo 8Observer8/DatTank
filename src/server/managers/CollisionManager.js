@@ -222,6 +222,48 @@ CollisionManager.prototype.update = function ( delta ) {
 
 };
 
+CollisionManager.prototype.isPlaceFree = function ( position, radius, rotation ) {
+
+    var body, shape, vec2;
+    var n = this.world.narrowphase;
+    var dummyBody = new p2.Body({ position: [ position.x, position.y ] });
+    var dummyShape = new p2.Circle({ radius: radius });
+    dummyBody.addShape( dummyShape );
+
+    var hitTestVec = new p2.vec2.create();
+
+    // Check bodies
+
+    for ( var i = 0, il = this.objects.length; i < il; i ++ ) {
+
+        body = this.objects[ i ].body;
+
+        for ( var j = 0, jl = body.shapes.length; j !== jl; j ++ ) {
+
+            shape = body.shapes[ j ];
+
+            // Get shape world position + angle
+
+            p2.vec2.rotate( hitTestVec, shape.position, body.angle );
+            p2.vec2.add( hitTestVec, hitTestVec, body.position );
+
+            var angle = shape.angle + body.angle;
+
+            if ( ( shape instanceof p2.Circle && n.circleCircle( dummyBody, dummyShape, dummyBody.position, 0, body, shape, body.position, 0, true ) ) ||
+                 ( shape instanceof p2.Convex && n.circleConvex( dummyBody, dummyShape, dummyBody.position, 0, body, shape, body.position, angle, true ) ) ) {
+
+                return false;
+
+            }
+
+        }
+
+    }
+
+    return true;
+
+};
+
 CollisionManager.prototype.clear = function () {
 
     this.world.clear();

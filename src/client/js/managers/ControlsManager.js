@@ -321,10 +321,6 @@ Game.ControlsManager.prototype.move = ( function () {
         bufferView[ 1 ] = scope.notMoveX ? 0 : scope.moveX;
         bufferView[ 2 ] = scope.notMoveZ ? 0 : scope.moveZ;
 
-        Game.arena.me.moveProgress = false;
-        Game.arena.me.movePath = false;
-        Game.arena.me.movementStart = false;
-
         network.send( 'PlayerTankMove', buffer, bufferView );
 
     };

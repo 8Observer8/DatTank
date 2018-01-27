@@ -25,7 +25,7 @@ BoxManager.prototype.add = function ( params ) {
 
     params.type = params.type || 'Ammo';
 
-    while ( ! position || ! this.arena.pathManager.isPlaceFree( position ) ) {
+    while ( ! position || ! this.arena.collisionManager.isPlaceFree( position, 20, 0 ) ) {
 
         position = new Game.Vec3( Math.floor( 1500 * ( Math.random() - 0.5 ) ), 20, Math.floor( 1500 * ( Math.random() - 0.5 ) ) );
 

@@ -69,13 +69,10 @@ Tower.prototype = Object.create( Game.EventDispatcher.prototype );
 
 Tower.prototype.init = function () {
 
-    var position = this.position;
     this.sizeX = 35;
     this.sizeY = 35;
     this.sizeZ = 35;
-    var id = this.id;
 
-    this.arena.pathManager.placeObject( new Game.Vec3( position.x - this.sizeX / 2, 0, position.z - this.sizeZ / 2 ), new Game.Vec3( position.x + this.sizeX / 2, 0, position.z + this.sizeZ / 2 ) );
     this.arena.collisionManager.addObject( this, 'box' );
 
     this.initBulletPool();

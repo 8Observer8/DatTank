@@ -33,7 +33,6 @@ global.Game.Vec3 = require('./utils/Vector3');
 // import game managers
 
 global.Game.DecorationManager = require('./managers/DecorationManager');
-global.Game.PathManager = require('./managers/PathManager');
 global.Game.BoxManager = require('./managers/BoxManager');
 global.Game.NetworkManager = require('./managers/NetworkManager');
 global.Game.PlayerManager = require('./managers/PlayerManager');

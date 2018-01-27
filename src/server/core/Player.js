@@ -101,6 +101,8 @@ Player.prototype.getInactiveBullet = function () {
 
 Player.prototype.respawn = function ( tankName ) {
 
+    tankName = tankName || this.tank.title.replace( '-', '' );
+
     this.status = Player.Alive;
     this.health = 100;
     this.ammo = this.tank.maxShells;
@@ -114,18 +116,29 @@ Player.prototype.respawn = function ( tankName ) {
     var offsetX = 0;
     var offsetZ = 0;
 
-    while ( Math.sqrt( offsetX * offsetX + offsetZ * offsetZ ) < 80 ) {
+    while ( Math.sqrt( offsetX * offsetX + offsetZ * offsetZ ) < 80 || ! this.arena.collisionManager.isPlaceFree( { x: this.position.x + offsetX, y: this.position.z + offsetZ }, 20, 0 ) ) {
 
-        offsetX = ( Math.random() - 0.5 ) * 150;
-        offsetZ = ( Math.random() - 0.5 ) * 150;
+        offsetX = ( Math.random() - 0.5 ) * 250;
+        offsetZ = ( Math.random() - 0.5 ) * 250;
 
     }
 
     this.position.x += offsetX;
     this.position.z += offsetZ;
 
-    if ( tankName ) this.selectTank( tankName );
+    this.selectTank( tankName );
     this.arena.updateLeaderboard();
+
+    if ( ! this.collisionBox ) {
+    
+        this.arena.collisionManager.addObject( this, 'box', true );
+
+    } else {
+
+        this.collisionBox.body.position[0] = this.position.x;
+        this.collisionBox.body.position[1] = this.position.z;
+
+    }
 
     //
 
@@ -357,7 +370,7 @@ Player.prototype.die = function ( killer ) {
 
     //
 
-    if ( scope.bot ) { // tmp hack for bot respown
+    if ( scope.bot ) { // tmp hack for bot respawn
 
         var maxKills = Math.floor( Math.random() * ( 200 - 100 ) ) + 100;
 
@@ -553,7 +566,6 @@ Player.prototype.addEventListeners = function () {
     this.addEventListener( 'ArenaPlayerRespawn', function ( event ) { scope.respawn( event.data ); });
     this.addEventListener( 'PlayerTankRotateTop', function ( event ) { scope.rotateTop( event.data[0] / 1000 ); });
     this.addEventListener( 'PlayerTankMove', function ( event ) { scope.move( event.data[0], event.data[1] ); });
-    this.addEventListener( 'PlayerTankMoveByPath', function ( event ) { scope.moveToPoint({ x: event.data[0], z: event.data[1] }); });
     this.addEventListener( 'PlayerTankShoot', function ( event ) { scope.shoot(); });
 
     this.addEventListener( 'SendChatMessage', function ( event ) { scope.sendChatMessage( event.data ) });
