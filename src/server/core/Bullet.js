@@ -30,7 +30,7 @@ Bullet.prototype = {};
 
 Bullet.prototype.init = function () {
 
-    this.arena.collisionManager.addObject( this, 'circle' );
+    this.arena.collisionManager.addObject( this, 'circle', true );
 
 };
 

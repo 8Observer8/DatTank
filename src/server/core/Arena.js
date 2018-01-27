@@ -65,7 +65,7 @@ Arena.prototype.addPlayer = function ( params ) {
     var player = new Game.Player( this, { login: params.login, tank: params.tank, socket: params.socket });
 
     this.playerManager.add( player );
-    this.collisionManager.addObject( player, 'box' );
+    this.collisionManager.addObject( player, 'box', true );
 
     //
 

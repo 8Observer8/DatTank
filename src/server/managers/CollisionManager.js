@@ -92,7 +92,7 @@ CollisionManager.prototype.collisionEnd = function ( event ) {
 
 };
 
-CollisionManager.prototype.addObject = function ( object, type ) {
+CollisionManager.prototype.addObject = function ( object, type, isDynamic ) {
 
     type = type || 'circle';
     var shape;
@@ -100,7 +100,7 @@ CollisionManager.prototype.addObject = function ( object, type ) {
     var collisionBox = {
         parent:     object,
         type:       type,
-        body:       new p2.Body({ mass: 1000, position: [ object.position.x, object.position.z ] }),
+        body:       new p2.Body({ mass: ( isDynamic ) ? 1000 : 0, position: [ object.position.x, object.position.z ] }),
         sensor:     false,
         collision:  false
     };
