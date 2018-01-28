@@ -199,6 +199,18 @@ Game.ControlsManager.prototype.keyInit = function () {
 
                 break;
 
+            case 32: // space
+
+                clearInterval( scope.fireTime );
+                scope.fireTime = setInterval( function () {
+
+                    scope.shoot();
+
+                }, 100);
+
+                scope.shoot();
+                break;
+
         }
 
     };
@@ -261,6 +273,11 @@ Game.ControlsManager.prototype.keyInit = function () {
                     scope.move();
 
                 }
+                break;
+
+            case 32: // space
+
+                scope.stopShooting();
                 break;
 
         }
