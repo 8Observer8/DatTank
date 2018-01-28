@@ -7,9 +7,7 @@ var BoxManager = function ( arena, params ) {
 
     this.arena = arena;
     this.boxes = [];
-
     this.boxAVGCount = params.boxAVGCount || 25;
-
     this.time = 0;
 
 };
@@ -129,20 +127,6 @@ BoxManager.prototype.update = function ( delay ) {
         }
 
     }
-
-};
-
-BoxManager.prototype.toJSON = function () {
-
-    var boxes = [];
-
-    for ( var i = 0, il = this.boxes.length; i < il; i ++ ) {
-
-        boxes.push( this.boxes[ i ].toJSON() );
-
-    }
-
-    return boxes;
 
 };
 

@@ -46,7 +46,7 @@ Game.Arena.prototype.init = function ( params ) {
     this.initExplosions();
     this.teamManager.init( params.teams );
     this.playerManager.init();
-    this.boxManager.init( params.boxes );
+    this.boxManager.init();
     this.towerManager.init();
 
     //
@@ -234,6 +234,26 @@ Game.Arena.prototype.towersOutOfRange = function ( towers ) {
 
 };
 
+Game.Arena.prototype.newBoxesInRange = function ( boxes ) {
+
+    for ( var i = 0, il = boxes.length; i < il; i ++ ) {
+
+        this.boxManager.add( boxes[ i ] );
+
+    }
+
+};
+
+Game.Arena.prototype.boxesOutOfRange = function ( boxes ) {
+
+    for ( var i = 0, il = boxes.length; i < il; i ++ ) {
+
+        this.boxManager.remove( boxes[ i ].id );
+
+    }
+
+};
+
 Game.Arena.prototype.playerLeft = function ( player ) {
 
     if ( this.playerManager.getById( player.id ) ) {
@@ -255,12 +275,6 @@ Game.Arena.prototype.update = function ( time, delta ) {
         this.playerManager.players[ i ].update( time, delta );
 
     }
-
-};
-
-Game.Arena.prototype.addBox = function ( data ) {
-
-    this.boxManager.add( data );
 
 };
 
@@ -297,7 +311,7 @@ Game.Arena.prototype.proxyEventToTower = function ( data, eventName ) {
 Game.Arena.prototype.proxyEventToBox = function ( data, eventName ) {
 
     var boxId = ( data.id ) ? data.id : data[0];
-    var box = this.boxManager.getById( boxId );
+    var box = this.boxManager.getBoxById( boxId );
     if ( ! box ) return;
 
     box.dispatchEvent({ type: eventName, data: data });
@@ -306,14 +320,15 @@ Game.Arena.prototype.proxyEventToBox = function ( data, eventName ) {
 
 Game.Arena.prototype.addNetworkListeners = function () {
 
-    network.addMessageListener( 'ArenaAddBox', this.addBox.bind( this ) );
     network.addMessageListener( 'ArenaPlayerLeft', this.playerLeft.bind( this ) );
     network.addMessageListener( 'ArenaLeaderboardUpdate', this.updateLeaderboard.bind( this ) );
 
     network.addMessageListener( 'PlayersInRange', this.newPlayersInRange.bind( this ) );
     network.addMessageListener( 'TowersInRange', this.newTowersInRange.bind( this ) );
+    network.addMessageListener( 'BoxesInRange', this.newBoxesInRange.bind( this ) );
     network.addMessageListener( 'PlayersOutOfRange', this.playersOutOfRange.bind( this ) );
     network.addMessageListener( 'TowersOutOfRange', this.towersOutOfRange.bind( this ) );
+    network.addMessageListener( 'BoxesOutOfRange', this.boxesOutOfRange.bind( this ) );
 
     //
 

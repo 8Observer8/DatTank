@@ -35,7 +35,6 @@ Game.NetworkManager.prototype.init = function ( callback ) {
     this.registerEvent( 'ArenaPlayerJoined', 'in', 'json', 2 );
     this.registerEvent( 'ArenaPlayerRespawn', 'in', 'json', 3 );
     this.registerEvent( 'ArenaPlayerRespawn', 'out', 'json', 4 );
-    this.registerEvent( 'ArenaAddBox', 'in', 'json', 5 );
     this.registerEvent( 'ArenaPlayerLeft', 'in', 'json', 6 );
     this.registerEvent( 'ArenaLeaderboardUpdate', 'in', 'json', 7 );
 
@@ -45,6 +44,8 @@ Game.NetworkManager.prototype.init = function ( callback ) {
     this.registerEvent( 'PlayersOutOfRange', 'in', 'json', 51 );
     this.registerEvent( 'TowersInRange', 'in', 'json', 60 );
     this.registerEvent( 'TowersOutOfRange', 'in', 'json', 61 );
+    this.registerEvent( 'BoxesInRange', 'in', 'json', 70 );
+    this.registerEvent( 'BoxesOutOfRange', 'in', 'json', 71 );
 
     this.registerEvent( 'PlayerTankRotateTop', 'in', 'bin', 100 );
     this.registerEvent( 'PlayerTankRotateTop', 'out', 'bin', 101 );

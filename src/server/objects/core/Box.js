@@ -20,9 +20,11 @@ var Box = function ( arena, params ) {
 
 Box.prototype = {};
 
+//
+
 Box.prototype.init = function () {
 
-    this.arena.announce( 'ArenaAddBox', null, this.toJSON() );
+    // nothing here
 
 };
 

@@ -411,7 +411,53 @@ Player.prototype.update = function ( delta, time ) {
 
     var scope = this;
 
-    // check new towers in range
+    // check boxes in range
+
+    var newBoxesInRange = [];
+    var boxesOutOfRange = [];
+
+    for ( var i = 0, il = scope.arena.boxManager.boxes.length; i < il; i ++ ) {
+
+        var box = scope.arena.boxManager.boxes[ i ];
+
+        if ( scope.isObjectInRange( box ) ) {
+
+            if ( scope.inRangeOf[ 'b-' + box.id ] ) continue;
+
+            scope.inRangeOf[ 'b-' + box.id ] = box;
+            newBoxesInRange.push( box.toJSON() );
+
+        } else {
+
+            if ( scope.inRangeOf[ 'b-' + box.id ] ) {
+
+                boxesOutOfRange.push( box.toJSON() );
+
+            }
+
+            scope.inRangeOf[ 'b-' + box.id ] = false;
+
+        }
+
+    }
+
+    if ( this.socket ) {
+
+        if ( newBoxesInRange.length ) {
+
+            networkManager.send( 'BoxesInRange', scope.socket, false, newBoxesInRange );
+
+        }
+
+        if ( boxesOutOfRange.length ) {
+
+            networkManager.send( 'BoxesOutOfRange', scope.socket, false, boxesOutOfRange );
+
+        }
+
+    }
+
+    // check towers in range
 
     var newTowersInRange = [];
     var towersOutOfRange = [];
@@ -459,7 +505,7 @@ Player.prototype.update = function ( delta, time ) {
 
     }
 
-    // check new players in range
+    // check players in range
 
     var newPlayersInRange = [];
     var playersOutOfRange = [];

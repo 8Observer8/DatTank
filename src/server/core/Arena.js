@@ -237,7 +237,6 @@ Arena.prototype.toJSON = function () {
         id:             this.id,
         decorations:    this.decorationManager.toJSON(),
         teams:          this.teamManager.toJSON(),
-        boxes:          this.boxManager.toJSON(),
         currentTime:    Date.now()
 
     };
