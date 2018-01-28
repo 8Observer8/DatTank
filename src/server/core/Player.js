@@ -203,6 +203,14 @@ Player.prototype.move = function ( directionX, directionZ ) {
 
     var scope = this;
 
+    if ( scope.moveDirection.x === directionX && scope.moveDirection.y === directionZ ) {
+
+        return;
+
+    }
+
+    //
+
     scope.networkBuffers['move'] = scope.networkBuffers['move'] || {};
     var buffer = scope.networkBuffers['move'].buffer || new ArrayBuffer( 14 );
     var bufferView = scope.networkBuffers['move'].bufferView || new Int16Array( buffer );
