@@ -34,12 +34,13 @@ Game.Tank.USAT54.prototype.initModel = function () {
 
     this.object = new THREE.Object3D();
 
+    var materials;
     var tankBaseModel = resourceManager.getModel( this.model.base );
     var tankTopModel = resourceManager.getModel( this.model.top );
 
     //
 
-    var materials = [];
+    materials = [];
     for ( var i = 0, il = tankBaseModel.material.length; i < il; i ++ ) {
 
         materials.push( tankBaseModel.material[ i ].clone() );
@@ -68,7 +69,7 @@ Game.Tank.USAT54.prototype.initModel = function () {
 
     //
 
-    var materials = [];
+    materials = [];
     for ( var i = 0, il = tankTopModel.material.length; i < il; i ++ ) {
 
         materials.push( tankTopModel.material[ i ].clone() );
@@ -119,10 +120,6 @@ Game.Tank.USAT54.prototype.destroy = function () {
 
     this.showExplosion();
 
-    this.moveProgress = false;
-    this.movementDurationMap = [];
-    this.moveProgress = 0;
-
     setTimeout( function () { // todo: need to improve this
 
         scope.animations.deathAction1.paused = true;
@@ -153,7 +150,7 @@ Game.Tank.USAT54.prototype.showBlastSmoke = function () {
     this.blastSmokeEnabled = true;
 
     var scale;
-    var sprite;
+    var sprite, material, map;
 
     if ( this.effects.blastSmoke ) {
 
@@ -172,9 +169,9 @@ Game.Tank.USAT54.prototype.showBlastSmoke = function () {
 
     }
 
-    var map = resourceManager.getTexture( 'smoke.png' );
-    var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff, fog: false, transparent: true } );
-    var sprite = new THREE.Sprite( material );
+    map = resourceManager.getTexture( 'smoke.png' );
+    material = new THREE.SpriteMaterial( { map: map, color: 0xffffff, fog: true, transparent: true } );
+    sprite = new THREE.Sprite( material );
 
     this.effects.blastSmoke = [];
     material.depthTest = false;

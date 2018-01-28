@@ -9,15 +9,8 @@ Game.Garage = function () {
     this.camera = false;
     this.scene = false;
     this.renderer = false;
-    this.objects = false;
 
     this.models = {};
-
-    this.object = false;
-    this.Tank_01 = false;
-    this.Tank_02 = false;
-    this.Tank_03 = false;
-
     this.currentTank = 0;
 
     this.maxSpeed = 5;
@@ -32,6 +25,8 @@ Game.Garage.prototype = {};
 //
 
 Game.Garage.prototype.init = function () {
+
+    var scope = this;
 
     $('#arrow1').click( this.arrowBack.bind( this ) );
     $('#arrow2').click( this.arrowForward.bind( this ) );
@@ -69,17 +64,14 @@ Game.Garage.prototype.init = function () {
     this.renderer.autoClear = false;
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFShadowMap;
-
     this.container.appendChild( this.renderer.domElement );
-
-    var scope = this;
 
     //
 
-    var loader1 = new THREE.JSONLoader();
+    var loader = new THREE.JSONLoader();
     var loaded = 0;
 
-    loader1.load( 'resources/models/tank-demo-1.json', function ( geometry, materials ) {
+    loader.load( 'resources/models/tank-demo-1.json', function ( geometry, materials ) {
 
         var model = new THREE.Mesh( geometry, materials );
         model.position.y += 0.6;
@@ -97,9 +89,7 @@ Game.Garage.prototype.init = function () {
 
     });
 
-    var loader2 = new THREE.JSONLoader();
-
-    loader2.load( 'resources/models/tank-demo-2.json', function ( geometry, materials ) {
+    loader.load( 'resources/models/tank-demo-2.json', function ( geometry, materials ) {
 
         var model = new THREE.Mesh( geometry, materials );
         model.position.y += 0.6;
@@ -114,9 +104,7 @@ Game.Garage.prototype.init = function () {
 
     });
 
-    var loader3 = new THREE.JSONLoader();
-
-    loader3.load( 'resources/models/tank-demo-3.json', function ( geometry, materials ) {
+    loader.load( 'resources/models/tank-demo-3.json', function ( geometry, materials ) {
 
         var model = new THREE.Mesh( geometry, materials );
         model.rotation.y = - Math.PI / 2;
@@ -132,9 +120,7 @@ Game.Garage.prototype.init = function () {
 
     });
 
-    var loader4 = new THREE.JSONLoader();
-
-    loader4.load( 'resources/models/garage.json', function ( geometry, materials ) {
+    loader.load( 'resources/models/garage.json', function ( geometry, materials ) {
 
         var model = new THREE.Mesh( geometry, materials );
         model.castShadow = true;
@@ -163,16 +149,6 @@ Game.Garage.prototype.init = function () {
     window.addEventListener( 'resize', this.resize.bind( this ) );
     this.render = this.render.bind( this );
     this.render();
-
-};
-
-Game.Garage.prototype.onProgress = function ( xhr ) {
-
-    if ( xhr.lengthComputable ) {
-
-        var percentComplete = xhr.loaded / xhr.total * 100;
-
-    }
 
 };
 
@@ -240,11 +216,12 @@ Game.Garage.prototype.selectTank = function ( event ) {
 
     this.resize();
     $('.choice-skins .tank.active').removeClass('active');
+
     var tankId;
 
     if ( event ) {
 
-        var tankId = $( event.currentTarget ).attr('id');
+        tankId = $( event.currentTarget ).attr('id');
         $( event.currentTarget ).addClass( 'active' );
 
     } else {
@@ -255,6 +232,7 @@ Game.Garage.prototype.selectTank = function ( event ) {
     }
 
     tankId = ( Game.Tank.list[ tankId ] ) ? tankId : 'USAT54';
+    this.currentTank = tankId;
 
     $('.skin-name').html( Game.Tank.list[ tankId ].title );
     $('.specification-txt#speed').html( Game.Tank.list[ tankId ].speed + 'km/h');
@@ -262,12 +240,12 @@ Game.Garage.prototype.selectTank = function ( event ) {
     $('.specification-txt#armour').html( Game.Tank.list[ tankId ].armour + 'mm');
     $('.specification-txt#bullet').html( Game.Tank.list[ tankId ].bullet + 'mm');
 
-    $('.counter-characteristicks#speed .color').css({'width': Math.round( 10 * Game.Tank.list[ tankId ].speed / this.maxSpeed ) +'%'});
-    $('.counter-characteristicks#range .color').css({'width': Math.round( 10 * Game.Tank.list[ tankId ].range / this.maxRange ) +'%'});
-    $('.counter-characteristicks#armour .color').css({'width': Math.round( 10 * Game.Tank.list[ tankId ].armour / this.maxArmour ) +'%'});
-    $('.counter-characteristicks#bullet .color').css({'width': Math.round( 10 * Game.Tank.list[ tankId ].bullet / this.maxBullet ) +'%'});
+    $('.counter-characteristicks#speed .color').css({ 'width': Math.round( 10 * Game.Tank.list[ tankId ].speed / this.maxSpeed ) +'%' });
+    $('.counter-characteristicks#range .color').css({ 'width': Math.round( 10 * Game.Tank.list[ tankId ].range / this.maxRange ) +'%' });
+    $('.counter-characteristicks#armour .color').css({ 'width': Math.round( 10 * Game.Tank.list[ tankId ].armour / this.maxArmour ) +'%' });
+    $('.counter-characteristicks#bullet .color').css({ 'width': Math.round( 10 * Game.Tank.list[ tankId ].bullet / this.maxBullet ) +'%' });
 
-    this.currentTank = tankId;
+    //
 
     for ( var modelName in this.models ) {
 

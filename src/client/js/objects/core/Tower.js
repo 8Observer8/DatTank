@@ -7,9 +7,9 @@ Game.Tower = function ( arena, params ) {
 
     EventDispatcher.call( this );
 
+    this.id = params.id;
     this.arena = arena;
 
-    this.id = params.id;
     this.team = this.arena.teamManager.getById( params.team ) || false;
     this.health = params.health;
 
@@ -156,8 +156,6 @@ Game.Tower.prototype.rotateTop = function ( oldAngle, newAngle ) {
 Game.Tower.prototype.shoot = function ( shootId ) {
 
     var bullet = false;
-    var hitCallback = false;
-    var scope = this;
 
     for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
 
@@ -197,17 +195,6 @@ Game.Tower.prototype.shoot = function ( shootId ) {
 
     bullet.active = true;
     bullet['shotId'] = shootId;
-    bullet['flytime'] = 5;
-
-    return {
-
-        onHit: function ( callback ) {
-
-            hitCallback = callback;
-
-        }
-
-    };
 
 };
 
@@ -235,33 +222,12 @@ Game.Tower.prototype.changeTeam = function ( team, init ) {
 
     this.updateHealthBar();
 
-    //
-
-    team.kills ++;
-
 };
 
 Game.Tower.prototype.updateHealth = function ( health ) {
 
     this.health = health;
     this.updateHealthBar();
-
-};
-
-Game.Tower.prototype.hideBullet = function ( data ) {
-
-    for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
-
-        hidebullet = this.bullets[ i ];
-
-        if ( data.bulletId === hidebullet.shotId ) {
-
-            this.bullets[ i ].active = false;
-            this.bullets[ i ].visible = false;
-
-        }
-
-    }
 
 };
 

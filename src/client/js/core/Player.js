@@ -29,13 +29,7 @@ Game.Player = function ( arena, params ) {
 
     this.moveSpeed = 0.09;
     this.originalMoveSpead = this.moveSpeed;
-
-    this.rotDelta = 0;
-    this.rotationTopTarget = false;
-    this.positionCorrection = { x: 0, z: 0 };
     this.moveDirection = new THREE.Vector2( params.moveDirection.x || 0, params.moveDirection.y || 0 );
-
-    this.lastShot = Date.now();
 
     this.explosion = [];
     this.bulletSpeed = 0.6;
@@ -53,9 +47,9 @@ Game.Player.prototype = Object.create( EventDispatcher.prototype );
 Game.Player.prototype.init = function ( params ) {
 
     this.selectTank( params.tank );
-    this.tank.init();
 
-    this.tank.setRotation( this.rotation )
+    this.tank.init();
+    this.tank.setRotation( this.rotation );
     this.tank.setPosition( this.position.x, this.position.y, this.position.z );
 
     this.addEventListeners();
@@ -117,17 +111,12 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
         this.tank.setPosition( this.position.x, this.position.y, this.position.z );
         this.tank.setRotation( params.rotation );
 
-        this.rotDelta = 0;
-        this.rotationTopTarget = false;
-
         if ( this.id === Game.arena.me.id ) {
 
             view.camera.position.set( this.position.x + 180, view.camera.position.y, this.position.z );
             view.camera.lookAt( this.position );
 
         }
-
-        this.lastShot = Date.now();
 
         this.moveSpeed = 0.09;
         this.moveSpeed = this.moveSpeed * this.tank.speed / 40;
@@ -157,7 +146,7 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
             ga('send', {
                 hitType: 'event',
                 eventCategory: 'game',
-                eventAction: 'respown'
+                eventAction: 'respawn'
             });
 
             var tank = localStorage.getItem( 'currentTank' ) || 0;
@@ -206,8 +195,6 @@ Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
             }
 
         }
-
-        var moveDelta = Math.sqrt( Math.pow( player.moveDirection.x, 2 ) + Math.pow( player.moveDirection.y, 2 ) );
 
         player.tank.addTrack();
 
@@ -258,7 +245,6 @@ Game.Player.prototype.rotateTop = function ( angle ) {
     angle = angle - this.tank.object.rotation.y;
     angle = Utils.formatAngle( angle );
 
-    this.rotationTopTarget = angle;
     this.topRotation = angle;
     this.tank.setTopRotation( angle );
 
@@ -336,7 +322,7 @@ Game.Player.prototype.gotBox = function ( data ) {
 
 };
 
-Game.Player.prototype.updateHealth = function ( value, playerId ) {
+Game.Player.prototype.updateHealth = function ( value ) {
 
     value = ( value !== undefined ) ? value : this.health;
 
@@ -375,16 +361,14 @@ Game.Player.prototype.updateHealth = function ( value, playerId ) {
 
 };
 
-Game.Player.prototype.updateHealthBar = function ( value ) {
-
-    value = ( value !== undefined ) ? value : this.health;
+Game.Player.prototype.updateHealthBar = function () {
 
     if ( ! this.healthBar ) {
 
         var bg = new THREE.Sprite( new THREE.SpriteMaterial( { color: 0xffffff, fog: true } ) );
         var healthBar = new THREE.Sprite( new THREE.SpriteMaterial( { color: 0x00ff00, fog: true } ) );
 
-        healthBar.position.set( 0, 60, 0 );
+        healthBar.position.set( 0, 50, 0 );
         healthBar.scale.set( 50, 2, 1 );
 
         this.healthBar = {
@@ -441,12 +425,22 @@ Game.Player.prototype.update = function ( time, delta ) {
 
 };
 
-Game.Player.prototype.die = function ( killer, killerKills ) {
+Game.Player.prototype.die = function ( killer ) {
 
     var scope = this;
 
     killer = Game.arena.playerManager.getById( killer ) || Game.arena.towerManager.getById( killer );
     if ( ! killer ) return;
+
+    if ( this.id === killer.id ) {
+
+        ga('send', {
+            hitType: 'event',
+            eventCategory: 'game',
+            eventAction: 'kill'
+        });
+
+    }
 
     if ( this.id === Game.arena.me.id ) {
 
@@ -480,16 +474,6 @@ Game.Player.prototype.die = function ( killer, killerKills ) {
 
     ui.showKills( killer, this );
 
-    if ( killer ) {
-
-        killer.team.kills ++;
-        killer.kills = killerKills;
-
-    }
-
-    this.team.death ++;
-    this.death ++;
-
     this.moveDirection.x = 0;
     this.moveDirection.y = 0;
 
@@ -506,19 +490,7 @@ Game.Player.prototype.dispose = function () {
 
 Game.Player.prototype.bulletHit = function ( data ) {
 
-    if ( this.id === Game.arena.playerManager.players[0].id ) {
-
-        for ( var towerId in Game.arena.towerManager.towers ) {
-
-            var tower = Game.arena.towerManager.towers[ towerId ];
-            tower.hideBullet( data );
-
-        }
-
-    }
-
     this.showExplosion( data );
-    this.tank.hideBullet( data );
 
 };
 

@@ -13,7 +13,6 @@ var Box = function ( arena, params ) {
     this.position = new Game.Vec3( params.position.x, params.position.y, params.position.z ) || new Game.Vec3( 0, 20, 0 );
 
     this.amount = 0;
-    this.duration = 0;
     this.type = 'none';
 
 };
@@ -31,11 +30,12 @@ Box.prototype.init = function () {
 Box.prototype.toJSON = function () {
 
     return {
+
         id:         this.id,
         type:       this.type,
         amount:     this.amount,
-        duration:   this.duration,
         position:   this.position.toJSON()
+
     };
 
 };

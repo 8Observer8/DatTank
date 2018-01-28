@@ -7,13 +7,13 @@ Game.SettingsManager = function () {
 
     if ( ! localStorage.getItem('hq') ) {
 
-        localStorage.setItem('hq', true);
+        localStorage.setItem( 'hq', true );
 
     }
 
     if ( ! localStorage.getItem('sound') ) {
 
-        localStorage.setItem('sound', true);
+        localStorage.setItem( 'sound', true );
 
     }
 

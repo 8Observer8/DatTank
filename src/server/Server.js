@@ -3,9 +3,6 @@
  * Basic start server
 */
 
-var PORT = 8082;
-
-var argparse = require('argparse');
 var http = require('http');
 var express = require('express');
 

@@ -3,7 +3,6 @@
  * Global params for server
 */
 
-var os = require('os');
 var argparse = require('argparse');
 
 //

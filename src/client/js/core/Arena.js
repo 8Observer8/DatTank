@@ -7,7 +7,6 @@ Game.Arena = function () {
 
     this.id = false;
     this.me = false;
-    this.currentTime = false;
 
     //
 
@@ -40,10 +39,9 @@ Game.Arena.prototype.init = function ( params ) {
 
     //
 
-    ui.clearKills();
     view.addDecorations( params.decorations );
-
     this.initExplosions();
+
     this.teamManager.init( params.teams );
     this.playerManager.init();
     this.boxManager.init();
@@ -51,7 +49,6 @@ Game.Arena.prototype.init = function ( params ) {
 
     //
 
-    this.currentTime = params.currentTime;
     this.me = this.addPlayer( params.me );
 
     //
@@ -118,11 +115,11 @@ Game.Arena.prototype.showExplosion = function ( params ) {
             if ( ! shooter ) continue;
 
             var bulletsPool = shooter.bullets;
-            for ( var i = 0, il = bulletsPool.length; i < il; i ++ ) {
+            for ( var j = 0, jl = bulletsPool.length; j < jl; j ++ ) {
 
-                if ( bulletsPool[ i ].id === params.id ) {
+                if ( bulletsPool[ j ].id === params.id ) {
 
-                    bulletsPool[ i ].visible = false;
+                    bulletsPool[ j ].visible = false;
                     break;
 
                 }

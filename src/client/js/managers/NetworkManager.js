@@ -5,7 +5,6 @@
 
 Game.NetworkManager = function () {
 
-    this.connected = false;
     this.transport = false;
     this.messageListeners = {};
 
@@ -98,7 +97,6 @@ Game.NetworkManager.prototype.init = function ( callback ) {
 
 Game.NetworkManager.prototype.onConnect = function () {
 
-    this.connected = true;
     this.initCallback();
 
     //
@@ -118,9 +116,7 @@ Game.NetworkManager.prototype.onMessage = function ( event ) {
 
 Game.NetworkManager.prototype.onDisconnected = function () {
 
-    this.connected = false;
     this.transport = false;
-
     this.init();
 
     //
@@ -202,7 +198,6 @@ Game.NetworkManager.prototype.triggerMessageListener = function ( eventId, data 
     var eventName = this.events.in[ eventId ].name;
     var eventType = this.events.in[ eventId ].dataType;
     var listeners = this.messageListeners[ eventName ] || [];
-    var content;
 
     if ( eventType === 'json' ) {
 

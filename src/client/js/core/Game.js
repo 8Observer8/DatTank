@@ -12,15 +12,27 @@ var Game = function () {
     this.loopTimeRemainder = 0;
     this.time = false;
 
+    //
+
+    this.isMobile = new MobileDetect( window.navigator.userAgent );
+    this.isMobile = this.isMobile.mobile() || this.isMobile.phone() || this.isMobile.tablet();
+
 };
 
-Game.Version = '3dev';
+Game.Version = '5dev';
 
 Game.prototype = {};
 
 //
 
 Game.prototype.init = function () {
+
+    if ( this.isMobile ) {
+
+        $('.error-on-mobile').show();
+        return;
+
+    }
 
     var scope = this;
 
@@ -89,7 +101,6 @@ Game.prototype.play = function ( event ) {
     //
 
     ui.showLoaderScreen();
-
     ui.hideSignInPopup();
     ui.hideFooter();
 
@@ -120,7 +131,7 @@ Game.prototype.play = function ( event ) {
 
         network.init( function () {
 
-            // free prev arena if still exists
+            // if free prev arena still exists
 
             if ( scope.arena !== false ) {
 
@@ -191,8 +202,6 @@ Game.prototype.joinArena = function ( params ) {
     $('#soundon').click( ui.changeSound.bind( ui ) );
     $('#qualityon').click( ui.chageQuality.bind( ui ) );
 
-    $('#leaderboard').click( ui.toggleLeaderboard.bind( ui ) );
-
     //
 
     this.prevLoopTime = Date.now();
@@ -219,6 +228,14 @@ Game.prototype.loop = function () {
     }
 
 };
+
+Game.prototype.dispose = function ( ) {
+
+    clearInterval( this.gameLoopInterval );
+
+};
+
+//
 
 Game.prototype.gaVk = function () {
 

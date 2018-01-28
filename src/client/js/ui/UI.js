@@ -91,17 +91,11 @@ Game.UI.prototype.openSettings = function (value) {
 
     }
 
-    if ( localStorage.getItem( 'gear' ) === 'false' ){
+    if ( localStorage.getItem( 'gear' ) === 'false' ) {
 
         $('#settings-wrapper').hide();
 
     }
-
-};
-
-Game.UI.prototype.toggleLeaderboard = function () {
-
-    $('#leaderboard-wrapper').toggle();
 
 };
 
@@ -172,12 +166,6 @@ Game.UI.prototype.showKills = function ( killer, killed ) {
 
 };
 
-Game.UI.prototype.clearKills = function () {
-
-    $('#kill-events').html('');
-
-};
-
 Game.UI.prototype.hideContinueBox = function () {
 
     $('#continue-box-wrapper').css( 'opacity', 0 );
@@ -221,7 +209,6 @@ Game.UI.prototype.updateLeaderboard = function ( players, me ) {
             $( names[ i ] ).html( players[ i ].login );
             $( kills[ i ] ).html( players[ i ].kills );
             $( teams[ i ] ).css( 'background-color', Game.Team.colors[ players[ i ].team ] );
-
             $( rows[ i ] ).show();
 
             if ( me && players[ i ].id === me.id ) {

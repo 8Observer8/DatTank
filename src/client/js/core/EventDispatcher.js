@@ -5,6 +5,8 @@
 
 function EventDispatcher () {
 
+    // nothing here
+
 };
 
 EventDispatcher.prototype = {};

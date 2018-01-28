@@ -49,17 +49,19 @@ Bot.prototype = {};
 
 Bot.prototype.init = function () {
 
+    var tank;
+
     if ( Math.random() <= 0.3 ) {
 
-        var tank = 'USAT54';
+        tank = 'USAT54';
 
     } else if ( Math.random() > 0.3 && Math.random() <= 0.6 ) {
 
-        var tank = 'D32';
+        tank = 'D32';
 
     } else if ( Math.random() > 0.6 ) {
 
-        var tank = 'UKBlackPrince';
+        tank = 'UKBlackPrince';
 
     }
 
@@ -74,7 +76,6 @@ Bot.prototype.init = function () {
 Bot.prototype.update = function () {
 
     var isMove = Math.random();
-    var scope = this;
 
     if ( this.removed ) {
 
@@ -109,7 +110,7 @@ Bot.prototype.update = function () {
 
     } else {
 
-        this.moveDuration = ( this.moveDuration !== false ) ? moveDuration - 40 : false;
+        this.moveDuration = ( this.moveDuration !== false ) ? this.moveDuration - 40 : false;
         this.rotateBaseDuration = ( this.rotateBaseDuration !== false ) ? this.rotateBaseDuration - 40 : false;
 
         if ( this.moveDuration <= 0 && this.moveDuration !== false ) {

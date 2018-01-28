@@ -78,7 +78,7 @@ CollisionManager.prototype.collisionEnd = function ( event ) {
 
         object = this.objects[ i ];
 
-        if ( event.bodyA == object.body || event.bodyB == object.body ) {
+        if ( event.bodyA === object.body || event.bodyB === object.body ) {
 
             if ( object.parent.type === 'Player' ) {
 
@@ -156,9 +156,11 @@ CollisionManager.prototype.removeObject = function ( object ) {
 
 CollisionManager.prototype.update = function ( delta ) {
 
+    var object;
+
     for ( var i = 0, il = this.objects.length; i < il; i ++ ) {
 
-        var object = this.objects[ i ];
+        object = this.objects[ i ];
 
         if ( object.parent.type === 'Player' ) {
 
@@ -199,7 +201,7 @@ CollisionManager.prototype.update = function ( delta ) {
 
     for ( var i = 0, il = this.objects.length; i < il; i ++ ) {
 
-        var object = this.objects[ i ];
+        object = this.objects[ i ];
 
         if ( object.parent.type !== 'Player' ) continue;
 
@@ -228,9 +230,9 @@ CollisionManager.prototype.update = function ( delta ) {
 
 };
 
-CollisionManager.prototype.isPlaceFree = function ( position, radius, rotation ) {
+CollisionManager.prototype.isPlaceFree = function ( position, radius ) {
 
-    var body, shape, vec2;
+    var body, shape;
     var n = this.world.narrowphase;
     var dummyBody = new p2.Body({ position: [ position.x, position.y ] });
     var dummyShape = new p2.Circle({ radius: radius });

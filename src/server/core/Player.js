@@ -42,7 +42,6 @@ var Player = function ( arena, params ) {
 
     this.collisionBox = false;
 
-    this.afkTimeout = false;
     this.shootTimeout = false;
 
     this.position = new Game.Vec3();
@@ -125,7 +124,7 @@ Player.prototype.respawn = function ( tankName ) {
     this.arena.updateLeaderboard();
 
     if ( ! this.collisionBox ) {
-    
+
         this.arena.collisionManager.addObject( this, 'box', true );
 
     } else {
@@ -660,7 +659,6 @@ Player.prototype.toPrivateJSON = function () {
         id:             this.id,
         login:          this.login,
         team:           this.team.id,
-        tank:           this.tank.title,
         tank:           this.tank.title,
         health:         this.health,
         ammo:           this.ammo,

@@ -6,8 +6,6 @@
 Game.ControlsManager = function () {
 
     this.pressedKey = {};
-    this.pressedMouseKey = false;
-
     this.mousePos = new THREE.Vector2( 0.5, 0.5 );
     this.prevMousePos = new THREE.Vector2( 0.5, 0.5 );
 
@@ -40,9 +38,6 @@ Game.ControlsManager.prototype.mouseInit = function () {
 
     function mouseDown ( event ) {
 
-        var mouseX = event.clientX;
-        var mouseY = event.clientY;
-
         scope.mousePos.x = ( event.clientX / view.SCREEN_WIDTH ) * 2 - 1;
         scope.mousePos.y = - ( event.clientY / view.SCREEN_HEIGHT ) * 2 + 1;
 
@@ -71,18 +66,12 @@ Game.ControlsManager.prototype.mouseInit = function () {
 
     function mouseMove ( event ) {
 
-        var mouseX = event.clientX;
-        var mouseY = event.clientY;
-
         scope.mousePos.x = ( event.clientX / view.SCREEN_WIDTH ) * 2 - 1;
         scope.mousePos.y = - ( event.clientY / view.SCREEN_HEIGHT ) * 2 + 1;
 
     };
 
     function mouseUp ( event ) {
-
-        var mouseX = event.clientX;
-        var mouseY = event.clientY;
 
         scope.mousePos.x = ( event.clientX / view.SCREEN_WIDTH ) * 2 - 1;
         scope.mousePos.y = - ( event.clientY / view.SCREEN_HEIGHT ) * 2 + 1;

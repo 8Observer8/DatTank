@@ -127,9 +127,10 @@ Game.Tank.prototype.initSounds = function () {
 Game.Tank.prototype.initLabel = function () {
 
     var canvas = document.createElement( 'canvas' );
-    canvas.width = 30 + 20 * this.player.login.length;
-    canvas.height = 25;
     var ctx = canvas.getContext('2d');
+
+    canvas.width = 256;
+    canvas.height = 128;
     ctx.fillStyle = this.player.team.color;
     ctx.fillRect( 0, 0, 25, 25 );
 
@@ -144,8 +145,8 @@ Game.Tank.prototype.initLabel = function () {
     material.map.needsUpdate = true;
 
     var sprite = new THREE.Sprite( material );
-    sprite.position.set( 0, 50, 0 );
-    sprite.scale.set( canvas.width / 3, canvas.height / 3, 1 );
+    sprite.position.set( 0, 35, 0 );
+    sprite.scale.set( 50, 25, 1 );
     material.depthWrite = false;
     material.depthTest = false;
     this.object.add( sprite );
@@ -422,7 +423,7 @@ Game.Tank.prototype.showSmoke = function ( strength ) {
 
         sprite = sprite.clone();
         sprite.position.z = -15;
-        sprite.position.y = 0 + 7 * i;
+        sprite.position.y = 7 * i;
         sprite.position.x = Math.random() * 3 - 1.5;
         sprite.material = sprite.material.clone();
         sprite.material.opacity = 0.8 - 0.8/5 * i;
@@ -485,10 +486,9 @@ Game.Tank.prototype.updateSmoke = function () {
 
 };
 
-Game.Tank.prototype.shootBullet = function ( shootId, data ) {
+Game.Tank.prototype.shootBullet = function ( shootId ) {
 
     var bullet = false;
-    var hitCallback = false;
 
     for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
 
@@ -526,24 +526,6 @@ Game.Tank.prototype.shootBullet = function ( shootId, data ) {
     }
 
     bullet['shotId'] = shootId;
-    bullet['flytime'] = 5;
-
-};
-
-Game.Tank.prototype.hideBullet = function ( data ) {
-
-    for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
-
-        hidebullet = this.bullets[ i ];
-
-        if ( data.bulletId === hidebullet.shotId ) {
-
-            this.bullets[ i ].active = false;
-            this.bullets[ i ].visible = false;
-
-        }
-
-    }
 
 };
 

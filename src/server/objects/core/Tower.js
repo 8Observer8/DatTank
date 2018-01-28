@@ -15,9 +15,7 @@ var Tower = function ( arena, params ) {
     this.health = 100;
     this.shootTime = Date.now();
     this.cooldown = 1300;
-
     this.target = false;
-    this.hits = {};
 
     this.bulletsPool = [];
 
@@ -163,7 +161,7 @@ Tower.prototype.shoot = function ( target ) {
 
 };
 
-Tower.prototype.hit = function ( killer, shootId ) {
+Tower.prototype.hit = function ( killer ) {
 
     var scope = this;
 

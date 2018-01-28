@@ -3,8 +3,6 @@
  * DatTank Scene Rendering core
 */
 
-var MOBILE;
-
 Game.ViewManager = function () {
 
     this.SCREEN_WIDTH = false;
@@ -14,24 +12,13 @@ Game.ViewManager = function () {
 
     //
 
-    MOBILE = new MobileDetect( window.navigator.userAgent );
-    MOBILE = MOBILE.mobile() || MOBILE.phone() || MOBILE.tablet();
-
-    if ( MOBILE ) {
-
-        $('.error-on-mobile').show();
-        return;
-
-    }
-
-    //
-
     this.scene = false;
     this.camera = false;
     this.renderer = false;
 
     this.cameraOffset = new THREE.Vector3();
     this.shakeInterval = false;
+    this.intersections = false;
 
     //
 
@@ -65,7 +52,7 @@ Game.ViewManager.prototype.setupScene = function () {
     this.camera.lookAt( new THREE.Vector3() );
     this.scene.add( this.camera );
 
-    this.scene.fog = new THREE.Fog( 0xa9a6a6, 100, 700 );
+    this.scene.fog = new THREE.FogExp2( 0xa9a6a6, 0.0024 );
 
     // setup sound listener
 
@@ -97,21 +84,12 @@ Game.ViewManager.prototype.setupScene = function () {
 Game.ViewManager.prototype.addDecorations = function ( decorations ) {
 
     var tree = resourceManager.getModel( 'tree.json' );
-    tree.material[0].alphaTest = 0.5;
-
     var tree1 = resourceManager.getModel( 'tree1.json' );
-    tree1.material[0].alphaTest = 0.5;
-
     var tree2 = resourceManager.getModel( 'tree2.json' );
-    tree1.material[0].alphaTest = 0.5;
-
     var tree3 = resourceManager.getModel( 'tree3.json' );
-    tree1.material[0].alphaTest = 0.5;
-
     var stone = resourceManager.getModel( 'stone.json' );
     var stone1 = resourceManager.getModel( 'stone1.json' );
     var stone2 = resourceManager.getModel( 'stone2.json' );
-
     var oldCastle = resourceManager.getModel( 'oldCastle.json' );
 
     var model;
@@ -164,10 +142,6 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
         }
 
         mesh = new THREE.Mesh( model.geometry, model.material );
-
-        var bbox = new THREE.Box3().setFromObject( mesh );
-        var radius = Math.max( Math.abs( bbox.min.x ), Math.abs( bbox.min.z ), Math.abs( bbox.max.x ), Math.abs( bbox.max.z ) ) / 1.2;
-
         mesh.scale.set( decoration.scale.x, decoration.scale.y, decoration.scale.z );
         mesh.rotation.y = Math.random() * Math.PI;
 
@@ -186,27 +160,13 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
 
         mesh.position.set( decoration.position.x, decoration.position.y, decoration.position.z );
         mesh.name = decoration.type;
+        view.scene.add( mesh );
 
         this.addObjectShadow( decoration.type, mesh.position, mesh.scale, mesh.rotation );
 
-        var box = new THREE.Mesh( new THREE.CylinderBufferGeometry( radius, radius, 30, 8, 1 ), new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.6 }) );
-
-        box.position.copy( mesh.position );
-        box.rotation.copy( mesh.rotation );
-        box.scale.copy( mesh.scale );
-        box.scale.y *= 1.5;
-
-        box.position.y += 15;
-        box.material.visible = false;
-
-        view.scene.add( mesh );
-        view.scene.add( box );
-        view.scene.intersections.push( box );
-
         if ( decoration.type === 'rock2' ) {
 
-            view.scene.remove( box );
-            mesh.scale.set( 10 + scale, 10 + Math.random() * 5, 10 + scale);
+            mesh.scale.set( 10 + scale, 10 + Math.random() * 5, 10 + scale );
 
         }
 
@@ -280,86 +240,94 @@ Game.ViewManager.prototype.addMap = function () {
 
 Game.ViewManager.prototype.addObjectShadow = function ( objectType, position, scale, rotation ) {
 
+    var shadowTexture;
+    var shadowMesh;
+    var shadowScale;
+
     switch ( objectType ) {
 
         case 'tree':
 
-            var treeShadowTexture = resourceManager.getTexture( 'treeshadow.png' );
-            var treeShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ map: treeShadowTexture, transparent: true, depthWrite: false, opacity: 0.4 }) );
-            treeShadow.material.transparent = true;
-            treeShadow.rotation.x = - Math.PI / 2;
-            treeShadow.position.copy( position );
-            treeShadow.position.y += 0.5;
-            treeShadow.scale.set( scale.y, scale.y, scale.y );
-            treeShadow.position.x += 2 * treeShadow.scale.y / 2 - 2;
-            treeShadow.position.z += 2 * treeShadow.scale.y / 2 - 4;
-            treeShadow.renderOrder = 2;
-            this.scene.add( treeShadow );
+            shadowScale = scale.y;
+            shadowTexture = resourceManager.getTexture( 'treeshadow.png' );
+            shadowMesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ map: shadowTexture, transparent: true, depthWrite: false, opacity: 0.4 }) );
+            shadowMesh.material.transparent = true;
+            shadowMesh.rotation.x = - Math.PI / 2;
+            shadowMesh.position.copy( position );
+            shadowMesh.position.y += 0.5;
+            shadowMesh.scale.set( shadowScale, shadowScale, shadowScale );
+            shadowMesh.position.x += 2 * shadowMesh.scale.y / 2 - 2;
+            shadowMesh.position.z += 2 * shadowMesh.scale.y / 2 - 4;
+            shadowMesh.renderOrder = 2;
+            this.scene.add( shadowMesh );
 
             break;
 
         case 'tree1':
 
-            var treeShadowTexture = resourceManager.getTexture( 'treeshadow1.png' );
-            var treeShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ map: treeShadowTexture, transparent: true, depthWrite: false, opacity: 0.4 }) );
-            treeShadow.material.transparent = true;
-            treeShadow.rotation.x = - Math.PI / 2;
-            treeShadow.position.copy( position );
-            treeShadow.position.y += 0.5;
-            treeShadow.scale.set( scale.y, scale.y, scale.y );
-            treeShadow.position.x += 2 * treeShadow.scale.y / 2 - 2;
-            treeShadow.position.z += 2 * treeShadow.scale.y / 2 - 4;
-            treeShadow.renderOrder = 2;
-            this.scene.add( treeShadow );
+            shadowScale = scale.y;
+            shadowTexture = resourceManager.getTexture( 'treeshadow1.png' );
+            shadowMesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ map: shadowTexture, transparent: true, depthWrite: false, opacity: 0.4 }) );
+            shadowMesh.material.transparent = true;
+            shadowMesh.rotation.x = - Math.PI / 2;
+            shadowMesh.position.copy( position );
+            shadowMesh.position.y += 0.5;
+            shadowMesh.scale.set( shadowScale, shadowScale, shadowScale );
+            shadowMesh.position.x += 2 * shadowMesh.scale.y / 2 - 2;
+            shadowMesh.position.z += 2 * shadowMesh.scale.y / 2 - 4;
+            shadowMesh.renderOrder = 2;
+            this.scene.add( shadowMesh );
 
             break;
 
         case 'tree2':
 
-            var treeShadowTexture = resourceManager.getTexture( 'treeshadow2.png' );
-            var treeShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ map: treeShadowTexture, transparent: true, depthWrite: false, opacity: 0.4 }) );
-            treeShadow.material.transparent = true;
-            treeShadow.rotation.x = - Math.PI / 2;
-            treeShadow.position.copy( position );
-            treeShadow.position.y += 0.5;
-            treeShadow.scale.set( scale.y, scale.y, scale.y );
-            treeShadow.position.x += 2 * treeShadow.scale.y / 2 - 2;
-            treeShadow.position.z += 2 * treeShadow.scale.y / 2 - 4;
-            treeShadow.renderOrder = 2;
-            this.scene.add( treeShadow );
+            shadowScale = scale.y;
+            shadowTexture = resourceManager.getTexture( 'treeshadow2.png' );
+            shadowMesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ map: shadowTexture, transparent: true, depthWrite: false, opacity: 0.4 }) );
+            shadowMesh.material.transparent = true;
+            shadowMesh.rotation.x = - Math.PI / 2;
+            shadowMesh.position.copy( position );
+            shadowMesh.position.y += 0.5;
+            shadowMesh.scale.set( shadowScale, shadowScale, shadowScale );
+            shadowMesh.position.x += 2 * shadowMesh.scale.y / 2 - 2;
+            shadowMesh.position.z += 2 * shadowMesh.scale.y / 2 - 4;
+            shadowMesh.renderOrder = 2;
+            this.scene.add( shadowMesh );
 
             break;
 
         case 'tree3':
 
-            var treeShadowTexture = resourceManager.getTexture( 'treeshadow3.png' );
-            var treeShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ map: treeShadowTexture, transparent: true, depthWrite: false, opacity: 0.4 }) );
-            treeShadow.material.transparent = true;
-            treeShadow.rotation.x = - Math.PI / 2;
-            treeShadow.position.copy( position );
-            treeShadow.position.y += 0.5;
-            treeShadow.scale.set( scale.y, scale.y, scale.y );
-            treeShadow.position.x += 2 * treeShadow.scale.y / 2 - 2;
-            treeShadow.position.z += 2 * treeShadow.scale.y / 2 - 4;
-            treeShadow.renderOrder = 2;
-            this.scene.add( treeShadow );
+            shadowScale = scale.y;
+            shadowTexture = resourceManager.getTexture( 'treeshadow3.png' );
+            shadowMesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ map: shadowTexture, transparent: true, depthWrite: false, opacity: 0.4 }) );
+            shadowMesh.material.transparent = true;
+            shadowMesh.rotation.x = - Math.PI / 2;
+            shadowMesh.position.copy( position );
+            shadowMesh.position.y += 0.5;
+            shadowMesh.scale.set( shadowScale, shadowScale, shadowScale );
+            shadowMesh.position.x += 2 * shadowMesh.scale.y / 2 - 2;
+            shadowMesh.position.z += 2 * shadowMesh.scale.y / 2 - 4;
+            shadowMesh.renderOrder = 2;
+            this.scene.add( shadowMesh );
 
             break;
 
         case 'rock':
 
-            var rockShadowTexture = resourceManager.getTexture( 'stoneshadow.png' );
-            var rockShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture, transparent: true, depthWrite: false, opacity: 0.4 }) );
-            rockShadow.material.transparent = true;
-            rockShadow.rotation.x = - Math.PI / 2;
-            rockShadow.position.copy( position );
-            rockShadow.position.y += 0.5;
-            var scale = ( scale.x + scale.y + scale.z ) / 3;
-            rockShadow.scale.set( scale, scale, scale );
-            rockShadow.position.x += rockShadow.scale.y / 2;
-            rockShadow.position.z += rockShadow.scale.y / 2;
-            rockShadow.renderOrder = 2;
-            this.scene.add( rockShadow );
+            shadowScale = ( scale.x + scale.y + scale.z ) / 3;
+            shadowTexture = resourceManager.getTexture( 'stoneshadow.png' );
+            shadowMesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: shadowTexture, transparent: true, depthWrite: false, opacity: 0.4 }) );
+            shadowMesh.material.transparent = true;
+            shadowMesh.rotation.x = - Math.PI / 2;
+            shadowMesh.position.copy( position );
+            shadowMesh.position.y += 0.5;
+            shadowMesh.scale.set( shadowScale, shadowScale, shadowScale );
+            shadowMesh.position.x += shadowMesh.scale.y / 2;
+            shadowMesh.position.z += shadowMesh.scale.y / 2;
+            shadowMesh.renderOrder = 2;
+            this.scene.add( shadowMesh );
 
             break;
 
@@ -369,51 +337,52 @@ Game.ViewManager.prototype.addObjectShadow = function ( objectType, position, sc
             var rockShadowTexture2 = resourceManager.getTexture( 'stoneshadow_2.png' );
             var rockShadowTexture3 = resourceManager.getTexture( 'stoneshadow_3.png' );
             var rockShadowTexture4 = resourceManager.getTexture( 'stoneshadow_4.png' );
+            shadowScale = ( scale.x + scale.y + scale.z ) / 4;
 
             if ( rotation.y < 0.9 ) {
 
-                var rockShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 5, 5 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture1, transparent: true, depthWrite: false, opacity: 0.4 }) );
+                shadowMesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 5, 5 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture1, transparent: true, depthWrite: false, opacity: 0.4 }) );
 
             } else if ( rotation.y > 0.9 && rotation.y < 1.8 ) {
 
-                var rockShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 5, 5 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture2, transparent: true, depthWrite: false, opacity: 0.4 }) );
+                shadowMesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 5, 5 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture2, transparent: true, depthWrite: false, opacity: 0.4 }) );
 
             } else if ( rotation.y > 1.8 && rotation.y < 2.7 ) {
 
-                var rockShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 5, 5 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture3, transparent: true, depthWrite: false, opacity: 0.4 }) );
+                shadowMesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 5, 5 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture3, transparent: true, depthWrite: false, opacity: 0.4 }) );
 
             } else if ( rotation.y > 2.7 ) {
 
-                var rockShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 5, 5 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture4, transparent: true, depthWrite: false, opacity: 0.4 }) );
+                shadowMesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 5, 5 ), new THREE.MeshBasicMaterial({ map: rockShadowTexture4, transparent: true, depthWrite: false, opacity: 0.4 }) );
 
             }
 
-            rockShadow.material.transparent = true;
-            rockShadow.rotation.x = - Math.PI / 2;
-            rockShadow.position.copy( position );
-            rockShadow.position.y += 0.5;
-            var scale = ( scale.x + scale.y + scale.z ) / 4;
-            rockShadow.scale.set( scale, scale, scale );
-            rockShadow.position.x += rockShadow.scale.y / 4;
-            rockShadow.position.z += rockShadow.scale.y / 4;
-            rockShadow.renderOrder = 2;
-            this.scene.add( rockShadow );
+            shadowMesh.material.transparent = true;
+            shadowMesh.rotation.x = - Math.PI / 2;
+            shadowMesh.position.copy( position );
+            shadowMesh.position.y += 0.5;
+            shadowMesh.scale.set( shadowScale, shadowScale, shadowScale );
+            shadowMesh.position.x += shadowMesh.scale.y / 4;
+            shadowMesh.position.z += shadowMesh.scale.y / 4;
+            shadowMesh.renderOrder = 2;
+            this.scene.add( shadowMesh );
 
             break;
 
         case 'oldCastle':
 
-            var shadowHouseTexture = resourceManager.getTexture( 'shadowHouse.png' );
-            var shadowHouse = new THREE.Mesh( new THREE.PlaneBufferGeometry( 6, 6 ), new THREE.MeshBasicMaterial({ map: shadowHouseTexture, transparent: true, depthWrite: false, opacity: 0.4 }) );
-            shadowHouse.material.transparent = true;
-            shadowHouse.rotation.x = - Math.PI / 2;
-            shadowHouse.position.copy( position );
-            shadowHouse.position.y += 0.5;
-            shadowHouse.scale.set( scale.y, scale.y, scale.y );
-            shadowHouse.position.x += 5 * shadowHouse.scale.y / 2 - 4;
-            shadowHouse.position.z += 3 * shadowHouse.scale.y / 2 - 4;
-            shadowHouse.renderOrder = 2;
-            this.scene.add( shadowHouse );
+            shadowScale = scale.y;
+            shadowTexture = resourceManager.getTexture( 'shadowHouse.png' );
+            shadowMesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 6, 6 ), new THREE.MeshBasicMaterial({ map: shadowTexture, transparent: true, depthWrite: false, opacity: 0.4 }) );
+            shadowMesh.material.transparent = true;
+            shadowMesh.rotation.x = - Math.PI / 2;
+            shadowMesh.position.copy( position );
+            shadowMesh.position.y += 0.5;
+            shadowMesh.scale.set( shadowScale, shadowScale, shadowScale );
+            shadowMesh.position.x += 5 * shadowMesh.scale.y / 2 - 4;
+            shadowMesh.position.z += 3 * shadowMesh.scale.y / 2 - 4;
+            shadowMesh.renderOrder = 2;
+            this.scene.add( shadowMesh );
 
             break;
 
@@ -531,8 +500,6 @@ Game.ViewManager.prototype.resize = function () {
 
 };
 
-var intersections = false;
-
 Game.ViewManager.prototype.animate = function ( delta ) {
 
     if ( ! Game.arena ) return;
@@ -562,19 +529,19 @@ Game.ViewManager.prototype.animate = function ( delta ) {
 
     }
 
-    if ( ! intersections || Game.arena.me.moveDirection.x || Game.arena.me.moveDirection.y || Math.abs( controls.mousePos.x - controls.prevMousePos.x ) > 0.02 || Math.abs( controls.mousePos.y - controls.prevMousePos.y ) > 0.02 ) {
+    if ( ! this.intersections || Game.arena.me.moveDirection.x || Game.arena.me.moveDirection.y || Math.abs( controls.mousePos.x - controls.prevMousePos.x ) > 0.02 || Math.abs( controls.mousePos.y - controls.prevMousePos.y ) > 0.02 ) {
 
         view.raycaster.setFromCamera( controls.mousePos, view.camera );
-        intersections = view.raycaster.intersectObjects( [ view.ground ] );
+        this.intersections = view.raycaster.intersectObjects( [ view.ground ] );
 
         if ( controls.prevMousePos.distanceTo( controls.mousePos ) > 0.05 ) {
 
             controls.prevMousePos.set( controls.mousePos.x, controls.mousePos.y );
 
-            if ( intersections.length ) {
+            if ( this.intersections.length ) {
 
                 var me = Game.arena.me;
-                var angle = Math.atan2( intersections[0].point.x - me.position.x, intersections[0].point.z - me.position.z ) - Math.PI / 2;
+                var angle = Math.atan2( this.intersections[0].point.x - me.position.x, this.intersections[0].point.z - me.position.z ) - Math.PI / 2;
 
                 if ( Math.abs( angle - me.topRotation ) > 0.01 ) {
 
@@ -590,7 +557,7 @@ Game.ViewManager.prototype.animate = function ( delta ) {
 
 };
 
-Game.ViewManager.prototype.addCameraShake = function ( duration, intencity ) {
+Game.ViewManager.prototype.addCameraShake = function ( duration, intensity ) {
 
     var iter = 0;
     var scope = this;
@@ -604,9 +571,9 @@ Game.ViewManager.prototype.addCameraShake = function ( duration, intencity ) {
 
     this.shakeInterval = setInterval( function () {
 
-        scope.cameraOffset.x = intencity * ( Math.random() - 0.5 ) * iter / 2;
-        scope.cameraOffset.y = intencity * ( Math.random() - 0.5 ) * iter / 2;
-        scope.cameraOffset.z = intencity * ( Math.random() - 0.5 ) * iter / 2;
+        scope.cameraOffset.x = intensity * ( Math.random() - 0.5 ) * iter / 2;
+        scope.cameraOffset.y = intensity * ( Math.random() - 0.5 ) * iter / 2;
+        scope.cameraOffset.z = intensity * ( Math.random() - 0.5 ) * iter / 2;
 
         iter ++;
 
