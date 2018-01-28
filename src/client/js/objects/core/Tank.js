@@ -549,6 +549,8 @@ Game.Tank.prototype.hideBullet = function ( data ) {
 
 Game.Tank.prototype.dispose = function () {
 
+    // remove explosion objects from scene
+
     if ( this.effects.explosion ) {
 
         for ( var i = 0, il = this.effects.explosion.length; i < il; i ++ ) {
@@ -559,7 +561,9 @@ Game.Tank.prototype.dispose = function () {
 
     }
 
-    if ( this.effects.blastSmoke && this.effects.blastSmoke.length ) {
+    // remove smoke objects from scene
+
+    if ( this.effects.blastSmoke ) {
 
         for ( var i = 0, il = this.effects.blastSmoke.length; i < il; i ++ ) {
 
@@ -569,11 +573,24 @@ Game.Tank.prototype.dispose = function () {
 
     }
 
+    // remove bullets from scene
+
     for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
 
         view.scene.remove( this.bullets[ i ] );
 
     }
+
+    // remove tracks from scene
+
+    for ( var i = 0, il = this.tracks.length; i < il; i ++ ) {
+
+        view.scene.remove( this.tracks[ i ].left );
+        view.scene.remove( this.tracks[ i ].right );
+
+    }
+
+    // remove tank object from scene
 
     view.scene.remove( this.object );
 
