@@ -12,6 +12,7 @@ var Player = function ( arena, params ) {
     if ( Player.numIds > 1000 ) Player.numIds = 0;
 
     this.id = Player.numIds ++;
+    this.arena = arena || false;
     this.login = params.login || 'guest';
 
     this.moveDirection = new Game.Vec2();
@@ -34,9 +35,6 @@ var Player = function ( arena, params ) {
 
     this.bulletsPool = [];
 
-    this.disable = false;
-
-    this.arena = arena || false;
     this.team = false;
     this.health = 100;
     this.kills = 0;
@@ -45,23 +43,20 @@ var Player = function ( arena, params ) {
     this.collisionBox = false;
 
     this.afkTimeout = false;
-    this.moveDelay = false;
     this.shootTimeout = false;
 
     this.position = new Game.Vec3();
     this.deltaPosition = new Game.Vec3();
     this.rotation = 0;
     this.rotationTop = - Math.PI / 2;
-    this.lastUpdatedTopRotation = - Math.PI / 2;
-
-    this.selectTank( params.tank );
 
     this.networkBuffers = {};
     this.inRangeOf = {};
-    this.viewRange = 550;
+    this.viewRange = 600;
 
     //
 
+    this.selectTank( params.tank );
     this.initBulletPool();
     this.addEventListeners();
 
@@ -201,7 +196,6 @@ Player.prototype.rotateTop = function ( angle ) {
     bufferView[2] = Math.floor( 1000 * angle );
 
     scope.sendEventToPlayersInRange( 'PlayerTankRotateTop', buffer, bufferView );
-    scope.lastUpdatedTopRotation = angle;
 
 };
 
@@ -574,10 +568,8 @@ Player.prototype.addEventListeners = function () {
 
 Player.prototype.isObjectInRange = function ( object ) {
 
-    var scope = this;
-    var distance = Math.sqrt( Math.pow( scope.position.x - object.position.x, 2 ) + Math.pow( scope.position.z - object.position.z, 2 ) );
-
-    return ( distance < scope.viewRange );
+    var distance = Math.sqrt( Math.pow( this.position.x - object.position.x, 2 ) + Math.pow( this.position.z - object.position.z, 2 ) );
+    return ( distance < this.viewRange );
 
 };
 
@@ -621,6 +613,7 @@ Player.prototype.toPrivateJSON = function () {
         rotation:       this.rotation,
         rotationTop:    this.rotationTop,
         position:       this.position,
+        moveDirection:  { x: this.moveDirection.x, y: this.moveDirection.y }
 
     };
 
@@ -637,7 +630,8 @@ Player.prototype.toPublicJSON = function () {
         health:         this.health,
         rotation:       this.rotation,
         rotationTop:    this.rotationTop,
-        position:       this.position
+        position:       this.position,
+        moveDirection:  { x: this.moveDirection.x, y: this.moveDirection.y }
 
     };
 

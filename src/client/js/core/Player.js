@@ -33,7 +33,7 @@ Game.Player = function ( arena, params ) {
     this.rotDelta = 0;
     this.rotationTopTarget = false;
     this.positionCorrection = { x: 0, z: 0 };
-    this.moveDirection = new THREE.Vector2();
+    this.moveDirection = new THREE.Vector2( params.moveDirection.x || 0, params.moveDirection.y || 0 );
 
     this.lastShot = Date.now();
 

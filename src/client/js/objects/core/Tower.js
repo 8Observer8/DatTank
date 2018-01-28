@@ -67,7 +67,7 @@ Game.Tower.prototype.init = function () {
     }
 
     var top = new THREE.Mesh( towerTopModel.geometry, materials );
-    top.position.y = this.rotation;
+    top.rotation.y = this.rotation;
     top.scale.set( 27, 27, 27 );
 
     this.object.add( top );

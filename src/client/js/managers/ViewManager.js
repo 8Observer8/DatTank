@@ -531,48 +531,6 @@ Game.ViewManager.prototype.resize = function () {
 
 };
 
-Game.ViewManager.prototype.showDestinationPoint = ( function () {
-
-    var interval;
-
-    return function ( position ) {
-
-        var scope = this;
-        clearInterval( interval );
-
-        if ( ! this.selectionCircle ) {
-
-            this.selectionCircle = new THREE.Mesh( new THREE.PlaneGeometry( 1.8, 1.8 ), new THREE.MeshBasicMaterial({ transparent: true, map: resourceManager.getTexture( 'SelectionSprite.png' ) }) );
-            this.selectionCircle.rotation.x = - Math.PI / 2;
-            this.scene.add( this.selectionCircle );
-
-        }
-
-        this.selectionCircle.position.set( position.x, 1, position.z );
-        this.selectionCircle.scale.set( 10, 10, 10 );
-        this.selectionCircle.material.opacity = 1;
-
-        var iter = 100;
-
-        interval = setInterval( function () {
-
-            scope.selectionCircle.scale.set( iter / 10, iter / 10, iter / 10 );
-            scope.selectionCircle.material.opacity = iter / 100;
-
-            iter -= 2;
-
-            if ( iter === 0 ) {
-
-                clearInterval( interval );
-
-            }
-
-        }, 16 );
-
-    };
-
-}) ();
-
 var intersections = false;
 
 Game.ViewManager.prototype.animate = function ( delta ) {
