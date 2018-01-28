@@ -175,6 +175,12 @@ CollisionManager.prototype.update = function ( delta ) {
                 object.body.position[1] = object.parent.position.z;
                 object.body.wakeUp();
 
+                if ( Math.abs( object.body.position[0] ) > 1270 || Math.abs( object.body.position[1] ) > 1270 ) {
+
+                    object.parent.explode();
+
+                }
+
             } else {
 
                 object.body.sleep();
