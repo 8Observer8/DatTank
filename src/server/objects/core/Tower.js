@@ -378,7 +378,8 @@ Tower.prototype.toJSON = function () {
         id:         this.id,
         team:       this.team.id,
         health:     this.health,
-        position:   { x: this.position.x, y: this.position.y, z: this.position.z }
+        position:   { x: this.position.x, y: this.position.y, z: this.position.z },
+        rotation:   this.rotation
 
     };
 
