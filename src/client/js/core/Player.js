@@ -242,9 +242,7 @@ Game.Player.prototype.rotateTop = function ( angle ) {
 
     if ( ! this.tank.object.top ) return;
 
-    angle = angle - this.tank.object.rotation.y;
     angle = Utils.formatAngle( angle );
-
     this.topRotation = angle;
     this.tank.setTopRotation( angle );
 

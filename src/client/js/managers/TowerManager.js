@@ -29,13 +29,16 @@ Game.TowerManager.prototype.remove = function ( tower ) {
 
     for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
 
-        if ( this.towers[ i ].id === tower.id ) continue;
+        if ( this.towers[ i ].id === tower.id ) {
+
+            tower.dispose();
+            continue;
+
+        }
 
         newTowerList.push( this.towers[ i ] );
 
     }
-
-    tower.dispose();
 
     this.towers = newTowerList;
 

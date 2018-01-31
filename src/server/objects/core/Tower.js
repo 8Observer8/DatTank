@@ -148,7 +148,7 @@ Tower.prototype.shoot = function ( target ) {
 
     var bullet = this.getInactiveBullet();
     if ( ! bullet ) return;
-    bullet.activate( this.position, this.rotation + Math.PI / 2 );
+    bullet.activate( this.position, this.rotation + Math.PI );
 
     //
 

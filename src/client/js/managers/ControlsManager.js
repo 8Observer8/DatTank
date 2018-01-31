@@ -291,7 +291,7 @@ Game.ControlsManager.prototype.rotateTop = (function () {
     return function ( angle ) {
 
         var me = Game.arena.me;
-        if ( ! me.tank.object.top ) return;
+        angle -= Game.arena.me.tank.object.rotation.y;
 
         if ( Date.now() - lastUpdateTime > 100 ) {
 

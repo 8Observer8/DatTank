@@ -287,6 +287,12 @@ Game.Tower.prototype.dispose = function () {
 
     view.scene.remove( this.object );
 
+    for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
+
+        view.scene.remove( this.bullets[ i ] );
+
+    }
+
 };
 
 Game.Tower.prototype.addEventListeners = function () {

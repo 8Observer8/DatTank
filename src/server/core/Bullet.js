@@ -70,8 +70,8 @@ Bullet.prototype.explode = function ( target ) {
 
 Bullet.prototype.update = function ( delta, time ) {
 
-    this.position.x = this.position.x + this.speed * Math.cos( this.angle ) * delta;
-    this.position.z = this.position.z - this.speed * Math.sin( this.angle ) * delta;
+    this.position.x = this.position.x + this.speed * Math.sin( this.angle ) * delta;
+    this.position.z = this.position.z + this.speed * Math.cos( this.angle ) * delta;
 
     this.flytime -= delta;
 

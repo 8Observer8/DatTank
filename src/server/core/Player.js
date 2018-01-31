@@ -273,7 +273,8 @@ Player.prototype.shoot = function () {
 
     var bullet = this.getInactiveBullet();
     if ( ! bullet ) return;
-    bullet.activate( scope.position, scope.rotationTop );
+
+    bullet.activate( scope.position, scope.rotationTop + scope.rotation + Math.PI / 2 );
 
     scope.ammo --;
 

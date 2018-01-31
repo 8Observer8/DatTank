@@ -209,6 +209,7 @@ Game.Arena.prototype.newTowersInRange = function ( towers ) {
 
     for ( var i = 0, il = towers.length; i < il; i ++ ) {
 
+        scope.towerManager.remove( towers[ i ] );
         scope.towerManager.add( new Game.Tower( scope, towers[ i ] ) );
 
     }
