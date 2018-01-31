@@ -97,15 +97,7 @@ Player.prototype.respawn = function ( tankName ) {
 
     tankName = tankName || this.tank.title.replace( '-', '' );
 
-    this.status = Player.Alive;
-    this.health = 100;
-    this.ammo = this.tank.maxShells;
-    this.position.set( this.team.spawnPosition.x, this.team.spawnPosition.y, this.team.spawnPosition.z );
-    this.rotation = 0;
-    this.rotationTop = 0;
-    this.bullets = [];
-
-    //
+    var newPosition = new Game.Vec3( this.team.spawnPosition.x, this.team.spawnPosition.y, this.team.spawnPosition.z );
 
     var offsetX = 0;
     var offsetZ = 0;
@@ -117,8 +109,23 @@ Player.prototype.respawn = function ( tankName ) {
 
     }
 
-    this.position.x += offsetX;
-    this.position.z += offsetZ;
+    newPosition.x += offsetX;
+    newPosition.z += offsetZ;
+
+    //
+
+    this.status = Player.Alive;
+    this.health = 100;
+    this.ammo = this.tank.maxShells;
+    this.position.set( newPosition.x, newPosition.y, newPosition.z );
+    this.rotation = 0;
+    this.rotationTop = 0;
+    var playerJSON = this.toPrivateJSON();
+    this.position = newPosition;
+
+    this.sendEventToPlayersInRange( 'ArenaPlayerRespawn', false, { player: playerJSON } );
+
+    //
 
     this.selectTank( tankName );
     this.arena.updateLeaderboard();
@@ -133,10 +140,6 @@ Player.prototype.respawn = function ( tankName ) {
         this.collisionBox.body.position[1] = this.position.z;
 
     }
-
-    //
-
-    this.arena.sendEventToPlayersInRange( this.position, 'ArenaPlayerRespawn', false, { player: this.toPrivateJSON() } );
 
 };
 
