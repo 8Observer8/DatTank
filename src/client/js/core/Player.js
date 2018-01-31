@@ -568,7 +568,7 @@ Game.Player.prototype.addEventListeners = function () {
     this.addEventListener( 'PlayerTankMove', function ( event ) { scope.move( event.data[1], event.data[2], event.data[3], event.data[4], event.data[5] ); });
     this.addEventListener( 'PlayerTankShoot', function ( event ) { scope.shoot( event.data[1] ); });
     this.addEventListener( 'PlayerTankHit', function ( event ) { scope.updateHealth( event.data[1] ); });
-    this.addEventListener( 'PlayerTankDied', function ( event ) { scope.die( event.data[1] , event.data[ 2 ] ); });
+    this.addEventListener( 'PlayerTankDied', function ( event ) { scope.die( event.data[1] ); });
     this.addEventListener( 'PlayerGotBox', function ( event ) { scope.gotBox( event.data ); });
 
     this.addEventListener( 'BulletHit', function ( event ) { scope.bulletHit( event.data ); });

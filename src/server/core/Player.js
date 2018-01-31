@@ -340,7 +340,7 @@ Player.prototype.die = function ( killer ) {
     var scope = this;
 
     scope.networkBuffers['die'] = scope.networkBuffers['die'] || {};
-    var buffer = scope.networkBuffers['die'].buffer || new ArrayBuffer( 8 );
+    var buffer = scope.networkBuffers['die'].buffer || new ArrayBuffer( 6 );
     var bufferView = scope.networkBuffers['die'].bufferView || new Uint16Array( buffer );
     scope.networkBuffers['die'].buffer = buffer;
     scope.networkBuffers['die'].bufferView = bufferView;
@@ -362,7 +362,6 @@ Player.prototype.die = function ( killer ) {
 
     bufferView[ 1 ] = scope.id;
     bufferView[ 2 ] = killer.id;
-    bufferView[ 3 ] = killer.kills;
 
     scope.sendEventToPlayersInRange( 'PlayerTankDied', buffer, bufferView );
 
