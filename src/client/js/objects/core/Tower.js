@@ -20,7 +20,7 @@ Game.Tower = function ( arena, params ) {
 
     this.animations = {};
     this.healthBar = false;
-    this.bulletSpeed = 0.6;
+    this.bulletSpeed = 0.4;
 
     //
 
@@ -267,27 +267,9 @@ Game.Tower.prototype.update = function ( delta ) {
         if ( bullet.active === true ) {
 
             var angle = - this.object.top.rotation.y - this.object.rotation.y - 1.57;
-
-            bullet.flytime --;
-
-            if ( bullet.flytime > 0 ) {
-
-                for ( var j = 0; j < 4; j ++ ) {
-
-                    var x = bullet.position.x + this.bulletSpeed * Math.cos( angle ) * delta;
-                    var z = bullet.position.z + this.bulletSpeed * Math.sin( angle ) * delta;
-
-                    bullet.position.set( x, bullet.position.y, z );
-                    bullet.visible = true;
-
-                }
-
-            } else {
-
-                bullet.visible = false;
-                bullet.active = false;
-
-            }
+            var x = bullet.position.x + this.bulletSpeed * Math.cos( angle ) * delta;
+            var z = bullet.position.z + this.bulletSpeed * Math.sin( angle ) * delta;
+            bullet.position.set( x, bullet.position.y, z );
 
         }
 

@@ -32,7 +32,7 @@ Game.Player = function ( arena, params ) {
     this.moveDirection = new THREE.Vector2( params.moveDirection.x || 0, params.moveDirection.y || 0 );
 
     this.explosion = [];
-    this.bulletSpeed = 0.6;
+    this.bulletSpeed = 0.4;
 
     //
 
@@ -393,31 +393,12 @@ Game.Player.prototype.update = function ( time, delta ) {
 
         var bullet = this.tank.bullets[ bulletId ];
 
-        if ( bullet.active === true ) {
+        if ( bullet.visible === true ) {
 
             var angle = - this.tank.object.top.rotation.y - this.tank.object.rotation.y;
-
-            bullet.flytime --;
-
-            if ( bullet.flytime > 0 ) {
-
-                for ( var j = 0; j < 4; j ++ ) {
-
-                    var x = bullet.position.x + this.bulletSpeed * Math.cos( angle ) * delta;
-                    var z = bullet.position.z + this.bulletSpeed * Math.sin( angle ) * delta;
-
-                    bullet.position.set( x, bullet.position.y, z );
-
-                    bullet.visible = true;
-
-                }
-
-            } else {
-
-                bullet.visible = false;
-                bullet.active = false;
-
-            }
+            var x = bullet.position.x + this.bulletSpeed * Math.cos( angle ) * delta;
+            var z = bullet.position.z + this.bulletSpeed * Math.sin( angle ) * delta;
+            bullet.position.set( x, bullet.position.y, z );
 
         }
 

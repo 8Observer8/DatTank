@@ -30,7 +30,7 @@ Bullet.prototype = {};
 
 Bullet.prototype.init = function () {
 
-    this.arena.collisionManager.addObject( this, 'circle', true );
+    //
 
 };
 
@@ -44,6 +44,10 @@ Bullet.prototype.activate = function ( position, angle ) {
     this.angle = angle;
     this.flytime = 220;
 
+    //
+
+    this.arena.collisionManager.addObject( this, 'circle', true );
+
 };
 
 Bullet.prototype.explode = function ( target ) {
@@ -52,6 +56,7 @@ Bullet.prototype.explode = function ( target ) {
 
     this.active = false;
     this.arena.sendEventToPlayersInRange( this.position, 'BulletHit', null, { bulletId: this.id, ownerId: this.ownerId, position: this.position } );
+    this.arena.collisionManager.removeObject( this );
 
     //
 
@@ -80,7 +85,7 @@ Bullet.prototype.update = function ( delta, time ) {
 
 Bullet.prototype.dispose = function () {
 
-    this.arena.collisionManager.removeObject( this );
+    // nothing here yet
 
 };
 

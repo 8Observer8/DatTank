@@ -26,6 +26,9 @@ CollisionManager.prototype = {};
 CollisionManager.prototype.init = function () {
 
     this.world = new p2.World({ gravity: [ 0, 0 ] });
+    this.world.applyDamping = false;
+    this.world.applyGravity = false;
+    this.world.applySpringForces = false;
     this.world.on( 'beginContact', this.collisionStart.bind( this ) );
     this.world.on( 'endContact', this.collisionEnd.bind( this ) );
 
@@ -161,6 +164,7 @@ CollisionManager.prototype.update = function ( delta ) {
     for ( var i = 0, il = this.objects.length; i < il; i ++ ) {
 
         object = this.objects[ i ];
+        if ( ! object ) continue;
 
         if ( object.parent.type === 'Player' ) {
 
@@ -175,17 +179,12 @@ CollisionManager.prototype.update = function ( delta ) {
                 object.parent.update( delta );
                 object.body.position[0] = object.parent.position.x;
                 object.body.position[1] = object.parent.position.z;
-                object.body.wakeUp();
 
                 if ( Math.abs( object.body.position[0] ) > 1270 || Math.abs( object.body.position[1] ) > 1270 ) {
 
                     object.parent.explode();
 
                 }
-
-            } else {
-
-                object.body.sleep();
 
             }
 
