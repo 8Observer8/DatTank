@@ -8,6 +8,8 @@ Game.Arena = function () {
     this.id = false;
     this.me = false;
 
+    this.viewRange = 600;
+
     //
 
     this.effects = {
@@ -189,19 +191,13 @@ Game.Arena.prototype.newPlayersInRange = function ( players ) {
 
     for ( var i = 0, il = players.length; i < il; i ++ ) {
 
-        scope.addPlayer( players[ i ] );
+        scope.playerManager.remove( players[ i ] );
 
     }
 
-};
-
-Game.Arena.prototype.playersOutOfRange = function ( players ) {
-
-    var scope = this;
-
     for ( var i = 0, il = players.length; i < il; i ++ ) {
 
-        scope.playerManager.remove( players[ i ] );
+        scope.addPlayer( players[ i ] );
 
     }
 
@@ -219,33 +215,11 @@ Game.Arena.prototype.newTowersInRange = function ( towers ) {
 
 };
 
-Game.Arena.prototype.towersOutOfRange = function ( towers ) {
-
-    var scope = this;
-
-    for ( var i = 0, il = towers.length; i < il; i ++ ) {
-
-        scope.towerManager.remove( towers[ i ] );
-
-    }
-
-};
-
 Game.Arena.prototype.newBoxesInRange = function ( boxes ) {
 
     for ( var i = 0, il = boxes.length; i < il; i ++ ) {
 
         this.boxManager.add( boxes[ i ] );
-
-    }
-
-};
-
-Game.Arena.prototype.boxesOutOfRange = function ( boxes ) {
-
-    for ( var i = 0, il = boxes.length; i < il; i ++ ) {
-
-        this.boxManager.remove( boxes[ i ].id );
 
     }
 
@@ -270,6 +244,47 @@ Game.Arena.prototype.update = function ( time, delta ) {
     for ( var i = 0, il = this.playerManager.players.length; i < il; i ++ ) {
 
         this.playerManager.players[ i ].update( time, delta );
+
+    }
+
+    // remove out of range objects
+
+    for ( var i = 0, il = this.playerManager.players.length; i < il; i ++ ) {
+
+        var player = this.playerManager.players[ i ];
+
+        if ( ! player || player.id === this.me.id ) continue;
+        if ( Utils.getDistance( player.position, this.me.position ) > this.viewRange ) {
+
+            this.playerManager.remove( player );
+
+        }
+
+    }
+
+    for ( var i = 0, il = this.towerManager.towers.length; i < il; i ++ ) {
+
+        var tower = this.towerManager.towers[ i ];
+        if ( ! tower ) continue;
+
+        if ( Utils.getDistance( tower.position, this.me.position ) > this.viewRange ) {
+
+            this.towerManager.remove( tower );
+
+        }
+
+    }
+
+    for ( var i = 0, il = this.boxManager.boxes.length; i < il; i ++ ) {
+
+        var box = this.boxManager.boxes[ i ];
+        if ( ! box ) continue;
+
+        if ( Utils.getDistance( box.position, this.me.position ) > this.viewRange ) {
+
+            this.boxManager.remove( box );
+
+        }
 
     }
 
@@ -323,9 +338,6 @@ Game.Arena.prototype.addNetworkListeners = function () {
     network.addMessageListener( 'PlayersInRange', this.newPlayersInRange.bind( this ) );
     network.addMessageListener( 'TowersInRange', this.newTowersInRange.bind( this ) );
     network.addMessageListener( 'BoxesInRange', this.newBoxesInRange.bind( this ) );
-    network.addMessageListener( 'PlayersOutOfRange', this.playersOutOfRange.bind( this ) );
-    network.addMessageListener( 'TowersOutOfRange', this.towersOutOfRange.bind( this ) );
-    network.addMessageListener( 'BoxesOutOfRange', this.boxesOutOfRange.bind( this ) );
 
     //
 

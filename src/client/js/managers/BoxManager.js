@@ -51,9 +51,8 @@ Game.BoxManager.prototype.add = function ( params ) {
 
 };
 
-Game.BoxManager.prototype.remove = function ( boxId ) {
+Game.BoxManager.prototype.remove = function ( box ) {
 
-    var box = this.getBoxById( boxId );
     box.remove();
 
     //
@@ -62,7 +61,7 @@ Game.BoxManager.prototype.remove = function ( boxId ) {
 
     for ( var i = 0, il = this.boxes.length; i < il; i ++ ) {
 
-        if ( this.boxes[ i ].id === boxId ) continue;
+        if ( this.boxes[ i ].id === box.id ) continue;
 
         newBoxList.push( this.boxes[ i ] );
 

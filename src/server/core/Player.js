@@ -136,7 +136,7 @@ Player.prototype.respawn = function ( tankName ) {
 
     //
 
-    networkManager.send( 'ArenaPlayerRespawn', this.socket, false, { player: this.toPrivateJSON() } );
+    this.arena.sendEventToPlayersInRange( this.position, 'ArenaPlayerRespawn', false, { player: this.toPrivateJSON() } );
 
 };
 
@@ -424,31 +424,15 @@ Player.prototype.update = function ( delta, time ) {
 
         } else {
 
-            if ( scope.inRangeOf[ 'b-' + box.id ] ) {
-
-                boxesOutOfRange.push( box.toJSON() );
-
-            }
-
-            scope.inRangeOf[ 'b-' + box.id ] = false;
+            delete scope.inRangeOf[ 'b-' + box.id ];
 
         }
 
     }
 
-    if ( this.socket ) {
+    if ( this.socket && newBoxesInRange.length ) {
 
-        if ( newBoxesInRange.length ) {
-
-            networkManager.send( 'BoxesInRange', scope.socket, false, newBoxesInRange );
-
-        }
-
-        if ( boxesOutOfRange.length ) {
-
-            networkManager.send( 'BoxesOutOfRange', scope.socket, false, boxesOutOfRange );
-
-        }
+        networkManager.send( 'BoxesInRange', scope.socket, false, newBoxesInRange );
 
     }
 
@@ -471,32 +455,16 @@ Player.prototype.update = function ( delta, time ) {
 
         } else {
 
-            if ( scope.inRangeOf[ 't-' + tower.id ] ) {
-
-                towersOutOfRange.push( tower.toJSON() );
-
-            }
-
-            scope.inRangeOf[ 't-' + tower.id ] = false;
-            tower.inRangeOf[ 'p-' + scope.id ] = false;
+            delete scope.inRangeOf[ 't-' + tower.id ];
+            delete tower.inRangeOf[ 'p-' + scope.id ];
 
         }
 
     }
 
-    if ( this.socket ) {
+    if ( this.socket && newTowersInRange.length ) {
 
-        if ( newTowersInRange.length ) {
-
-            networkManager.send( 'TowersInRange', scope.socket, false, newTowersInRange );
-
-        }
-
-        if ( towersOutOfRange.length ) {
-
-            networkManager.send( 'TowersOutOfRange', scope.socket, false, towersOutOfRange );
-
-        }
+        networkManager.send( 'TowersInRange', scope.socket, false, newTowersInRange );
 
     }
 
@@ -520,31 +488,15 @@ Player.prototype.update = function ( delta, time ) {
 
         } else {
 
-            if ( scope.inRangeOf[ 'p-' + player.id ] ) {
-
-                playersOutOfRange.push( player.toPublicJSON() );
-
-            }
-
-            scope.inRangeOf[ 'p-' + player.id ] = false;
+            delete scope.inRangeOf[ 'p-' + player.id ];
 
         }
 
     }
 
-    if ( this.socket ) {
+    if ( this.socket && newPlayersInRange.length ) {
 
-        if ( newPlayersInRange.length ) {
-
-            networkManager.send( 'PlayersInRange', scope.socket, false, newPlayersInRange );
-
-        }
-
-        if ( playersOutOfRange.length ) {
-
-            networkManager.send( 'PlayersOutOfRange', scope.socket, false, playersOutOfRange );
-
-        }
+        networkManager.send( 'PlayersInRange', scope.socket, false, newPlayersInRange );
 
     }
 

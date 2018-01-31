@@ -121,6 +121,14 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
         this.moveSpeed = 0.09;
         this.moveSpeed = this.moveSpeed * this.tank.speed / 40;
 
+        var tankName = params.tank;
+        this.tank.dispose();
+        this.selectTank( tankName );
+        this.tank.init();
+
+        this.healthBar = false;
+        this.updateHealthBar();
+
         if ( Game.arena.me.id === this.id ) {
 
             ui.updateHealth( this.health );
@@ -128,14 +136,6 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
 
             ui.hideContinueBox();
             ui.updateAmmo( this.ammo );
-
-            var tankName = params.tank;
-            this.tank.dispose();
-            this.selectTank( tankName );
-            this.tank.init();
-
-            this.healthBar = false;
-            this.updateHealthBar();
 
         }
 

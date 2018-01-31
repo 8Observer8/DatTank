@@ -35,13 +35,16 @@ Game.PlayerManager.prototype.remove = function ( player ) {
 
     for ( var i = 0, il = this.players.length; i < il; i ++ ) {
 
-        if ( this.players[ i ].id === player.id ) continue;
+        if ( this.players[ i ].id === player.id ) {
+
+            player.tank.dispose();
+            continue;
+
+        }
 
         newPlayersList.push( this.players[ i ] );
 
     }
-
-    player.tank.dispose();
 
     this.players = newPlayersList;
 
