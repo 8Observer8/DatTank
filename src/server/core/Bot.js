@@ -196,7 +196,7 @@ Bot.prototype.update = function () {
 
         }
 
-        rotation += Math.PI / 2;
+        rotation += Math.PI / 2 - this.player.rotation;
 
         delta = utils.formatAngle( rotation ) - utils.formatAngle( this.player.rotationTop );
 

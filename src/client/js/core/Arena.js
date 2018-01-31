@@ -114,15 +114,17 @@ Game.Arena.prototype.showExplosion = function ( params ) {
 
             }
 
-            if ( ! shooter ) continue;
+            if ( shooter ) {
 
-            var bulletsPool = shooter.bullets;
-            for ( var j = 0, jl = bulletsPool.length; j < jl; j ++ ) {
+                var bulletsPool = shooter.bullets;
+                for ( var j = 0, jl = bulletsPool.length; j < jl; j ++ ) {
 
-                if ( bulletsPool[ j ].bulletId === params.bulletId ) {
+                    if ( bulletsPool[ j ].bulletId === params.bulletId ) {
 
-                    bulletsPool[ j ].visible = false;
-                    break;
+                        bulletsPool[ j ].visible = false;
+                        break;
+
+                    }
 
                 }
 
