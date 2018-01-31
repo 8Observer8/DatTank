@@ -42,6 +42,8 @@ Game.ChatManager.prototype.typingMessage = function ( event ) {
 
 Game.ChatManager.prototype.openCloseMessage = function ( event ) {
 
+    return;
+
     if ( event.keyCode === 13 && this.openedMenu === false ) {
 
         this.showMessageContainer();
