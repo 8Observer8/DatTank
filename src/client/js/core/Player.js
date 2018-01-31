@@ -32,7 +32,7 @@ Game.Player = function ( arena, params ) {
     this.moveDirection = new THREE.Vector2( params.moveDirection.x || 0, params.moveDirection.y || 0 );
 
     this.explosion = [];
-    this.bulletSpeed = 0.4;
+    this.bulletSpeed = 1.3;
 
     //
 
@@ -250,7 +250,7 @@ Game.Player.prototype.rotateTop = function ( angle ) {
 
 };
 
-Game.Player.prototype.shoot = function ( shootId, ammo ) {
+Game.Player.prototype.shoot = function ( bulletId ) {
 
     var scope = this;
 
@@ -258,13 +258,13 @@ Game.Player.prototype.shoot = function ( shootId, ammo ) {
 
     if ( Game.arena.me.id === this.id ) {
 
-        this.ammo = ammo;
+        this.ammo --;
         ui.updateAmmo( this.ammo );
 
     }
 
     this.tank.showBlastSmoke();
-    this.tank.shootBullet( shootId );
+    this.tank.shootBullet( bulletId );
 
     //
 
@@ -395,9 +395,8 @@ Game.Player.prototype.update = function ( time, delta ) {
 
         if ( bullet.visible === true ) {
 
-            var angle = - this.tank.object.top.rotation.y - this.tank.object.rotation.y;
-            var x = bullet.position.x + this.bulletSpeed * Math.cos( angle ) * delta;
-            var z = bullet.position.z + this.bulletSpeed * Math.sin( angle ) * delta;
+            var x = bullet.position.x + this.bulletSpeed * Math.cos( bullet.directionRotation ) * delta;
+            var z = bullet.position.z + this.bulletSpeed * Math.sin( bullet.directionRotation ) * delta;
             bullet.position.set( x, bullet.position.y, z );
 
         }
@@ -525,7 +524,6 @@ Game.Player.prototype.updateExplosion = function ( delta ) {
                     this.explosion[ i ].material.map.offset.y -= 0.25;
                     this.explosion[ i ].scale.x = Math.sin( this.explosion[ i ].time / 1000 );
                     this.explosion[ i ].scale.y = Math.sin( this.explosion[ i ].time / 1000 );
-
                     this.explosion[ i ].visible = false;
 
                 }
@@ -568,8 +566,8 @@ Game.Player.prototype.addEventListeners = function () {
 
     this.addEventListener( 'PlayerTankRotateTop', function ( event ) { scope.rotateTop( event.data[1] / 1000 ); });
     this.addEventListener( 'PlayerTankMove', function ( event ) { scope.move( event.data[1], event.data[2], event.data[3], event.data[4], event.data[5] ); });
-    this.addEventListener( 'PlayerTankShoot', function ( event ) { scope.shoot( event.data[1], event.data[2] ); });
-    this.addEventListener( 'PlayerTankHit', function ( event ) { scope.updateHealth( event.data[1], event.data[0] ); });
+    this.addEventListener( 'PlayerTankShoot', function ( event ) { scope.shoot( event.data[1] ); });
+    this.addEventListener( 'PlayerTankHit', function ( event ) { scope.updateHealth( event.data[1] ); });
     this.addEventListener( 'PlayerTankDied', function ( event ) { scope.die( event.data[1] , event.data[ 2 ] ); });
     this.addEventListener( 'PlayerGotBox', function ( event ) { scope.gotBox( event.data ); });
 

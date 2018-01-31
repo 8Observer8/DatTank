@@ -20,7 +20,7 @@ Game.Tower = function ( arena, params ) {
 
     this.animations = {};
     this.healthBar = false;
-    this.bulletSpeed = 0.4;
+    this.bulletSpeed = 1.5;
 
     //
 
@@ -102,7 +102,6 @@ Game.Tower.prototype.initBullets = function () {
 
         var bullet = new THREE.Mesh( new THREE.SphereGeometry( 3.4, 10, 10 ), new THREE.MeshLambertMaterial({ color: 0x7A3EA8 }) );
         bullet.visible = false;
-        bullet.active = false;
 
         this.bullets.push( bullet );
         view.scene.add( bullet );
@@ -153,14 +152,15 @@ Game.Tower.prototype.rotateTop = function ( oldAngle, newAngle ) {
 
 };
 
-Game.Tower.prototype.shoot = function ( shootId ) {
+Game.Tower.prototype.shoot = function ( bulletId ) {
 
     var bullet = false;
 
     for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
 
         bullet = this.bullets[ i ];
-        if ( bullet.active === false ) break;
+        bullet.bulletId = bulletId;
+        if ( bullet.visible === false ) break;
 
     }
 
@@ -171,7 +171,15 @@ Game.Tower.prototype.shoot = function ( shootId ) {
 
     //
 
-    bullet.position.set( this.object.position.x, 25, this.object.position.z );
+    bullet.directionRotation = - this.object.top.rotation.y - this.object.rotation.y - 1.57;
+
+    var offsetDist = 55;
+    var offsetX = offsetDist * Math.cos( bullet.directionRotation );
+    var offsetZ = offsetDist * Math.sin( bullet.directionRotation );
+
+    bullet.position.set( this.object.position.x + offsetX, 25, this.object.position.z + offsetZ );
+
+    //
 
     if ( bullet.soundShooting.buffer ) {
 
@@ -193,8 +201,7 @@ Game.Tower.prototype.shoot = function ( shootId ) {
 
     //
 
-    bullet.active = true;
-    bullet['shotId'] = shootId;
+    bullet.visible = true;
 
 };
 
@@ -264,11 +271,10 @@ Game.Tower.prototype.update = function ( delta ) {
 
         var bullet = this.bullets[ bulletId ];
 
-        if ( bullet.active === true ) {
+        if ( bullet.visible === true ) {
 
-            var angle = - this.object.top.rotation.y - this.object.rotation.y - 1.57;
-            var x = bullet.position.x + this.bulletSpeed * Math.cos( angle ) * delta;
-            var z = bullet.position.z + this.bulletSpeed * Math.sin( angle ) * delta;
+            var x = bullet.position.x + this.bulletSpeed * Math.cos( bullet.directionRotation ) * delta;
+            var z = bullet.position.z + this.bulletSpeed * Math.sin( bullet.directionRotation ) * delta;
             bullet.position.set( x, bullet.position.y, z );
 
         }

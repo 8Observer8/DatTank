@@ -53,9 +53,7 @@ Game.Tank.prototype.initBullets = function () {
     for ( var i = 0; i < 5; i ++ ) {
 
         var bullet = new THREE.Mesh( new THREE.SphereGeometry( 2.5, 12, 12 ), new THREE.MeshLambertMaterial({ color: this.player.team.color }) );
-
         bullet.visible = false;
-        bullet.active = false;
 
         this.bullets.push( bullet );
         view.scene.add( bullet );
@@ -486,14 +484,15 @@ Game.Tank.prototype.updateSmoke = function () {
 
 };
 
-Game.Tank.prototype.shootBullet = function ( shootId ) {
+Game.Tank.prototype.shootBullet = function ( bulletId ) {
 
     var bullet = false;
 
     for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
 
         bullet = this.bullets[ i ];
-        if ( bullet.active === false ) break;
+        bullet.bulletId = bulletId;
+        if ( bullet.visible === false ) break;
 
     }
 
@@ -505,7 +504,8 @@ Game.Tank.prototype.shootBullet = function ( shootId ) {
     //
 
     bullet.position.set( this.object.position.x, 25, this.object.position.z );
-    bullet.active = true;
+    bullet.visible = true;
+    bullet.directionRotation = - this.object.top.rotation.y - this.object.rotation.y;
 
     if ( bullet.soundShooting.buffer ) {
 
@@ -524,8 +524,6 @@ Game.Tank.prototype.shootBullet = function ( shootId ) {
         }
 
     }
-
-    bullet['shotId'] = shootId;
 
 };
 

@@ -153,9 +153,7 @@ Tower.prototype.shoot = function ( target ) {
     //
 
     bufferView[1] = scope.id;
-    bufferView[2] = Tower.numShootId;
-
-    Tower.numShootId = ( Tower.numShootId > 1000 ) ? 0 : Tower.numShootId + 1;
+    bufferView[2] = bullet.id;
 
     scope.sendEventToPlayersInRange( 'TowerShoot', buffer, bufferView );
 
@@ -385,9 +383,7 @@ Tower.prototype.toJSON = function () {
 
 Tower.prototype.addEventListeners = function () {
 
-    var scope = this;
-
-    this.addEventListener( 'TowerHit', function ( event ) { scope.hit( event.data[1], event.data[2] ); });
+    // nothing here
 
 };
 
@@ -414,7 +410,6 @@ Tower.prototype.sendEventToPlayersInRange = function ( event, buffer, bufferView
 //
 
 Tower.numIds = 1000;
-Tower.numShootId = 0;
 Tower.Alive = 100;
 Tower.Dead = 101;
 

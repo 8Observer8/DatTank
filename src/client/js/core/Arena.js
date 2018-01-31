@@ -117,7 +117,7 @@ Game.Arena.prototype.showExplosion = function ( params ) {
             var bulletsPool = shooter.bullets;
             for ( var j = 0, jl = bulletsPool.length; j < jl; j ++ ) {
 
-                if ( bulletsPool[ j ].id === params.id ) {
+                if ( bulletsPool[ j ].bulletId === params.bulletId ) {
 
                     bulletsPool[ j ].visible = false;
                     break;

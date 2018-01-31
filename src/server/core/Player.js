@@ -241,7 +241,7 @@ Player.prototype.shoot = function () {
     var scope = this;
 
     scope.networkBuffers['shoot'] = scope.networkBuffers['shoot'] || {};
-    var buffer = scope.networkBuffers['shoot'].buffer || new ArrayBuffer( 14 );
+    var buffer = scope.networkBuffers['shoot'].buffer || new ArrayBuffer( 6 );
     var bufferView = scope.networkBuffers['shoot'].bufferView || new Uint16Array( buffer );
     scope.networkBuffers['shoot'].buffer = buffer;
     scope.networkBuffers['shoot'].bufferView = bufferView;
@@ -277,10 +277,7 @@ Player.prototype.shoot = function () {
     //
 
     bufferView[ 1 ] = scope.id;
-    bufferView[ 2 ] = Player.numShootId;
-    bufferView[ 3 ] = scope.ammo;
-
-    Player.numShootId = ( Player.numShootId > 1000 ) ? 0 : Player.numShootId + 1;
+    bufferView[ 2 ] = bullet.id;
 
     scope.sendEventToPlayersInRange( 'PlayerTankShoot', buffer, bufferView );
 
@@ -690,7 +687,6 @@ Player.prototype.toPublicJSON = function () {
 };
 
 Player.numIds = 1;
-Player.numShootId = 0;
 Player.Alive = 100;
 Player.Dead = 110;
 Player.AFK = 120;
