@@ -247,7 +247,9 @@ Game.Arena.prototype.update = function ( time, delta ) {
 
     }
 
-    // remove out of range objects
+    // remove out of range players
+
+    var playersToRemove = [];
 
     for ( var i = 0, il = this.playerManager.players.length; i < il; i ++ ) {
 
@@ -256,11 +258,21 @@ Game.Arena.prototype.update = function ( time, delta ) {
         if ( ! player || player.id === this.me.id ) continue;
         if ( Utils.getDistance( player.position, this.me.position ) > this.viewRange ) {
 
-            this.playerManager.remove( player );
+            playersToRemove.push( player );
 
         }
 
     }
+
+    for ( var i = 0, il = playersToRemove.length; i < il; i ++ ) {
+
+        this.playerManager.remove( playersToRemove[ i ] );
+
+    }
+
+    // remove out of range towers
+
+    var towersToRemove = [];
 
     for ( var i = 0, il = this.towerManager.towers.length; i < il; i ++ ) {
 
@@ -275,6 +287,16 @@ Game.Arena.prototype.update = function ( time, delta ) {
 
     }
 
+    for ( var i = 0, il = towersToRemove.length; i < il; i ++ ) {
+
+        this.towersToRemove.remove( towersToRemove[ i ] );
+
+    }
+
+    // remove out of range boxes
+
+    var boxesToRemove = [];
+
     for ( var i = 0, il = this.boxManager.boxes.length; i < il; i ++ ) {
 
         var box = this.boxManager.boxes[ i ];
@@ -285,6 +307,12 @@ Game.Arena.prototype.update = function ( time, delta ) {
             this.boxManager.remove( box );
 
         }
+
+    }
+
+    for ( var i = 0, il = boxesToRemove.length; i < il; i ++ ) {
+
+        this.boxesToRemove.remove( boxesToRemove[ i ] );
 
     }
 
