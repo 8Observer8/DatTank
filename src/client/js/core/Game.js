@@ -44,14 +44,12 @@ Game.prototype.init = function () {
     window.resourceManager = new Game.ResourceManager();
     window.soundManager = new Game.SoundManager();
     window.settings = new Game.SettingsManager();
-    window.chatManager = new Game.ChatManager();
 
     window.garage.init();
 
     //
 
     ui.init();
-    chatManager.init();
 
     var login = $('#username').val() || localStorage.getItem('login') || '';
     $('#username').val( login );

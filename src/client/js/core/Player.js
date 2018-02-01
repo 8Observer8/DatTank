@@ -540,16 +540,6 @@ Game.Player.prototype.hideExplosion = function () {
 
 };
 
-Game.Player.prototype.sendChatMessage = function ( data ) {
-
-    var login = data.login;
-    var message = data.message;
-    var teamId = data.teamId;
-
-    chatManager.newMessage( login, message, teamId );
-
-};
-
 Game.Player.prototype.addEventListeners = function () {
 
     var scope = this;
@@ -564,6 +554,5 @@ Game.Player.prototype.addEventListeners = function () {
     this.addEventListener( 'PlayerGotBox', function ( event ) { scope.gotBox( event.data ); });
 
     this.addEventListener( 'BulletHit', function ( event ) { scope.bulletHit( event.data ); });
-    this.addEventListener( 'SendChatMessage', function ( event ) { scope.sendChatMessage( event.data ) } )
 
 };

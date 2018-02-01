@@ -536,16 +536,6 @@ Player.prototype.update = function ( delta, time ) {
 
 };
 
-Player.prototype.sendChatMessage = function ( data ) {
-
-    var login = data.login;
-    var message = data.message;
-    var teamId = this.team.id;
-
-    this.arena.announce( 'SendChatMessage', null, { login: login, message: message, teamId: teamId } );
-
-};
-
 Player.prototype.dispose = function () {
 
     this.arena.collisionManager.removeObject( this );
@@ -566,8 +556,6 @@ Player.prototype.addEventListeners = function () {
     this.addEventListener( 'PlayerTankRotateTop', function ( event ) { scope.rotateTop( event.data[0] / 1000 ); });
     this.addEventListener( 'PlayerTankMove', function ( event ) { scope.move( event.data[0], event.data[1] ); });
     this.addEventListener( 'PlayerTankShoot', function ( event ) { scope.shoot(); });
-
-    this.addEventListener( 'SendChatMessage', function ( event ) { scope.sendChatMessage( event.data ) });
 
 };
 

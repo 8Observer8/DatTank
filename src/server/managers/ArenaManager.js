@@ -190,7 +190,6 @@ ArenaManager.prototype.addNetworkListeners = function () {
     networkManager.addMessageListener( 'PlayerTankRotateTop', this.proxyEventToPlayer.bind( this ) );
     networkManager.addMessageListener( 'PlayerTankMove', this.proxyEventToPlayer.bind( this ) );
     networkManager.addMessageListener( 'PlayerTankShoot', this.proxyEventToPlayer.bind( this ) );
-    networkManager.addMessageListener( 'SendChatMessage', this.proxyEventToPlayer.bind( this ) );
 
 };
 

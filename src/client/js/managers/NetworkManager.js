@@ -73,11 +73,6 @@ Game.NetworkManager.prototype.init = function ( callback ) {
     this.registerEvent( 'RemoveBox', 'out', 'json', 301 );
     this.registerEvent( 'PickedBox', 'in', 'json', 302 );
 
-    // register chat event
-
-    this.registerEvent( 'SendChatMessage', 'in', 'json', 501 );
-    this.registerEvent( 'SendChatMessage', 'out', 'json', 502 );
-
     // establish connection
 
     this.transport = new WebSocket( 'ws://' + window.location.host.split(':')[0] + ':8085/ws/game' );

@@ -57,11 +57,6 @@ NetworkManager.prototype.init = function () {
     this.registerEvent( 'RemoveBox', 'out', 'json', 301 );
     this.registerEvent( 'PickedBox', 'out', 'json', 302 );
 
-    // register chat event
-
-    this.registerEvent( 'SendChatMessage', 'out', 'json', 501 );
-    this.registerEvent( 'SendChatMessage', 'in', 'json', 502 );
-
     // enable io
 
     this.io = new WebSocketServer({ port: environment.web.socketPort });
