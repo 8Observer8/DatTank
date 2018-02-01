@@ -8,17 +8,17 @@ var BotManager = function ( arena, params ) {
     this.arena = arena;
     this.bots = [];
 
+    this.botNum = 15 + Math.floor( Math.random() * 8 );
+
 };
 
 BotManager.prototype = {};
 
 //
 
-BotManager.prototype.init = function ( botNum ) {
+BotManager.prototype.init = function () {
 
-    botNum = botNum || 15 + Math.floor( Math.random() * 8 );
-
-    for ( var i = 0; i < botNum; i ++ ) {
+    for ( var i = 0; i < this.botNum; i ++ ) {
 
         this.add( new Game.Bot( this.arena ) );
 

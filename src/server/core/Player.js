@@ -375,7 +375,7 @@ Player.prototype.die = function ( killer ) {
 
         var maxKills = Math.floor( Math.random() * ( 200 - 100 ) ) + 100;
 
-        if ( scope.arena.playerManager.players.length - scope.arena.botManager.bots.length < 5 && scope.kills < maxKills ) {
+        if ( scope.arena.playerManager.players.length - scope.arena.botManager.bots.length < scope.arena.botManager.botNum && scope.kills < maxKills ) {
 
             setTimeout( scope.respawn.bind( scope ), 3000 );
 
