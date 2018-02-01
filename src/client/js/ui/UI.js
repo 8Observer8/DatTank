@@ -190,8 +190,9 @@ Game.UI.prototype.updateTeamScore = function ( teams ) {
 
 };
 
-Game.UI.prototype.updateLeaderboard = function ( players, me ) {
+Game.UI.prototype.updateLeaderboard = function ( players ) {
 
+    var me = game.arena.me;
     var names = $('#top-killers .player-name');
     var kills = $('#top-killers .kills');
     var teams = $('#top-killers .players-team-image');
@@ -237,6 +238,7 @@ Game.UI.prototype.updateLeaderboard = function ( players, me ) {
             if ( me && players[ i ].id === me.id ) {
 
                 rank = i + 1;
+                me.killsNumber = players[ i ].kills;
                 break;
 
             }
@@ -247,11 +249,14 @@ Game.UI.prototype.updateLeaderboard = function ( players, me ) {
 
         $('#top-killers .killer-outer.last .player-counter').html( '#' + rank );
         $('#top-killers .killer-outer.last .player-name').html( me.login );
-        $('#top-killers .killer-outer.last .kills').html( me.kills );
+        $('#top-killers .killer-outer.last .kills').html( me.killsNumber );
         $('#top-killers .killer-outer.last .players-team-image').css( 'background-color', me.team.color );
 
         $('#top-killers #divider').show();
         $('#top-killers .killer-outer.last').show();
+        setTimeout( function () {
+            $('#top-killers .killer-outer.last').addClass('myplace');
+        }, 10 );
 
     } else {
 

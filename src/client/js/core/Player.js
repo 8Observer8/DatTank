@@ -422,12 +422,6 @@ Game.Player.prototype.die = function ( killer ) {
 
     if ( this.id === Game.arena.me.id ) {
 
-        ga('send', {
-            hitType: 'event',
-            eventCategory: 'game',
-            eventAction: 'kill'
-        });
-
         view.addCameraShake( 1000, 1.5 );
 
         setTimeout( function () {

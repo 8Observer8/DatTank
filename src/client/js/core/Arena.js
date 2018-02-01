@@ -323,7 +323,7 @@ Game.Arena.prototype.update = function ( time, delta ) {
 
 Game.Arena.prototype.updateLeaderboard = function ( data ) {
 
-    ui.updateLeaderboard( data.players, this.me );
+    ui.updateLeaderboard( data.players );
     ui.updateTeamScore( data.teams );
 
 };
