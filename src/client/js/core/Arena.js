@@ -121,6 +121,7 @@ Game.Arena.prototype.showExplosion = function ( params ) {
                     if ( bulletsPool[ j ].bulletId === params.bulletId ) {
 
                         bulletsPool[ j ].visible = false;
+                        bulletsPool[ j ].trace.visible = false;
                         break;
 
                     }

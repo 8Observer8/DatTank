@@ -406,6 +406,12 @@ Game.Player.prototype.update = function ( time, delta ) {
             var z = bullet.position.z + this.bulletSpeed * Math.sin( bullet.directionRotation ) * delta;
             bullet.position.set( x, bullet.position.y, z );
 
+            bullet.trace.position.set( ( x + bullet.startPos.x ) / 2, bullet.position.y, ( z + bullet.startPos.z ) / 2 );
+            var dx = x - bullet.startPos.x;
+            var dz = z - bullet.startPos.z;
+            bullet.trace.scale.x = Math.sqrt( dx * dx + dz * dz ) / 3;
+            bullet.trace.material.opacity = Math.max( 0.5 - bullet.trace.scale.x / 280, 0 );
+
         }
 
     }

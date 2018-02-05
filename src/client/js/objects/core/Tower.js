@@ -14,6 +14,7 @@ Game.Tower = function ( arena, params ) {
     this.health = params.health;
 
     this.bullets = [];
+
     this.object = new THREE.Object3D();
     this.rotation = params.rotation || 0;
     this.position = new THREE.Vector3( params.position.x, params.position.y, params.position.z );
@@ -100,11 +101,17 @@ Game.Tower.prototype.initBullets = function () {
 
     for ( var i = 0; i < 5; i ++ ) {
 
-        var bullet = new THREE.Mesh( new THREE.SphereGeometry( 3.4, 10, 10 ), new THREE.MeshLambertMaterial({ color: 0x7A3EA8 }) );
+        var bullet = new THREE.Mesh( new THREE.BoxGeometry( 2.5, 2.5, 2.5 ), new THREE.MeshBasicMaterial({ color: 0xff3333 }) );
         bullet.visible = false;
-
         this.bullets.push( bullet );
         view.scene.add( bullet );
+
+        var bulletTrace = new THREE.Mesh( new THREE.PlaneGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 0.5, transparent: true }) );
+        bulletTrace.visible = false;
+        bulletTrace.rotation.x = - Math.PI / 2;
+        view.scene.add( bulletTrace );
+        bullet.trace = bulletTrace;
+        bullet.trace.renderOrder = 5;
 
         bullet.soundShooting = new THREE.PositionalAudio( view.sound.listener );
         bullet.soundShooting.setBuffer( resourceManager.getSound('tank_shooting.wav') );
@@ -177,7 +184,11 @@ Game.Tower.prototype.shoot = function ( bulletId ) {
     var offsetX = offsetDist * Math.cos( bullet.directionRotation );
     var offsetZ = offsetDist * Math.sin( bullet.directionRotation );
 
+    bullet.startPos = new THREE.Vector3( this.object.position.x + offsetX, 25, this.object.position.z + offsetZ );
     bullet.position.set( this.object.position.x + offsetX, 25, this.object.position.z + offsetZ );
+    bullet.trace.position.set( this.object.position.x + offsetX, 25, this.object.position.z + offsetZ );
+    bullet.trace.rotation.z = - bullet.directionRotation;
+    bullet.trace.scale.set( 1, 1, 1 );
 
     //
 
@@ -202,6 +213,7 @@ Game.Tower.prototype.shoot = function ( bulletId ) {
     //
 
     bullet.visible = true;
+    bullet.trace.visible = true;
 
 };
 
@@ -277,6 +289,12 @@ Game.Tower.prototype.update = function ( delta ) {
             var z = bullet.position.z + this.bulletSpeed * Math.sin( bullet.directionRotation ) * delta;
             bullet.position.set( x, bullet.position.y, z );
 
+            bullet.trace.position.set( ( x + bullet.startPos.x ) / 2, bullet.position.y, ( z + bullet.startPos.z ) / 2 );
+            var dx = x - bullet.startPos.x;
+            var dz = z - bullet.startPos.z;
+            bullet.trace.scale.x = Math.sqrt( dx * dx + dz * dz ) / 3;
+            bullet.trace.material.opacity = Math.max( 0.5 - bullet.trace.scale.x / 280, 0 );
+
         }
 
     }
@@ -290,6 +308,7 @@ Game.Tower.prototype.dispose = function () {
     for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
 
         view.scene.remove( this.bullets[ i ] );
+        view.scene.remove( this.bullets[ i ].trace );
 
     }
 

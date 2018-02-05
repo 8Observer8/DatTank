@@ -60,11 +60,17 @@ Game.Tank.prototype.initBullets = function () {
 
     for ( var i = 0; i < 5; i ++ ) {
 
-        var bullet = new THREE.Mesh( new THREE.SphereGeometry( 2.5, 12, 12 ), new THREE.MeshLambertMaterial({ color: this.player.team.color }) );
+        var bullet = new THREE.Mesh( new THREE.BoxGeometry( 2.5, 2.5, 2.5 ), new THREE.MeshBasicMaterial({ color: 0xff3333 }) );
         bullet.visible = false;
-
         this.bullets.push( bullet );
         view.scene.add( bullet );
+
+        var bulletTrace = new THREE.Mesh( new THREE.PlaneGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 0.5, transparent: true }) );
+        bulletTrace.visible = false;
+        bulletTrace.rotation.x = - Math.PI / 2;
+        view.scene.add( bulletTrace );
+        bullet.trace = bulletTrace;
+        bullet.trace.renderOrder = 5;
 
         bullet.soundShooting = new THREE.PositionalAudio( view.sound.listener );
         bullet.soundShooting.setBuffer( resourceManager.getSound('tank_shooting.wav') );
@@ -518,12 +524,18 @@ Game.Tank.prototype.shootBullet = function ( bulletId ) {
     //
 
     bullet.visible = true;
+    bullet.trace.visible = true;
     bullet.directionRotation = - this.object.top.rotation.y - this.object.rotation.y;
 
-    var offsetDist = 35;
+    var offsetDist = 28;
     var offsetX = offsetDist * Math.cos( bullet.directionRotation );
     var offsetZ = offsetDist * Math.sin( bullet.directionRotation );
+
+    bullet.startPos = new THREE.Vector3( this.object.position.x + offsetX, 25, this.object.position.z + offsetZ );
     bullet.position.set( this.object.position.x + offsetX, 25, this.object.position.z + offsetZ );
+    bullet.trace.position.set( this.object.position.x + offsetX, 25, this.object.position.z + offsetZ );
+    bullet.trace.rotation.z = - bullet.directionRotation;
+    bullet.trace.scale.set( 1, 1, 1 );
 
     if ( bullet.soundShooting.buffer ) {
 
@@ -576,6 +588,7 @@ Game.Tank.prototype.dispose = function () {
     for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
 
         view.scene.remove( this.bullets[ i ] );
+        view.scene.remove( this.bullets[ i ].trace );
 
     }
 
