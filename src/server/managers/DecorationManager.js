@@ -57,7 +57,7 @@ DecorationManager.prototype.init = function ( params ) {
                 var dx = spawnPosition.x - x;
                 var dz = spawnPosition.z - z;
 
-                if ( Math.sqrt( dx * dx + dz * dz ) < 100 ) {
+                if ( Math.sqrt( dx * dx + dz * dz ) < 150 ) {
 
                     placedOnBase = true;
                     break;

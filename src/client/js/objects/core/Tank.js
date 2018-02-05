@@ -517,9 +517,13 @@ Game.Tank.prototype.shootBullet = function ( bulletId ) {
 
     //
 
-    bullet.position.set( this.object.position.x, 25, this.object.position.z );
     bullet.visible = true;
     bullet.directionRotation = - this.object.top.rotation.y - this.object.rotation.y;
+
+    var offsetDist = 35;
+    var offsetX = offsetDist * Math.cos( bullet.directionRotation );
+    var offsetZ = offsetDist * Math.sin( bullet.directionRotation );
+    bullet.position.set( this.object.position.x + offsetX, 25, this.object.position.z + offsetZ );
 
     if ( bullet.soundShooting.buffer ) {
 
