@@ -46,6 +46,14 @@ Game.Tank.prototype.init = function () {
     this.initTracks();
     this.initLabel();
 
+    //
+
+    if ( this.player.health <= 0 ) {
+
+        this.destroy();
+
+    }
+
 };
 
 Game.Tank.prototype.initBullets = function () {

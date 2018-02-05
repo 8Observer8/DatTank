@@ -49,6 +49,27 @@ DecorationManager.prototype.init = function ( params ) {
 
             if ( ! this.arena.collisionManager.isPlaceFree( { x: x, y: z }, 20, 0 ) ) continue;
 
+            var placedOnBase = false;
+
+            for ( var i = 0, il = this.arena.teamManager.teams.length; i < il; i ++ ) {
+
+                var spawnPosition = this.arena.teamManager.teams[ i ].spawnPosition;
+                var dx = spawnPosition.x - x;
+                var dz = spawnPosition.z - z;
+
+                if ( Math.sqrt( dx * dx + dz * dz ) < 100 ) {
+
+                    placedOnBase = true;
+                    break;
+
+                }
+
+            }
+
+            if ( placedOnBase ) continue;
+
+            //
+
             var decoration = new Game.Decoration[ type ]( this.arena, {
                 position:   new Game.Vec3( x, 0, z ),
                 scale:      new Game.Vec3( scale, scaleH, scale ),

@@ -91,7 +91,7 @@ Arena.prototype.removePlayer = function ( player ) {
 
     //
 
-    for ( var i = this.playerManager.players.length; i < 8; i ++ ) {
+    for ( var i = this.playerManager.players.length; i < this.botManager.botNum; i ++ ) {
 
         this.botManager.bots.push( new Game.Bot( this ) );
 

@@ -22,6 +22,7 @@ Game.Player = function ( arena, params ) {
     //
 
     this.position = new THREE.Vector3( params.position.x, params.position.y, params.position.z );
+    this.positionCorrection = new THREE.Vector3( 0, 0, 0 );
     this.rotation = params.rotation;
     this.topRotation = params.rotationTop;
 
@@ -165,8 +166,7 @@ Game.Player.prototype.move = function ( directionX, directionZ, positionX, posit
     player.moveDirection.x = directionX;
     player.moveDirection.y = directionZ;
 
-    player.position.x = positionX;
-    player.position.z = positionZ;
+    player.positionCorrection.set( positionX - player.position.x, positionZ - player.position.z );
 
     player.rotation = rotation / 1000.0;
 
@@ -387,6 +387,15 @@ Game.Player.prototype.update = function ( time, delta ) {
     this.updateDirectionMovement( time, delta );
     this.updateExplosion( delta );
 
+    //
+
+    var dx = delta * this.positionCorrection.x / 1000;
+    var dz = delta * this.positionCorrection.z / 1000;
+    this.positionCorrection.x -= dx;
+    this.positionCorrection.z -= dz;
+
+    //
+
     for ( var bulletId in this.tank.bullets ) {
 
         var bullet = this.tank.bullets[ bulletId ];
@@ -457,12 +466,6 @@ Game.Player.prototype.dispose = function () {
 
     this.tank.dispose();
     this.tank = false;
-
-};
-
-Game.Player.prototype.bulletHit = function ( data ) {
-
-    this.showExplosion( data );
 
 };
 

@@ -135,6 +135,7 @@ Bot.prototype.update = function () {
     var minDist = 1000;
     var players = this.arena.playerManager.players;
     var towers = this.arena.towerManager.towers;
+    var distance;
 
     // search for Player target
 
@@ -144,7 +145,7 @@ Bot.prototype.update = function () {
 
         if ( player.team === this.player.team || player.status !== Game.Player.Alive ) continue;
 
-        var distance = Math.sqrt( Math.pow( player.position.x - this.player.position.x, 2 ) + Math.pow( player.position.z - this.player.position.z, 2 ) );
+        distance = Math.sqrt( Math.pow( player.position.x - this.player.position.x, 2 ) + Math.pow( player.position.z - this.player.position.z, 2 ) );
 
         if ( distance <= minDist ) {
 
@@ -167,7 +168,7 @@ Bot.prototype.update = function () {
 
             if ( tower.team === this.player.team ) continue;
 
-            var distance = Math.sqrt( Math.pow( tower.position.x - this.player.position.x, 2 ) + Math.pow( tower.position.z - this.player.position.z, 2 ) );
+            distance = Math.sqrt( Math.pow( tower.position.x - this.player.position.x, 2 ) + Math.pow( tower.position.z - this.player.position.z, 2 ) );
 
             if ( distance <= minDist ) {
 
