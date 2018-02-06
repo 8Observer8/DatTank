@@ -201,6 +201,18 @@ Player.prototype.rotateTop = function ( angle ) {
 
 };
 
+Player.prototype.changeHealth = function ( delta ) {
+
+    // todo
+
+};
+
+Player.prototype.changeAmmo = function ( delta ) {
+
+    // todo
+
+};
+
 Player.prototype.move = function ( directionX, directionZ ) {
 
     var scope = this;
@@ -383,6 +395,7 @@ Player.prototype.die = function ( killer ) {
 
             setTimeout( function () {
 
+                if ( scope.arena.disposed ) return;
                 scope.arena.botManager.remove( scope );
                 scope.arena.removePlayer( scope );
 
@@ -534,17 +547,19 @@ Player.prototype.update = function ( delta, time ) {
 
     }
 
+    // if bot update
+
+    if ( this.bot ) {
+
+        this.bot.update();
+
+    }
+
 };
 
 Player.prototype.dispose = function () {
 
     this.arena.collisionManager.removeObject( this );
-
-    for ( var i = 0, il = this.bulletsPool.length; i < il; i ++ ) {
-
-        this.bulletsPool[ i ].dispose();
-
-    }
 
 };
 

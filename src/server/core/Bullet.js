@@ -18,21 +18,13 @@ var Bullet = function ( arena, id ) {
     this.speed = 1.8;
     this.radius = 10;
 
-    //
-
-    this.init();
+    this.networkBuffers = {};
 
 };
 
 Bullet.prototype = {};
 
 //
-
-Bullet.prototype.init = function () {
-
-    //
-
-};
 
 Bullet.prototype.activate = function ( position, angle ) {
 
@@ -54,8 +46,23 @@ Bullet.prototype.explode = function ( target ) {
 
     if ( target && target.id === this.ownerId ) return;
 
+    //
+
+    this.networkBuffers['BulletHit'] = this.networkBuffers['BulletHit'] || {};
+    var buffer = this.networkBuffers['BulletHit'].buffer || new ArrayBuffer( 10 );
+    var bufferView = this.networkBuffers['BulletHit'].bufferView || new Uint16Array( buffer );
+    this.networkBuffers['BulletHit'].buffer = buffer;
+    this.networkBuffers['BulletHit'].bufferView = bufferView;
+
+    bufferView[1] = this.id;
+    bufferView[2] = this.ownerId;
+    bufferView[3] = this.position.x;
+    bufferView[4] = this.position.z;
+
+    //
+
     this.active = false;
-    this.arena.sendEventToPlayersInRange( this.position, 'BulletHit', null, { bulletId: this.id, ownerId: this.ownerId, position: this.position } );
+    this.arena.sendEventToPlayersInRange( this.position, 'BulletHit', buffer, bufferView );
     this.arena.collisionManager.removeObject( this );
 
     //
@@ -80,12 +87,6 @@ Bullet.prototype.update = function ( delta, time ) {
         this.explode();
 
     }
-
-};
-
-Bullet.prototype.dispose = function () {
-
-    // nothing here yet
 
 };
 

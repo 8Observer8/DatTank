@@ -30,7 +30,7 @@ Game.NetworkManager.prototype.init = function ( callback ) {
     // register network events
 
     this.registerEvent( 'ArenaJoinRequest', 'out', 'json', 0 );
-    this.registerEvent( 'ArenaJoinResponce', 'in', 'json', 1 );
+    this.registerEvent( 'ArenaJoinResponse', 'in', 'json', 1 );
     this.registerEvent( 'ArenaPlayerJoined', 'in', 'json', 2 );
     this.registerEvent( 'ArenaPlayerRespawn', 'in', 'json', 3 );
     this.registerEvent( 'ArenaPlayerRespawn', 'out', 'json', 4 );
@@ -52,26 +52,20 @@ Game.NetworkManager.prototype.init = function ( callback ) {
     this.registerEvent( 'PlayerTankShoot', 'in', 'bin', 115 );
     this.registerEvent( 'PlayerTankShoot', 'out', 'bin', 116 );
 
-    this.registerEvent( 'PlayerTankHit', 'in', 'bin', 117 );
-    this.registerEvent( 'PlayerTankHit', 'out', 'bin', 118 );
-
-    this.registerEvent( 'PlayerTankDied', 'in', 'bin', 119 );
-    this.registerEvent( 'PlayerGotBox', 'in', 'json', 120 );
+    this.registerEvent( 'PlayerTankUpdateHealth', 'in', 'bin', 117 );
+    this.registerEvent( 'PlayerTankUpdateAmmo', 'in', 'bin', 118 );
 
     //
 
     this.registerEvent( 'TowerRotateTop', 'in', 'bin', 200 );
     this.registerEvent( 'TowerShoot', 'in', 'bin', 201 );
     this.registerEvent( 'TowerChangeTeam', 'in', 'bin', 202 );
-
-    this.registerEvent( 'TowerHit', 'in', 'bin', 203 );
-    this.registerEvent( 'TowerHit', 'out', 'bin', 204 );
-    this.registerEvent( 'BulletHit', 'in', 'json', 205 );
+    this.registerEvent( 'TowerUpdateHealth', 'in', 'bin', 203 );
 
     //
 
-    this.registerEvent( 'RemoveBox', 'out', 'json', 301 );
-    this.registerEvent( 'PickedBox', 'in', 'json', 302 );
+    this.registerEvent( 'BulletHit', 'in', 'bin', 300 );
+    this.registerEvent( 'RemoveBox', 'in', 'bin', 301 );
 
     // establish connection
 

@@ -20,18 +20,8 @@ Ammo.prototype = Object.create( Game.Box.prototype );
 
 Ammo.prototype.pickUp = function ( player ) {
 
-    player.ammo += this.amount;
-    player.ammo = Math.min( player.tank.maxShells, player.ammo );
-
-    //
-
-    this.arena.announce( 'PickedBox', null, { id: this.id } );
-
-    if ( player.socket ) {
-
-        networkManager.send( 'PlayerGotBox', player.socket, null, { player: { id: player.id }, box: this.toJSON(), value: player.ammo } );
-
-    }
+    this.dispose();
+    player.changeAmmo( this.amount );
 
 };
 

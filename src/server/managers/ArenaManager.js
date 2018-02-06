@@ -64,8 +64,8 @@ ArenaManager.prototype.removeEmptyArenas = function () {
 
         arena = this.arenas[ i ];
 
-        if ( ! arena || ! arena.players ) continue;
-        if ( arena.players.length - arena.bots.length === 0 ) {
+        if ( ! arena || ! arena.playerManager.players ) continue;
+        if ( arena.playerManager.players.length - arena.botManager.bots.length === 0 ) {
 
             arena.clear();
             continue;
@@ -161,7 +161,7 @@ ArenaManager.prototype.playerJoin = function ( data, socket ) {
         var response = arena.toJSON();
         response.me = player.toPrivateJSON();
 
-        networkManager.send( 'ArenaJoinResponce', socket, false, response );
+        networkManager.send( 'ArenaJoinResponse', socket, false, response );
 
     });
 

@@ -90,7 +90,13 @@ Game.Arena.prototype.initExplosions = function () {
 
 };
 
-Game.Arena.prototype.showExplosion = function ( params ) {
+Game.Arena.prototype.showExplosion = function ( data ) {
+
+    var bulletId = data[0];
+    var ownerId = data[1];
+    var position = { x: data[2], y: 25, z: data[3] };
+
+    //
 
     for ( var i = 0; i < this.effects.explosions.length; i ++ ) {
 
@@ -98,18 +104,18 @@ Game.Arena.prototype.showExplosion = function ( params ) {
 
         if ( ! explosion.visible ) {
 
-            explosion.position.set( params.position.x, params.position.y, params.position.z );
+            explosion.position.set( position.x, position.y, position.z );
             explosion.scale.set( 80, 80, 80 );
             explosion.visible = true;
 
-            var shooter = this.playerManager.getById( params.ownerId );
+            var shooter = this.playerManager.getById( ownerId );
             if ( shooter ) {
 
                 shooter = shooter.tank;
 
             } else {
 
-                shooter = this.towerManager.getById( params.ownerId );
+                shooter = this.towerManager.getById( ownerId );
 
             }
 
@@ -118,7 +124,7 @@ Game.Arena.prototype.showExplosion = function ( params ) {
                 var bulletsPool = shooter.bullets;
                 for ( var j = 0, jl = bulletsPool.length; j < jl; j ++ ) {
 
-                    if ( bulletsPool[ j ].bulletId === params.bulletId ) {
+                    if ( bulletsPool[ j ].bulletId === bulletId ) {
 
                         bulletsPool[ j ].visible = false;
                         bulletsPool[ j ].trace.visible = false;
@@ -364,6 +370,7 @@ Game.Arena.prototype.addNetworkListeners = function () {
 
     network.addMessageListener( 'ArenaPlayerLeft', this.playerLeft.bind( this ) );
     network.addMessageListener( 'ArenaLeaderboardUpdate', this.updateLeaderboard.bind( this ) );
+    network.addMessageListener( 'ArenaPlayerRespawn', this.proxyEventToPlayer.bind( this ) );
 
     network.addMessageListener( 'PlayersInRange', this.newPlayersInRange.bind( this ) );
     network.addMessageListener( 'TowersInRange', this.newTowersInRange.bind( this ) );
@@ -371,27 +378,22 @@ Game.Arena.prototype.addNetworkListeners = function () {
 
     //
 
-    network.addMessageListener( 'ArenaPlayerRespawn', this.proxyEventToPlayer.bind( this ) );
-
     network.addMessageListener( 'PlayerTankRotateTop', this.proxyEventToPlayer.bind( this ) );
     network.addMessageListener( 'PlayerTankMove', this.proxyEventToPlayer.bind( this ) );
     network.addMessageListener( 'PlayerTankShoot', this.proxyEventToPlayer.bind( this ) );
-    network.addMessageListener( 'PlayerTankHit', this.proxyEventToPlayer.bind( this ) );
-    network.addMessageListener( 'PlayerTankDied', this.proxyEventToPlayer.bind( this ) );
-    network.addMessageListener( 'PlayerGotBox', this.proxyEventToPlayer.bind( this ) );
+    network.addMessageListener( 'PlayerTankHealthUpdate', this.proxyEventToPlayer.bind( this ) );
+    network.addMessageListener( 'PlayerTankAmmoUpdate', this.proxyEventToPlayer.bind( this ) );
 
     //
 
     network.addMessageListener( 'TowerRotateTop', this.proxyEventToTower.bind( this ) );
     network.addMessageListener( 'TowerShoot', this.proxyEventToTower.bind( this ) );
     network.addMessageListener( 'TowerChangeTeam', this.proxyEventToTower.bind( this ) );
-    network.addMessageListener( 'TowerHit', this.proxyEventToTower.bind( this ) );
-
-    network.addMessageListener( 'BulletHit', this.showExplosion.bind( this ) );
+    network.addMessageListener( 'TowerUpdateHealth', this.proxyEventToTower.bind( this ) );
 
     //
 
+    network.addMessageListener( 'BulletHit', this.showExplosion.bind( this ) );
     network.addMessageListener( 'RemoveBox', this.proxyEventToBox.bind( this ) );
-    network.addMessageListener( 'PickedBox', this.proxyEventToBox.bind( this ) );
 
 };

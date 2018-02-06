@@ -20,6 +20,7 @@ var Arena = function ( callback ) {
     this.currentTime = false;
     this.prevUpdateTime = Date.now();
     this.loopIter = 0;
+    this.disposed = false;
 
     //
 
@@ -65,11 +66,15 @@ Arena.prototype.addPlayer = function ( params ) {
 
     //
 
-    setTimeout( function () {
+    if ( ! this.disposed ) {
 
-        scope.updateLeaderboard();
+        setTimeout( function () {
 
-    }, 1000 );
+            scope.updateLeaderboard();
+
+        }, 1000 );
+
+    }
 
     //
 
@@ -99,11 +104,19 @@ Arena.prototype.removePlayer = function ( player ) {
 
     //
 
-    setTimeout( function () {
+    Game.ArenaManager.removeEmptyArenas();
 
-        scope.updateLeaderboard();
+    //
 
-    }, 1000 );
+    if ( ! this.disposed ) {
+
+        setTimeout( function () {
+
+            scope.updateLeaderboard();
+
+        }, 1000 );
+
+    }
 
 };
 
@@ -255,6 +268,8 @@ Arena.prototype.clear = function () {
     this.botManager = false;
     this.boxManager = false;
     this.collisionManager = false;
+
+    this.disposed = true;
 
 };
 

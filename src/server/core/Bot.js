@@ -9,27 +9,19 @@ var Bot = function ( arena ) {
     this.arena = arena;
     this.login = false;
 
-    var logins = [ 'calzone', 'augmenton', 'celianaro', 'pantor', 'elementalium', 'gazer', 'velent', 'oddio', 'taker', 'windmill',
-        'soliter', 'roadkiller', 'bambuno', 'tratatar', 'sulfurio', 'helioss', 'seba', 'tracy', 'sandman', 'wooka', 'killdrop', 'warang',
-        'dziu', 'bernard', 'centaur', '¥Rebook¥', 'BratoK', 'Terrorist', 'Mahno', 'Skuzi', 'Suzuki', 'Myron', 'horror', 'zuzu', 'o_0',
-        'HEqpOPMaJI', 'X_A_M', 'Vadic', '@did@s', 'Alliance', 'TRAKTORIST', 'MaJoR$', 'DeRJkiY', ']{olyan@', 'kaban', 'Semkiv', 'Agent',
-        'CJIeCaPb', 'Delros',  'T0rM@Z', 'MAKAROV', 'T0rM@Z', 'Adas', 'bandit', 'Chetkii', 'Artuomchik', 'buben', 'DonKarleone', 'accura2k_',
-        'GOPNIK', 'KabaniyKlyk', 'Kermit', 'KoLяN4Uk', 'KraCaV4nK', 'limon4ello', 'master_of_ceremony', 'Mr_Zaza', 'Biwen', 'ne_zli', 'NURCHIK',
-        'StrannicK', 'Tîgrrr', 'Timent', 'Vision', 'X_A_M_E_P', 'Marckiz', 'bigman', 'creed', 'DarkFantastik', 'SlowPok', 'NaGiBatoR',
-        'Mam_ya_ebashy', 'LLI_K_O_JI_b_H_U_K', 'FRESH_MEAT', 'LegendarY', 'Rabbit_wolf', 'iJseven', 'Ha_KoJleHu_OJleHu', 'Vertyxan',
-        'x_Evil_x', 'cTaTucT_kycToDpoT', 'TaNkIsT228', 'LaRDeN', 'EHOT', 'CruzTanks', 'Mazay_Ded', 'Dark_Foch', 'FL1pSTaR', 'SkyDog',
-        'Nevrox', 'AWAJA', 'GrizeR', 'Jove_V_KyStax', 'Zybinjo', 'Pro1004EloVe4Ek', 'Ben_Laden', 'DeLviR', 'SkyLiTeR', '_fly_', '4ypa-4yps'
-    ];
-
     while ( this.login === false ) {
 
-        this.login = logins[ Math.floor( logins.length * Math.random() ) ];
+        this.login = Bot.LoginBase[ Math.floor( Bot.LoginBase.length * Math.random() ) ];
 
-        for ( var i = 0; i < this.arena.botManager.bots.length; i ++ ) {
+        if ( this.login !== 'guest' ) {
 
-            if ( this.login === this.arena.botManager.bots[ i ].login ) {
+            for ( var i = 0; i < this.arena.botManager.bots.length; i ++ ) {
 
-                this.login = false;
+                if ( this.login === this.arena.botManager.bots[ i ].login ) {
+
+                    this.login = false;
+
+                }
 
             }
 
@@ -38,6 +30,8 @@ var Bot = function ( arena ) {
     }
 
     this.lastTopRotate = 0;
+
+    //
 
     this.init();
 
@@ -68,8 +62,6 @@ Bot.prototype.init = function () {
     this.player = this.arena.addPlayer({ login: this.login, tank: tank, socket: false });
     this.player.ammo = 10000000;
     this.player.bot = this;
-
-    this.updateInterval = setInterval( this.update.bind( this ), 40 );
 
 };
 
@@ -237,9 +229,24 @@ Bot.prototype.update = function () {
 
 Bot.prototype.dispose = function () {
 
-    clearInterval( this.updateInterval );
+    // nothing here yet
 
 };
+
+//
+
+Bot.LoginBase = [ 'guest', 'guest', 'guest', 'guest', 'guest', 'guest', 'guest', 'guest', 'guest', 'guest', 'guest', 'guest', 'guest',
+    'calzone', 'augmenton', 'celianaro', 'pantor', 'elementalium', 'gazer', 'velent', 'oddio', 'taker', 'windmill',
+    'soliter', 'roadkiller', 'bambuno', 'tratatar', 'sulfurio', 'helioss', 'seba', 'tracy', 'sandman', 'wooka', 'killdrop', 'warang',
+    'dziu', 'bernard', 'centaur', '¥Rebook¥', 'BratoK', 'Terrorist', 'Mahno', 'Skuzi', 'Suzuki', 'Myron', 'horror', 'zuzu', 'o_0',
+    'HEqpOPMaJI', 'X_A_M', 'Vadic', '@did@s', 'Alliance', 'TRAKTORIST', 'MaJoR$', 'DeRJkiY', ']{olyan@', 'kaban', 'Semkiv', 'Agent',
+    'CJIeCaPb', 'Delros',  'T0rM@Z', 'MAKAROV', 'T0rM@Z', 'Adas', 'bandit', 'Chetkii', 'Artuomchik', 'buben', 'DonKarleone', 'accura2k_',
+    'GOPNIK', 'KabaniyKlyk', 'Kermit', 'KoLяN4Uk', 'KraCaV4nK', 'limon4ello', 'master_of_ceremony', 'Mr_Zaza', 'Biwen', 'ne_zli', 'NURCHIK',
+    'StrannicK', 'Tîgrrr', 'Timent', 'Vision', 'X_A_M_E_P', 'Marckiz', 'bigman', 'creed', 'DarkFantastik', 'SlowPok', 'NaGiBatoR',
+    'Mam_ya_ebashy', 'LLI_K_O_JI_b_H_U_K', 'FRESH_MEAT', 'LegendarY', 'Rabbit_wolf', 'iJseven', 'Ha_KoJleHu_OJleHu', 'Vertyxan',
+    'x_Evil_x', 'cTaTucT_kycToDpoT', 'TaNkIsT228', 'LaRDeN', 'EHOT', 'CruzTanks', 'Mazay_Ded', 'Dark_Foch', 'FL1pSTaR', 'SkyDog',
+    'Nevrox', 'AWAJA', 'GrizeR', 'Jove_V_KyStax', 'Zybinjo', 'Pro1004EloVe4Ek', 'Ben_Laden', 'DeLviR', 'SkyLiTeR', '_fly_', '4ypa-4yps'
+];
 
 //
 

@@ -15,6 +15,8 @@ var Box = function ( arena, params ) {
     this.amount = 0;
     this.type = 'none';
 
+    this.networkBuffers = {};
+
 };
 
 Box.prototype = {};
@@ -24,6 +26,22 @@ Box.prototype = {};
 Box.prototype.init = function () {
 
     // nothing here
+
+};
+
+Box.prototype.dispose = function () {
+
+    this.networkBuffers['RemoveBox'] = this.networkBuffers['RemoveBox'] || {};
+    var buffer = this.networkBuffers['RemoveBox'].buffer || new ArrayBuffer( 4 );
+    var bufferView = this.networkBuffers['RemoveBox'].bufferView || new Uint16Array( buffer );
+    this.networkBuffers['RemoveBox'].buffer = buffer;
+    this.networkBuffers['RemoveBox'].bufferView = bufferView;
+
+    bufferView[1] = this.id;
+
+    //
+
+    networkManager.sendEventToPlayersInRange( this.position, 'BoxRemove', buffer, bufferView );
 
 };
 

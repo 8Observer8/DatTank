@@ -121,7 +121,7 @@ Game.prototype.play = function ( event ) {
 
         // init network
 
-        network.addMessageListener( 'ArenaJoinResponce', function ( data ) {
+        network.addMessageListener( 'ArenaJoinResponse', function ( data ) {
 
             game.joinArena( data );
 

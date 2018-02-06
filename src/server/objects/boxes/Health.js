@@ -20,20 +20,8 @@ Health.prototype = Object.create( Game.Box.prototype );
 
 Health.prototype.pickUp = function ( player ) {
 
-    player.health += this.amount;
-    player.health = Math.min( player.health, 100 );
-
-    player.hit( false );
-
-    //
-
-    this.arena.announce( 'PickedBox', null, { id: this.id } );
-
-    if ( player.socket ) {
-
-        networkManager.send( 'PlayerGotBox', player.socket, null, { player: { id: player.id }, box: this.toJSON(), value: player.health } );
-
-    }
+    this.dispose();
+    player.changeHealth( this.amount );
 
 };
 
