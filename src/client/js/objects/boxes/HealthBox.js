@@ -28,7 +28,6 @@ Game.Box.Health.prototype.init = function () {
     this.mesh.name = 'HealthBox';
     this.mesh.scale.set( 31, 31, 31 );
     this.mesh.rotation.z = Math.PI / 2;
-
     this.mesh.position.copy( this.position );
 
     view.scene.add( this.mesh );
@@ -37,9 +36,17 @@ Game.Box.Health.prototype.init = function () {
 
 };
 
-Game.Box.Health.prototype.remove = function () {
+Game.Box.Health.prototype.remove = function ( fromNetwork ) {
 
-    view.scene.remove( this.mesh );
+    if ( fromNetwork ) {
+
+        Game.arena.boxManager.remove( this );
+
+    } else {
+
+        view.scene.remove( this.mesh );
+
+    }
 
 };
 
@@ -55,7 +62,7 @@ Game.Box.Health.prototype.addEventListeners = function () {
 
     var scope = this;
 
-    this.addEventListener( 'PickedBox', function () { scope.remove(); });
-    this.addEventListener( 'RemoveBox', function () { scope.remove(); });
+    this.addEventListener( 'PickedBox', function () { scope.remove( true ); });
+    this.addEventListener( 'RemoveBox', function () { scope.remove( true ); });
 
 };

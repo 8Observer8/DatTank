@@ -53,15 +53,16 @@ Game.BoxManager.prototype.add = function ( params ) {
 
 Game.BoxManager.prototype.remove = function ( box ) {
 
-    box.remove();
-
-    //
-
     var newBoxList = [];
 
     for ( var i = 0, il = this.boxes.length; i < il; i ++ ) {
 
-        if ( this.boxes[ i ].id === box.id ) continue;
+        if ( this.boxes[ i ].id === box.id ) {
+
+            this.boxes[ i ].remove();
+            continue;
+
+        }
 
         newBoxList.push( this.boxes[ i ] );
 

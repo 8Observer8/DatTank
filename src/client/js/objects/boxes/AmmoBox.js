@@ -35,9 +35,17 @@ Game.Box.Ammo.prototype.init = function () {
 
 };
 
-Game.Box.Ammo.prototype.remove = function () {
+Game.Box.Ammo.prototype.remove = function ( fromNetwork ) {
 
-    view.scene.remove( this.mesh );
+    if ( fromNetwork ) {
+
+        Game.arena.boxManager.remove( this );
+
+    } else {
+
+        view.scene.remove( this.mesh );
+
+    }
 
 };
 
@@ -53,7 +61,7 @@ Game.Box.Ammo.prototype.addEventListeners = function () {
 
     var scope = this;
 
-    this.addEventListener( 'PickedBox', function () { scope.remove(); });
-    this.addEventListener( 'RemoveBox', function () { scope.remove(); });
+    this.addEventListener( 'PickedBox', function () { scope.remove( true ); });
+    this.addEventListener( 'RemoveBox', function () { scope.remove( true ); });
 
 };

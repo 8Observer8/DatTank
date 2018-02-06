@@ -166,7 +166,7 @@ Game.Player.prototype.move = function ( directionX, directionZ, positionX, posit
     player.moveDirection.x = directionX;
     player.moveDirection.y = directionZ;
 
-    player.positionCorrection.set( positionX - player.position.x, positionZ - player.position.z );
+    player.positionCorrection.set( positionX - player.position.x, 0, positionZ - player.position.z );
 
     player.rotation = rotation / 1000.0;
 
@@ -389,10 +389,18 @@ Game.Player.prototype.update = function ( time, delta ) {
 
     //
 
-    var dx = delta * this.positionCorrection.x / 1000;
-    var dz = delta * this.positionCorrection.z / 1000;
-    this.positionCorrection.x -= dx;
-    this.positionCorrection.z -= dz;
+    var dx = this.positionCorrection.x * ( delta / 500 );
+    var dz = this.positionCorrection.z * ( delta / 500 );
+
+    if ( Math.abs( dx ) > 0.1 || Math.abs( dz ) > 0.1 ) {
+
+        this.positionCorrection.x -= dx;
+        this.positionCorrection.z -= dz;
+
+        this.position.x += dx;
+        this.position.z += dz;
+
+    }
 
     //
 
