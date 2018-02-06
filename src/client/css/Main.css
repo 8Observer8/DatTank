@@ -1346,3 +1346,92 @@ object {
     color: gainsboro;
     margin: 30px auto 0;
 }
+
+/**/
+
+/*vieport panel*/
+
+.navigation-panel {
+    position: absolute;
+    overflow: hidden;
+    top: 10px;
+    left: 10px;
+}
+
+#viewport-graphics-quality {
+    margin: 3px;
+    float: left;
+    width: 30px;
+    height: 30px;
+    background-image: url(/resources/img/tank-quality.png);
+    background-size: 100% 200%;
+    opacity: 0.5;
+    transition: opacity 200ms ease;
+    cursor: url(../resources/img/cursor.png), auto;
+    z-index: 1;
+}
+
+#viewport-graphics-quality:hover {
+    opacity: 0.85;
+}
+
+#viewport-graphics-quality:active {
+    top: 21px;
+    opacity: 1;
+}
+
+#viewport-graphics-quality[hq="true"] {
+    background-position: 0% 100%;
+}
+
+#viewport-information {
+    display: none;
+    margin: 3px;
+    float: left;
+    width: 30px;
+    height: 30px;
+    background-image: url(../resources/img/information.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: 0px -4px;
+    opacity: 0.7;
+    transition: opacity 200ms ease;
+    cursor: url(../resources/img/cursor.png), auto;
+    z-index: 1;
+}
+
+#viewport-information:hover {
+    opacity: 0.9;
+}
+
+#viewport-information:active {
+    background-position: 0px -3px;
+    opacity: 1;
+}
+
+#viewport-sound-on-off {
+    margin: 3px;
+    float: left;
+    width: 30px;
+    height: 30px;
+    background-image: url(../resources/img/sound-on-off.png);
+    background-size: 152% 260%;
+    opacity: 0.5;
+    background-position: -9px -8px;
+    transition: opacity 200ms ease;
+    cursor: url(../resources/img/cursor.png), auto;
+    z-index: 1;
+}
+
+#viewport-sound-on-off:hover {
+    opacity: 0.85;
+}
+
+#viewport-sound-on-off:active {
+    top: 11px;
+    opacity: 1;
+}
+
+#viewport-sound-on-off[sound="true"] {
+    background-position: -9px 31px;
+}
