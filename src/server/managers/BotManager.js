@@ -44,7 +44,7 @@ BotManager.prototype.remove = function ( bot ) {
 
     }
 
-    bot.bot.removed = true;
+    bot.removed = true;
     this.bots = newBotList;
 
 };

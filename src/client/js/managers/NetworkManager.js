@@ -65,7 +65,7 @@ Game.NetworkManager.prototype.init = function ( callback ) {
     //
 
     this.registerEvent( 'BulletHit', 'in', 'bin', 300 );
-    this.registerEvent( 'RemoveBox', 'in', 'bin', 301 );
+    this.registerEvent( 'BoxRemove', 'in', 'bin', 301 );
 
     // establish connection
 

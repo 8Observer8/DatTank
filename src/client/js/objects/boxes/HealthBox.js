@@ -62,7 +62,6 @@ Game.Box.Health.prototype.addEventListeners = function () {
 
     var scope = this;
 
-    this.addEventListener( 'PickedBox', function () { scope.remove( true ); });
-    this.addEventListener( 'RemoveBox', function () { scope.remove( true ); });
+    this.addEventListener( 'BoxRemove', function () { scope.remove( true ); });
 
 };

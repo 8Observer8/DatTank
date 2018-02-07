@@ -22,6 +22,8 @@ var Arena = function ( callback ) {
     this.loopIter = 0;
     this.disposed = false;
 
+    this.leaderboardUpdateTimeout = false;
+
     //
 
     this.init( callback );
@@ -68,11 +70,7 @@ Arena.prototype.addPlayer = function ( params ) {
 
     if ( ! this.disposed ) {
 
-        setTimeout( function () {
-
-            scope.updateLeaderboard();
-
-        }, 1000 );
+        scope.updateLeaderboard();
 
     }
 
@@ -110,11 +108,7 @@ Arena.prototype.removePlayer = function ( player ) {
 
     if ( ! this.disposed ) {
 
-        setTimeout( function () {
-
-            scope.updateLeaderboard();
-
-        }, 1000 );
+        scope.updateLeaderboard();
 
     }
 
@@ -130,6 +124,7 @@ Arena.prototype.sendEventToPlayersInRange = function ( position, event, buffer, 
 
         if ( Math.sqrt( dx * dx + dy * dy ) > 600 ) continue;
         if ( ! player.socket ) continue;
+
         networkManager.send( event, player.socket, buffer, bufferView );
 
     }
@@ -154,65 +149,74 @@ Arena.prototype.announce = function ( eventName, data, view, players ) {
 
 Arena.prototype.updateLeaderboard = function () {
 
-    var players = [];
-    var teams = [];
+    function update () {
 
-    //
+        var players = [];
+        var teams = [];
 
-    function sortByProperty ( array, property ) {
+        //
 
-        for ( var i = 0; i < array.length; i ++ ) {
+        function sortByProperty ( array, property ) {
 
-            for ( var j = i; j < array.length; j ++ ) {
+            for ( var i = 0; i < array.length; i ++ ) {
 
-                if ( array[ i ][ property ] < array[ j ][ property ] ) {
+                for ( var j = i; j < array.length; j ++ ) {
 
-                    var tmp = array[ i ];
-                    array[ i ] = array[ j ];
-                    array[ j ] = tmp;
+                    if ( array[ i ][ property ] < array[ j ][ property ] ) {
+
+                        var tmp = array[ i ];
+                        array[ i ] = array[ j ];
+                        array[ j ] = tmp;
+
+                    }
 
                 }
 
             }
 
+            return array;
+
+        };
+
+        //
+
+        sortByProperty( this.playerManager.players, 'kills' );
+
+        for ( var i = 0, il = this.playerManager.players.length; i < il; i ++ ) {
+
+            players.push({
+                id:         this.playerManager.players[ i ].id,
+                login:      this.playerManager.players[ i ].login,
+                team:       this.playerManager.players[ i ].team.id,
+                kills:      this.playerManager.players[ i ].kills,
+                death:      this.playerManager.players[ i ].death
+            });
+
         }
 
-        return array;
+        //
+
+        for ( var i = 0, il = this.teamManager.teams.length; i < il; i ++ ) {
+
+            if ( this.teamManager.teams[ i ].id === 1000 ) continue;
+
+            teams.push({
+                id:         this.teamManager.teams[ i ].id,
+                score:      Math.floor( 100 * this.teamManager.teams[ i ].towers / this.towerManager.towers.length )
+            });
+
+        }
+
+        //
+
+        this.announce( 'ArenaLeaderboardUpdate', null, { players: players, teams: teams } );
 
     };
 
     //
 
-    sortByProperty( this.playerManager.players, 'kills' );
-
-    for ( var i = 0, il = this.playerManager.players.length; i < il; i ++ ) {
-
-        players.push({
-            id:         this.playerManager.players[ i ].id,
-            login:      this.playerManager.players[ i ].login,
-            team:       this.playerManager.players[ i ].team.id,
-            kills:      this.playerManager.players[ i ].kills,
-            death:      this.playerManager.players[ i ].death
-        });
-
-    }
-
-    //
-
-    for ( var i = 0, il = this.teamManager.teams.length; i < il; i ++ ) {
-
-        if ( this.teamManager.teams[ i ].id === 1000 ) continue;
-
-        teams.push({
-            id:         this.teamManager.teams[ i ].id,
-            score:      Math.floor( 100 * this.teamManager.teams[ i ].towers / this.towerManager.towers.length )
-        });
-
-    }
-
-    //
-
-    this.announce( 'ArenaLeaderboardUpdate', null, { players: players, teams: teams } );
+    clearTimeout( this.leaderboardUpdateTimeout );
+    this.leaderboardUpdateTimeout = setTimeout( update.bind( this ), 1000 );
 
 };
 

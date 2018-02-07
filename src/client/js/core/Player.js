@@ -134,9 +134,7 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
 
             ui.updateHealth( this.health );
             ui.updateAmmo( this.ammo );
-
             ui.hideContinueBox();
-            ui.updateAmmo( this.ammo );
 
         }
 
@@ -286,41 +284,7 @@ Game.Player.prototype.shoot = function ( bulletId ) {
 
 };
 
-Game.Player.prototype.gotBox = function ( data ) {
-
-    var box = data.box;
-    var value = data.value;
-
-    if ( localStorage.getItem('sound') === 'true' ) {
-
-        soundManager.menuSound.play();
-
-    }
-
-    switch ( box.type ) {
-
-        case 'Health':
-
-            this.health = value;
-            this.updateHealth();
-            break;
-
-        case 'Ammo':
-
-            this.ammo = value;
-            ui.updateAmmo( this.ammo );
-            break;
-
-        default:
-
-            console.log('Unknown box type[' + box.type + '].');
-            break;
-
-    }
-
-};
-
-Game.Player.prototype.updateHealth = function ( value ) {
+Game.Player.prototype.updateHealth = function ( value, killerId ) {
 
     value = ( value !== undefined ) ? value : this.health;
 
@@ -345,9 +309,19 @@ Game.Player.prototype.updateHealth = function ( value ) {
 
     }
 
+    if ( localStorage.getItem('sound') === 'true' && value > this.health ) {
+
+        soundManager.menuSound.play();
+
+    }
+
     this.health = value;
 
-    if ( this.health <= 50 ) {
+    if ( this.health === 0 ) {
+
+        this.die( killerId );
+
+    } else if ( this.health <= 50 ) {
 
         this.tank.showSmoke();
 
@@ -356,6 +330,19 @@ Game.Player.prototype.updateHealth = function ( value ) {
         this.tank.hideSmoke();
 
     }
+
+};
+
+Game.Player.prototype.updateAmmo = function ( value ) {
+
+    if ( localStorage.getItem('sound') === 'true' && value > this.ammo ) {
+
+        soundManager.menuSound.play();
+
+    }
+
+    this.ammo = value;
+    ui.updateAmmo( this.ammo );
 
 };
 
@@ -426,11 +413,10 @@ Game.Player.prototype.update = function ( time, delta ) {
 
 };
 
-Game.Player.prototype.die = function ( killer ) {
+Game.Player.prototype.die = function ( killerId ) {
 
     var scope = this;
-
-    killer = Game.arena.playerManager.getById( killer ) || Game.arena.towerManager.getById( killer );
+    var killer = Game.arena.playerManager.getById( killerId ) || Game.arena.towerManager.getById( killerId );
     if ( ! killer ) return;
 
     if ( this.id === killer.id ) {
@@ -566,10 +552,7 @@ Game.Player.prototype.addEventListeners = function () {
     this.addEventListener( 'PlayerTankRotateTop', function ( event ) { scope.rotateTop( event.data[1] / 1000 ); });
     this.addEventListener( 'PlayerTankMove', function ( event ) { scope.move( event.data[1], event.data[2], event.data[3], event.data[4], event.data[5] ); });
     this.addEventListener( 'PlayerTankShoot', function ( event ) { scope.shoot( event.data[1] ); });
-    this.addEventListener( 'PlayerTankHit', function ( event ) { scope.updateHealth( event.data[1] ); });
-    this.addEventListener( 'PlayerTankDied', function ( event ) { scope.die( event.data[1] ); });
-    this.addEventListener( 'PlayerGotBox', function ( event ) { scope.gotBox( event.data ); });
-
-    this.addEventListener( 'BulletHit', function ( event ) { scope.bulletHit( event.data ); });
+    this.addEventListener( 'PlayerTankUpdateHealth', function ( event ) { scope.updateHealth( event.data[1], event.data[2] ); });
+    this.addEventListener( 'PlayerTankUpdateAmmo', function ( event ) { scope.updateAmmo( event.data[1] ); });
 
 };

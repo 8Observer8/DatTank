@@ -65,6 +65,31 @@ Bot.prototype.init = function () {
 
 };
 
+Bot.prototype.die = function () {
+
+    var scope = this;
+    var maxKills = Math.floor( Math.random() * 15 ) + 5;
+
+    //
+
+    if ( scope.arena.playerManager.players.length - scope.arena.botManager.bots.length < scope.arena.botManager.botNum && scope.kills < maxKills ) {
+
+        setTimeout( scope.player.respawn.bind( scope ), 3000 );
+
+    } else {
+
+        setTimeout( function () {
+
+            if ( scope.arena.disposed ) return;
+            scope.arena.botManager.remove( scope );
+            scope.arena.removePlayer( scope.player );
+
+        }, 2000 );
+
+    }
+
+};
+
 Bot.prototype.update = function () {
 
     var isMove = Math.random();

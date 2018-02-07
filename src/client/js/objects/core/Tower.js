@@ -321,6 +321,6 @@ Game.Tower.prototype.addEventListeners = function () {
     this.addEventListener( 'TowerRotateTop', function ( event ) { scope.rotateTop( event.data[1] / 1000, event.data[2] / 1000 ); });
     this.addEventListener( 'TowerShoot', function ( event ) { scope.shoot( event.data[1] ); });
     this.addEventListener( 'TowerChangeTeam', function ( event ) { scope.changeTeam( event.data[1] ); });
-    this.addEventListener( 'TowerHit', function ( event ) { scope.updateHealth( event.data[1] ); });
+    this.addEventListener( 'TowerUpdateHealth', function ( event ) { scope.updateHealth( event.data[1] ); });
 
 };

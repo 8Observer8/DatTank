@@ -41,7 +41,7 @@ Box.prototype.dispose = function () {
 
     //
 
-    networkManager.sendEventToPlayersInRange( this.position, 'BoxRemove', buffer, bufferView );
+    this.arena.sendEventToPlayersInRange( this.position, 'BoxRemove', buffer, bufferView );
 
 };
 

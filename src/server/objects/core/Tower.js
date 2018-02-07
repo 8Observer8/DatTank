@@ -29,7 +29,7 @@ var Tower = function ( arena, params ) {
 
     this.range = 300;
     this.armour = 350;
-    this.bullet = 100;
+    this.bullet = 150;
 
     this.networkBuffers = {};
     this.inRangeOf = {};
@@ -104,6 +104,27 @@ Tower.prototype.getInactiveBullet = function () {
 
 };
 
+Tower.prototype.updateHealth = function ( delta ) {
+
+    this.networkBuffers['UpdateHealth'] = this.networkBuffers['UpdateHealth'] || {};
+    var buffer = this.networkBuffers['UpdateHealth'].buffer || new ArrayBuffer( 6 );
+    var bufferView = this.networkBuffers['UpdateHealth'].bufferView || new Uint16Array( buffer );
+    this.networkBuffers['UpdateHealth'].buffer = buffer;
+    this.networkBuffers['UpdateHealth'].bufferView = bufferView;
+
+    //
+
+    this.health = Math.max( Math.min( this.health - delta, 100 ), 0 );
+
+    //
+
+    bufferView[ 1 ] = this.id;
+    bufferView[ 2 ] = this.health;
+
+    this.sendEventToPlayersInRange( 'TowerUpdateHealth', buffer, bufferView );
+
+};
+
 Tower.prototype.shoot = function ( target ) {
 
     var scope = this;
@@ -161,40 +182,21 @@ Tower.prototype.shoot = function ( target ) {
 
 Tower.prototype.hit = function ( killer ) {
 
-    var scope = this;
+    killer = this.arena.playerManager.getById( killer );
 
-    scope.networkBuffers['hit'] = scope.networkBuffers['hit'] || {};
-    var buffer = scope.networkBuffers['hit'].buffer || new ArrayBuffer( 6 );
-    var bufferView = scope.networkBuffers['hit'].bufferView || new Uint16Array( buffer );
-    scope.networkBuffers['hit'].buffer = buffer;
-    scope.networkBuffers['hit'].bufferView = bufferView;
+    if ( ! killer ) return;
+    if ( killer.team.id === this.team.id ) return;
+
+    this.updateHealth( Math.floor( 57 * ( killer.tank.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ) ) );
 
     //
 
-    killer = scope.arena.playerManager.getById( killer );
+    if ( this.health === 0 ) {
 
-    if ( ! killer ) return;
-    if ( killer.team.id === scope.team.id ) return;
-
-    var amount = Math.floor( 57 * ( killer.tank.bullet / scope.armour ) * ( 0.5 * Math.random() + 0.5 ) );
-
-    if ( scope.health - amount <= 0 ) {
-
-        scope.health = 0;
-        scope.changeTeam( killer.team );
-
+        this.changeTeam( killer.team );
         return;
 
     }
-
-    //
-
-    scope.health -= amount;
-
-    bufferView[ 1 ] = scope.id;
-    bufferView[ 2 ] = scope.health;
-
-    scope.sendEventToPlayersInRange( 'TowerHit', buffer, bufferView );
 
 };
 

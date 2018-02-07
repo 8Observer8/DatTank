@@ -339,9 +339,7 @@ Game.Arena.prototype.proxyEventToPlayer = function ( data, eventName ) {
 
     var playerId = ( data.player ) ? data.player.id : data[0];
     var player = this.playerManager.getById( playerId );
-
     if ( ! player ) return;
-    player = ( ! player ) ? this.me : player;
 
     player.dispatchEvent({ type: eventName, data: data });
 
@@ -381,8 +379,8 @@ Game.Arena.prototype.addNetworkListeners = function () {
     network.addMessageListener( 'PlayerTankRotateTop', this.proxyEventToPlayer.bind( this ) );
     network.addMessageListener( 'PlayerTankMove', this.proxyEventToPlayer.bind( this ) );
     network.addMessageListener( 'PlayerTankShoot', this.proxyEventToPlayer.bind( this ) );
-    network.addMessageListener( 'PlayerTankHealthUpdate', this.proxyEventToPlayer.bind( this ) );
-    network.addMessageListener( 'PlayerTankAmmoUpdate', this.proxyEventToPlayer.bind( this ) );
+    network.addMessageListener( 'PlayerTankUpdateHealth', this.proxyEventToPlayer.bind( this ) );
+    network.addMessageListener( 'PlayerTankUpdateAmmo', this.proxyEventToPlayer.bind( this ) );
 
     //
 
@@ -394,6 +392,6 @@ Game.Arena.prototype.addNetworkListeners = function () {
     //
 
     network.addMessageListener( 'BulletHit', this.showExplosion.bind( this ) );
-    network.addMessageListener( 'RemoveBox', this.proxyEventToBox.bind( this ) );
+    network.addMessageListener( 'BoxRemove', this.proxyEventToBox.bind( this ) );
 
 };

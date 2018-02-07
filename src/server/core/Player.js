@@ -201,15 +201,76 @@ Player.prototype.rotateTop = function ( angle ) {
 
 };
 
-Player.prototype.changeHealth = function ( delta ) {
+Player.prototype.changeHealth = function ( delta, killer ) {
 
-    // todo
+    if ( this.status !== Player.Alive ) {
+
+        return;
+
+    }
+
+    //
+
+    this.health += delta;
+    this.health = Math.max( Math.min( 100, this.health ), 0 );
+
+    //
+
+    this.networkBuffers['UpdateHealth'] = this.networkBuffers['UpdateHealth'] || {};
+    var buffer = this.networkBuffers['UpdateHealth'].buffer || new ArrayBuffer( 8 );
+    var bufferView = this.networkBuffers['UpdateHealth'].bufferView || new Int16Array( buffer );
+    this.networkBuffers['UpdateHealth'].buffer = buffer;
+    this.networkBuffers['UpdateHealth'].bufferView = bufferView;
+
+    bufferView[ 1 ] = this.id;
+    bufferView[ 2 ] = this.health;
+    bufferView[ 3 ] = ( killer ) ? killer.id : -1;
+
+    //
+
+    this.sendEventToPlayersInRange( 'PlayerTankUpdateHealth', buffer, bufferView );
+
+    //
+
+    if ( this.health === 0 ) {
+
+        this.die( killer );
+
+    }
 
 };
 
 Player.prototype.changeAmmo = function ( delta ) {
 
-    // todo
+    if ( this.status !== Player.Alive ) {
+
+        return;
+
+    }
+
+    //
+
+    this.ammo += delta;
+    this.ammo = Math.max( Math.min( this.tank.maxShells, this.ammo ), 0 );
+
+    //
+
+    this.networkBuffers['UpdateAmmo'] = this.networkBuffers['UpdateAmmo'] || {};
+    var buffer = this.networkBuffers['UpdateAmmo'].buffer || new ArrayBuffer( 6 );
+    var bufferView = this.networkBuffers['UpdateAmmo'].bufferView || new Int16Array( buffer );
+    this.networkBuffers['UpdateAmmo'].buffer = buffer;
+    this.networkBuffers['UpdateAmmo'].bufferView = bufferView;
+
+    bufferView[ 1 ] = this.id;
+    bufferView[ 2 ] = this.ammo;
+
+    //
+
+    if ( this.socket ) {
+    
+        networkManager.send( 'PlayerTankUpdateAmmo', this.socket, buffer, bufferView );
+
+    }
 
 };
 
@@ -246,6 +307,8 @@ Player.prototype.move = function ( directionX, directionZ ) {
     bufferView[ 4 ] = scope.position.x;
     bufferView[ 5 ] = scope.position.z;
     bufferView[ 6 ] = scope.rotation * 1000;
+
+    //
 
     scope.sendEventToPlayersInRange( 'PlayerTankMove', buffer, bufferView );
 
@@ -301,121 +364,57 @@ Player.prototype.shoot = function () {
 
 Player.prototype.hit = function ( killer ) {
 
-    var scope = this;
-
-    scope.networkBuffers['hit'] = scope.networkBuffers['hit'] || {};
-    var buffer = scope.networkBuffers['hit'].buffer || new ArrayBuffer( 6 );
-    var bufferView = scope.networkBuffers['hit'].bufferView || new Uint16Array( buffer );
-    scope.networkBuffers['hit'].buffer = buffer;
-    scope.networkBuffers['hit'].bufferView = bufferView;
-
-    //
-
-    if ( scope.status !== Player.Alive ) {
+    if ( this.status !== Player.Alive ) {
 
         return;
 
     }
 
-    killer = scope.arena.playerManager.getById( killer ) || scope.arena.towerManager.getById( killer );
+    //
+
+    killer = this.arena.playerManager.getById( killer ) || this.arena.towerManager.getById( killer );
 
     if ( ! killer ) return;
-    if ( killer.team.id === scope.team.id ) return;
+    if ( killer.team.id === this.team.id ) return;
 
-    if ( killer ) {
+    //
 
-        if ( killer instanceof Game.Player ) {
+    var bulletSize = ( killer.tank ) ? killer.tank.bullet : killer.bullet;
 
-            scope.health -= 40 * ( killer.tank.bullet / scope.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
-            scope.health = Math.max( Math.round( scope.health ), 0 );
-
-        } else if ( killer instanceof Game.Tower ) {
-
-            scope.health -= 60 * ( killer.bullet / scope.tank.armour ) * ( 0.5 * Math.random() + 0.5 );
-            scope.health = Math.max( Math.round( scope.health ), 0 );
-
-        }
-
-    }
-
-    bufferView[ 1 ] = scope.id;
-    bufferView[ 2 ] = scope.health;
-
-    scope.sendEventToPlayersInRange( 'PlayerTankHit', buffer, bufferView );
-
-    if ( scope.health <= 0 ) {
-
-        scope.die( killer );
-
-    }
+    this.changeHealth( - 40 * ( bulletSize / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 ), killer );
 
 };
 
 Player.prototype.die = function ( killer ) {
 
-    var scope = this;
+    if ( this.status === Player.Dead ) return;
 
-    scope.networkBuffers['die'] = scope.networkBuffers['die'] || {};
-    var buffer = scope.networkBuffers['die'].buffer || new ArrayBuffer( 6 );
-    var bufferView = scope.networkBuffers['die'].bufferView || new Uint16Array( buffer );
-    scope.networkBuffers['die'].buffer = buffer;
-    scope.networkBuffers['die'].bufferView = bufferView;
-
-    //
-
-    if ( scope.status === Player.Dead ) return;
-
-    scope.status = Player.Dead;
+    this.status = Player.Dead;
 
     killer.kills ++;
-    scope.death ++;
+    this.death ++;
 
     killer.team.kills ++;
-    scope.team.death ++;
+    this.team.death ++;
 
-    scope.moveDirection.x = 0;
-    scope.moveDirection.y = 0;
-
-    bufferView[ 1 ] = scope.id;
-    bufferView[ 2 ] = killer.id;
-
-    scope.sendEventToPlayersInRange( 'PlayerTankDied', buffer, bufferView );
+    this.moveDirection.x = 0;
+    this.moveDirection.y = 0;
 
     //
 
-    if ( scope.bot ) { // tmp hack for bot respawn
+    if ( this.bot ) {
 
-        var maxKills = Math.floor( Math.random() * ( 200 - 100 ) ) + 100;
+        this.bot.die();
 
-        if ( scope.arena.playerManager.players.length - scope.arena.botManager.bots.length < scope.arena.botManager.botNum && scope.kills < maxKills ) {
+    } else if ( ! this.socket ) {
 
-            setTimeout( scope.respawn.bind( scope ), 3000 );
-
-        } else {
-
-            setTimeout( function () {
-
-                if ( scope.arena.disposed ) return;
-                scope.arena.botManager.remove( scope );
-                scope.arena.removePlayer( scope );
-
-            }, 2000 );
-
-        }
-
-    } else if ( ! scope.socket ) {
-
-        scope.arena.removePlayer( scope );
+        this.arena.removePlayer( this );
 
     }
 
     //
 
-    setTimeout( function () {
-
-        scope.arena.updateLeaderboard();
-
-    }, 1000 );
+    this.arena.updateLeaderboard();
 
 };
 
