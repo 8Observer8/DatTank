@@ -102,7 +102,7 @@ Player.prototype.respawn = function ( tankName ) {
     var offsetX = 0;
     var offsetZ = 0;
 
-    while ( Math.sqrt( offsetX * offsetX + offsetZ * offsetZ ) < 80 || ! this.arena.collisionManager.isPlaceFree( { x: this.position.x + offsetX, y: this.position.z + offsetZ }, 20, 0 ) ) {
+    while ( Math.sqrt( offsetX * offsetX + offsetZ * offsetZ ) < 80 || ! this.arena.collisionManager.isPlaceFree( { x: newPosition.x + offsetX, y: newPosition.z + offsetZ }, 50, 0 ) ) {
 
         offsetX = ( Math.random() - 0.5 ) * 250;
         offsetZ = ( Math.random() - 0.5 ) * 250;
