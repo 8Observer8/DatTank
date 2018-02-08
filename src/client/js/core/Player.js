@@ -142,12 +142,7 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
 
         if ( Game.arena.me.id === this.id ) {
 
-            ga('send', {
-                hitType: 'event',
-                eventCategory: 'game',
-                eventAction: 'respawn'
-            });
-
+            game.logger.newEvent( 'respawn' );
             var tank = localStorage.getItem( 'currentTank' ) || 0;
             network.send( 'ArenaPlayerRespawn', false, tank );
 
@@ -419,13 +414,9 @@ Game.Player.prototype.die = function ( killerId ) {
     var killer = Game.arena.playerManager.getById( killerId ) || Game.arena.towerManager.getById( killerId );
     if ( ! killer ) return;
 
-    if ( this.id === killer.id ) {
+    if ( Game.arena.me.id === killer.id ) {
 
-        ga('send', {
-            hitType: 'event',
-            eventCategory: 'game',
-            eventAction: 'kill'
-        });
+        game.logger.newEvent( 'kill' );
 
     }
 

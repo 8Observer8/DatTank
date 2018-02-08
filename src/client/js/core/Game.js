@@ -17,6 +17,8 @@ var Game = function () {
     this.isMobile = new MobileDetect( window.navigator.userAgent );
     this.isMobile = this.isMobile.mobile() || this.isMobile.phone() || this.isMobile.tablet();
 
+    this.logger = new Game.Logger();
+
 };
 
 Game.Version = '5dev';
@@ -143,16 +145,11 @@ Game.prototype.play = function ( event ) {
             var login = $('#username').val() || localStorage.getItem('login') || '';
             localStorage.setItem( 'login', login );
 
-            ga('send', {
-                hitType: 'event',
-                eventCategory: 'game',
-                eventAction: 'play'
-            });
-
             var tank = localStorage.getItem( 'currentTank' ) || 0;
 
             setTimeout( function () {
 
+                game.logger.newEvent( 'play' );
                 network.send( 'ArenaJoinRequest', false, { login: login, tank: tank } );
 
             }, 1000 );
@@ -237,30 +234,18 @@ Game.prototype.dispose = function ( ) {
 
 Game.prototype.gaVk = function () {
 
-    ga('send', {
-        hitType: 'event',
-        eventCategory: 'game',
-        eventAction: 'shareVk'
-    });
+    game.logger.newEvent( 'shareVk', 'game' );
 
 };
 
 Game.prototype.gaFb = function () {
 
-    ga('send', {
-        hitType: 'event',
-        eventCategory: 'game',
-        eventAction: 'shareFacebook'
-    });
+    game.logger.newEvent( 'shareFacebook', 'game' );
 
 };
 
 Game.prototype.gaTw = function () {
 
-    ga('send', {
-        hitType: 'event',
-        eventCategory: 'game',
-        eventAction: 'shareTwiter'
-    });
+    game.logger.newEvent( 'shareTwiter', 'game' );
 
 };
