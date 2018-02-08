@@ -128,12 +128,7 @@ Game.ControlsManager.prototype.keyInit = function () {
                 scope.stopMovingDown = false;
                 scope.stopMovingLeft = false;
                 scope.stopMovingRight = false;
-
-                if ( Game.arena.me.position.x > -1267 && Game.arena.me.position.z > -1267 && Game.arena.me.position.z < 1267 && scope.stopMovingUp === false ) {
-
-                    scope.move();
-
-                }
+                scope.move();
 
                 break;
 
@@ -145,12 +140,7 @@ Game.ControlsManager.prototype.keyInit = function () {
                 scope.stopMovingUp = false;
                 scope.stopMovingDown = false;
                 scope.stopMovingRight = false;
-
-                if ( Game.arena.me.position.z < 1267 && Game.arena.me.position.x > -1267 && Game.arena.me.position.x < 1267 && scope.stopMovingLeft === false) {
-
-                    scope.move();
-
-                }
+                scope.move();
 
                 break;
 
@@ -162,12 +152,7 @@ Game.ControlsManager.prototype.keyInit = function () {
                 scope.stopMovingUp = false;
                 scope.stopMovingLeft = false;
                 scope.stopMovingRight = false;
-
-                if ( Game.arena.me.position.z < 1267 && Game.arena.me.position.z > -1267 && Game.arena.me.position.x < 1267 && scope.stopMovingDown === false ) {
-
-                    scope.move();
-
-                }
+                scope.move();
 
                 break;
 
@@ -179,12 +164,7 @@ Game.ControlsManager.prototype.keyInit = function () {
                 scope.stopMovingUp = false;
                 scope.stopMovingLeft = false;
                 scope.stopMovingDown = false;
-
-                if ( Game.arena.me.position.z > -1267 && Game.arena.me.position.x > -1267 && Game.arena.me.position.x < 1267 && scope.stopMovingRight === false ) {
-
-                    scope.move();
-
-                }
+                scope.move();
 
                 break;
 
@@ -218,11 +198,7 @@ Game.ControlsManager.prototype.keyInit = function () {
                 newDirection = ( scope.pressedKey[ 40 ] || scope.pressedKey[ 83 ] ) ? -1 : 0;
                 if ( scope.moveX === newDirection ) break;
                 scope.moveX = newDirection;
-                if ( Game.arena.me.position.z < 1267 && Game.arena.me.position.z > -1267 && Game.arena.me.position.x > -1267 && scope.stopMovingUp === false ) {
-
-                    scope.move();
-
-                }
+                scope.move();
                 break;
 
             case 37: // left
@@ -231,11 +207,7 @@ Game.ControlsManager.prototype.keyInit = function () {
                 newDirection = ( scope.pressedKey[ 39 ] || scope.pressedKey[ 68 ] ) ? -1 : 0;
                 if ( scope.moveZ === newDirection ) break;
                 scope.moveZ = newDirection;
-                if ( Game.arena.me.position.z < 1267 && Game.arena.me.position.x > -1267 && Game.arena.me.position.x < 1267 && scope.stopMovingLeft === false) {
-
-                    scope.move();
-
-                }
+                scope.move();
                 break;
 
             case 40: // down
@@ -244,11 +216,7 @@ Game.ControlsManager.prototype.keyInit = function () {
                 newDirection = ( scope.pressedKey[ 38 ] || scope.pressedKey[ 87 ] ) ? 1 : 0;
                 if ( scope.moveX === newDirection ) break;
                 scope.moveX = newDirection;
-                if ( Game.arena.me.position.z < 1267 && Game.arena.me.position.z > -1267 && Game.arena.me.position.x < 1267 && scope.stopMovingDown === false ) {
-
-                    scope.move();
-
-                }
+                scope.move();
                 break;
 
             case 39: // right
@@ -257,11 +225,7 @@ Game.ControlsManager.prototype.keyInit = function () {
                 newDirection = ( scope.pressedKey[ 37 ] || scope.pressedKey[ 65 ] ) ? 1 : 0;
                 if ( scope.moveZ === newDirection ) break;
                 scope.moveZ = newDirection;
-                if ( Game.arena.me.position.z > -1267 && Game.arena.me.position.x > -1267 && Game.arena.me.position.x < 1267 && scope.stopMovingRight === false ) {
-
-                    scope.move();
-
-                }
+                scope.move();
                 break;
 
             case 32: // space

@@ -206,7 +206,8 @@ CollisionManager.prototype.update = function ( delta ) {
 
         if ( object.parent.type !== 'Player' ) continue;
 
-        if ( Math.abs( object.body.position[0] ) > 1270 || Math.abs( object.body.position[1] ) > 1270 ) {
+        if ( Math.abs( object.parent.position.x + object.parent.deltaPosition.x ) > 1270 ||
+             Math.abs( object.parent.position.z + object.parent.deltaPosition.z ) > 1270 ) {
 
             object.parent.move( 0, object.parent.moveDirection.y );
             continue;

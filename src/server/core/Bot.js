@@ -92,40 +92,32 @@ Bot.prototype.die = function () {
 
 Bot.prototype.update = function () {
 
-    var isMove = Math.random();
-
-    if ( this.removed ) {
-
-        this.dispose();
-        return;
-
-    }
-
     if ( this.player.status !== Game.Player.Alive ) return;
 
     //
 
-    if ( this.player.moveDirection.x === 0 && this.player.moveDirection.y === 0 ) {
+    if ( this.player.moveDirection.x === 0 ) {
 
-        if ( isMove < 0.2 ) {
+        var x = Math.floor( 3 * Math.random() ) - 1;
+        var moveDuration = Math.floor( 8000 * Math.random() ) + 1000;
 
-            var x = Math.floor( 3 * Math.random() ) - 1;
-            var y = Math.floor( 3 * Math.random() ) - 1;
+        this.player.move( x, this.player.moveDirection.y );
+        this.moveDuration = moveDuration;
 
-            var rotateBaseDuration = Math.floor( 500 * Math.random() ) + 500;
-            var moveDuration = Math.floor( 8000 * Math.random() ) + 1000;
+    } 
 
-            if ( x !== 0 || y !== 0 ) {
+    if ( this.player.moveDirection.y === 0 ) {
 
-                this.player.move( x, y );
-                this.moveDuration = moveDuration;
-                this.rotateBaseDuration = rotateBaseDuration;
+        var y = Math.floor( 3 * Math.random() ) - 1;
+        var rotateBaseDuration = Math.floor( 500 * Math.random() ) + 500;
 
-            }
+        this.player.move( this.player.moveDirection.x, y );
+        this.rotateBaseDuration = rotateBaseDuration;
 
-        }
+    }
 
-    } else {
+
+    if ( this.player.moveDirection.x !== 0 || this.player.moveDirection.y !== 0 ) {
 
         this.moveDuration = ( this.moveDuration !== false ) ? this.moveDuration - 40 : false;
         this.rotateBaseDuration = ( this.rotateBaseDuration !== false ) ? this.rotateBaseDuration - 40 : false;

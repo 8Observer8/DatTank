@@ -527,6 +527,11 @@ Player.prototype.update = function ( delta, time ) {
             scope.deltaPosition.x = - scope.moveSpeed * Math.sin( scope.rotation ) * delta;
             scope.deltaPosition.z = - scope.moveSpeed * Math.cos( scope.rotation ) * delta;
 
+        } else {
+
+            scope.deltaPosition.x = 0;
+            scope.deltaPosition.z = 0;
+
         }
 
         //
