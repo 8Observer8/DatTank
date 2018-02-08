@@ -38,8 +38,8 @@ Game.ControlsManager.prototype.mouseInit = function () {
 
     function mouseDown ( event ) {
 
-        scope.mousePos.x = ( event.clientX / view.SCREEN_WIDTH ) * 2 - 1;
-        scope.mousePos.y = - ( event.clientY / view.SCREEN_HEIGHT ) * 2 + 1;
+        scope.mousePos.x = ( event.clientX / view.screenWidth ) * 2 - 1;
+        scope.mousePos.y = - ( event.clientY / view.screenHeight ) * 2 + 1;
 
         var mouseKeyPressed = event.which;
 
@@ -66,15 +66,15 @@ Game.ControlsManager.prototype.mouseInit = function () {
 
     function mouseMove ( event ) {
 
-        scope.mousePos.x = ( event.clientX / view.SCREEN_WIDTH ) * 2 - 1;
-        scope.mousePos.y = - ( event.clientY / view.SCREEN_HEIGHT ) * 2 + 1;
+        scope.mousePos.x = ( event.clientX / view.screenWidth ) * 2 - 1;
+        scope.mousePos.y = - ( event.clientY / view.screenHeight ) * 2 + 1;
 
     };
 
     function mouseUp ( event ) {
 
-        scope.mousePos.x = ( event.clientX / view.SCREEN_WIDTH ) * 2 - 1;
-        scope.mousePos.y = - ( event.clientY / view.SCREEN_HEIGHT ) * 2 + 1;
+        scope.mousePos.x = ( event.clientX / view.screenWidth ) * 2 - 1;
+        scope.mousePos.y = - ( event.clientY / view.screenHeight ) * 2 + 1;
 
         var mouseKeyPressed = event.which;
 

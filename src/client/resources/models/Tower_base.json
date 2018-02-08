@@ -20,7 +20,7 @@
         "blending":"NormalBlending",
         "colorSpecular":[0.5,0.5,0.5],
         "colorDiffuse":[0.64,0.64,0.64],
-        "shading":"basic",
+        "shading":"lambert",
         "DbgColor":15658734,
         "DbgIndex":0
     },{
@@ -37,7 +37,7 @@
         "blending":"NormalBlending",
         "colorSpecular":[0.5,0.5,0.5],
         "colorDiffuse":[0.64,0.003007,0.004885],
-        "shading":"basic",
+        "shading":"lambert",
         "DbgColor":15597568,
         "DbgIndex":1
     }],

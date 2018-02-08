@@ -23,6 +23,7 @@ Game.Arena = function () {
     this.teamManager = new Game.TeamManager( this );
     this.towerManager = new Game.TowerManager( this );
     this.controlsManager = new Game.ControlsManager( this );
+    this.decorationManager = new Game.DecorationManager( this );
 
 };
 
@@ -40,13 +41,13 @@ Game.Arena.prototype.init = function ( params ) {
 
     //
 
-    view.addDecorations( params.decorations );
-    this.initExplosions();
-
     this.teamManager.init( params.teams );
     this.playerManager.init();
     this.boxManager.init();
     this.towerManager.init();
+
+    view.addDecorations( params.decorations );
+    this.initExplosions();
 
     //
 

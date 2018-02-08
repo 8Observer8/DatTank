@@ -5,8 +5,8 @@
 
 Game.ViewManager = function () {
 
-    this.SCREEN_WIDTH = false;
-    this.SCREEN_HEIGHT = false;
+    this.screenWidth = false;
+    this.screenHeight = false;
 
     this.prevRenderTime = false;
 
@@ -16,13 +16,33 @@ Game.ViewManager = function () {
     this.camera = false;
     this.renderer = false;
 
+    //
+
+    this.quality = false;
+    this.antialias = false;
+
+    // scene params
+
+    this.fog = { color: 0xd3d3c2, density: 0.0025 };
+    this.lights = {
+        ambient:    0xfff3bc,
+        sun:        {
+            color:      0xfff3bc,
+            intensity:  0.6,
+            position:   new THREE.Vector3( 0, 100, 0 ),
+            target:     new THREE.Vector3( 50, 0, 50 )
+        }
+    };
+
+    //
+
     this.cameraOffset = new THREE.Vector3();
     this.shakeInterval = false;
     this.intersections = false;
 
     //
 
-    this.raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3(), 0, 10000 );
+    this.raycaster = false;
 
 };
 
@@ -33,26 +53,29 @@ Game.ViewManager.prototype = {};
 Game.ViewManager.prototype.setupScene = function () {
 
     this.quality = 1;
-    this.SCREEN_WIDTH = window.innerWidth;
-    this.SCREEN_HEIGHT = window.innerHeight;
+    this.antialias = true;
+    this.screenWidth = window.innerWidth;
+    this.screenHeight = window.innerHeight;
+
+    this.raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3(), 0, 10000 );
 
     // setup camera and scene
 
     this.scene = new THREE.Scene();
-    this.scene.intersections = [];
-    this.camera = new THREE.PerspectiveCamera( 60, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 1, 1300 );
-
-    this.sun = new THREE.DirectionalLight( 0xffffff, 0.5 );
-    this.sun.position.set( 0, 100, 0 );
-    this.sun.target = new THREE.Object3D();
-    this.sun.target.position.set( 50, 0, 50 );
-    this.scene.add ( this.sun );
-
-    this.camera.position.set( 180, 400, 0 );
-    this.camera.lookAt( new THREE.Vector3() );
+    this.camera = new THREE.PerspectiveCamera( 60, this.screenWidth / this.screenHeight, 1, 1300 );
     this.scene.add( this.camera );
 
-    this.scene.fog = new THREE.FogExp2( 0xa9a6a6, 0.0024 );
+    // setup lights
+
+    this.sun = new THREE.DirectionalLight( this.lights.sun.color, this.lights.sun.intensity );
+    this.sun.position.copy( this.lights.sun.position );
+    this.sun.target.position.set( this.lights.sun.target );
+    this.scene.add ( this.sun );
+    this.scene.add( new THREE.AmbientLight( this.lights.ambient ) );
+
+    // add fog
+
+    this.scene.fog = new THREE.FogExp2( this.fog.color, this.fog.density );
 
     // setup sound listener
 
@@ -64,33 +87,18 @@ Game.ViewManager.prototype.setupScene = function () {
 
     }
 
-    // add light
+    // start rendering
 
-    this.scene.add( new THREE.AmbientLight( 0xeeeeee ) );
+    this.updateRenderer();
+    this.render();
 
     // user event handlers
 
     window.addEventListener( 'resize', this.resize.bind( this ) );
 
-    this.updateRenderer();
-    this.render();
-
-    //
-
-    console.log( '>Scene inited.' );
-
 };
 
 Game.ViewManager.prototype.addDecorations = function ( decorations ) {
-
-    var tree = resourceManager.getModel( 'tree.json' );
-    var tree1 = resourceManager.getModel( 'tree1.json' );
-    var tree2 = resourceManager.getModel( 'tree2.json' );
-    var tree3 = resourceManager.getModel( 'tree3.json' );
-    var stone = resourceManager.getModel( 'stone.json' );
-    var stone1 = resourceManager.getModel( 'stone1.json' );
-    var stone2 = resourceManager.getModel( 'stone2.json' );
-    var oldCastle = resourceManager.getModel( 'oldCastle.json' );
 
     var model;
     var mesh;
@@ -101,80 +109,23 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
     for ( var i = 0, il = decorations.length; i < il; i ++ ) {
 
         decoration = decorations[ i ];
-
-        switch ( decoration.type ) {
-
-            case 'tree':
-                model = tree;
-                break;
-
-            case 'tree1':
-                model = tree1;
-                break;
-
-            case 'tree2':
-                model = tree2;
-                break;
-
-            case 'tree3':
-                model = tree3;
-                break;
-
-            case 'rock':
-                model = stone;
-                break;
-
-            case 'rock1':
-                model = stone1;
-                break;
-
-            case 'rock2':
-                model = stone2;
-                break;
-
-            case 'oldCastle':
-                model = oldCastle;
-                break;
-
-            default:
-                console.log('No proper decoration model.');
-
-        }
+        model = Game.arena.decorationManager.list[ decoration.type ].model;
 
         mesh = new THREE.Mesh( model.geometry, model.material );
         mesh.scale.set( decoration.scale.x, decoration.scale.y, decoration.scale.z );
         mesh.rotation.y = Math.random() * Math.PI;
-
-        var scale = Math.random() * 15;
-        if ( decoration.type === 'tree' || decoration.type === 'tree1' || decoration.type === 'tree2' || decoration.type === 'tree3' ) {
-
-            mesh.scale.y /= 1.7;
-
-        }
-
-        if ( decoration.type === 'oldCastle' ) {
-
-            mesh.scale.set( 20, 20, 20 );
-
-        }
-
         mesh.position.set( decoration.position.x, decoration.position.y, decoration.position.z );
         mesh.name = decoration.type;
+        mesh.geometry.computeFlatVertexNormals();
         view.scene.add( mesh );
 
         this.addObjectShadow( decoration.type, mesh.position, mesh.scale, mesh.rotation );
-
-        if ( decoration.type === 'rock2' ) {
-
-            mesh.scale.set( 10 + scale, 10 + Math.random() * 5, 10 + scale );
-
-        }
 
     }
 
 };
 
-Game.ViewManager.prototype.addMap = function () {
+Game.ViewManager.prototype.addTerrain = function () {
 
     var size = 2430;
     var offset = 100;
@@ -194,7 +145,7 @@ Game.ViewManager.prototype.addMap = function () {
 
     }
 
-    var ground = new THREE.Mesh( new THREE.PlaneBufferGeometry( size + 1800, size + 1800 ), new THREE.MeshBasicMaterial({ map: groundTexture, color: 0x555555 }) );
+    var ground = new THREE.Mesh( new THREE.PlaneBufferGeometry( size + 1800, size + 1800 ), new THREE.MeshBasicMaterial({ map: groundTexture, color: 0x777050 }) );
     ground.rotation.x = - Math.PI / 2;
     this.scene.add( ground );
     this.scene.ground = ground;
@@ -395,11 +346,11 @@ Game.ViewManager.prototype.addObjectShadow = function ( objectType, position, sc
 Game.ViewManager.prototype.addGrassZones = function () {
 
     var size = 2430;
-    var grassTexture = resourceManager.getTexture( 'Grass.png' );
-    var grass = new THREE.Mesh( new THREE.PlaneBufferGeometry( 240, 240 ), new THREE.MeshBasicMaterial({ map: grassTexture, color: 0x779977, transparent: true, depthWrite: false }) );
-    grass.rotation.x = - Math.PI / 2;
-    grass.rotation.z = Math.random() * Math.PI;
     var scale = Math.random() / 2 + 0.3;
+    var grassTexture = resourceManager.getTexture( 'Grass.png' );
+
+    var grass = new THREE.Mesh( new THREE.PlaneBufferGeometry( 240, 240 ), new THREE.MeshBasicMaterial({ map: grassTexture, color: 0x779977, transparent: true, depthWrite: false }) );
+    grass.rotation.set( - Math.PI / 2, 0, Math.random() * Math.PI );
     grass.scale.set( scale, scale, scale );
     grass.material.transparent = true;
     grass.position.set( ( Math.random() - 0.5 ) * size, 0.1 + Math.random() / 10, ( Math.random() - 0.5 ) * size );
@@ -442,80 +393,56 @@ Game.ViewManager.prototype.addTeamZone = function () {
 
 };
 
-Game.ViewManager.prototype.clean = function () {
+Game.ViewManager.prototype.addCameraShake = function ( duration, intensity ) {
 
-    if ( this.scene ) {
+    var iter = 0;
+    var scope = this;
 
-        this.camera.position.y = 400;
+    if ( this.shakeInterval !== false ) {
 
-        for ( var i = 0, il = this.scene.children.length; i < il; i ++ ) {
+        clearInterval( this.shakeInterval );
+        this.cameraOffset.set( 0, 0, 0 );
 
-            if ( this.shakeInterval !== false ) {
+    }
 
-                clearInterval( this.shakeInterval );
-                this.shakeInterval = false;
+    this.shakeInterval = setInterval( function () {
 
-            }
+        scope.cameraOffset.x = intensity * ( Math.random() - 0.5 ) * iter / 2;
+        scope.cameraOffset.y = intensity * ( Math.random() - 0.5 ) * iter / 2;
+        scope.cameraOffset.z = intensity * ( Math.random() - 0.5 ) * iter / 2;
 
-            this.cameraOffset.set( 0, 0, 0 );
-            this.scene.remove( this.scene.children[ i ] );
+        iter ++;
+
+        if ( iter > Math.floor( ( duration - 100 ) / 40 ) ) {
+
+            clearInterval( scope.shakeInterval );
+            scope.cameraOffset.set( 0, 0, 0 );
+            scope.shakeInterval = false;
 
         }
 
-    }
+    }, 40 );
 
 };
 
-Game.ViewManager.prototype.updateRenderer = function () {
+//
 
-    var antialias = false;
-    this.quality = 0.7;
+Game.ViewManager.prototype.updateCamera = function () {
 
-    if ( localStorage.getItem('hq') === 'true' ) {
-
-        antialias = true;
-        this.quality = 1;
-
-    }
-
-    $('#renderport').remove();
-    $('#viewport').prepend('<canvas id="renderport"></canvas>');
-    this.renderer = new THREE.WebGLRenderer({ canvas: $('#renderport')[0], antialias: antialias });
-    this.renderer.setSize( this.quality * this.SCREEN_WIDTH, this.quality * this.SCREEN_HEIGHT );
-    this.renderer.setClearColor( 0xa9a6a6 );
-
-};
-
-Game.ViewManager.prototype.resize = function () {
-
-    this.SCREEN_WIDTH = window.innerWidth;
-    this.SCREEN_HEIGHT = window.innerHeight;
-
-    //
-
-    this.camera.aspect = this.SCREEN_WIDTH / this.SCREEN_HEIGHT;
-    this.camera.updateProjectionMatrix();
-
-    this.renderer.setSize( this.quality * this.SCREEN_WIDTH, this.quality * this.SCREEN_HEIGHT );
+    this.camera.position.x = Game.arena.me.position.x - 170 * Math.sin( Game.arena.me.rotation ) + this.cameraOffset.x;
+    this.camera.position.z = Game.arena.me.position.z - 170 * Math.cos( Game.arena.me.rotation ) + this.cameraOffset.y;
+    this.camera.position.y = 120 + this.cameraOffset.z;
+    this.camera.lookAtVector = this.camera.lookAtVector || new THREE.Vector3();
+    this.camera.lookAtVector.set( Game.arena.me.position.x, Game.arena.me.position.y + 65, Game.arena.me.position.z );
+    this.camera.lookAt( this.camera.lookAtVector );
 
 };
 
 Game.ViewManager.prototype.animate = function ( delta ) {
 
-    if ( ! Game.arena ) return;
+    if ( ! Game.arena || ! Game.arena.me ) return;
 
-    // update camera position
-
-    // + shake camera
-    this.camera.position.x = Game.arena.me.position.x - ( 170 * Math.sin( Game.arena.me.rotation ) );
-    this.camera.position.z = Game.arena.me.position.z - ( 170 * Math.cos( Game.arena.me.rotation ) );
-    this.camera.position.y = 120;
-
-    this.camera.position.set( this.camera.position.x + this.cameraOffset.x, this.camera.position.y + this.cameraOffset.y, this.camera.position.z + this.cameraOffset.z );
-
-    var lookPos = new THREE.Vector3( Game.arena.me.position.x, Game.arena.me.position.y + 65, Game.arena.me.position.z );
-
-    this.camera.lookAt( lookPos );
+    this.updateCamera();
 
     if ( Game.arena.boxManager ) {
 
@@ -557,38 +484,6 @@ Game.ViewManager.prototype.animate = function ( delta ) {
 
 };
 
-Game.ViewManager.prototype.addCameraShake = function ( duration, intensity ) {
-
-    var iter = 0;
-    var scope = this;
-
-    if ( this.shakeInterval !== false ) {
-
-        clearInterval( this.shakeInterval );
-        this.cameraOffset.set( 0, 0, 0 );
-
-    }
-
-    this.shakeInterval = setInterval( function () {
-
-        scope.cameraOffset.x = intensity * ( Math.random() - 0.5 ) * iter / 2;
-        scope.cameraOffset.y = intensity * ( Math.random() - 0.5 ) * iter / 2;
-        scope.cameraOffset.z = intensity * ( Math.random() - 0.5 ) * iter / 2;
-
-        iter ++;
-
-        if ( iter > Math.floor( ( duration - 100 ) / 40 ) ) {
-
-            clearInterval( scope.shakeInterval );
-            scope.cameraOffset.set( 0, 0, 0 );
-            scope.shakeInterval = false;
-
-        }
-
-    }, 40 );
-
-};
-
 Game.ViewManager.prototype.render = function () {
 
     if ( ! this.prevRenderTime ) this.prevRenderTime = performance.now();
@@ -602,5 +497,67 @@ Game.ViewManager.prototype.render = function () {
     //
 
     requestAnimationFrame( this.render.bind( this ) );
+
+};
+
+//
+
+Game.ViewManager.prototype.resize = function () {
+
+    this.screenWidth = window.innerWidth;
+    this.screenHeight = window.innerHeight;
+
+    //
+
+    this.camera.aspect = this.screenWidth / this.screenHeight;
+    this.camera.updateProjectionMatrix();
+
+    this.renderer.setSize( this.quality * this.screenWidth, this.quality * this.screenHeight );
+
+};
+
+Game.ViewManager.prototype.updateRenderer = function () {
+
+    if ( localStorage.getItem('hq') === 'true' ) {
+
+        this.antialias = true;
+        this.quality = 1;
+
+    } else {
+
+        this.antialias = false;
+        this.quality = 0.7;
+
+    }
+
+    $('#renderport').remove();
+    $('#viewport').prepend('<canvas id="renderport"></canvas>');
+    this.renderer = new THREE.WebGLRenderer({ canvas: $('#renderport')[0], antialias: this.antialias });
+    this.renderer.setSize( this.quality * this.screenWidth, this.quality * this.screenHeight );
+    this.renderer.setClearColor( this.fog.color );
+
+};
+
+Game.ViewManager.prototype.clean = function () {
+
+    if ( this.scene ) {
+
+        this.camera.position.y = 400;
+
+        for ( var i = 0, il = this.scene.children.length; i < il; i ++ ) {
+
+            if ( this.shakeInterval !== false ) {
+
+                clearInterval( this.shakeInterval );
+                this.shakeInterval = false;
+
+            }
+
+            this.cameraOffset.set( 0, 0, 0 );
+            this.scene.remove( this.scene.children[ i ] );
+
+        }
+
+    }
 
 };

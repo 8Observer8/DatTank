@@ -38,7 +38,7 @@ BotManager.prototype.remove = function ( bot ) {
 
     for ( var i = 0, il = this.bots.length; i < il; i ++ ) {
 
-        if ( this.bots[ i ].player.id === bot.id ) continue;
+        if ( this.bots[ i ].player.id === bot.player.id ) continue;
 
         newBotList.push( this.bots[ i ] );
 

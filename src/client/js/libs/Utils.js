@@ -35,8 +35,8 @@ Utils.getScreenPos = (function () {
 
         point.set( x, y, z );
 
-        var widthHalf = view.SCREEN_WIDTH / 2;
-        var heightHalf = view.SCREEN_HEIGHT / 2;
+        var widthHalf = view.screenWidth / 2;
+        var heightHalf = view.screenHeight / 2;
         var vector = point.project( camera );
 
         result.x = ( vector.x * widthHalf ) + widthHalf,

@@ -21,7 +21,7 @@ Stones2.prototype.init = function () {
     this.sizeX = this.size.x * this.scale.x;
     this.sizeY = this.size.y * this.scale.y;
     this.sizeZ = this.size.z * this.scale.z;
-    this.radius = 5;
+    this.radius = 20;
 
     this.arena.collisionManager.addObject( this, 'circle' );
 

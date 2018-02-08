@@ -46,6 +46,7 @@ Game.Tower.prototype.init = function () {
     //
 
     var base = new THREE.Mesh( towerBaseModel.geometry, towerBaseModel.material );
+    base.geometry.computeFlatVertexNormals();
     base.rotation.y = 0;
     base.scale.set( 27, 27, 27 );
     this.object.add( base );
@@ -68,6 +69,7 @@ Game.Tower.prototype.init = function () {
     }
 
     var top = new THREE.Mesh( towerTopModel.geometry, materials );
+    top.geometry.computeFlatVertexNormals();
     top.rotation.y = this.rotation;
     top.scale.set( 27, 27, 27 );
 

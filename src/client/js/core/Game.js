@@ -21,7 +21,7 @@ var Game = function () {
 
 };
 
-Game.Version = '5dev';
+Game.Version = 'v0.4';
 
 Game.prototype = {};
 
@@ -166,16 +166,16 @@ Game.prototype.play = function ( event ) {
 
 Game.prototype.joinArena = function ( params ) {
 
-    view.clean();
-    view.setupScene();
-
     $('#crowd-shortcut').show();
 
     //
 
     Game.arena = new Game.Arena();
-    Game.arena.init( params );
-    this.arena = Game.arena;
+
+    //
+
+    view.clean();
+    view.setupScene();
 
     //
 
@@ -184,8 +184,13 @@ Game.prototype.joinArena = function ( params ) {
 
     //
 
-    view.addMap();
+    view.addTerrain();
     view.addTeamZone();
+
+    //
+
+    Game.arena.init( params );
+    this.arena = Game.arena;
 
     // change camera position
 
