@@ -267,7 +267,7 @@ Player.prototype.changeAmmo = function ( delta ) {
     //
 
     if ( this.socket ) {
-    
+
         networkManager.send( 'PlayerTankUpdateAmmo', this.socket, buffer, bufferView );
 
     }

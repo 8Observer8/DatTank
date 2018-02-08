@@ -29,6 +29,9 @@ CollisionManager.prototype.init = function () {
     this.world.applyDamping = false;
     this.world.applyGravity = false;
     this.world.applySpringForces = false;
+
+    //
+
     this.world.on( 'beginContact', this.collisionStart.bind( this ) );
     this.world.on( 'endContact', this.collisionEnd.bind( this ) );
 
@@ -74,6 +77,7 @@ CollisionManager.prototype.collisionStart = function ( event ) {
 CollisionManager.prototype.collisionEnd = function ( event ) {
 
     var object;
+    var obstacle;
 
     //
 
@@ -83,7 +87,9 @@ CollisionManager.prototype.collisionEnd = function ( event ) {
 
         if ( event.bodyA === object.body || event.bodyB === object.body ) {
 
-            if ( object.parent.type === 'Player' ) {
+            obstacle = ( event.bodyA === object.body ) ? event.bodyB : event.bodyA;
+
+            if ( object.parent.type === 'Player' && obstacle.parent.type !== 'Bullet' ) {
 
                 object.collision = false;
 
@@ -115,10 +121,6 @@ CollisionManager.prototype.addObject = function ( object, type, isDynamic ) {
     } else if ( type === 'circle' ) {
 
         shape = new p2.Circle({ radius: object.radius });
-
-    } else if ( type === 'particle' ) {
-
-        shape = new p2.Particle({});
 
     }
 
