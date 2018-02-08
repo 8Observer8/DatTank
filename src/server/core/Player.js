@@ -95,7 +95,7 @@ Player.prototype.getInactiveBullet = function () {
 
 Player.prototype.respawn = function ( tankName ) {
 
-    tankName = tankName || this.tank.title.replace( '-', '' );
+    tankName = tankName || ( this.tank ) ? this.tank.title.replace( '-', '' ) : 'USA-T54';
 
     var newPosition = new Game.Vec3( this.team.spawnPosition.x, this.team.spawnPosition.y, this.team.spawnPosition.z );
 
@@ -425,7 +425,6 @@ Player.prototype.update = function ( delta, time ) {
     // check boxes in range
 
     var newBoxesInRange = [];
-    var boxesOutOfRange = [];
 
     for ( var i = 0, il = scope.arena.boxManager.boxes.length; i < il; i ++ ) {
 
@@ -455,7 +454,6 @@ Player.prototype.update = function ( delta, time ) {
     // check towers in range
 
     var newTowersInRange = [];
-    var towersOutOfRange = [];
 
     for ( var i = 0, il = scope.arena.towerManager.towers.length; i < il; i ++ ) {
 
@@ -487,7 +485,6 @@ Player.prototype.update = function ( delta, time ) {
     // check players in range
 
     var newPlayersInRange = [];
-    var playersOutOfRange = [];
 
     for ( var i = 0, il = scope.arena.playerManager.players.length; i < il; i ++ ) {
 

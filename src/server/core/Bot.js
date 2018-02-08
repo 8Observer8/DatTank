@@ -72,9 +72,9 @@ Bot.prototype.die = function () {
 
     //
 
-    if ( scope.arena.playerManager.players.length - scope.arena.botManager.bots.length < scope.arena.botManager.botNum && scope.kills < maxKills ) {
+    if ( scope.arena.playerManager.players.length - scope.arena.botManager.bots.length < scope.arena.botManager.botNum && scope.player.kills < maxKills ) {
 
-        setTimeout( scope.player.respawn.bind( scope ), 3000 );
+        setTimeout( scope.player.respawn.bind( scope.player ), 3000 );
 
     } else {
 
