@@ -23,9 +23,12 @@ Game.Tower = function ( arena, params ) {
     this.healthBar = false;
     this.bulletSpeed = 1.5;
 
+    this.changeTeamAnimationTime = false;
+
     //
 
     this.initBullets();
+    this.initChangeTeamEffect();
     this.init();
 
     //
@@ -49,8 +52,6 @@ Game.Tower.prototype.init = function () {
     base.geometry.computeFlatVertexNormals();
     base.rotation.y = 0;
     base.scale.set( 27, 27, 27 );
-    this.object.add( base );
-    this.object.base = base;
 
     for ( var i = 0, il = base.material.length; i < il; i ++ ) {
 
@@ -73,12 +74,17 @@ Game.Tower.prototype.init = function () {
     top.rotation.y = this.rotation;
     top.scale.set( 27, 27, 27 );
 
+    //
+
+    this.object.add( base );
+    this.object.base = base;
+
     this.object.add( top );
     this.object.top = top;
 
-    //
-
     view.scene.add( this.object );
+
+    //
 
     this.object.position.set( this.position.x, this.position.y, this.position.z );
 
@@ -96,6 +102,19 @@ Game.Tower.prototype.init = function () {
     this.rotateTop( this.rotation, this.rotation );
 
     this.addEventListeners();
+
+};
+
+Game.Tower.prototype.initChangeTeamEffect = function () {
+
+    this.changeTeamEffectPipe = new THREE.Object3D();
+    this.changeTeamEffectPipe.position.set( this.position.x, 100, this.position.z );
+    view.scene.add( this.changeTeamEffectPipe );
+
+    var pipe = new THREE.Mesh( new THREE.CylinderBufferGeometry( 50, 50, 800, 10 ), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.0, depthWrite: false }) );
+    this.changeTeamEffectPipe.pipe = pipe;
+    this.changeTeamEffectPipe.add( pipe );
+    this.changeTeamEffectPipe.visible = false;
 
 };
 
@@ -219,16 +238,6 @@ Game.Tower.prototype.shoot = function ( bulletId ) {
 
 };
 
-Game.Tower.prototype.animate = function ( delta ) {
-
-    if ( this.mixer ) {
-
-        this.mixer.update( delta / 1000 );
-
-    }
-
-};
-
 Game.Tower.prototype.changeTeam = function ( team, init ) {
 
     team = this.arena.teamManager.getById( team );
@@ -239,7 +248,17 @@ Game.Tower.prototype.changeTeam = function ( team, init ) {
     this.object.top.material[1].color.setHex( + team.color.replace('#', '0x') );
     this.object.base.material[1].color.setHex( + team.color.replace('#', '0x') );
 
-    if ( ! init ) this.health = 100;
+    if ( ! init ) {
+
+        this.health = 100;
+
+        this.changeTeamAnimationTime = 0;
+        this.changeTeamEffectPipe.pipe.material.color.setHex( + team.color.replace('#', '0x') );
+        this.changeTeamEffectPipe.pipe.material.opacity = 0;
+        this.changeTeamEffectPipe.scale.set( 0.1, 0.1, 0.1 );
+        this.changeTeamEffectPipe.visible = true;
+
+    }
 
     this.updateHealthBar();
 
@@ -249,6 +268,58 @@ Game.Tower.prototype.updateHealth = function ( health ) {
 
     this.health = health;
     this.updateHealthBar();
+
+};
+
+Game.Tower.prototype.dispose = function () {
+
+    view.scene.remove( this.object );
+
+    for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
+
+        view.scene.remove( this.bullets[ i ] );
+        view.scene.remove( this.bullets[ i ].trace );
+
+    }
+
+};
+
+//
+
+Game.Tower.prototype.animate = function ( delta ) {
+
+    if ( this.changeTeamEffectPipe.visible ) {
+
+        var progress = this.changeTeamAnimationTime / 2000;
+        this.changeTeamAnimationTime += delta;
+
+        if ( progress > 0.5 ) {
+
+            this.changeTeamEffectPipe.pipe.material.opacity = 1 - progress;
+
+        } else {
+        
+            this.changeTeamEffectPipe.pipe.material.opacity = progress / 2;
+            this.changeTeamEffectPipe.scale.set( progress, progress, progress );
+
+        }
+
+        if ( progress > 1 ) {
+
+            this.changeTeamAnimationTime = false;
+            this.changeTeamEffectPipe.visible = false;
+
+        }
+
+    }
+
+    //
+
+    if ( this.mixer ) {
+
+        this.mixer.update( delta / 1000 );
+
+    }
 
 };
 
@@ -298,19 +369,6 @@ Game.Tower.prototype.update = function ( delta ) {
             bullet.trace.material.opacity = Math.max( 0.5 - bullet.trace.scale.x / 280, 0 );
 
         }
-
-    }
-
-};
-
-Game.Tower.prototype.dispose = function () {
-
-    view.scene.remove( this.object );
-
-    for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
-
-        view.scene.remove( this.bullets[ i ] );
-        view.scene.remove( this.bullets[ i ].trace );
 
     }
 
