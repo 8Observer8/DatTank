@@ -274,6 +274,7 @@ Game.Tower.prototype.updateHealth = function ( health ) {
 Game.Tower.prototype.dispose = function () {
 
     view.scene.remove( this.object );
+    view.scene.remove( this.changeTeamEffectPipe );
 
     for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
 
