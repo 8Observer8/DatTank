@@ -23,6 +23,8 @@ Game.Tower = function ( arena, params ) {
     this.healthBar = false;
     this.bulletSpeed = 1.5;
 
+    this.label = false;
+
     this.changeTeamAnimationTime = false;
 
     //
@@ -98,10 +100,76 @@ Game.Tower.prototype.init = function () {
 
     //
 
-    this.updateHealthBar();
+    this.initLabel();
     this.rotateTop( this.rotation, this.rotation );
 
     this.addEventListeners();
+
+};
+
+Game.Tower.prototype.initLabel = function () {
+
+    var canvas, ctx, sprite, material;
+    this.label = {};
+
+    canvas = document.createElement( 'canvas' );
+    canvas.width = 256;
+    canvas.height = 64;
+
+    ctx = canvas.getContext('2d');
+    material = new THREE.SpriteMaterial({ map: new THREE.Texture( canvas ), color: 0xffffff, fog: true });
+
+    sprite = new THREE.Sprite( material );
+    sprite.position.set( 0, 35, 0 );
+    sprite.scale.set( 52, 13, 1 );
+
+    this.label.canvas = canvas;
+    this.label.ctx = ctx;
+    this.label.material = material;
+    this.label.sprite = sprite;
+
+    this.object.add( sprite );
+
+};
+
+Game.Tower.prototype.updateLabel = function () {
+
+    // draw health red bg
+
+    this.label.ctx.fillStyle = '#9e0e0e';
+    this.label.ctx.fillRect( 0, 0, 300, 10 );
+
+    // draw health green indicator
+
+    this.label.ctx.fillStyle = '#00ff00';
+    this.label.ctx.fillRect( 0, 0, 300 * ( this.health / 100 ), 10 );
+
+    // draw health 'amout' lines based on armour
+
+    this.label.ctx.strokeStyle = 'rgba( 0, 0, 0, 0.3 )';
+
+    for ( var i = 0, il = 10; i < il; i ++ ) {
+
+        this.label.ctx.beginPath();
+        this.label.ctx.moveTo( i * 300 / il, 0 );
+        this.label.ctx.lineTo( i * 300 / il, 10 );
+        this.label.ctx.stroke();
+
+    }
+
+    // draw team color rect
+
+    // this.label.ctx.fillStyle = this.player.team.color;
+    // this.label.ctx.fillRect( 0, 15, 25, 25 );
+
+    // draw player login
+
+    // this.label.ctx.fillStyle = '#ffffff';
+    // this.label.ctx.font = '26px Tahoma';
+    // this.label.ctx.textAlign = 'left';
+    // this.label.ctx.fillText( this.player.login, 30, 35 );
+
+    this.label.material.map.needsUpdate = true;
 
 };
 
@@ -112,6 +180,7 @@ Game.Tower.prototype.initChangeTeamEffect = function () {
     view.scene.add( this.changeTeamEffectPipe );
 
     var pipe = new THREE.Mesh( new THREE.CylinderBufferGeometry( 50, 50, 800, 10 ), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.0, depthWrite: false }) );
+    pipe.renderOrder = 100;
     this.changeTeamEffectPipe.pipe = pipe;
     this.changeTeamEffectPipe.add( pipe );
     this.changeTeamEffectPipe.visible = false;
@@ -144,30 +213,6 @@ Game.Tower.prototype.initBullets = function () {
         this.object.add( bullet.soundShooting );
 
     }
-
-};
-
-Game.Tower.prototype.updateHealthBar = function () {
-
-    if ( ! this.healthBar ) {
-
-        var bg = new THREE.Sprite( new THREE.SpriteMaterial( { color: 0xffffff, fog: true } ) );
-        var healthBar = new THREE.Sprite( new THREE.SpriteMaterial( { color: 0x00ff00, fog: true } ) );
-        healthBar.position.set( 0, 50, 0 );
-        healthBar.scale.set( 50, 2, 1 );
-
-        this.healthBar = {
-            bg:     bg,
-            health: healthBar
-        };
-
-        this.object.add( this.healthBar.health );
-
-    }
-
-    //
-
-    this.healthBar.health.scale.x = 50 * this.health / 100;
 
 };
 
@@ -260,14 +305,14 @@ Game.Tower.prototype.changeTeam = function ( team, init ) {
 
     }
 
-    this.updateHealthBar();
+    this.updateLabel();
 
 };
 
 Game.Tower.prototype.updateHealth = function ( health ) {
 
     this.health = health;
-    this.updateHealthBar();
+    this.updateLabel();
 
 };
 

@@ -145,16 +145,14 @@ Game.Tank.prototype.initLabel = function () {
 
     canvas = document.createElement( 'canvas' );
     canvas.width = 256;
-    canvas.height = 128;
+    canvas.height = 64;
 
     ctx = canvas.getContext('2d');
     material = new THREE.SpriteMaterial({ map: new THREE.Texture( canvas ), color: 0xffffff, fog: true });
 
     sprite = new THREE.Sprite( material );
     sprite.position.set( 0, 35, 0 );
-    sprite.scale.set( 50, 25, 1 );
-    material.depthWrite = false;
-    material.depthTest = false;
+    sprite.scale.set( 52, 13, 1 );
 
     this.label.canvas = canvas;
     this.label.ctx = ctx;
