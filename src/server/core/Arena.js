@@ -151,6 +151,8 @@ Arena.prototype.updateLeaderboard = function () {
 
     function update () {
 
+        if ( this.disposed ) return;
+
         var players = [];
         var teams = [];
 
