@@ -1,5 +1,5 @@
 /*
- * @authour ohmed
+ * @author ohmed
  * Decoration object class
 */
 

@@ -17,7 +17,7 @@ Game.UI.prototype.init = function () {
 
     if ( localStorage.getItem('hq') === 'true' ) {
 
-        this.chageQuality( true, true );
+        this.changeQuality( true, true );
 
     }
 
@@ -36,7 +36,7 @@ Game.UI.prototype.init = function () {
 
 };
 
-Game.UI.prototype.chageQuality = function ( value, withoutSound ) {
+Game.UI.prototype.changeQuality = function ( value, withoutSound ) {
 
     value = ( typeof value === 'boolean' ) ? value : $( value.currentTarget ).attr('hq') !== 'true';
     $('#graphics-quality').attr( 'hq', value );

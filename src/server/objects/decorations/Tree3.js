@@ -1,5 +1,5 @@
 /*
- * @authour ohmed
+ * @author ohmed
  * Tree map decoration
 */
 

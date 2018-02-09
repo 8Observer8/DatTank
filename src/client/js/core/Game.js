@@ -74,10 +74,10 @@ Game.prototype.init = function () {
     $('.btn-pick').click( ui.selectTankAndcloseChoiceWindow.bind( ui ) );
     $('#signin-box-wrapper #change-tank').click( ui.showChoiceWindow.bind( ui ) );
 
-    $('#graphics-quality').click( ui.chageQuality.bind( ui ) );
+    $('#graphics-quality').click( ui.changeQuality.bind( ui ) );
     $('#sound-on-off').click( ui.changeSound.bind( ui ) );
 
-    $('#viewport-graphics-quality').click( ui.chageQuality.bind( ui ) );
+    $('#viewport-graphics-quality').click( ui.changeQuality.bind( ui ) );
     $('#viewport-sound-on-off').click( ui.changeSound.bind( ui ) );
 
     $('.share-vk').click( this.gaVk.bind( this ) );
@@ -200,7 +200,7 @@ Game.prototype.joinArena = function ( params ) {
     $('#gear_btn').click( ui.openSettings.bind( ui ) );
     $('#exit-btn').click( ui.openSettings.bind( ui ) );
     $('#soundon').click( ui.changeSound.bind( ui ) );
-    $('#qualityon').click( ui.chageQuality.bind( ui ) );
+    $('#qualityon').click( ui.changeQuality.bind( ui ) );
 
     //
 

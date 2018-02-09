@@ -23,7 +23,7 @@ Game.ViewManager = function () {
 
     // scene params
 
-    this.fog = { color: 0xd3d3c2, density: 0.0025 };
+    this.fog = { color: 0xc4c4c2, density: 0.0025 };
     this.lights = {
         ambient:    0xfff3bc,
         sun:        {
