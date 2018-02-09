@@ -13,7 +13,31 @@ var Player = function ( arena, params ) {
 
     this.id = Player.numIds ++;
     this.arena = arena || false;
-    this.login = params.login || 'guest';
+    this.login = params.login || false;
+
+    //
+
+    var loginAttempt = 1;
+
+    while ( ! this.login ) {
+
+        this.login = 'player ' + loginAttempt;
+
+        for ( var i = 0, il = this.arena.playerManager.players.length; i < il; i ++ ) {
+
+            if ( this.arena.playerManager.players[ i ].login === this.login ) {
+
+                this.login = false;
+                loginAttempt ++;
+                break;
+
+            }
+
+        }
+
+    }
+
+    //
 
     this.moveDirection = new Game.Vec2();
     this.moveSpeed = 0.09;

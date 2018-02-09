@@ -7,19 +7,19 @@ var Bot = function ( arena ) {
 
     this.player = false;
     this.arena = arena;
-    this.login = false;
+    this.login = '';
 
-    while ( this.login === false ) {
+    while ( this.login === '' ) {
 
         this.login = Bot.LoginBase[ Math.floor( Bot.LoginBase.length * Math.random() ) ];
 
-        if ( this.login !== 'guest' ) {
+        if ( this.login !== false ) {
 
             for ( var i = 0; i < this.arena.botManager.bots.length; i ++ ) {
 
                 if ( this.login === this.arena.botManager.bots[ i ].login ) {
 
-                    this.login = false;
+                    this.login = '';
 
                 }
 
@@ -252,7 +252,7 @@ Bot.prototype.dispose = function () {
 
 //
 
-Bot.LoginBase = [ 'guest', 'guest', 'guest', 'guest', 'guest', 'guest', 'guest', 'guest', 'guest', 'guest', 'guest', 'guest', 'guest',
+Bot.LoginBase = [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, 
     'calzone', 'augmenton', 'celianaro', 'pantor', 'elementalium', 'gazer', 'velent', 'oddio', 'taker', 'windmill',
     'soliter', 'roadkiller', 'bambuno', 'tratatar', 'sulfurio', 'helioss', 'seba', 'tracy', 'sandman', 'wooka', 'killdrop', 'warang',
     'dziu', 'bernard', 'centaur', '¥Rebook¥', 'BratoK', 'Terrorist', 'Mahno', 'Skuzi', 'Suzuki', 'Myron', 'horror', 'zuzu', 'o_0',
