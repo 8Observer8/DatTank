@@ -134,15 +134,17 @@ Game.Tower.prototype.initLabel = function () {
 
 Game.Tower.prototype.updateLabel = function () {
 
+    var width = this.label.canvas.width;
+
     // draw health red bg
 
     this.label.ctx.fillStyle = '#9e0e0e';
-    this.label.ctx.fillRect( 0, 0, 300, 10 );
+    this.label.ctx.fillRect( 0, 0, width, 10 );
 
     // draw health green indicator
 
     this.label.ctx.fillStyle = '#00ff00';
-    this.label.ctx.fillRect( 0, 0, 300 * ( this.health / 100 ), 10 );
+    this.label.ctx.fillRect( 0, 0, width * ( this.health / 100 ), 10 );
 
     // draw health 'amout' lines based on armour
 
@@ -151,8 +153,8 @@ Game.Tower.prototype.updateLabel = function () {
     for ( var i = 0, il = 10; i < il; i ++ ) {
 
         this.label.ctx.beginPath();
-        this.label.ctx.moveTo( i * 300 / il, 0 );
-        this.label.ctx.lineTo( i * 300 / il, 10 );
+        this.label.ctx.moveTo( i * width / il, 0 );
+        this.label.ctx.lineTo( i * width / il, 10 );
         this.label.ctx.stroke();
 
     }
