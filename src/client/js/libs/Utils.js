@@ -5,17 +5,7 @@
 
 var Utils = {};
 
-Utils.ge = function ( selector ) {
-
-    return document.querySelector( selector );
-
-};
-
-Utils.ges = function ( selector ) {
-
-    return document.querySelectorAll( selector );
-
-};
+//
 
 Utils.getDistance = function ( v1, v2 ) {
 

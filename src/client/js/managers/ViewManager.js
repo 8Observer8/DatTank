@@ -57,12 +57,12 @@ Game.ViewManager.prototype.setupScene = function () {
     this.screenWidth = window.innerWidth;
     this.screenHeight = window.innerHeight;
 
-    this.raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3(), 0, 10000 );
+    this.raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3(), 0, 5000 );
 
     // setup camera and scene
 
     this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera( 60, this.screenWidth / this.screenHeight, 1, 1300 );
+    this.camera = new THREE.PerspectiveCamera( 60, this.screenWidth / this.screenHeight, 1, 900 );
     this.scene.add( this.camera );
 
     // setup lights
