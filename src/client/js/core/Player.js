@@ -52,11 +52,9 @@ Game.Player.prototype.init = function ( params ) {
     this.tank.init();
     this.tank.setRotation( this.rotation );
     this.tank.setPosition( this.position.x, this.position.y, this.position.z );
+    this.tank.updateLabel();
 
     this.addEventListeners();
-
-    this.healthBar = false;
-    this.updateHealthBar();
 
 };
 
@@ -128,7 +126,7 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
         this.tank.init();
 
         this.healthBar = false;
-        this.updateHealthBar();
+        this.tank.updateLabel();
 
         if ( Game.arena.me.id === this.id ) {
 
@@ -282,6 +280,7 @@ Game.Player.prototype.shoot = function ( bulletId ) {
 Game.Player.prototype.updateHealth = function ( value, killerId ) {
 
     value = ( value !== undefined ) ? value : this.health;
+    this.health = value;
 
     //
 
@@ -293,14 +292,7 @@ Game.Player.prototype.updateHealth = function ( value, killerId ) {
 
         }
 
-        this.health = value;
         ui.updateHealth( this.health );
-        this.updateHealthBar( this.health );
-
-    } else {
-
-        this.health = value;
-        this.updateHealthBar( this.health );
 
     }
 
@@ -310,7 +302,7 @@ Game.Player.prototype.updateHealth = function ( value, killerId ) {
 
     }
 
-    this.health = value;
+    this.tank.updateLabel();
 
     if ( this.health === 0 ) {
 
@@ -338,29 +330,6 @@ Game.Player.prototype.updateAmmo = function ( value ) {
 
     this.ammo = value;
     ui.updateAmmo( this.ammo );
-
-};
-
-Game.Player.prototype.updateHealthBar = function () {
-
-    if ( ! this.healthBar ) {
-
-        var bg = new THREE.Sprite( new THREE.SpriteMaterial( { color: 0xffffff, fog: true } ) );
-        var healthBar = new THREE.Sprite( new THREE.SpriteMaterial( { color: 0x00ff00, fog: true } ) );
-
-        healthBar.position.set( 0, 50, 0 );
-        healthBar.scale.set( 50, 2, 1 );
-
-        this.healthBar = {
-            bg:     bg,
-            health: healthBar
-        };
-
-        this.tank.object.add( this.healthBar.health );
-
-    }
-
-    this.healthBar.health.scale.x = 50 * this.health / 100;
 
 };
 

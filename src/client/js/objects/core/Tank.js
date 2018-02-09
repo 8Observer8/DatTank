@@ -27,6 +27,8 @@ Game.Tank = function ( params ) {
     this.tracksOffset = 0;
     this.tracks = [];
 
+    this.label = false;
+
     //
 
     this.type = 'tank';
@@ -138,30 +140,69 @@ Game.Tank.prototype.initSounds = function () {
 
 Game.Tank.prototype.initLabel = function () {
 
-    var canvas = document.createElement( 'canvas' );
-    var ctx = canvas.getContext('2d');
+    var canvas, ctx, sprite, material;
+    this.label = {};
 
+    canvas = document.createElement( 'canvas' );
     canvas.width = 256;
     canvas.height = 128;
-    ctx.fillStyle = this.player.team.color;
-    ctx.fillRect( 0, 0, 25, 25 );
 
-    ctx.fillStyle = '#ffffff';
-    ctx.font = '25px Arial';
-    ctx.textAlign = 'left';
-    ctx.fillText( this.player.login, 30, 20 );
+    ctx = canvas.getContext('2d');
+    material = new THREE.SpriteMaterial({ map: new THREE.Texture( canvas ), color: 0xffffff, fog: true });
 
-    //
-
-    var material = new THREE.SpriteMaterial({ map: new THREE.Texture( canvas ), color: 0xffffff, fog: true });
-    material.map.needsUpdate = true;
-
-    var sprite = new THREE.Sprite( material );
+    sprite = new THREE.Sprite( material );
     sprite.position.set( 0, 35, 0 );
     sprite.scale.set( 50, 25, 1 );
     material.depthWrite = false;
     material.depthTest = false;
+
+    this.label.canvas = canvas;
+    this.label.ctx = ctx;
+    this.label.material = material;
+    this.label.sprite = sprite;
+
     this.object.add( sprite );
+
+};
+
+Game.Tank.prototype.updateLabel = function () {
+
+    // draw health red bg
+
+    this.label.ctx.fillStyle = '#9e0e0e';
+    this.label.ctx.fillRect( 0, 0, 300, 10 );
+
+    // draw health green indicator
+
+    this.label.ctx.fillStyle = '#00ff00';
+    this.label.ctx.fillRect( 0, 0, 300 * ( this.player.health / 100 ), 10 );
+
+    // draw health 'amout' lines based on armour
+
+    this.label.ctx.strokeStyle = 'rgba( 0, 0, 0, 0.3 )';
+
+    for ( var i = 0, il = 3 * this.armour / 50; i < il; i ++ ) {
+
+        this.label.ctx.beginPath();
+        this.label.ctx.moveTo( i * 300 / il, 0 );
+        this.label.ctx.lineTo( i * 300 / il, 10 );
+        this.label.ctx.stroke();
+
+    }
+
+    // draw team color rect
+
+    this.label.ctx.fillStyle = this.player.team.color;
+    this.label.ctx.fillRect( 0, 15, 25, 25 );
+
+    // draw player login
+
+    this.label.ctx.fillStyle = '#ffffff';
+    this.label.ctx.font = '26px Tahoma';
+    this.label.ctx.textAlign = 'left';
+    this.label.ctx.fillText( this.player.login, 30, 35 );
+
+    this.label.material.map.needsUpdate = true;
 
 };
 
