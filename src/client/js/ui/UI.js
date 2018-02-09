@@ -126,6 +126,12 @@ Game.UI.prototype.setCursor = function () {
 
 };
 
+Game.UI.prototype.showDisconectMessage = function () {
+
+    $('.disconnect-warning').show();
+
+};
+
 Game.UI.prototype.updateHealth = function ( value ) {
 
     $('#health-number').html( value );

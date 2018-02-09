@@ -210,6 +210,7 @@ Game.prototype.loop = function () {
 
 Game.prototype.dispose = function ( ) {
 
+    this.arena.stopped = true;
     clearInterval( this.gameLoopInterval );
 
 };

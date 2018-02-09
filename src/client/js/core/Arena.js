@@ -7,6 +7,7 @@ Game.Arena = function () {
 
     this.id = false;
     this.me = false;
+    this.stopped = false;
 
     this.viewRange = 650;
 
@@ -252,6 +253,8 @@ Game.Arena.prototype.playerLeft = function ( player ) {
 };
 
 Game.Arena.prototype.update = function ( time, delta ) {
+
+    if ( this.stopped ) return;
 
     this.updateExplosions( delta );
 

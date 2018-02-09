@@ -103,7 +103,8 @@ Game.NetworkManager.prototype.onMessage = function ( event ) {
 Game.NetworkManager.prototype.onDisconnected = function () {
 
     this.transport = false;
-    this.init();
+    game.dispose();
+    ui.showDisconectMessage();
 
     //
 

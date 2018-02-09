@@ -1435,3 +1435,14 @@ object {
 #viewport-sound-on-off[sound="true"] {
     background-position: -9px 31px;
 }
+
+/**/
+
+.disconnect-warning {
+    display: none;
+    position: absolute;
+    bottom: 25px;
+    left: 20px;
+    font-size: 22px;
+    color: #ff4242;
+}
