@@ -1,6 +1,6 @@
 {
     "materials":[{
-        "shading":"lambert",
+        "shading":"phong",
         "wireframe":false,
         "mapDiffuseAnisotropy":1,
         "colorDiffuse":[0.64,0.64,0.64],
