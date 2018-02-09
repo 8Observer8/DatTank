@@ -118,7 +118,6 @@ Game.prototype.play = function ( event ) {
 
         // init controls
 
-        controls.mouseInit();
         controls.keyInit();
 
         // init network
@@ -174,33 +173,13 @@ Game.prototype.joinArena = function ( params ) {
 
     //
 
-    view.clean();
-    view.setupScene();
-
-    //
-
     ui.showViewport();
     ui.hideLoaderScreen();
 
     //
 
-    view.addTerrain();
-    view.addTeamZone();
-
-    //
-
     Game.arena.init( params );
     this.arena = Game.arena;
-
-    // change camera position
-
-    view.camera.position.set( Game.arena.me.position.x + 180, 400, Game.arena.me.position.z );
-    view.camera.lookAt( Game.arena.me.position );
-
-    $('#gear_btn').click( ui.openSettings.bind( ui ) );
-    $('#exit-btn').click( ui.openSettings.bind( ui ) );
-    $('#soundon').click( ui.changeSound.bind( ui ) );
-    $('#qualityon').click( ui.changeQuality.bind( ui ) );
 
     //
 

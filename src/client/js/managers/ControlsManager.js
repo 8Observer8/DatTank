@@ -93,11 +93,11 @@ Game.ControlsManager.prototype.mouseInit = function () {
 
     //
 
-    var viewport = Utils.ge('#viewport');
+    var viewport = $('#viewport #renderport');
 
-    viewport.addEventListener( 'mousedown', mouseDown );
-    viewport.addEventListener( 'mousemove', mouseMove );
-    viewport.addEventListener( 'mouseup', mouseUp );
+    viewport.bind( 'mousedown', mouseDown );
+    viewport.bind( 'mousemove', mouseMove );
+    viewport.bind( 'mouseup', mouseUp );
 
 };
 

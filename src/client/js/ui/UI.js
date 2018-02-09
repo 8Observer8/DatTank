@@ -31,6 +31,15 @@ Game.UI.prototype.init = function () {
 
     localStorage.setItem( 'gear', false );
 
+    // ui binding
+
+    $('#gear_btn').click( this.openSettings.bind( this ) );
+    $('#exit-btn').click( this.openSettings.bind( this ) );
+    $('#soundon').click( this.changeSound.bind( this ) );
+    $('#qualityon').click( this.changeQuality.bind( this ) );
+
+    //
+
     setTimeout( function () { $('.fb-like').animate( { opacity: 1 }, 500 ); }, 1000 );
     setTimeout( function () { $('.folow-btn').animate( { opacity: 1 }, 500 ); }, 1200 );
 

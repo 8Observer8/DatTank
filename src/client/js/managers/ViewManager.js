@@ -536,6 +536,8 @@ Game.ViewManager.prototype.updateRenderer = function () {
     this.renderer.setSize( this.quality * this.screenWidth, this.quality * this.screenHeight );
     this.renderer.setClearColor( this.fog.color );
 
+    controls.mouseInit();
+
 };
 
 Game.ViewManager.prototype.clean = function () {

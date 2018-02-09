@@ -46,7 +46,14 @@ Game.Arena.prototype.init = function ( params ) {
     this.boxManager.init();
     this.towerManager.init();
 
+    //
+
+    view.clean();
+    view.setupScene();
     view.addDecorations( params.decorations );
+    view.addTerrain();
+    view.addTeamZone();
+
     this.initExplosions();
 
     //
