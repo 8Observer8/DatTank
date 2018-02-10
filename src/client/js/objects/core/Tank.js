@@ -29,6 +29,7 @@ Game.Tank = function ( params ) {
 
     this.label = false;
     this.ffLabel = false;
+    this.healthChangeLabels = [];
 
     //
 
@@ -204,6 +205,37 @@ Game.Tank.prototype.updateLabel = function () {
     this.label.ctx.fillText( this.player.login, 30, 35 );
 
     this.label.material.map.needsUpdate = true;
+
+};
+
+Game.Tank.prototype.addHealthChangeLabel = function ( delta ) {
+
+    var canvas, ctx, sprite, material;
+    var text = ( delta >= 0 ) ? '+' + Math.round( delta ) : Math.round( delta );
+    var color = ( delta >= 0 ) ? '#00ff00' : '#ff0000';
+
+    canvas = document.createElement( 'canvas' );
+    canvas.width = 128;
+    canvas.height = 64;
+
+    ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = color;
+    ctx.font = '35px Tahoma';
+    ctx.textAlign = 'left';
+    ctx.fillText( text, 30, 35 );
+
+    material = new THREE.SpriteMaterial({ map: new THREE.Texture( canvas ), color: 0xffffff, fog: true });
+    material.map.needsUpdate = true;
+
+    sprite = new THREE.Sprite( material );
+    sprite.position.set( 0, 35, 0 );
+    sprite.scale.set( 24, 12, 1 );
+    sprite.time = 0;
+
+    this.object.add( sprite );
+
+    this.healthChangeLabels.push( sprite );
 
 };
 
@@ -698,6 +730,36 @@ Game.Tank.prototype.dispose = function () {
 };
 
 Game.Tank.prototype.animate = function ( delta ) {
+
+    var newHealthChangeLabelsList = [];
+    var visibleTime = 1000;
+
+    for ( var i = 0, il = this.healthChangeLabels.length; i < il; i ++ ) {
+
+        this.healthChangeLabels[ i ].time += delta;
+        this.healthChangeLabels[ i ].position.y = 45 + 50 * this.healthChangeLabels[ i ].time / visibleTime;
+
+        if ( this.healthChangeLabels[ i ].time > visibleTime / 4 ) {
+
+            this.healthChangeLabels[ i ].material.opacity = 0.5 - ( this.healthChangeLabels[ i ].time - visibleTime / 4 ) / ( 3 * visibleTime / 4 );
+
+        }
+
+        if ( this.healthChangeLabels[ i ].time > visibleTime ) {
+
+            this.object.remove( this.healthChangeLabels[ i ] );
+
+        } else {
+
+            newHealthChangeLabelsList.push( this.healthChangeLabels[ i ] );
+
+        }
+
+    }
+
+    this.healthChangeLabels = newHealthChangeLabelsList;
+
+    //
 
     if ( this.ffLabel && this.ffLabel.sprite.visible ) {
 

@@ -277,17 +277,20 @@ Game.Player.prototype.shoot = function ( bulletId ) {
 
 };
 
-Game.Player.prototype.updateHealth = function ( value, killerId ) {
+Game.Player.prototype.updateHealth = function ( health, killerId ) {
 
-    value = ( value !== undefined ) ? value : this.health;
+    health = ( health !== undefined ) ? health : this.health;
     if ( this.health === 0 ) return;
-    this.health = value;
+
+    this.tank.addHealthChangeLabel( health - this.health );
+
+    this.health = health;
 
     //
 
     if ( Game.arena && Game.arena.me.id === this.id ) {
 
-        if ( value < this.health ) {
+        if ( health < this.health ) {
 
             view.addCameraShake( 300, 3 );
 
@@ -297,7 +300,7 @@ Game.Player.prototype.updateHealth = function ( value, killerId ) {
 
     }
 
-    if ( localStorage.getItem('sound') === 'true' && value > this.health ) {
+    if ( localStorage.getItem('sound') === 'true' && health > this.health ) {
 
         soundManager.menuSound.play();
 

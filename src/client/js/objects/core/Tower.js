@@ -24,6 +24,7 @@ Game.Tower = function ( arena, params ) {
     this.bulletSpeed = 1.5;
 
     this.label = false;
+    this.healthChangeLabels = [];
 
     this.changeTeamAnimationTime = false;
 
@@ -218,6 +219,37 @@ Game.Tower.prototype.initBullets = function () {
 
 };
 
+Game.Tower.prototype.addHealthChangeLabel = function ( delta ) {
+
+    var canvas, ctx, sprite, material;
+    var text = ( delta >= 0 ) ? '+' + Math.round( delta ) : Math.round( delta );
+    var color = ( delta >= 0 ) ? '#00ff00' : '#ff0000';
+
+    canvas = document.createElement( 'canvas' );
+    canvas.width = 128;
+    canvas.height = 64;
+
+    ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = color;
+    ctx.font = '35px Tahoma';
+    ctx.textAlign = 'left';
+    ctx.fillText( text, 30, 35 );
+
+    material = new THREE.SpriteMaterial({ map: new THREE.Texture( canvas ), color: 0xffffff, fog: true });
+    material.map.needsUpdate = true;
+
+    sprite = new THREE.Sprite( material );
+    sprite.position.set( 0, 35, 0 );
+    sprite.scale.set( 24, 12, 1 );
+    sprite.time = 0;
+
+    this.object.add( sprite );
+
+    this.healthChangeLabels.push( sprite );
+
+};
+
 Game.Tower.prototype.rotateTop = function ( oldAngle, newAngle ) {
 
     this.newRotation = newAngle;
@@ -319,8 +351,12 @@ Game.Tower.prototype.changeTeam = function ( team, newOwnerId, init ) {
 
 Game.Tower.prototype.updateHealth = function ( health ) {
 
+    var delta = health - this.health;
+
     this.health = health;
     this.updateLabel();
+
+    this.addHealthChangeLabel( delta );
 
 };
 
@@ -341,6 +377,36 @@ Game.Tower.prototype.dispose = function () {
 //
 
 Game.Tower.prototype.animate = function ( delta ) {
+
+    var newHealthChangeLabelsList = [];
+    var visibleTime = 1000;
+
+    for ( var i = 0, il = this.healthChangeLabels.length; i < il; i ++ ) {
+
+        this.healthChangeLabels[ i ].time += delta;
+        this.healthChangeLabels[ i ].position.y = 45 + 50 * this.healthChangeLabels[ i ].time / visibleTime;
+
+        if ( this.healthChangeLabels[ i ].time > visibleTime / 4 ) {
+
+            this.healthChangeLabels[ i ].material.opacity = 0.5 - ( this.healthChangeLabels[ i ].time - visibleTime / 4 ) / ( 3 * visibleTime / 4 );
+
+        }
+
+        if ( this.healthChangeLabels[ i ].time > visibleTime ) {
+
+            this.object.remove( this.healthChangeLabels[ i ] );
+
+        } else {
+
+            newHealthChangeLabelsList.push( this.healthChangeLabels[ i ] );
+
+        }
+
+    }
+
+    this.healthChangeLabels = newHealthChangeLabelsList;
+
+    //
 
     if ( this.changeTeamEffectPipe.visible ) {
 
