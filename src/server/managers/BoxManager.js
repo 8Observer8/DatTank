@@ -23,9 +23,9 @@ BoxManager.prototype.add = function ( params ) {
 
     params.type = params.type || 'Ammo';
 
-    while ( ! position || ! this.arena.collisionManager.isPlaceFree( position, 20, 0 ) ) {
+    while ( ! position || ! this.arena.collisionManager.isPlaceFree( { x: position.x, y: position.y }, 20 ) ) {
 
-        position = new Game.Vec3( Math.floor( 1500 * ( Math.random() - 0.5 ) ), 20, Math.floor( 1500 * ( Math.random() - 0.5 ) ) );
+        position = new Game.Vec3( Math.floor( 2000 * ( Math.random() - 0.5 ) ), 20, Math.floor( 2000 * ( Math.random() - 0.5 ) ) );
 
     }
 
@@ -35,16 +35,12 @@ BoxManager.prototype.add = function ( params ) {
 
         case 'Health':
 
-            box = new Game.Box.Health( this.arena, {
-                position: position
-            });
+            box = new Game.Box.Health( this.arena, { position: position });
             break;
 
         case 'Ammo':
 
-            box = new Game.Box.Ammo( this.arena, {
-                position: position
-            });
+            box = new Game.Box.Ammo( this.arena, { position: position });
             break;
 
         default:

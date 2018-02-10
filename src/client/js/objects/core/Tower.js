@@ -35,7 +35,7 @@ Game.Tower = function ( arena, params ) {
 
     //
 
-    this.changeTeam( this.team.id, true );
+    this.changeTeam( this.team.id, false, true );
 
 };
 
@@ -285,7 +285,7 @@ Game.Tower.prototype.shoot = function ( bulletId ) {
 
 };
 
-Game.Tower.prototype.changeTeam = function ( team, init ) {
+Game.Tower.prototype.changeTeam = function ( team, newOwnerId, init ) {
 
     team = this.arena.teamManager.getById( team );
     if ( ! team ) return;
@@ -296,6 +296,12 @@ Game.Tower.prototype.changeTeam = function ( team, init ) {
     this.object.base.material[1].color.setHex( + team.color.replace('#', '0x') );
 
     if ( ! init ) {
+
+        if ( newOwnerId === game.arena.me.id ) {
+        
+            game.logger.newEvent( 'TowerCaptured' );
+
+        }
 
         this.health = 100;
 
@@ -428,7 +434,7 @@ Game.Tower.prototype.addEventListeners = function () {
 
     this.addEventListener( 'TowerRotateTop', function ( event ) { scope.rotateTop( event.data[1] / 1000, event.data[2] / 1000 ); });
     this.addEventListener( 'TowerShoot', function ( event ) { scope.shoot( event.data[1] ); });
-    this.addEventListener( 'TowerChangeTeam', function ( event ) { scope.changeTeam( event.data[1] ); });
+    this.addEventListener( 'TowerChangeTeam', function ( event ) { scope.changeTeam( event.data[1], event.data[2] ); });
     this.addEventListener( 'TowerUpdateHealth', function ( event ) { scope.updateHealth( event.data[1] ); });
 
 };

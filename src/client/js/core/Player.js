@@ -280,6 +280,7 @@ Game.Player.prototype.shoot = function ( bulletId ) {
 Game.Player.prototype.updateHealth = function ( value, killerId ) {
 
     value = ( value !== undefined ) ? value : this.health;
+    if ( this.health === 0 ) return;
     this.health = value;
 
     //
@@ -330,50 +331,6 @@ Game.Player.prototype.updateAmmo = function ( value ) {
 
     this.ammo = value;
     ui.updateAmmo( this.ammo );
-
-};
-
-Game.Player.prototype.update = function ( time, delta ) {
-
-    this.updateDirectionMovement( time, delta );
-    this.updateExplosion( delta );
-
-    //
-
-    var dx = this.positionCorrection.x * ( delta / 500 );
-    var dz = this.positionCorrection.z * ( delta / 500 );
-
-    if ( Math.abs( dx ) > 0.1 || Math.abs( dz ) > 0.1 ) {
-
-        this.positionCorrection.x -= dx;
-        this.positionCorrection.z -= dz;
-
-        this.position.x += dx;
-        this.position.z += dz;
-
-    }
-
-    //
-
-    for ( var bulletId in this.tank.bullets ) {
-
-        var bullet = this.tank.bullets[ bulletId ];
-
-        if ( bullet.visible === true ) {
-
-            var x = bullet.position.x + this.bulletSpeed * Math.cos( bullet.directionRotation ) * delta;
-            var z = bullet.position.z + this.bulletSpeed * Math.sin( bullet.directionRotation ) * delta;
-            bullet.position.set( x, bullet.position.y, z );
-
-            bullet.trace.position.set( ( x + bullet.startPos.x ) / 2, bullet.position.y, ( z + bullet.startPos.z ) / 2 );
-            var dx = x - bullet.startPos.x;
-            var dz = z - bullet.startPos.z;
-            bullet.trace.scale.x = Math.sqrt( dx * dx + dz * dz ) / 3;
-            bullet.trace.material.opacity = Math.max( 0.5 - bullet.trace.scale.x / 280, 0 );
-
-        }
-
-    }
 
 };
 
@@ -502,6 +459,57 @@ Game.Player.prototype.hideExplosion = function () {
     }
 
 };
+
+//
+
+Game.Player.prototype.update = function ( time, delta ) {
+
+    this.updateDirectionMovement( time, delta );
+    this.updateExplosion( delta );
+
+    //
+
+    var dx = this.positionCorrection.x * ( delta / 500 );
+    var dz = this.positionCorrection.z * ( delta / 500 );
+
+    if ( Math.abs( dx ) > 0.1 || Math.abs( dz ) > 0.1 ) {
+
+        this.positionCorrection.x -= dx;
+        this.positionCorrection.z -= dz;
+
+        this.position.x += dx;
+        this.position.z += dz;
+
+    }
+
+    //
+
+    var x, z;
+    var dx, dz;
+
+    for ( var bulletId in this.tank.bullets ) {
+
+        var bullet = this.tank.bullets[ bulletId ];
+
+        if ( bullet.visible === true ) {
+
+            x = bullet.position.x + this.bulletSpeed * Math.cos( bullet.directionRotation ) * delta;
+            z = bullet.position.z + this.bulletSpeed * Math.sin( bullet.directionRotation ) * delta;
+            bullet.position.set( x, bullet.position.y, z );
+
+            bullet.trace.position.set( ( x + bullet.startPos.x ) / 2, bullet.position.y, ( z + bullet.startPos.z ) / 2 );
+            dx = x - bullet.startPos.x;
+            dz = z - bullet.startPos.z;
+            bullet.trace.scale.x = Math.sqrt( dx * dx + dz * dz ) / 3;
+            bullet.trace.material.opacity = Math.max( 0.5 - bullet.trace.scale.x / 280, 0 );
+
+        }
+
+    }
+
+};
+
+//
 
 Game.Player.prototype.addEventListeners = function () {
 

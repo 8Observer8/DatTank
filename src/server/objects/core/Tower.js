@@ -193,19 +193,19 @@ Tower.prototype.hit = function ( killer ) {
 
     if ( this.health === 0 ) {
 
-        this.changeTeam( killer.team );
+        this.changeTeam( killer.team, killer.id );
         return;
 
     }
 
 };
 
-Tower.prototype.changeTeam = function ( team ) {
+Tower.prototype.changeTeam = function ( team, killerId ) {
 
     var scope = this;
 
     scope.networkBuffers['changeTeam'] = scope.networkBuffers['changeTeam'] || {};
-    var buffer = scope.networkBuffers['changeTeam'].buffer || new ArrayBuffer( 6 );
+    var buffer = scope.networkBuffers['changeTeam'].buffer || new ArrayBuffer( 8 );
     var bufferView = scope.networkBuffers['changeTeam'].bufferView || new Uint16Array( buffer );
     scope.networkBuffers['changeTeam'].buffer = buffer;
     scope.networkBuffers['changeTeam'].bufferView = bufferView;
@@ -224,6 +224,7 @@ Tower.prototype.changeTeam = function ( team ) {
 
     bufferView[ 1 ] = scope.id;
     bufferView[ 2 ] = team.id;
+    bufferView[ 3 ] = killerId;
 
     //
 
