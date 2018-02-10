@@ -43,6 +43,11 @@ var Player = function ( arena, params ) {
     this.moveSpeed = 0.09;
     this.originalMoveSpead = this.moveSpeed;
 
+    this.sinceHitRegeneraionLimit = 5000;
+    this.sinceHitTime = false;
+    this.sinceRegenerationLimit = 2000;
+    this.sinceRegenerationTime = false;
+
     this.status = Player.Alive;
 
     this.socket = params.socket || false;
@@ -235,8 +240,10 @@ Player.prototype.changeHealth = function ( delta, killer ) {
 
     //
 
-    this.health += delta;
-    this.health = Math.max( Math.min( 100, this.health ), 0 );
+    var health = this.health + delta;
+    health = Math.max( Math.min( 100, health ), 0 );
+    if ( this.health === health ) return;
+    this.health = health;
 
     //
 
@@ -422,6 +429,9 @@ Player.prototype.hit = function ( killer ) {
 
     }
 
+    this.sinceHitTime = 0;
+    this.sinceRegenerationTime = 0;
+
     //
 
     var bulletSize = ( killer.tank ) ? killer.tank.bullet : killer.bullet;
@@ -462,9 +472,36 @@ Player.prototype.die = function ( killer ) {
 
 };
 
+Player.prototype.isObjectInRange = function ( object ) {
+
+    var distance = Math.sqrt( Math.pow( this.position.x - object.position.x, 2 ) + Math.pow( this.position.z - object.position.z, 2 ) );
+    return ( distance < this.viewRange );
+
+};
+
+//
+
 Player.prototype.update = function ( delta, time ) {
 
     var scope = this;
+
+    // regeneration
+
+    this.sinceHitTime += delta;
+    if ( this.sinceHitTime > this.sinceHitRegeneraionLimit ) {
+
+        if ( this.sinceRegenerationTime > this.sinceRegenerationLimit ) {
+
+            this.changeHealth( 5 );
+            this.sinceRegenerationTime = 0;
+
+        } else {
+
+            this.sinceRegenerationTime += delta;
+
+        }
+
+    }
 
     // check boxes in range
 
@@ -616,13 +653,6 @@ Player.prototype.addEventListeners = function () {
     this.addEventListener( 'PlayerTankRotateTop', function ( event ) { scope.rotateTop( event.data[0] / 1000 ); });
     this.addEventListener( 'PlayerTankMove', function ( event ) { scope.move( event.data[0], event.data[1] ); });
     this.addEventListener( 'PlayerTankShoot', function ( event ) { scope.shoot(); });
-
-};
-
-Player.prototype.isObjectInRange = function ( object ) {
-
-    var distance = Math.sqrt( Math.pow( this.position.x - object.position.x, 2 ) + Math.pow( this.position.z - object.position.z, 2 ) );
-    return ( distance < this.viewRange );
 
 };
 
