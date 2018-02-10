@@ -5,6 +5,7 @@
 
 var http = require('http');
 var express = require('express');
+var compression = require('compression')
 
 //
 
@@ -17,7 +18,10 @@ require('./Global');
 
 //
 
-app.use( express.static( __dirname + './../client') );
+app.use( compression() );
+
+app.use( express.static( __dirname + './../client', { maxAge: 7 * 86400000 } ) );
+
 app.use( '/terms', express.static( __dirname + './../client/terms.html') );
 app.use( '/policy', express.static( __dirname + './../client/policy.html') );
 app.use( '/changelog', express.static( __dirname + './../client/changelog.html') );
