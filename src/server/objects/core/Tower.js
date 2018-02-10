@@ -30,6 +30,10 @@ var Tower = function ( arena, params ) {
     this.range = 300;
     this.armour = 350;
     this.bullet = 150;
+    this.sinceHitRegeneraionLimit = 5000;
+    this.sinceHitTime = false;
+    this.sinceRegenerationLimit = 2000;
+    this.sinceRegenerationTime = false;
 
     this.networkBuffers = {};
     this.inRangeOf = {};
@@ -114,7 +118,9 @@ Tower.prototype.updateHealth = function ( delta ) {
 
     //
 
-    this.health = Math.max( Math.min( this.health - delta, 100 ), 0 );
+    var health = Math.max( Math.min( this.health - delta, 100 ), 0 );
+    if ( health === this.health ) return;
+    this.health = health;
 
     //
 
@@ -191,6 +197,11 @@ Tower.prototype.hit = function ( killer ) {
         return;
 
     }
+
+    //
+
+    this.sinceHitTime = 0;
+    this.sinceRegenerationTime = 0;
 
     this.updateHealth( Math.floor( 57 * ( killer.tank.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ) ) );
 
@@ -363,15 +374,31 @@ Tower.prototype.update = function ( delta, time ) {
     if ( ! target ) {
 
         this.target = false;
-        return;
+
+    } else {
+
+        this.target = target;
+        this.rotateTop( target, delta );
 
     }
 
-    this.target = target;
-
     //
 
-    this.rotateTop( target, delta );
+    this.sinceHitTime += delta;
+    if ( this.sinceHitTime > this.sinceHitRegeneraionLimit ) {
+
+        if ( this.sinceRegenerationTime > this.sinceRegenerationLimit ) {
+
+            this.updateHealth( - 5 );
+            this.sinceRegenerationTime = 0;
+
+        } else {
+
+            this.sinceRegenerationTime += delta;
+
+        }
+
+    }
 
 };
 
