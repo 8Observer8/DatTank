@@ -185,7 +185,12 @@ Tower.prototype.hit = function ( killer ) {
     killer = this.arena.playerManager.getById( killer );
 
     if ( ! killer ) return;
-    if ( killer.team.id === this.team.id ) return;
+    if ( killer.team.id === this.team.id ) {
+
+        killer.friendlyFire();
+        return;
+
+    }
 
     this.updateHealth( Math.floor( 57 * ( killer.tank.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ) ) );
 

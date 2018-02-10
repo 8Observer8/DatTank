@@ -93,7 +93,7 @@ Game.ControlsManager.prototype.mouseInit = function () {
 
     //
 
-    var viewport = $('#viewport #renderport');
+    var viewport = $('#viewport #renderport, #kill-events');
 
     viewport.bind( 'mousedown', mouseDown );
     viewport.bind( 'mousemove', mouseMove );

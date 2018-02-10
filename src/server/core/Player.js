@@ -386,6 +386,22 @@ Player.prototype.shoot = function () {
 
 };
 
+Player.prototype.friendlyFire = function () {
+
+    if ( ! this.socket ) return;
+
+    this.networkBuffers['FriendlyFire'] = this.networkBuffers['FriendlyFire'] || {};
+    var buffer = this.networkBuffers['FriendlyFire'].buffer || new ArrayBuffer( 4 );
+    var bufferView = this.networkBuffers['FriendlyFire'].bufferView || new Uint16Array( buffer );
+    this.networkBuffers['FriendlyFire'].buffer = buffer;
+    this.networkBuffers['FriendlyFire'].bufferView = bufferView;
+
+    bufferView[1] = this.id;
+
+    networkManager.send( 'PlayerFriendlyFire', this.socket, buffer, bufferView );
+
+};
+
 Player.prototype.hit = function ( killer ) {
 
     if ( this.status !== Player.Alive ) {
@@ -399,12 +415,16 @@ Player.prototype.hit = function ( killer ) {
     killer = this.arena.playerManager.getById( killer ) || this.arena.towerManager.getById( killer );
 
     if ( ! killer ) return;
-    if ( killer.team.id === this.team.id ) return;
+    if ( killer.team.id === this.team.id ) {
+
+        if ( killer instanceof Player ) killer.friendlyFire();
+        return;
+
+    }
 
     //
 
     var bulletSize = ( killer.tank ) ? killer.tank.bullet : killer.bullet;
-
     this.changeHealth( - 40 * ( bulletSize / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 ), killer );
 
 };

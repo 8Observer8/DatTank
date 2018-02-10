@@ -28,6 +28,7 @@ Game.Tank = function ( params ) {
     this.tracks = [];
 
     this.label = false;
+    this.ffLabel = false;
 
     //
 
@@ -203,6 +204,54 @@ Game.Tank.prototype.updateLabel = function () {
     this.label.ctx.fillText( this.player.login, 30, 35 );
 
     this.label.material.map.needsUpdate = true;
+
+};
+
+Game.Tank.prototype.friendlyFire = function () {
+
+    if ( ! this.ffLabel ) {
+
+        var canvas, ctx, sprite, material;
+        this.ffLabel = {};
+
+        canvas = document.createElement( 'canvas' );
+        canvas.width = 256;
+        canvas.height = 32;
+
+        ctx = canvas.getContext('2d');
+
+        // draw lebel text
+
+        ctx.fillStyle = '#ff5555';
+        ctx.font = '26px Tahoma';
+        ctx.textAlign = 'left';
+        ctx.fillText( 'Friendly fire!', 55, 20 );
+
+        // make sprite
+
+        material = new THREE.SpriteMaterial({ map: new THREE.Texture( canvas ), color: 0xffffff, fog: true });
+        material.map.needsUpdate = true;
+
+        sprite = new THREE.Sprite( material );
+        sprite.position.set( 0, 45, 0 );
+        sprite.scale.set( 52, 6.2, 1 );
+        sprite.visible = false;
+
+        this.ffLabel.canvas = canvas;
+        this.ffLabel.ctx = ctx;
+        this.ffLabel.material = material;
+        this.ffLabel.sprite = sprite;
+
+        this.object.add( sprite );
+
+    }
+
+    //
+
+    this.ffLabel.sprite.visible = true;
+    this.ffLabel.sprite.material.opacity = 0.0;
+    this.ffLabel.sprite.position.y = 45;
+    this.ffLabel.time = 0;
 
 };
 
@@ -649,6 +698,27 @@ Game.Tank.prototype.dispose = function () {
 };
 
 Game.Tank.prototype.animate = function ( delta ) {
+
+    if ( this.ffLabel && this.ffLabel.sprite.visible ) {
+
+        this.ffLabel.time += delta;
+        this.ffLabel.sprite.position.y = 45 + 7 * this.ffLabel.time / 3000;
+
+        if ( this.ffLabel.time < 1500 ) {
+
+            this.ffLabel.sprite.material.opacity = this.ffLabel.time / 1500;
+
+        } else if ( this.ffLabel.time < 3000 ) {
+
+            this.ffLabel.sprite.material.opacity = 2 - this.ffLabel.time / 1500;
+
+        } else {
+
+            this.ffLabel.sprite.visible = false;
+
+        }
+
+    }
 
     if ( this.mixer ) {
 

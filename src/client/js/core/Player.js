@@ -517,6 +517,7 @@ Game.Player.prototype.addEventListeners = function () {
 
     this.addEventListener( 'ArenaPlayerRespawn', function ( event ) { scope.respawn( true, event.data.player ); });
 
+    this.addEventListener( 'PlayerFriendlyFire', function ( event ) { scope.tank.friendlyFire(); });
     this.addEventListener( 'PlayerTankRotateTop', function ( event ) { scope.rotateTop( event.data[1] / 1000 ); });
     this.addEventListener( 'PlayerTankMove', function ( event ) { scope.move( event.data[1], event.data[2], event.data[3], event.data[4], event.data[5] ); });
     this.addEventListener( 'PlayerTankShoot', function ( event ) { scope.shoot( event.data[1] ); });
