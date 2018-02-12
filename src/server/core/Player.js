@@ -492,7 +492,7 @@ Player.prototype.update = function ( delta, time ) {
 
         if ( this.sinceRegenerationTime > this.sinceRegenerationLimit ) {
 
-            this.changeHealth( 5 );
+            this.changeHealth( 2 );
             this.sinceRegenerationTime = 0;
 
         } else {
