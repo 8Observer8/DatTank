@@ -7,7 +7,7 @@ var BoxManager = function ( arena, params ) {
 
     this.arena = arena;
     this.boxes = [];
-    this.boxAVGCount = params.boxAVGCount || 25;
+    this.count = params.count || 2500;
     this.time = 0;
 
 };
@@ -16,6 +16,16 @@ BoxManager.prototype = {};
 
 //
 
+BoxManager.prototype.init = function () {
+
+    for ( var i = 0; i < this.count; i ++ ) {
+
+        this.add({ type: ( Math.random() > 0.4 ) ? 'Ammo' : 'Health' });
+
+    }
+
+};
+
 BoxManager.prototype.add = function ( params ) {
 
     var box = false;
@@ -23,7 +33,7 @@ BoxManager.prototype.add = function ( params ) {
 
     params.type = params.type || 'Ammo';
 
-    while ( ! position || ! this.arena.collisionManager.isPlaceFree( { x: position.x, y: position.y }, 20 ) ) {
+    while ( ! position || ! this.arena.collisionManager.isPlaceFree( { x: position.x, y: position.z }, 50 ) ) {
 
         position = new Game.Vec3( Math.floor( 2000 * ( Math.random() - 0.5 ) ), 20, Math.floor( 2000 * ( Math.random() - 0.5 ) ) );
 
@@ -101,15 +111,7 @@ BoxManager.prototype.update = function ( delay ) {
 
     //
 
-    if ( this.boxes.length < this.boxAVGCount ) {
-
-        this.add({
-            type: ( Math.random() > 0.4 ) ? 'Ammo' : 'Health'
-        });
-
-    }
-
-    //
+    var boxToRemove = [];
 
     for ( var i = 0, il = players.length; i < il; i ++ ) {
 
@@ -118,9 +120,16 @@ BoxManager.prototype.update = function ( delay ) {
         for ( var j = 0, jl = boxes.length; j < jl; j ++ ) {
 
             boxes[ j ].pickUp( players[ i ] );
-            this.remove( boxes[ j ] );
+            boxToRemove.push( boxes[ j ] );
 
         }
+
+    }
+
+    for ( var i = 0, il = boxToRemove.length; i < il; i ++ ) {
+
+        this.remove( boxToRemove[ i ] );
+        this.add({ type: ( Math.random() > 0.4 ) ? 'Ammo' : 'Health' });
 
     }
 

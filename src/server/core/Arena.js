@@ -49,6 +49,7 @@ Arena.prototype.init = function ( callback ) {
         oldCastle: { type: 'OldCastle', count: 3 }
     });
     this.botManager.init();
+    this.boxManager.init();
 
     //
 
