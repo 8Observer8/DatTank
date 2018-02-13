@@ -13,7 +13,7 @@ var config = {
     },
 
     master: {
-        host:       'http://localhost',
+        host:       'localhost',
         port:       3100,
     }
 
