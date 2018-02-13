@@ -1348,7 +1348,39 @@ object {
 }
 
 /**/
-
+.top-playeers-scrore {
+    width: 320px;
+    background: transparent;
+    height: initial;
+    position: absolute;
+    top: 10%;
+    left: 0px;
+    color: #d6d6d6;
+}
+.top-playeers-scrore table {
+    border: 1px solid white;
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+    pointer-events: none;
+    z-index: 900;
+    color: #dbdbdb;
+    background-color: rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+}
+.top-playeers-scrore table tr { 
+    border: 1px solid #211e1e;
+    border-left: 1px solid transparent;
+}
+.top-playeers-scrore .player-score {
+    padding: 0px 0;
+    height: 40px;
+    width: 50%;
+    font-size: 16px;
+}
+.top-playeers-scrore .player-score.header {
+    font-size: 18px;
+}
 /*vieport panel*/
 
 .navigation-panel {
