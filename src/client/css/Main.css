@@ -1348,16 +1348,21 @@ object {
 }
 
 /**/
-.top-playeers-scrore {
+@media only screen and (max-width: 1020px) {
+    .top-players-score {
+        display: none;
+    }
+}
+.top-players-score {
     width: 320px;
     background: transparent;
     height: initial;
-    position: absolute;
-    top: 10%;
+    position: fixed;
+    top: 20%;
     left: 0px;
     color: #d6d6d6;
 }
-.top-playeers-scrore table {
+.top-players-score table {
     border: 1px solid white;
     width: 100%;
     text-align: center;
@@ -1368,19 +1373,24 @@ object {
     background-color: rgba(0, 0, 0, 0.1);
     font-weight: bold;
 }
-.top-playeers-scrore table tr { 
+.top-players-score table tr { 
     border: 1px solid #211e1e;
     border-left: 1px solid transparent;
 }
-.top-playeers-scrore .player-score {
-    padding: 0px 0;
-    height: 40px;
-    width: 50%;
+.top-players-score .players-score {
+    width: 142px;
+    overflow: hidden;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 10px 0;
     font-size: 16px;
+    margin: 0 7px;
 }
-.top-playeers-scrore .player-score.header {
+.top-players-score .players-score.header {
     font-size: 18px;
 }
+
 /*vieport panel*/
 
 .navigation-panel {
@@ -1431,16 +1441,13 @@ object {
     cursor: url(../resources/img/cursor.png), auto;
     z-index: 1;
 }
-
 #viewport-information:hover {
     opacity: 0.9;
 }
-
 #viewport-information:active {
     background-position: 0px -3px;
     opacity: 1;
 }
-
 #viewport-sound-on-off {
     margin: 3px;
     float: left;
@@ -1454,16 +1461,13 @@ object {
     cursor: url(../resources/img/cursor.png), auto;
     z-index: 1;
 }
-
 #viewport-sound-on-off:hover {
     opacity: 0.85;
 }
-
 #viewport-sound-on-off:active {
     top: 11px;
     opacity: 1;
 }
-
 #viewport-sound-on-off[sound="true"] {
     background-position: -9px 31px;
 }
