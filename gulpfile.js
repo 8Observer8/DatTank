@@ -69,17 +69,6 @@ gulp.task( 'server-master', function () {
 
 });
 
-gulp.task( 'server-master', function () {
-
-    gulp.src('./src/server-master/**/*')
-        .pipe( gulp.dest('./bin/server-master/') );
-
-    //
-
-    restartMasterServer();
-
-});
-
 // Arena-Server
 
 gulp.task( 'server-arena', function () {
@@ -89,18 +78,7 @@ gulp.task( 'server-arena', function () {
 
     //
 
-    restartArenaServer();
-
-});
-
-gulp.task( 'server-arena', function () {
-
-    gulp.src('./src/server-arena/**/*')
-        .pipe( gulp.dest('./bin/server-arena/') );
-
-    //
-
-    restartArenaServer();
+    setTimeout( restartArenaServer, 1000 );
 
 });
 
@@ -108,8 +86,7 @@ gulp.task( 'server-arena', function () {
 
 gulp.task( 'run', [ 'resources', 'js', 'html', 'css', 'server-master', 'server-arena' ], function () {
 
-    restartMasterServer();
-    restartArenaServer();
+    // nothing here
 
 });
 

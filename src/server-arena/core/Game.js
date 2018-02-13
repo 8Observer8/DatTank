@@ -32,13 +32,39 @@ Game.prototype.init = function () {
 
 };
 
+Game.prototype.updateTopList = function ( login, kills ) {
+
+    var req = http.get({
+        hostname:   environment.master.host,
+        port:       environment.master.port,
+        path:       '/api/update-top-list?login=' + encodeURI( login ) + '&kills=' + kills
+    }, function ( res ) {
+
+        var response = '';
+        res.setEncoding('utf8');
+
+        res.on( 'data', function ( chunk ) {
+        
+            response += chunk;
+      
+        });
+
+        res.on( 'end', function () {
+
+            response = JSON.parse( response );
+
+        });
+
+    });
+
+};
+
 Game.prototype.reportToMaster = function () {
 
     var req = http.get({
         hostname:   environment.master.host,
         port:       environment.master.port,
-        path:       '/api/status-update?aid=' + this.aid + '&players=' + 0 + '&ip=' + ip.address(),
-        method:     'GET'
+        path:       '/api/status-update?aid=' + this.aid + '&players=' + 0 + '&ip=' + ip.address()
     }, function ( res ) {
 
         var response = '';

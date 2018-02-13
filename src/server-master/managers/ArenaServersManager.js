@@ -37,6 +37,7 @@ ArenaServersManager.prototype.init = function () {
 
     this.transport = new express();
     this.transport.get( '/api/status-update', this.arenaServerStatusUpdate.bind( this ) );
+    this.transport.get( '/api/update-top-list', this.updateTopList.bind( this ) );
     this.transport.listen( this.transportPort );
 
     // init update interval
@@ -46,6 +47,22 @@ ArenaServersManager.prototype.init = function () {
     //
 
     console.log( '> DatTank MasterServer: Started ArenaServerManager on port ' + this.transportPort );
+
+};
+
+ArenaServersManager.prototype.updateTopList = function ( req, res ) {
+
+    var login = req.query.login;
+    var kills = req.query.kills;
+
+    if ( ! login || ! kills ) {
+
+        return res.send({ success: false });
+
+    }
+
+    DT.playerManager.updateTopBoard( login, kills );
+    return res.send({ success: true });
 
 };
 

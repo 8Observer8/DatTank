@@ -29,7 +29,7 @@ NetworkManager.prototype.init = function () {
     this.app = express();
     this.server = http.createServer( this.app );
 
-    //
+    // handling requests from clients
 
     this.app.get( '/api/getFreeArena', function ( req, res ) {
 

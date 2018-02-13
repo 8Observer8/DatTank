@@ -267,6 +267,12 @@ Player.prototype.changeHealth = function ( delta, killer ) {
 
         this.die( killer );
 
+        if ( killer.type === 'Player' ) {
+        
+            game.updateTopList( killer.login, killer.kills );
+
+        }
+
     }
 
 };
