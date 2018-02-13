@@ -47,6 +47,16 @@ NetworkManager.prototype.init = function () {
 
     });
 
+    this.app.get( '/api/getTopPlayers', function ( req, res ) {
+
+        DT.playerManager.getTopBoard( function ( playersTop ) {
+        
+            return res.send( playersTop );
+
+        });
+
+    });
+
     //
 
     this.app.use( compression() );

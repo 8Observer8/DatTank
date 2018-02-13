@@ -87,6 +87,24 @@ Game.prototype.init = function () {
     //
 
     this.getArena();
+    this.getTopPlayers();
+
+};
+
+Game.prototype.getTopPlayers = function () {
+
+    var scope = this;
+
+    $.get('/api/getTopPlayers', function ( response ) {
+
+        for ( var i = 0, il = 10; i < il; i ++ ) {
+
+            $( $('.top-players-score tr')[ i + 1 ] ).find('td')[0].innerHTML = '<span class="nmb">' + ( i + 1 ) + '</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>' + response[ i ].login + '</span>';
+            $( $('.top-players-score tr')[ i + 1 ] ).find('td')[1].innerHTML = response[ i ].kills;
+
+        }
+
+    });
 
 };
 

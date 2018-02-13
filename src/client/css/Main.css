@@ -1378,17 +1378,27 @@ object {
     border-left: 1px solid transparent;
 }
 .top-players-score .players-score {
-    width: 142px;
+    float: left;
+    width: 200px;
     overflow: hidden;
     display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
     padding: 10px 0;
+    padding-left: 10px;
     font-size: 16px;
     margin: 0 7px;
+    text-align: left;
+}
+.top-players-score .players-score.kills {
+    width: 50px;
+    text-align: center;
 }
 .top-players-score .players-score.header {
     font-size: 18px;
+}
+.top-players-score .players-score .nmb {
+    opacity: 0.3;
 }
 
 /*vieport panel*/

@@ -13,6 +13,31 @@ PlayerManager.prototype = {};
 
 //
 
+PlayerManager.prototype.getTopBoard = function ( callback ) {
+
+    DB.models.topPlayers
+    .find()
+    .sort([ [ 'kills', 'descending' ] ])
+    .limit( 10 )
+    .then( function ( result ) {
+
+        var players = [];
+
+        for ( var i = 0, il = result.length; i < il; i ++ ) {
+
+            players.push({
+                login:  result[ i ].login,
+                kills:  result[ i ].kills
+            });
+
+        }
+
+        return callback( players );
+
+    });
+
+};
+
 PlayerManager.prototype.updateTopBoard = function ( login, kills ) {
 
     DB.models.topPlayers
