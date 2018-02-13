@@ -9,8 +9,12 @@ var config = {
 
     web: {
         host:       'http://localhost',
-        port:       8082,
         socketPort: 8085
+    },
+
+    master: {
+        host:       'localhost',
+        port:       3100,
     }
 
 };

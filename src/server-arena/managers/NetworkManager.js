@@ -68,7 +68,7 @@ NetworkManager.prototype.init = function () {
 
     //
 
-    console.log( '> Socket network started on port ' + environment.web.socketPort );
+    console.log( '> DatTank ArenaServer: Network started on port ' + environment.web.socketPort );
 
 };
 

@@ -84,6 +84,22 @@ Game.prototype.init = function () {
     $('.share-fb').click( this.gaFb.bind( this ) );
     $('.share-tw').click( this.gaTw.bind( this ) );
 
+    //
+
+    this.getArena();
+
+};
+
+Game.prototype.getArena = function () {
+
+    var scope = this;
+
+    $.get('/api/getFreeArena', function ( response ) {
+
+        scope.arenaHost = response.ip;
+
+    });
+
 };
 
 Game.prototype.play = function ( event ) {

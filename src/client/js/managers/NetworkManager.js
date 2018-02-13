@@ -71,7 +71,7 @@ Game.NetworkManager.prototype.init = function ( callback ) {
 
     // establish connection
 
-    this.transport = new WebSocket( 'ws://' + window.location.host.split(':')[0] + ':8085/ws/game' );
+    this.transport = new WebSocket( 'ws://' + game.arenaHost + ':8085/ws/game' );
     this.transport.binaryType = 'arraybuffer';
 
     // add event handlers

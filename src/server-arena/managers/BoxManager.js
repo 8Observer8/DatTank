@@ -7,7 +7,7 @@ var BoxManager = function ( arena, params ) {
 
     this.arena = arena;
     this.boxes = [];
-    this.count = params.count || 2500;
+    this.count = params.count || 25;
     this.time = 0;
 
 };

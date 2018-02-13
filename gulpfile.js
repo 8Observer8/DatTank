@@ -13,7 +13,8 @@ var spawn = require('child_process').spawn;
 
 //
 
-var nodeProcess;
+var masterProcess = false;
+var arenaProcesses = [];
 
 // Resources build
 
@@ -55,24 +56,60 @@ gulp.task( 'html', function () {
 
 });
 
-// Server
+// Master-Server
 
-gulp.task( 'server', function () {
+gulp.task( 'server-master', function () {
 
-    gulp.src('./src/server/**/*')
-        .pipe( gulp.dest('./bin/server/') );
+    gulp.src('./src/server-master/**/*')
+        .pipe( gulp.dest('./bin/server-master/') );
 
     //
 
-    restartServer();
+    restartMasterServer();
+
+});
+
+gulp.task( 'server-master', function () {
+
+    gulp.src('./src/server-master/**/*')
+        .pipe( gulp.dest('./bin/server-master/') );
+
+    //
+
+    restartMasterServer();
+
+});
+
+// Arena-Server
+
+gulp.task( 'server-arena', function () {
+
+    gulp.src('./src/server-arena/**/*')
+        .pipe( gulp.dest('./bin/server-arena/') );
+
+    //
+
+    restartArenaServer();
+
+});
+
+gulp.task( 'server-arena', function () {
+
+    gulp.src('./src/server-arena/**/*')
+        .pipe( gulp.dest('./bin/server-arena/') );
+
+    //
+
+    restartArenaServer();
 
 });
 
 // RUN
 
-gulp.task( 'run', [ 'resources', 'js', 'html', 'css', 'server' ], function () {
+gulp.task( 'run', [ 'resources', 'js', 'html', 'css', 'server-master', 'server-arena' ], function () {
 
-    restartServer();
+    restartMasterServer();
+    restartArenaServer();
 
 });
 
@@ -83,7 +120,8 @@ gulp.task( 'watch', function () {
     gulp.watch( './src/client/css/*', ['css']);
     gulp.watch( './src/client/*', ['html'] );
     gulp.watch( './src/client/js/**/*', ['js'] );
-    gulp.watch( './src/server/**/*', ['server'] );
+    gulp.watch( './src/server-master/**/*', ['server-master'] );
+    gulp.watch( './src/server-arena/**/*', ['server-arena'] );
 
 });
 
@@ -93,12 +131,19 @@ gulp.task( 'default', [ 'watch', 'run' ] );
 
 //
 
-function restartServer () {
+function restartMasterServer () {
 
-    if ( nodeProcess ) nodeProcess.kill();
-    nodeProcess = spawn( 'node', [ './bin/server/Server.js' ], { stdio: 'inherit' } )
+    if ( masterProcess ) {
 
-    nodeProcess.on( 'close', function ( code ) {
+        masterProcess.kill();
+
+    }
+
+    //
+
+    masterProcess = spawn( 'node', [ './bin/server-master/Server.js' ], { stdio: 'inherit' } )
+
+    masterProcess.on( 'close', function ( code ) {
 
         if ( code === 8 ) {
 
@@ -110,8 +155,44 @@ function restartServer () {
 
 };
 
+function restartArenaServer () {
+
+    for ( var i = 0, il = arenaProcesses.length; i < il; i ++ ) {
+
+        arenaProcesses[ i ].kill();
+
+    }
+
+    //
+
+    var arenaProcess = spawn( 'node', [ './bin/server-arena/Server.js' ], { stdio: 'inherit' } )
+
+    arenaProcess.on( 'close', function ( code ) {
+
+        if ( code === 8 ) {
+
+            gulp.log('Error detected, waiting for changes...');
+
+        }
+
+    });
+
+    arenaProcesses.push( arenaProcess );
+
+};
+
 process.on( 'exit', function () {
 
-    if ( nodeProcess ) nodeProcess.kill();
+    if ( masterProcess ) {
+
+        masterProcess.kill();
+
+    }
+
+    for ( var i = 0, il = arenaProcesses.length; i < il; i ++ ) {
+
+        arenaProcesses[ i ].kill();
+
+    }
 
 });

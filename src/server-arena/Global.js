@@ -3,23 +3,6 @@
  * Global params for server
 */
 
-var argparse = require('argparse');
-
-//
-
-var parser = new argparse.ArgumentParser();
-
-parser.addArgument(['--debug'], {
-    action: 'storeTrue',
-    defaultValue: false
-});
-
-var args = parser.parseArgs();
-
-global.DEBUG = args.debug;
-
-//
-
 global.environment = require('./environments/EnvironmentDetect');
 
 //
