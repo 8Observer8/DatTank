@@ -60,7 +60,7 @@ NetworkManager.prototype.init = function () {
     //
 
     this.app.use( compression() );
-    this.app.use( express.static( __dirname + './../../client', { maxAge: 7 * 86400000 } ) );
+    this.app.use( express.static( __dirname + './../../client' ) );
 
     this.app.use( '/terms', express.static( __dirname + './../../сlient/terms.html') );
     this.app.use( '/policy', express.static( __dirname + './../../client/policy.html') );

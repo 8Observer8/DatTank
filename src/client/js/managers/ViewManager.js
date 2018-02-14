@@ -41,6 +41,8 @@ Game.ViewManager = function () {
     this.shakeInterval = false;
     this.intersections = false;
 
+    this.sound = {};
+
     //
 
     this.raycaster = false;
@@ -80,13 +82,9 @@ Game.ViewManager.prototype.setupScene = function () {
 
     // setup sound listener
 
-    if ( ! this.sound ) {
-
-        this.sound = {};
-        this.sound.listener = new THREE.AudioListener();
-        this.camera.add( this.sound.listener );
-
-    }
+    this.sound.listener = new THREE.AudioListener();
+    if ( soundManager.muted ) this.sound.listener.setMasterVolume( 0 );
+    this.camera.add( this.sound.listener );
 
     // start rendering
 

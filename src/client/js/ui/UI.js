@@ -68,6 +68,7 @@ Game.UI.prototype.changeSound = function ( value, withoutSound ) {
     $('#sound-on-off').attr( 'sound', value );
     $('#viewport-sound-on-off').attr( 'sound', value );
     localStorage.setItem( 'sound', value );
+    soundManager.toggleMute();
 
     if ( ! withoutSound ) {
 

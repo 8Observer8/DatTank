@@ -123,9 +123,9 @@ Game.Tank.prototype.initSounds = function () {
     this.sounds.moving = new THREE.PositionalAudio( view.sound.listener );
     this.sounds.moving.setBuffer( resourceManager.getSound('tank_moving.wav') );
     this.sounds.moving.loop = true;
-    this.sounds.moving.setRefDistance( 15 );
+    this.sounds.moving.setRefDistance( 11 );
     this.sounds.moving.autoplay = false;
-    if ( this.player.id !== Game.arena.me ) this.sounds.moving.setVolume(0.4);
+    if ( this.player.id !== Game.arena.me ) this.sounds.moving.setVolume(0.15);
 
     this.object.add( this.sounds.moving );
 
@@ -669,17 +669,21 @@ Game.Tank.prototype.shootBullet = function ( bulletId ) {
 
         }
 
-        if ( localStorage.getItem('sound') !== 'false' ) {
-
-            bullet.soundShooting.play();
-
-        }
+        bullet.soundShooting.play();
 
     }
 
 };
 
 Game.Tank.prototype.dispose = function () {
+
+    // stop all audio
+
+    for ( var s in this.sounds ) {
+
+        if ( this.sounds[ s ] ) this.sounds[ s ].pause();
+
+    }
 
     // remove explosion objects from scene
 

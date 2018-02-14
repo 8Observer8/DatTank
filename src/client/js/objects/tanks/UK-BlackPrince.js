@@ -128,11 +128,7 @@ Game.Tank.UKBlackPrince.prototype.destroy = function () {
 
     }, 1100 );
 
-    if ( localStorage.getItem('sound') !== 'false' ) {
-
-        this.sounds.explosion.play();
-
-    }
+    this.sounds.explosion.play();
 
 };
 

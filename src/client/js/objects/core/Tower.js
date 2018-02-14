@@ -302,11 +302,7 @@ Game.Tower.prototype.shoot = function ( bulletId ) {
 
         }
 
-        if ( localStorage.getItem('sound') !== 'false' ) {
-
-            bullet.soundShooting.play();
-
-        }
+        bullet.soundShooting.play();
 
     }
 

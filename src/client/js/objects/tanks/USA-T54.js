@@ -127,11 +127,7 @@ Game.Tank.USAT54.prototype.destroy = function () {
 
     }, 750 );
 
-    if ( localStorage.getItem('sound') !== 'false' ) {
-
-        this.sounds.explosion.play();
-
-    }
+    this.sounds.explosion.play();
 
 };
 
