@@ -1348,19 +1348,26 @@ object {
 }
 
 /**/
+.top-players-score {
+    width: 320px;
+    background: transparent;
+    height: initial;
+    left: 0px;
+    color: #d6d6d6;
+    position: fixed;
+    top: calc(50% - +250px);
+    overflow: hidden;
+}
 @media only screen and (max-width: 1020px) {
     .top-players-score {
         display: none;
     }
 }
-.top-players-score {
-    width: 320px;
-    background: transparent;
-    height: initial;
-    position: fixed;
-    top: 20%;
-    left: 0px;
-    color: #d6d6d6;
+@media only screen and (max-height: 700px) {
+    .top-players-score {
+        height: 244px;
+        top: calc(50% - +145px);
+    }
 }
 .top-players-score table {
     border: 1px solid white;
