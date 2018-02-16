@@ -169,6 +169,13 @@ Game.Tank.prototype.updateLabel = function () {
 
     var width = this.label.canvas.width;
 
+    //
+
+    this.label.ctx.shadowColor = '#000';
+    this.label.ctx.shadowOffsetX = 0;
+    this.label.ctx.shadowOffsetY = 0;
+    this.label.ctx.shadowBlur = 3;
+
     // draw health red bg
 
     this.label.ctx.fillStyle = '#9e0e0e';
@@ -202,10 +209,6 @@ Game.Tank.prototype.updateLabel = function () {
     this.label.ctx.fillStyle = '#ffffff';
     this.label.ctx.font = '26px Tahoma';
     this.label.ctx.textAlign = 'left';
-    this.label.ctx.shadowColor = '#000';
-    this.label.ctx.shadowOffsetX = 0;
-    this.label.ctx.shadowOffsetY = 0;
-    this.label.ctx.shadowBlur = 3;
 
     this.label.ctx.fillText( this.player.login, 30, 35 );
 
@@ -224,6 +227,11 @@ Game.Tank.prototype.addHealthChangeLabel = function ( delta ) {
     canvas.height = 64;
 
     ctx = canvas.getContext('2d');
+
+    ctx.shadowColor = '#000';
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
+    ctx.shadowBlur = 3;
 
     ctx.fillStyle = color;
     ctx.font = '35px Tahoma';
@@ -565,7 +573,7 @@ Game.Tank.prototype.showSmoke = function ( strength ) {
     var scale;
 
     this.effects.smoke = [];
-    material.depthTest = false;
+    material.depthTest = true;
     material.depthWrite = false;
 
     for ( var i = 0; i <= 5; i ++ ) {
