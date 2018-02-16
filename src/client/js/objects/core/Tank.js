@@ -174,7 +174,7 @@ Game.Tank.prototype.updateLabel = function () {
     this.label.ctx.shadowColor = '#000';
     this.label.ctx.shadowOffsetX = 0;
     this.label.ctx.shadowOffsetY = 0;
-    this.label.ctx.shadowBlur = 3;
+    this.label.ctx.shadowBlur = 4;
 
     // draw health red bg
 

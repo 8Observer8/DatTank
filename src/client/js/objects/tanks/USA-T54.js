@@ -177,7 +177,7 @@ Game.Tank.USAT54.prototype.showBlastSmoke = function () {
 
         sprite = sprite.clone();
         sprite.position.z = 0;
-        sprite.position.y = 0;
+        sprite.position.y = 1;
         sprite.position.x = 2.9 + i / 7;
         sprite.material = sprite.material.clone();
         sprite.material.opacity = 0.8 - 0.8 / 5 * ( 5 - i );

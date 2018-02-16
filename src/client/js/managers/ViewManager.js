@@ -136,16 +136,7 @@ Game.ViewManager.prototype.addTerrain = function () {
     var groundTexture = resourceManager.getTexture( 'Ground.jpg' );
     groundTexture.wrapS = THREE.RepeatWrapping;
     groundTexture.wrapT = THREE.RepeatWrapping;
-
-    if ( localStorage.getItem('hq') === 'true' ) {
-
-        groundTexture.repeat.set( 30, 30 );
-
-    } else {
-
-        groundTexture.repeat.set( 10, 10 );
-
-    }
+    groundTexture.repeat.set( 30, 30 );
 
     var ground = new THREE.Mesh( new THREE.PlaneBufferGeometry( size + 1800, size + 1800 ), new THREE.MeshBasicMaterial({ map: groundTexture, color: 0x777050 }) );
     ground.rotation.x = - Math.PI / 2;
@@ -157,7 +148,7 @@ Game.ViewManager.prototype.addTerrain = function () {
 
     // add grass
 
-    for ( var i = 0; i < 50; i ++ ) {
+    for ( var i = 0; i < 150; i ++ ) {
 
         this.addGrassZones();
 

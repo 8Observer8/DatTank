@@ -280,8 +280,6 @@ Game.Player.prototype.updateHealth = function ( health, killerId ) {
 
     this.tank.addHealthChangeLabel( health - this.health );
 
-    this.health = health;
-
     //
 
     if ( Game.arena && Game.arena.me.id === this.id ) {
@@ -295,6 +293,10 @@ Game.Player.prototype.updateHealth = function ( health, killerId ) {
         ui.updateHealth( this.health );
 
     }
+
+    //
+
+    this.health = health;
 
     this.tank.updateLabel();
 
