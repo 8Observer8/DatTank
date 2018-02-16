@@ -235,7 +235,7 @@ Game.prototype.loop = function () {
 
     for ( var i = 0, il = Math.floor( delta / 20 ); i < il; i ++ ) {
 
-        this.time += 20;
+        this.time += delta;
         this.arena.update( this.time, 20 );
 
     }

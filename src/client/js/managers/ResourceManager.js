@@ -35,8 +35,6 @@ Game.ResourceManager = function () {
         'tree6.json',
         'tree7.json',
         'tree8.json',
-        'tree9.json',
-        'tree10.json',
 
         'stone1.json',
         'stone2.json',
@@ -61,8 +59,6 @@ Game.ResourceManager = function () {
         'tree6-shadow.png',
         'tree7-shadow.png',
         'tree8-shadow.png',
-        'tree9-shadow.png',
-        'tree10-shadow.png',
 
         'stoneshadow.png',
 
@@ -106,11 +102,25 @@ Game.ResourceManager.prototype.loadModel = function ( modelName, callback ) {
 
     loader.load( 'resources/models/' + modelName, function ( g, m ) {
 
-        scope.models.push({
+        var data = {
             name:       modelName,
-            geometry:   g,
+            geometry:   false,
             material:   m
-        });
+        };
+
+        g.computeFlatVertexNormals();
+
+        if ( modelName.indexOf('tree') !== -1 || modelName.indexOf('stone') !== -1 ) {
+
+            data.geometry = new THREE.BufferGeometry().fromGeometry( g );
+
+        } else {
+
+            data.geometry = g;
+
+        }
+
+        scope.models.push( data );
 
         scope.modelsLoaded ++;
 

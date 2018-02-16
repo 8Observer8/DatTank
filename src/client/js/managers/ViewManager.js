@@ -41,6 +41,8 @@ Game.ViewManager = function () {
     this.shakeInterval = false;
     this.intersections = false;
 
+    this.decorations = [];
+
     this.sound = {};
 
     //
@@ -83,7 +85,6 @@ Game.ViewManager.prototype.setupScene = function () {
     // setup sound listener
 
     this.sound.listener = new THREE.AudioListener();
-    console.log( soundManager.muted );
     if ( soundManager.muted ) this.sound.listener.setMasterVolume( 0 );
     this.camera.add( this.sound.listener );
 
@@ -111,13 +112,14 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
         decoration = decorations[ i ];
         model = Game.arena.decorationManager.list[ decoration.type ].model;
 
-        mesh = new THREE.Mesh( model.geometry, model.material );
+        mesh = new THREE.Mesh( model.geometry, [ model.material[0].clone() ] );
+        mesh.material[0].side = THREE.FrontSize;
         mesh.scale.set( decoration.scale.x, decoration.scale.y, decoration.scale.z );
         mesh.rotation.y = Math.random() * Math.PI;
         mesh.position.set( decoration.position.x, decoration.position.y, decoration.position.z );
         mesh.name = decoration.type;
-        mesh.geometry.computeFlatVertexNormals();
         view.scene.add( mesh );
+        this.decorations.push( mesh );
 
         this.addObjectShadow( decoration.type, mesh.position, mesh.scale, mesh.rotation );
 
@@ -319,9 +321,9 @@ Game.ViewManager.prototype.addCameraShake = function ( duration, intensity ) {
 
 Game.ViewManager.prototype.updateCamera = function () {
 
-    this.camera.position.x = Game.arena.me.position.x - 170 * Math.sin( Game.arena.me.rotation ) + this.cameraOffset.x;
-    this.camera.position.z = Game.arena.me.position.z - 170 * Math.cos( Game.arena.me.rotation ) + this.cameraOffset.y;
-    this.camera.position.y = 120 + this.cameraOffset.z;
+    this.camera.position.x = Game.arena.me.position.x - 150 * Math.sin( Game.arena.me.rotation ) + this.cameraOffset.x;
+    this.camera.position.z = Game.arena.me.position.z - 150 * Math.cos( Game.arena.me.rotation ) + this.cameraOffset.y;
+    this.camera.position.y = 110 + this.cameraOffset.z;
     this.camera.lookAtVector = this.camera.lookAtVector || new THREE.Vector3();
     this.camera.lookAtVector.set( Game.arena.me.position.x, Game.arena.me.position.y + 65, Game.arena.me.position.z );
     this.camera.lookAt( this.camera.lookAtVector );
@@ -343,6 +345,30 @@ Game.ViewManager.prototype.animate = function ( delta ) {
     for ( var i = 0, il = Game.arena.towerManager.towers.length; i < il; i ++ ) {
 
         Game.arena.towerManager.towers[ i ].update( delta );
+
+    }
+
+    //
+
+    for ( var i = 0, il = this.decorations.length; i < il; i ++ ) {
+
+        var decoration = this.decorations[ i ];
+        var dx = decoration.position.x - this.camera.position.x;
+        var dz = decoration.position.z - this.camera.position.z;
+
+        if ( Math.sqrt( dx * dx + dz * dz ) < 85 ) {
+
+            decoration.material[0].transparent = true;
+            decoration.material[0].opacity = 0.2;
+            decoration.material[0].depthWrite = false;
+
+        } else {
+
+            decoration.material[0].transparent = false;
+            decoration.material[0].opacity = 1;
+            decoration.material[0].depthWrite = true;
+
+        }
 
     }
 
@@ -411,7 +437,7 @@ Game.ViewManager.prototype.updateRenderer = function () {
     if ( localStorage.getItem('hq') === 'true' ) {
 
         this.antialias = true;
-        this.quality = 1;
+        this.quality = 0.9;
 
     } else {
 
@@ -419,6 +445,8 @@ Game.ViewManager.prototype.updateRenderer = function () {
         this.quality = 0.7;
 
     }
+
+    this.antialias = false;
 
     $('#renderport').remove();
     $('#viewport').prepend('<canvas id="renderport"></canvas>');

@@ -53,9 +53,6 @@ global.Game.Decoration.Tree5 = require('./objects/decorations/Tree5');
 global.Game.Decoration.Tree6 = require('./objects/decorations/Tree6');
 global.Game.Decoration.Tree7 = require('./objects/decorations/Tree7');
 global.Game.Decoration.Tree8 = require('./objects/decorations/Tree8');
-global.Game.Decoration.Tree9 = require('./objects/decorations/Tree9');
-global.Game.Decoration.Tree10 = require('./objects/decorations/Tree10');
-global.Game.Decoration.Tree11 = require('./objects/decorations/Tree11');
 
 global.Game.Decoration.Stones1 = require('./objects/decorations/Stones1');
 global.Game.Decoration.Stones2 = require('./objects/decorations/Stones2');
