@@ -202,6 +202,11 @@ Game.Tank.prototype.updateLabel = function () {
     this.label.ctx.fillStyle = '#ffffff';
     this.label.ctx.font = '26px Tahoma';
     this.label.ctx.textAlign = 'left';
+    this.label.ctx.shadowColor = '#000';
+    this.label.ctx.shadowOffsetX = 0;
+    this.label.ctx.shadowOffsetY = 0;
+    this.label.ctx.shadowBlur = 3;
+
     this.label.ctx.fillText( this.player.login, 30, 35 );
 
     this.label.material.map.needsUpdate = true;
@@ -254,10 +259,14 @@ Game.Tank.prototype.friendlyFire = function () {
 
         // draw lebel text
 
-        ctx.fillStyle = '#ff5555';
+        ctx.fillStyle = '#fff';
         ctx.font = '26px Tahoma';
         ctx.textAlign = 'left';
-        ctx.fillText( 'Friendly fire!', 55, 20 );
+        ctx.shadowColor = '#900';
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 0;
+        ctx.shadowBlur = 3;
+        ctx.fillText( 'Friendly fire!!!', 55, 20 );
 
         // make sprite
 
@@ -768,7 +777,7 @@ Game.Tank.prototype.animate = function ( delta ) {
     if ( this.ffLabel && this.ffLabel.sprite.visible ) {
 
         this.ffLabel.time += delta;
-        this.ffLabel.sprite.position.y = 45 + 7 * this.ffLabel.time / 3000;
+        this.ffLabel.sprite.position.y = 45 + 20 * this.ffLabel.time / 3000;
 
         if ( this.ffLabel.time < 1500 ) {
 

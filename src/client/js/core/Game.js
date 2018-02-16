@@ -41,10 +41,10 @@ Game.prototype.init = function () {
     window.ui = new Game.UI();
     window.garage = new Game.Garage();
     window.network = new Game.NetworkManager();
+    window.soundManager = new Game.SoundManager();
     window.view = new Game.ViewManager();
     window.controls = new Game.ControlsManager();
     window.resourceManager = new Game.ResourceManager();
-    window.soundManager = new Game.SoundManager();
     window.settings = new Game.SettingsManager();
 
     window.garage.init();

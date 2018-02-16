@@ -45,13 +45,27 @@ global.Game.Tank.D32 = require('./objects/tanks/D-32');
 
 global.Game.Decoration = require('./objects/core/Decoration');
 
-global.Game.Decoration.Tree = require('./objects/decorations/Tree');
 global.Game.Decoration.Tree1 = require('./objects/decorations/Tree1');
 global.Game.Decoration.Tree2 = require('./objects/decorations/Tree2');
 global.Game.Decoration.Tree3 = require('./objects/decorations/Tree3');
-global.Game.Decoration.Stones = require('./objects/decorations/Stones');
+global.Game.Decoration.Tree4 = require('./objects/decorations/Tree4');
+global.Game.Decoration.Tree5 = require('./objects/decorations/Tree5');
+global.Game.Decoration.Tree6 = require('./objects/decorations/Tree6');
+global.Game.Decoration.Tree7 = require('./objects/decorations/Tree7');
+global.Game.Decoration.Tree8 = require('./objects/decorations/Tree8');
+global.Game.Decoration.Tree9 = require('./objects/decorations/Tree9');
+global.Game.Decoration.Tree10 = require('./objects/decorations/Tree10');
+global.Game.Decoration.Tree11 = require('./objects/decorations/Tree11');
+
 global.Game.Decoration.Stones1 = require('./objects/decorations/Stones1');
 global.Game.Decoration.Stones2 = require('./objects/decorations/Stones2');
+global.Game.Decoration.Stones3 = require('./objects/decorations/Stones3');
+global.Game.Decoration.Stones4 = require('./objects/decorations/Stones4');
+global.Game.Decoration.Stones5 = require('./objects/decorations/Stones5');
+global.Game.Decoration.Stones6 = require('./objects/decorations/Stones6');
+global.Game.Decoration.Stones7 = require('./objects/decorations/Stones7');
+global.Game.Decoration.Stones8 = require('./objects/decorations/Stones8');
+
 global.Game.Decoration.OldCastle = require('./objects/decorations/OldCastle');
 
 // import Improvement boxes

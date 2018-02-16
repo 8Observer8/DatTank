@@ -1,6 +1,6 @@
 /*
  * @author ohmed
- * Tree map decoration
+ * Tree2 map decoration
 */
 
 var Tree2 = function ( arena, params ) {

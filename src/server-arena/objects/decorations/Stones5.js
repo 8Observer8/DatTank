@@ -1,38 +1,38 @@
 /*
  * @author ohmed
- * Tree map decoration
+ * Stones5 map decoration
 */
 
-var Tree = function ( arena, params ) {
+var Stones5 = function ( arena, params ) {
 
-    this.id = Tree.numIds ++;
+    this.id = Stones5.numIds ++;
     Game.Decoration.call( this, arena, params );
 
-    this.size.set( 0.8, 0.2, 0.8 );
-    this.type = 'Tree';
+    this.size.set( 0.8, 0.8, 0.8 );
+    this.type = 'Stones5';
     this.init();
 
 };
 
-Tree.prototype = Object.create( Game.Decoration.prototype );
+Stones5.prototype = Object.create( Game.Decoration.prototype );
 
-Tree.prototype.init = function () {
+Stones5.prototype.init = function () {
 
     this.sizeX = this.size.x * this.scale.x;
     this.sizeY = this.size.y * this.scale.y;
     this.sizeZ = this.size.z * this.scale.z;
-    this.radius = 3;
+    this.radius = 20;
 
     this.arena.collisionManager.addObject( this, 'circle' );
 
 };
 
-Tree.prototype.toJSON = function () {
+Stones5.prototype.toJSON = function () {
 
     return {
         id:         this.id,
         name:       this.name,
-        type:       'tree',
+        type:       'stone5',
         position:   this.position.toJSON(),
         rotation:   this.rotation,
         scale:      this.scale.toJSON()
@@ -42,4 +42,4 @@ Tree.prototype.toJSON = function () {
 
 //
 
-module.exports = Tree;
+module.exports = Stones5;

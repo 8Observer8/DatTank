@@ -1,6 +1,6 @@
 /*
  * @author ohmed
- * Stones map decoration
+ * Stones1 map decoration
 */
 
 var Stones1 = function ( arena, params ) {
@@ -32,7 +32,7 @@ Stones1.prototype.toJSON = function () {
     return {
         id:         this.id,
         name:       this.name,
-        type:       'rock1',
+        type:       'stone1',
         position:   this.position.toJSON(),
         rotation:   this.rotation,
         scale:      this.scale.toJSON()

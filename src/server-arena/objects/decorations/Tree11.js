@@ -1,22 +1,22 @@
 /*
  * @author ohmed
- * Tree3 map decoration
+ * Tree11 map decoration
 */
 
-var Tree3 = function ( arena, params ) {
+var Tree11 = function ( arena, params ) {
 
-    this.id = Tree3.numIds ++;
+    this.id = Tree11.numIds ++;
     Game.Decoration.call( this, arena, params );
 
     this.size.set( 0.8, 0.8, 0.8 );
-    this.type = 'Tree3';
+    this.type = 'Tree11';
     this.init();
 
 };
 
-Tree3.prototype = Object.create( Game.Decoration.prototype );
+Tree11.prototype = Object.create( Game.Decoration.prototype );
 
-Tree3.prototype.init = function () {
+Tree11.prototype.init = function () {
 
     this.sizeX = this.size.x * this.scale.x;
     this.sizeY = this.size.y * this.scale.y;
@@ -27,12 +27,12 @@ Tree3.prototype.init = function () {
 
 };
 
-Tree3.prototype.toJSON = function () {
+Tree11.prototype.toJSON = function () {
 
     return {
         id:         this.id,
         name:       this.name,
-        type:       'tree3',
+        type:       'tree11',
         position:   this.position.toJSON(),
         rotation:   this.rotation,
         scale:      this.scale.toJSON()
@@ -42,4 +42,4 @@ Tree3.prototype.toJSON = function () {
 
 //
 
-module.exports = Tree3;
+module.exports = Tree11;

@@ -33,6 +33,13 @@ DecorationManager.prototype.init = function ( params ) {
             x = 2350 * ( Math.random() - 0.5 );
             z = 2350 * ( Math.random() - 0.5 );
 
+            if ( type.indexOf('Tree') != -1 ) {
+
+                scale = 5 * Math.random() + 12;
+                scaleH = 5 * Math.random() + 12;
+
+            }
+
             if ( type === 'OldCastle' ) {
 
                 scale = 5 * Math.random() + 20;

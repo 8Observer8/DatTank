@@ -39,14 +39,21 @@ Arena.prototype.init = function ( callback ) {
     this.teamManager.init( 4 );
     this.towerManager.init();
     this.decorationManager.init({
-        trees: { type: 'Tree', count: 40 },
-        trees1: { type: 'Tree1', count: 20 },
-        trees2: { type: 'Tree2', count: 10 },
-        trees3: { type: 'Tree3', count: 20 },
-        rocks: { type: 'Stones', count: 20 },
-        rocks1: { type: 'Stones1', count: 10 },
-        rocks2: { type: 'Stones2', count: 10 },
-        oldCastle: { type: 'OldCastle', count: 3 }
+        trees1:     { type: 'Tree1', count: 5 },
+        trees2:     { type: 'Tree2', count: 10 },
+        trees3:     { type: 'Tree3', count: 5 },
+        trees4:     { type: 'Tree4', count: 10 },
+        trees5:     { type: 'Tree5', count: 50 },
+        trees6:     { type: 'Tree6', count: 0 }, // too small fiew tree
+        trees7:     { type: 'Tree7', count: 20 },
+        trees8:     { type: 'Tree8', count: 60 },
+        trees9:     { type: 'Tree9', count: 0 }, // too small broken tree
+        trees10:    { type: 'Tree10', count: 60 },
+        stones1:    { type: 'Stones1', count: 20 },
+        stones2:    { type: 'Stones2', count: 10 },
+        stones3:    { type: 'Stones3', count: 10 },
+        stones4:    { type: 'Stones4', count: 2 },
+        oldCastle:  { type: 'OldCastle', count: 3 }
     });
     this.botManager.init();
     this.boxManager.init();

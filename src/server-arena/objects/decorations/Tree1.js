@@ -8,7 +8,7 @@ var Tree1 = function ( arena, params ) {
     this.id = Tree1.numIds ++;
     Game.Decoration.call( this, arena, params );
 
-    this.size.set( 0.8, 0.8, 0.8 );
+    this.size.set( 0.8, 0.2, 0.8 );
     this.type = 'Tree1';
     this.init();
 
@@ -21,7 +21,7 @@ Tree1.prototype.init = function () {
     this.sizeX = this.size.x * this.scale.x;
     this.sizeY = this.size.y * this.scale.y;
     this.sizeZ = this.size.z * this.scale.z;
-    this.radius = 1;
+    this.radius = 3;
 
     this.arena.collisionManager.addObject( this, 'circle' );
 

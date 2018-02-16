@@ -170,7 +170,7 @@ Game.Tank.D32.prototype.showBlastSmoke = function () {
     sprite = new THREE.Sprite( material );
 
     this.effects.blastSmoke = [];
-    material.depthTest = false;
+    material.depthTest = true;
     material.depthWrite = false;
 
     for ( var i = 0; i <= 5; i ++ ) {

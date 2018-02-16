@@ -27,13 +27,21 @@ Game.ResourceManager = function () {
         'health_box.json',
         'ammo_box.json',
 
-        'tree.json',
         'tree1.json',
         'tree2.json',
         'tree3.json',
-        'stone.json',
+        'tree4.json',
+        'tree5.json',
+        'tree6.json',
+        'tree7.json',
+        'tree8.json',
+        'tree9.json',
+        'tree10.json',
+
         'stone1.json',
         'stone2.json',
+        'stone3.json',
+        'stone4.json',
 
         'oldCastle.json'
     ];
@@ -44,17 +52,24 @@ Game.ResourceManager = function () {
         'Grass.png',
         'Base-ground.png',
         'brick.jpg',
-        'treeshadow.png',
-        'treeshadow1.png',
-        'treeshadow2.png',
-        'treeshadow3.png',
+
+        'tree1-shadow.png',
+        'tree2-shadow.png',
+        'tree3-shadow.png',
+        'tree4-shadow.png',
+        'tree5-shadow.png',
+        'tree6-shadow.png',
+        'tree7-shadow.png',
+        'tree8-shadow.png',
+        'tree9-shadow.png',
+        'tree10-shadow.png',
 
         'stoneshadow.png',
 
-        'stoneshadow_1.png',
-        'stoneshadow_2.png',
-        'stoneshadow_3.png',
-        'stoneshadow_4.png',
+        'stone1-shadow.png',
+        'stone2-shadow.png',
+        'stone3-shadow.png',
+        'stone4-shadow.png',
 
         'shadowHouse.png',
 

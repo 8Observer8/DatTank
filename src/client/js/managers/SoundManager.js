@@ -7,11 +7,12 @@ Game.SoundManager = function () {
 
     this.menuSound = new Audio();
     this.menuSound.src = '/resources/sounds/menu_click.wav';
+    this.menuSound.volume = 0.3;
 
     this.objectPickSound = new Audio();
     this.objectPickSound.src = '/resources/sounds/object_pick.wav';
 
-    this.muted = ( localStorage.getItem( 'sound' ) === 'true' );
+    this.muted = ( localStorage.getItem( 'sound' ) != 'true' );
 
 };
 
@@ -29,9 +30,9 @@ Game.SoundManager.prototype.playMenuSound = function () {
 
 };
 
-Game.SoundManager.prototype.toggleMute = function () {
+Game.SoundManager.prototype.toggleMute = function ( muted ) {
 
-    this.muted = ! this.muted;
+    this.muted = ( muted !== undefined ) ? muted : ! this.muted;
 
     //
 

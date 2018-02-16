@@ -1,6 +1,6 @@
 /*
  * @author ohmed
- * Stones map decoration
+ * Stones2 map decoration
 */
 
 var Stones2 = function ( arena, params ) {
@@ -21,7 +21,7 @@ Stones2.prototype.init = function () {
     this.sizeX = this.size.x * this.scale.x;
     this.sizeY = this.size.y * this.scale.y;
     this.sizeZ = this.size.z * this.scale.z;
-    this.radius = 20;
+    this.radius = 5;
 
     this.arena.collisionManager.addObject( this, 'circle' );
 
@@ -32,7 +32,7 @@ Stones2.prototype.toJSON = function () {
     return {
         id:         this.id,
         name:       this.name,
-        type:       'rock2',
+        type:       'stone2',
         position:   this.position.toJSON(),
         rotation:   this.rotation,
         scale:      this.scale.toJSON()

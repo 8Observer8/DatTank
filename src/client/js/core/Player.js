@@ -296,12 +296,6 @@ Game.Player.prototype.updateHealth = function ( health, killerId ) {
 
     }
 
-    if ( localStorage.getItem('sound') === 'true' && health > this.health ) {
-
-        soundManager.menuSound.play();
-
-    }
-
     this.tank.updateLabel();
 
     if ( this.health === 0 ) {
@@ -321,12 +315,6 @@ Game.Player.prototype.updateHealth = function ( health, killerId ) {
 };
 
 Game.Player.prototype.updateAmmo = function ( value ) {
-
-    if ( localStorage.getItem('sound') === 'true' && value > this.ammo ) {
-
-        soundManager.menuSound.play();
-
-    }
 
     this.ammo = value;
     ui.updateAmmo( this.ammo );
