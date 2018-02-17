@@ -29,9 +29,6 @@ Game.DecorationManager.prototype.init = function () {
         tree6:      { model: resourceManager.getModel( 'tree6.json' ) },
         tree7:      { model: resourceManager.getModel( 'tree7.json' ) },
         tree8:      { model: resourceManager.getModel( 'tree8.json' ) },
-        tree9:      { model: resourceManager.getModel( 'tree9.json' ) },
-        tree10:     { model: resourceManager.getModel( 'tree10.json' ) },
-        tree11:     { model: resourceManager.getModel( 'tree11.json' ) },
 
         stone1:     { model: resourceManager.getModel( 'stone1.json' ) },
         stone2:     { model: resourceManager.getModel( 'stone2.json' ) },

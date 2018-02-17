@@ -152,6 +152,7 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
 
 Game.Player.prototype.move = function ( directionX, directionZ, positionX, positionZ, rotation ) {
 
+    if ( this.status !== 'alive' ) return;
     var player = this;
 
     player.moveDirection.x = directionX;
@@ -168,6 +169,7 @@ Game.Player.prototype.move = function ( directionX, directionZ, positionX, posit
 
 Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
 
+    if ( this.status !== 'alive' ) return;
     var player = this;
 
     //
@@ -275,8 +277,9 @@ Game.Player.prototype.shoot = function ( bulletId ) {
 
 Game.Player.prototype.updateHealth = function ( health, killerId ) {
 
+    if ( this.status !== 'alive' ) return;
+
     health = ( health !== undefined ) ? health : this.health;
-    if ( this.health === 0 ) return;
 
     this.tank.addHealthChangeLabel( health - this.health );
 
@@ -290,7 +293,7 @@ Game.Player.prototype.updateHealth = function ( health, killerId ) {
 
         }
 
-        ui.updateHealth( this.health );
+        ui.updateHealth( health );
 
     }
 
@@ -318,12 +321,16 @@ Game.Player.prototype.updateHealth = function ( health, killerId ) {
 
 Game.Player.prototype.updateAmmo = function ( value ) {
 
+    if ( this.status !== 'alive' ) return;
+
     this.ammo = value;
     ui.updateAmmo( this.ammo );
 
 };
 
 Game.Player.prototype.die = function ( killerId ) {
+
+    if ( this.status !== 'alive' ) return;
 
     var scope = this;
     var killer = Game.arena.playerManager.getById( killerId ) || Game.arena.towerManager.getById( killerId );

@@ -79,6 +79,7 @@ Game.ResourceManager = function () {
         'tank_shooting.wav',
         'tank_moving.wav',
         'tank_explosion.wav',
+        'box_pick.wav'
     ];
 
     //

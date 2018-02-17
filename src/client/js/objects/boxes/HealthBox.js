@@ -42,6 +42,13 @@ Game.Box.Health.prototype.remove = function ( fromNetwork ) {
 
         Game.arena.boxManager.remove( this );
 
+        var sound = new THREE.PositionalAudio( view.sound.listener );
+        sound.position.set( this.position.x, this.position.y, this.position.z );
+        sound.setBuffer( resourceManager.getSound('box_pick.wav') );
+        sound.loop = false;
+        sound.setRefDistance( 200 );
+        sound.play();
+
     } else {
 
         view.scene.remove( this.mesh );
