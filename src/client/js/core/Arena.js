@@ -9,7 +9,7 @@ Game.Arena = function () {
     this.me = false;
     this.stopped = false;
 
-    this.viewRange = 650;
+    this.viewRange = 601;
 
     //
 

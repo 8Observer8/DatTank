@@ -171,6 +171,8 @@ Game.Tank.prototype.updateLabel = function () {
 
     //
 
+    this.label.ctx.clearRect( 0, 0, this.label.canvas.width, this.label.canvas.height );
+
     this.label.ctx.shadowColor = '#000';
     this.label.ctx.shadowOffsetX = 0;
     this.label.ctx.shadowOffsetY = 0;

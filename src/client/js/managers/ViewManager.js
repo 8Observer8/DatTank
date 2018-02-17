@@ -113,7 +113,7 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
         model = Game.arena.decorationManager.list[ decoration.type ].model;
 
         mesh = new THREE.Mesh( model.geometry, [ model.material[0].clone() ] );
-        mesh.material[0].side = THREE.FrontSize;
+        mesh.material[0].side = THREE.FrontSide;
         mesh.scale.set( decoration.scale.x, decoration.scale.y, decoration.scale.z );
         mesh.rotation.y = Math.random() * Math.PI;
         mesh.position.set( decoration.position.x, decoration.position.y, decoration.position.z );
@@ -138,7 +138,7 @@ Game.ViewManager.prototype.addTerrain = function () {
     groundTexture.wrapT = THREE.RepeatWrapping;
     groundTexture.repeat.set( 30, 30 );
 
-    var ground = new THREE.Mesh( new THREE.PlaneBufferGeometry( size + 1800, size + 1800 ), new THREE.MeshBasicMaterial({ map: groundTexture, color: 0x777050 }) );
+    var ground = new THREE.Mesh( new THREE.PlaneBufferGeometry( size + 1800, size + 1800 ), new THREE.MeshBasicMaterial({ depthWrite: false, map: groundTexture, color: 0x777050 }) );
     ground.rotation.x = - Math.PI / 2;
     this.scene.add( ground );
     this.scene.ground = ground;
@@ -202,7 +202,6 @@ Game.ViewManager.prototype.addObjectShadow = function ( objectType, position, sc
         shadowMesh.scale.set( shadowScale, shadowScale, shadowScale );
         shadowMesh.position.x += 2 * shadowMesh.scale.y / 2 - 2;
         shadowMesh.position.z += 2 * shadowMesh.scale.y / 2 - 4;
-        shadowMesh.renderOrder = 2;
         this.scene.add( shadowMesh );
 
     }
@@ -219,7 +218,6 @@ Game.ViewManager.prototype.addObjectShadow = function ( objectType, position, sc
         shadowMesh.scale.set( shadowScale, shadowScale, shadowScale );
         shadowMesh.position.x += shadowMesh.scale.y / 2;
         shadowMesh.position.z += shadowMesh.scale.y / 2;
-        shadowMesh.renderOrder = 2;
         this.scene.add( shadowMesh );
 
     }
@@ -237,7 +235,7 @@ Game.ViewManager.prototype.addGrassZones = function () {
     grass.scale.set( scale, scale, scale );
     grass.material.transparent = true;
     grass.position.set( ( Math.random() - 0.5 ) * size, 0.1 + Math.random() / 10, ( Math.random() - 0.5 ) * size );
-    grass.renderOrder = 1;
+    grass.renderOrder = 5;
     this.scene.add( grass );
 
 };
@@ -268,7 +266,7 @@ Game.ViewManager.prototype.addTeamZone = function () {
 
         plane.rotation.x = - Math.PI / 2;
         plane.position.set( x, 2, z );
-        plane.renderOrder = 0;
+        plane.renderOrder = 9;
         this.scene.add( plane );
         plane.name = 'team-spawn-plane-' + name;
 
@@ -349,15 +347,21 @@ Game.ViewManager.prototype.animate = function ( delta ) {
 
         if ( Math.sqrt( dx * dx + dz * dz ) < 85 ) {
 
+            decoration.material[0].side = THREE.BackSide;
             decoration.material[0].transparent = true;
             decoration.material[0].opacity = 0.2;
             decoration.material[0].depthWrite = false;
+            decoration.material[0].depthTest = false;
+            decoration.renderOrder = 10;
 
         } else {
 
+            decoration.material[0].side = THREE.FrontSide;
             decoration.material[0].transparent = false;
             decoration.material[0].opacity = 1;
             decoration.material[0].depthWrite = true;
+            decoration.material[0].depthTest = true;
+            decoration.renderOrder = 0;
 
         }
 

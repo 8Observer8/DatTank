@@ -253,6 +253,7 @@ Game.Tower.prototype.addHealthChangeLabel = function ( delta ) {
     sprite.position.set( 0, 35, 0 );
     sprite.scale.set( 24, 12, 1 );
     sprite.time = 0;
+    sprite.renderOrder = 5;
 
     this.object.add( sprite );
 
