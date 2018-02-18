@@ -27,11 +27,15 @@ DecorationManager.prototype.init = function ( params ) {
 
         while ( count ) {
 
-            scale = 5 * Math.random() + 25;
-            scaleH = 5 * Math.random() + 30;
-
             x = 2350 * ( Math.random() - 0.5 );
             z = 2350 * ( Math.random() - 0.5 );
+
+            if ( type.indexOf('Stone') != -1 ) {
+
+                scale = 5 * Math.random() + 20;
+                scaleH = 5 * Math.random() + 20;
+
+            }
 
             if ( type.indexOf('Tree') != -1 ) {
 
@@ -75,7 +79,7 @@ DecorationManager.prototype.init = function ( params ) {
             var decoration = new Game.Decoration[ type ]( this.arena, {
                 position:   new Game.Vec3( x, 0, z ),
                 scale:      new Game.Vec3( scale, scaleH, scale ),
-                rotation:   2 * Math.PI * Math.random()
+                rotation:   ( params.rotation !== false ) ? params.rotation : 2 * Math.PI * Math.random()
             });
 
             this.decorations.push( decoration );

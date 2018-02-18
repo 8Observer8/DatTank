@@ -108,8 +108,8 @@ Game.Tank.prototype.initTracks = function () {
             lastUpdate: 0
         });
 
-        plane1.renderOrder = 3;
-        plane2.renderOrder = 3;
+        plane1.renderOrder = 10;
+        plane2.renderOrder = 10;
 
         view.scene.add( plane1 );
         view.scene.add( plane2 );

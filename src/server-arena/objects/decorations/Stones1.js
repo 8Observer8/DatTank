@@ -21,9 +21,10 @@ Stones1.prototype.init = function () {
     this.sizeX = this.size.x * this.scale.x;
     this.sizeY = this.size.y * this.scale.y;
     this.sizeZ = this.size.z * this.scale.z;
-    this.radius = 5;
+    this.rotation = 0;
 
-    this.arena.collisionManager.addObject( this, 'circle' );
+    this.arena.collisionManager.addObject( { position: { x: this.position.x + 45, z: this.position.z }, radius: 15 }, 'circle' );
+    this.arena.collisionManager.addObject( { position: { x: this.position.x - 45, z: this.position.z }, radius: 15 }, 'circle' );
 
 };
 

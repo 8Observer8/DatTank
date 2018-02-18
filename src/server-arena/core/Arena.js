@@ -48,10 +48,10 @@ Arena.prototype.init = function ( callback ) {
         trees7:     { type: 'Tree7', count: 30 },
         trees8:     { type: 'Tree8', count: 60 },
 
-        stones1:    { type: 'Stones1', count: 20 },
-        stones2:    { type: 'Stones2', count: 10 },
-        stones3:    { type: 'Stones3', count: 10 },
-        stones4:    { type: 'Stones4', count: 2 },
+        stones1:    { type: 'Stones1', count: 5 },
+        stones2:    { type: 'Stones2', count: 5 },
+        stones3:    { type: 'Stones3', count: 50 },
+        stones4:    { type: 'Stones4', count: 10 },
 
         oldCastle:  { type: 'OldCastle', count: 3 }
 

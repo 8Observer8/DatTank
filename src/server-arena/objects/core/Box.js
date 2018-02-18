@@ -11,7 +11,7 @@ var Box = function ( arena, params ) {
     this.arena = arena;
 
     this.position = new Game.Vec3( params.position.x, params.position.y, params.position.z ) || new Game.Vec3( 0, 20, 0 );
-    this.radius = 3;
+    this.radius = 10;
 
     this.amount = 0;
     this.removed = false;

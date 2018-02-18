@@ -161,7 +161,8 @@ Player.prototype.respawn = function ( tankName ) {
 
     if ( ! this.collisionBox ) {
 
-        this.arena.collisionManager.addObject( this, 'box', true );
+        this.radius = 20;
+        this.arena.collisionManager.addObject( this, 'circle', true );
 
     } else {
 
@@ -490,6 +491,7 @@ Player.prototype.isObjectInRange = function ( object ) {
 Player.prototype.update = function ( delta, time ) {
 
     var scope = this;
+    if ( scope.status !== Player.Alive ) return;
 
     // regeneration
 

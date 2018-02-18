@@ -8,7 +8,7 @@ var Stones3 = function ( arena, params ) {
     this.id = Stones3.numIds ++;
     Game.Decoration.call( this, arena, params );
 
-    this.size.set( 0.8, 0.8, 0.8 );
+    this.size.set( 0.8, 0.02, 0.8 );
     this.type = 'Stones3';
     this.init();
 
@@ -21,9 +21,6 @@ Stones3.prototype.init = function () {
     this.sizeX = this.size.x * this.scale.x;
     this.sizeY = this.size.y * this.scale.y;
     this.sizeZ = this.size.z * this.scale.z;
-    this.radius = 20;
-
-    this.arena.collisionManager.addObject( this, 'circle' );
 
 };
 

@@ -115,7 +115,7 @@ Game.ViewManager.prototype.addDecorations = function ( decorations ) {
         mesh = new THREE.Mesh( model.geometry, [ model.material[0].clone() ] );
         mesh.material[0].side = THREE.FrontSide;
         mesh.scale.set( decoration.scale.x, decoration.scale.y, decoration.scale.z );
-        mesh.rotation.y = Math.random() * Math.PI;
+        mesh.rotation.y = decoration.rotation;
         mesh.position.set( decoration.position.x, decoration.position.y, decoration.position.z );
         mesh.name = decoration.type;
         view.scene.add( mesh );
@@ -140,6 +140,7 @@ Game.ViewManager.prototype.addTerrain = function () {
 
     var ground = new THREE.Mesh( new THREE.PlaneBufferGeometry( size + 1800, size + 1800 ), new THREE.MeshBasicMaterial({ depthWrite: false, map: groundTexture, color: 0x777050 }) );
     ground.rotation.x = - Math.PI / 2;
+    ground.renderOrder = 6;
     this.scene.add( ground );
     this.scene.ground = ground;
 
@@ -202,13 +203,23 @@ Game.ViewManager.prototype.addObjectShadow = function ( objectType, position, sc
         shadowMesh.scale.set( shadowScale, shadowScale, shadowScale );
         shadowMesh.position.x += 2 * shadowMesh.scale.y / 2 - 2;
         shadowMesh.position.z += 2 * shadowMesh.scale.y / 2 - 4;
+        shadowMesh.renderOrder = 10;
         this.scene.add( shadowMesh );
 
     }
 
     if ( objectType.indexOf('stone') !== -1 ) {
 
-        shadowScale = 5 * scale.y;
+        if ( objectType === 'stone3' ) {
+
+            shadowScale = scale.y;
+
+        } else {
+            
+            shadowScale = 5 * scale.y;
+
+        }
+
         shadowTexture = resourceManager.getTexture( objectType + '-shadow.png' );
         shadowMesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ map: shadowTexture, transparent: true, depthWrite: false, opacity: 0.48 }) );
         shadowMesh.material.transparent = true;
@@ -218,6 +229,7 @@ Game.ViewManager.prototype.addObjectShadow = function ( objectType, position, sc
         shadowMesh.scale.set( shadowScale, shadowScale, shadowScale );
         shadowMesh.position.x += shadowMesh.scale.y / 2;
         shadowMesh.position.z += shadowMesh.scale.y / 2;
+        shadowMesh.renderOrder = 10;
         this.scene.add( shadowMesh );
 
     }
@@ -235,7 +247,7 @@ Game.ViewManager.prototype.addGrassZones = function () {
     grass.scale.set( scale, scale, scale );
     grass.material.transparent = true;
     grass.position.set( ( Math.random() - 0.5 ) * size, 0.1 + Math.random() / 10, ( Math.random() - 0.5 ) * size );
-    grass.renderOrder = 5;
+    grass.renderOrder = 8;
     this.scene.add( grass );
 
 };
@@ -345,7 +357,7 @@ Game.ViewManager.prototype.animate = function ( delta ) {
         var dx = decoration.position.x - this.camera.position.x;
         var dz = decoration.position.z - this.camera.position.z;
 
-        if ( Math.sqrt( dx * dx + dz * dz ) < 85 ) {
+        if ( Math.sqrt( dx * dx + dz * dz ) < 100 ) {
 
             decoration.material[0].side = THREE.BackSide;
             decoration.material[0].transparent = true;

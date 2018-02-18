@@ -21,7 +21,7 @@ Tree3.prototype.init = function () {
     this.sizeX = this.size.x * this.scale.x;
     this.sizeY = this.size.y * this.scale.y;
     this.sizeZ = this.size.z * this.scale.z;
-    this.radius = 1;
+    this.radius = 0.5;
 
     this.arena.collisionManager.addObject( this, 'circle' );
 
