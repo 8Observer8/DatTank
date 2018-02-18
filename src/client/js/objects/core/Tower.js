@@ -188,7 +188,7 @@ Game.Tower.prototype.initChangeTeamEffect = function () {
     view.scene.add( this.changeTeamEffectPipe );
 
     var pipe = new THREE.Mesh( new THREE.CylinderBufferGeometry( 50, 50, 550, 10 ), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.0, depthWrite: false }) );
-    pipe.renderOrder = 1;
+    pipe.renderOrder = 10;
     this.changeTeamEffectPipe.pipe = pipe;
     this.changeTeamEffectPipe.visible = false;
     this.changeTeamEffectPipe.add( pipe );
@@ -427,7 +427,7 @@ Game.Tower.prototype.animate = function ( delta ) {
         } else {
         
             this.changeTeamEffectPipe.pipe.material.opacity = progress / 2;
-            this.changeTeamEffectPipe.position.y += 0.4;
+            this.changeTeamEffectPipe.position.y += 0.6 * delta / 16;
             this.changeTeamEffectPipe.scale.set( progress, progress, progress );
 
         }
@@ -436,6 +436,7 @@ Game.Tower.prototype.animate = function ( delta ) {
 
             this.changeTeamAnimationTime = false;
             this.changeTeamEffectPipe.visible = false;
+            this.changeTeamEffectPipe.position.y = 0;
 
         }
 

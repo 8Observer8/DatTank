@@ -7,7 +7,7 @@ var Health = function ( arena, params ) {
 
     Game.Box.call( this, arena, params );
 
-    this.type = 'Health';
+    this.boxType = 'Health';
     this.amount = 20;
 
     //

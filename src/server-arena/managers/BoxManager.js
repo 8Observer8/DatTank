@@ -6,9 +6,9 @@
 var BoxManager = function ( arena, params ) {
 
     this.arena = arena;
+
     this.boxes = [];
     this.count = params.count || 25;
-    this.time = 0;
 
 };
 
@@ -67,6 +67,7 @@ BoxManager.prototype.add = function ( params ) {
 BoxManager.prototype.remove = function ( box ) {
 
     var newBoxList = [];
+    box.removed = true;
 
     for ( var i = 0, il = this.boxes.length; i < il; i ++ ) {
 
@@ -77,6 +78,10 @@ BoxManager.prototype.remove = function ( box ) {
     }
 
     this.boxes = newBoxList;
+
+    //
+
+    this.add({ type: ( Math.random() > 0.4 ) ? 'Ammo' : 'Health' });
 
 };
 
@@ -100,38 +105,6 @@ BoxManager.prototype.getInRange = function ( player ) {
     }
 
     return result;
-
-};
-
-BoxManager.prototype.update = function ( delay ) {
-
-    var players = this.arena.playerManager.players;
-
-    this.time += delay;
-
-    //
-
-    var boxToRemove = [];
-
-    for ( var i = 0, il = players.length; i < il; i ++ ) {
-
-        var boxes = this.getInRange( players[ i ] );
-
-        for ( var j = 0, jl = boxes.length; j < jl; j ++ ) {
-
-            boxes[ j ].pickUp( players[ i ] );
-            boxToRemove.push( boxes[ j ] );
-
-        }
-
-    }
-
-    for ( var i = 0, il = boxToRemove.length; i < il; i ++ ) {
-
-        this.remove( boxToRemove[ i ] );
-        this.add({ type: ( Math.random() > 0.4 ) ? 'Ammo' : 'Health' });
-
-    }
 
 };
 

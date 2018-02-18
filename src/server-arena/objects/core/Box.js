@@ -11,9 +11,11 @@ var Box = function ( arena, params ) {
     this.arena = arena;
 
     this.position = new Game.Vec3( params.position.x, params.position.y, params.position.z ) || new Game.Vec3( 0, 20, 0 );
+    this.radius = 3;
 
     this.amount = 0;
-    this.type = 'none';
+    this.removed = false;
+    this.type = 'Box';
 
     this.networkBuffers = {};
 
@@ -25,7 +27,7 @@ Box.prototype = {};
 
 Box.prototype.init = function () {
 
-    // nothing here
+    this.arena.collisionManager.addObject( this, 'circle' );
 
 };
 
@@ -50,7 +52,7 @@ Box.prototype.toJSON = function () {
     return {
 
         id:         this.id,
-        type:       this.type,
+        type:       this.boxType,
         amount:     this.amount,
         position:   this.position.toJSON()
 

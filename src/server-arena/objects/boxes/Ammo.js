@@ -7,7 +7,7 @@ var Ammo = function ( arena, params ) {
 
     Game.Box.call( this, arena, params );
 
-    this.type = 'Ammo';
+    this.boxType = 'Ammo';
     this.amount = 40;
 
     //

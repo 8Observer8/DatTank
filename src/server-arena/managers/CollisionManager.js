@@ -53,11 +53,11 @@ CollisionManager.prototype.collisionStart = function ( event ) {
 
             obstacle = ( event.bodyA === object.body ) ? event.bodyB : event.bodyA;
 
-            if ( object.parent.type === 'Player' && obstacle.parent.type !== 'Bullet' ) {
+            if ( object.parent.type === 'Player' && obstacle.parent.type !== 'Bullet' && obstacle.parent.type !== 'Box' ) {
 
                 object.collision = true;
 
-            } else if ( object.parent.type === 'Bullet' && object.parent.active ) {
+            } else if ( object.parent.type === 'Bullet' && object.parent.active && obstacle.parent.type !== 'Box' ) {
 
                 target = ( event.bodyA == object.body ) ? event.bodyB : event.bodyA;
                 if ( target.parent.type !== 'Bullet' ) {
@@ -65,6 +65,11 @@ CollisionManager.prototype.collisionStart = function ( event ) {
                     object.parent.explode( target.parent );
 
                 }
+
+            } else if ( object.parent.type === 'Player' && obstacle.parent.type === 'Box' && ! obstacle.parent.removed ) {
+
+                obstacle.parent.pickUp( object.parent );
+                this.arena.boxManager.remove( obstacle.parent );
 
             }
 
