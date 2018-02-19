@@ -79,6 +79,8 @@ BoxManager.prototype.remove = function ( box ) {
 
     this.boxes = newBoxList;
 
+    this.arena.collisionManager.removeObject( box );
+
     //
 
     this.add({ type: ( Math.random() > 0.4 ) ? 'Ammo' : 'Health' });
