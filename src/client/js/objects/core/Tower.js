@@ -349,6 +349,7 @@ Game.Tower.prototype.changeTeam = function ( team, newOwnerId, init ) {
         this.changeTeamAnimationTime = 0;
         this.changeTeamEffectPipe.pipe.material.color.setHex( + team.color.replace('#', '0x') );
         this.changeTeamEffectPipe.pipe.material.opacity = 0;
+        this.changeTeamEffectPipe.position.y = 100;
         this.changeTeamEffectPipe.scale.set( 0.1, 0.1, 0.1 );
         this.changeTeamEffectPipe.visible = true;
 
@@ -438,7 +439,6 @@ Game.Tower.prototype.animate = function ( delta ) {
 
             this.changeTeamAnimationTime = false;
             this.changeTeamEffectPipe.visible = false;
-            this.changeTeamEffectPipe.position.y = 0;
 
         }
 

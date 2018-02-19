@@ -239,6 +239,7 @@ Arena.prototype.update = function () {
 
     // update managers
 
+    this.botManager.update( delta, time );
     this.playerManager.update( delta, time );
     this.towerManager.update( delta, time );
 

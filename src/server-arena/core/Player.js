@@ -428,7 +428,12 @@ Player.prototype.hit = function ( killer ) {
 
     killer = this.arena.playerManager.getById( killer ) || this.arena.towerManager.getById( killer );
 
-    if ( ! killer ) return;
+    if ( ! killer ) {
+
+        return;
+
+    }
+
     if ( killer.team.id === this.team.id ) {
 
         if ( killer instanceof Player ) killer.friendlyFire();
@@ -634,14 +639,6 @@ Player.prototype.update = function ( delta, time ) {
             scope.rotation -= 0.001 * delta;
 
         }
-
-    }
-
-    // if bot update
-
-    if ( this.bot ) {
-
-        this.bot.update();
 
     }
 

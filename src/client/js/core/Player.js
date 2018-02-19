@@ -23,6 +23,7 @@ Game.Player = function ( arena, params ) {
 
     this.position = new THREE.Vector3( params.position.x, params.position.y, params.position.z );
     this.positionCorrection = new THREE.Vector3( 0, 0, 0 );
+    this.rotationCorrection = params.rotation;
     this.rotation = params.rotation;
     this.topRotation = params.rotationTop;
 
@@ -104,6 +105,7 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
 
         this.position.set( params.position.x, params.position.y, params.position.z );
         this.rotation = params.rotation;
+        this.rotationCorrection = params.rotation;
         this.topRotation = params.rotationTop;
 
         this.tank.reset();
@@ -153,17 +155,21 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
 Game.Player.prototype.move = function ( directionX, directionZ, positionX, positionZ, rotation ) {
 
     if ( this.status !== 'alive' ) return;
-    var player = this;
 
-    player.moveDirection.x = directionX;
-    player.moveDirection.y = directionZ;
+    this.moveDirection.x = directionX;
+    this.moveDirection.y = directionZ;
 
-    player.positionCorrection.set( positionX - player.position.x, 0, positionZ - player.position.z );
+    this.positionCorrection.set( positionX - this.position.x, 0, positionZ - this.position.z );
+    this.rotationCorrection = rotation / 1000.0 - this.rotation;
 
-    player.rotation = rotation / 1000.0;
+    //
 
-    player.tank.setRotation( player.rotation );
-    player.tank.setPosition( player.position.x, player.position.y, player.position.z );
+    if ( this.bot ) {
+
+        this.bot.moveDuration = false;
+        this.bot.rotateBaseDuration = false;
+
+    }
 
 };
 
@@ -334,9 +340,8 @@ Game.Player.prototype.die = function ( killerId ) {
 
     var scope = this;
     var killer = Game.arena.playerManager.getById( killerId ) || Game.arena.towerManager.getById( killerId );
-    if ( ! killer ) return;
 
-    if ( Game.arena.me.id === killer.id ) {
+    if ( killer && Game.arena.me.id === killer.id ) {
 
         game.logger.newEvent( 'kill' );
 
@@ -352,9 +357,13 @@ Game.Player.prototype.die = function ( killerId ) {
 
                 ui.showContinueBox( '<br>' + killer.team.name + ' team tower', killer.team.color );
 
-            } else {
+            } else if ( killer instanceof Game.Player ) {
 
                 ui.showContinueBox( killer.login, killer.team.color );
+
+            } else {
+
+                ui.showContinueBox( '<br>stray bullet', '#555' );
 
             }
 
@@ -366,7 +375,11 @@ Game.Player.prototype.die = function ( killerId ) {
 
     }
 
-    ui.showKills( killer, this );
+    if ( killer ) {
+
+        ui.showKills( killer, this );
+
+    }
 
     this.moveDirection.x = 0;
     this.moveDirection.y = 0;
@@ -465,13 +478,51 @@ Game.Player.prototype.update = function ( time, delta ) {
 
     //
 
-    var dx = this.positionCorrection.x * ( delta / 500 );
-    var dz = this.positionCorrection.z * ( delta / 500 );
+    var dx = this.positionCorrection.x * delta / 300;
+    var dz = this.positionCorrection.z * delta / 300;
+    var dr = this.rotationCorrection * delta / 100;
+
+    if ( Math.abs( dr ) > 0.001 ) {
+
+        if ( this.rotationCorrection - dr >= 0 ) {
+        
+            this.rotationCorrection -= dr;
+
+        } else {
+
+            dr = this.rotationCorrection;
+            this.rotationCorrection = 0;
+
+        }
+
+        this.rotation += dr;
+        this.tank.setRotation( this.rotation );
+
+    }
 
     if ( Math.abs( dx ) > 0.1 || Math.abs( dz ) > 0.1 ) {
 
-        this.positionCorrection.x -= dx;
-        this.positionCorrection.z -= dz;
+        if ( this.positionCorrection.x - dx >= 0 ) {
+
+            this.positionCorrection.x -= dx;
+
+        } else {
+
+            dx = this.positionCorrection.x;
+            this.positionCorrection.x = 0;
+
+        }
+
+        if ( this.positionCorrection.z - dz >= 0 ) {
+
+            this.positionCorrection.z -= dz;
+
+        } else {
+
+            dz = this.positionCorrection.z;
+            this.positionCorrection.z = 0;
+
+        }
 
         this.position.x += dx;
         this.position.z += dz;

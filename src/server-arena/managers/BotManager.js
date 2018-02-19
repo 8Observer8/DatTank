@@ -65,6 +65,16 @@ BotManager.prototype.getById = function ( botId ) {
 
 };
 
+BotManager.prototype.update = function ( delta ) {
+
+    for ( var i = 0, il = this.bots.length; i < il; i ++ ) {
+
+        this.bots[ i ].update( delta );
+
+    }
+
+};
+
 //
 
 module.exports = BotManager;
