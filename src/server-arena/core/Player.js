@@ -316,6 +316,12 @@ Player.prototype.move = function ( directionX, directionZ ) {
 
     var scope = this;
 
+    if ( scope.status !== Player.Alive ) {
+
+        return;
+
+    }
+
     if ( scope.moveDirection.x === directionX && scope.moveDirection.y === directionZ ) {
 
         return;
@@ -329,12 +335,6 @@ Player.prototype.move = function ( directionX, directionZ ) {
     var bufferView = scope.networkBuffers['move'].bufferView || new Int16Array( buffer );
     scope.networkBuffers['move'].buffer = buffer;
     scope.networkBuffers['move'].bufferView = bufferView;
-
-    if ( scope.status !== Player.Alive ) {
-
-        return;
-
-    }
 
     scope.moveDirection.x = directionX;
     scope.moveDirection.y = directionZ;
@@ -356,17 +356,17 @@ Player.prototype.shoot = function () {
 
     var scope = this;
 
-    scope.networkBuffers['shoot'] = scope.networkBuffers['shoot'] || {};
-    var buffer = scope.networkBuffers['shoot'].buffer || new ArrayBuffer( 6 );
-    var bufferView = scope.networkBuffers['shoot'].bufferView || new Uint16Array( buffer );
-    scope.networkBuffers['shoot'].buffer = buffer;
-    scope.networkBuffers['shoot'].bufferView = bufferView;
-
     if ( scope.status !== Player.Alive ) {
 
         return;
 
     }
+
+    scope.networkBuffers['shoot'] = scope.networkBuffers['shoot'] || {};
+    var buffer = scope.networkBuffers['shoot'].buffer || new ArrayBuffer( 6 );
+    var bufferView = scope.networkBuffers['shoot'].bufferView || new Uint16Array( buffer );
+    scope.networkBuffers['shoot'].buffer = buffer;
+    scope.networkBuffers['shoot'].bufferView = bufferView;
 
     if ( scope.shootTimeout ) return;
 
@@ -453,8 +453,8 @@ Player.prototype.hit = function ( killer ) {
 
 Player.prototype.die = function ( killer ) {
 
-    if ( this.status === Player.Dead ) return;
-
+    if ( this.status !== Player.Alive ) return;
+console.log( this.id, this.status, this.health, killer.id );
     this.status = Player.Dead;
 
     killer.kills ++;
@@ -727,7 +727,6 @@ Player.prototype.toPublicJSON = function () {
 Player.numIds = 1;
 Player.Alive = 100;
 Player.Dead = 110;
-Player.AFK = 120;
 
 //
 

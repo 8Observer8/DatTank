@@ -10,7 +10,7 @@ Game.Player = function ( arena, params ) {
     this.id = params.id;
     this.login = params.login || 'guest';
 
-    this.status = 'alive';
+    this.status = Game.Player.Alive;
     this.team = arena.teamManager.getById( params.team ) || false;
 
     this.health = params.health;
@@ -23,7 +23,7 @@ Game.Player = function ( arena, params ) {
 
     this.position = new THREE.Vector3( params.position.x, params.position.y, params.position.z );
     this.positionCorrection = new THREE.Vector3( 0, 0, 0 );
-    this.rotationCorrection = params.rotation;
+    this.rotationCorrection = 0;
     this.rotation = params.rotation;
     this.topRotation = params.rotationTop;
 
@@ -99,13 +99,13 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
 
     if ( fromNetwork ) {
 
-        this.status = 'alive';
+        this.status = Game.Player.Alive;
         this.ammo = params.ammo;
         this.health = params.health;
 
         this.position.set( params.position.x, params.position.y, params.position.z );
         this.rotation = params.rotation;
-        this.rotationCorrection = params.rotation;
+        this.rotationCorrection = 0;
         this.topRotation = params.rotationTop;
 
         this.tank.reset();
@@ -154,7 +154,7 @@ Game.Player.prototype.respawn = function ( fromNetwork, params ) {
 
 Game.Player.prototype.move = function ( directionX, directionZ, positionX, positionZ, rotation ) {
 
-    if ( this.status !== 'alive' ) return;
+    if ( this.status !== Game.Player.Alive ) return;
 
     this.moveDirection.x = directionX;
     this.moveDirection.y = directionZ;
@@ -175,12 +175,10 @@ Game.Player.prototype.move = function ( directionX, directionZ, positionX, posit
 
 Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
 
-    if ( this.status !== 'alive' ) return;
+    if ( this.status !== Game.Player.Alive ) return;
     var player = this;
 
     //
-
-    player.tank.update( delta );
 
     if ( player.moveDirection.x !== 0 || player.moveDirection.y !== 0 ) {
 
@@ -247,7 +245,7 @@ Game.Player.prototype.shoot = function ( bulletId ) {
 
     var scope = this;
 
-    if ( this.status !== 'alive' ) return;
+    if ( this.status !== Game.Player.Alive ) return;
 
     if ( Game.arena.me.id === this.id ) {
 
@@ -283,7 +281,7 @@ Game.Player.prototype.shoot = function ( bulletId ) {
 
 Game.Player.prototype.updateHealth = function ( health, killerId ) {
 
-    if ( this.status !== 'alive' ) return;
+    if ( this.status !== Game.Player.Alive ) return;
 
     health = ( health !== undefined ) ? health : this.health;
 
@@ -327,7 +325,7 @@ Game.Player.prototype.updateHealth = function ( health, killerId ) {
 
 Game.Player.prototype.updateAmmo = function ( value ) {
 
-    if ( this.status !== 'alive' ) return;
+    if ( this.status !== Game.Player.Alive ) return;
 
     this.ammo = value;
     ui.updateAmmo( this.ammo );
@@ -336,10 +334,12 @@ Game.Player.prototype.updateAmmo = function ( value ) {
 
 Game.Player.prototype.die = function ( killerId ) {
 
-    if ( this.status !== 'alive' ) return;
+    if ( this.status !== Game.Player.Alive ) return;
 
     var scope = this;
     var killer = Game.arena.playerManager.getById( killerId ) || Game.arena.towerManager.getById( killerId );
+
+    this.status = Game.Player.Dead;
 
     if ( killer && Game.arena.me.id === killer.id ) {
 
@@ -475,6 +475,7 @@ Game.Player.prototype.update = function ( time, delta ) {
 
     this.updateDirectionMovement( time, delta );
     this.updateExplosion( delta );
+    this.tank.update( delta );
 
     //
 
@@ -484,17 +485,7 @@ Game.Player.prototype.update = function ( time, delta ) {
 
     if ( Math.abs( dr ) > 0.001 ) {
 
-        if ( this.rotationCorrection - dr >= 0 ) {
-        
-            this.rotationCorrection -= dr;
-
-        } else {
-
-            dr = this.rotationCorrection;
-            this.rotationCorrection = 0;
-
-        }
-
+        this.rotationCorrection -= dr;
         this.rotation += dr;
         this.tank.setRotation( this.rotation );
 
@@ -502,27 +493,8 @@ Game.Player.prototype.update = function ( time, delta ) {
 
     if ( Math.abs( dx ) > 0.1 || Math.abs( dz ) > 0.1 ) {
 
-        if ( this.positionCorrection.x - dx >= 0 ) {
-
-            this.positionCorrection.x -= dx;
-
-        } else {
-
-            dx = this.positionCorrection.x;
-            this.positionCorrection.x = 0;
-
-        }
-
-        if ( this.positionCorrection.z - dz >= 0 ) {
-
-            this.positionCorrection.z -= dz;
-
-        } else {
-
-            dz = this.positionCorrection.z;
-            this.positionCorrection.z = 0;
-
-        }
+        this.positionCorrection.x -= dx;
+        this.positionCorrection.z -= dz;
 
         this.position.x += dx;
         this.position.z += dz;
@@ -572,3 +544,8 @@ Game.Player.prototype.addEventListeners = function () {
     this.addEventListener( 'PlayerTankUpdateAmmo', function ( event ) { scope.updateAmmo( event.data[1] ); });
 
 };
+
+//
+
+Game.Player.Alive = 100;
+Game.Player.Dead = 110;
