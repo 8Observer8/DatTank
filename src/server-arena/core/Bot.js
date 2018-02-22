@@ -85,7 +85,6 @@ Bot.prototype.die = function () {
 
             if ( scope.arena.disposed ) return;
             scope.arena.botManager.remove( scope );
-            scope.arena.removePlayer( scope.player );
 
         }, 2000 );
 

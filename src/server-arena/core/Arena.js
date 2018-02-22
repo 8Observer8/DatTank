@@ -71,7 +71,22 @@ Arena.prototype.init = function ( callback ) {
 
 Arena.prototype.addPlayer = function ( params ) {
 
-    var scope = this;
+    // dispose extra bots if needed
+
+    if ( params.socket && Game.ArenaManager.maxPlayersInArena - this.playerManager.players.length - 2 < 0 ) {
+
+        var bot = this.botManager.bots[0];
+
+        if ( bot ) {
+            
+            this.botManager.remove( bot );
+
+        }
+
+    }
+
+    //
+
     var player = new Game.Player( this, { login: params.login, tank: params.tank, socket: params.socket });
     this.playerManager.add( player );
 
@@ -79,7 +94,7 @@ Arena.prototype.addPlayer = function ( params ) {
 
     if ( ! this.disposed ) {
 
-        scope.updateLeaderboard();
+        this.updateLeaderboard();
 
     }
 
@@ -90,8 +105,6 @@ Arena.prototype.addPlayer = function ( params ) {
 };
 
 Arena.prototype.removePlayer = function ( player ) {
-
-    var scope = this;
 
     if ( this.playerManager.remove( player ) ) {
 
@@ -111,13 +124,17 @@ Arena.prototype.removePlayer = function ( player ) {
 
     //
 
-    Game.ArenaManager.removeEmptyArenas();
+    if ( player.socket ) {
+
+        Game.ArenaManager.removeEmptyArenas();
+
+    }
 
     //
 
     if ( ! this.disposed ) {
 
-        scope.updateLeaderboard();
+        this.updateLeaderboard();
 
     }
 

@@ -47,6 +47,10 @@ BotManager.prototype.remove = function ( bot ) {
     bot.removed = true;
     this.bots = newBotList;
 
+    //
+
+    this.arena.removePlayer( bot.player );
+
 };
 
 BotManager.prototype.getById = function ( botId ) {

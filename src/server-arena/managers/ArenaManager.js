@@ -6,7 +6,7 @@
 var ArenaManager = function () {
 
     this.arenas = [];
-    this.maxPlayersInArena = 25;
+    this.maxPlayersInArena = 24;
 
 };
 
@@ -86,6 +86,8 @@ ArenaManager.prototype.findArena = function ( callback ) {
     var avgArena = false;
     var arena = false;
     var players = false;
+    var bots = false;
+    var livePlayers = false;
 
     this.removeEmptyArenas();
 
@@ -95,14 +97,16 @@ ArenaManager.prototype.findArena = function ( callback ) {
 
         arena = this.arenas[ i ];
         players = arena.playerManager.players;
+        bots = arena.botManager.bots;
+        livePlayers = players.length - bots.length;
 
-        if ( players.length < this.maxPlayersInArena && players > 5 ) {
+        if ( livePlayers < this.maxPlayersInArena && players > 5 ) {
 
             avgArena = this.arenas[ i ];
 
         }
 
-        if ( ( ! minArena && players.length < this.maxPlayersInArena ) || ( minArena && players.length < minArena.playerManager.players.length ) ) {
+        if ( ( ! minArena && livePlayers < this.maxPlayersInArena ) || ( minArena && livePlayers < minArena.playerManager.players.length - minArena.botManager.bots.length ) ) {
 
             minArena = arena;
 
