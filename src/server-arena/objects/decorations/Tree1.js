@@ -18,10 +18,14 @@ Tree1.prototype = Object.create( Game.Decoration.prototype );
 
 Tree1.prototype.init = function () {
 
+    var sizeXZ = 5 * Math.random() + 45;
+    this.scale = new Game.Vec3( sizeXZ, 5 * Math.random() + 65, sizeXZ );
+
     this.sizeX = this.size.x * this.scale.x;
     this.sizeY = this.size.y * this.scale.y;
     this.sizeZ = this.size.z * this.scale.z;
     this.radius = 1;
+    this.rotation = Math.random() * Math.PI * 2;
 
     this.arena.collisionManager.addObject( this, 'circle' );
 

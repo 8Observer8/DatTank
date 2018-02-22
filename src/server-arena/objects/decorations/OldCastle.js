@@ -18,6 +18,8 @@ OldCastle.prototype = Object.create( Game.Decoration.prototype );
 
 OldCastle.prototype.init = function () {
 
+    this.scale = new Game.Vec3( 5 * Math.random() + 20, 15, 5 * Math.random() + 20 );
+
     this.sizeX = this.size.x * this.scale.x;
     this.sizeY = this.size.y * this.scale.y;
     this.sizeZ = this.size.z * this.scale.z;

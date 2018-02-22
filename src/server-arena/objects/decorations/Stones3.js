@@ -18,9 +18,13 @@ Stones3.prototype = Object.create( Game.Decoration.prototype );
 
 Stones3.prototype.init = function () {
 
+    var sizeXZ = 5 * Math.random() + 20;
+    this.scale = new Game.Vec3( sizeXZ, 5 * Math.random() + 20, sizeXZ );
+
     this.sizeX = this.size.x * this.scale.x;
     this.sizeY = this.size.y * this.scale.y;
     this.sizeZ = this.size.z * this.scale.z;
+    this.rotation = Math.random() * Math.PI * 2;
 
 };
 
