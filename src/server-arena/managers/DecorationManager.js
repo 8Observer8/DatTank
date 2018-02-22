@@ -44,6 +44,13 @@ DecorationManager.prototype.init = function ( params ) {
 
             }
 
+            if ( type === 'Tree1' ) {
+
+                scale = 5 * Math.random() + 45;
+                scaleH = 5 * Math.random() + 65;
+
+            }
+
             if ( type === 'OldCastle' ) {
 
                 scale = 5 * Math.random() + 20;

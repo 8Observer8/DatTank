@@ -7,6 +7,7 @@ var Box = function ( arena, params ) {
 
     params = params || {};
 
+    if ( Box.numIds > 1000 ) Box.numIds = 0;
     this.id = Box.numId ++;
     this.arena = arena;
 

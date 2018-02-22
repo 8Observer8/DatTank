@@ -454,7 +454,7 @@ Player.prototype.hit = function ( killer ) {
 Player.prototype.die = function ( killer ) {
 
     if ( this.status !== Player.Alive ) return;
-console.log( this.id, this.status, this.health, killer.id );
+
     this.status = Player.Dead;
 
     killer.kills ++;

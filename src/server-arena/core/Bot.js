@@ -71,7 +71,7 @@ Bot.prototype.init = function () {
 Bot.prototype.die = function () {
 
     var scope = this;
-    var maxKills = Math.floor( Math.random() * 15 ) + 5;
+    var maxKills = Math.floor( Math.random() * 60 ) + 8;
 
     //
 
@@ -255,14 +255,22 @@ Bot.prototype.dispose = function () {
 Bot.LoginBase = [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, 
     'calzone', 'augmenton', 'celianaro', 'pantor', 'elementalium', 'gazer', 'velent', 'oddio', 'taker', 'windmill',
     'soliter', 'roadkiller', 'bambuno', 'tratatar', 'sulfurio', 'helioss', 'seba', 'tracy', 'sandman', 'wooka', 'killdrop', 'warang',
-    'dziu', 'bernard', 'centaur', '¥Rebook¥', 'BratoK', 'Terrorist', 'Mahno', 'Skuzi', 'Suzuki', 'Myron', 'horror', 'zuzu', 'o_0',
     'HEqpOPMaJI', 'X_A_M', 'Vadic', '@did@s', 'Alliance', 'TRAKTORIST', 'MaJoR$', 'DeRJkiY', ']{olyan@', 'kaban', 'Semkiv', 'Agent',
     'CJIeCaPb', 'Delros',  'T0rM@Z', 'MAKAROV', 'T0rM@Z', 'Adas', 'bandit', 'Chetkii', 'Artuomchik', 'buben', 'DonKarleone', 'accura2k_',
     'GOPNIK', 'KabaniyKlyk', 'Kermit', 'KoLяN4Uk', 'KraCaV4nK', 'limon4ello', 'master_of_ceremony', 'Mr_Zaza', 'Biwen', 'ne_zli', 'NURCHIK',
     'StrannicK', 'Tîgrrr', 'Timent', 'Vision', 'X_A_M_E_P', 'Marckiz', 'bigman', 'creed', 'DarkFantastik', 'SlowPok', 'NaGiBatoR',
-    'Mam_ya_ebashy', 'LLI_K_O_JI_b_H_U_K', 'FRESH_MEAT', 'LegendarY', 'Rabbit_wolf', 'iJseven', 'Ha_KoJleHu_OJleHu', 'Vertyxan',
+    'FRESH_MEAT', 'LegendarY', 'Rabbit_wolf', 'iJseven', 'Ha_KoJleHu_OJleHu', 'Vertyxan', 'kirpa', 'dindi', 'dildo', 'moskva', 'opz',
     'x_Evil_x', 'cTaTucT_kycToDpoT', 'TaNkIsT228', 'LaRDeN', 'EHOT', 'CruzTanks', 'Mazay_Ded', 'Dark_Foch', 'FL1pSTaR', 'SkyDog',
-    'Nevrox', 'AWAJA', 'GrizeR', 'Jove_V_KyStax', 'Zybinjo', 'Pro1004EloVe4Ek', 'Ben_Laden', 'DeLviR', 'SkyLiTeR', '_fly_', '4ypa-4yps'
+    'Nevrox', 'AWAJA', 'GrizeR', 'Jove_V_KyStax', 'Zybinjo', 'Pro1004EloVe4Ek', 'Ben_Laden', 'DeLviR', 'SkyLiTeR', '_fly_', '4ypa-4yps',
+    'your mom', 'ok', 'ffff', '123', 'lol', 'lalaka', 'burzum', 'zeka', 'korb', 'zimba', 'koss', 'russka kurva', 'kol', 'atari', 'kombo',
+    'per4uk', 'qwddcc', 'qwerty', 'zopa', 'timba', 'karramba', 'abdul', 'dx', 'ed', 'eddy', 'freeman', 'wow', 'tom', 'sin', 'cos', 'io',
+    'datkiller', 'paul', 'lucifer', 'zomb', 'zombie', 'zombie666', 'devil', 'moskal', 'USSR', 'ripper', 'felix', '911', 'mamal', 'sdf',
+    'kiss', 'die_wegan', 'jelly', 'oppa', 'dizer', 'dendy', 'paranoid', 'android', 'mathafaka', 'sirian', 'ajar', 'asian', 'nervos',
+    'gblz', 'trevor', 'lol poney', 'matardar', 'diego', 'sniper', 'kemper', 'datend', 'kiba', 'andromeda', 'feedback', 'shotback',
+    'wtf', 'dat kurwa', 'dfbgnhg', 'andy', 'фффф', 'опачик', 'pavel', 'T52', 'NZT', 'D3', 'Bimba', 'makaka', 'мразь', '...', 'kibaba',
+    'kebab', 'nazzi', 'nippy', 'romb', 'opa', 'zip', 'rarka', 'limbo', '21k', 'kilo', 'jesus', 'kepasa', 'kantor', '456453425', 'upyr',
+    'kinchasa', 'lover', 'marta', 'ochkar', 'poseidon', 'zeus', 'stalker', 'vova', 'vovchik', 'poop', 'yamaha', 'сука', 'упячка',
+    'танк', 'кузя', 'kolyan', 'zadrot', 'lamp', 'kozavka', 'dikar', 'artist', 'kopa', 'chicken', 'orbea', 'z358', 'hjgdfd', 'sdfdgdg'
 ];
 
 //

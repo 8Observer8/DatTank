@@ -102,7 +102,7 @@ ArenaManager.prototype.findArena = function ( callback ) {
 
         }
 
-        if ( ( ! minArena && players.length < this.maxPlayersInArena ) || ( minArena && players.length < minArena.players.length ) ) {
+        if ( ( ! minArena && players.length < this.maxPlayersInArena ) || ( minArena && players.length < minArena.playerManager.players.length ) ) {
 
             minArena = arena;
 
