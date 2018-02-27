@@ -23,3 +23,8 @@ Game.Box = function ( params ) {
 };
 
 Game.Box.prototype = Object.create( EventDispatcher.prototype );
+
+Game.Box.Types = {
+    0:     'Ammo',
+    1:     'Health'
+};

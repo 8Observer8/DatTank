@@ -529,7 +529,7 @@ Player.prototype.update = function ( delta, time ) {
             if ( scope.inRangeOf[ 'b-' + box.id ] ) continue;
 
             scope.inRangeOf[ 'b-' + box.id ] = box;
-            newBoxesInRange.push( box.toJSON() );
+            newBoxesInRange.push( box );
 
         } else {
 
@@ -541,7 +541,23 @@ Player.prototype.update = function ( delta, time ) {
 
     if ( this.socket && newBoxesInRange.length ) {
 
-        networkManager.send( 'BoxesInRange', scope.socket, false, newBoxesInRange );
+        var boxDataSize = 8;
+        var buffer = new ArrayBuffer( 2 + boxDataSize * newBoxesInRange.length );
+        var bufferView = new Uint16Array( buffer );
+        var box;
+
+        for ( var i = 1, il = boxDataSize * newBoxesInRange.length + 1; i < il; i += boxDataSize ) {
+
+            box = newBoxesInRange[ ( i - 1 ) / boxDataSize ];
+
+            bufferView[ i + 0 ] = box.id;
+            bufferView[ i + 1 ] = Game.Box.Types[ box.boxType ];
+            bufferView[ i + 2 ] = box.position.x;
+            bufferView[ i + 3 ] = box.position.z;
+
+        }
+
+        networkManager.send( 'BoxesInRange', scope.socket, buffer, bufferView );
 
     }
 

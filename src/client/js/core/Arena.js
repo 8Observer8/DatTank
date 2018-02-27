@@ -231,12 +231,27 @@ Game.Arena.prototype.newTowersInRange = function ( towers ) {
 
 };
 
-Game.Arena.prototype.newBoxesInRange = function ( boxes ) {
+Game.Arena.prototype.newBoxesInRange = function ( data ) {
 
-    for ( var i = 0, il = boxes.length; i < il; i ++ ) {
+    var box;
+    var boxBinSize = 4;
 
-        this.boxManager.remove( boxes[ i ] );
-        this.boxManager.add( boxes[ i ] );
+    //
+
+    for ( var i = 0, il = data.length / boxBinSize; i < il; i ++ ) {
+
+        box = {
+            id:         data[ i * boxBinSize + 0 ],
+            type:       Game.Box.Types[ data[ i * boxBinSize + 1 ] ],
+            position:   {
+                x:  data[ i * boxBinSize + 2 ],
+                y:  20,
+                z:  data[ i * boxBinSize + 3 ]
+            }
+        };
+
+        this.boxManager.remove( box );
+        this.boxManager.add( box );
 
     }
 

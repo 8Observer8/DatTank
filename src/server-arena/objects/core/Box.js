@@ -48,19 +48,10 @@ Box.prototype.dispose = function () {
 
 };
 
-Box.prototype.toJSON = function () {
-
-    return {
-
-        id:         this.id,
-        type:       this.boxType,
-        amount:     this.amount,
-        position:   this.position.toJSON()
-
-    };
-
+Box.Types = {
+    'Ammo':     0,
+    'Health':   1
 };
-
 Box.numIds = 0;
 
 //
