@@ -8,7 +8,7 @@ var Box = function ( arena, params ) {
     params = params || {};
 
     if ( Box.numIds > 1000 ) Box.numIds = 0;
-    this.id = Box.numId ++;
+    this.id = Box.numIds ++;
     this.arena = arena;
 
     this.position = new Game.Vec3( params.position.x, params.position.y, params.position.z ) || new Game.Vec3( 0, 20, 0 );
@@ -61,7 +61,7 @@ Box.prototype.toJSON = function () {
 
 };
 
-Box.numId = 0;
+Box.numIds = 0;
 
 //
 
