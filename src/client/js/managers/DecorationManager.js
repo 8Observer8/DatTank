@@ -34,10 +34,6 @@ Game.DecorationManager.prototype.init = function () {
         stone2:     { model: resourceManager.getModel( 'stone2.json' ) },
         stone3:     { model: resourceManager.getModel( 'stone3.json' ) },
         stone4:     { model: resourceManager.getModel( 'stone4.json' ) },
-        stone5:     { model: resourceManager.getModel( 'stone5.json' ) },
-        stone6:     { model: resourceManager.getModel( 'stone6.json' ) },
-        stone7:     { model: resourceManager.getModel( 'stone7.json' ) },
-        stone8:     { model: resourceManager.getModel( 'stone8.json' ) },
 
         oldCastle:  { model: resourceManager.getModel( 'oldCastle.json' ) }
 

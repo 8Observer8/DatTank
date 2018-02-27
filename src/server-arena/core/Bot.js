@@ -12,6 +12,8 @@ var Bot = function ( arena ) {
     this.moveDuration = false;
     this.rotateBaseDuration = false;
 
+    this.maxKills = Math.floor( Math.random() * 60 ) + 8;
+
     while ( this.login === '' ) {
 
         this.login = Bot.LoginBase[ Math.floor( Bot.LoginBase.length * Math.random() ) ];
@@ -71,11 +73,10 @@ Bot.prototype.init = function () {
 Bot.prototype.die = function () {
 
     var scope = this;
-    var maxKills = Math.floor( Math.random() * 60 ) + 8;
 
     //
 
-    if ( scope.arena.playerManager.players.length - scope.arena.botManager.bots.length < scope.arena.botManager.botNum && scope.player.kills < maxKills ) {
+    if ( scope.arena.playerManager.players.length - scope.arena.botManager.bots.length < scope.arena.botManager.botNum && scope.player.kills < this.maxKills ) {
 
         setTimeout( scope.player.respawn.bind( scope.player ), 3000 );
 
