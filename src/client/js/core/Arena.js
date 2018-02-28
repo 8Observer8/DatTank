@@ -220,12 +220,27 @@ Game.Arena.prototype.newPlayersInRange = function ( players ) {
 
 };
 
-Game.Arena.prototype.newTowersInRange = function ( towers ) {
+Game.Arena.prototype.newTowersInRange = function ( data ) {
 
-    for ( var i = 0, il = towers.length; i < il; i ++ ) {
+    var tower;
+    var towerBinSize = 12;
 
-        this.towerManager.remove( towers[ i ] );
-        this.towerManager.add( new Game.Tower( this, towers[ i ] ) );
+    for ( var i = 0, il = data.length / towerBinSize; i < il; i ++ ) {
+
+        tower = {
+            id:         data[ i * towerBinSize + 0 ],
+            team:       data[ i * towerBinSize + 1 ],
+            position:   {
+                x:  data[ i * towerBinSize + 2 ],
+                y:  0,
+                z:  data[ i * towerBinSize + 3 ]
+            },
+            rotation:   data[ i * towerBinSize + 4 ] / 1000,
+            health:     data[ i * towerBinSize + 5 ]
+        };
+
+        this.towerManager.remove( tower );
+        this.towerManager.add( new Game.Tower( this, tower ) );
 
     }
 

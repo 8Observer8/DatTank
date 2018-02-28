@@ -575,7 +575,7 @@ Player.prototype.update = function ( delta, time ) {
 
             scope.inRangeOf[ 't-' + tower.id ] = tower;
             tower.inRangeOf[ 'p-' + scope.id ] = scope;
-            newTowersInRange.push( tower.toJSON() );
+            newTowersInRange.push( tower );
 
         } else {
 
@@ -588,7 +588,25 @@ Player.prototype.update = function ( delta, time ) {
 
     if ( this.socket && newTowersInRange.length ) {
 
-        networkManager.send( 'TowersInRange', scope.socket, false, newTowersInRange );
+        var towerDataSize = 12;
+        var buffer = new ArrayBuffer( 2 + towerDataSize * newTowersInRange.length );
+        var bufferView = new Uint16Array( buffer );
+        var tower;
+
+        for ( var i = 1, il = towerDataSize * newTowersInRange.length + 1; i < il; i += towerDataSize ) {
+
+            tower = newTowersInRange[ ( i - 1 ) / towerDataSize ];
+
+            bufferView[ i + 0 ] = tower.id;
+            bufferView[ i + 1 ] = tower.team.id;
+            bufferView[ i + 2 ] = tower.position.x;
+            bufferView[ i + 3 ] = tower.position.z;
+            bufferView[ i + 4 ] = tower.rotation * 1000;
+            bufferView[ i + 5 ] = tower.health;
+
+        }
+
+        networkManager.send( 'TowersInRange', scope.socket, buffer, bufferView );
 
     }
 

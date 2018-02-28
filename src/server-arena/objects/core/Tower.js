@@ -403,20 +403,6 @@ Tower.prototype.update = function ( delta, time ) {
 
 };
 
-Tower.prototype.toJSON = function () {
-
-    return {
-
-        id:         this.id,
-        team:       this.team.id,
-        health:     this.health,
-        position:   { x: this.position.x, y: this.position.y, z: this.position.z },
-        rotation:   this.rotation
-
-    };
-
-};
-
 Tower.prototype.addEventListeners = function () {
 
     // nothing here

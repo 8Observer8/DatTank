@@ -40,7 +40,7 @@ Game.NetworkManager.prototype.init = function ( callback ) {
     //
 
     this.registerEvent( 'PlayersInRange', 'in', 'json', 50 );
-    this.registerEvent( 'TowersInRange', 'in', 'json', 60 );
+    this.registerEvent( 'TowersInRange', 'in', 'bin', 60 );
     this.registerEvent( 'BoxesInRange', 'in', 'bin', 70 );
 
     this.registerEvent( 'PlayerFriendlyFire', 'in', 'bin', 80 );
