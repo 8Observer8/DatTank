@@ -825,3 +825,9 @@ Game.Tank.prototype.update = function ( delta ) {
 
 Game.Tank.list = {};
 Game.Tank.numID = 0;
+
+Game.Tank.typeIds = {
+    1:  'D-32',
+    2:  'UK-BlackPrince',
+    3:  'USA-T54'
+};

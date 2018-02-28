@@ -202,19 +202,40 @@ Game.Arena.prototype.addPlayer = function ( data ) {
 
 };
 
-Game.Arena.prototype.newPlayersInRange = function ( players ) {
+Game.Arena.prototype.newPlayersInRange = function ( data ) {
 
-    var scope = this;
+    var player;
+    var playerBinSize = 46;
 
-    for ( var i = 0, il = players.length; i < il; i ++ ) {
+    for ( var i = 0, il = data.length / playerBinSize; i < il; i ++ ) {
 
-        scope.playerManager.remove( players[ i ] );
+        player = {
+            id:             data[ i * playerBinSize + 0 ],
+            team:           data[ i * playerBinSize + 1 ],
+            position:   {
+                x:  data[ i * playerBinSize + 2 ],
+                y:  0,
+                z:  data[ i * playerBinSize + 3 ]
+            },
+            rotation:       data[ i * playerBinSize + 4 ] / 1000,
+            rotationTop:    data[ i * playerBinSize + 5 ] / 1000,
+            health:         data[ i * playerBinSize + 6 ],
+            moveDirection:  {
+                x:  data[ i * playerBinSize + 7 ],
+                y:  data[ i * playerBinSize + 8 ]
+            },
+            tank:   Game.Tank.typeIds[ data[ i * playerBinSize + 9 ] ],
+            login:  ''
+        };
 
-    }
+        for ( var j = 0; j < 13; j ++ ) {
 
-    for ( var i = 0, il = players.length; i < il; i ++ ) {
+            player.login += String.fromCharCode( data[ i * playerBinSize + 10 + j ] );
 
-        scope.addPlayer( players[ i ] );
+        }
+
+        this.playerManager.remove( player );
+        this.addPlayer( player );
 
     }
 

@@ -12,6 +12,8 @@ var D32 = function ( params ) {
     this.maxShells = 70;
     this.reloadTime = 300;
 
+    this.typeId = 1;
+
 };
 
 D32.prototype = Object.create( Game.Tank.prototype );

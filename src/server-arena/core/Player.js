@@ -625,7 +625,7 @@ Player.prototype.update = function ( delta, time ) {
             if ( scope.inRangeOf[ 'p-' + player.id ] ) continue;
 
             scope.inRangeOf[ 'p-' + player.id ] = player;
-            newPlayersInRange.push( player.toPublicJSON() );
+            newPlayersInRange.push( player );
 
         } else {
 
@@ -637,7 +637,39 @@ Player.prototype.update = function ( delta, time ) {
 
     if ( this.socket && newPlayersInRange.length ) {
 
-        networkManager.send( 'PlayersInRange', scope.socket, false, newPlayersInRange );
+        var playerDataSize = 20 + 13 * 2;
+        var buffer = new ArrayBuffer( 2 + playerDataSize * newPlayersInRange.length );
+        var bufferView = new Uint16Array( buffer );
+        var player;
+
+        for ( var i = 1, il = playerDataSize * newPlayersInRange.length + 1; i < il; i += playerDataSize ) {
+
+            player = newPlayersInRange[ ( i - 1 ) / playerDataSize ];
+
+            bufferView[ i + 0 ] = player.id;
+            bufferView[ i + 1 ] = player.team.id;
+            bufferView[ i + 2 ] = player.position.x;
+            bufferView[ i + 3 ] = player.position.z;
+            bufferView[ i + 4 ] = player.rotation * 1000;
+            bufferView[ i + 5 ] = player.topRotation * 1000;
+            bufferView[ i + 6 ] = player.health;
+            bufferView[ i + 7 ] = player.moveDirection.x;
+            bufferView[ i + 8 ] = player.moveDirection.y;
+            bufferView[ i + 9 ] = player.tank.typeId;
+
+            for ( var j = 0, jl = player.login.length; j < jl; j ++ ) {
+
+                if ( player.login[ j ] ) {
+
+                    bufferView[ i + 10 + j ] = + player.login[ j ].charCodeAt( 0 ).toString( 10 );
+
+                }
+
+            }
+
+        }
+
+        networkManager.send( 'PlayersInRange', scope.socket, buffer, bufferView );
 
     }
 
@@ -731,24 +763,6 @@ Player.prototype.toPrivateJSON = function () {
         tank:           this.tank.title,
         health:         this.health,
         ammo:           this.ammo,
-        rotation:       this.rotation,
-        rotationTop:    this.rotationTop,
-        position:       this.position,
-        moveDirection:  { x: this.moveDirection.x, y: this.moveDirection.y }
-
-    };
-
-};
-
-Player.prototype.toPublicJSON = function () {
-
-    return {
-
-        id:             this.id,
-        login:          this.login,
-        team:           this.team.id,
-        tank:           this.tank.title,
-        health:         this.health,
         rotation:       this.rotation,
         rotationTop:    this.rotationTop,
         position:       this.position,

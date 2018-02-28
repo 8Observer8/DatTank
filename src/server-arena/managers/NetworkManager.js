@@ -29,7 +29,7 @@ NetworkManager.prototype.init = function () {
 
     //
 
-    this.registerEvent( 'PlayersInRange', 'out', 'json', 50 );
+    this.registerEvent( 'PlayersInRange', 'out', 'bin', 50 );
     this.registerEvent( 'TowersInRange', 'out', 'bin', 60 );
     this.registerEvent( 'BoxesInRange', 'out', 'bin', 70 );
 

@@ -16,6 +16,8 @@ var UKBlackPrince = function ( params ) {
     this.maxShells = 70;
     this.reloadTime = 1200;
 
+    this.typeId = 2;
+
 };
 
 UKBlackPrince.prototype = Object.create( Game.Tank.prototype );

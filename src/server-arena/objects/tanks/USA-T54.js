@@ -16,6 +16,8 @@ var USAT54 = function ( params ) {
     this.maxShells = 80;
     this.reloadTime = 700;
 
+    this.typeId = 3;
+
 };
 
 USAT54.prototype = Object.create( Game.Tank.prototype );
