@@ -39,7 +39,6 @@ Game.ViewManager = function () {
 
     this.cameraOffset = new THREE.Vector3();
     this.shakeInterval = false;
-    this.intersections = false;
 
     this.decorations = [];
 
@@ -379,25 +378,23 @@ Game.ViewManager.prototype.animate = function ( delta ) {
 
     }
 
-    if ( ! this.intersections || Game.arena.me.moveDirection.x || Game.arena.me.moveDirection.y || Math.abs( controls.mousePos.x - controls.prevMousePos.x ) > 0.02 || Math.abs( controls.mousePos.y - controls.prevMousePos.y ) > 0.02 ) {
+    if ( Game.arena.me.moveDirection.x || Game.arena.me.moveDirection.y || Math.abs( controls.mousePos.x - controls.prevMousePos.x ) > 0.02 || Math.abs( controls.mousePos.y - controls.prevMousePos.y ) > 0.02 ) {
 
-        view.raycaster.setFromCamera( controls.mousePos, view.camera );
-        this.intersections = view.raycaster.intersectObjects( [ view.ground ] );
+        var me = Game.arena.me;
+        var vector = new THREE.Vector3();
+        game.arena.me.tank.object.top.updateMatrixWorld();
+        vector.setFromMatrixPosition( me.tank.object.top.matrixWorld );
+        vector.project( view.camera );
+
+        //
 
         if ( controls.prevMousePos.distanceTo( controls.mousePos ) > 0.01 ) {
 
-            controls.prevMousePos.set( controls.mousePos.x, controls.mousePos.y );
+            var angle = Math.atan2( - vector.y + controls.mousePos.y, - vector.x + controls.mousePos.x ) - Math.PI + me.rotation;
 
-            if ( this.intersections.length ) {
+            if ( Math.abs( angle - me.topRotation ) > 0.003 ) {
 
-                var me = Game.arena.me;
-                var angle = Math.atan2( this.intersections[0].point.x - me.position.x, this.intersections[0].point.z - me.position.z ) - Math.PI / 2;
-
-                if ( Math.abs( angle - me.topRotation ) > 0.003 ) {
-
-                    controls.rotateTop( angle );
-
-                }
+                controls.rotateTop( angle );
 
             }
 
