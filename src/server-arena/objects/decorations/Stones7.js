@@ -5,11 +5,13 @@
 
 var Stones7 = function ( arena, params ) {
 
+    this.arena = arena;
     this.id = Stones7.numIds ++;
     Game.Decoration.call( this, arena, params );
 
     this.size.set( 0.8, 0.8, 0.8 );
     this.type = 'Stones3';
+
     this.init();
 
 };
@@ -41,6 +43,14 @@ Stones7.prototype.toJSON = function () {
         rotation:   this.rotation,
         scale:      this.scale.toJSON()
     };
+
+};
+
+//
+
+Stones7.canPlace = function ( arena, x, z ) {
+
+    return arena.collisionManager.isPlaceFree( { x: x, y: z }, 20, 0 );
 
 };
 

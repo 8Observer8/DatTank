@@ -10,6 +10,7 @@ var OldCastle = function ( arena, params ) {
 
     this.size.set( 4.5, 4.5, 4.5 );
     this.type = 'OldCastle';
+
     this.init();
 
 };
@@ -38,6 +39,14 @@ OldCastle.prototype.toJSON = function () {
         rotation:   this.rotation,
         scale:      this.scale.toJSON()
     };
+
+};
+
+//
+
+OldCastle.canPlace = function ( arena, x, z ) {
+
+    return arena.collisionManager.isPlaceFree( { x: x, y: z }, 4.5 * 25, 0 );
 
 };
 

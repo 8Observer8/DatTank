@@ -5,11 +5,14 @@
 
 var Tree3 = function ( arena, params ) {
 
+    this.arena = arena;
     this.id = Tree3.numIds ++;
     Game.Decoration.call( this, arena, params );
 
+    this.radius = 0.5;
     this.size.set( 0.8, 0.8, 0.8 );
     this.type = 'Tree3';
+
     this.init();
 
 };
@@ -24,7 +27,6 @@ Tree3.prototype.init = function () {
     this.sizeX = this.size.x * this.scale.x;
     this.sizeY = this.size.y * this.scale.y;
     this.sizeZ = this.size.z * this.scale.z;
-    this.radius = 0.5;
     this.rotation = Math.random() * Math.PI * 2;
 
     this.arena.collisionManager.addObject( this, 'circle' );
@@ -41,6 +43,14 @@ Tree3.prototype.toJSON = function () {
         rotation:   this.rotation,
         scale:      this.scale.toJSON()
     };
+
+};
+
+//
+
+Tree3.canPlace = function ( arena, x, z ) {
+
+    return arena.collisionManager.isPlaceFree( { x: x, y: z }, 40, 0 );
 
 };
 

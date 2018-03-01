@@ -32,7 +32,7 @@ DecorationManager.prototype.init = function ( params ) {
 
             //
 
-            if ( ! this.arena.collisionManager.isPlaceFree( { x: x, y: z }, 20, 0 ) ) continue;
+            if ( ! Game.Decoration[ type ].canPlace( this.arena, x, z ) ) continue;
 
             var placedOnBase = false;
 

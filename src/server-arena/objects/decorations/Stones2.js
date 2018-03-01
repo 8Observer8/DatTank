@@ -5,11 +5,13 @@
 
 var Stones2 = function ( arena, params ) {
 
+    this.arena = arena;
     this.id = Stones2.numIds ++;
     Game.Decoration.call( this, arena, params );
 
     this.size.set( 7, 0.8, 2 );
     this.type = 'Stones2';
+
     this.init();
 
 };
@@ -40,6 +42,14 @@ Stones2.prototype.toJSON = function () {
         rotation:   this.rotation,
         scale:      this.scale.toJSON()
     };
+
+};
+
+//
+
+Stones2.canPlace = function ( arena, x, z ) {
+
+    return arena.collisionManager.isPlaceFree( { x: x - 20, y: z }, 20, 0 ) && arena.collisionManager.isPlaceFree( { x: x + 20, y: z }, 20, 0 );
 
 };
 

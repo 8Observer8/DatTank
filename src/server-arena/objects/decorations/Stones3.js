@@ -5,11 +5,13 @@
 
 var Stones3 = function ( arena, params ) {
 
+    this.arena = arena;
     this.id = Stones3.numIds ++;
     Game.Decoration.call( this, arena, params );
 
     this.size.set( 0.8, 0.02, 0.8 );
     this.type = 'Stones3';
+
     this.init();
 
 };
@@ -38,6 +40,14 @@ Stones3.prototype.toJSON = function () {
         rotation:   this.rotation,
         scale:      this.scale.toJSON()
     };
+
+};
+
+//
+
+Stones3.canPlace = function ( arena, x, z ) {
+
+    return true;
 
 };
 
