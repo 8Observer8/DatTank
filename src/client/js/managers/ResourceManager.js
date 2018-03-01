@@ -60,8 +60,6 @@ Game.ResourceManager = function () {
         'tree7-shadow.png',
         'tree8-shadow.png',
 
-        'stoneshadow.png',
-
         'stone1-shadow.png',
         'stone2-shadow.png',
         'stone3-shadow.png',
