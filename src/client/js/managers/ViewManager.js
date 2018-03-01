@@ -382,7 +382,6 @@ Game.ViewManager.prototype.animate = function ( delta ) {
 
         var me = Game.arena.me;
         var vector = new THREE.Vector3();
-        game.arena.me.tank.object.top.updateMatrixWorld();
         vector.setFromMatrixPosition( me.tank.object.top.matrixWorld );
         vector.project( view.camera );
 
