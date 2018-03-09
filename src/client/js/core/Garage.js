@@ -75,8 +75,8 @@ Game.Garage.prototype.init = function () {
 
         var model = new THREE.Mesh( geometry, materials );
         model.position.y += 0.6;
-        model.position.x += 1;
-        model.position.z -= 1.5;
+        // model.position.x += 1;
+        // model.position.z -= 1.5;
         model.rotation.y = - Math.PI / 2;
         model.visible = true;
         model.castShadow = true;
@@ -105,6 +105,22 @@ Game.Garage.prototype.init = function () {
     });
 
     loader.load( 'resources/models/tank-demo-3.json', function ( geometry, materials ) {
+
+        var model = new THREE.Mesh( geometry, materials );
+        model.rotation.y = - Math.PI / 2;
+        model.position.y += 0.3;
+        model.visible = false;
+        model.castShadow = true;
+        model.receiveShadow = true;
+
+        scope.scene.add( model );
+        scope.models['D32'] = model;
+
+        loaded ++;
+
+    });
+
+    loader.load( 'resources/models/tank-demo-4.json', function ( geometry, materials ) {
 
         var model = new THREE.Mesh( geometry, materials );
         model.rotation.y = - Math.PI / 2;
