@@ -1,9 +1,9 @@
 /*
  * @author ohmed
- * Tank "USA-T54" unit class
+ * Tank "T-44" unit class
 */
 
-Game.Tank.UKBlackPrince = function ( params ) {
+Game.Tank.T44 = function ( params ) {
 
     Game.Tank.call( this, params );
 
@@ -20,17 +20,18 @@ Game.Tank.UKBlackPrince = function ( params ) {
 
 };
 
-Game.Tank.UKBlackPrince.prototype = Object.create( Game.Tank.prototype );
+Game.Tank.T44.prototype = Object.create( Game.Tank.prototype );
 
-Game.Tank.UKBlackPrince.prototype.speed = 30;
-Game.Tank.UKBlackPrince.prototype.range = 160;
-Game.Tank.UKBlackPrince.prototype.armour = 700;
-Game.Tank.UKBlackPrince.prototype.bullet = 77;
-Game.Tank.UKBlackPrince.prototype.reloadTime = 40;
+Game.Tank.T44.prototype.year = 1944;
+Game.Tank.T44.prototype.ammoCapacity = 64;
+Game.Tank.T44.prototype.speed = 51;
+Game.Tank.T44.prototype.armour = 90;
+Game.Tank.T44.prototype.bullet = 85;
+Game.Tank.T44.prototype.rpm = 10.7;
 
 //
 
-Game.Tank.UKBlackPrince.prototype.initModel = function () {
+Game.Tank.T44.prototype.initModel = function () {
 
     this.object = new THREE.Object3D();
 
@@ -109,7 +110,7 @@ Game.Tank.UKBlackPrince.prototype.initModel = function () {
 
 };
 
-Game.Tank.UKBlackPrince.prototype.destroy = function () {
+Game.Tank.T44.prototype.destroy = function () {
 
     var scope = this;
 
@@ -134,15 +135,16 @@ Game.Tank.UKBlackPrince.prototype.destroy = function () {
 
 //
 
-Game.Tank.list[ 'UKBlackPrince' ] = {
-    title:      'UK-Black-Prince',
-    speed:      Game.Tank.UKBlackPrince.prototype.speed,
-    range:      Game.Tank.UKBlackPrince.prototype.range,
-    armour:     Game.Tank.UKBlackPrince.prototype.armour,
-    bullet:     Game.Tank.UKBlackPrince.prototype.bullet
+Game.Tank.list[ 'T44' ] = {
+    title:          'T44',
+    speed:          Game.Tank.T44.prototype.speed,
+    rpm:            Game.Tank.T44.prototype.rpm,
+    armour:         Game.Tank.T44.prototype.armour,
+    bullet:         Game.Tank.T44.prototype.bullet,
+    ammoCapacity:   Game.Tank.T44.prototype.ammoCapacity
 };
 
-Game.Tank.UKBlackPrince.prototype.showBlastSmoke = function () {
+Game.Tank.T44.prototype.showBlastSmoke = function () {
 
     this.blastSmokeEnabled = true;
 

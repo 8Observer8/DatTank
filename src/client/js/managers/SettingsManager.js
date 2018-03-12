@@ -19,7 +19,7 @@ Game.SettingsManager = function () {
 
     if ( ! localStorage.getItem('currentTank') ) {
 
-        localStorage.setItem('currentTank', 'USAT54');
+        localStorage.setItem('currentTank', 'T54');
 
     }
 

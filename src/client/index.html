@@ -65,9 +65,10 @@
         <script src="/js/objects/boxes/AmmoBox.js"></script>
         <script src="/js/objects/boxes/HealthBox.js"></script>
 
-        <script src="/js/objects/tanks/UK-BlackPrince.js"></script>
-        <script src="/js/objects/tanks/USA-T54.js"></script>
-        <script src="/js/objects/tanks/D-32.js"></script>
+        <script src="/js/objects/tanks/IS-2.js"></script>
+        <script src="/js/objects/tanks/T-29.js"></script>
+        <script src="/js/objects/tanks/T-44.js"></script>
+        <script src="/js/objects/tanks/T-54.js"></script>
 
         <script src="/js/utils/Logger.js"></script>
 
@@ -210,20 +211,23 @@
                     </div>
                 </div>
                 <div class="choice-skins">
-                    <div class="tank" id="USAT54" >
+                    <div class="tank" id="IS2" >
                         <img class="tank-img" src="/resources/img/tank-ico-1.png">
                     </div>
-                    <div class="tank active" id="UKBlackPrince" >
+                    <div class="tank" id="T29" >
+                        <img class="tank-img" src="/resources/img/tank-ico-1.png">
+                    </div>
+                    <div class="tank active" id="T44" >
                         <img class="tank-img" src="/resources/img/tank-ico-2.png">
                     </div>
-                    <div class="tank" id="D32" >
-                        <img class="tank-img new-img" src="/resources/img/new_red.png">
+                    <div class="tank" id="T54" >
+                        <!-- <img class="tank-img new-img" src="/resources/img/new_red.png"> -->
                         <img class="tank-img" src="/resources/img/tank-ico-3.png">
                     </div>
                 </div>
 
                 <div class="container-specification">
-                    <h2 class="skin-name">Uk-Black-Prince</h2>
+                    <h2 class="skin-name"></h2>
                     <div class="line-characteristics">
                         <p class="specification-txt" id="speed"></p>
                         <div class="counter-characteristicks" id="speed">
@@ -232,11 +236,11 @@
                         <p class="specification-value">Speed:</p>
                     </div>
                     <div class="line-characteristics">
-                        <p class="specification-txt" id="range"></p>
-                        <div class="counter-characteristicks" id="range">
+                        <p class="specification-txt" id="rpm"></p>
+                        <div class="counter-characteristicks" id="rpm">
                             <div class="color"></div>
                         </div>
-                        <p class="specification-value">Range:</p>
+                        <p class="specification-value">Reload:</p>
                     </div>
                     <div class="line-characteristics">
                         <p class="specification-txt" id="armour"></p>
@@ -250,7 +254,14 @@
                         <div class="counter-characteristicks" id="bullet">
                             <div class="color"></div>
                         </div>
-                        <p class="specification-value">Bullet:</p>
+                        <p class="specification-value">Gun:</p>
+                    </div>
+                    <div class="line-characteristics">
+                        <p class="specification-txt" id="ammoCapacity"></p>
+                        <div class="counter-characteristicks" id="ammoCapacity">
+                            <div class="color"></div>
+                        </div>
+                        <p class="specification-value">Ammo:</p>
                     </div>
                 </div>
                 <div class="share-label">

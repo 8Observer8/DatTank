@@ -1036,7 +1036,7 @@ object {
     height: 100%;
     display: none;
     z-index: 100;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.8);
 }
 
 .select-tank-skins {
@@ -1046,9 +1046,9 @@ object {
     margin-left: auto;
     margin-right: auto;
     top: 8%;
-    width: 70%;
-    height: 70%;
-    border: 3px solid #422;
+    width: 85%;
+    height: 80%;
+    border: 3px solid #555;
 }
 
 .select-tank-skins canvas {
@@ -1227,14 +1227,12 @@ object {
 
 .container-specification  {
     position: relative;
-    width: 242px;
-    height: 250px;
+    width: 280px;
     float: left;
     top: calc(50% + -45%);
     left: 5%;
-    background: #44403d;
-    border-radius: 7px;
-    box-shadow: 0px 5px 28px #171515;
+    background: rgba(0, 0, 0, 0.4);
+    padding-bottom: 20px;
 }
 
 .line-characteristics {
@@ -1250,7 +1248,10 @@ object {
     right: 10px;
     margin: 0;
     font-family: sans-serif;
-    font-size: 18px;
+    font-size: 13px;
+    width: 60px;
+    text-align: center;
+    padding-top: 3px;
 }
 
 .specification-value {
@@ -1261,7 +1262,7 @@ object {
 
 .counter-characteristicks {
     position: absolute;
-    width: 90px;
+    width: 130px;
     height: 8px;
     border-radius: 3px;
     border: 1px solid #695e5e;
@@ -1277,7 +1278,7 @@ object {
 
 .skin-name {
     color: #fffdfd;
-    margin: 20px 30px 14px;
+    margin: 20px 10px 14px;
 }
 
 .btn-pick {
