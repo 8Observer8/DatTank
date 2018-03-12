@@ -16,6 +16,7 @@ Game.Garage = function () {
 
     this.models = {};
     this.currentTank = 0;
+    this.currentTankModel = false;
 
 };
 
@@ -45,11 +46,11 @@ Game.Garage.prototype.init = function () {
 
     // Lights
 
-    var ambientlight = new THREE.AmbientLight( 0xeeeeee );
+    var ambientlight = new THREE.AmbientLight( 0x888888 );
     this.scene.add( ambientlight );
 
-    this.spotLight = new THREE.SpotLight( 0xaaaaaa, 0.5, 10, Math.PI / 4, 0.4 );
-    this.spotLight.position.set( 2, 5, 2 );
+    this.spotLight = new THREE.SpotLight( 0xaaaaaa, 1, 30, Math.PI / 4, 0.8 );
+    this.spotLight.position.set( 2, 7, 2 );
     this.spotLight.lookAt( this.scene.position );
     this.spotLight.castShadow = true;
     this.spotLight.shadow.mapSize.width = 1024;
@@ -194,8 +195,11 @@ Game.Garage.prototype.render = function () {
 
     //
 
-    this.camera.position.set( Math.cos( this.timer * this.rotationSpeed ) * 10, 4, Math.sin( this.timer * this.rotationSpeed ) * 10 );
-    this.camera.lookAt( this.scene.position );
+    if ( this.currentTankModel ) {
+    
+        this.currentTankModel.rotation.set( 0, this.timer * this.rotationSpeed, 0 );
+
+    }
 
     this.renderer.render( this.scene, this.camera );
 
@@ -303,6 +307,7 @@ Game.Garage.prototype.selectTank = function ( event ) {
     }
 
     this.models[ tankId ].visible = true;
+    this.currentTankModel = this.models[ tankId ];
 
     if ( event ) {
 
