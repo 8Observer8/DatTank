@@ -12,7 +12,7 @@
 },
 
 {
-    name:           'T-55',
+    name:           'T-54',
     bullet:         100,
     penetration:    175/235/50,
     damage:         250/250/330,

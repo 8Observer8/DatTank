@@ -63,19 +63,19 @@ Game.Player.prototype.selectTank = function ( tankName ) {
 
     switch ( tankName ) {
 
-        case 'USA-T54':
+        case 'T29':
 
-            this.tank = new Game.Tank.USAT54({ player: this });
+            this.tank = new Game.Tank.T29({ player: this });
             break;
 
-        case 'UK-BlackPrince':
+        case 'T44':
 
-            this.tank = new Game.Tank.UKBlackPrince({ player: this });
+            this.tank = new Game.Tank.T44({ player: this });
             break;
 
-        case 'D-32':
+        case 'T54':
 
-            this.tank = new Game.Tank.D32({ player: this });
+            this.tank = new Game.Tank.T54({ player: this });
             break;
 
     }

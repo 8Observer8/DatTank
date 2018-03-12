@@ -30,7 +30,7 @@
         "wireframe":false,
         "specularCoef":50,
         "visible":true,
-        "colorDiffuse":[0.64,0.64,0.64],
+        "colorDiffuse":[0.99,0.99,0.99],
         "depthWrite":true,
         "DbgIndex":0,
         "shading":"lambert"
@@ -52,7 +52,7 @@
         "wireframe":false,
         "specularCoef":50,
         "visible":true,
-        "colorDiffuse":[0.64,0.64,0.64],
+        "colorDiffuse":[0.99,0.99,0.99],
         "depthWrite":true,
         "DbgIndex":1,
         "shading":"lambert"

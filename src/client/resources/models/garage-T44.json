@@ -34,7 +34,7 @@
         "DbgIndex":0,
         "DbgName":"T-44_bottom_material",
         "mapDiffuse":"T-44_texture.png",
-        "colorDiffuse":[0.64,0.64,0.64],
+        "colorDiffuse":[0.99,0.99,0.99],
         "doubleSided":false,
         "wireframe":false
     },{
@@ -56,7 +56,7 @@
         "DbgIndex":1,
         "DbgName":"T-44_top_material",
         "mapDiffuse":"T-44_texture.png",
-        "colorDiffuse":[0.64,0.64,0.64],
+        "colorDiffuse":[0.99,0.99,0.99],
         "doubleSided":false,
         "wireframe":false
     }]

@@ -1,36 +1,37 @@
 /*
  * @author ohmed
- * Tank "D-32" unit class
+ * Tank "IS-2" unit class
 */
 
-Game.Tank.D32 = function ( params ) {
+Game.Tank.IS2 = function ( params ) {
 
     Game.Tank.call( this, params );
 
     //
 
     this.model = {
-        top:    'Tank03_top.json',
-        base:   'Tank03_base.json'
+        top:    'Tank04_top.json',
+        base:   'Tank04_base.json'
     };
 
     this.trackOffset = { l: -3, r: -8 };
 
-    this.name = 'D-32';
+    this.name = 'IS2';
 
 };
 
-Game.Tank.D32.prototype = Object.create( Game.Tank.prototype );
+Game.Tank.IS2.prototype = Object.create( Game.Tank.prototype );
 
-Game.Tank.D32.prototype.speed = 50;
-Game.Tank.D32.prototype.range = 160;
-Game.Tank.D32.prototype.armour = 150;
-Game.Tank.D32.prototype.bullet = 77;
-Game.Tank.D32.prototype.reloadTime = 100;
+Game.Tank.IS2.prototype.year = 1950;
+Game.Tank.IS2.prototype.ammoCapacity = 36;
+Game.Tank.IS2.prototype.speed = 51;
+Game.Tank.IS2.prototype.armour = 90;
+Game.Tank.IS2.prototype.bullet = 100;
+Game.Tank.IS2.prototype.rpm = 6.45;
 
 //
 
-Game.Tank.D32.prototype.initModel = function () {
+Game.Tank.IS2.prototype.initModel = function () {
 
     this.object = new THREE.Object3D();
 
@@ -108,7 +109,7 @@ Game.Tank.D32.prototype.initModel = function () {
 
 };
 
-Game.Tank.D32.prototype.destroy = function () {
+Game.Tank.IS2.prototype.destroy = function () {
 
     var scope = this;
 
@@ -133,15 +134,16 @@ Game.Tank.D32.prototype.destroy = function () {
 
 //
 
-Game.Tank.list[ 'D32' ] = {
-    title:      'D-32',
-    speed:      Game.Tank.D32.prototype.speed,
-    range:      Game.Tank.D32.prototype.range,
-    armour:     Game.Tank.D32.prototype.armour,
-    bullet:     Game.Tank.D32.prototype.bullet
+Game.Tank.list[ 'IS2' ] = {
+    title:          'IS2',
+    speed:          Game.Tank.IS2.prototype.speed,
+    rpm:            Game.Tank.IS2.prototype.rpm,
+    armour:         Game.Tank.IS2.prototype.armour,
+    bullet:         Game.Tank.IS2.prototype.bullet,
+    ammoCapacity:   Game.Tank.IS2.prototype.ammoCapacity
 };
 
-Game.Tank.D32.prototype.showBlastSmoke = function () {
+Game.Tank.IS2.prototype.showBlastSmoke = function () {
 
     this.blastSmokeEnabled = true;
 

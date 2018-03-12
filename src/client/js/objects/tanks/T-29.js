@@ -1,36 +1,37 @@
 /*
  * @author ohmed
- * Tank "USA-T54" unit class
+ * Tank "T-29" unit class
 */
 
-Game.Tank.USAT54 = function ( params ) {
+Game.Tank.T29 = function ( params ) {
 
     Game.Tank.call( this, params );
 
     //
 
     this.model = {
-        top:    'Tank01_top.json',
-        base:   'Tank01_base.json'
+        top:    'Tank03_top.json',
+        base:   'Tank03_base.json'
     };
 
-    this.trackOffset = { l: -1, r: -9 };
+    this.trackOffset = { l: -3, r: -8 };
 
-    this.name = 'USA-T54';
+    this.name = 'T29';
 
 };
 
-Game.Tank.USAT54.prototype = Object.create( Game.Tank.prototype );
+Game.Tank.T29.prototype = Object.create( Game.Tank.prototype );
 
-Game.Tank.USAT54.prototype.speed = 43;
-Game.Tank.USAT54.prototype.range = 100;
-Game.Tank.USAT54.prototype.armour = 180;
-Game.Tank.USAT54.prototype.bullet = 105;
-Game.Tank.USAT54.prototype.reloadTime = 20;
+Game.Tank.T29.prototype.year = 1946;
+Game.Tank.T29.prototype.ammoCapacity = 126;
+Game.Tank.T29.prototype.speed = 35;
+Game.Tank.T29.prototype.armour = 102;
+Game.Tank.T29.prototype.bullet = 105;
+Game.Tank.T29.prototype.rpm = 16.7;
 
 //
 
-Game.Tank.USAT54.prototype.initModel = function () {
+Game.Tank.T29.prototype.initModel = function () {
 
     this.object = new THREE.Object3D();
 
@@ -47,8 +48,6 @@ Game.Tank.USAT54.prototype.initModel = function () {
         materials[ materials.length - 1 ].morphTargets = true;
 
     }
-
-    //
 
     var base = new THREE.Mesh( tankBaseModel.geometry, materials );
     base.rotation.y = 0;
@@ -80,7 +79,9 @@ Game.Tank.USAT54.prototype.initModel = function () {
     var top = new THREE.Mesh( tankTopModel.geometry, materials );
     top.castShadow = true;
     top.receiveShadow = true;
-    top.position.y = 0;
+    top.position.y = 20;
+    top.position.x = 0;
+    top.position.z = 7;
     top.scale.set( 20, 20, 20 );
 
     this.object.add( top );
@@ -90,16 +91,16 @@ Game.Tank.USAT54.prototype.initModel = function () {
 
     this.mixer = new THREE.AnimationMixer( top );
 
-    var shotAction = this.mixer.clipAction( top.geometry.animations[0], top );
+    var shotAction = this.mixer.clipAction( tankTopModel.geometry.animations[0], top );
     shotAction.setDuration( 0.5 ).setLoop( THREE.LoopOnce );
     this.animations.shotAction = shotAction;
 
-    var deathAction1 = this.mixer.clipAction( top.geometry.animations[1], top );
-    deathAction1.setDuration( 0.8 ).setLoop( THREE.LoopOnce );
+    var deathAction1 = this.mixer.clipAction( tankTopModel.geometry.animations[1], top );
+    deathAction1.setDuration( 1 ).setLoop( THREE.LoopOnce );
     this.animations.deathAction1 = deathAction1;
 
-    var deathAction2 = this.mixer.clipAction( base.geometry.animations[0], base );
-    deathAction2.setDuration( 0.8 ).setLoop( THREE.LoopOnce );
+    var deathAction2 = this.mixer.clipAction( tankBaseModel.geometry.animations[0], base );
+    deathAction2.setDuration( 2 ).setLoop( THREE.LoopOnce );
     this.animations.deathAction2 = deathAction2;
 
     //
@@ -108,7 +109,7 @@ Game.Tank.USAT54.prototype.initModel = function () {
 
 };
 
-Game.Tank.USAT54.prototype.destroy = function () {
+Game.Tank.T29.prototype.destroy = function () {
 
     var scope = this;
 
@@ -120,12 +121,12 @@ Game.Tank.USAT54.prototype.destroy = function () {
 
     this.showExplosion();
 
-    setTimeout( function () { // todo: need to improve this
+    setTimeout( function () {
 
         scope.animations.deathAction1.paused = true;
         scope.animations.deathAction2.paused = true;
 
-    }, 750 );
+    }, 1100 );
 
     this.sounds.explosion.play();
 
@@ -133,15 +134,16 @@ Game.Tank.USAT54.prototype.destroy = function () {
 
 //
 
-Game.Tank.list[ 'USAT54' ] = {
-    title:      'USA-T54',
-    speed:      Game.Tank.USAT54.prototype.speed,
-    range:      Game.Tank.USAT54.prototype.range,
-    armour:     Game.Tank.USAT54.prototype.armour,
-    bullet:     Game.Tank.USAT54.prototype.bullet
+Game.Tank.list[ 'T29' ] = {
+    title:          'T29',
+    speed:          Game.Tank.T29.prototype.speed,
+    rpm:            Game.Tank.T29.prototype.rpm,
+    armour:         Game.Tank.T29.prototype.armour,
+    bullet:         Game.Tank.T29.prototype.bullet,
+    ammoCapacity:   Game.Tank.T29.prototype.ammoCapacity
 };
 
-Game.Tank.USAT54.prototype.showBlastSmoke = function () {
+Game.Tank.T29.prototype.showBlastSmoke = function () {
 
     this.blastSmokeEnabled = true;
 
@@ -177,8 +179,8 @@ Game.Tank.USAT54.prototype.showBlastSmoke = function () {
 
         sprite = sprite.clone();
         sprite.position.z = 0;
-        sprite.position.y = 1;
-        sprite.position.x = 2.9 + i / 7;
+        sprite.position.y = 0;
+        sprite.position.x = 1.5 + i / 7;
         sprite.material = sprite.material.clone();
         sprite.material.opacity = 0.8 - 0.8 / 5 * ( 5 - i );
         scale = 1 + i / 5;
