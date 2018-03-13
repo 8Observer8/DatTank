@@ -1,9 +1,13 @@
+/*
+ * @author ohmed
+ * Tank "T29" unit class
+*/
 
-var D32 = function ( params ) {
+var T29 = function ( params ) {
 
     Game.Tank.call( this, params );
 
-    this.title = 'D-32';
+    this.title = 'T29';
 
     this.speed = 50;
     this.range = 160;
@@ -16,6 +20,8 @@ var D32 = function ( params ) {
 
 };
 
-D32.prototype = Object.create( Game.Tank.prototype );
+T29.prototype = Object.create( Game.Tank.prototype );
 
-module.exports = D32;
+//
+
+module.exports = T29;

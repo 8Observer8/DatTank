@@ -1,13 +1,13 @@
 /*
  * @author ohmed
- * Tank "USA-T54" unit class
+ * Tank "T44" unit class
 */
 
-var USAT54 = function ( params ) {
+var T44 = function ( params ) {
 
     Game.Tank.call( this, params );
 
-    this.title = 'USA-T54';
+    this.title = 'T44';
 
     this.speed = 43;
     this.range = 100;
@@ -20,6 +20,8 @@ var USAT54 = function ( params ) {
 
 };
 
-USAT54.prototype = Object.create( Game.Tank.prototype );
+T44.prototype = Object.create( Game.Tank.prototype );
 
-module.exports = USAT54;
+//
+
+module.exports = T44;
