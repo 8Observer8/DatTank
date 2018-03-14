@@ -867,8 +867,8 @@ Game.Tank.list = {};
 Game.Tank.numID = 0;
 
 Game.Tank.typeIds = {
-    1:  'IS2',
-    2:  'T29',
-    3:  'T44',
-    4:  'T54'
+    0:  'IS2',
+    1:  'T29',
+    2:  'T44',
+    3:  'T54'
 };

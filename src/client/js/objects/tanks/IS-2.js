@@ -80,6 +80,7 @@ Game.Tank.IS2.prototype.initModel = function () {
 
     var top = new THREE.Mesh( tankTopModel.geometry, materials );
     top.scale.set( 12, 12, 12 );
+    top.position.y = 23;
 
     this.object.add( top );
     this.object.top = top;
