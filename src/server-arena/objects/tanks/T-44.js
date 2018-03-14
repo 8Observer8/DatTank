@@ -9,14 +9,13 @@ var T44 = function ( params ) {
 
     this.title = 'T44';
 
-    this.speed = 43;
-    this.range = 100;
-    this.armour = 360;
-    this.bullet = 155;
-    this.maxShells = 80;
-    this.reloadTime = 700;
+    this.speed = 51;
+    this.armour = 90;
+    this.bullet = 85;
+    this.ammoCapacity = 64;
+    this.rpm = 10.7;
 
-    this.typeId = 3;
+    this.typeId = 2;
 
 };
 

@@ -26,7 +26,7 @@ Game.Tank.T29.prototype.year = 1946;
 Game.Tank.T29.prototype.ammoCapacity = 126;
 Game.Tank.T29.prototype.speed = 35;
 Game.Tank.T29.prototype.armour = 102;
-Game.Tank.T29.prototype.bullet = 105;
+Game.Tank.T29.prototype.bullet = 76;
 Game.Tank.T29.prototype.rpm = 16.7;
 
 //

@@ -24,10 +24,10 @@ Game.Tank.IS2.prototype = Object.create( Game.Tank.prototype );
 
 Game.Tank.IS2.prototype.year = 1950;
 Game.Tank.IS2.prototype.ammoCapacity = 36;
-Game.Tank.IS2.prototype.speed = 51;
+Game.Tank.IS2.prototype.speed = 37;
 Game.Tank.IS2.prototype.armour = 90;
-Game.Tank.IS2.prototype.bullet = 100;
-Game.Tank.IS2.prototype.rpm = 6.45;
+Game.Tank.IS2.prototype.bullet = 122;
+Game.Tank.IS2.prototype.rpm = 4.88;
 
 //
 
