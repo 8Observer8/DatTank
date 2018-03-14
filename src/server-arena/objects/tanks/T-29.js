@@ -9,12 +9,11 @@ var T29 = function ( params ) {
 
     this.title = 'T29';
 
-    this.speed = 50;
-    this.range = 160;
-    this.armour = 300;
-    this.bullet = 67;
-    this.maxShells = 70;
-    this.reloadTime = 300;
+    this.speed = 35;
+    this.armour = 102;
+    this.bullet = 76;
+    this.ammoCapacity = 127;
+    this.rpm = 16.67;
 
     this.typeId = 1;
 

@@ -12,8 +12,8 @@ Game.ResourceManager = function () {
     //
 
     this.modelList = [
-        'Tank01_base.json',
-        'Tank01_top.json',
+        'IS-2-bottom.json',
+        'IS-2-top.json',
 
         'Tank02_base.json',
         'Tank02_top.json',

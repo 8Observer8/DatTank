@@ -63,6 +63,11 @@ Game.Player.prototype.selectTank = function ( tankName ) {
 
     switch ( tankName ) {
 
+        case 'IS2':
+
+            this.tank = new Game.Tank.IS2({ player: this });
+            break;
+
         case 'T29':
 
             this.tank = new Game.Tank.T29({ player: this });
@@ -274,6 +279,7 @@ Game.Player.prototype.shoot = function ( bulletId ) {
 
         // -> and re-adding the class
         element.addClass('ammo-animation');
+        element.css( 'animation-duration', 1000 * 60 / this.tank.rpm + 'ms' );
 
     }
 

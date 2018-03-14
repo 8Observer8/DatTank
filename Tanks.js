@@ -26,7 +26,7 @@
 
 {
     name:           'T-29',
-    bullet:         105,
+    bullet:         76,
     penetration:    198/245/53,
     damage:         320/320/420,
     rateOfFire:     16.67,
@@ -65,10 +65,10 @@
 
 {
     name:           'IS-2',
-    bullet:         100,
+    bullet:         122,
     penetration:    175/235/50,
     damage:         250/250/330,
-    rateOfFire:     6.45
+    rateOfFire:     4.88
     enginePower:    520,
     armour:         90/90/60,
     ammoCapacity:   36,

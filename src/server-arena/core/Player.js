@@ -124,7 +124,7 @@ Player.prototype.getInactiveBullet = function () {
 
 Player.prototype.respawn = function ( tankName ) {
 
-    tankName = tankName || ( this.tank ) ? this.tank.title.replace( '-', '' ) : 'USA-T54';
+    tankName = tankName || ( this.tank ) ? this.tank.title : 'T44';
 
     var newPosition = new Game.Vec3( this.team.spawnPosition.x, this.team.spawnPosition.y, this.team.spawnPosition.z );
 
@@ -145,7 +145,7 @@ Player.prototype.respawn = function ( tankName ) {
 
     this.status = Player.Alive;
     this.health = 100;
-    this.ammo = this.tank.maxShells;
+    this.ammo = this.tank.ammoCapacity;
     this.position.set( newPosition.x, newPosition.y, newPosition.z );
     this.rotation = 0;
     this.rotationTop = 0;
@@ -177,30 +177,35 @@ Player.prototype.selectTank = function ( tankName ) {
 
     switch ( tankName ) {
 
-        case 'USAT54':
+        case 'IS2':
 
-            this.tank = new Game.Tank.USAT54();
+            this.tank = new Game.Tank.IS2();
             break;
 
-        case 'UKBlackPrince':
+        case 'T29':
 
-            this.tank = new Game.Tank.UKBlackPrince();
+            this.tank = new Game.Tank.T29();
             break;
 
-        case 'D32':
+        case 'T44':
 
-            this.tank = new Game.Tank.D32();
+            this.tank = new Game.Tank.T44();
+            break;
+
+        case 'T54':
+
+            this.tank = new Game.Tank.T54();
             break;
 
         default:
 
-            this.tank = new Game.Tank.USAT54();
+            this.tank = new Game.Tank.T44();
             break;
 
     }
 
     this.moveSpeed = this.originalMoveSpead * this.tank.speed / 40;
-    this.ammo = this.tank.maxShells;
+    this.ammo = this.tank.ammoCapacity;
 
 };
 
@@ -289,7 +294,7 @@ Player.prototype.changeAmmo = function ( delta ) {
     //
 
     this.ammo += delta;
-    this.ammo = Math.max( Math.min( this.tank.maxShells, this.ammo ), 0 );
+    this.ammo = Math.max( Math.min( this.tank.ammoCapacity, this.ammo ), 0 );
 
     //
 
@@ -362,19 +367,19 @@ Player.prototype.shoot = function () {
 
     }
 
+    if ( scope.shootTimeout ) return;
+
     scope.networkBuffers['shoot'] = scope.networkBuffers['shoot'] || {};
     var buffer = scope.networkBuffers['shoot'].buffer || new ArrayBuffer( 6 );
     var bufferView = scope.networkBuffers['shoot'].bufferView || new Uint16Array( buffer );
     scope.networkBuffers['shoot'].buffer = buffer;
     scope.networkBuffers['shoot'].bufferView = bufferView;
 
-    if ( scope.shootTimeout ) return;
-
     scope.shootTimeout = setTimeout( function () {
 
         scope.shootTimeout = false;
 
-    }, scope.tank.reloadTime );
+    }, 1000 * 60 / scope.tank.rpm );
 
     if ( scope.ammo <= 0 ) {
 

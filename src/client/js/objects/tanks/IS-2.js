@@ -10,8 +10,8 @@ Game.Tank.IS2 = function ( params ) {
     //
 
     this.model = {
-        top:    'Tank04_top.json',
-        base:   'Tank04_base.json'
+        top:    'IS-2-top.json',
+        base:   'IS-2-bottom.json'
     };
 
     this.trackOffset = { l: -3, r: -8 };
@@ -24,10 +24,10 @@ Game.Tank.IS2.prototype = Object.create( Game.Tank.prototype );
 
 Game.Tank.IS2.prototype.year = 1950;
 Game.Tank.IS2.prototype.ammoCapacity = 36;
-Game.Tank.IS2.prototype.speed = 51;
+Game.Tank.IS2.prototype.speed = 37;
 Game.Tank.IS2.prototype.armour = 90;
-Game.Tank.IS2.prototype.bullet = 100;
-Game.Tank.IS2.prototype.rpm = 6.45;
+Game.Tank.IS2.prototype.bullet = 122;
+Game.Tank.IS2.prototype.rpm = 4.88;
 
 //
 
@@ -50,8 +50,7 @@ Game.Tank.IS2.prototype.initModel = function () {
     }
 
     var base = new THREE.Mesh( tankBaseModel.geometry, materials );
-    base.rotation.y = 0;
-    base.scale.set( 20, 20, 20 );
+    base.scale.set( 12, 12, 12 );
     this.object.add( base );
     this.object.base = base;
 
@@ -77,12 +76,7 @@ Game.Tank.IS2.prototype.initModel = function () {
     }
 
     var top = new THREE.Mesh( tankTopModel.geometry, materials );
-    top.castShadow = true;
-    top.receiveShadow = true;
-    top.position.y = 20;
-    top.position.x = 0;
-    top.position.z = 7;
-    top.scale.set( 20, 20, 20 );
+    top.scale.set( 12, 12, 12 );
 
     this.object.add( top );
     this.object.top = top;
