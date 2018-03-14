@@ -313,7 +313,6 @@ Game.UI.prototype.showChoiceWindow = function () {
     $('#signin-box').css('opacity', 0);
 
     garage.open();
-    garage.selectTank();
     soundManager.playMenuSound();
 
 };

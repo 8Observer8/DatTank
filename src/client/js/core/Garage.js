@@ -14,6 +14,8 @@ Game.Garage = function () {
     this.lastFrameTime = 0;
     this.rotationSpeed = 0.00015;
 
+    this.loaded = false;
+
     this.models = {};
     this.currentTank = 0;
     this.currentTankModel = false;
@@ -85,6 +87,12 @@ Game.Garage.prototype.init = function () {
         scope.models['IS2'] = model;
 
         loaded ++;
+        if ( loaded === 5 ) {
+
+            scope.loaded = true;
+            scope.selectTank();
+
+        }
 
     });
 
@@ -101,6 +109,12 @@ Game.Garage.prototype.init = function () {
         scope.models['T29'] = model;
 
         loaded ++;
+        if ( loaded === 5 ) {
+
+            scope.loaded = true;
+            scope.selectTank();
+
+        }
 
     });
 
@@ -117,6 +131,12 @@ Game.Garage.prototype.init = function () {
         scope.models['T44'] = model;
 
         loaded ++;
+        if ( loaded === 5 ) {
+
+            scope.loaded = true;
+            scope.selectTank();
+
+        }
 
     });
 
@@ -133,6 +153,12 @@ Game.Garage.prototype.init = function () {
         scope.models['T54'] = model;
 
         loaded ++;
+        if ( loaded === 5 ) {
+
+            scope.loaded = true;
+            scope.selectTank();
+
+        }
 
     });
 
@@ -145,6 +171,12 @@ Game.Garage.prototype.init = function () {
         scope.scene.add( model );
 
         loaded ++;
+        if ( loaded === 5 ) {
+
+            scope.loaded = true;
+            scope.selectTank();
+
+        }
 
     });
 
@@ -169,6 +201,14 @@ Game.Garage.prototype.init = function () {
 };
 
 Game.Garage.prototype.open = function () {
+
+    if ( this.loaded ) {
+
+        garage.selectTank();
+
+    }
+
+    this.resize();
 
     this.timer = 0;
     this.camera.position.set( Math.cos( this.timer * this.rotationSpeed ) * 10, 4, Math.sin( this.timer * this.rotationSpeed ) * 10 );
@@ -197,7 +237,7 @@ Game.Garage.prototype.render = function () {
 
     if ( this.currentTankModel ) {
     
-        this.currentTankModel.rotation.set( 0, this.timer * this.rotationSpeed, 0 );
+        this.currentTankModel.rotation.y = this.timer * this.rotationSpeed;
 
     }
 
@@ -245,7 +285,6 @@ Game.Garage.prototype.arrowBack = function () {
 
 Game.Garage.prototype.selectTank = function ( event ) {
 
-    this.resize();
     $('.choice-skins .tank.active').removeClass('active');
 
     var tankId;
