@@ -377,7 +377,7 @@ object {
     height: 41px;
     margin-left: 16px;
     margin-right: auto;
-    width: calc( 90% - 42px );
+    width: 90%;
     text-align: center;
     font: normal 15px 'Roboto';
     color: #fff;
@@ -1120,9 +1120,8 @@ object {
     position: absolute;
     bottom: 36px;
     border: none;
-    left: 30%;
-    width: calc(36% + 6rem);
-    margin-left: -8rem;
+    left: calc( 50% - 175px );
+    width: 350px;
 }
 
 .choice-skins .tank {
@@ -1130,7 +1129,6 @@ object {
     width: 84px;
     height: 60px;
     display: inline-block;
-    left: calc(32%);
     opacity: 0.7;
     transition: opacity 200ms ease;
 }
@@ -1295,17 +1293,22 @@ object {
 
 .btn-pick {
     position: absolute;
-    right: 6%;
+    left: calc( 50% - 50px );
     color: white;
     background-color: #00b6ff;
     border: 1px solid #0493CC;
-    top: 87%;
+    bottom: 35%;
     width: 10%;
     text-align: center;
     opacity: 0.8;
     padding: 8px;
-    min-width: 64px;
-    min-height: 18px;
+    width: 100px;
+    height: 18px;
+    transition: opacity 200ms ease;
+}
+
+.btn-pick:hover {
+    opacity: 1;
 }
 
 .tw-picture-share {

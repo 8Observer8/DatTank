@@ -61,15 +61,17 @@ Game.prototype.init = function () {
     $('#signin-box #username').focus();
     $('#signin-box #username').keydown( function ( event ) {
 
-        if ( event.keyCode === 13 ) {
+        if ( event.keyCode === 13 && ! garage.opened ) {
 
-            scope.play();
+            event.stopPropagation();
+            document.activeElement.blur();
+            ui.showChoiceWindow();
 
         }
 
     });
 
-    $('#play-btn').click( this.play.bind( this ) );
+    $('#play-btn').click( ui.showChoiceWindow.bind( ui ) );
     $('.change-skin-btn').click( ui.showChoiceWindow.bind( ui ) );
     $('.btn-pick').click( ui.selectTankAndcloseChoiceWindow.bind( ui ) );
     $('#signin-box-wrapper #change-tank').click( ui.showChoiceWindow.bind( ui ) );

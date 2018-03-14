@@ -5,6 +5,8 @@
 
 Game.Garage = function () {
 
+    this.opened = false;
+
     this.container = false;
     this.camera = false;
     this.scene = false;
@@ -34,7 +36,6 @@ Game.Garage.prototype.init = function () {
     $('#arrow2').click( this.arrowForward.bind( this ) );
     $('.choice-skins .tank').click( this.selectTank.bind( this ) );
     $('.close-tank-skins').click( ui.closeChoiceWindow.bind( ui ) );
-    $('.unblockTank').click( this.unblockTank.bind( this ) );
 
     //
 
@@ -184,9 +185,16 @@ Game.Garage.prototype.init = function () {
 
     $( document ).keydown( function ( event ) {
 
+        if ( ! scope.opened ) return;
+
         switch ( event.keyCode ) {
 
-            case 27: // esc btn
+            case 13: // enter key
+
+                ui.selectTankAndcloseChoiceWindow();
+                break;
+
+            case 27: // esc key
 
                 ui.closeChoiceWindow();
                 break;
@@ -221,11 +229,20 @@ Game.Garage.prototype.open = function () {
 
     }
 
+    this.opened = true;
     this.resize();
 
     this.timer = 0;
     this.camera.position.set( Math.cos( this.timer * this.rotationSpeed ) * 10, 4, Math.sin( this.timer * this.rotationSpeed ) * 10 );
     this.camera.lookAt( this.scene.position );
+
+};
+
+Game.Garage.prototype.close = function () {
+
+    this.opened = false;
+    $('.tank-skins').hide();
+    soundManager.playMenuSound();
 
 };
 
@@ -255,12 +272,6 @@ Game.Garage.prototype.render = function () {
     }
 
     this.renderer.render( this.scene, this.camera );
-
-};
-
-Game.Garage.prototype.stop = function () {
-
-    soundManager.playMenuSound();
 
 };
 
@@ -366,28 +377,6 @@ Game.Garage.prototype.selectTank = function ( event ) {
         soundManager.playMenuSound();
         localStorage.setItem( 'currentTank', this.currentTank );
 
-        // if ( localStorage.getItem( 'currentTank' ) !== 'T44' ) {
-
-        //     $('.share-label').hide();
-
-        // }
-
     }
-
-};
-
-Game.Garage.prototype.pickTank = function () {
-
-    // if ( localStorage.getItem( 'currentTank' ) === 'T44' && localStorage.getItem( 'unblockedTank' ) !== 'true' ) {
-
-    //     $('.share-label').show();
-
-    // }
-
-};
-
-Game.Garage.prototype.unblockTank = function () {
-
-    localStorage.setItem( 'unblockedTank', true );
 
 };
