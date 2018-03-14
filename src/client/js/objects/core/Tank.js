@@ -827,7 +827,8 @@ Game.Tank.list = {};
 Game.Tank.numID = 0;
 
 Game.Tank.typeIds = {
-    1:  'D-32',
-    2:  'UK-BlackPrince',
-    3:  'USA-T54'
+    1:  'IS2',
+    2:  'T29',
+    3:  'T44',
+    4:  'T54'
 };

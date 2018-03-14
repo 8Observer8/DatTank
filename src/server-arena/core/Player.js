@@ -145,7 +145,7 @@ Player.prototype.respawn = function ( tankName ) {
 
     this.status = Player.Alive;
     this.health = 100;
-    this.ammo = this.tank.maxShells;
+    this.ammo = this.tank.ammoCapacity;
     this.position.set( newPosition.x, newPosition.y, newPosition.z );
     this.rotation = 0;
     this.rotationTop = 0;
@@ -205,7 +205,7 @@ Player.prototype.selectTank = function ( tankName ) {
     }
 
     this.moveSpeed = this.originalMoveSpead * this.tank.speed / 40;
-    this.ammo = this.tank.maxShells;
+    this.ammo = this.tank.ammoCapacity;
 
 };
 
@@ -294,7 +294,7 @@ Player.prototype.changeAmmo = function ( delta ) {
     //
 
     this.ammo += delta;
-    this.ammo = Math.max( Math.min( this.tank.maxShells, this.ammo ), 0 );
+    this.ammo = Math.max( Math.min( this.tank.ammoCapacity, this.ammo ), 0 );
 
     //
 
@@ -367,19 +367,19 @@ Player.prototype.shoot = function () {
 
     }
 
+    if ( scope.shootTimeout ) return;
+
     scope.networkBuffers['shoot'] = scope.networkBuffers['shoot'] || {};
     var buffer = scope.networkBuffers['shoot'].buffer || new ArrayBuffer( 6 );
     var bufferView = scope.networkBuffers['shoot'].bufferView || new Uint16Array( buffer );
     scope.networkBuffers['shoot'].buffer = buffer;
     scope.networkBuffers['shoot'].bufferView = bufferView;
 
-    if ( scope.shootTimeout ) return;
-
     scope.shootTimeout = setTimeout( function () {
 
         scope.shootTimeout = false;
 
-    }, scope.tank.reloadTime );
+    }, 1000 * 60 / scope.tank.rpm );
 
     if ( scope.ammo <= 0 ) {
 
