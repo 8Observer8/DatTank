@@ -184,9 +184,22 @@ Game.Garage.prototype.init = function () {
 
     $( document ).keydown( function ( event ) {
 
-        if ( event.keyCode === 27 ) {
+        switch ( event.keyCode ) {
 
-            ui.closeChoiceWindow();
+            case 27: // esc btn
+
+                ui.closeChoiceWindow();
+                break;
+
+            case 39: // right arrow
+
+                scope.arrowForward();
+                break;
+
+            case 37: // left arrow
+
+                scope.arrowBack();
+                break;
 
         }
 
