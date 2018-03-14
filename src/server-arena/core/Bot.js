@@ -49,18 +49,23 @@ Bot.prototype = {};
 Bot.prototype.init = function () {
 
     var tank;
+    var rnd = Math.random();
 
-    if ( Math.random() <= 0.3 ) {
+    if ( rnd <= 0.25 ) {
 
-        tank = 'USAT54';
+        tank = 'IS2';
 
-    } else if ( Math.random() > 0.3 && Math.random() <= 0.6 ) {
+    } else if ( rnd > 0.25 && rnd <= 0.5 ) {
 
-        tank = 'D32';
+        tank = 'T29';
 
-    } else if ( Math.random() > 0.6 ) {
+    } else if ( rnd > 0.5 && rnd <= 0.75 ) {
 
-        tank = 'UKBlackPrince';
+        tank = 'T44';
+
+    } else {
+
+        tank = 'T54';
 
     }
 

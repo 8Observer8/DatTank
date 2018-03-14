@@ -46,15 +46,16 @@ Game.Garage.prototype.init = function () {
 
     // Lights
 
-    var ambientlight = new THREE.AmbientLight( 0x888888 );
+    var ambientlight = new THREE.AmbientLight( 0xaaaaaa );
     this.scene.add( ambientlight );
 
-    this.spotLight = new THREE.SpotLight( 0xaaaaaa, 1, 30, Math.PI / 4, 0.8 );
+    this.spotLight = new THREE.SpotLight( 0x888888, 1, 30, Math.PI / 4, 0.8 );
     this.spotLight.position.set( 2, 7, 2 );
     this.spotLight.lookAt( this.scene.position );
     this.spotLight.castShadow = true;
-    this.spotLight.shadow.mapSize.width = 1024;
-    this.spotLight.shadow.mapSize.height = 1024;
+    this.spotLight.shadow.mapSize.width = 512;
+    this.spotLight.shadow.mapSize.height = 512;
+    this.spotLight.shadowBias = - 0.001;
     this.scene.add( this.spotLight );
 
     // Renderer

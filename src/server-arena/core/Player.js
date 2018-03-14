@@ -124,7 +124,7 @@ Player.prototype.getInactiveBullet = function () {
 
 Player.prototype.respawn = function ( tankName ) {
 
-    tankName = tankName || ( this.tank ) ? this.tank.title.replace( '-', '' ) : 'USA-T54';
+    tankName = tankName || ( this.tank ) ? this.tank.title : 'T44';
 
     var newPosition = new Game.Vec3( this.team.spawnPosition.x, this.team.spawnPosition.y, this.team.spawnPosition.z );
 
@@ -177,24 +177,29 @@ Player.prototype.selectTank = function ( tankName ) {
 
     switch ( tankName ) {
 
-        case 'USAT54':
+        case 'IS2':
 
-            this.tank = new Game.Tank.USAT54();
+            this.tank = new Game.Tank.IS2();
             break;
 
-        case 'UKBlackPrince':
+        case 'T29':
 
-            this.tank = new Game.Tank.UKBlackPrince();
+            this.tank = new Game.Tank.T29();
             break;
 
-        case 'D32':
+        case 'T44':
 
-            this.tank = new Game.Tank.D32();
+            this.tank = new Game.Tank.T44();
+            break;
+
+        case 'T54':
+
+            this.tank = new Game.Tank.T54();
             break;
 
         default:
 
-            this.tank = new Game.Tank.USAT54();
+            this.tank = new Game.Tank.T44();
             break;
 
     }

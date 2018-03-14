@@ -17,7 +17,7 @@
         "colorEmissive":[0,0,0],
         "depthWrite":true,
         "blending":1,
-        "colorSpecular":[0.5,0.5,0.5],
+        "colorSpecular":[0,0,0],
         "DbgIndex":0,
         "transparent":false,
         "DbgColor":15658734,
