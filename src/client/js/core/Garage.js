@@ -74,7 +74,6 @@ Game.Garage.prototype.init = function () {
     loader.load( 'resources/models/garage-IS2.json', function ( geometry, materials ) {
 
         var model = new THREE.Mesh( geometry, materials );
-        model.rotation.y = - Math.PI;
         model.position.y += 0.4;
         model.visible = true;
         model.castShadow = true;

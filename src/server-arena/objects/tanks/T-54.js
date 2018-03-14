@@ -1,13 +1,13 @@
 /*
  * @author ohmed
- * Tank "UK-BlackPrince" unit class
+ * Tank "T54" unit class
 */
 
-var UKBlackPrince = function ( params ) {
+var T54 = function ( params ) {
 
     Game.Tank.call( this, params );
 
-    this.title = 'UK-BlackPrince';
+    this.title = 'T54';
 
     this.speed = 30;
     this.range = 160;
@@ -20,6 +20,8 @@ var UKBlackPrince = function ( params ) {
 
 };
 
-UKBlackPrince.prototype = Object.create( Game.Tank.prototype );
+T54.prototype = Object.create( Game.Tank.prototype );
 
-module.exports = UKBlackPrince;
+//
+
+module.exports = T54;
