@@ -1148,6 +1148,19 @@ object {
     position: absolute;
 }
 
+.choice-skins .title {
+    width: 100%;
+    text-align: center;
+    color: #bbb;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 200ms ease;
+}
+
+.choice-skins .tank:hover .title {
+    opacity: 1;
+}
+
 .choice-skins .tank.active {
     opacity: 1;
 }
