@@ -641,7 +641,6 @@ object {
 
 .ammo-animation {
     animation-name: reload;
-    animation-duration: 1s;
     animation-fill-mode: forwards;
 }
 

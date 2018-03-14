@@ -387,7 +387,7 @@ Game.Tank.prototype.setRotation = function ( angle ) {
 
 Game.Tank.prototype.setTopRotation = function ( angle ) {
 
-    this.object.top.rotation.y = angle;
+    this.object.top.rotation.y = angle + Math.PI / 2;
 
 };
 
@@ -666,7 +666,7 @@ Game.Tank.prototype.shootBullet = function ( bulletId ) {
 
     bullet.visible = true;
     bullet.trace.visible = true;
-    bullet.directionRotation = - this.object.top.rotation.y - this.object.rotation.y;
+    bullet.directionRotation = - this.object.top.rotation.y - this.object.rotation.y + Math.PI / 2;
 
     var offsetDist = 28;
     var offsetX = offsetDist * Math.cos( bullet.directionRotation );
