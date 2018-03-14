@@ -805,6 +805,46 @@ Game.Tank.prototype.animate = function ( delta ) {
 
     }
 
+    // if tank moves update tracks
+
+    if ( this.object.base.material.length === 3 ) {
+
+        if ( this.player.moveDirection.x ) {
+
+            this.object.base.material[1].map.offset.y = this.object.base.material[1].map.offset.y - 0.005 * this.player.moveDirection.x;
+            if ( this.object.base.material[1].map.offset.y > 1 ) this.object.base.material[1].map.offset.y = 0;
+            this.object.base.material[1].needsUpdate = true;
+
+            this.object.base.material[2].map.offset.y = this.object.base.material[2].map.offset.y - 0.005 * this.player.moveDirection.x;
+            if ( this.object.base.material[2].map.offset.y > 1 ) this.object.base.material[2].map.offset.y = 0;
+            this.object.base.material[2].needsUpdate = true;
+
+        } else if ( this.player.moveDirection.y === -1 ) {
+
+            this.object.base.material[1].map.offset.y = this.object.base.material[1].map.offset.y - 0.005;
+            if ( this.object.base.material[1].map.offset.y > 1 ) this.object.base.material[1].map.offset.y = 0;
+            this.object.base.material[1].needsUpdate = true;
+
+            this.object.base.material[2].map.offset.y = this.object.base.material[2].map.offset.y + 0.005;
+            if ( this.object.base.material[2].map.offset.y > 1 ) this.object.base.material[2].map.offset.y = 0;
+            this.object.base.material[2].needsUpdate = true;
+
+        } else if ( this.player.moveDirection.y === 1 ) {
+
+            this.object.base.material[1].map.offset.y = this.object.base.material[1].map.offset.y + 0.005;
+            if ( this.object.base.material[1].map.offset.y > 1 ) this.object.base.material[1].map.offset.y = 0;
+            this.object.base.material[1].needsUpdate = true;
+
+            this.object.base.material[2].map.offset.y = this.object.base.material[2].map.offset.y - 0.005;
+            if ( this.object.base.material[2].map.offset.y > 1 ) this.object.base.material[2].map.offset.y = 0;
+            this.object.base.material[2].needsUpdate = true;
+
+        }
+
+    }
+
+    //
+
     if ( this.mixer ) {
 
         this.mixer.update( delta / 1000 );

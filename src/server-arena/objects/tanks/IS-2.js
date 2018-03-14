@@ -13,7 +13,7 @@ var IS2 = function ( params ) {
     this.armour = 90;
     this.bullet = 122;
     this.ammoCapacity = 36;
-    this.rpm = 4.88;
+    this.rpm = 4.88 * 10;
 
     this.typeId = 0;
 
