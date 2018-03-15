@@ -10,8 +10,8 @@ Game.Tank.T29 = function ( params ) {
     //
 
     this.model = {
-        top:    'Tank03_top.json',
-        base:   'Tank03_base.json'
+        top:    'T29-top.json',
+        base:   'T29-bottom.json'
     };
 
     this.trackOffset = { l: -3, r: -8 };
@@ -27,7 +27,7 @@ Game.Tank.T29.prototype.ammoCapacity = 126;
 Game.Tank.T29.prototype.speed = 35;
 Game.Tank.T29.prototype.armour = 102;
 Game.Tank.T29.prototype.bullet = 76;
-Game.Tank.T29.prototype.rpm = 16.7;
+Game.Tank.T29.prototype.rpm = 16.7 * 10;
 
 //
 
@@ -44,14 +44,17 @@ Game.Tank.T29.prototype.initModel = function () {
     materials = [];
     for ( var i = 0, il = tankBaseModel.material.length; i < il; i ++ ) {
 
-        materials.push( tankBaseModel.material[ i ].clone() );
-        materials[ materials.length - 1 ].morphTargets = true;
+        var material = tankBaseModel.material[ i ].clone();
+        material.map = material.map.clone();
+        material.map.needsUpdate = true;
+        material.morphTargets = true;
+        materials.push( material );
 
     }
 
     var base = new THREE.Mesh( tankBaseModel.geometry, materials );
     base.rotation.y = 0;
-    base.scale.set( 20, 20, 20 );
+    base.scale.set( 9.5, 9.5, 9.5 );
     this.object.add( base );
     this.object.base = base;
 
@@ -59,10 +62,10 @@ Game.Tank.T29.prototype.initModel = function () {
 
     var tankShadowTexture = resourceManager.getTexture( 'shadowTank.png' );
     var tankShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: tankShadowTexture, transparent: true, depthWrite: false, opacity: 0.7 }) );
-    tankShadow.scale.set( 15, 17, 17 );
+    tankShadow.scale.set( 16, 21, 1 );
     tankShadow.rotation.x = - Math.PI / 2;
     tankShadow.position.y += 0.5;
-    tankShadow.renderOrder = 2;
+    tankShadow.renderOrder = 10;
 
     this.object.add( tankShadow );
 
@@ -80,9 +83,7 @@ Game.Tank.T29.prototype.initModel = function () {
     top.castShadow = true;
     top.receiveShadow = true;
     top.position.y = 20;
-    top.position.x = 0;
-    top.position.z = 7;
-    top.scale.set( 20, 20, 20 );
+    top.scale.set( 9.5, 9.5, 9.5 );
 
     this.object.add( top );
     this.object.top = top;

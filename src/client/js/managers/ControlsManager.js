@@ -54,7 +54,7 @@ Game.ControlsManager.prototype.mouseInit = function () {
 
                     scope.shoot();
 
-                }, 700 );
+                }, 300 );
 
                 scope.shoot();
 
@@ -175,7 +175,7 @@ Game.ControlsManager.prototype.keyInit = function () {
 
                     scope.shoot();
 
-                }, 100);
+                }, 300 );
 
                 scope.shoot();
                 break;

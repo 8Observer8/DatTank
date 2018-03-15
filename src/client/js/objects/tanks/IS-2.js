@@ -10,8 +10,8 @@ Game.Tank.IS2 = function ( params ) {
     //
 
     this.model = {
-        top:    'IS-2-top.json',
-        base:   'IS-2-bottom.json'
+        top:    'IS2-top.json',
+        base:   'IS2-bottom.json'
     };
 
     this.trackOffset = { l: -3, r: -8 };
@@ -61,10 +61,10 @@ Game.Tank.IS2.prototype.initModel = function () {
 
     var tankShadowTexture = resourceManager.getTexture( 'shadowTank.png' );
     var tankShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: tankShadowTexture, transparent: true, depthWrite: false, opacity: 0.7 }) );
-    tankShadow.scale.set( 15, 17, 17 );
+    tankShadow.scale.set( 16, 24, 1 );
     tankShadow.rotation.x = - Math.PI / 2;
     tankShadow.position.y += 0.5;
-    tankShadow.renderOrder = 2;
+    tankShadow.renderOrder = 10;
 
     this.object.add( tankShadow );
 

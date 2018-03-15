@@ -13,7 +13,7 @@ var T29 = function ( params ) {
     this.armour = 102;
     this.bullet = 76;
     this.ammoCapacity = 127;
-    this.rpm = 16.67;
+    this.rpm = 16.67 * 10;
 
     this.typeId = 1;
 

@@ -10,13 +10,13 @@ Game.Tank.T44 = function ( params ) {
     //
 
     this.model = {
-        top:    'Tank02_top.json',
-        base:   'Tank02_base.json'
+        top:    'T44-top.json',
+        base:   'T44-bottom.json'
     };
 
     this.trackOffset = { l: -3, r: -6 };
 
-    this.name = 'UK-Black-Prince';
+    this.name = 'T44';
 
 };
 
@@ -27,7 +27,7 @@ Game.Tank.T44.prototype.ammoCapacity = 64;
 Game.Tank.T44.prototype.speed = 51;
 Game.Tank.T44.prototype.armour = 90;
 Game.Tank.T44.prototype.bullet = 85;
-Game.Tank.T44.prototype.rpm = 10.7;
+Game.Tank.T44.prototype.rpm = 10.7 * 10;
 
 //
 
@@ -44,15 +44,18 @@ Game.Tank.T44.prototype.initModel = function () {
     materials = [];
     for ( var i = 0, il = tankBaseModel.material.length; i < il; i ++ ) {
 
-        materials.push( tankBaseModel.material[ i ].clone() );
-        materials[ materials.length - 1 ].morphTargets = true;
+        var material = tankBaseModel.material[ i ].clone();
+        material.map = material.map.clone();
+        material.map.needsUpdate = true;
+        material.morphTargets = true;
+        materials.push( material );
 
     }
 
     var base = new THREE.Mesh( tankBaseModel.geometry, materials );
     base.rotation.y = 0;
-    base.position.y = 5;
-    base.scale.set( 20, 20, 20 );
+    base.position.y = -2;
+    base.scale.set( 12, 12, 12 );
     this.object.add( base );
     this.object.base = base;
 
@@ -68,10 +71,10 @@ Game.Tank.T44.prototype.initModel = function () {
 
     var tankShadowTexture = resourceManager.getTexture( 'shadowTank.png' );
     var tankShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: tankShadowTexture, transparent: true, depthWrite: false, opacity: 0.7 }) );
-    tankShadow.scale.set( 15, 17, 17 );
+    tankShadow.scale.set( 17, 20, 1 );
     tankShadow.rotation.x = - Math.PI / 2;
-    tankShadow.position.y += 0.5;
-    tankShadow.renderOrder = 2;
+    tankShadow.position.y += 1;
+    tankShadow.renderOrder = 10;
 
     this.object.add( tankShadow );
 
@@ -81,9 +84,7 @@ Game.Tank.T44.prototype.initModel = function () {
     top.castShadow = true;
     top.receiveShadow = true;
     top.position.y = 20;
-    top.position.x = 2;
-    top.position.z = 2;
-    top.scale.set( 20, 20, 20 );
+    top.scale.set( 12, 12, 12 );
 
     this.object.add( top );
     this.object.top = top;
