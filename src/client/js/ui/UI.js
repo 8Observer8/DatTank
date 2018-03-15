@@ -313,7 +313,6 @@ Game.UI.prototype.showChoiceWindow = function () {
     $('#signin-box').css('opacity', 0);
 
     garage.open();
-    garage.selectTank();
     soundManager.playMenuSound();
 
 };
@@ -326,26 +325,25 @@ Game.UI.prototype.closeChoiceWindow = function ( event ) {
 
     }
 
-    $('.tank-skins').hide();
+    $('#signin-box #username').focus();
     $('#signin-box').css('opacity', 1);
-    garage.stop();
+    garage.close();
 
 };
 
 Game.UI.prototype.selectTankAndcloseChoiceWindow = function () {
 
-    if ( localStorage.getItem( 'currentTank' ) === 'D32' && localStorage.getItem( 'unblockedTank' ) !== 'true' ) {
+    $('#signin-box').css('opacity', 1);
+    garage.close();
 
-        $('.share-label').show();
+    if ( game.arena ) {
+
+        game.arena.me.respawn( false );
 
     } else {
 
-        $('.tank-skins').hide();
+        game.play();
 
     }
-
-    $('#signin-box').css('opacity', 1);
-    garage.pickTank();
-    garage.stop();
 
 };

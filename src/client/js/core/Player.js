@@ -279,7 +279,7 @@ Game.Player.prototype.shoot = function ( bulletId ) {
 
         // -> and re-adding the class
         element.addClass('ammo-animation');
-        element.css( 'animation-duration', 1000 * 60 / this.tank.rpm + 'ms' );
+        element.css( 'animation-duration', 4000 + 1000 * 60 / this.tank.rpm + 'ms' );
 
     }
 

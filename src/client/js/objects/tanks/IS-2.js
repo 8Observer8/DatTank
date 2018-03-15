@@ -27,7 +27,7 @@ Game.Tank.IS2.prototype.ammoCapacity = 36;
 Game.Tank.IS2.prototype.speed = 37;
 Game.Tank.IS2.prototype.armour = 90;
 Game.Tank.IS2.prototype.bullet = 122;
-Game.Tank.IS2.prototype.rpm = 4.88;
+Game.Tank.IS2.prototype.rpm = 4.88 * 10;
 
 //
 
@@ -44,8 +44,11 @@ Game.Tank.IS2.prototype.initModel = function () {
     materials = [];
     for ( var i = 0, il = tankBaseModel.material.length; i < il; i ++ ) {
 
-        materials.push( tankBaseModel.material[ i ].clone() );
-        materials[ materials.length - 1 ].morphTargets = true;
+        var material = tankBaseModel.material[ i ].clone();
+        material.map = material.map.clone();
+        material.map.needsUpdate = true;
+        material.morphTargets = true;
+        materials.push( material );
 
     }
 
@@ -77,6 +80,7 @@ Game.Tank.IS2.prototype.initModel = function () {
 
     var top = new THREE.Mesh( tankTopModel.geometry, materials );
     top.scale.set( 12, 12, 12 );
+    top.position.y = 23;
 
     this.object.add( top );
     this.object.top = top;

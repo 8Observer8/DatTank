@@ -5,6 +5,8 @@
 
 Game.Garage = function () {
 
+    this.opened = false;
+
     this.container = false;
     this.camera = false;
     this.scene = false;
@@ -13,6 +15,8 @@ Game.Garage = function () {
     this.timer = 0;
     this.lastFrameTime = 0;
     this.rotationSpeed = 0.00015;
+
+    this.loaded = false;
 
     this.models = {};
     this.currentTank = 0;
@@ -32,7 +36,6 @@ Game.Garage.prototype.init = function () {
     $('#arrow2').click( this.arrowForward.bind( this ) );
     $('.choice-skins .tank').click( this.selectTank.bind( this ) );
     $('.close-tank-skins').click( ui.closeChoiceWindow.bind( ui ) );
-    $('.unblockTank').click( this.unblockTank.bind( this ) );
 
     //
 
@@ -85,6 +88,12 @@ Game.Garage.prototype.init = function () {
         scope.models['IS2'] = model;
 
         loaded ++;
+        if ( loaded === 5 ) {
+
+            scope.loaded = true;
+            scope.selectTank();
+
+        }
 
     });
 
@@ -101,6 +110,12 @@ Game.Garage.prototype.init = function () {
         scope.models['T29'] = model;
 
         loaded ++;
+        if ( loaded === 5 ) {
+
+            scope.loaded = true;
+            scope.selectTank();
+
+        }
 
     });
 
@@ -117,6 +132,12 @@ Game.Garage.prototype.init = function () {
         scope.models['T44'] = model;
 
         loaded ++;
+        if ( loaded === 5 ) {
+
+            scope.loaded = true;
+            scope.selectTank();
+
+        }
 
     });
 
@@ -133,6 +154,12 @@ Game.Garage.prototype.init = function () {
         scope.models['T54'] = model;
 
         loaded ++;
+        if ( loaded === 5 ) {
+
+            scope.loaded = true;
+            scope.selectTank();
+
+        }
 
     });
 
@@ -145,6 +172,12 @@ Game.Garage.prototype.init = function () {
         scope.scene.add( model );
 
         loaded ++;
+        if ( loaded === 5 ) {
+
+            scope.loaded = true;
+            scope.selectTank();
+
+        }
 
     });
 
@@ -152,9 +185,29 @@ Game.Garage.prototype.init = function () {
 
     $( document ).keydown( function ( event ) {
 
-        if ( event.keyCode === 27 ) {
+        if ( ! scope.opened ) return;
 
-            ui.closeChoiceWindow();
+        switch ( event.keyCode ) {
+
+            case 13: // enter key
+
+                ui.selectTankAndcloseChoiceWindow();
+                break;
+
+            case 27: // esc key
+
+                ui.closeChoiceWindow();
+                break;
+
+            case 39: // right arrow
+
+                scope.arrowForward();
+                break;
+
+            case 37: // left arrow
+
+                scope.arrowBack();
+                break;
 
         }
 
@@ -170,9 +223,26 @@ Game.Garage.prototype.init = function () {
 
 Game.Garage.prototype.open = function () {
 
+    if ( this.loaded ) {
+
+        garage.selectTank();
+
+    }
+
+    this.opened = true;
+    this.resize();
+
     this.timer = 0;
     this.camera.position.set( Math.cos( this.timer * this.rotationSpeed ) * 10, 4, Math.sin( this.timer * this.rotationSpeed ) * 10 );
     this.camera.lookAt( this.scene.position );
+
+};
+
+Game.Garage.prototype.close = function () {
+
+    this.opened = false;
+    $('.tank-skins').hide();
+    soundManager.playMenuSound();
 
 };
 
@@ -197,17 +267,11 @@ Game.Garage.prototype.render = function () {
 
     if ( this.currentTankModel ) {
     
-        this.currentTankModel.rotation.set( 0, this.timer * this.rotationSpeed, 0 );
+        this.currentTankModel.rotation.y = this.timer * this.rotationSpeed;
 
     }
 
     this.renderer.render( this.scene, this.camera );
-
-};
-
-Game.Garage.prototype.stop = function () {
-
-    soundManager.playMenuSound();
 
 };
 
@@ -245,7 +309,6 @@ Game.Garage.prototype.arrowBack = function () {
 
 Game.Garage.prototype.selectTank = function ( event ) {
 
-    this.resize();
     $('.choice-skins .tank.active').removeClass('active');
 
     var tankId;
@@ -314,28 +377,6 @@ Game.Garage.prototype.selectTank = function ( event ) {
         soundManager.playMenuSound();
         localStorage.setItem( 'currentTank', this.currentTank );
 
-        // if ( localStorage.getItem( 'currentTank' ) !== 'T44' ) {
-
-        //     $('.share-label').hide();
-
-        // }
-
     }
-
-};
-
-Game.Garage.prototype.pickTank = function () {
-
-    // if ( localStorage.getItem( 'currentTank' ) === 'T44' && localStorage.getItem( 'unblockedTank' ) !== 'true' ) {
-
-    //     $('.share-label').show();
-
-    // }
-
-};
-
-Game.Garage.prototype.unblockTank = function () {
-
-    localStorage.setItem( 'unblockedTank', true );
 
 };
