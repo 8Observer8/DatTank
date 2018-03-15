@@ -1047,16 +1047,14 @@ object {
     top: 8%;
     width: 85%;
     height: 80%;
-    border: 3px solid #555;
 }
 
 .select-tank-skins canvas {
     position: absolute;
     top: 0px;
     left: 0px;
-    width: 100% !important;
-    height: 100% !important;
     z-index: 0;
+    border: 3px solid #555;
 }
 
 .close-tank-skins {
@@ -1084,44 +1082,33 @@ object {
     height: 100%;
 }
 
-.arrows1 {
-    position: absolute;
-    width: 11%;
-    height: 100%;
-    top: 0%;
-    min-width: 31px;
+.arrows {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 82px;
+    background: rgba( 200, 200, 200, 0 );
+    transition: background 400ms ease;
 }
 
-.arrows2 {
-    position: absolute;
-    width: 15%;
-    height: 100%;
-    left: 85%;
-    top: 0%;
+.arrows:hover {
+    background: rgba( 200, 200, 200, 0.1 );
 }
 
-.arrows-right {
+.arrows img {
     position: absolute;
-    width: 29px;
-    height: 11%;
-    top: 45%;
-    right: 5%;
-}
-
-.arrows-left {
-    position: absolute;
-    width: 29px;
-    height: 11%;
-    top: 45%;
-    left: 5%;
+    width: 12px;
+    height: 16px;
+    top: 30px;
+    left: calc( 50% - 6px );
 }
 
 .choice-skins {
     position: absolute;
     bottom: 36px;
     border: none;
-    left: calc( 50% - 175px );
-    width: 350px;
+    left: calc( 50% - 210px );
+    width: 420px;
 }
 
 .choice-skins .tank {
@@ -1181,13 +1168,11 @@ object {
     width: 325px;
     height: 140px;
     padding: 20px;
-
     position: absolute;
     background-color: white;
     top: 50%;
     left: 50%;
     border-radius: 10px;
-
     margin: -90px 0 0 -185px;
 }
 
@@ -1235,11 +1220,11 @@ object {
     margin-top: 26px;
 }
 
-.container-specification  {
+.container-specification {
+    position: absolute;
     position: relative;
     width: 280px;
-    float: left;
-    top: calc(50% + -45%);
+    top: 10%;
     left: 5%;
     background: rgba(0, 0, 0, 0.4);
     padding-bottom: 20px;
@@ -1288,7 +1273,8 @@ object {
 
 .skin-name {
     color: #fffdfd;
-    margin: 20px 10px 14px;
+    padding: 20px 10px 0px;
+    margin: 0;
 }
 
 .btn-pick {
