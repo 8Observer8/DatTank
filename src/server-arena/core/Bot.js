@@ -51,23 +51,25 @@ Bot.prototype.init = function () {
     var tank;
     var rnd = Math.random();
 
-    // if ( rnd <= 0.25 ) {
+    if ( rnd <= 0.25 ) {
 
         tank = 'IS2';
 
-    // } else if ( rnd > 0.25 && rnd <= 0.5 ) {
+    } else if ( rnd > 0.25 && rnd <= 0.5 ) {
 
-    //     tank = 'T29';
+        tank = 'T29';
 
-    // } else if ( rnd > 0.5 && rnd <= 0.75 ) {
+    } else if ( rnd > 0.5 && rnd <= 0.75 ) {
 
-    //     tank = 'T44';
+        // tank = 'T44';
+        tank = 'IS2';
 
-    // } else {
+    } else {
 
-    //     tank = 'T54';
+        // tank = 'T54';
+        tank = 'T29';
 
-    // }
+    }
 
     this.player = this.arena.addPlayer({ login: this.login, tank: tank, socket: false });
     this.player.ammo = 10000000;

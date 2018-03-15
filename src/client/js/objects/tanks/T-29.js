@@ -10,8 +10,8 @@ Game.Tank.T29 = function ( params ) {
     //
 
     this.model = {
-        top:    'Tank03_top.json',
-        base:   'Tank03_base.json'
+        top:    'T29-top.json',
+        base:   'T29-bottom.json'
     };
 
     this.trackOffset = { l: -3, r: -8 };
@@ -27,7 +27,7 @@ Game.Tank.T29.prototype.ammoCapacity = 126;
 Game.Tank.T29.prototype.speed = 35;
 Game.Tank.T29.prototype.armour = 102;
 Game.Tank.T29.prototype.bullet = 76;
-Game.Tank.T29.prototype.rpm = 16.7;
+Game.Tank.T29.prototype.rpm = 16.7 * 10;
 
 //
 
@@ -51,7 +51,7 @@ Game.Tank.T29.prototype.initModel = function () {
 
     var base = new THREE.Mesh( tankBaseModel.geometry, materials );
     base.rotation.y = 0;
-    base.scale.set( 20, 20, 20 );
+    base.scale.set( 9.5, 9.5, 9.5 );
     this.object.add( base );
     this.object.base = base;
 
@@ -82,7 +82,7 @@ Game.Tank.T29.prototype.initModel = function () {
     top.position.y = 20;
     top.position.x = 0;
     top.position.z = 7;
-    top.scale.set( 20, 20, 20 );
+    top.scale.set( 9.5, 9.5, 9.5 );
 
     this.object.add( top );
     this.object.top = top;
