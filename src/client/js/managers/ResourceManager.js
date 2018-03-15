@@ -12,14 +12,14 @@ Game.ResourceManager = function () {
     //
 
     this.modelList = [
-        'IS-2-bottom.json',
-        'IS-2-top.json',
+        'IS2-bottom.json',
+        'IS2-top.json',
 
         'T29-bottom.json',
         'T29-top.json',
 
-        'Tank03_base.json',
-        'Tank03_top.json',
+        'T44-bottom.json',
+        'T44-top.json',
 
         'Tower_base.json',
         'Tower_top.json',

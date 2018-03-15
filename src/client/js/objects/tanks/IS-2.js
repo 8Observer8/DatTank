@@ -10,8 +10,8 @@ Game.Tank.IS2 = function ( params ) {
     //
 
     this.model = {
-        top:    'IS-2-top.json',
-        base:   'IS-2-bottom.json'
+        top:    'IS2-top.json',
+        base:   'IS2-bottom.json'
     };
 
     this.trackOffset = { l: -3, r: -8 };

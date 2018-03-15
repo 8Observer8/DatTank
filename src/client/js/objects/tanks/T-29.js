@@ -83,8 +83,6 @@ Game.Tank.T29.prototype.initModel = function () {
     top.castShadow = true;
     top.receiveShadow = true;
     top.position.y = 20;
-    top.position.x = 0;
-    top.position.z = 7;
     top.scale.set( 9.5, 9.5, 9.5 );
 
     this.object.add( top );

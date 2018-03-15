@@ -27,7 +27,7 @@ Game.Tank.T54.prototype.ammoCapacity = 50;
 Game.Tank.T54.prototype.speed = 48;
 Game.Tank.T54.prototype.armour = 120;
 Game.Tank.T54.prototype.bullet = 100;
-Game.Tank.T54.prototype.rpm = 7.06;
+Game.Tank.T54.prototype.rpm = 7.06 * 10;
 
 //
 

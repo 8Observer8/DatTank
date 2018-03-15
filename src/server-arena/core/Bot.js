@@ -61,13 +61,13 @@ Bot.prototype.init = function () {
 
     } else if ( rnd > 0.5 && rnd <= 0.75 ) {
 
-        // tank = 'T44';
-        tank = 'IS2';
+        tank = 'T44';
 
     } else {
 
         // tank = 'T54';
         tank = 'T29';
+        tank = 'T44';
 
     }
 
