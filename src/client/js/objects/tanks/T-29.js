@@ -44,8 +44,11 @@ Game.Tank.T29.prototype.initModel = function () {
     materials = [];
     for ( var i = 0, il = tankBaseModel.material.length; i < il; i ++ ) {
 
-        materials.push( tankBaseModel.material[ i ].clone() );
-        materials[ materials.length - 1 ].morphTargets = true;
+        var material = tankBaseModel.material[ i ].clone();
+        material.map = material.map.clone();
+        material.map.needsUpdate = true;
+        material.morphTargets = true;
+        materials.push( material );
 
     }
 
@@ -59,10 +62,10 @@ Game.Tank.T29.prototype.initModel = function () {
 
     var tankShadowTexture = resourceManager.getTexture( 'shadowTank.png' );
     var tankShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: tankShadowTexture, transparent: true, depthWrite: false, opacity: 0.7 }) );
-    tankShadow.scale.set( 15, 17, 17 );
+    tankShadow.scale.set( 16, 21, 1 );
     tankShadow.rotation.x = - Math.PI / 2;
     tankShadow.position.y += 0.5;
-    tankShadow.renderOrder = 2;
+    tankShadow.renderOrder = 10;
 
     this.object.add( tankShadow );
 
