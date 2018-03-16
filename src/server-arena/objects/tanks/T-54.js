@@ -13,7 +13,7 @@ var T54 = function ( params ) {
     this.armour = 120;
     this.bullet = 100;
     this.ammoCapacity = 50;
-    this.rpm = 7.06;
+    this.rpm = 7.06 * 10;
 
     this.typeId = 3;
 

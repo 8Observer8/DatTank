@@ -65,9 +65,7 @@ Bot.prototype.init = function () {
 
     } else {
 
-        // tank = 'T54';
-        tank = 'T29';
-        tank = 'T44';
+        tank = 'T54';
 
     }
 
