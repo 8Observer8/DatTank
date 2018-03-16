@@ -21,6 +21,9 @@ Game.ResourceManager = function () {
         'T44-bottom.json',
         'T44-top.json',
 
+        'T54-bottom.json',
+        'T54-top.json',
+
         'Tower_base.json',
         'Tower_top.json',
 
