@@ -321,11 +321,11 @@ Game.ViewManager.prototype.addCameraShake = function ( duration, intensity ) {
 
 Game.ViewManager.prototype.updateCamera = function () {
 
-    this.camera.position.x = Game.arena.me.position.x - 150 * Math.sin( Game.arena.me.rotation ) + this.cameraOffset.x;
-    this.camera.position.z = Game.arena.me.position.z - 150 * Math.cos( Game.arena.me.rotation ) + this.cameraOffset.y;
-    this.camera.position.y = 110 + this.cameraOffset.z;
+    this.camera.position.x = Game.arena.me.position.x - 100 * Math.sin( Game.arena.me.rotation ) + this.cameraOffset.x;
+    this.camera.position.z = Game.arena.me.position.z - 100 * Math.cos( Game.arena.me.rotation ) + this.cameraOffset.y;
+    this.camera.position.y = 70 + this.cameraOffset.z;
     this.camera.lookAtVector = this.camera.lookAtVector || new THREE.Vector3();
-    this.camera.lookAtVector.set( Game.arena.me.position.x, Game.arena.me.position.y + 65, Game.arena.me.position.z );
+    this.camera.lookAtVector.set( Game.arena.me.position.x, 40, Game.arena.me.position.z );
     this.camera.lookAt( this.camera.lookAtVector );
 
 };

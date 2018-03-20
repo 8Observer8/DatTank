@@ -14,7 +14,7 @@ Game.Tank.T54 = function ( params ) {
         base:   'T54-bottom.json'
     };
 
-    this.trackOffset = { l: -1, r: -9 };
+    this.trackOffset = { l: -1, r: -6 };
 
     this.name = 'T54';
 
@@ -57,7 +57,7 @@ Game.Tank.T54.prototype.initModel = function () {
     var base = new THREE.Mesh( tankBaseModel.geometry, materials );
     base.rotation.y = 0;
     base.position.y = 10;
-    base.scale.set( 25, 25, 25 );
+    base.scale.set( 18, 18, 18 );
     this.object.add( base );
     this.object.base = base;
 
@@ -65,7 +65,7 @@ Game.Tank.T54.prototype.initModel = function () {
 
     var tankShadowTexture = resourceManager.getTexture( 'shadowTank.png' );
     var tankShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: tankShadowTexture, transparent: true, depthWrite: false, opacity: 0.7 }) );
-    tankShadow.scale.set( 15, 17, 17 );
+    tankShadow.scale.set( 13, 14, 1 );
     tankShadow.rotation.x = - Math.PI / 2;
     tankShadow.position.y += 0.5;
     tankShadow.renderOrder = 2;
@@ -85,8 +85,8 @@ Game.Tank.T54.prototype.initModel = function () {
     var top = new THREE.Mesh( tankTopModel.geometry, materials );
     top.castShadow = true;
     top.receiveShadow = true;
-    top.position.y = 21;
-    top.scale.set( 25, 25, 25 );
+    top.position.y = 17;
+    top.scale.set( 18, 18, 18 );
 
     this.object.add( top );
     this.object.top = top;
