@@ -668,13 +668,14 @@ Game.Tank.prototype.shootBullet = function ( bulletId ) {
     bullet.trace.visible = true;
     bullet.directionRotation = - this.object.top.rotation.y - this.object.rotation.y + Math.PI / 2;
 
-    var offsetDist = 28;
+    var offsetDist = 55;
     var offsetX = offsetDist * Math.cos( bullet.directionRotation );
+    var offsetY = this.object.top.position.y;
     var offsetZ = offsetDist * Math.sin( bullet.directionRotation );
 
-    bullet.startPos = new THREE.Vector3( this.object.position.x + offsetX, 25, this.object.position.z + offsetZ );
-    bullet.position.set( this.object.position.x + offsetX, 25, this.object.position.z + offsetZ );
-    bullet.trace.position.set( this.object.position.x + offsetX, 25, this.object.position.z + offsetZ );
+    bullet.startPos = new THREE.Vector3( this.object.position.x + offsetX, offsetY, this.object.position.z + offsetZ );
+    bullet.position.set( this.object.position.x + offsetX, offsetY, this.object.position.z + offsetZ );
+    bullet.trace.position.set( this.object.position.x + offsetX, offsetY, this.object.position.z + offsetZ );
     bullet.trace.rotation.z = - bullet.directionRotation;
     bullet.trace.scale.set( 1, 1, 1 );
 

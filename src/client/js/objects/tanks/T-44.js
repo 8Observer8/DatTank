@@ -14,7 +14,7 @@ Game.Tank.T44 = function ( params ) {
         base:   'T44-bottom.json'
     };
 
-    this.trackOffset = { l: -3, r: -6 };
+    this.trackOffset = { l: -1, r: -6 };
 
     this.name = 'T44';
 
@@ -55,7 +55,7 @@ Game.Tank.T44.prototype.initModel = function () {
     var base = new THREE.Mesh( tankBaseModel.geometry, materials );
     base.rotation.y = 0;
     base.position.y = -2;
-    base.scale.set( 12, 12, 12 );
+    base.scale.set( 10, 10, 10 );
     this.object.add( base );
     this.object.base = base;
 
@@ -71,7 +71,7 @@ Game.Tank.T44.prototype.initModel = function () {
 
     var tankShadowTexture = resourceManager.getTexture( 'shadowTank.png' );
     var tankShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: tankShadowTexture, transparent: true, depthWrite: false, opacity: 0.7 }) );
-    tankShadow.scale.set( 17, 20, 1 );
+    tankShadow.scale.set( 13, 18, 1 );
     tankShadow.rotation.x = - Math.PI / 2;
     tankShadow.position.y += 1;
     tankShadow.renderOrder = 10;
@@ -81,10 +81,8 @@ Game.Tank.T44.prototype.initModel = function () {
     //
 
     var top = new THREE.Mesh( tankTopModel.geometry, materials );
-    top.castShadow = true;
-    top.receiveShadow = true;
-    top.position.y = 20;
-    top.scale.set( 12, 12, 12 );
+    top.position.y = 15;
+    top.scale.set( 10, 10, 10 );
 
     this.object.add( top );
     this.object.top = top;
@@ -180,9 +178,9 @@ Game.Tank.T44.prototype.showBlastSmoke = function () {
     for ( var i = 0; i <= 5; i ++ ) {
 
         sprite = sprite.clone();
-        sprite.position.z = 0;
+        sprite.position.x = 0;
         sprite.position.y = 0;
-        sprite.position.x = 2 + i / 7;
+        sprite.position.z = 4.5 + i / 7;
         sprite.material = sprite.material.clone();
         sprite.material.opacity = 0.8 - 0.8 / 5 * ( 5 - i );
         scale = 1 + i / 5;

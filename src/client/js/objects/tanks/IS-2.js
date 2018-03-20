@@ -14,7 +14,7 @@ Game.Tank.IS2 = function ( params ) {
         base:   'IS2-bottom.json'
     };
 
-    this.trackOffset = { l: -3, r: -8 };
+    this.trackOffset = { l: -1, r: -7 };
 
     this.name = 'IS2';
 
@@ -53,7 +53,7 @@ Game.Tank.IS2.prototype.initModel = function () {
     }
 
     var base = new THREE.Mesh( tankBaseModel.geometry, materials );
-    base.scale.set( 12, 12, 12 );
+    base.scale.set( 10, 10, 10 );
     this.object.add( base );
     this.object.base = base;
 
@@ -61,7 +61,7 @@ Game.Tank.IS2.prototype.initModel = function () {
 
     var tankShadowTexture = resourceManager.getTexture( 'shadowTank.png' );
     var tankShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: tankShadowTexture, transparent: true, depthWrite: false, opacity: 0.7 }) );
-    tankShadow.scale.set( 16, 24, 1 );
+    tankShadow.scale.set( 13, 20, 1 );
     tankShadow.rotation.x = - Math.PI / 2;
     tankShadow.position.y += 0.5;
     tankShadow.renderOrder = 10;
@@ -79,8 +79,8 @@ Game.Tank.IS2.prototype.initModel = function () {
     }
 
     var top = new THREE.Mesh( tankTopModel.geometry, materials );
-    top.scale.set( 12, 12, 12 );
-    top.position.y = 23;
+    top.scale.set( 10, 10, 10 );
+    top.position.y = 20;
 
     this.object.add( top );
     this.object.top = top;
@@ -176,9 +176,9 @@ Game.Tank.IS2.prototype.showBlastSmoke = function () {
     for ( var i = 0; i <= 5; i ++ ) {
 
         sprite = sprite.clone();
-        sprite.position.z = 0;
+        sprite.position.x = 0;
         sprite.position.y = 0;
-        sprite.position.x = 1.5 + i / 7;
+        sprite.position.z = 5 + i / 7;
         sprite.material = sprite.material.clone();
         sprite.material.opacity = 0.8 - 0.8 / 5 * ( 5 - i );
         scale = 1 + i / 5;

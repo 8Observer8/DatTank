@@ -60,7 +60,7 @@ var Player = function ( arena, params ) {
     }
 
     this.sizeX = 40;
-    this.sizeZ = 50;
+    this.sizeZ = 20;
 
     this.bulletsPool = [];
 
@@ -161,7 +161,7 @@ Player.prototype.respawn = function ( tankName ) {
 
     if ( ! this.collisionBox ) {
 
-        this.radius = 20;
+        this.radius = 25;
         this.arena.collisionManager.addObject( this, 'circle', true );
 
     } else {
@@ -593,21 +593,23 @@ Player.prototype.update = function ( delta, time ) {
 
     if ( this.socket && newTowersInRange.length ) {
 
+        var params = 6;
         var towerDataSize = 12;
         var buffer = new ArrayBuffer( 2 + towerDataSize * newTowersInRange.length );
-        var bufferView = new Uint16Array( buffer );
-        var tower;
+        var bufferView = new Int16Array( buffer );
+        var tower, offset;
 
-        for ( var i = 1, il = towerDataSize * newTowersInRange.length + 1; i < il; i += towerDataSize ) {
+        for ( var i = 0, il = newTowersInRange.length; i < il; i ++ ) {
 
-            tower = newTowersInRange[ ( i - 1 ) / towerDataSize ];
+            tower = newTowersInRange[ i ];
+            offset = 1 + params * i;
 
-            bufferView[ i + 0 ] = tower.id;
-            bufferView[ i + 1 ] = tower.team.id;
-            bufferView[ i + 2 ] = tower.position.x;
-            bufferView[ i + 3 ] = tower.position.z;
-            bufferView[ i + 4 ] = tower.rotation * 1000;
-            bufferView[ i + 5 ] = tower.health;
+            bufferView[ offset + 0 ] = tower.id;
+            bufferView[ offset + 1 ] = tower.team.id;
+            bufferView[ offset + 2 ] = tower.position.x;
+            bufferView[ offset + 3 ] = tower.position.z;
+            bufferView[ offset + 4 ] = tower.rotation * 1000;
+            bufferView[ offset + 5 ] = tower.health;
 
         }
 

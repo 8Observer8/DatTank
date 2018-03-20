@@ -205,7 +205,7 @@ Game.Arena.prototype.addPlayer = function ( data ) {
 Game.Arena.prototype.newPlayersInRange = function ( data ) {
 
     var player;
-    var playerBinSize = 46;
+    var playerBinSize = 23;
 
     for ( var i = 0, il = data.length / playerBinSize; i < il; i ++ ) {
 
@@ -244,7 +244,7 @@ Game.Arena.prototype.newPlayersInRange = function ( data ) {
 Game.Arena.prototype.newTowersInRange = function ( data ) {
 
     var tower;
-    var towerBinSize = 12;
+    var towerBinSize = 6;
 
     for ( var i = 0, il = data.length / towerBinSize; i < il; i ++ ) {
 
