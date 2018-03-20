@@ -452,7 +452,7 @@ Player.prototype.hit = function ( killer ) {
     //
 
     var bulletSize = ( killer.tank ) ? killer.tank.bullet : killer.bullet;
-    this.changeHealth( - 40 * ( bulletSize / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 ), killer );
+    this.changeHealth( - 20 * ( bulletSize / this.tank.armour ) * ( 0.5 * Math.random() + 0.5 ), killer );
 
 };
 

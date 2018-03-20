@@ -204,7 +204,7 @@ Tower.prototype.hit = function ( killer ) {
     this.sinceHitTime = 0;
     this.sinceRegenerationTime = 0;
 
-    this.updateHealth( Math.floor( 57 * ( killer.tank.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ) ) );
+    this.updateHealth( Math.floor( 20 * ( killer.tank.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ) ) );
 
     //
 
