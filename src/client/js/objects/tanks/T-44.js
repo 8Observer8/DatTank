@@ -180,9 +180,9 @@ Game.Tank.T44.prototype.showBlastSmoke = function () {
     for ( var i = 0; i <= 5; i ++ ) {
 
         sprite = sprite.clone();
-        sprite.position.z = 0;
+        sprite.position.x = 0;
         sprite.position.y = 0;
-        sprite.position.x = 2 + i / 7;
+        sprite.position.z = 4.5 + i / 7;
         sprite.material = sprite.material.clone();
         sprite.material.opacity = 0.8 - 0.8 / 5 * ( 5 - i );
         scale = 1 + i / 5;

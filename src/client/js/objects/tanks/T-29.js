@@ -54,6 +54,7 @@ Game.Tank.T29.prototype.initModel = function () {
 
     var base = new THREE.Mesh( tankBaseModel.geometry, materials );
     base.rotation.y = 0;
+    base.position.y += 2;
     base.scale.set( 9.5, 9.5, 9.5 );
     this.object.add( base );
     this.object.base = base;
@@ -82,7 +83,7 @@ Game.Tank.T29.prototype.initModel = function () {
     var top = new THREE.Mesh( tankTopModel.geometry, materials );
     top.castShadow = true;
     top.receiveShadow = true;
-    top.position.y = 20;
+    top.position.y = 22;
     top.scale.set( 9.5, 9.5, 9.5 );
 
     this.object.add( top );
@@ -179,9 +180,9 @@ Game.Tank.T29.prototype.showBlastSmoke = function () {
     for ( var i = 0; i <= 5; i ++ ) {
 
         sprite = sprite.clone();
-        sprite.position.z = 0;
+        sprite.position.x = 0;
         sprite.position.y = 0;
-        sprite.position.x = 1.5 + i / 7;
+        sprite.position.z = 6.5 + i / 7;
         sprite.material = sprite.material.clone();
         sprite.material.opacity = 0.8 - 0.8 / 5 * ( 5 - i );
         scale = 1 + i / 5;
