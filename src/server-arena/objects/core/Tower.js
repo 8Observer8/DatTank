@@ -28,8 +28,8 @@ var Tower = function ( arena, params ) {
     };
 
     this.range = 300;
-    this.armour = 350;
-    this.bullet = 150;
+    this.armour = 100;
+    this.bullet = 120;
 
     this.sinceHitRegeneraionLimit = 5000;
     this.sinceHitTime = false;
@@ -204,7 +204,7 @@ Tower.prototype.hit = function ( killer ) {
     this.sinceHitTime = 0;
     this.sinceRegenerationTime = 0;
 
-    this.updateHealth( Math.floor( 57 * ( killer.tank.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ) ) );
+    this.updateHealth( Math.floor( 20 * ( killer.tank.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ) ) );
 
     //
 
