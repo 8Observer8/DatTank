@@ -28,8 +28,8 @@ var Tower = function ( arena, params ) {
     };
 
     this.range = 300;
-    this.armour = 350;
-    this.bullet = 150;
+    this.armour = 100;
+    this.bullet = 120;
 
     this.sinceHitRegeneraionLimit = 5000;
     this.sinceHitTime = false;
