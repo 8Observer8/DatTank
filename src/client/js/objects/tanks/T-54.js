@@ -56,7 +56,7 @@ Game.Tank.T54.prototype.initModel = function () {
 
     var base = new THREE.Mesh( tankBaseModel.geometry, materials );
     base.rotation.y = 0;
-    base.position.y = 13;
+    base.position.y = 10;
     base.scale.set( 25, 25, 25 );
     this.object.add( base );
     this.object.base = base;
