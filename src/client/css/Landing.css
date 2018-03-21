@@ -1,0 +1,602 @@
+
+/**/
+
+#graphics-quality {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 40px;
+    background-image: url(/resources/img/tank-quality.png);
+    background-size: 100% 200%;
+    opacity: 0.7;
+    transition: opacity 200ms ease;
+    cursor: url('../resources/img/cursor.png'), auto;
+}
+
+#graphics-quality:hover {
+    opacity: 0.85;
+}
+
+#graphics-quality:active {
+    top: 21px;
+    opacity: 1;
+}
+
+#graphics-quality[hq="true"] {
+    background-position: 0% 100%;
+}
+
+/* sound-on-off */
+
+#sound-on-off {
+    position: absolute;
+    top: 10px;
+    right: 90px;
+    width: 60px;
+    height: 60px;
+    background-image: url('../resources/img/sound-on-off.png');
+    background-size: 100% 200%;
+    opacity: 0.7;
+    transition: opacity 200ms ease;
+    cursor: url('../resources/img/cursor.png'), auto;
+}
+
+#sound-on-off:hover {
+    opacity: 0.85;
+}
+
+#sound-on-off:active {
+    top: 11px;
+    opacity: 1;
+}
+
+#sound-on-off[sound="true"] {
+    background-position: 0% 100%;
+}
+
+.top-left-like-btns {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+}
+
+.top-left-like-btns .fb-like {
+    opacity: 0;
+    margin: 3px;
+}
+
+.top-left-like-btns .folow-btn {
+    opacity: 0;
+    margin: 3px;
+}
+
+#signin-box-wrapper {
+    position: absolute;
+    top: 26%;
+    left: 0px;
+    width: 100%;
+    height: 50%;
+}
+
+#signin-box-wrapper #signin-box {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 340px;
+    border: 1px solid #CCC;
+    box-shadow: #888 0 0 40px;
+    background-color: #fff;
+}
+
+#signin-box-wrapper #signin-box .note {
+    display: table;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 3px;
+    font-size: 12px;
+    color: #ff9844;
+    text-align: center;
+}
+
+#signin-box-wrapper #signin-box #title {
+    position: relative;
+    margin-top: 30px;
+    letter-spacing: 0.1em;
+    font: normal 35px 'Roboto';
+    color: #222;
+    text-align: center;
+}
+
+#signin-box-wrapper #signin-box #title #alpha {
+    right: 43px;
+    bottom: 4px;
+    position: absolute;
+    font: bold 14px 'Roboto';
+    color: #00b6ff;
+}
+
+#signin-box-wrapper #signin-box .field {
+    display: table;
+    margin-top: 10px;
+    margin-left: 16px;
+    margin-right: auto;
+    padding: 8px 15px;
+    width: 80%;
+    font: normal 15px 'Roboto';
+    cursor: url('../resources/img/cursor.png'), auto;
+    outline: none;
+}
+
+#signin-box-wrapper #signin-box #play-change-btn{
+    position: relative;
+    margin-top: 8px;
+    width: 100%;
+    height: 41px;
+}
+
+#signin-box-wrapper #signin-box #play-btn #play-btn-text{
+    position: relative;
+    top: 10px;
+}
+
+#signin-box-wrapper #signin-box #play-btn {
+    float: left;
+    background-color: #00b6ff;
+    height: 41px;
+    margin-left: 16px;
+    margin-right: auto;
+    width: 90%;
+    text-align: center;
+    font: normal 15px 'Roboto';
+    color: #fff;
+    border: 1px solid #0493CC;
+    opacity: 0.8;
+    transition: opacity 200ms ease;
+}
+
+#signin-box-wrapper #signin-box #play-btn:hover {
+    opacity: 1;
+}
+
+#signin-box-wrapper #signin-box #instructions {
+    position: relative;
+    width: 100%;
+    margin-top: 11px;
+    font: normal 13px arial, tahoma;
+    text-align: center;
+    color: #888;
+}
+
+/**/
+.top-players-score {
+    width: 320px;
+    background: transparent;
+    height: initial;
+    left: 0px;
+    color: #d6d6d6;
+    position: fixed;
+    top: calc(50% - +250px);
+    overflow: hidden;
+}
+@media only screen and (max-width: 1020px) {
+    .top-players-score {
+        display: none;
+    }
+}
+@media only screen and (max-height: 700px) {
+    .top-players-score {
+        height: 244px;
+        top: calc(50% - +145px);
+    }
+}
+.top-players-score table {
+    border: 1px solid white;
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+    pointer-events: none;
+    z-index: 900;
+    color: #dbdbdb;
+    background-color: rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+}
+.top-players-score table tr { 
+    border: 1px solid #211e1e;
+    border-left: 1px solid transparent;
+}
+.top-players-score .players-score {
+    float: left;
+    width: 200px;
+    overflow: hidden;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 10px 0;
+    padding-left: 10px;
+    font-size: 16px;
+    margin: 0 7px;
+    text-align: left;
+}
+.top-players-score .players-score.kills {
+    width: 50px;
+    text-align: center;
+}
+.top-players-score .players-score.header {
+    font-size: 18px;
+}
+.top-players-score .players-score .nmb {
+    opacity: 0.3;
+}
+
+/**/
+
+#share-btn {
+    position: fixed;
+    opacity: 1;
+    left: 0;
+    bottom: 42px;
+    z-index: 10;
+    width: 100%;
+    height: 93px;
+}
+
+#f-btn {
+    position: fixed;
+    bottom: 37px;
+    right: 15px;
+    z-index: 20;
+}
+
+.btn-share-fb {
+    width: 80px;
+    height: 74px;
+}
+
+.fb-picture-share {
+    border:0px;
+    width: 80px;
+    height: 74px;
+}
+
+#tw-btn {
+    position: fixed;
+    bottom: 37px;
+    z-index: 20;
+    right: 104px;
+}
+
+.btn-share-tw {
+    border: 0px;
+    width: 80px;
+    height: 74;
+}
+
+.change-skin-btn {
+    position: fixed;
+    left: 20px;
+    bottom: 40px;
+    z-index: 20;
+    display: inline;
+}
+
+.btn-skin {
+    width: 128px;
+    height: 85px;
+}
+
+.snake-img {
+    width: 85px;
+    height:80px;
+}
+
+/* garage */
+
+.tank-skins {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    display: none;
+    z-index: 100;
+    background: rgba(0,0,0,0.8);
+}
+
+.select-tank-skins {
+    position: relative;
+    min-width: 318px;
+    min-height: 311px;
+    margin-left: auto;
+    margin-right: auto;
+    top: 8%;
+    width: 85%;
+    height: 80%;
+}
+
+.select-tank-skins canvas {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 0;
+    border: 3px solid #555;
+}
+
+
+.close-tank-skins {
+    position: inherit;
+    float: right;
+    padding: 10px;
+    margin-right: 13px;
+    margin-top: 6px;
+    z-index: 100;
+    color: #fff;
+    font-size: 30px;
+}
+
+.select-window {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+}
+
+.tankskin {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.choice-skins {
+    position: absolute;
+    bottom: 36px;
+    border: none;
+    left: calc( 50% - 210px );
+    width: 420px;
+}
+
+.arrows {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 82px;
+    background: rgba( 200, 200, 200, 0 );
+    transition: background 400ms ease;
+}
+
+.arrows:hover {
+    background: rgba( 200, 200, 200, 0.1 );
+}
+
+.arrows img {
+    position: absolute;
+    width: 12px;
+    height: 16px;
+    top: 30px;
+    left: calc( 50% - 6px );
+}
+
+.choice-skins .tank {
+    position: relative;
+    width: 84px;
+    height: 60px;
+    display: inline-block;
+    opacity: 0.7;
+    transition: opacity 200ms ease;
+}
+
+.choice-skins .tank:hover {
+    opacity: 0.9;
+}
+
+.choice-skins .tank .tank-img {
+    width: 84px;
+    height: 60px;
+}
+
+.choice-skins .new-img {
+    position: absolute;
+}
+
+.choice-skins .title {
+    width: 100%;
+    text-align: center;
+    color: #bbb;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 200ms ease;
+}
+
+.choice-skins .tank:hover .title {
+    opacity: 1;
+}
+
+.choice-skins .tank.active {
+    opacity: 1;
+}
+
+.choice-skins .tank.active .tank-img {
+    border-bottom: 3px solid #00b6ff;
+}
+
+.container-specification {
+    position: absolute;
+    position: relative;
+    width: 280px;
+    top: 10%;
+    left: 5%;
+    background: rgba(0, 0, 0, 0.4);
+    padding-bottom: 20px;
+}
+
+.line-characteristics {
+    position: relative;
+    display: inline-flex;
+    width: 100%;
+    color: #a49999;
+    margin: 20px 0;
+}
+
+.specification-txt {
+    position: absolute;
+    right: 10px;
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 13px;
+    width: 60px;
+    text-align: center;
+    padding-top: 3px;
+}
+
+.specification-value {
+    position: absolute;
+    left: 10px;
+    margin: 0;
+}
+
+.counter-characteristicks {
+    position: absolute;
+    width: 130px;
+    height: 8px;
+    border-radius: 3px;
+    border: 1px solid #695e5e;
+    left: 70px;
+    top: 5px;
+}
+
+.counter-characteristicks .color {
+    background-color: #34b83c;
+    height: 100%;
+    border-radius: inherit;
+}
+
+.skin-name {
+    color: #fffdfd;
+    padding: 20px 10px 0px;
+    margin: 0;
+}
+
+.share-label {
+    display: none;
+    width: 325px;
+    height: 140px;
+    padding: 20px;
+    position: absolute;
+    background-color: white;
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    margin: -90px 0 0 -185px;
+}
+
+.share-title {
+    position: absolute;
+    top: 0%;
+    left: 23%;
+    font-size: 24px;
+    margin-top: 15px;
+}
+
+.share-label #f-btn {
+    position: absolute;
+
+}
+.share-label #tw-btn {
+    position: absolute;
+}
+.share-label .vk-picture-share {
+    border: 0px;
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    top: 70px;
+    left: 45px;
+    margin: 0px;
+}
+.share-label .tw-picture-share {
+    border: 0px;
+    position: relative;
+    right: 39px;
+}
+.share-label .fb-picture-share {
+    border: 0px;
+    position: relative;
+    right: 20px;
+}
+
+.vk-picture-share {
+    border:0px;
+    width: 60px;
+    height: 60px;
+    float: right;
+    margin-right: 200px;
+    margin-top: 26px;
+}
+
+.tw-picture-share {
+    border: 0px;
+    width: 80px;
+    height: 74px;
+}
+
+.btn-pick {
+    position: absolute;
+    left: calc( 50% - 50px );
+    color: white;
+    background-color: #00b6ff;
+    border: 1px solid #0493CC;
+    bottom: 35%;
+    width: 10%;
+    text-align: center;
+    opacity: 0.8;
+    padding: 8px;
+    width: 100px;
+    height: 18px;
+    transition: opacity 200ms ease;
+}
+
+.btn-pick:hover {
+    opacity: 1;
+}
+
+/* footer */
+
+#footer {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 40px;
+    background-color: #333;
+    border-top: 1px solid #444;
+}
+
+#footer #dt-version {
+    position: absolute;
+    top: 12px;
+    left: 25px;
+    color: #fff;
+    cursor: default;
+    font-size: 11px;
+    opacity: 0.2;
+}
+
+#footer a {
+    float: right;
+    margin-top: 9px;
+    margin-right: 15px;
+    padding: 4px;
+    text-decoration: none;
+    font: normal 11px Roboto, tahoma, arial;
+    color: #fff;
+    letter-spacing: 0.05em;
+    opacity: 0.5;
+    transition: opacity 200ms ease;
+    cursor: url('../resources/img/cursor.png'), auto;
+}
+
+#footer a:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+}

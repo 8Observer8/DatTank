@@ -157,7 +157,7 @@ Game.UI.prototype.showContinueBox = function ( playerlogin, playerColor ) {
     });
 
     $('#continue-box-wrapper').show();
-    $('#continue-box-wrapper #title').html('<p>Killed by <span style="color:'+ playerColor + '">' + playerlogin +'</span></p>');
+    $('#continue-box-wrapper #continue-box-wrapper-title').html('<p>Killed by <span style="color:'+ playerColor + '">' + playerlogin +'</span></p>');
     $('#continue-box-wrapper #change-tank').click( ui.showChoiceWindow.bind( ui ) );
 
     setTimeout( function () {

@@ -144,13 +144,13 @@ Game.prototype.play = function ( event ) {
 
         var value = Math.round( 100 * progress ) + '%';
         $('#loader-wrapper #progress-wrapper #progress-bar').css( 'width', value );
-        $('#loader-wrapper #title span').html( value );
+        $('#loader-wrapper #loader-wrapper-title span').html( value );
         $('#crowd-shortcut').hide();
 
     }, function () {
 
         $('#loader-wrapper #progress-wrapper').hide();
-        $('#loader-wrapper #title').html('Initializing arena...');
+        $('#loader-wrapper #loader-wrapper-title').html('Initializing arena...');
 
         // init controls
 

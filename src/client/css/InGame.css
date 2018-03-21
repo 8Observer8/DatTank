@@ -1,0 +1,557 @@
+
+/* continue box */
+
+#continue-box-wrapper {
+    display: none;
+    position: absolute;
+    top: 26%;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 200ms ease;
+    z-index: 10;
+}
+
+#continue-change-btn {
+    position: relative;
+    margin-top: 10px;
+    width: 100%;
+    height: 43px;
+}
+
+#continue-box-wrapper #continue-box {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 340px;
+    padding-bottom: 20px;
+    border: 1px solid #CCC;
+    box-shadow: #888 0 0 40px;
+    background-color: #fff;
+}
+
+#continue-box-wrapper #continue-box #continue-box-wrapper-title {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    margin-top: 30px;
+    letter-spacing: 0.1em;
+    font: normal 35px 'Roboto';
+    color: #222;
+    text-align: center;
+}
+
+#continue-box-wrapper #continue-box #share-btns {
+    display: table;
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#continue-box-wrapper #continue-box #share-btns .fb-like {
+    float: left;
+    margin: 2px;
+}
+
+#continue-box-wrapper #continue-box #share-btns .folow-btn {
+    float: left;
+    margin: 2px;
+}
+
+#continue-box-wrapper #continue-box #continue-btn {
+    float: left;
+    background-color: #00b6ff;
+    height: 41px;
+    margin-left: 10px;
+    margin-right: auto;
+    width: calc( 90% - 37px );
+    text-align: center;
+    font: normal 15px 'Roboto';
+    color: #fff;
+    border: 1px solid #0493CC;
+    opacity: 0.8;
+    transition: opacity 200ms ease;
+}
+
+#continue-box-wrapper #continue-box #continue-btn #continue-btn-text{
+    position: relative;
+    top: 10px;
+}
+
+#change-tank {
+    position: relative;
+    border: 1px solid #0493CC;
+    height: 41px;
+    right: 5%;
+    float: right;
+    width: 40px;
+    background: #9a9a9a;
+    opacity: 0.75;
+}
+
+#change-tank:hover {
+    position: relative;
+    height: 41px;
+    right: 5%;
+    float: right;
+    opacity: 0.85;
+}
+
+#change-tank img {
+    margin-top: 6px;
+    margin-left: 5px;
+    width: 30px;
+    height: 30px;
+}
+
+#continue-box-wrapper #continue-box #continue-btn:hover {
+    opacity: 1;
+}
+
+#continue-box-wrapper #continue-box #instructions {
+    position: relative;
+    width: 100%;
+    margin-top: 11px;
+    font: normal 13px arial, tahoma;
+    text-align: center;
+    color: #888;
+}
+
+
+
+#arena-time {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font: normal 35px Roboto, arial, tahoma;
+    color: burlywood;
+    z-index: 10;
+}
+
+/* loader screen */
+
+#loader-wrapper {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 200ms ease;
+}
+
+#loader-wrapper #loader {
+    position: relative;
+    top: 42%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 250px;
+}
+
+#loader-wrapper #title {
+    color: #fff;
+    width: 250px;
+    font: normal 13px Roboto, arial, tahoma;
+}
+
+#loader-wrapper #background-img-left {
+    position: absolute;
+    width: 400px;
+    height: 150px;
+    right: 10%;
+    bottom: 12%;
+    opacity: 0.5;
+    background-image: url('../resources/img/tank-bg.png');
+    background-size: 100% 100%;
+}
+
+#loader-wrapper #background-img-right {
+    position: absolute;
+    width: 400px;
+    height: 150px;
+    left: 10%;
+    bottom: 12%;
+    opacity: 0.5;
+    background-image: url('../resources/img/tank-bg.png');
+    background-size: 100% 100%;
+    transform: scale( -1, 1 );
+}
+
+#loader-wrapper #progress-wrapper {
+    position: relative;
+    width: 250px;
+    height: 3px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #555;
+    overflow: hidden;
+}
+
+#loader-wrapper #progress-wrapper #progress-bar {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 0%;
+    height: 100%;
+    background-color: #777;
+}
+
+#kill-events {
+    position: absolute;
+    left: 1%;
+    top: 50%;
+    color: white;
+}
+
+/*vieport panel*/
+
+.navigation-panel {
+    position: absolute;
+    overflow: hidden;
+    top: 10px;
+    left: 10px;
+}
+
+#viewport-graphics-quality {
+    margin: 3px;
+    float: left;
+    width: 30px;
+    height: 30px;
+    background-image: url(/resources/img/tank-quality.png);
+    background-size: 100% 200%;
+    opacity: 0.5;
+    transition: opacity 200ms ease;
+    cursor: url(../resources/img/cursor.png), auto;
+    z-index: 1;
+}
+
+#viewport-graphics-quality:hover {
+    opacity: 0.85;
+}
+
+#viewport-graphics-quality:active {
+    top: 21px;
+    opacity: 1;
+}
+
+#viewport-graphics-quality[hq="true"] {
+    background-position: 0% 100%;
+}
+
+#viewport-information {
+    display: none;
+    margin: 3px;
+    float: left;
+    width: 30px;
+    height: 30px;
+    background-image: url(../resources/img/information.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: 0px -4px;
+    opacity: 0.7;
+    transition: opacity 200ms ease;
+    cursor: url(../resources/img/cursor.png), auto;
+    z-index: 1;
+}
+#viewport-information:hover {
+    opacity: 0.9;
+}
+#viewport-information:active {
+    background-position: 0px -3px;
+    opacity: 1;
+}
+#viewport-sound-on-off {
+    margin: 3px;
+    float: left;
+    width: 30px;
+    height: 30px;
+    background-image: url(../resources/img/sound-on-off.png);
+    background-size: 152% 260%;
+    opacity: 0.5;
+    background-position: -9px -8px;
+    transition: opacity 200ms ease;
+    cursor: url(../resources/img/cursor.png), auto;
+    z-index: 1;
+}
+#viewport-sound-on-off:hover {
+    opacity: 0.85;
+}
+#viewport-sound-on-off:active {
+    top: 11px;
+    opacity: 1;
+}
+#viewport-sound-on-off[sound="true"] {
+    background-position: -9px 31px;
+}
+
+/**/
+/* viewport */
+
+#viewport {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 0;
+    cursor: url('../resources/img/cursor.png'), auto;
+}
+
+#viewport #renderport {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 0;
+    cursor: url('../resources/img/cursor.png'), auto;
+}
+
+
+
+/**/
+
+#viewport .tankLabel {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 18px;
+}
+
+#viewport .tankLabel .title {
+    text-align: center;
+    color: #fff;
+    float: left;
+    letter-spacing: 0.1em;
+    font: normal 17px arial, tahoma;
+}
+
+#viewport .tankLabel .teamRec {
+    margin: 3px;
+    height: 12px;
+    float: left;
+    width: 12px;
+    margin-top: 4px;
+}
+
+#player-params {
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+    height: 50px;
+    width: 250px;
+    color: burlywood;
+    cursor: url('../resources/img/cursor.png'), auto;
+}
+
+#ammo {
+    float: left;
+    height: 100%;
+    width: 50%;
+}
+
+#ammo-image {
+    height: 100%;
+    float: left;
+    background-image: url('../resources/img/ammo1.png');
+    width: 50px;
+    background-size: 100% 100%;
+    overflow: hidden;
+}
+
+#empty-ammo-image {
+    height: 100%;
+    background-image: url('../resources/img/ammo.png');
+    width: 50px;
+    background-size: cover;
+}
+
+.ammo-animation {
+    animation-name: reload;
+    animation-fill-mode: forwards;
+}
+
+#ammo-number {
+    height: 100%;
+    float: left;
+    font-size: 32px;
+    width: 50px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+
+#health {
+    float: left;
+    height: 100%;
+    width: 50%;
+}
+
+#health-image {
+    height: 100%;
+    float: left;
+    background-image: url('../resources/img/health.png');
+    width: 50px;
+    background-size: 100% 100%;
+    overflow: hidden;
+}
+
+#empty-health-image {
+    height: 0%;
+    background-image: url('../resources/img/health1.png');
+    width: 50px;
+    background-size: cover;
+}
+
+#health-number {
+    height: 100%;
+    float: left;
+    font-size: 32px;
+    width: 50px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+
+#team-params {
+    top: 10px;
+    position: absolute;
+    width: 380px;
+    left: calc(50% - 160px);
+    color: burlywood;
+}
+
+.team-image {
+    height: 30px;
+    float: left;
+    width: 30px;
+    margin: 5px;
+}
+
+.team-number {
+    height: 40px;
+    float: left;
+    font-size: 25px;
+    width: 30px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    text-shadow: 0px 0px 7px #000;
+}
+
+.team-stat {
+    height: 100%;
+    width: 95px;
+    float: left;
+}
+
+#team1-score .team-image {
+    background-color: red;
+}
+
+#team2-score .team-image {
+    background-color: green;
+}
+
+#team3-score .team-image {
+    background-color: blue;
+}
+
+#team4-score .team-image {
+    background-color: orange;
+}
+
+#top-killers {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    background-color: rgba( 0, 0, 0, 0.5 );
+    color: burlywood;
+    width: 195px;
+}
+
+.leaderboard {
+    display: none;
+    position: relative;
+    width: 100%;
+    height: 35px;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.killer-outer {
+    position: relative;
+    display: none;
+    width: 100%;
+    height: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.leaderboard-wrapper {
+    position: relative;
+    display: block;
+}
+
+.player-counter {
+    float: left;
+    width: 25px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.players-team-image {
+    background-color: green;
+    width: 8px;
+    height: 8px;
+    margin-top: 2px;
+    float: left;
+    margin: 3px 3.5px 3px 3.5px;
+}
+
+.player-name {
+    float: left;
+    width: 110px;
+    font-size: 12px;
+}
+
+.kills {
+    float: left;
+    width: 38px;
+    text-align: right;
+    font-size: 12px;
+}
+
+.disconnect-warning {
+    display: none;
+    position: absolute;
+    bottom: 25px;
+    left: 20px;
+    font-size: 22px;
+    color: #ff4242;
+}
+
+#divider {
+    display: none;
+    width: 95%;
+    margin-right: auto;
+    margin-left: auto;
+    border-top: 1px solid burlywood;
+}
+
+#top-killers .killer-outer.last {
+    display: none;
+}
+
+@keyframes reload {
+    from { height: 100%; }
+    to { height: 0%; }
+}
+
+/**/
