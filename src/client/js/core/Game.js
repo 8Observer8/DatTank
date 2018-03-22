@@ -76,6 +76,7 @@ Game.prototype.init = function () {
     $('.btn-pick').click( ui.selectTankAndcloseChoiceWindow.bind( ui ) );
     $('#signin-box-wrapper #change-tank').click( ui.showChoiceWindow.bind( ui ) );
 
+    $('#fullscreen-on-off').click( ui.changeFullScreen.bind( ui ) );
     $('#graphics-quality').click( ui.changeQuality.bind( ui ) );
     $('#sound-on-off').click( ui.changeSound.bind( ui ) );
 

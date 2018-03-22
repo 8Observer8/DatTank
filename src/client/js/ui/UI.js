@@ -45,6 +45,21 @@ Game.UI.prototype.init = function () {
 
 };
 
+Game.UI.prototype.changeFullScreen = function ( value, withoutSound ) {
+
+    value = ( typeof value === 'boolean' ) ? value : $( value.currentTarget ).attr('screen') !== 'true';
+    $('#fullscreen-on-off').attr( 'screen', value );
+
+    view.updateRenderer();
+
+    if ( ! withoutSound ) {
+
+        soundManager.playMenuSound();
+
+    }
+
+};
+
 Game.UI.prototype.changeQuality = function ( value, withoutSound ) {
 
     value = ( typeof value === 'boolean' ) ? value : $( value.currentTarget ).attr('hq') !== 'true';
