@@ -80,6 +80,7 @@ Game.prototype.init = function () {
     $('#graphics-quality').click( ui.changeQuality.bind( ui ) );
     $('#sound-on-off').click( ui.changeSound.bind( ui ) );
 
+    $('#viewport-fullscreen-on-off').click( ui.changeFullScreen.bind( ui ) );
     $('#viewport-graphics-quality').click( ui.changeQuality.bind( ui ) );
     $('#viewport-sound-on-off').click( ui.changeSound.bind( ui ) );
 

@@ -49,6 +49,7 @@ Game.UI.prototype.changeFullScreen = function ( value, withoutSound ) {
 
     value = ( typeof value === 'boolean' ) ? value : $( value.currentTarget ).attr('screen') !== 'true';
     $('#fullscreen-on-off').attr( 'screen', value );
+    $('#viewport-fullscreen-on-off').attr( 'screen', value );
 
     view.updateRenderer();
 

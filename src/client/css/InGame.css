@@ -216,6 +216,32 @@
     left: 10px;
 }
 
+#viewport-fullscreen-on-off {
+    margin: 3px;
+    float: left;
+    width: 30px;
+    height: 30px;
+    background-image: url(/resources/img/fullscreen-on-off.png);
+    background-size: 100% 200%;
+    opacity: 0.5;
+    transition: opacity 200ms ease;
+    cursor: url(../resources/img/cursor.png), auto;
+    z-index: 1;
+}
+
+#viewport-fullscreen-on-off:hover {
+    opacity: 0.85;
+}
+
+#viewport-fullscreen-on-off:active {
+    top: 21px;
+    opacity: 1;
+}
+
+#viewport-fullscreen-on-off[screen="true"] {
+    background-position: 0% 100%;
+}
+
 #viewport-graphics-quality {
     margin: 3px;
     float: left;
