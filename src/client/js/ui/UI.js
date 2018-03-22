@@ -85,6 +85,7 @@ Game.UI.prototype.hideSignInPopup = function () {
     $('#sound-on-off').hide();
     $('#share-btn').hide();
     $('.top-left-like-btns').hide();
+    $('.new-features-box').hide();
 
 };
 
