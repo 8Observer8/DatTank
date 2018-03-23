@@ -219,7 +219,7 @@
 #viewport-fullscreen-on-off {
     margin: 3px;
     float: left;
-    width: 30px;
+    width: 40px;
     height: 30px;
     background-image: url(/resources/img/fullscreen-on-off.png);
     background-size: 100% 200%;
@@ -243,9 +243,9 @@
 }
 
 #viewport-graphics-quality {
-    margin: 3px;
+    margin: 5px;
     float: left;
-    width: 30px;
+    width: 35px;
     height: 30px;
     background-image: url(/resources/img/tank-quality.png);
     background-size: 100% 200%;
@@ -291,9 +291,9 @@
     opacity: 1;
 }
 #viewport-sound-on-off {
-    margin: 3px;
+    margin: 6px;
     float: left;
-    width: 30px;
+    width: 32px;
     height: 30px;
     background-image: url(../resources/img/sound-on-off.png);
     background-size: 152% 260%;

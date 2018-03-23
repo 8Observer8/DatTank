@@ -45,22 +45,6 @@ Game.UI.prototype.init = function () {
 
 };
 
-Game.UI.prototype.changeFullScreen = function ( value, withoutSound ) {
-
-    value = ( typeof value === 'boolean' ) ? value : $( value.currentTarget ).attr('screen') !== 'true';
-    $('#fullscreen-on-off').attr( 'screen', value );
-    $('#viewport-fullscreen-on-off').attr( 'screen', value );
-
-    view.updateRenderer();
-
-    if ( ! withoutSound ) {
-
-        soundManager.playMenuSound();
-
-    }
-
-};
-
 Game.UI.prototype.changeQuality = function ( value, withoutSound ) {
 
     value = ( typeof value === 'boolean' ) ? value : $( value.currentTarget ).attr('hq') !== 'true';
@@ -85,6 +69,22 @@ Game.UI.prototype.changeSound = function ( value, withoutSound ) {
     $('#viewport-sound-on-off').attr( 'sound', value );
     localStorage.setItem( 'sound', value );
     soundManager.toggleMute( ! value );
+
+    if ( ! withoutSound ) {
+
+        soundManager.playMenuSound();
+
+    }
+
+};
+
+Game.UI.prototype.changeFullScreen = function ( value, withoutSound ) {
+
+    value = ( typeof value === 'boolean' ) ? value : $( value.currentTarget ).attr('screen') !== 'true';
+    $('#fullscreen-on-off').attr( 'screen', value );
+    $('#viewport-fullscreen-on-off').attr( 'screen', value );
+
+    view.updateRenderer();
 
     if ( ! withoutSound ) {
 
