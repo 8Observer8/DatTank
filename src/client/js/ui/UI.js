@@ -224,7 +224,7 @@ Game.UI.prototype.updateLeaderboard = function ( players ) {
         if ( i < players.length ) {
 
             $( names[ i ] ).html( players[ i ].login );
-            $( kills[ i ] ).html( players[ i ].kills );
+            $( kills[ i ] ).html( players[ i ].score + '/' + players[ i ].kills );
             $( teams[ i ] ).css( 'background-color', Game.Team.colors[ players[ i ].team ] );
             $( rows[ i ] ).show();
 
@@ -254,7 +254,8 @@ Game.UI.prototype.updateLeaderboard = function ( players ) {
             if ( me && players[ i ].id === me.id ) {
 
                 rank = i + 1;
-                me.killsNumber = players[ i ].kills;
+                me.score = players[ i ].score;
+                me.kills = players[ i ].kills;
                 break;
 
             }
@@ -265,7 +266,7 @@ Game.UI.prototype.updateLeaderboard = function ( players ) {
 
         $('#top-killers .killer-outer.last .player-counter').html( '#' + rank );
         $('#top-killers .killer-outer.last .player-name').html( me.login );
-        $('#top-killers .killer-outer.last .kills').html( me.killsNumber );
+        $('#top-killers .killer-outer.last .kills').html( me.score + '/' + me.kills );
         $('#top-killers .killer-outer.last .players-team-image').css( 'background-color', me.team.color );
 
         $('#top-killers #divider').show();

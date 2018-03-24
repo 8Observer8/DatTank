@@ -68,6 +68,9 @@ var Player = function ( arena, params ) {
     this.health = 100;
     this.kills = 0;
     this.death = 0;
+    this.score = 0;
+    this.level = 0;
+    this.bonusLevels = 0;
 
     this.collisionBox = false;
 
@@ -142,6 +145,8 @@ Player.prototype.respawn = function ( tankName ) {
     newPosition.z += offsetZ;
 
     //
+
+    this.changeScore( - Math.floor( 1 * this.score / 3 ) );
 
     this.status = Player.Alive;
     this.health = 100;
@@ -276,6 +281,7 @@ Player.prototype.changeHealth = function ( delta, killer ) {
         if ( killer.type === 'Player' ) {
         
             game.updateTopList( killer.login, killer.kills );
+            killer.changeScore( 10 );
 
         }
 
@@ -314,6 +320,40 @@ Player.prototype.changeAmmo = function ( delta ) {
         networkManager.send( 'PlayerTankUpdateAmmo', this.socket, buffer, bufferView );
 
     }
+
+};
+
+Player.prototype.changeScore = function ( delta ) {
+
+    this.score += delta;
+
+    //
+
+    var level = 0;
+    var lavels = [ 0, 100, 150, 250, 380, 500, 650, 900, 1300, 1700, 2500 ];
+
+    while ( levels[ levels ] < this.score ) {
+
+        level ++;
+
+    }
+
+    if ( this.level > level ) {
+
+        this.level = level;
+
+    } else {
+
+        this.bonusLevels = level - this.level;
+
+    }
+
+};
+
+Player.prototype.changeLevel = function () {
+
+    // todo
+    // update stats
 
 };
 

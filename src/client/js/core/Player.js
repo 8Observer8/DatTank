@@ -17,7 +17,7 @@ Game.Player = function ( arena, params ) {
     this.ammo = params.ammo;
 
     this.kills = params.kills || 0;
-    this.death = params.death || 0;
+    this.score = params.score || 0;
 
     //
 

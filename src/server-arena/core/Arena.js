@@ -208,7 +208,7 @@ Arena.prototype.updateLeaderboard = function () {
 
         //
 
-        sortByProperty( this.playerManager.players, 'kills' );
+        sortByProperty( this.playerManager.players, 'score' );
 
         for ( var i = 0, il = this.playerManager.players.length; i < il; i ++ ) {
 
@@ -217,7 +217,7 @@ Arena.prototype.updateLeaderboard = function () {
                 login:      this.playerManager.players[ i ].login,
                 team:       this.playerManager.players[ i ].team.id,
                 kills:      this.playerManager.players[ i ].kills,
-                death:      this.playerManager.players[ i ].death
+                score:      this.playerManager.players[ i ].score
             });
 
         }

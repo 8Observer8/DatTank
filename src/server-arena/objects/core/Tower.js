@@ -211,6 +211,8 @@ Tower.prototype.hit = function ( killer ) {
     if ( this.health === 0 ) {
 
         this.changeTeam( killer.team, killer.id );
+        killer.changeScore( 5 );
+        this.arena.updateLeaderboard();
         return;
 
     }
