@@ -76,9 +76,11 @@ Game.prototype.init = function () {
     $('.btn-pick').click( ui.selectTankAndcloseChoiceWindow.bind( ui ) );
     $('#signin-box-wrapper #change-tank').click( ui.showChoiceWindow.bind( ui ) );
 
+    $('#fullscreen-on-off').click( ui.changeFullScreen.bind( ui ) );
     $('#graphics-quality').click( ui.changeQuality.bind( ui ) );
     $('#sound-on-off').click( ui.changeSound.bind( ui ) );
 
+    $('#viewport-fullscreen-on-off').click( ui.changeFullScreen.bind( ui ) );
     $('#viewport-graphics-quality').click( ui.changeQuality.bind( ui ) );
     $('#viewport-sound-on-off').click( ui.changeSound.bind( ui ) );
 
@@ -144,13 +146,13 @@ Game.prototype.play = function ( event ) {
 
         var value = Math.round( 100 * progress ) + '%';
         $('#loader-wrapper #progress-wrapper #progress-bar').css( 'width', value );
-        $('#loader-wrapper #title span').html( value );
+        $('#loader-wrapper #loader-wrapper-title span').html( value );
         $('#crowd-shortcut').hide();
 
     }, function () {
 
         $('#loader-wrapper #progress-wrapper').hide();
-        $('#loader-wrapper #title').html('Initializing arena...');
+        $('#loader-wrapper #loader-wrapper-title').html('Initializing arena...');
 
         // init controls
 

@@ -78,6 +78,22 @@ Game.UI.prototype.changeSound = function ( value, withoutSound ) {
 
 };
 
+Game.UI.prototype.changeFullScreen = function ( value, withoutSound ) {
+
+    value = ( typeof value === 'boolean' ) ? value : $( value.currentTarget ).attr('screen') !== 'true';
+    $('#fullscreen-on-off').attr( 'screen', value );
+    $('#viewport-fullscreen-on-off').attr( 'screen', value );
+
+    view.updateRenderer();
+
+    if ( ! withoutSound ) {
+
+        soundManager.playMenuSound();
+
+    }
+
+};
+
 Game.UI.prototype.hideSignInPopup = function () {
 
     $('#signin-box-wrapper').hide();
@@ -85,6 +101,7 @@ Game.UI.prototype.hideSignInPopup = function () {
     $('#sound-on-off').hide();
     $('#share-btn').hide();
     $('.top-left-like-btns').hide();
+    $('.new-features-box').hide();
 
 };
 
@@ -157,7 +174,7 @@ Game.UI.prototype.showContinueBox = function ( playerlogin, playerColor ) {
     });
 
     $('#continue-box-wrapper').show();
-    $('#continue-box-wrapper #title').html('<p>Killed by <span style="color:'+ playerColor + '">' + playerlogin +'</span></p>');
+    $('#continue-box-wrapper #continue-box-wrapper-title').html('<p>Killed by <span style="color:'+ playerColor + '">' + playerlogin +'</span></p>');
     $('#continue-box-wrapper #change-tank').click( ui.showChoiceWindow.bind( ui ) );
 
     setTimeout( function () {
