@@ -330,9 +330,9 @@ Player.prototype.changeScore = function ( delta ) {
     //
 
     var level = 0;
-    var levels = [ 0, 100, 150, 250, 380, 500, 650, 900, 1300, 1700, 2500 ];
+    var levels = [ 0, 10, 15, 250, 380, 500, 650, 900, 1300, 1700, 2500 ];
 
-    while ( levels[ levels ] < this.score ) {
+    while ( levels[ level ] < this.score ) {
 
         level ++;
 
@@ -342,9 +342,19 @@ Player.prototype.changeScore = function ( delta ) {
 
         this.level = level;
 
-    } else {
+    } else if ( this.level < level ) {
+
+        this.networkBuffers['NewLevel'] = this.networkBuffers['NewLevel'] || {};
+        var buffer = this.networkBuffers['NewLevel'].buffer || new ArrayBuffer( 6 );
+        var bufferView = this.networkBuffers['NewLevel'].bufferView || new Int16Array( buffer );
+        this.networkBuffers['NewLevel'].buffer = buffer;
+        this.networkBuffers['NewLevel'].bufferView = bufferView;
 
         this.bonusLevels = level - this.level;
+        bufferView[ 1 ] = this.id;
+        bufferView[ 2 ] = this.bonusLevels;
+
+        networkManager.send( 'PlayerNewLevel', this.socket, buffer, bufferView );
 
     }
 

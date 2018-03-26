@@ -439,6 +439,7 @@ Game.Arena.prototype.addNetworkListeners = function () {
     //
 
     network.addMessageListener( 'PlayerFriendlyFire', this.proxyEventToPlayer.bind( this ) );
+    network.addMessageListener( 'PlayerNewLevel', this.proxyEventToPlayer.bind( this ) );
 
     network.addMessageListener( 'PlayerTankRotateTop', this.proxyEventToPlayer.bind( this ) );
     network.addMessageListener( 'PlayerTankMove', this.proxyEventToPlayer.bind( this ) );
