@@ -38,6 +38,8 @@ Game.UI.prototype.init = function () {
     $('#soundon').click( this.changeSound.bind( this ) );
     $('#qualityon').click( this.changeQuality.bind( this ) );
 
+    $('.stats-update-block .bonus .increase').click( this.updateTankStat.bind( this ) );
+
     //
 
     setTimeout( function () { $('.fb-like').animate( { opacity: 1 }, 500 ); }, 1000 );
@@ -338,6 +340,23 @@ Game.UI.prototype.showTankStatsUpdate = function ( bonusLevels ) {
     $('.stats-update-block').show();
     $('.level-indicator-block').hide();
     $('.stats-update-block .title').html( 'You have ' + bonusLevels + ' bonus levels.' );
+
+};
+
+Game.UI.prototype.updateTankStat = function ( event ) {
+
+    var statName = event.target.parentNode.className.replace('bonus ', '');
+    game.arena.me.updateStats( statName );
+
+    //
+
+    game.arena.me.bonusLevels --;
+
+    if ( game.arena.me.bonusLevels === 0 ) {
+
+        this.hideTankStatsUpdate();
+
+    }
 
 };
 

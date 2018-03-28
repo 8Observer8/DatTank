@@ -362,10 +362,10 @@ Player.prototype.changeScore = function ( delta ) {
 
 };
 
-Player.prototype.changeLevel = function () {
+Player.prototype.updateStats = function ( statId ) {
 
+    console.log( statId );
     // todo
-    // update stats
 
 };
 
@@ -783,6 +783,7 @@ Player.prototype.addEventListeners = function () {
     this.addEventListener( 'PlayerTankRotateTop', function ( event ) { scope.rotateTop( event.data[0] / 1000 ); });
     this.addEventListener( 'PlayerTankMove', function ( event ) { scope.move( event.data[0], event.data[1] ); });
     this.addEventListener( 'PlayerTankShoot', function ( event ) { scope.shoot(); });
+    this.addEventListener( 'PlayerTankUpdateStats', function ( event ) { scope.updateStats( event.data[0] ); });
 
 };
 

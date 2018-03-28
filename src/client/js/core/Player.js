@@ -478,6 +478,29 @@ Game.Player.prototype.hideExplosion = function () {
 Game.Player.prototype.newLevel = function ( bonusLevels ) {
 
     ui.showTankStatsUpdate( bonusLevels );
+    this.bonusLevels = bonusLevels;
+
+};
+
+Game.Player.prototype.updateStats = function ( name ) {
+
+    var stats = {
+        'speed':          0,
+        'rpm':            1,
+        'armour':         2,
+        'gun':            3,
+        'ammo-capacity':  4
+    };
+
+    var buffer = new ArrayBuffer( 4 );
+    var bufferView = new Int16Array( buffer );
+    var statsId = stats[ name ];
+
+    //
+
+    bufferView[1] = statsId;
+
+    network.send( 'PlayerTankUpdateStats', buffer, bufferView );
 
 };
 
