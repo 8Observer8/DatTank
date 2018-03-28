@@ -17,7 +17,7 @@ PlayerManager.prototype.getTopBoard = function ( callback ) {
 
     DB.models.topPlayers
     .find()
-    .sort([ [ 'kills', 'descending' ] ])
+    .sort([ [ 'score', 'descending' ] ])
     .limit( 10 )
     .then( function ( result ) {
 
@@ -27,7 +27,8 @@ PlayerManager.prototype.getTopBoard = function ( callback ) {
 
             players.push({
                 login:  result[ i ].login,
-                kills:  result[ i ].kills
+                kills:  result[ i ].kills,
+                score:  result[ i ].score
             });
 
         }
@@ -38,7 +39,7 @@ PlayerManager.prototype.getTopBoard = function ( callback ) {
 
 };
 
-PlayerManager.prototype.updateTopBoard = function ( login, kills ) {
+PlayerManager.prototype.updateTopBoard = function ( login, score, kills ) {
 
     DB.models.topPlayers
     .findOne({ login: login })
@@ -47,14 +48,15 @@ PlayerManager.prototype.updateTopBoard = function ( login, kills ) {
         if ( ! result ) {
 
             DB.models.topPlayers
-            .create({ login: login, kills: kills })
+            .create({ login: login, score: score, kills: kills })
             .then( function () {} );
             return;
 
         } else {
 
-            if ( result.kills >= kills ) return;
+            if ( result.score >= score ) return;
             result.kills = kills;
+            result.score = score;
 
         }
 

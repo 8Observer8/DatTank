@@ -212,7 +212,9 @@ Tower.prototype.hit = function ( killer ) {
 
         this.changeTeam( killer.team, killer.id );
         killer.changeScore( 5 );
+        game.updateTopList( killer.login, killer.score, killer.kills );
         this.arena.updateLeaderboard();
+
         return;
 
     }

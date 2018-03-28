@@ -249,44 +249,45 @@
 
 /* scroll - Chrome*/
 .new-features-box .new-features::-webkit-scrollbar {
-        width:7px;
-        height: 7px;
+    width:7px;
+    height: 7px;
 }
 .new-features-box .new-features::-webkit-scrollbar-thumb {
-        border-radius:9px;
-        background:#55585b;
-        height: 7px;
+    border-radius:9px;
+    background:#55585b;
+    height: 7px;
 }
 /* scroll - Firefox 19+ */
 .new-features-box .new-features::-moz-scrollbar {
-        width:7px;
+    width:7px;
 }
 .new-features-box .new-features::-moz-scrollbar-thumb {
-        border-radius:9px;
-        background:#55585b;
+    border-radius:9px;
+    background:#55585b;
 }
 
 /* scroll - Firefox 18- */
 .new-features-box .new-features:-moz-scrollbar {
-        width:7px;
+    width:7px;
 }
 .new-features-box .new-features:-moz-scrollbar-thumb {
-        border-radius:9px;
-        background:#55585b;
+    border-radius:9px;
+    background:#55585b;
 }
 
 /* scroll - IE 10+ */
 .new-features-box .new-featuress:-ms-scrollbar {
-        width:7px;
+    width:7px;
 }
 .new-features-box .new-features:-ms-scrollbar-thumb {
-        border-radius:9px;
-        background:#55585b;
+    border-radius:9px;
+    background:#55585b;
 }
 
 
 /**/
 .top-players-score {
+    visibility: hidden;
     width: 320px;
     background: transparent;
     height: initial;
@@ -318,7 +319,7 @@
     background-color: rgba(0, 0, 0, 0.1);
     font-weight: bold;
 }
-.top-players-score table tr { 
+.top-players-score table tr {
     border: 1px solid #211e1e;
     border-left: 1px solid transparent;
 }
@@ -334,6 +335,7 @@
     font-size: 16px;
     margin: 0 7px;
     text-align: left;
+    font-weight: 400;
 }
 .top-players-score .players-score.kills {
     width: 50px;
@@ -345,7 +347,16 @@
 .top-players-score .players-score .nmb {
     opacity: 0.3;
 }
-
+.top-players-score .header.login {
+    width: 185px;
+    font-weight: 700;
+}
+.top-players-score .header.kills {
+    width: 75px;
+    font-size: 13px;
+    line-height: 22px;
+    font-weight: 700;
+}
 /**/
 
 #share-btn {

@@ -12,6 +12,9 @@ var TopPlayersSchema = mongoose.Schema({
     login: {
         type: String,
     },
+    score: {
+    	type: Number
+    },
     kills: {
         type: Number
     }

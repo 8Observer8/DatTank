@@ -54,14 +54,15 @@ ArenaServersManager.prototype.updateTopList = function ( req, res ) {
 
     var login = req.query.login;
     var kills = req.query.kills;
+    var score = req.query.score;
 
-    if ( ! login || ! kills ) {
+    if ( ! login || ! kills || ! score ) {
 
         return res.send({ success: false });
 
     }
 
-    DT.playerManager.updateTopBoard( login, kills );
+    DT.playerManager.updateTopBoard( login, score, kills );
     return res.send({ success: true });
 
 };

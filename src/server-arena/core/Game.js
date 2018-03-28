@@ -32,12 +32,12 @@ Game.prototype.init = function () {
 
 };
 
-Game.prototype.updateTopList = function ( login, kills ) {
+Game.prototype.updateTopList = function ( login, score, kills ) {
 
     var req = http.get({
         hostname:   environment.master.host,
         port:       environment.master.port,
-        path:       '/api/update-top-list?login=' + encodeURI( login ) + '&kills=' + kills
+        path:       '/api/update-top-list?login=' + encodeURI( login ) + '&kills=' + kills + '&score=' + score
     }, function ( res ) {
 
         var response = '';
