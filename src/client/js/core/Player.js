@@ -30,7 +30,7 @@ Game.Player = function ( arena, params ) {
     //
 
     this.moveSpeed = 0.09;
-    this.originalMoveSpead = this.moveSpeed;
+    this.originalMoveSpeed = this.moveSpeed;
     this.moveDirection = new THREE.Vector2( params.moveDirection.x || 0, params.moveDirection.y || 0 );
 
     this.explosion = [];
@@ -85,7 +85,7 @@ Game.Player.prototype.selectTank = function ( tankName ) {
 
     }
 
-    this.moveSpeed = this.originalMoveSpead * this.tank.speed / 40;
+    this.moveSpeed = this.originalMoveSpeed * this.tank.speed / 40;
 
 };
 
@@ -491,6 +491,42 @@ Game.Player.prototype.updateStats = function ( name ) {
         'gun':            3,
         'ammo-capacity':  4
     };
+
+    switch ( name ) {
+
+        case 'speed':
+
+            this.tank.speed += 3;
+            this.moveSpeed = this.originalMoveSpeed * this.tank.speed / 40;
+            break;
+
+        case 'rpm':
+
+            this.tank.rpm *= 1.1;
+            break;
+
+        case 'armour':
+
+            this.tank.armour += 10;
+            break;
+
+        case 'gun':
+
+            this.tank.bullet += 5;
+            break;
+
+        case 'ammo-capacity':
+
+            this.tank.ammoCapacity += 15;
+            break;
+
+        default:
+
+            return false;
+
+    }
+
+    //
 
     var buffer = new ArrayBuffer( 4 );
     var bufferView = new Int16Array( buffer );

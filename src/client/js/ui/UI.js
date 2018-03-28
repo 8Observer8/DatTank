@@ -331,11 +331,11 @@ Game.UI.prototype.showTankStatsUpdate = function ( bonusLevels ) {
 
     var tank = game.arena.me.tank;
 
-    $('.stats-update-block .bonus.speed .bonus-title span').html( tank.speed + ' -> ' + ( tank.speed + 1 ) );
-    $('.stats-update-block .bonus.reload .bonus-title span').html( tank.rpm + ' -> ' + ( tank.rpm + 1 ) );
-    $('.stats-update-block .bonus.armour .bonus-title span').html( tank.armour + ' -> ' + ( tank.armour + 1 ) );
-    $('.stats-update-block .bonus.gun .bonus-title span').html( tank.bullet + ' -> ' + ( tank.bullet + 1 ) );
-    $('.stats-update-block .bonus.ammo-capacity .bonus-title span').html( tank.ammoCapacity + ' -> ' + ( tank.ammoCapacity + 1 ) );
+    $('.stats-update-block .bonus.speed .bonus-title span').html( tank.speed + ' -> ' + ( tank.speed + 3 ) );
+    $('.stats-update-block .bonus.rpm .bonus-title span').html( tank.rpm + ' -> ' + Math.floor( 100 * tank.rpm * 1.1 ) / 100 );
+    $('.stats-update-block .bonus.armour .bonus-title span').html( tank.armour + ' -> ' + ( tank.armour + 10 ) );
+    $('.stats-update-block .bonus.gun .bonus-title span').html( tank.bullet + ' -> ' + ( tank.bullet + 5 ) );
+    $('.stats-update-block .bonus.ammo-capacity .bonus-title span').html( tank.ammoCapacity + ' -> ' + ( tank.ammoCapacity + 15 ) );
 
     $('.stats-update-block').show();
     $('.level-indicator-block').hide();

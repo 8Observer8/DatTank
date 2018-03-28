@@ -41,7 +41,7 @@ var Player = function ( arena, params ) {
 
     this.moveDirection = new Game.Vec2();
     this.moveSpeed = 0.09;
-    this.originalMoveSpead = this.moveSpeed;
+    this.originalMoveSpeed = this.moveSpeed;
 
     this.sinceHitRegeneraionLimit = 5000;
     this.sinceHitTime = false;
@@ -209,7 +209,7 @@ Player.prototype.selectTank = function ( tankName ) {
 
     }
 
-    this.moveSpeed = this.originalMoveSpead * this.tank.speed / 40;
+    this.moveSpeed = this.originalMoveSpeed * this.tank.speed / 40;
     this.ammo = this.tank.ammoCapacity;
 
 };
@@ -364,8 +364,44 @@ Player.prototype.changeScore = function ( delta ) {
 
 Player.prototype.updateStats = function ( statId ) {
 
-    console.log( statId );
-    // todo
+    var stats = [ 'speed', 'rpm', 'armour', 'gun', 'ammoCapacity' ];
+    var statName = stats[ statId ];
+
+    if ( this.bonusLevels <= 0 ) return false;
+
+    switch ( statName ) {
+
+        case 'speed':
+
+            this.tank.speed += 3;
+            this.moveSpeed = this.originalMoveSpeed * this.tank.speed / 40;
+            break;
+
+        case 'rpm':
+
+            this.tank.rpm *= 1.1;
+            break;
+
+        case 'armour':
+
+            this.tank.armour += 10;
+            break;
+
+        case 'gun':
+
+            this.tank.bullet += 5;
+            break;
+
+        case 'ammoCapacity':
+
+            this.tank.ammoCapacity += 15;
+            break;
+
+        default:
+
+            return false;
+
+    }
 
 };
 
