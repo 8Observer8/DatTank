@@ -330,13 +330,15 @@ Player.prototype.changeScore = function ( delta ) {
     //
 
     var level = 0;
-    var levels = [ 0, 10, 15, 250, 380, 500, 650, 900, 1300, 1700, 2500 ];
+    var levels = [ 0, 5, 15, 250, 380, 500, 650, 900, 1300, 1700, 2500 ];
 
-    while ( levels[ level ] < this.score ) {
+    while ( levels[ level ] <= this.score ) {
 
         level ++;
 
     }
+
+    level --;
 
     if ( this.level > level ) {
 

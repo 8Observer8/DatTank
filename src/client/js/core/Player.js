@@ -477,8 +477,7 @@ Game.Player.prototype.hideExplosion = function () {
 
 Game.Player.prototype.newLevel = function ( bonusLevels ) {
 
-    // todo
-    alert( 'BonusLevels: ' + bonusLevels );
+    ui.showTankStatsUpdate( bonusLevels );
 
 };
 

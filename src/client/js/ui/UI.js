@@ -166,6 +166,7 @@ Game.UI.prototype.updateAmmo = function ( value ) {
 Game.UI.prototype.showContinueBox = function ( playerlogin, playerColor ) {
 
     $('#continue-box-wrapper #continue-btn').off();
+    this.hideTankStatsUpdate();
 
     $('#continue-box-wrapper #continue-btn').click( function () {
 
@@ -249,6 +250,8 @@ Game.UI.prototype.updateLeaderboard = function ( players ) {
 
                 $( rows[ i ] ).addClass('myplace');
                 meInTop = true;
+                me.score = players[ i ].score;
+                me.kills = players[ i ].kills;
 
             }
 
@@ -298,6 +301,50 @@ Game.UI.prototype.updateLeaderboard = function ( players ) {
         $('#top-killers .killer-outer.last').hide();
 
     }
+
+    this.updateLevelProgress();
+
+};
+
+Game.UI.prototype.updateLevelProgress = function () {
+
+    var levels = [ 0, 5, 15, 250, 380, 500, 650, 900, 1300, 1700, 2500 ];
+    var level = 0;
+
+    while ( levels[ level ] <= game.arena.me.score ) {
+
+        level ++;
+
+    }
+
+    level --;
+
+    var levelProgress = 100 * ( game.arena.me.score - levels[ level ] ) / ( levels[ level + 1 ] - levels[ level ] );
+    $('.level-indicator-block .title').html( 'Level ' + level );
+    $('.level-indicator-block .progress-bar .progress-indicator').css( 'width', levelProgress + '%' );
+
+};
+
+Game.UI.prototype.showTankStatsUpdate = function ( bonusLevels ) {
+
+    var tank = game.arena.me.tank;
+
+    $('.stats-update-block .bonus.speed .bonus-title span').html( tank.speed + ' -> ' + ( tank.speed + 1 ) );
+    $('.stats-update-block .bonus.reload .bonus-title span').html( tank.rpm + ' -> ' + ( tank.rpm + 1 ) );
+    $('.stats-update-block .bonus.armour .bonus-title span').html( tank.armour + ' -> ' + ( tank.armour + 1 ) );
+    $('.stats-update-block .bonus.gun .bonus-title span').html( tank.bullet + ' -> ' + ( tank.bullet + 1 ) );
+    $('.stats-update-block .bonus.ammo-capacity .bonus-title span').html( tank.ammoCapacity + ' -> ' + ( tank.ammoCapacity + 1 ) );
+
+    $('.stats-update-block').show();
+    $('.level-indicator-block').hide();
+    $('.stats-update-block .title').html( 'You have ' + bonusLevels + ' bonus levels.' );
+
+};
+
+Game.UI.prototype.hideTankStatsUpdate = function () {
+
+    $('.stats-update-block').hide();
+    $('.level-indicator-block').show();
 
 };
 
