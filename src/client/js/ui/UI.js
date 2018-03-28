@@ -27,18 +27,10 @@ Game.UI.prototype.init = function () {
 
     }
 
-    $('#settings-wrapper').hide();
-
-    localStorage.setItem( 'gear', false );
-
     // ui binding
 
-    $('#gear_btn').click( this.openSettings.bind( this ) );
-    $('#exit-btn').click( this.openSettings.bind( this ) );
-    $('#soundon').click( this.changeSound.bind( this ) );
-    $('#qualityon').click( this.changeQuality.bind( this ) );
-
     $('.stats-update-block .bonus .increase').click( this.updateTankStat.bind( this ) );
+    $( document ).on('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', this.onFullscreenModeChange.bind( this ) );
 
     //
 
@@ -83,10 +75,48 @@ Game.UI.prototype.changeSound = function ( value, withoutSound ) {
 Game.UI.prototype.changeFullScreen = function ( value, withoutSound ) {
 
     value = ( typeof value === 'boolean' ) ? value : $( value.currentTarget ).attr('screen') !== 'true';
-    $('#fullscreen-on-off').attr( 'screen', value );
-    $('#viewport-fullscreen-on-off').attr( 'screen', value );
 
-    view.updateRenderer();
+    //
+
+    if ( value ) {
+
+        if ( document.body.requestFullscreen ) {
+    
+            document.body.requestFullscreen();
+  
+        } else if ( document.body.mozRequestFullScreen ) {
+    
+            document.body.mozRequestFullScreen();
+  
+        } else if ( document.body.webkitRequestFullscreen ) {
+    
+            document.body.webkitRequestFullscreen();
+  
+        } else if ( document.body.msRequestFullscreen ) {
+    
+            document.body.msRequestFullscreen();
+        
+        }
+
+    } else {
+
+        if ( document.exitFullscreen ) {
+    
+            document.exitFullscreen();
+  
+        } else if ( document.mozCancelFullScreen ) {
+    
+            document.mozCancelFullScreen();
+  
+        } else if ( document.webkitExitFullscreen ) {
+    
+            document.webkitExitFullscreen();
+  
+        }
+
+    }
+
+    //
 
     if ( ! withoutSound ) {
 
@@ -96,35 +126,24 @@ Game.UI.prototype.changeFullScreen = function ( value, withoutSound ) {
 
 };
 
+Game.UI.prototype.onFullscreenModeChange = function () {
+
+    var isFullscreen = ( document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement ) !== undefined;
+
+    $('#fullscreen-on-off').attr( 'screen', isFullscreen );
+    $('#viewport-fullscreen-on-off').attr( 'screen', isFullscreen );
+
+};
+
 Game.UI.prototype.hideSignInPopup = function () {
 
     $('#signin-box-wrapper').hide();
     $('#graphics-quality').hide();
     $('#sound-on-off').hide();
+    $('#fullscreen-on-off').hide();
     $('#share-btn').hide();
     $('.top-left-like-btns').hide();
     $('.new-features-box').hide();
-
-};
-
-Game.UI.prototype.openSettings = function (value) {
-
-    value = ( typeof value === 'boolean' ) ? value : $('#gear_btn').attr('gear') !== 'true';
-    $('#gear_btn').attr( 'gear', value );
-    localStorage.setItem( 'gear', value );
-    soundManager.playMenuSound();
-
-    if ( localStorage.getItem( 'gear' ) === 'true' ) {
-
-        $('#settings-wrapper').show();
-
-    }
-
-    if ( localStorage.getItem( 'gear' ) === 'false' ) {
-
-        $('#settings-wrapper').hide();
-
-    }
 
 };
 
