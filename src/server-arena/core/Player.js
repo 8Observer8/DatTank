@@ -146,7 +146,14 @@ Player.prototype.respawn = function ( tankName ) {
 
     //
 
-    this.changeScore( - Math.floor( 1 * this.score / 3 ) );
+    this.tank.speed = this.tank.origParams.speed;
+    this.moveSpeed = this.originalMoveSpeed * this.tank.speed / 40;
+    this.tank.armour = this.tank.origParams.armour;
+    this.tank.rpm = this.tank.origParams.rpm;
+    this.tank.ammoCapacity = this.tank.origParams.ammoCapacity;
+    this.tank.bullet = this.tank.origParams.bullet;
+
+    //
 
     this.status = Player.Alive;
     this.health = 100;
@@ -175,6 +182,11 @@ Player.prototype.respawn = function ( tankName ) {
         this.collisionBox.body.position[1] = this.position.z;
 
     }
+
+    //
+
+    this.level = 0;
+    this.changeScore( - Math.floor( 1 * this.score / 3 ) );
 
 };
 
@@ -330,7 +342,7 @@ Player.prototype.changeScore = function ( delta ) {
     //
 
     var level = 0;
-    var levels = [ 0, 5, 15, 250, 380, 500, 650, 900, 1300, 1700, 2500 ];
+    var levels = [ 0, 10, 30, 60, 100, 150, 250, 340, 500, 650, 1000 ];
 
     while ( levels[ level ] <= this.score ) {
 
@@ -353,6 +365,7 @@ Player.prototype.changeScore = function ( delta ) {
         this.networkBuffers['NewLevel'].bufferView = bufferView;
 
         this.bonusLevels = level - this.level;
+        this.level = level;
         bufferView[ 1 ] = this.id;
         bufferView[ 2 ] = this.bonusLevels;
 
@@ -368,6 +381,7 @@ Player.prototype.updateStats = function ( statId ) {
     var statName = stats[ statId ];
 
     if ( this.bonusLevels <= 0 ) return false;
+    this.bonusLevels --;
 
     switch ( statName ) {
 

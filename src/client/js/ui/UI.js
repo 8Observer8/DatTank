@@ -310,7 +310,7 @@ Game.UI.prototype.updateLeaderboard = function ( players ) {
 
 Game.UI.prototype.updateLevelProgress = function () {
 
-    var levels = [ 0, 5, 15, 250, 380, 500, 650, 900, 1300, 1700, 2500 ];
+    var levels = [ 0, 10, 30, 60, 100, 150, 250, 340, 500, 650, 1000 ];
     var level = 0;
 
     while ( levels[ level ] <= game.arena.me.score ) {
@@ -332,7 +332,7 @@ Game.UI.prototype.showTankStatsUpdate = function ( bonusLevels ) {
     var tank = game.arena.me.tank;
 
     $('.stats-update-block .bonus.speed .bonus-title span').html( tank.speed + ' -> ' + ( tank.speed + 3 ) );
-    $('.stats-update-block .bonus.rpm .bonus-title span').html( tank.rpm + ' -> ' + Math.floor( 100 * tank.rpm * 1.1 ) / 100 );
+    $('.stats-update-block .bonus.rpm .bonus-title span').html( Math.floor( 100 * tank.rpm ) / 100 + ' -> ' + Math.floor( 100 * tank.rpm * 1.1 ) / 100 );
     $('.stats-update-block .bonus.armour .bonus-title span').html( tank.armour + ' -> ' + ( tank.armour + 10 ) );
     $('.stats-update-block .bonus.gun .bonus-title span').html( tank.bullet + ' -> ' + ( tank.bullet + 5 ) );
     $('.stats-update-block .bonus.ammo-capacity .bonus-title span').html( tank.ammoCapacity + ' -> ' + ( tank.ammoCapacity + 15 ) );
@@ -345,8 +345,17 @@ Game.UI.prototype.showTankStatsUpdate = function ( bonusLevels ) {
 
 Game.UI.prototype.updateTankStat = function ( event ) {
 
+    var tank = game.arena.me.tank;
     var statName = event.target.parentNode.className.replace('bonus ', '');
     game.arena.me.updateStats( statName );
+
+    //
+
+    $('.stats-update-block .bonus.speed .bonus-title span').html( tank.speed + ' -> ' + ( tank.speed + 3 ) );
+    $('.stats-update-block .bonus.rpm .bonus-title span').html( Math.floor( 100 * tank.rpm ) / 100 + ' -> ' + Math.floor( 100 * tank.rpm * 1.1 ) / 100 );
+    $('.stats-update-block .bonus.armour .bonus-title span').html( tank.armour + ' -> ' + ( tank.armour + 10 ) );
+    $('.stats-update-block .bonus.gun .bonus-title span').html( tank.bullet + ' -> ' + ( tank.bullet + 5 ) );
+    $('.stats-update-block .bonus.ammo-capacity .bonus-title span').html( tank.ammoCapacity + ' -> ' + ( tank.ammoCapacity + 15 ) );
 
     //
 

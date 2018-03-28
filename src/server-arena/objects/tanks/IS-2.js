@@ -15,6 +15,14 @@ var IS2 = function ( params ) {
     this.ammoCapacity = 36;
     this.rpm = 4.88 * 10;
 
+    this.origParams = {
+        speed:          this.speed,
+        armour:         this.armour,
+        bullet:         this.bullet,
+        rpm:            this.rpm,
+        ammoCapacity:   this.ammoCapacity
+    };
+
     this.typeId = 0;
 
 };
