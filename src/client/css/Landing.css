@@ -325,7 +325,7 @@
 }
 .top-players-score .players-score {
     float: left;
-    width: 200px;
+    width: 180px;
     overflow: hidden;
     display: inline-block;
     text-overflow: ellipsis;
@@ -338,7 +338,7 @@
     font-weight: 400;
 }
 .top-players-score .players-score.kills {
-    width: 50px;
+    width: 90px;
     text-align: center;
 }
 .top-players-score .players-score.header {

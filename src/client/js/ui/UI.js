@@ -381,6 +381,7 @@ Game.UI.prototype.updateTankStat = function ( event ) {
     //
 
     game.arena.me.bonusLevels --;
+    $('.stats-update-block .title').html( 'You have ' + game.arena.me.bonusLevels + ' bonus levels.' );
 
     if ( game.arena.me.bonusLevels === 0 ) {
 

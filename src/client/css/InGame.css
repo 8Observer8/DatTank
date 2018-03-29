@@ -203,7 +203,7 @@
 #kill-events {
     position: absolute;
     left: 1%;
-    top: 50%;
+    top: 20%;
     color: white;
 }
 
@@ -498,7 +498,7 @@
     right: 20px;
     background-color: rgba( 0, 0, 0, 0.5 );
     color: burlywood;
-    width: 195px;
+    width: 210px;
 }
 
 .leaderboard {
@@ -549,7 +549,7 @@
 
 .kills {
     float: left;
-    width: 38px;
+    width: 53px;
     text-align: right;
     font-size: 12px;
 }
