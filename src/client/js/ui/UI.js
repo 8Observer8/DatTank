@@ -341,7 +341,7 @@ Game.UI.prototype.updateLevelProgress = function () {
     level --;
 
     var levelProgress = 100 * ( game.arena.me.score - levels[ level ] ) / ( levels[ level + 1 ] - levels[ level ] );
-    $('.level-indicator-block .title').html( 'Level ' + level );
+    $('.level-indicator-block .title').html( 'Level ' + level + ' (' + Math.floor( levelProgress ) + '%)' );
     $('.level-indicator-block .progress-bar .progress-indicator').css( 'width', levelProgress + '%' );
 
 };
@@ -375,6 +375,8 @@ Game.UI.prototype.updateTankStat = function ( event ) {
     $('.stats-update-block .bonus.armour .bonus-title span').html( tank.armour + ' -> ' + ( tank.armour + 10 ) );
     $('.stats-update-block .bonus.gun .bonus-title span').html( tank.bullet + ' -> ' + ( tank.bullet + 5 ) );
     $('.stats-update-block .bonus.ammo-capacity .bonus-title span').html( tank.ammoCapacity + ' -> ' + ( tank.ammoCapacity + 15 ) );
+
+    soundManager.playMenuSound();
 
     //
 

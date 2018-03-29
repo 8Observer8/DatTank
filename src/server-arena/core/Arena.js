@@ -244,7 +244,7 @@ Arena.prototype.updateLeaderboard = function () {
     //
 
     clearTimeout( this.leaderboardUpdateTimeout );
-    this.leaderboardUpdateTimeout = setTimeout( update.bind( this ), 1000 );
+    this.leaderboardUpdateTimeout = setTimeout( update.bind( this ), 200 );
 
 };
 

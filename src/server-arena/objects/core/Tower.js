@@ -206,6 +206,13 @@ Tower.prototype.hit = function ( killer ) {
 
     this.updateHealth( Math.floor( 20 * ( killer.tank.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ) ) );
 
+    if ( killer.type === 'Player' ) {
+
+        killer.changeScore( 1 );
+        this.arena.updateLeaderboard();
+
+    }
+
     //
 
     if ( this.health === 0 ) {

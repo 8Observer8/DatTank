@@ -556,6 +556,13 @@ Player.prototype.hit = function ( killer ) {
 
     }
 
+    if ( killer instanceof Player ) {
+
+        killer.changeScore( 1 );
+        this.arena.updateLeaderboard();
+
+    }
+
     this.sinceHitTime = 0;
     this.sinceRegenerationTime = 0;
 
