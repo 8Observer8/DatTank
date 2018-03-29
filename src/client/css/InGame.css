@@ -625,7 +625,7 @@
 .stats-update-block .title {
     font-weight: 700;
     font-size: 22px;
-    color: #aaa;
+    color: #71C4FA;
 }
 
 .stats-update-block .bonus {
@@ -638,7 +638,7 @@
 .stats-update-block .bonus-title {
     position: absolute;
     left: 0px;
-    color: #aaa;
+    color: #ccc;
     font-size: 20px;
     width: 217px;
 }
@@ -655,7 +655,7 @@
     display: block;
     text-align: center;
     width: 27px;
-    color: #aaa;
+    color: #ccc;
     font-size: 17px;
     font-weight: 700;
     padding: 3px;

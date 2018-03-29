@@ -329,7 +329,7 @@ Game.UI.prototype.updateLeaderboard = function ( players ) {
 
 Game.UI.prototype.updateLevelProgress = function () {
 
-    var levels = [ 0, 10, 30, 60, 100, 150, 250, 340, 500, 650, 1000 ];
+    var levels = [ 0, 10, 30, 60, 100, 150, 250, 340, 500, 650, 1000, 1400, 1900, 2500, 3000, 3800, 4500, 5500, 6700, 7200, 8700, 9800, 12000 ];
     var level = 0;
 
     while ( levels[ level ] <= game.arena.me.score ) {
