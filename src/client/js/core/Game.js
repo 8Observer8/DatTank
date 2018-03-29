@@ -61,6 +61,8 @@ Game.prototype.init = function () {
     $('#signin-box #username').focus();
     $('#signin-box #username').keydown( function ( event ) {
 
+        if ( $('#play-btn #play-btn-text').html() !== 'PLAY!' ) return;
+
         if ( event.keyCode === 13 && ! garage.opened ) {
 
             event.stopPropagation();
@@ -123,6 +125,7 @@ Game.prototype.getArena = function () {
     $.get('/api/getFreeArena', function ( response ) {
 
         scope.arenaHost = response.ip;
+        $('#play-btn #play-btn-text').html('PLAY!');
 
     });
 

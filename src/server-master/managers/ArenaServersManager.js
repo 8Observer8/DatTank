@@ -71,13 +71,13 @@ ArenaServersManager.prototype.getFreeServer = function () {
 
     for ( var aid in this.arenaServers ) {
 
-        var arena = this.arenaServers[ aid ];
+        var arenaServer = this.arenaServers[ aid ];
 
-        if ( arena.players < 25 ) {
+        if ( arenaServer.players < 100 ) {
 
             return {
-                id: arena.aid,
-                ip: arena.ip
+                id: arenaServer.aid,
+                ip: arenaServer.ip
             };
 
         }

@@ -423,6 +423,8 @@ Game.UI.prototype.hideLoaderScreen = function () {
 
 Game.UI.prototype.showChoiceWindow = function () {
 
+    if ( $('#play-btn #play-btn-text').html() !== 'PLAY!' ) return;
+
     $('.tank-skins').show();
     $('#signin-box').css('opacity', 0);
 

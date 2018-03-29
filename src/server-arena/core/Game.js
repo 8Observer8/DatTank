@@ -61,10 +61,30 @@ Game.prototype.updateTopList = function ( login, score, kills ) {
 
 Game.prototype.reportToMaster = function () {
 
+    var players = 0;
+
+    for ( var i = 0, il = Game.ArenaManager.arenas.length; i < il; i ++ ) {
+
+        var arena = Game.ArenaManager.arenas[ i ];
+
+        for ( var j = 0, jl = arena.playerManager.players.length; j < jl; j ++ ) {
+
+            if ( arena.playerManager.players[ j ].socket ) {
+
+                players ++;
+
+            }
+
+        }
+
+    }
+
+    //
+
     var req = http.get({
         hostname:   environment.master.host,
         port:       environment.master.port,
-        path:       '/api/status-update?aid=' + this.aid + '&players=' + 0 + '&ip=' + ip.address()
+        path:       '/api/status-update?aid=' + this.aid + '&players=' + players + '&ip=' + ip.address()
     }, function ( res ) {
 
         var response = '';

@@ -31,6 +31,26 @@ NetworkManager.prototype.init = function () {
 
     // handling requests from clients
 
+    this.app.get( '/api/stats', function ( req, res ) {
+
+        var arenas = [];
+
+        for ( var aid in DT.arenaServersManager.arenaServers ) {
+
+            var arena = DT.arenaServersManager.arenaServers[ aid ];
+
+            arenas.push({
+                id:         arena.aid,
+                ip:         arena.ip,
+                players:    arena.players
+            });
+
+        }
+
+        return res.send( arenas );
+
+    });
+
     this.app.get( '/api/getFreeArena', function ( req, res ) {
 
         var arena = DT.arenaServersManager.getFreeServer();
