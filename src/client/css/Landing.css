@@ -209,12 +209,12 @@
 
 .new-features-box .new-features{
     position: relative;
-    height: 230px;
+    height: 225px;
     margin-left: auto;
     margin-right: auto;
-    width: 340px;
+    width: 300px;
     float: left;
-    left: 63%;
+    left: calc( 50% + 190px );
     border: 1px solid #333;
     overflow-y: scroll;
     background-color: transparent;
