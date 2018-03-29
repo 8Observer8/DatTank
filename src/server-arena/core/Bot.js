@@ -98,6 +98,13 @@ Bot.prototype.die = function () {
 
 };
 
+Bot.prototype.levelUp = function () {
+
+    var statId = Math.floor( Math.random() * 4 );
+    this.player.updateStats( statId );
+
+};
+
 Bot.prototype.update = function () {
 
     if ( this.player.status !== Game.Player.Alive ) return;

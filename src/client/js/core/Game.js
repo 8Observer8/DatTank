@@ -21,7 +21,7 @@ var Game = function () {
 
 };
 
-Game.Version = 'v0.4';
+Game.Version = 'v0.5.0';
 
 Game.prototype = {};
 

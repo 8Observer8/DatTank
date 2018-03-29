@@ -358,18 +358,26 @@ Player.prototype.changeScore = function ( delta ) {
 
     } else if ( this.level < level ) {
 
-        this.networkBuffers['NewLevel'] = this.networkBuffers['NewLevel'] || {};
-        var buffer = this.networkBuffers['NewLevel'].buffer || new ArrayBuffer( 6 );
-        var bufferView = this.networkBuffers['NewLevel'].bufferView || new Int16Array( buffer );
-        this.networkBuffers['NewLevel'].buffer = buffer;
-        this.networkBuffers['NewLevel'].bufferView = bufferView;
+        if ( this.socket ) {
 
-        this.bonusLevels = level - this.level;
-        this.level = level;
-        bufferView[ 1 ] = this.id;
-        bufferView[ 2 ] = this.bonusLevels;
+            this.networkBuffers['NewLevel'] = this.networkBuffers['NewLevel'] || {};
+            var buffer = this.networkBuffers['NewLevel'].buffer || new ArrayBuffer( 6 );
+            var bufferView = this.networkBuffers['NewLevel'].bufferView || new Int16Array( buffer );
+            this.networkBuffers['NewLevel'].buffer = buffer;
+            this.networkBuffers['NewLevel'].bufferView = bufferView;
 
-        networkManager.send( 'PlayerNewLevel', this.socket, buffer, bufferView );
+            this.bonusLevels = level - this.level;
+            this.level = level;
+            bufferView[ 1 ] = this.id;
+            bufferView[ 2 ] = this.bonusLevels;
+
+            networkManager.send( 'PlayerNewLevel', this.socket, buffer, bufferView );
+
+        } else {
+
+            this.bot.levelUp();
+
+        }
 
     }
 
