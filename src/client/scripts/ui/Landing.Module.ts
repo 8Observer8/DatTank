@@ -5,6 +5,8 @@
 
 class UILandingModule {
 
+    private uiCore;
+
     public initPlayBtn () {
 
         $('#play-btn #play-btn-text').html('PLAY!');
@@ -32,9 +34,13 @@ class UILandingModule {
 
     };
 
-    public init () {
+    public init ( uiCore ) {
 
-        // nothing here
+        this.uiCore = uiCore;
+
+        //
+
+        $('#fullscreen-on-off').click( this.uiCore.toggleFullscreenMode.bind( this.uiCore ) );
 
     };
 

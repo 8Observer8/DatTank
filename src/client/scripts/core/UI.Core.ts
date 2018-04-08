@@ -79,9 +79,9 @@ class UICore {
 
     public init () {
 
-        this.modules.landing.init();
-        this.modules.garage.init();
-        this.modules.inGame.init();
+        this.modules.landing.init( this );
+        this.modules.garage.init( this );
+        this.modules.inGame.init( this );
 
         //
 

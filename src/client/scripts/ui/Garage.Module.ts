@@ -5,8 +5,11 @@
 
 class UIGarageModule {
 
-    public init () {
+    private uiCore;
 
+    public init ( uiCore ) {
+
+        this.uiCore = uiCore;
         // nothing here
 
     };
