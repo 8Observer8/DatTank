@@ -10,6 +10,12 @@ var useref = require('gulp-useref');
 var argv = require('yargs').argv;
 var gulpif = require('gulp-if');
 var spawn = require('child_process').spawn;
+var ts = require('gulp-typescript');
+
+var browserify = require('browserify');
+var babelify = require('babelify');
+var buffer = require('vinyl-buffer');
+var source = require('vinyl-source-stream');
 
 //
 
@@ -29,9 +35,32 @@ gulp.task( 'resources', function () {
 
 gulp.task( 'js', function () {
 
-    gulp.src([ './src/client/js/**/*' ])
-        .pipe( gulpif( argv.prod, uglify() ) )
-        .pipe( gulp.dest('./bin/client/js/') );
+    gulp.src('./src/client/js/**/*')
+        .pipe(gulp.dest('./bin/client/js/'));
+
+});
+
+// TS build
+
+gulp.task( 'brf', function () {
+
+    var b = browserify({
+        entries: './src/client/scripts/Init.ts',
+        transform: babelify,
+        debug: true
+    });
+    
+    b.plugin('tsify');
+    b.transform({global: true}, 'browserify-shim');
+
+    return b.bundle()
+        .pipe( source('bundle.js') )
+        .pipe( buffer() )
+        // .pipe($.sourcemaps.init({loadMaps: true}))
+        // .pipe($.sourcemaps.write('.'))
+        .pipe( gulp.dest('./bin/client/scripts') )
+        .pipe( gulpif( argv.prod, uglify() ) );
+        // .pipe( reload({stream: true}) );
 
 });
 
@@ -84,7 +113,7 @@ gulp.task( 'server-arena', function () {
 
 // RUN
 
-gulp.task( 'run', [ 'resources', 'js', 'html', 'css', 'server-master', 'server-arena' ], function () {
+gulp.task( 'run', [ 'resources', 'js', 'brf', 'html', 'css', 'server-master', 'server-arena' ], function () {
 
     // nothing here
 
@@ -96,6 +125,7 @@ gulp.task( 'watch', function () {
 
     gulp.watch( './src/client/css/*', ['css']);
     gulp.watch( './src/client/*', ['html'] );
+    gulp.watch( './src/client/scripts/**/*', ['brf'] );
     gulp.watch( './src/client/js/**/*', ['js'] );
     gulp.watch( './src/server-master/**/*', ['server-master'] );
     gulp.watch( './src/server-arena/**/*', ['server-arena'] );

@@ -186,7 +186,7 @@
 
             };
 
-            console.log ( 'Initialisation succeeded' );
+            // console.log ( 'Initialisation succeeded' );
 
         } catch ( error )  {
 
