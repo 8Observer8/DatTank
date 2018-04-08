@@ -53,6 +53,7 @@ class GameCore {
 
         //
 
+        this.gameService.getTopPlayers( this.ui.modules.landing.setTopPlayersBoard.bind( this.ui.modules.landing ) );
         this.gameService.getFreeArena( this.preInitArena.bind( this ) );
 
         //
@@ -81,5 +82,7 @@ class GameCore {
     };
 
 };
+
+//
 
 export { GameCore };

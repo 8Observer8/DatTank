@@ -16,6 +16,19 @@ class GameService {
 
     };
 
+    public getTopPlayers ( callback ) {
+
+        $.get('/api/getTopPlayers', function ( response ) {
+
+            let players = response;
+            callback( players );
+
+        });
+
+    };
+
 };
+
+//
 
 export { GameService };
