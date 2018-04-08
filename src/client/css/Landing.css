@@ -199,7 +199,8 @@
 
 /**/
 
-.new-features-box{
+.new-features-box {
+    display: none;
     position: absolute;
     top: 26%;
     left: 0px;
