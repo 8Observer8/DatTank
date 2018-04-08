@@ -13,7 +13,8 @@ import { ResourceManager } from "./managers/Resource.Manager";
 import { GameService } from "./services/Game.Service";
 
 import { ArenaCore } from "./core/Arena.Core";
-import { UICore } from "./core/UI.Core";
+
+import { UICore } from "./ui/Core.UI";
 
 //
 

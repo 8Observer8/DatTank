@@ -3,9 +3,9 @@
  * DatTank global UI core
 */
 
-import { UILandingModule } from "./../ui/Landing.Module";
-import { UIGarageModule } from "./../ui/Garage.Module";
-import { UIInGameModule } from "./../ui/InGame.Module";
+import { UILandingModule } from "./Landing.UI";
+import { UIGarageModule } from "./Garage.UI";
+import { UIInGameModule } from "./InGame.UI";
 
 //
 
