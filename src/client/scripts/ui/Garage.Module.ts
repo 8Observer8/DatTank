@@ -5,12 +5,25 @@
 
 class UIGarageModule {
 
+    private game;
     private uiCore;
 
-    public init ( uiCore ) {
+    //
 
-        this.uiCore = uiCore;
-        // nothing here
+    public init ( game ) {
+
+        this.game = game;
+        this.uiCore = game.ui;
+
+    };
+
+    public show () {
+
+        $('.tank-skins').show();
+
+    };
+
+    public hide () {
 
     };
 

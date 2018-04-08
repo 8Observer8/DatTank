@@ -5,6 +5,7 @@
 
 class UILandingModule {
 
+    private game;
     private uiCore;
 
     public initPlayBtn () {
@@ -34,12 +35,14 @@ class UILandingModule {
 
     };
 
-    public init ( uiCore ) {
+    public init ( game ) {
 
-        this.uiCore = uiCore;
+        this.game = game;
+        this.uiCore = game.ui;
 
         //
 
+        $('#play-btn').click( this.game.garage.show.bind( this.game.garage ) );
         $('#fullscreen-on-off').click( this.uiCore.toggleFullscreenMode.bind( this.uiCore ) );
 
     };

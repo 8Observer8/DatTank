@@ -90,45 +90,6 @@ Game.prototype.init = function () {
     $('.share-fb').click( this.gaFb.bind( this ) );
     $('.share-tw').click( this.gaTw.bind( this ) );
 
-    //
-
-    this.getArena();
-    this.getTopPlayers();
-
-};
-
-Game.prototype.getTopPlayers = function () {
-
-    var scope = this;
-
-    $.get('/api/getTopPlayers', function ( players ) {
-
-        if ( players.length < 10 ) return;
-
-        for ( var i = 0, il = players.length; i < il; i ++ ) {
-
-            $( $('.top-players-score tr')[ i + 1 ] ).find('td')[0].innerHTML = '<span class="nmb">' + ( i + 1 ) + '</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>' + players[ i ].login + '</span>';
-            $( $('.top-players-score tr')[ i + 1 ] ).find('td')[1].innerHTML = players[ i ].score + ' / ' + players[ i ].kills;
-
-        }
-
-        $('.top-players-score').css('visibility', 'visible');
-
-    });
-
-};
-
-Game.prototype.getArena = function () {
-
-    var scope = this;
-
-    $.get('/api/getFreeArena', function ( response ) {
-
-        scope.arenaHost = response.ip;
-        $('#play-btn #play-btn-text').html('PLAY!');
-
-    });
-
 };
 
 Game.prototype.play = function ( event ) {

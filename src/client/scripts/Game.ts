@@ -1,15 +1,19 @@
 /*
  * @author ohmed
- * DatTank game core
+ * Game game core & init
 */
 
-import { NetworkManager } from "./../managers/Network.Manager";
-import { ResourceManager } from "./../managers/Resource.Manager";
+import * as $ from 'jquery';
 
-import { GameService } from "./../services/Game.Service";
+import { Network } from "./network/Core.Network";
+import { Garage } from "./garage/Core.Garage";
 
-import { ArenaCore } from "./Arena.Core";
-import { UICore } from "./UI.Core";
+import { ResourceManager } from "./managers/Resource.Manager";
+
+import { GameService } from "./services/Game.Service";
+
+import { ArenaCore } from "./core/Arena.Core";
+import { UICore } from "./core/UI.Core";
 
 //
 
@@ -17,6 +21,7 @@ class GameCore {
 
     public version: string = 'v0.6.0';
 
+    public ready: boolean = false;
     public time: number;
 
     private gameLoopInterval: number;
@@ -31,10 +36,9 @@ class GameCore {
     //
 
     public ui: UICore = new UICore();
-
-    public networkManager: NetworkManager = new NetworkManager();
+    public garage: Garage = new Garage();
+    public network: Network = new Network();
     public resourceManager: ResourceManager = new ResourceManager();
-
     public gameService: GameService = new GameService();
 
     //
@@ -43,10 +47,12 @@ class GameCore {
 
         var self = this;
 
-        this.networkManager.init();
+        this.network.init();
         this.resourceManager.init();
 
-        this.ui.init();
+        this.garage.init( this );
+
+        this.ui.init( this );
         this.ui.modules.landing.setVersion( this.version );
 
         this.arena = new ArenaCore();
@@ -66,6 +72,7 @@ class GameCore {
 
         this.arena.preInit( server.ip, server.id );
         this.ui.modules.landing.initPlayBtn();
+        this.ready = true;
 
     };
 
@@ -85,4 +92,7 @@ class GameCore {
 
 //
 
-export { GameCore };
+var game = new GameCore();
+window['game'] = game;
+
+$( document ).ready( game.init.bind( game ) );

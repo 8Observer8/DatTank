@@ -5,13 +5,15 @@
 
 class UIInGameModule {
 
+    private game;
     private uiCore;
 
-    public init ( uiCore ) {
+    //
 
-        this.uiCore = uiCore;
+    public init ( game ) {
 
-        // nothing here
+        this.game = game;
+        this.uiCore = game.ui;
 
     };
 

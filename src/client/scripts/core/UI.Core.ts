@@ -11,6 +11,8 @@ import { UIInGameModule } from "./../ui/InGame.Module";
 
 class UICore {
 
+    private game;
+
     public modules = {
         landing:    new UILandingModule(),
         garage:     new UIGarageModule(),
@@ -77,11 +79,13 @@ class UICore {
 
     };
 
-    public init () {
+    public init ( game ) {
 
-        this.modules.landing.init( this );
-        this.modules.garage.init( this );
-        this.modules.inGame.init( this );
+        this.game = game;
+
+        this.modules.landing.init( this.game );
+        this.modules.garage.init( this.game );
+        this.modules.inGame.init( this.game );
 
         //
 

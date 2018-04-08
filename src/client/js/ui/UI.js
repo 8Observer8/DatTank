@@ -72,69 +72,6 @@ Game.UI.prototype.changeSound = function ( value, withoutSound ) {
 
 };
 
-Game.UI.prototype.changeFullScreen = function ( value, withoutSound ) {
-
-    value = ( typeof value === 'boolean' ) ? value : $( value.currentTarget ).attr('screen') !== 'true';
-
-    //
-
-    if ( value ) {
-
-        if ( document.body.requestFullscreen ) {
-    
-            document.body.requestFullscreen();
-  
-        } else if ( document.body.mozRequestFullScreen ) {
-    
-            document.body.mozRequestFullScreen();
-  
-        } else if ( document.body.webkitRequestFullscreen ) {
-    
-            document.body.webkitRequestFullscreen();
-  
-        } else if ( document.body.msRequestFullscreen ) {
-    
-            document.body.msRequestFullscreen();
-        
-        }
-
-    } else {
-
-        if ( document.exitFullscreen ) {
-    
-            document.exitFullscreen();
-  
-        } else if ( document.mozCancelFullScreen ) {
-    
-            document.mozCancelFullScreen();
-  
-        } else if ( document.webkitExitFullscreen ) {
-    
-            document.webkitExitFullscreen();
-  
-        }
-
-    }
-
-    //
-
-    if ( ! withoutSound ) {
-
-        soundManager.playMenuSound();
-
-    }
-
-};
-
-Game.UI.prototype.onFullscreenModeChange = function () {
-
-    var isFullscreen = ( document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement ) !== undefined;
-
-    $('#fullscreen-on-off').attr( 'screen', isFullscreen );
-    $('#viewport-fullscreen-on-off').attr( 'screen', isFullscreen );
-
-};
-
 Game.UI.prototype.hideSignInPopup = function () {
 
     $('#signin-box-wrapper').hide();

@@ -45,7 +45,7 @@ gulp.task( 'js', function () {
 gulp.task( 'brf', function () {
 
     var b = browserify({
-        entries: './src/client/scripts/Init.ts',
+        entries: './src/client/scripts/Game.ts',
         transform: babelify,
         debug: true
     });
