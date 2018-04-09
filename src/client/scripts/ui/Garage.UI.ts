@@ -15,6 +15,10 @@ class UIGarageModule {
         this.game = game;
         this.uiCore = game.ui;
 
+        //
+
+        $('.close-tank-skins').click( this.hide.bind( this ) );
+
     };
 
     public show () {
@@ -24,6 +28,8 @@ class UIGarageModule {
     };
 
     public hide () {
+
+        $('.tank-skins').hide();
 
     };
 

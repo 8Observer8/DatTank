@@ -3,24 +3,19 @@
  * DatTank Garage core
 */
 
+import { GarageScene } from "./Scene.Garage";
+
+//
+
 class Garage {
 
     public isOpened: boolean = false;
 
     private game;
     private ui;
-
-    private container;
-    private camera;
-    private scene;
-    private renderer;
-
-    private timer: number;
-    private lastFrameTime: number;
-    private tankRotationSpeed: number = 0.00015;
-
     private currentTank;
-    private models;
+
+    public scene: GarageScene = new GarageScene();
 
     //
 
@@ -28,6 +23,7 @@ class Garage {
 
         this.game = game;
         this.ui = game.ui.modules.garage;
+        this.scene.init( this );
 
     };
 
@@ -36,8 +32,9 @@ class Garage {
         if ( ! this.game.ready ) return;
 
         this.isOpened = true;
-        this.resize();
         this.ui.show();
+        this.scene.reset();
+        this.scene.resize();
 
     };
 
@@ -60,23 +57,31 @@ class Garage {
 
     };
 
-    public selectTank () {
+    public selectTank ( event? ) {
+
+        $('.choice-skins .tank.active').removeClass('active');
+
+        let tankId;
+
+        if ( event ) {
+    
+            tankId = $( event.currentTarget ).attr('id');
+            $( event.currentTarget ).addClass( 'active' );
+    
+        } else {
+    
+            tankId = localStorage.getItem( 'currentTank' ) || 'T54';
+            $( '#' + tankId.replace('-', '') ).addClass( 'active' );
+    
+        }
 
         // todo
 
     };
 
-    //
+    public onLoadedResources () {
 
-    private resize () {
-
-        // todo
-
-    };
-
-    private render () {
-
-        // todo
+        this.selectTank();
 
     };
 
