@@ -7,13 +7,9 @@ import * as $ from 'jquery';
 
 import { Network } from "./network/Core.Network";
 import { Garage } from "./garage/Core.Garage";
-
 import { ResourceManager } from "./managers/Resource.Manager";
-
 import { GameService } from "./services/Game.Service";
-
 import { ArenaCore } from "./core/Arena.Core";
-
 import { UICore } from "./ui/Core.UI";
 
 //
@@ -74,6 +70,20 @@ class GameCore {
         this.arena.preInit( server.ip, server.id );
         this.ui.modules.landing.initPlayBtn();
         this.ready = true;
+
+    };
+
+    public play () {
+
+        this.resourceManager.load( function ( progress ) {
+
+            console.log( progress );
+
+        }, function () {
+
+            console.log( 'Loaded' );
+
+        });
 
     };
 

@@ -9,9 +9,9 @@ import * as THREE from 'three';
 
 class ResourceManager {
 
-    private models;
-    private textures;
-    private sounds;
+    private models = [];
+    private textures = [];
+    private sounds = [];
 
     private loadedModels: number = 0;
     private loadedTextures: number = 0;
@@ -136,7 +136,7 @@ class ResourceManager {
 
     private loadTexture ( textureName: string, callback ) {
 
-        this.textureLoader.load( 'resources/textures/' + textureName, function ( texture ) {
+        this.textureLoader.load( 'resources/textures/' + textureName, ( texture ) => {
 
             texture.name = textureName;
             this.textures.push( texture );

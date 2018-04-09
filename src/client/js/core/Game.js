@@ -94,18 +94,6 @@ Game.prototype.init = function () {
 
 Game.prototype.play = function ( event ) {
 
-    var scope = this;
-
-    if ( event ) {
-
-        event.preventDefault();
-
-    }
-
-    soundManager.playMenuSound();
-
-    //
-
     ui.showLoaderScreen();
     ui.hideSignInPopup();
     ui.hideFooter();
@@ -170,10 +158,6 @@ Game.prototype.play = function ( event ) {
 };
 
 Game.prototype.joinArena = function ( params ) {
-
-    $('#crowd-shortcut').show();
-
-    //
 
     Game.arena = new Game.Arena();
 

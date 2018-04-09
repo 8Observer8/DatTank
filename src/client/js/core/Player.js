@@ -7,17 +7,7 @@ Game.Player = function ( arena, params ) {
 
     EventDispatcher.call( this );
 
-    this.id = params.id;
-    this.login = params.login || 'guest';
-
-    this.status = Game.Player.Alive;
     this.team = arena.teamManager.getById( params.team ) || false;
-
-    this.health = params.health;
-    this.ammo = params.ammo;
-
-    this.kills = params.kills || 0;
-    this.score = params.score || 0;
 
     //
 
@@ -166,15 +156,6 @@ Game.Player.prototype.move = function ( directionX, directionZ, positionX, posit
 
     this.positionCorrection.set( positionX - this.position.x, 0, positionZ - this.position.z );
     this.rotationCorrection = rotation / 1000.0 - this.rotation;
-
-    //
-
-    if ( this.bot ) {
-
-        this.bot.moveDuration = false;
-        this.bot.rotateBaseDuration = false;
-
-    }
 
 };
 

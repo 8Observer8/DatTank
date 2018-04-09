@@ -26,6 +26,10 @@ class Garage {
         this.ui = game.ui.modules.garage;
         this.scene.init( this );
 
+        //
+
+        $('.btn-pick').click( this.game.play.bind( this.game ) );
+
     };
 
     public show () {

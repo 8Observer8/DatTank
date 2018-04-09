@@ -19,6 +19,12 @@ class TankGfx {
 
     };
 
+    public destroy () {
+
+        // todo
+
+    };
+
 };
 
 //
