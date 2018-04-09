@@ -5,124 +5,9 @@
 
 Game.ViewManager = function () {
 
-    this.screenWidth = false;
-    this.screenHeight = false;
-
-    this.prevRenderTime = false;
-
-    //
-
-    this.scene = false;
-    this.camera = false;
-    this.renderer = false;
-
-    //
-
-    this.quality = false;
-    this.antialias = false;
-
     // scene params
 
     this.mapSize = 1270;
-    this.fog = { color: 0xc4c4c2, density: 0.0025 };
-    this.lights = {
-        ambient:    0xfff3bc,
-        sun:        {
-            color:      0xfff3bc,
-            intensity:  0.6,
-            position:   new THREE.Vector3( 0, 100, 0 ),
-            target:     new THREE.Vector3( 50, 0, 50 )
-        }
-    };
-
-    //
-
-    this.cameraOffset = new THREE.Vector3();
-    this.shakeInterval = false;
-
-    this.decorations = [];
-
-    this.sound = {};
-
-    //
-
-    this.raycaster = false;
-
-};
-
-Game.ViewManager.prototype = {};
-
-//
-
-Game.ViewManager.prototype.setupScene = function () {
-
-    this.quality = 1;
-    this.antialias = true;
-    this.screenWidth = window.innerWidth;
-    this.screenHeight = window.innerHeight;
-
-    this.raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3(), 0, 5000 );
-
-    // setup camera and scene
-
-    this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera( 60, this.screenWidth / this.screenHeight, 1, 900 );
-    this.scene.add( this.camera );
-
-    // setup lights
-
-    this.sun = new THREE.DirectionalLight( this.lights.sun.color, this.lights.sun.intensity );
-    this.sun.position.copy( this.lights.sun.position );
-    this.sun.target.position.set( this.lights.sun.target );
-    this.scene.add ( this.sun );
-    this.scene.add( new THREE.AmbientLight( this.lights.ambient ) );
-
-    // add fog
-
-    this.scene.fog = new THREE.FogExp2( this.fog.color, this.fog.density );
-
-    // setup sound listener
-
-    this.sound.listener = new THREE.AudioListener();
-    if ( soundManager.muted ) this.sound.listener.setMasterVolume( 0 );
-    this.camera.add( this.sound.listener );
-
-    // start rendering
-
-    this.updateRenderer();
-    this.render();
-
-    // user event handlers
-
-    window.addEventListener( 'resize', this.resize.bind( this ) );
-
-};
-
-Game.ViewManager.prototype.addDecorations = function ( decorations ) {
-
-    var model;
-    var mesh;
-    var decoration;
-
-    //
-
-    for ( var i = 0, il = decorations.length; i < il; i ++ ) {
-
-        decoration = decorations[ i ];
-        model = Game.arena.decorationManager.list[ decoration.type ].model;
-
-        mesh = new THREE.Mesh( model.geometry, [ model.material[0].clone() ] );
-        mesh.material[0].side = THREE.FrontSide;
-        mesh.scale.set( decoration.scale.x, decoration.scale.y, decoration.scale.z );
-        mesh.rotation.y = decoration.rotation;
-        mesh.position.set( decoration.position.x, decoration.position.y, decoration.position.z );
-        mesh.name = decoration.type;
-        view.scene.add( mesh );
-        this.decorations.push( mesh );
-
-        this.addObjectShadow( decoration.type, mesh.position, mesh.scale, mesh.rotation );
-
-    }
 
 };
 
@@ -319,17 +204,6 @@ Game.ViewManager.prototype.addCameraShake = function ( duration, intensity ) {
 
 //
 
-Game.ViewManager.prototype.updateCamera = function () {
-
-    this.camera.position.x = Game.arena.me.position.x - 100 * Math.sin( Game.arena.me.rotation ) + this.cameraOffset.x;
-    this.camera.position.z = Game.arena.me.position.z - 100 * Math.cos( Game.arena.me.rotation ) + this.cameraOffset.y;
-    this.camera.position.y = 70 + this.cameraOffset.z;
-    this.camera.lookAtVector = this.camera.lookAtVector || new THREE.Vector3();
-    this.camera.lookAtVector.set( Game.arena.me.position.x, 40, Game.arena.me.position.z );
-    this.camera.lookAt( this.camera.lookAtVector );
-
-};
-
 Game.ViewManager.prototype.animate = function ( delta ) {
 
     if ( ! Game.arena || ! Game.arena.me ) return;
@@ -396,88 +270,6 @@ Game.ViewManager.prototype.animate = function ( delta ) {
                 controls.rotateTop( angle );
 
             }
-
-        }
-
-    }
-
-};
-
-Game.ViewManager.prototype.render = function () {
-
-    if ( ! this.prevRenderTime ) this.prevRenderTime = performance.now();
-
-    var delta = performance.now() - this.prevRenderTime;
-    this.prevRenderTime = performance.now();
-
-    this.animate( delta );
-    this.renderer.render( this.scene, this.camera );
-
-    //
-
-    requestAnimationFrame( this.render.bind( this ) );
-
-};
-
-//
-
-Game.ViewManager.prototype.resize = function () {
-
-    this.screenWidth = window.innerWidth;
-    this.screenHeight = window.innerHeight;
-
-    //
-
-    this.camera.aspect = this.screenWidth / this.screenHeight;
-    this.camera.updateProjectionMatrix();
-
-    this.renderer.setSize( this.quality * this.screenWidth, this.quality * this.screenHeight );
-
-};
-
-Game.ViewManager.prototype.updateRenderer = function () {
-
-    if ( localStorage.getItem('hq') === 'true' ) {
-
-        this.antialias = true;
-        this.quality = 0.9;
-
-    } else {
-
-        this.antialias = false;
-        this.quality = 0.7;
-
-    }
-
-    this.antialias = false;
-
-    $('#renderport').remove();
-    $('#viewport').prepend('<canvas id="renderport"></canvas>');
-    this.renderer = new THREE.WebGLRenderer({ canvas: $('#renderport')[0], antialias: this.antialias });
-    this.renderer.setSize( this.quality * this.screenWidth, this.quality * this.screenHeight );
-    this.renderer.setClearColor( this.fog.color );
-
-    controls.mouseInit();
-
-};
-
-Game.ViewManager.prototype.clean = function () {
-
-    if ( this.scene ) {
-
-        this.camera.position.y = 400;
-
-        for ( var i = 0, il = this.scene.children.length; i < il; i ++ ) {
-
-            if ( this.shakeInterval !== false ) {
-
-                clearInterval( this.shakeInterval );
-                this.shakeInterval = false;
-
-            }
-
-            this.cameraOffset.set( 0, 0, 0 );
-            this.scene.remove( this.scene.children[ i ] );
 
         }
 

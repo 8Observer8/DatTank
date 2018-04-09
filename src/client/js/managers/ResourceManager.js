@@ -5,12 +5,6 @@
 
 Game.ResourceManager = function () {
 
-    this.models = [];
-    this.textures = [];
-    this.sounds = [];
-
-    //
-
     this.modelList = [
         'IS2-bottom.json',
         'IS2-top.json',
@@ -82,12 +76,6 @@ Game.ResourceManager = function () {
         'tank_explosion.wav',
         'box_pick.wav'
     ];
-
-    //
-
-    this.modelsLoaded = 0;
-    this.texturesLoaded = 0;
-    this.soundsLoaded = 0;
 
 };
 

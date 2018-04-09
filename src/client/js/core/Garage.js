@@ -7,10 +7,6 @@ Game.Garage = function () {
 
 };
 
-Game.Garage.prototype = {};
-
-//
-
 Game.Garage.prototype.init = function () {
 
     var scope = this;
@@ -18,10 +14,6 @@ Game.Garage.prototype.init = function () {
     $('#arrow1').click( this.prevTank.bind( this ) );
     $('#arrow2').click( this.nextTank.bind( this ) );
     $('.choice-skins .tank').click( this.selectTank.bind( this ) );
-
-    //
-
-    this.loadModels();
 
     //
 
@@ -130,31 +122,6 @@ Game.Garage.prototype.loadModels = function () {
         }
 
     });
-
-};
-
-Game.Garage.prototype.open = function () {
-
-    if ( this.loaded ) {
-
-        garage.selectTank();
-
-    }
-
-    this.opened = true;
-    this.resize();
-
-    this.timer = 0;
-    this.camera.position.set( Math.cos( this.timer * this.rotationSpeed ) * 10, 4, Math.sin( this.timer * this.rotationSpeed ) * 10 );
-    this.camera.lookAt( this.scene.position );
-
-};
-
-Game.Garage.prototype.close = function () {
-
-    this.opened = false;
-    $('.tank-skins').hide();
-    soundManager.playMenuSound();
 
 };
 
