@@ -4,6 +4,7 @@
 */
 
 import { GarageScene } from "./Scene.Garage";
+import { TankList as Tanks } from "./../core/objects/Tank.Core";
 
 //
 

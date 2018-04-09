@@ -5,11 +5,6 @@
 
 Game.Tank = function ( params ) {
 
-    params = params || {};
-
-    this.id = Game.Tank.numID ++;
-    this.player = params.player;
-
     this.animations = {};
     this.effects = {};
     this.sounds = {};

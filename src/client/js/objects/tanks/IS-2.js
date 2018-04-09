@@ -16,18 +16,7 @@ Game.Tank.IS2 = function ( params ) {
 
     this.trackOffset = { l: -1, r: -7 };
 
-    this.name = 'IS2';
-
 };
-
-Game.Tank.IS2.prototype = Object.create( Game.Tank.prototype );
-
-Game.Tank.IS2.prototype.year = 1950;
-Game.Tank.IS2.prototype.ammoCapacity = 36;
-Game.Tank.IS2.prototype.speed = 37;
-Game.Tank.IS2.prototype.armour = 90;
-Game.Tank.IS2.prototype.bullet = 122;
-Game.Tank.IS2.prototype.rpm = 4.88 * 10;
 
 //
 
@@ -128,17 +117,6 @@ Game.Tank.IS2.prototype.destroy = function () {
 
     this.sounds.explosion.play();
 
-};
-
-//
-
-Game.Tank.list[ 'IS2' ] = {
-    title:          'IS2',
-    speed:          Game.Tank.IS2.prototype.speed,
-    rpm:            Game.Tank.IS2.prototype.rpm,
-    armour:         Game.Tank.IS2.prototype.armour,
-    bullet:         Game.Tank.IS2.prototype.bullet,
-    ammoCapacity:   Game.Tank.IS2.prototype.ammoCapacity
 };
 
 Game.Tank.IS2.prototype.showBlastSmoke = function () {
