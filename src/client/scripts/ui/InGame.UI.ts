@@ -17,6 +17,12 @@ class UIInGameModule {
 
     };
 
+    public showViewport () {
+
+        $('#viewport').show();
+
+    };
+
 };
 
 //

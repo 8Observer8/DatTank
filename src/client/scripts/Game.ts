@@ -3,7 +3,8 @@
  * Game game core & init
 */
 
-import * as $ from 'jquery';
+import * as $ from "jquery";
+import * as MobileDetect from "mobile-detect";
 
 import { Network } from "./network/Core.Network";
 import { Garage } from "./garage/Core.Garage";
@@ -11,6 +12,7 @@ import { ResourceManager } from "./managers/Resource.Manager";
 import { GameService } from "./services/Game.Service";
 import { ArenaCore } from "./core/Arena.Core";
 import { UICore } from "./ui/Core.UI";
+import { Logger } from "./utils/Logger";
 
 //
 
@@ -32,6 +34,7 @@ class GameCore {
 
     //
 
+    public logger: Logger = new Logger();
     public ui: UICore = new UICore();
     public garage: Garage = new Garage();
     public network: Network = new Network();
@@ -41,6 +44,11 @@ class GameCore {
     //
 
     public init () {
+
+        let mobileDetect = new MobileDetect( window.navigator.userAgent );
+        this.isMobile = mobileDetect.mobile() !== null || mobileDetect.phone() !== null || mobileDetect.tablet() !== null;
+
+        //
 
         this.resourceManager.init();
 
@@ -113,8 +121,9 @@ class GameCore {
 
     public joinArena ( data ) {
 
-        // todo
-        console.log( data );
+        this.arena.init( data );
+        this.ui.modules.landing.hideLoader();
+        this.ui.modules.inGame.showViewport();
 
     };
 

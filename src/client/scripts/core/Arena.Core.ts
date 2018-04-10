@@ -24,6 +24,12 @@ class ArenaCore {
 
     public me: PlayerCore;
 
+    private prevUpdateTime: number;
+    private time: number;
+    private updateTimeRemainder: number = 0;
+    private updateInterval: number;
+    private updateIntervalDuration: number = 20;
+
     //
 
     public preInit ( ip: string, id: string ) {
@@ -33,9 +39,11 @@ class ArenaCore {
 
     };
 
-    public init () {
+    public init ( data ) {
 
-        // todo
+        this.prevUpdateTime = Date.now();
+        this.time = Date.now();
+        this.updateInterval = setInterval( this.update.bind( this ), this.updateIntervalDuration );
 
     };
 
@@ -57,9 +65,29 @@ class ArenaCore {
 
     };
 
+    public dispose () {
+
+        clearInterval( this.updateInterval );
+
+    };
+
     private update ( time: number, delta: number ) {
 
-        // todo
+        var time = Date.now();
+        var delta = time - this.prevUpdateTime + this.updateTimeRemainder;
+
+        this.updateTimeRemainder = delta % this.updateIntervalDuration;
+        delta = delta - this.updateTimeRemainder;
+        this.prevUpdateTime = time;
+
+        //
+
+        for ( var i = 0, il = Math.floor( delta / this.updateIntervalDuration ); i < il; i ++ ) {
+
+            this.time += delta;
+            this.update( this.time, this.updateIntervalDuration );
+    
+        }
 
     };
 

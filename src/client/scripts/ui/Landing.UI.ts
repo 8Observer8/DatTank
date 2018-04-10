@@ -83,6 +83,28 @@ class UILandingModule {
         this.game = game;
         this.uiCore = game.ui;
 
+        // init sign in block
+
+        var login = $('#username').val() || localStorage.getItem('login') || '';
+        $('#username').val( login );
+
+        // add handlers
+
+        $('#signin-box #username').focus();
+        $('#signin-box #username').keydown( ( event ) => {
+
+            if ( ! this.game.ready ) return;
+
+            if ( event.keyCode === 13 && ! this.game.garage.isOpened ) {
+
+                event.stopPropagation();
+                document.activeElement['blur']();
+                this.game.garage.show();
+
+            }
+
+        });
+
         //
 
         $('#play-btn').click( this.game.garage.show.bind( this.game.garage ) );
