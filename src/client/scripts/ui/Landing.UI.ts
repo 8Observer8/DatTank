@@ -35,6 +35,35 @@ class UILandingModule {
 
     };
 
+    public hide () {
+
+        $('#footer').hide();
+        $('#signin-box-wrapper').hide();
+        $('#graphics-quality').hide();
+        $('#sound-on-off').hide();
+        $('#fullscreen-on-off').hide();
+        $('#share-btn').hide();
+        $('.top-left-like-btns').hide();
+        $('.new-features-box').hide();
+        $('.top-players-score').hide();
+
+    };
+
+    public showLoader () {
+
+        $('#loader-wrapper').show();
+        $('#loader-wrapper').css( 'opacity', 1 );
+
+    };
+
+    public setLoaderProgress ( value: number ) {
+
+        let label = Math.round( 100 * value ) + '%';
+        $('#loader-wrapper #progress-wrapper #progress-bar').css( 'width', label );
+        $('#loader-wrapper #loader-wrapper-title span').html( label );
+
+    };
+
     public init ( game ) {
 
         this.game = game;

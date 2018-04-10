@@ -103,7 +103,6 @@ Game.prototype.play = function ( event ) {
         var value = Math.round( 100 * progress ) + '%';
         $('#loader-wrapper #progress-wrapper #progress-bar').css( 'width', value );
         $('#loader-wrapper #loader-wrapper-title span').html( value );
-        $('#crowd-shortcut').hide();
 
     }, function () {
 

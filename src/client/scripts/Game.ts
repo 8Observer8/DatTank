@@ -75,9 +75,15 @@ class GameCore {
 
     public play () {
 
-        this.resourceManager.load( function ( progress ) {
+        this.ui.modules.landing.hide();
+        this.garage.hide();
+        this.ui.modules.landing.showLoader();
+  
+        //
 
-            console.log( progress );
+        this.resourceManager.load( ( progress ) => {
+
+            this.ui.modules.landing.setLoaderProgress( progress );
 
         }, function () {
 

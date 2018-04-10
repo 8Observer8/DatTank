@@ -72,24 +72,6 @@ Game.UI.prototype.changeSound = function ( value, withoutSound ) {
 
 };
 
-Game.UI.prototype.hideSignInPopup = function () {
-
-    $('#signin-box-wrapper').hide();
-    $('#graphics-quality').hide();
-    $('#sound-on-off').hide();
-    $('#fullscreen-on-off').hide();
-    $('#share-btn').hide();
-    $('.top-left-like-btns').hide();
-    $('.new-features-box').hide();
-
-};
-
-Game.UI.prototype.hideFooter = function () {
-
-    $('#footer').hide();
-
-};
-
 Game.UI.prototype.showViewport = function () {
 
     $('#viewport').show();
