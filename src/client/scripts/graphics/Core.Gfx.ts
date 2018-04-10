@@ -7,7 +7,7 @@ import * as THREE from 'three';
 
 //
 
-declare enum Quality { LOW = 0.7, MEDIUM = 0.85, HIGH = 1 };
+enum Quality { LOW = 0.7, MEDIUM = 0.85, HIGH = 1 };
 
 interface GfxSettings {
     quality:    Quality;

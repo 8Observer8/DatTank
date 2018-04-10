@@ -44,7 +44,22 @@ class GameCore {
 
         var self = this;
 
-        this.network.init();
+        this.network.init( () => {
+
+            // send network request
+
+            let login = $('#username').val() || localStorage.getItem('login') || '';
+            localStorage.setItem( 'login', login + '' );
+            let tank = localStorage.getItem( 'currentTank' ) || 0;
+
+            setTimeout( () => {
+
+                this.network.send( 'ArenaJoinRequest', false, { login: login, tank: tank } );
+
+            }, 1000 );
+
+        });
+
         this.resourceManager.init();
 
         this.garage.init( this );
@@ -85,8 +100,9 @@ class GameCore {
 
             this.ui.modules.landing.setLoaderProgress( progress );
 
-        }, function () {
+        }, () => {
 
+            this.ui.modules.landing.setLoaderLabelToInit();
             console.log( 'Loaded' );
 
         });

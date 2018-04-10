@@ -9,12 +9,6 @@ Game.UI = function () {
 
 };
 
-Game.UI.prototype = {};
-
-//
-
-Game.UI.prototype.init = function () {
-
     if ( localStorage.getItem('hq') === 'true' ) {
 
         this.changeQuality( true, true );
@@ -75,12 +69,6 @@ Game.UI.prototype.changeSound = function ( value, withoutSound ) {
 Game.UI.prototype.showViewport = function () {
 
     $('#viewport').show();
-
-};
-
-Game.UI.prototype.setCursor = function () {
-
-    $('#viewport').addClass('properCursor');
 
 };
 
@@ -314,72 +302,5 @@ Game.UI.prototype.hideTankStatsUpdate = function () {
 
     $('.stats-update-block').hide();
     $('.level-indicator-block').show();
-
-};
-
-Game.UI.prototype.showLoaderScreen = function () {
-
-    $('#loader-wrapper').show();
-
-    setTimeout( function () {
-
-        $('#loader-wrapper').css( 'opacity', 1 );
-
-    }, 50 );
-
-};
-
-Game.UI.prototype.hideLoaderScreen = function () {
-
-    setTimeout( function () {
-
-        $('#loader-wrapper').hide();
-
-    }, 200 );
-
-    $('#loader-wrapper').css( 'opacity', 0 );
-
-};
-
-Game.UI.prototype.showChoiceWindow = function () {
-
-    if ( $('#play-btn #play-btn-text').html() !== 'PLAY!' ) return;
-
-    $('.tank-skins').show();
-    $('#signin-box').css('opacity', 0);
-
-    garage.open();
-    soundManager.playMenuSound();
-
-};
-
-Game.UI.prototype.closeChoiceWindow = function ( event ) {
-
-    if ( event ) {
-
-        event.stopPropagation();
-
-    }
-
-    $('#signin-box #username').focus();
-    $('#signin-box').css('opacity', 1);
-    garage.close();
-
-};
-
-Game.UI.prototype.selectTankAndcloseChoiceWindow = function () {
-
-    $('#signin-box').css('opacity', 1);
-    garage.close();
-
-    if ( game.arena ) {
-
-        game.arena.me.respawn( false );
-
-    } else {
-
-        game.play();
-
-    }
 
 };

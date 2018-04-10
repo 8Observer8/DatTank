@@ -94,20 +94,9 @@ Game.prototype.init = function () {
 
 Game.prototype.play = function ( event ) {
 
-    ui.showLoaderScreen();
-    ui.hideSignInPopup();
-    ui.hideFooter();
-
     resourceManager.load( function ( progress ) {
 
-        var value = Math.round( 100 * progress ) + '%';
-        $('#loader-wrapper #progress-wrapper #progress-bar').css( 'width', value );
-        $('#loader-wrapper #loader-wrapper-title span').html( value );
-
     }, function () {
-
-        $('#loader-wrapper #progress-wrapper').hide();
-        $('#loader-wrapper #loader-wrapper-title').html('Initializing arena...');
 
         // init controls
 
@@ -123,32 +112,12 @@ Game.prototype.play = function ( event ) {
 
         network.init( function () {
 
-            // if free prev arena still exists
-
-            if ( scope.arena !== false ) {
-
-                scope.arena.dispose();
-                scope.arena = false;
-
-            }
-
-            // send network request
-
-            var login = $('#username').val() || localStorage.getItem('login') || '';
-            localStorage.setItem( 'login', login );
-
-            var tank = localStorage.getItem( 'currentTank' ) || 0;
-
             setTimeout( function () {
 
                 game.logger.newEvent( 'play' );
                 network.send( 'ArenaJoinRequest', false, { login: login, tank: tank } );
 
             }, 1000 );
-
-            // UI changes
-
-            ui.setCursor();
 
         });
 

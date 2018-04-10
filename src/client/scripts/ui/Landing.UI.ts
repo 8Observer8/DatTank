@@ -56,6 +56,20 @@ class UILandingModule {
 
     };
 
+    public setLoaderLabelToInit () {
+
+        $('#loader-wrapper #progress-wrapper').hide();
+        $('#loader-wrapper #loader-wrapper-title').html('Initializing arena...');
+
+    };
+
+    public hideLoader () {
+
+        $('#loader-wrapper').hide();
+        $('#loader-wrapper').css( 'opacity', 0 );
+
+    };
+
     public setLoaderProgress ( value: number ) {
 
         let label = Math.round( 100 * value ) + '%';

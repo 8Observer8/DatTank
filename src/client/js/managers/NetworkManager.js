@@ -5,31 +5,12 @@
 
 Game.NetworkManager = function () {
 
-    this.transport = false;
-    this.messageListeners = {};
-
-    this.initCallback = false;
-
 };
-
-Game.NetworkManager.prototype = {};
-
-//
 
 Game.NetworkManager.prototype.init = function ( callback ) {
 
-    if ( this.transport ) {
-
-        console.error( '[NETWORK] Connection already established.' );
-        return;
-
-    }
-
-    this.initCallback = callback;
-
     // register network events
 
-    this.registerEvent( 'ArenaJoinRequest', 'out', 'json', 0 );
     this.registerEvent( 'ArenaJoinResponse', 'in', 'json', 1 );
     this.registerEvent( 'ArenaPlayerJoined', 'in', 'json', 2 );
     this.registerEvent( 'ArenaPlayerRespawn', 'in', 'json', 3 );
@@ -72,76 +53,9 @@ Game.NetworkManager.prototype.init = function ( callback ) {
     this.registerEvent( 'BulletHit', 'in', 'bin', 300 );
     this.registerEvent( 'BoxRemove', 'in', 'bin', 301 );
 
-    // establish connection
-
-    this.transport = new WebSocket( 'ws://' + game.arenaHost + ':8085/ws/game' );
-    this.transport.binaryType = 'arraybuffer';
-
-    // add event handlers
-
-    this.transport.addEventListener( 'open', this.onConnect.bind( this ) );
-    this.transport.addEventListener( 'close', this.onDisconnected.bind( this ) );
-    this.transport.addEventListener( 'error', this.onError.bind( this ) );
-    this.transport.addEventListener( 'message', this.onMessage.bind( this ) );
-
-};
-
-Game.NetworkManager.prototype.onConnect = function () {
-
-    this.initCallback();
-
-    //
-
-    console.log( '[NETWORK] Connected to server.' );
-
-};
-
-Game.NetworkManager.prototype.onMessage = function ( event ) {
-
-    var eventId = new Int16Array( event.data, 0, 1 )[ 0 ];
-    var content = new Int16Array( event.data, 2 );
-
-    this.triggerMessageListener( eventId, content );
-
-};
-
-Game.NetworkManager.prototype.onDisconnected = function () {
-
-    this.transport = false;
-    game.dispose();
-    ui.showDisconectMessage();
-
-    //
-
-    console.log( '[NETWORK] Connection closed.' );
-
-};
-
-Game.NetworkManager.prototype.onError = function ( err ) {
-
-    // todo: handle error
-
-    //
-
-    console.error( '[NETWORK] Connection error: ', err );
-
 };
 
 Game.NetworkManager.prototype.send = function ( eventName, data, view ) {
-
-    if ( ! this.transport ) {
-
-        console.error( '[NETWORK:SEND_MESSAGE] No network socket connection.' );
-        return false;
-
-    }
-
-    if ( ! this.events.out[ eventName ] ) {
-
-        console.error( '[NETWORK:SEND_MESSAGE] No event "' + eventName + '" registered.' );
-        return false;
-
-    }
 
     if ( ! data ) {
 
@@ -166,13 +80,6 @@ Game.NetworkManager.prototype.send = function ( eventName, data, view ) {
     }
 
     this.transport.send( data, { binary: true, mask: true } );
-
-};
-
-Game.NetworkManager.prototype.addMessageListener = function ( eventName, callback ) {
-
-    this.messageListeners[ eventName ] = this.messageListeners[ eventName ] || [];
-    this.messageListeners[ eventName ].push( callback );
 
 };
 
@@ -213,38 +120,4 @@ Game.NetworkManager.prototype.triggerMessageListener = function ( eventId, data 
 
     }
 
-};
-
-Game.NetworkManager.prototype.registerEvent = function ( eventName, ioType, dataType, eventId ) {
-
-    if ( ! this.events[ ioType ] ) {
-
-        console.error( 'Wrong event IO type.' );
-        return;
-
-    }
-
-    if ( ioType === 'out' ) {
-
-        this.events.out[ eventName ] = {
-            id:         eventId,
-            name:       eventName,
-            dataType:   dataType
-        };
-
-    } else {
-
-        this.events.in[ eventId ] = {
-            id:         eventId,
-            name:       eventName,
-            dataType:   dataType
-        };
-
-    }
-
-};
-
-Game.NetworkManager.prototype.events = {
-    in:     {},
-    out:    {}
 };
