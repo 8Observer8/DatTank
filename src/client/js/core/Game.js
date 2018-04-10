@@ -110,17 +110,6 @@ Game.prototype.play = function ( event ) {
 
         });
 
-        network.init( function () {
-
-            setTimeout( function () {
-
-                game.logger.newEvent( 'play' );
-                network.send( 'ArenaJoinRequest', false, { login: login, tank: tank } );
-
-            }, 1000 );
-
-        });
-
     });
 
 };
