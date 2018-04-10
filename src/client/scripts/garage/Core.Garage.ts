@@ -4,7 +4,7 @@
 */
 
 import { GarageScene } from "./Scene.Garage";
-import { TankList as Tanks } from "./../core/objects/Tank.Core";
+import { TankList as Tanks, TankList } from "./../core/objects/Tank.Core";
 
 //
 
@@ -29,6 +29,41 @@ class Garage {
         //
 
         $('.btn-pick').click( this.game.play.bind( this.game ) );
+        $('.close-tank-skins').click( this.hide.bind( this ) );
+        $('#arrow1').click( this.prevTank.bind( this ) );
+        $('#arrow2').click( this.nextTank.bind( this ) );
+        $('.choice-skins .tank').click( this.selectTank.bind( this ) );
+        $( document ).keydown( this.keyDown.bind( this ) );
+
+    };
+
+    public keyDown ( event ) {
+
+        if ( ! this.isOpened ) return;
+
+        switch ( event.keyCode ) {
+
+            case 13: // enter key
+
+                this.game.play();
+                break;
+
+            case 27: // esc key
+
+                this.hide();
+                break;
+
+            case 39: // right arrow
+
+                this.nextTank();
+                break;
+
+            case 37: // left arrow
+
+                this.prevTank();
+                break;
+
+        }
 
     };
 
@@ -37,7 +72,9 @@ class Garage {
         if ( ! this.game.ready ) return;
 
         this.isOpened = true;
-        this.ui.show();
+
+        $('.tank-skins').show();
+
         this.scene.reset();
         this.scene.resize();
 
@@ -46,19 +83,28 @@ class Garage {
     public hide () {
 
         this.isOpened = false;
-        this.ui.hide();
+        $('.tank-skins').hide();
 
     };
 
     public nextTank () {
 
-        // todo
+        let tankList = Object.keys( Tanks );
+        let currentIndex = tankList.indexOf( this.currentTank );
+
+        let newTank = tankList[ currentIndex + 1 ];
+        this.selectTank( newTank );
 
     };
 
     public prevTank () {
 
-        // todo
+        let tankList = Object.keys( Tanks );
+        let currentIndex = tankList.indexOf( this.currentTank );
+        if ( currentIndex === 0 ) currentIndex = tankList.length;
+
+        let newTank = tankList[ currentIndex - 1 ];
+        this.selectTank( newTank );
 
     };
 
@@ -68,19 +114,65 @@ class Garage {
 
         let tankId;
 
-        if ( event ) {
-    
+        if ( event && typeof event === 'string' ) {
+
+            tankId = event;
+            $( '#' + tankId ).addClass( 'active' );
+
+        } else if ( event ) {
+
             tankId = $( event.currentTarget ).attr('id');
             $( event.currentTarget ).addClass( 'active' );
-    
+
         } else {
-    
-            tankId = localStorage.getItem( 'currentTank' ) || 'T54';
-            $( '#' + tankId.replace('-', '') ).addClass( 'active' );
-    
+
+            tankId = localStorage.getItem( 'currentTank' ) || 'IS2';
+            $( '#' + tankId ).addClass( 'active' );
+
         }
 
-        // todo
+        let tankType = Tanks[ tankId ];
+        this.currentTank = tankId;
+        this.scene.selectModel( tankId );
+
+        //
+
+        $('.skin-name').html( 'Tank: ' + tankType.title );
+        $('.specification-txt#speed').html( tankType.speed + 'km/h' );
+        $('.specification-txt#rpm').html( tankType.rpm + 'rpm' );
+        $('.specification-txt#armour').html( tankType.armour + 'mm' );
+        $('.specification-txt#bullet').html( tankType.bullet + 'mm' );
+        $('.specification-txt#ammoCapacity').html( tankType.ammoCapacity );
+
+        //
+
+        var maxSpeed = 0;
+        var maxRpm = 0;
+        var maxArmour = 0;
+        var maxBullet = 0;
+        var maxAmmoCapacity = 0;
+
+        for ( var tankName in TankList ) {
+
+            maxSpeed = Math.max( maxSpeed, TankList[ tankName ].speed );
+            maxRpm = Math.max( maxRpm, TankList[ tankName ].rpm );
+            maxArmour = Math.max( maxArmour, TankList[ tankName ].armour );
+            maxBullet = Math.max( maxBullet, TankList[ tankName ].bullet );
+            maxAmmoCapacity = Math.max( maxAmmoCapacity, TankList[ tankName ].ammoCapacity );
+
+        }
+
+        //
+
+        $('.counter-characteristicks#speed .color').css({ 'width': Math.round( 100 * tankType.speed / maxSpeed ) + '%' });
+        $('.counter-characteristicks#rpm .color').css({ 'width': Math.round( 100 * tankType.rpm / maxRpm ) + '%' });
+        $('.counter-characteristicks#armour .color').css({ 'width': Math.round( 100 * tankType.armour / maxArmour ) + '%' });
+        $('.counter-characteristicks#bullet .color').css({ 'width': Math.round( 100 * tankType.bullet / maxBullet ) + '%' });
+        $('.counter-characteristicks#ammoCapacity .color').css({ 'width': Math.round( 100 * tankType.ammoCapacity / maxAmmoCapacity ) + '%' });
+
+        //
+
+        localStorage.setItem( 'currentTank', this.currentTank );
 
     };
 

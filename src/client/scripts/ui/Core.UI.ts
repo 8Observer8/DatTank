@@ -4,7 +4,6 @@
 */
 
 import { UILandingModule } from "./Landing.UI";
-import { UIGarageModule } from "./Garage.UI";
 import { UIInGameModule } from "./InGame.UI";
 
 //
@@ -15,7 +14,6 @@ class UICore {
 
     public modules = {
         landing:    new UILandingModule(),
-        garage:     new UIGarageModule(),
         inGame:     new UIInGameModule()
     };
 
@@ -84,7 +82,6 @@ class UICore {
         this.game = game;
 
         this.modules.landing.init( this.game );
-        this.modules.garage.init( this.game );
         this.modules.inGame.init( this.game );
 
         //

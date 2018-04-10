@@ -87,7 +87,7 @@ class GarageScene {
         let scope = this;
         let loader = new THREE.JSONLoader();
         let loaded = 0;
-        let totalToLoad = 2;
+        let totalToLoad = 5;
 
         //
 
@@ -111,12 +111,60 @@ class GarageScene {
             model.castShadow = true;
             model.receiveShadow = true;
             model.scale.set( 0.8, 0.8, 0.8 );
-    
+
             scope.scene.add( model );
             scope.models['IS2'] = model;
 
             loadedCallback();
-    
+
+        });
+
+        loader.load( 'resources/models/garage-T29.json', function ( geometry, materials ) {
+
+            var model = new THREE.Mesh( geometry, materials );
+            model.position.y += 0.4;
+            model.visible = true;
+            model.castShadow = true;
+            model.receiveShadow = true;
+            model.scale.set( 0.8, 0.8, 0.8 );
+
+            scope.scene.add( model );
+            scope.models['T29'] = model;
+
+            loadedCallback();
+
+        });
+
+        loader.load( 'resources/models/garage-T44.json', function ( geometry, materials ) {
+
+            var model = new THREE.Mesh( geometry, materials );
+            model.position.y += 0.4;
+            model.visible = true;
+            model.castShadow = true;
+            model.receiveShadow = true;
+            model.scale.set( 0.8, 0.8, 0.8 );
+
+            scope.scene.add( model );
+            scope.models['T44'] = model;
+
+            loadedCallback();
+
+        });
+
+        loader.load( 'resources/models/garage-T54.json', function ( geometry, materials ) {
+
+            var model = new THREE.Mesh( geometry, materials );
+            model.position.y += 0.4;
+            model.visible = true;
+            model.castShadow = true;
+            model.receiveShadow = true;
+            model.scale.set( 0.8, 0.8, 0.8 );
+
+            scope.scene.add( model );
+            scope.models['T54'] = model;
+
+            loadedCallback();
+
         });
 
         loader.load( 'resources/models/garage.json', function ( geometry, materials ) {
@@ -130,6 +178,19 @@ class GarageScene {
             loadedCallback();
 
         });
+
+    };
+
+    public selectModel ( modelName: string ) {
+
+        for ( var model in this.models ) {
+
+            this.models[ model ].visible = false;
+
+        }
+
+        this.models[ modelName ].visible = true;
+        this.currentTankModel = this.models[ modelName ];
 
     };
 
