@@ -9,6 +9,7 @@ import { TowerManager } from "./../managers/Tower.Manager";
 import { BoxManager } from "./../managers/Box.Manager";
 
 import { PlayerCore } from "./Player.Core";
+import { ArenaNetwork } from "../network/Arena.Network";
 
 //
 
@@ -31,6 +32,8 @@ class ArenaCore {
     private updateTimeRemainder: number = 0;
     private updateInterval: number;
     private updateIntervalDuration: number = 20;
+
+    private network: ArenaNetwork = new ArenaNetwork();
 
     //
 

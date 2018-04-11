@@ -82,7 +82,6 @@ class PlayerCore {
 
     constructor ( arena, params ) {
 
-        super();
         this.init( params );
 
     };
