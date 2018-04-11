@@ -9,7 +9,12 @@ import { BoxCore } from "./../../core/objects/Box.Core";
 
 class AmmoBox extends BoxCore {
 
-    // todo
+    constructor ( params ) {
+
+        super( params );
+        this.type = 'AmmoBox';
+
+    };
 
 };
 

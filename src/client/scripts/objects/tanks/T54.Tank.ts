@@ -35,6 +35,12 @@ class T54Tank extends TankCore {
 
     };
 
+    constructor ( params ) {
+
+        super( params );
+
+    };
+
 };
 
 //

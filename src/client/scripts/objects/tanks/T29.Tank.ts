@@ -35,6 +35,12 @@ class T29Tank extends TankCore {
 
     };
 
+    constructor ( params ) {
+
+        super( params );
+
+    };
+
 };
 
 //

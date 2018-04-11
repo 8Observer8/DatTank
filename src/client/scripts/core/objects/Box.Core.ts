@@ -3,15 +3,47 @@
  * DatTank Box general class
 */
 
+import { BoxGfx } from "./../../graphics/objects/Box.Gfx";
+
+//
+
 class BoxCore {
 
     public id: number;
-    
+    public position = { x: 0, y: 0, z: 0 };
+    public type: string;
+
+    protected gfx: BoxGfx = new BoxGfx();
+
     //
+
+    public remove () {
+
+        this.gfx.dispose();
+
+    };
+
+    public pick () {
+
+        this.gfx.pick();
+
+    };
 
     public update ( time: number, delta: number ) {
 
-        // todo
+        this.gfx.update( time, delta );
+
+    };
+
+    public init () {
+
+        this.gfx.init( this );
+
+    };
+
+    constructor ( params ) {
+
+        //
 
     };
 

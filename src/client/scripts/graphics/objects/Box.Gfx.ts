@@ -5,6 +5,7 @@
 
 import * as THREE from 'three';
 
+import { BoxCore } from "./../../core/objects/Box.Core";
 import { ResourceManager } from "./../../managers/Resource.Manager";
 
 //
@@ -16,9 +17,21 @@ class BoxGfx {
 
     //
 
-    public remove () {
+    public dispose () {
 
-        // todo
+        // view.scene.remove( this.mesh );
+
+    };
+
+    public pick () {
+
+        // var sound = new THREE.PositionalAudio( view.sound.listener );
+        // sound.position.set( this.position.x, this.position.y, this.position.z );
+        // sound.setBuffer( resourceManager.getSound('box_pick.wav') );
+        // sound.loop = false;
+        // sound.setRefDistance( 200 );
+        // sound.play();
+        this.dispose();
 
     };
 
@@ -30,9 +43,19 @@ class BoxGfx {
 
     };
 
-    public init () {
+    public init ( box: BoxCore ) {
 
-        // todo
+        var boxModel = ResourceManager.getModel( box.type + '.json' );
+
+        this.mesh = new THREE.Mesh( boxModel.geometry, boxModel.material );
+        this.mesh.name = box.type;
+        this.mesh.scale.set( 20, 20, 20 );
+
+        this.mesh.position.x = box.position.x;
+        this.mesh.position.y = box.position.y;
+        this.mesh.position.z = box.position.z;
+    
+        // view.scene.add( this.mesh );
 
     };
 

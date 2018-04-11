@@ -35,6 +35,12 @@ class IS2Tank extends TankCore {
 
     };
 
+    constructor ( params ) {
+
+        super( params );
+
+    };
+
 };
 
 //

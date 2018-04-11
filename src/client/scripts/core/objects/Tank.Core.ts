@@ -111,7 +111,7 @@ class TankCore {
 
     //
 
-    constructor ( arena, params ) {
+    constructor ( params ) {
 
         this.init( params );
 
