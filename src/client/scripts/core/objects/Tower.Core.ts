@@ -18,6 +18,14 @@ class TowerCore {
 
     public id: number;
 
+    //
+
+    public dispose () {
+
+        // todo
+
+    };
+
 };
 
 //
