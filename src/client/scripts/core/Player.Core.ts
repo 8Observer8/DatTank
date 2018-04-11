@@ -6,7 +6,7 @@
 import { EventDispatcher } from "./../utils/EventDispatcher";
 
 import { TankCore } from "./objects/Tank.Core";
-import { ArenaCore } from "./Arena.Core";
+import { Arena } from "./Arena.Core";
 import { TeamCore } from "./Team.Core";
 import { TankList as Tanks } from "./objects/Tank.Core";
 import { PlayerNetwork } from "./../network/Player.Network";
@@ -19,7 +19,6 @@ enum Status { ALIVE = 0, DEAD = 1 };
 
 class PlayerCore extends EventDispatcher {
 
-    public arena: ArenaCore;
     public id: number;
     public username: string;
     public status: Status;
@@ -86,7 +85,6 @@ class PlayerCore extends EventDispatcher {
     constructor ( arena, params ) {
 
         super();
-        this.arena = arena;
         this.init( params );
 
     };

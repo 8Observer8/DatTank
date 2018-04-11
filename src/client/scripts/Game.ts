@@ -10,7 +10,7 @@ import { Network } from "./network/Core.Network";
 import { Garage } from "./garage/Core.Garage";
 import { ResourceManager } from "./managers/Resource.Manager";
 import { GameService } from "./services/Game.Service";
-import { ArenaCore } from "./core/Arena.Core";
+import { Arena } from "./core/Arena.Core";
 import { UICore } from "./ui/Core.UI";
 import { Logger } from "./utils/Logger";
 
@@ -27,10 +27,6 @@ class GameCore {
     private prevLoopTime: number;
 
     public isMobile: boolean;
-
-    //
-
-    public arena: ArenaCore;
 
     //
 
@@ -55,8 +51,6 @@ class GameCore {
         this.ui.init( this );
         this.ui.modules.landing.setVersion( this.version );
 
-        this.arena = new ArenaCore();
-
         //
 
         this.gameService.getTopPlayers( this.ui.modules.landing.setTopPlayersBoard.bind( this.ui.modules.landing ) );
@@ -70,7 +64,7 @@ class GameCore {
 
     public preInitArena ( server ) {
 
-        this.arena.preInit( server.ip, server.id );
+        Arena.preInit( server.ip, server.id );
         this.ui.modules.landing.initPlayBtn();
         this.ready = true;
 
@@ -119,7 +113,7 @@ class GameCore {
 
     public joinArena ( data ) {
 
-        this.arena.init( data );
+        Arena.init( data );
         this.ui.modules.landing.hideLoader();
         this.ui.modules.inGame.showViewport();
 

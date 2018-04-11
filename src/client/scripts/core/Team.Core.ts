@@ -31,6 +31,14 @@ class TeamCore {
     public color: number;
     public name: string;
 
+    //
+
+    constructor ( params ) {
+
+        // todo
+
+    };
+
 };
 
 export { TeamCore };

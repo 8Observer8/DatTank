@@ -14,6 +14,8 @@ import { PlayerCore } from "./Player.Core";
 
 class ArenaCore {
 
+    private static instance: ArenaCore;
+
     private serverIP: string;
     private serverID: string;
 
@@ -39,7 +41,14 @@ class ArenaCore {
 
     };
 
-    public init ( data ) {
+    public init ( params ) {
+
+        this.teams.init( params );
+        this.players.init();
+        this.towers.init();
+        this.boxes.init();
+
+        //
 
         this.prevUpdateTime = Date.now();
         this.time = Date.now();
@@ -91,8 +100,22 @@ class ArenaCore {
 
     };
 
+    //
+
+    constructor () {
+
+        if ( ArenaCore.instance ) {
+
+            return ArenaCore.instance;
+
+        }
+
+        ArenaCore.instance = this;
+
+    };
+
 };
 
 //
 
-export { ArenaCore };
+export let Arena = new ArenaCore;

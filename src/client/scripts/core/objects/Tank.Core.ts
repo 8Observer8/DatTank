@@ -3,9 +3,7 @@
  * DatTank Tank general class
 */
 
-import { EventDispatcher } from "./../../utils/EventDispatcher";
 import { PlayerCore } from "./../Player.Core";
-import { ArenaCore } from "./../Arena.Core";
 
 import { TankNetwork } from "./../../network/Tank.Network";
 import { TankGfx } from "./../../graphics/objects/Tank.Gfx";
@@ -16,7 +14,7 @@ let TankList = {};
 
 //
 
-class TankCore extends EventDispatcher {
+class TankCore {
 
     static list: object;
 
@@ -43,7 +41,6 @@ class TankCore extends EventDispatcher {
     public rotation: number = 0;
 
     protected network: TankNetwork = new TankNetwork();
-    protected arena: ArenaCore;
     protected gfx: TankGfx = new TankGfx();
 
     //
@@ -92,6 +89,12 @@ class TankCore extends EventDispatcher {
 
     };
 
+    public friendlyFire () {
+
+        // todo
+
+    };
+
     public update ( time: number, delta: number ) {
 
         this.updateMovement( time, delta );
@@ -114,8 +117,6 @@ class TankCore extends EventDispatcher {
 
     constructor ( arena, params ) {
 
-        super();
-        this.arena = arena;
         this.init( params );
 
     };

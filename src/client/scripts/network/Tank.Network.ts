@@ -4,12 +4,13 @@
 */
 
 import { Network } from "./../network/Core.Network";
+import { TankCore } from "./../core/objects/Tank.Core";
 
 //
 
 class TankNetwork {
 
-    private tank;
+    private tank: TankCore;
 
     //
 
@@ -29,7 +30,7 @@ class TankNetwork {
         let data = event.data;
         if ( this.filter( data ) ) return;
 
-        this.tank.move( data[1], data[2], data[3], data[4], data[5] );
+        this.tank.setMovement( data[1], data[2], data[3], data[4], data[5] );
 
     };
 
@@ -38,7 +39,7 @@ class TankNetwork {
         let data = event.data;
         if ( this.filter( data ) ) return;
 
-        this.tank.rotateTop( data[1] / 1000 );
+        this.tank.setTopRotation( data[1] / 1000 );
 
     };
 
@@ -60,21 +61,21 @@ class TankNetwork {
 
     };
 
-    private setUpdateHealth ( event ) {
+    private setHealth ( event ) {
 
         let data = event.data;
         if ( this.filter( data ) ) return;
 
-        this.tank.updateHealth( data[1] );
+        this.tank.setHealth( data[1], data[2] );
 
     };
 
-    private setUpdateAmmo ( event ) {
+    private setAmmo ( event ) {
 
         let data = event.data;
         if ( this.filter( data ) ) return;
 
-        this.tank.updateAmmo( data[1] );
+        this.tank.setAmmo( data[1] );
 
     };
 
@@ -90,8 +91,8 @@ class TankNetwork {
         Network.addMessageListener( 'TankMove', this.setMove.bind( this ) );
         Network.addMessageListener( 'TankRotateTop', this.setRotateTop.bind( this ) );
         Network.addMessageListener( 'TankShoot', this.setShoot.bind( this ) );
-        Network.addMessageListener( 'TankUpdateHealth', this.setUpdateHealth.bind( this ) );
-        Network.addMessageListener( 'TankUpdateAmmo', this.setUpdateAmmo.bind( this ) );
+        Network.addMessageListener( 'TankSetHealth', this.setHealth.bind( this ) );
+        Network.addMessageListener( 'TankSetAmmo', this.setAmmo.bind( this ) );
 
     };
 

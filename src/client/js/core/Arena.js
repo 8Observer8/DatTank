@@ -3,51 +3,7 @@
  * DatTank Arena object
 */
 
-Game.Arena = function () {
-
-    this.id = false;
-    this.me = false;
-    this.stopped = false;
-
-    this.viewRange = 601;
-
-    //
-
-    this.effects = {
-        explosions:     []
-    };
-
-    //
-
-    this.boxManager = new Game.BoxManager( this );
-    this.playerManager = new Game.PlayerManager( this );
-    this.teamManager = new Game.TeamManager( this );
-    this.towerManager = new Game.TowerManager( this );
-    this.controlsManager = new Game.ControlsManager( this );
-    this.decorationManager = new Game.DecorationManager( this );
-
-};
-
-Game.Arena.prototype = {};
-
-//
-
 Game.Arena.prototype.init = function ( params ) {
-
-    this.id = params.id;
-
-    //
-
-    this.addNetworkListeners();
-
-    //
-
-    this.teamManager.init( params.teams );
-    this.playerManager.init();
-    this.boxManager.init();
-    this.towerManager.init();
-
-    //
 
     view.clean();
     view.setupScene();
@@ -65,14 +21,6 @@ Game.Arena.prototype.init = function ( params ) {
 
     ui.updateAmmo( this.me.ammo );
     ui.updateHealth( this.me.health );
-
-    //
-
-    setInterval( function () {
-
-        localStorage.setItem( 'lastActiveTime', Date.now() );
-
-    }, 1000 );
 
 };
 
@@ -397,64 +345,7 @@ Game.Arena.prototype.updateLeaderboard = function ( data ) {
 
 //
 
-Game.Arena.prototype.proxyEventToPlayer = function ( data, eventName ) {
-
-    var playerId = ( data.player ) ? data.player.id : data[0];
-    var player = this.playerManager.getById( playerId );
-    if ( ! player ) return;
-
-    player.dispatchEvent({ type: eventName, data: data });
-
-};
-
-Game.Arena.prototype.proxyEventToTower = function ( data, eventName ) {
-
-    var tower = this.towerManager.getById( data[0] );
-    if ( ! tower ) return;
-
-    tower.dispatchEvent({ type: eventName, data: data });
-
-};
-
-Game.Arena.prototype.proxyEventToBox = function ( data, eventName ) {
-
-    var boxId = ( data.id ) ? data.id : data[0];
-    var box = this.boxManager.getBoxById( boxId );
-    if ( ! box ) return;
-
-    box.dispatchEvent({ type: eventName, data: data });
-
-};
-
 Game.Arena.prototype.addNetworkListeners = function () {
-
-    network.addMessageListener( 'ArenaPlayerLeft', this.playerLeft.bind( this ) );
-    network.addMessageListener( 'ArenaLeaderboardUpdate', this.updateLeaderboard.bind( this ) );
-    network.addMessageListener( 'ArenaPlayerRespawn', this.proxyEventToPlayer.bind( this ) );
-
-    network.addMessageListener( 'PlayersInRange', this.newPlayersInRange.bind( this ) );
-    network.addMessageListener( 'TowersInRange', this.newTowersInRange.bind( this ) );
-    network.addMessageListener( 'BoxesInRange', this.newBoxesInRange.bind( this ) );
-
-    //
-
-    network.addMessageListener( 'PlayerFriendlyFire', this.proxyEventToPlayer.bind( this ) );
-    network.addMessageListener( 'PlayerNewLevel', this.proxyEventToPlayer.bind( this ) );
-
-    network.addMessageListener( 'PlayerTankRotateTop', this.proxyEventToPlayer.bind( this ) );
-    network.addMessageListener( 'PlayerTankMove', this.proxyEventToPlayer.bind( this ) );
-    network.addMessageListener( 'PlayerTankShoot', this.proxyEventToPlayer.bind( this ) );
-    network.addMessageListener( 'PlayerTankUpdateHealth', this.proxyEventToPlayer.bind( this ) );
-    network.addMessageListener( 'PlayerTankUpdateAmmo', this.proxyEventToPlayer.bind( this ) );
-
-    //
-
-    network.addMessageListener( 'TowerRotateTop', this.proxyEventToTower.bind( this ) );
-    network.addMessageListener( 'TowerShoot', this.proxyEventToTower.bind( this ) );
-    network.addMessageListener( 'TowerChangeTeam', this.proxyEventToTower.bind( this ) );
-    network.addMessageListener( 'TowerUpdateHealth', this.proxyEventToTower.bind( this ) );
-
-    //
 
     network.addMessageListener( 'BulletHit', this.showExplosion.bind( this ) );
     network.addMessageListener( 'BoxRemove', this.proxyEventToBox.bind( this ) );

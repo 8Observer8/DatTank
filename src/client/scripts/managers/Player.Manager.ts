@@ -5,6 +5,12 @@
 
 class PlayerManager {
 
+    public init () {
+
+        // todo
+
+    };
+
 };
 
 //
