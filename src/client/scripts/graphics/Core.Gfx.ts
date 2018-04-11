@@ -173,6 +173,21 @@ class GraphicsCore {
 
     };
 
+    public removeCameraShake () {
+
+        this.camera.position.y = 400;
+
+        if ( this.shakeInterval !== null ) {
+
+            clearInterval( this.shakeInterval );
+            this.shakeInterval = null;
+
+        }
+
+        this.cameraOffset.set( 0, 0, 0 );
+
+    };
+
     private updateCamera ( position: THREE.Vector3, rotation: number ) {
 
         this.camera.position.x = position.x - 100 * Math.sin( rotation ) + this.cameraOffset.x;
@@ -208,17 +223,7 @@ class GraphicsCore {
     public clear () {
 
         if (  ! this.scene ) return;
-
-        this.camera.position.y = 400;
-
-        if ( this.shakeInterval !== null ) {
-
-            clearInterval( this.shakeInterval );
-            this.shakeInterval = null;
-
-        }
-
-        this.cameraOffset.set( 0, 0, 0 );
+        this.removeCameraShake();
 
         //
 

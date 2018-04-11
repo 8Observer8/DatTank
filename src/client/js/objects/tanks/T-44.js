@@ -5,41 +5,11 @@
 
 Game.Tank.T44 = function ( params ) {
 
-    Game.Tank.call( this, params );
-
-    //
-
-    this.model = {
-        top:    'T44-top.json',
-        base:   'T44-bottom.json'
-    };
-
     this.trackOffset = { l: -1, r: -6 };
-
-    this.name = 'T44';
 
 };
 
-Game.Tank.T44.prototype = Object.create( Game.Tank.prototype );
-
-Game.Tank.T44.prototype.year = 1944;
-Game.Tank.T44.prototype.ammoCapacity = 64;
-Game.Tank.T44.prototype.speed = 51;
-Game.Tank.T44.prototype.armour = 90;
-Game.Tank.T44.prototype.bullet = 85;
-Game.Tank.T44.prototype.rpm = 10.7 * 10;
-
-//
-
 Game.Tank.T44.prototype.initModel = function () {
-
-    this.object = new THREE.Object3D();
-
-    var materials;
-    var tankBaseModel = resourceManager.getModel( this.model.base );
-    var tankTopModel = resourceManager.getModel( this.model.top );
-
-    //
 
     materials = [];
     for ( var i = 0, il = tankBaseModel.material.length; i < il; i ++ ) {
@@ -107,40 +77,6 @@ Game.Tank.T44.prototype.initModel = function () {
 
     view.scene.add( this.object );
 
-};
-
-Game.Tank.T44.prototype.destroy = function () {
-
-    var scope = this;
-
-    this.animations.deathAction1.stop();
-    this.animations.deathAction1.play();
-
-    this.animations.deathAction2.stop();
-    this.animations.deathAction2.play();
-
-    this.showExplosion();
-
-    setTimeout( function () {
-
-        scope.animations.deathAction1.paused = true;
-        scope.animations.deathAction2.paused = true;
-
-    }, 1100 );
-
-    this.sounds.explosion.play();
-
-};
-
-//
-
-Game.Tank.list[ 'T44' ] = {
-    title:          'T44',
-    speed:          Game.Tank.T44.prototype.speed,
-    rpm:            Game.Tank.T44.prototype.rpm,
-    armour:         Game.Tank.T44.prototype.armour,
-    bullet:         Game.Tank.T44.prototype.bullet,
-    ammoCapacity:   Game.Tank.T44.prototype.ammoCapacity
 };
 
 Game.Tank.T44.prototype.showBlastSmoke = function () {

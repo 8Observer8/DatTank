@@ -37,8 +37,6 @@ class GameCore {
     public logger: Logger = new Logger();
     public ui: UICore = new UICore();
     public garage: Garage = new Garage();
-    public network: Network = new Network();
-    public resourceManager: ResourceManager = new ResourceManager();
     public gameService: GameService = new GameService();
 
     //
@@ -50,7 +48,7 @@ class GameCore {
 
         //
 
-        this.resourceManager.init();
+        ResourceManager.init();
 
         this.garage.init( this );
 
@@ -86,7 +84,7 @@ class GameCore {
   
         //
 
-        this.resourceManager.load( ( progress ) => {
+        ResourceManager.load( ( progress ) => {
 
             this.ui.modules.landing.setLoaderProgress( progress );
 
@@ -101,9 +99,9 @@ class GameCore {
 
     public requestJoinArena () {
 
-        this.network.addMessageListener( 'ArenaJoinResponse', this.joinArena.bind( this ) );
+        Network.addMessageListener( 'ArenaJoinResponse', this.joinArena.bind( this ) );
 
-        this.network.init( () => {
+        Network.init( () => {
 
             let login = $('#username').val() || localStorage.getItem('login') || '';
             localStorage.setItem( 'login', login + '' );
@@ -111,7 +109,7 @@ class GameCore {
 
             setTimeout( () => {
 
-                this.network.send( 'ArenaJoinRequest', false, { login: login, tank: tank } );
+                Network.send( 'ArenaJoinRequest', false, { login: login, tank: tank } );
 
             }, 1000 );
 

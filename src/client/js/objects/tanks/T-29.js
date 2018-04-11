@@ -33,14 +33,6 @@ Game.Tank.T29.prototype.rpm = 16.7 * 10;
 
 Game.Tank.T29.prototype.initModel = function () {
 
-    this.object = new THREE.Object3D();
-
-    var materials;
-    var tankBaseModel = resourceManager.getModel( this.model.base );
-    var tankTopModel = resourceManager.getModel( this.model.top );
-
-    //
-
     materials = [];
     for ( var i = 0, il = tankBaseModel.material.length; i < il; i ++ ) {
 
@@ -107,40 +99,6 @@ Game.Tank.T29.prototype.initModel = function () {
 
     view.scene.add( this.object );
 
-};
-
-Game.Tank.T29.prototype.destroy = function () {
-
-    var scope = this;
-
-    this.animations.deathAction1.stop();
-    this.animations.deathAction1.play();
-
-    this.animations.deathAction2.stop();
-    this.animations.deathAction2.play();
-
-    this.showExplosion();
-
-    setTimeout( function () {
-
-        scope.animations.deathAction1.paused = true;
-        scope.animations.deathAction2.paused = true;
-
-    }, 1100 );
-
-    this.sounds.explosion.play();
-
-};
-
-//
-
-Game.Tank.list[ 'T29' ] = {
-    title:          'T29',
-    speed:          Game.Tank.T29.prototype.speed,
-    rpm:            Game.Tank.T29.prototype.rpm,
-    armour:         Game.Tank.T29.prototype.armour,
-    bullet:         Game.Tank.T29.prototype.bullet,
-    ammoCapacity:   Game.Tank.T29.prototype.ammoCapacity
 };
 
 Game.Tank.T29.prototype.showBlastSmoke = function () {

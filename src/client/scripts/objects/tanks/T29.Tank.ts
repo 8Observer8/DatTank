@@ -29,7 +29,9 @@ class T29Tank extends TankCore {
         this.rpm = T29Tank.rpm;
         this.armour = T29Tank.armour;
 
-        // todo
+        //
+
+        this.gfx.init( this.title );
 
     };
 

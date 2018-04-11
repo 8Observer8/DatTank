@@ -9,36 +9,9 @@ Game.Player = function ( arena, params ) {
 
     this.team = arena.teamManager.getById( params.team ) || false;
 
-    //
-
-    this.position = new THREE.Vector3( params.position.x, params.position.y, params.position.z );
-    this.positionCorrection = new THREE.Vector3( 0, 0, 0 );
-    this.rotationCorrection = 0;
-    this.rotation = params.rotation;
-    this.topRotation = params.rotationTop;
-
-    //
-
-    this.moveSpeed = 0.09;
-    this.originalMoveSpeed = this.moveSpeed;
-    this.moveDirection = new THREE.Vector2( params.moveDirection.x || 0, params.moveDirection.y || 0 );
-
-    this.explosion = [];
-    this.bulletSpeed = 1.3;
-
-    //
-
-    this.init( params );
-
 };
 
-Game.Player.prototype = Object.create( EventDispatcher.prototype );
-
-//
-
 Game.Player.prototype.init = function ( params ) {
-
-    this.selectTank( params.tank );
 
     this.tank.init();
     this.tank.setRotation( this.rotation );
@@ -49,113 +22,42 @@ Game.Player.prototype.init = function ( params ) {
 
 };
 
-Game.Player.prototype.selectTank = function ( tankName ) {
-
-    switch ( tankName ) {
-
-        case 'IS2':
-
-            this.tank = new Game.Tank.IS2({ player: this });
-            break;
-
-        case 'T29':
-
-            this.tank = new Game.Tank.T29({ player: this });
-            break;
-
-        case 'T44':
-
-            this.tank = new Game.Tank.T44({ player: this });
-            break;
-
-        case 'T54':
-
-            this.tank = new Game.Tank.T54({ player: this });
-            break;
-
-    }
-
-    this.moveSpeed = this.originalMoveSpeed * this.tank.speed / 40;
-
-};
-
 Game.Player.prototype.respawn = function ( fromNetwork, params ) {
 
-    if ( view.shakeInterval !== false ) {
+    this.position.set( params.position.x, params.position.y, params.position.z );
+    this.rotation = params.rotation;
+    this.rotationCorrection = 0;
+    this.topRotation = params.rotationTop;
 
-        clearInterval( view.shakeInterval );
-        view.shakeInterval = false;
+    this.tank.reset();
+    this.tank.setPosition( this.position.x, this.position.y, this.position.z );
+    this.tank.setRotation( params.rotation );
 
-    }
+    if ( this.id === Game.arena.me.id ) {
 
-    view.cameraOffset.set( 0, 0, 0 );
-
-    //
-
-    if ( fromNetwork ) {
-
-        this.status = Game.Player.Alive;
-        this.ammo = params.ammo;
-        this.health = params.health;
-
-        this.position.set( params.position.x, params.position.y, params.position.z );
-        this.rotation = params.rotation;
-        this.rotationCorrection = 0;
-        this.topRotation = params.rotationTop;
-
-        this.tank.reset();
-        this.tank.setPosition( this.position.x, this.position.y, this.position.z );
-        this.tank.setRotation( params.rotation );
-
-        if ( this.id === Game.arena.me.id ) {
-
-            view.camera.position.set( this.position.x + 180, view.camera.position.y, this.position.z );
-            view.camera.lookAt( this.position );
-
-        }
-
-        this.moveSpeed = 0.09;
-        this.moveSpeed = this.moveSpeed * this.tank.speed / 40;
-
-        var tankName = params.tank;
-        this.tank.dispose();
-        this.selectTank( tankName );
-        this.tank.init();
-
-        this.healthBar = false;
-        this.tank.updateLabel();
-
-        if ( Game.arena.me.id === this.id ) {
-
-            ui.updateHealth( this.health );
-            ui.updateAmmo( this.ammo );
-            ui.hideContinueBox();
-
-        }
-
-    } else {
-
-        if ( Game.arena.me.id === this.id ) {
-
-            game.logger.newEvent( 'respawn' );
-            var tank = localStorage.getItem( 'currentTank' ) || 0;
-            network.send( 'ArenaPlayerRespawn', false, tank );
-
-        }
+        view.camera.position.set( this.position.x + 180, view.camera.position.y, this.position.z );
+        view.camera.lookAt( this.position );
 
     }
 
-};
+    this.moveSpeed = 0.09;
+    this.moveSpeed = this.moveSpeed * this.tank.speed / 40;
 
-Game.Player.prototype.move = function ( directionX, directionZ, positionX, positionZ, rotation ) {
+    var tankName = params.tank;
+    this.tank.dispose();
+    this.selectTank( tankName );
+    this.tank.init();
 
-    if ( this.status !== Game.Player.Alive ) return;
+    this.healthBar = false;
+    this.tank.updateLabel();
 
-    this.moveDirection.x = directionX;
-    this.moveDirection.y = directionZ;
+    if ( Game.arena.me.id === this.id ) {
 
-    this.positionCorrection.set( positionX - this.position.x, 0, positionZ - this.position.z );
-    this.rotationCorrection = rotation / 1000.0 - this.rotation;
+        ui.updateHealth( this.health );
+        ui.updateAmmo( this.ammo );
+        ui.hideContinueBox();
+
+    }
 
 };
 
@@ -214,16 +116,6 @@ Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
     }
 
     player.tank.setPosition( player.position.x, player.position.y, player.position.z );
-
-};
-
-Game.Player.prototype.rotateTop = function ( angle ) {
-
-    if ( ! this.tank.object.top ) return;
-
-    angle = Utils.formatAngle( angle );
-    this.topRotation = angle;
-    this.tank.setTopRotation( angle );
 
 };
 
@@ -375,13 +267,6 @@ Game.Player.prototype.die = function ( killerId ) {
 
 };
 
-Game.Player.prototype.dispose = function () {
-
-    this.tank.dispose();
-    this.tank = false;
-
-};
-
 Game.Player.prototype.showExplosion = function ( data ) {
 
     var scale = 30;
@@ -530,12 +415,6 @@ Game.Player.prototype.updateStats = function ( name ) {
 
 Game.Player.prototype.update = function ( time, delta ) {
 
-    this.updateDirectionMovement( time, delta );
-    this.updateExplosion( delta );
-    this.tank.update( delta );
-
-    //
-
     var dx = this.positionCorrection.x * delta / 300;
     var dz = this.positionCorrection.z * delta / 300;
     var dr = this.rotationCorrection * delta / 100;
@@ -592,18 +471,6 @@ Game.Player.prototype.addEventListeners = function () {
     var scope = this;
 
     this.addEventListener( 'ArenaPlayerRespawn', function ( event ) { scope.respawn( true, event.data.player ); });
-
-    this.addEventListener( 'PlayerFriendlyFire', function ( event ) { scope.tank.friendlyFire(); });
     this.addEventListener( 'PlayerNewLevel', function ( event ) { scope.newLevel( event.data[1] ); });
-    this.addEventListener( 'PlayerTankRotateTop', function ( event ) { scope.rotateTop( event.data[1] / 1000 ); });
-    this.addEventListener( 'PlayerTankMove', function ( event ) { scope.move( event.data[1], event.data[2], event.data[3], event.data[4], event.data[5] ); });
-    this.addEventListener( 'PlayerTankShoot', function ( event ) { scope.shoot( event.data[1] ); });
-    this.addEventListener( 'PlayerTankUpdateHealth', function ( event ) { scope.updateHealth( event.data[1], event.data[2] ); });
-    this.addEventListener( 'PlayerTankUpdateAmmo', function ( event ) { scope.updateAmmo( event.data[1] ); });
 
 };
-
-//
-
-Game.Player.Alive = 100;
-Game.Player.Dead = 110;

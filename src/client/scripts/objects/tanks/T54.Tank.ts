@@ -29,7 +29,9 @@ class T54Tank extends TankCore {
         this.rpm = T54Tank.rpm;
         this.armour = T54Tank.armour;
 
-        // todo
+        //
+
+        this.gfx.init( this.title );
 
     };
 

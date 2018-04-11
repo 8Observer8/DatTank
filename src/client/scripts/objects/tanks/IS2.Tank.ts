@@ -29,7 +29,9 @@ class IS2Tank extends TankCore {
         this.rpm = IS2Tank.rpm;
         this.armour = IS2Tank.armour;
 
-        // todo
+        //
+
+        this.gfx.init( this.title );
 
     };
 

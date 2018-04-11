@@ -5,15 +5,6 @@
 
 Game.Tank.IS2 = function ( params ) {
 
-    Game.Tank.call( this, params );
-
-    //
-
-    this.model = {
-        top:    'IS2-top.json',
-        base:   'IS2-bottom.json'
-    };
-
     this.trackOffset = { l: -1, r: -7 };
 
 };
@@ -21,14 +12,6 @@ Game.Tank.IS2 = function ( params ) {
 //
 
 Game.Tank.IS2.prototype.initModel = function () {
-
-    this.object = new THREE.Object3D();
-
-    var materials;
-    var tankBaseModel = resourceManager.getModel( this.model.base );
-    var tankTopModel = resourceManager.getModel( this.model.top );
-
-    //
 
     materials = [];
     for ( var i = 0, il = tankBaseModel.material.length; i < il; i ++ ) {
@@ -93,29 +76,6 @@ Game.Tank.IS2.prototype.initModel = function () {
     //
 
     view.scene.add( this.object );
-
-};
-
-Game.Tank.IS2.prototype.destroy = function () {
-
-    var scope = this;
-
-    this.animations.deathAction1.stop();
-    this.animations.deathAction1.play();
-
-    this.animations.deathAction2.stop();
-    this.animations.deathAction2.play();
-
-    this.showExplosion();
-
-    setTimeout( function () {
-
-        scope.animations.deathAction1.paused = true;
-        scope.animations.deathAction2.paused = true;
-
-    }, 1100 );
-
-    this.sounds.explosion.play();
 
 };
 

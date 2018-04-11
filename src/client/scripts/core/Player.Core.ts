@@ -8,12 +8,12 @@ import { EventDispatcher } from "./../utils/EventDispatcher";
 import { TankCore } from "./objects/Tank.Core";
 import { ArenaCore } from "./Arena.Core";
 import { TeamCore } from "./Team.Core";
-
+import { TankList as Tanks } from "./objects/Tank.Core";
 import { PlayerNetwork } from "./../network/Player.Network";
 
 //
 
-declare enum Status { Alive = 0, Dead = 1 };
+enum Status { ALIVE = 0, DEAD = 1 };
 
 //
 
@@ -27,66 +27,31 @@ class PlayerCore extends EventDispatcher {
     public team: TeamCore;
     public tank: TankCore;
 
-    public health: number;
-    public ammo: number;
     public kills: number;
     public score: number;
+    public bonusLevel: number;
 
     private network: PlayerNetwork = new PlayerNetwork();
 
     //
 
     private setTank ( tankName: string ) {
-
-        // todo
+    
+        this.tank = new Tanks[ tankName ]({ player: this });
 
     };
 
     public triggerRespawn () {
 
-        // todo
+        var tank = localStorage.getItem( 'currentTank' ) || 'IS2';
+        this.network.respawn( tank );
 
     };
 
     public respawn ( params ) {
 
-        // todo
-
-    };
-
-    private updateMovement ( time: number, delta: number ) {
-
-        // todo
-
-    };
-
-    public setMovement ( directionX: number, directionZ: number, positionX: number, positionZ: number, rotation: number ) {
-
-        // todo
-
-    };
-
-    public setTopRotation ( angle: number ) {
-
-        // todo
-
-    };
-
-    public setHealth ( value: number, trigger: any ) {
-
-        // todo
-
-    };
-
-    public setAmmo ( value: number ) {
-
-        // todo
-
-    };
-
-    public shoot ( id: number ) {
-
-        // todo
+        this.status = Status.ALIVE;
+        this.setTank( params.tank );
 
     };
 
@@ -98,13 +63,21 @@ class PlayerCore extends EventDispatcher {
 
     public dispose () {
 
-        // todo
+        this.tank.dispose();
+        this.tank = null;
 
     };
 
     public update ( time: number, delta: number ) {
 
-        // todo
+        this.tank.update( time, delta );
+
+    };
+
+    private init ( params ) {
+
+        this.setTank( params.tank );
+        // todo rest
 
     };
 
@@ -114,6 +87,7 @@ class PlayerCore extends EventDispatcher {
 
         super();
         this.arena = arena;
+        this.init( params );
 
     };
 

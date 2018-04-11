@@ -7,7 +7,9 @@ import * as THREE from 'three';
 
 //
 
-class ResourceManager {
+class ResourceManagerCore {
+
+    private static instance: ResourceManagerCore;
 
     private models = [];
     private textures = [];
@@ -272,8 +274,22 @@ class ResourceManager {
 
     };
 
+    //
+
+    constructor () {
+
+        if ( ResourceManagerCore.instance ) {
+
+            return ResourceManagerCore.instance;
+
+        }
+
+        ResourceManagerCore.instance = this;
+
+    };
+
 };
 
 //
 
-export { ResourceManager };
+export let ResourceManager = new ResourceManagerCore();

@@ -3,9 +3,17 @@
  * DatTank Player network handler
 */
 
+import { Network } from "./../network/Core.Network";
+
+//
+
 class PlayerNetwork {
 
-    // todo
+    public respawn ( tank: string ) {
+
+        Network.send( 'ArenaPlayerRespawn', false, tank );
+
+    };
 
 };
 

@@ -12,7 +12,9 @@ enum EventType { BIN = 0, JSON = 1 };
 
 //
 
-class Network {
+class NetworkCore {
+
+    private static instance: NetworkCore;
 
     private transport;
     private messageListeners: object = {};
@@ -141,7 +143,7 @@ class Network {
 
     };
 
-    public send ( eventName: string, data: ArrayBuffer | boolean, view?: Int16Array | object ) {
+    public send ( eventName: string, data: ArrayBuffer | boolean, view?: Int16Array | object | number | string ) {
 
         if ( ! this.transport ) {
 
@@ -253,8 +255,22 @@ class Network {
 
     };
 
+    //
+
+    constructor () {
+
+        if ( NetworkCore.instance ) {
+
+            return NetworkCore.instance;
+
+        }
+
+        NetworkCore.instance = this;
+
+    };
+
 };
 
 //
 
-export { Network };
+export let Network = new NetworkCore();
