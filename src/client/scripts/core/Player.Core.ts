@@ -3,8 +3,6 @@
  * DatTank Player core
 */
 
-import { EventDispatcher } from "./../utils/EventDispatcher";
-
 import { TankCore } from "./objects/Tank.Core";
 import { Arena } from "./Arena.Core";
 import { TeamCore } from "./Team.Core";
@@ -17,7 +15,7 @@ enum Status { ALIVE = 0, DEAD = 1 };
 
 //
 
-class PlayerCore extends EventDispatcher {
+class PlayerCore {
 
     public id: number;
     public username: string;
@@ -76,7 +74,7 @@ class PlayerCore extends EventDispatcher {
     private init ( params ) {
 
         this.setTank( params.tank );
-        // todo rest
+        this.team = Arena.teams.getById( params.team );
 
     };
 

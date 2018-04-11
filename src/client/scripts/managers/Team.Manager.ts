@@ -31,7 +31,7 @@ class TeamManager {
 
         }
 
-        return false;
+        return null;
 
     };
 

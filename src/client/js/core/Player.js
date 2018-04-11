@@ -1,15 +1,3 @@
-/*
- * @author ohmed
- * DatTank Player object
-*/
-
-Game.Player = function ( arena, params ) {
-
-    EventDispatcher.call( this );
-
-    this.team = arena.teamManager.getById( params.team ) || false;
-
-};
 
 Game.Player.prototype.init = function ( params ) {
 
@@ -411,8 +399,6 @@ Game.Player.prototype.updateStats = function ( name ) {
 
 };
 
-//
-
 Game.Player.prototype.update = function ( time, delta ) {
 
     var dx = this.positionCorrection.x * delta / 300;
@@ -461,16 +447,5 @@ Game.Player.prototype.update = function ( time, delta ) {
         }
 
     }
-
-};
-
-//
-
-Game.Player.prototype.addEventListeners = function () {
-
-    var scope = this;
-
-    this.addEventListener( 'ArenaPlayerRespawn', function ( event ) { scope.respawn( true, event.data.player ); });
-    this.addEventListener( 'PlayerNewLevel', function ( event ) { scope.newLevel( event.data[1] ); });
 
 };

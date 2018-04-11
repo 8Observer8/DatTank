@@ -25,6 +25,12 @@ class PlayerNetwork {
 
     //
 
+    private setRespawn ( event ) {
+
+        // todo
+
+    };
+
     private setLevel ( event ) {
 
         // todo
@@ -47,6 +53,7 @@ class PlayerNetwork {
 
         //
 
+        Network.addMessageListener( 'PlayerRespawn', this.respawn.bind( this ) );
         Network.addMessageListener( 'PlayerNewLevel', this.setLevel.bind( this ) );
 
     };

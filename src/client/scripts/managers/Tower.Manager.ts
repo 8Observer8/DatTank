@@ -52,7 +52,7 @@ class TowerManager {
 
         }
 
-        return false;
+        return null;
 
     };
 
