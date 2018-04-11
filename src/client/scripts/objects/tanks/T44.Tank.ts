@@ -1,6 +1,6 @@
 /*
  * @author ohmed
- * DatTank Tank T44 file
+ * DatTank Tank T44
 */
 
 import { TankCore, TankList } from "./../../core/objects/Tank.Core";
@@ -36,8 +36,6 @@ class T44Tank extends TankCore {
     };
 
 };
-
-TankList['T44'] = T44Tank;
 
 //
 

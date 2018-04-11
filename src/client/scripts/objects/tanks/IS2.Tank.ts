@@ -1,6 +1,6 @@
 /*
  * @author ohmed
- * DatTank Tank IS2 file
+ * DatTank Tank IS2
 */
 
 import { TankCore, TankList } from "./../../core/objects/Tank.Core";
@@ -36,8 +36,6 @@ class IS2Tank extends TankCore {
     };
 
 };
-
-TankList['IS2'] = IS2Tank;
 
 //
 

@@ -10,10 +10,6 @@ import { TankGfx } from "./../../graphics/objects/Tank.Gfx";
 
 //
 
-let TankList = {};
-
-//
-
 class TankCore {
 
     static list: object;
@@ -130,10 +126,12 @@ import { T29Tank } from "./../../objects/tanks/T29.Tank";
 import { T44Tank } from "./../../objects/tanks/T44.Tank";
 import { T54Tank } from "./../../objects/tanks/T54.Tank";
 
-TankList['IS2'] = IS2Tank;
-TankList['T29'] = T29Tank;
-TankList['T44'] = T44Tank;
-TankList['T54'] = T54Tank;
+let TankList = {
+    IS2:    IS2Tank,
+    T29:    T29Tank,
+    T44:    T44Tank,
+    T54:    T54Tank
+};
 
 //
 
