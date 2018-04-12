@@ -20,11 +20,6 @@ class ArenaCore {
     private serverIP: string;
     private serverID: string;
 
-    public teams: TeamManager = new TeamManager();
-    public players: PlayerManager = new PlayerManager();
-    public towers: TowerManager = new TowerManager();
-    public boxes: BoxManager = new BoxManager();
-
     public me: PlayerCore;
 
     private prevUpdateTime: number;
@@ -46,10 +41,10 @@ class ArenaCore {
 
     public init ( params ) {
 
-        this.teams.init( params );
-        this.players.init();
-        this.towers.init();
-        this.boxes.init();
+        TeamManager.init( params );
+        PlayerManager.init();
+        TowerManager.init();
+        BoxManager.init();
 
         //
 

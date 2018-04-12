@@ -8,8 +8,9 @@ import { Arena } from "./../core/Arena.Core";
 
 //
 
-class PlayerManager {
+class PlayerManagerCore {
 
+    private static instance: PlayerManagerCore;
     private players: Array<PlayerCore>;
 
     //
@@ -69,8 +70,20 @@ class PlayerManager {
 
     };
 
+    constructor () {
+
+        if ( PlayerManagerCore.instance ) {
+
+            return PlayerManagerCore.instance;
+
+        }
+
+        PlayerManagerCore.instance = this;
+
+    };
+
 };
 
 //
 
-export { PlayerManager };
+export let PlayerManager = new PlayerManagerCore();

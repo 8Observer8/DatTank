@@ -3,12 +3,26 @@
  * DatTank Arena decoration manager
 */
 
-class DecorationManager {
+class DecorationManagerCore {
+
+    private static instance: DecorationManagerCore;
 
     //
+
+    constructor () {
+
+        if ( DecorationManagerCore.instance ) {
+
+            return DecorationManagerCore.instance;
+
+        }
+
+        DecorationManagerCore.instance = this;
+
+    };
 
 };
 
 //
 
-export { DecorationManager };
+export let DecorationManager = new DecorationManagerCore();

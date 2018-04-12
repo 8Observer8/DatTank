@@ -7,8 +7,9 @@ import { TowerCore } from "../core/objects/Tower.Core";
 
 //
 
-class TowerManager {
+class TowerManagerCore {
 
+    private static instance: TowerManagerCore;
     private towers: Array<TowerCore> = [];
 
     //
@@ -27,7 +28,7 @@ class TowerManager {
 
             if ( this.towers[ i ].id === tower.id ) {
 
-                tower.dispose();
+                // tower.dispose();
                 continue;
 
             }
@@ -62,8 +63,20 @@ class TowerManager {
 
     };
 
+    constructor () {
+
+        if ( TowerManagerCore.instance ) {
+
+            return TowerManagerCore.instance;
+
+        }
+
+        TowerManagerCore.instance = this;
+
+    };
+
 };
 
 //
 
-export { TowerManager };
+export let TowerManager = new TowerManagerCore();

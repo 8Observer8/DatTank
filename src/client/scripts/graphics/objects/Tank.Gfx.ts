@@ -11,8 +11,7 @@ import { ResourceManager } from "./../../managers/Resource.Manager";
 
 class TankGfx {
 
-    public object: THREE.Object3D = new THREE.Object3D();
-
+    private object: THREE.Object3D = new THREE.Object3D();
     private topMesh: THREE.Mesh;
     private baseMesh: THREE.Mesh;
 

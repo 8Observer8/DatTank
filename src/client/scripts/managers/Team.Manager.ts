@@ -7,7 +7,9 @@ import { TeamCore } from "./../core/Team.Core";
 
 //
 
-class TeamManager {
+class TeamManagerCore {
+
+    private static instance: TeamManagerCore;
 
     private teams: Array<TeamCore> = [];
 
@@ -47,8 +49,20 @@ class TeamManager {
 
     };
 
+    constructor () {
+
+        if ( TeamManagerCore.instance ) {
+
+            return TeamManagerCore.instance;
+
+        }
+
+        TeamManagerCore.instance = this;
+
+    };
+
 };
 
 //
 
-export { TeamManager };
+export let TeamManager = new TeamManagerCore();

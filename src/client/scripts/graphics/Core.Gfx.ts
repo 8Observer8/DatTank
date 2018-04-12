@@ -5,6 +5,8 @@
 
 import * as THREE from 'three';
 
+import { TerrainGfx } from "./objects/Terrain.Gfx";
+
 //
 
 enum Quality { LOW = 0.7, MEDIUM = 0.85, HIGH = 1 };
@@ -17,6 +19,8 @@ interface GfxSettings {
 //
 
 class GraphicsCore {
+
+    private static instance;
 
     public scene: THREE.Scene;
     public camera: THREE.PerspectiveCamera;
@@ -57,8 +61,6 @@ class GraphicsCore {
 
     public init () {
 
-        this.resize();
-
         // setup raycaster
 
         this.raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3(), 0, 5000 );
@@ -68,6 +70,11 @@ class GraphicsCore {
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera( 60, this.windowWidth / this.windowHeight, 1, 900 );
         this.scene.add( this.camera );
+
+        //
+
+        this.updateRenderer();
+        this.resize();
 
         // setup lights
 
@@ -93,7 +100,6 @@ class GraphicsCore {
         // start rendering
 
         this.render = this.render.bind( this );
-        this.updateRenderer();
         this.render();
 
     };
@@ -112,7 +118,7 @@ class GraphicsCore {
 
             let decoration = decorations[ i ];
             // let model = Game.arena.decorationManager.list[ decoration.type ].model;
-    
+
             // let mesh = new THREE.Mesh( model.geometry, [ model.material[0].clone() ] );
             // mesh.material[0].side = THREE.FrontSide;
             // mesh.scale.set( decoration.scale.x, decoration.scale.y, decoration.scale.z );
@@ -121,9 +127,9 @@ class GraphicsCore {
             // mesh.name = decoration.type;
             // view.scene.add( mesh );
             // this.decorations.push( mesh );
-    
+
             // this.addObjectShadow( decoration.type, mesh.position, mesh.scale, mesh.rotation );
-    
+
         }
 
     };
@@ -146,12 +152,12 @@ class GraphicsCore {
 
         this.windowWidth = window.innerWidth;
         this.windowHeight = window.innerHeight;
-    
+
         //
-    
+
         this.camera.aspect = this.windowWidth / this.windowHeight;
         this.camera.updateProjectionMatrix();
-    
+
         this.renderer.setSize( this.gfxSettings.quality * this.windowWidth, this.gfxSettings.quality * this.windowHeight );
 
     };
@@ -235,8 +241,22 @@ class GraphicsCore {
 
     };
 
+    //
+
+    constructor () {
+
+        if ( GraphicsCore.instance ) {
+
+            return GraphicsCore.instance;
+
+        }
+
+        GraphicsCore.instance = this;
+
+    };
+
 };
 
 //
 
-export { GraphicsCore };
+export let GfxCore = new GraphicsCore();

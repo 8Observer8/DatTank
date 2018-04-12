@@ -13,6 +13,7 @@ import { GameService } from "./services/Game.Service";
 import { Arena } from "./core/Arena.Core";
 import { UICore } from "./ui/Core.UI";
 import { Logger } from "./utils/Logger";
+import { GfxCore } from "./graphics/Core.Gfx";
 
 //
 
@@ -116,6 +117,8 @@ class GameCore {
         Arena.init( data );
         this.ui.modules.landing.hideLoader();
         this.ui.modules.inGame.showViewport();
+
+        GfxCore.init();
 
     };
 

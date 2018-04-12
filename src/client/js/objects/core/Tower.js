@@ -5,31 +5,6 @@
 
 Game.Tower = function ( arena, params ) {
 
-    EventDispatcher.call( this );
-
-    this.id = params.id;
-    this.arena = arena;
-
-    this.team = this.arena.teamManager.getById( params.team ) || false;
-    this.health = params.health;
-
-    this.bullets = [];
-
-    this.object = new THREE.Object3D();
-    this.rotation = params.rotation || 0;
-    this.position = new THREE.Vector3( params.position.x, params.position.y, params.position.z );
-
-    this.animations = {};
-    this.healthBar = false;
-    this.bulletSpeed = 1.5;
-
-    this.label = false;
-    this.healthChangeLabels = [];
-
-    this.changeTeamAnimationTime = false;
-
-    //
-
     this.initBullets();
     this.initChangeTeamEffect();
     this.init();
@@ -39,10 +14,6 @@ Game.Tower = function ( arena, params ) {
     this.changeTeam( this.team.id, false, true );
 
 };
-
-Game.Tower.prototype = Object.create( EventDispatcher.prototype );
-
-//
 
 Game.Tower.prototype.init = function () {
 

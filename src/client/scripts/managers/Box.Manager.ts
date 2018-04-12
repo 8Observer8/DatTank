@@ -7,8 +7,9 @@ import { BoxCore } from "./../core/objects/Box.Core";
 
 //
 
-class BoxManager {
+class BoxManagerCore {
 
+    private static instance: BoxManagerCore;
     private boxes: Array<BoxCore> = [];
 
     //
@@ -78,8 +79,20 @@ class BoxManager {
 
     };
 
+    constructor () {
+
+        if ( BoxManagerCore.instance ) {
+
+            return BoxManagerCore.instance;
+
+        }
+
+        BoxManagerCore.instance = this;
+
+    };
+
 };
 
 //
 
-export { BoxManager };
+export let BoxManager = new BoxManagerCore();
