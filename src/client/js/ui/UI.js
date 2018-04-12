@@ -5,10 +5,6 @@
 
 Game.UI = function () {
 
-    // nothing here
-
-};
-
     if ( localStorage.getItem('hq') === 'true' ) {
 
         this.changeQuality( true, true );
@@ -25,11 +21,6 @@ Game.UI = function () {
 
     $('.stats-update-block .bonus .increase').click( this.updateTankStat.bind( this ) );
     $( document ).on('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', this.onFullscreenModeChange.bind( this ) );
-
-    //
-
-    setTimeout( function () { $('.fb-like').animate( { opacity: 1 }, 500 ); }, 1000 );
-    setTimeout( function () { $('.folow-btn').animate( { opacity: 1 }, 500 ); }, 1200 );
 
 };
 
@@ -63,12 +54,6 @@ Game.UI.prototype.changeSound = function ( value, withoutSound ) {
         soundManager.playMenuSound();
 
     }
-
-};
-
-Game.UI.prototype.showViewport = function () {
-
-    $('#viewport').show();
 
 };
 

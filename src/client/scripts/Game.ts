@@ -19,15 +19,9 @@ import { GfxCore } from "./graphics/Core.Gfx";
 
 class GameCore {
 
-    public version: string = 'v0.6.0';
-
-    public ready: boolean = false;
-    public time: number;
-
-    private gameLoopInterval: number;
-    private prevLoopTime: number;
-
+    public version: string = 'v0.5.1';
     public isMobile: boolean;
+    public ready: boolean = false;
 
     //
 

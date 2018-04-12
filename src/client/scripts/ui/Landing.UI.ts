@@ -110,6 +110,9 @@ class UILandingModule {
         $('#play-btn').click( this.game.garage.show.bind( this.game.garage ) );
         $('#fullscreen-on-off').click( this.uiCore.toggleFullscreenMode.bind( this.uiCore ) );
 
+        setTimeout( function () { $('.fb-like').animate( { opacity: 1 }, 500 ); }, 1000 );
+        setTimeout( function () { $('.folow-btn').animate( { opacity: 1 }, 500 ); }, 1200 );
+
     };
 
 };
