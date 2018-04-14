@@ -122,5 +122,6 @@ class GameCore {
 
 var game = new GameCore();
 window['game'] = game;
+window['game']['gfx'] = GfxCore;
 
 $( document ).ready( game.init.bind( game ) );

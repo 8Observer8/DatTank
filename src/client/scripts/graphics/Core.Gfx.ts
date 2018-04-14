@@ -5,7 +5,7 @@
 
 import * as THREE from 'three';
 
-import { TerrainGfx } from "./objects/Terrain.Gfx";
+import { LandscapeGfx } from "./objects/Landscape.Gfx";
 
 //
 
@@ -44,6 +44,7 @@ class GraphicsCore {
 
     public decorations: Array<object> = [];
     public sun: THREE.DirectionalLight;
+    public landscape: LandscapeGfx = new LandscapeGfx();
 
     public lights = {
         ambient:    0xfff3bc,
@@ -87,6 +88,10 @@ class GraphicsCore {
 
         this.scene.fog = new THREE.FogExp2( this.fog.color, this.fog.density );
 
+        // init landscape
+
+        this.landscape.init();
+
         // setup sound listener
 
         this.audioListener = new THREE.AudioListener();
@@ -101,48 +106,6 @@ class GraphicsCore {
 
         this.render = this.render.bind( this );
         this.render();
-
-    };
-
-    //
-
-    private buildTerrain () {
-
-        // todo
-
-    };
-
-    private addDecorations ( decorations:Array<object> ) {
-
-        for ( var i = 0, il = decorations.length; i < il; i ++ ) {
-
-            let decoration = decorations[ i ];
-            // let model = Game.arena.decorationManager.list[ decoration.type ].model;
-
-            // let mesh = new THREE.Mesh( model.geometry, [ model.material[0].clone() ] );
-            // mesh.material[0].side = THREE.FrontSide;
-            // mesh.scale.set( decoration.scale.x, decoration.scale.y, decoration.scale.z );
-            // mesh.rotation.y = decoration.rotation;
-            // mesh.position.set( decoration.position.x, decoration.position.y, decoration.position.z );
-            // mesh.name = decoration.type;
-            // view.scene.add( mesh );
-            // this.decorations.push( mesh );
-
-            // this.addObjectShadow( decoration.type, mesh.position, mesh.scale, mesh.rotation );
-
-        }
-
-    };
-
-    private addTeamZones () {
-
-        // todo
-
-    };
-
-    private addGrassZones () {
-
-        // todo
 
     };
 

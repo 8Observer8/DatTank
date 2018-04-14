@@ -3,70 +3,6 @@
  * DatTank Scene Rendering core
 */
 
-Game.ViewManager = function () {
-
-    // scene params
-
-    this.mapSize = 1270;
-
-};
-
-Game.ViewManager.prototype.addTerrain = function () {
-
-    var size = 2430;
-    var offset = 100;
-    var wallWidth = 30;
-
-    var groundTexture = resourceManager.getTexture( 'Ground.jpg' );
-    groundTexture.wrapS = THREE.RepeatWrapping;
-    groundTexture.wrapT = THREE.RepeatWrapping;
-    groundTexture.repeat.set( 30, 30 );
-
-    var ground = new THREE.Mesh( new THREE.PlaneBufferGeometry( size + 1800, size + 1800 ), new THREE.MeshBasicMaterial({ depthWrite: false, map: groundTexture, color: 0x777050 }) );
-    ground.rotation.x = - Math.PI / 2;
-    ground.renderOrder = 6;
-    this.scene.add( ground );
-    this.scene.ground = ground;
-
-    ground.name = 'ground';
-    this.ground = ground;
-
-    // add grass
-
-    for ( var i = 0; i < 150; i ++ ) {
-
-        this.addGrassZones();
-
-    }
-
-    // add edges
-
-    var edgeTexture = resourceManager.getTexture( 'brick.jpg' );
-    edgeTexture.wrapS = THREE.RepeatWrapping;
-    edgeTexture.wrapT = THREE.RepeatWrapping;
-    edgeTexture.repeat.set( 50, 0.5 );
-    var material = new THREE.MeshBasicMaterial({ color: 0x999999, map: edgeTexture });
-
-    var border1 = new THREE.Mesh( new THREE.BoxGeometry( size + 2 * offset + wallWidth, wallWidth, wallWidth ), material );
-    border1.rotation.y += Math.PI / 2;
-    border1.position.set( size / 2 + offset, 1, 0 );
-    this.scene.add( border1 );
-
-    var border2 = new THREE.Mesh( new THREE.BoxGeometry( size + 2 * offset + wallWidth, wallWidth, wallWidth ), material );
-    border2.rotation.y = - Math.PI / 2;
-    border2.position.set( - size / 2 - offset, 1, 0 );
-    this.scene.add( border2 );
-
-    var border3 = new THREE.Mesh( new THREE.BoxGeometry( size + 2 * offset - wallWidth, wallWidth, wallWidth ), material );
-    border3.position.set( 0, 1, size / 2 + offset );
-    this.scene.add( border3 );
-
-    var border4 = new THREE.Mesh( new THREE.BoxGeometry( size + 2 * offset - wallWidth, wallWidth, wallWidth ), material );
-    border4.position.set( 0, 1, - size / 2 - offset );
-    this.scene.add( border4 );
-
-};
-
 Game.ViewManager.prototype.addObjectShadow = function ( objectType, position, scale, rotation ) {
 
     var shadowTexture;
@@ -117,22 +53,6 @@ Game.ViewManager.prototype.addObjectShadow = function ( objectType, position, sc
         this.scene.add( shadowMesh );
 
     }
-
-};
-
-Game.ViewManager.prototype.addGrassZones = function () {
-
-    var size = 2430;
-    var scale = Math.random() / 2 + 0.3;
-    var grassTexture = resourceManager.getTexture( 'Grass.png' );
-
-    var grass = new THREE.Mesh( new THREE.PlaneBufferGeometry( 240, 240 ), new THREE.MeshBasicMaterial({ map: grassTexture, color: 0x779977, transparent: true, depthWrite: false }) );
-    grass.rotation.set( - Math.PI / 2, 0, Math.random() * Math.PI );
-    grass.scale.set( scale, scale, scale );
-    grass.material.transparent = true;
-    grass.position.set( ( Math.random() - 0.5 ) * size, 0.1 + Math.random() / 10, ( Math.random() - 0.5 ) * size );
-    grass.renderOrder = 8;
-    this.scene.add( grass );
 
 };
 
