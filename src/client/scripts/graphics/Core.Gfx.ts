@@ -168,7 +168,7 @@ class GraphicsCore {
 
     };
 
-    private animate ( delta: number ) {
+    private animate ( time: number, delta: number ) {
 
         // todo
 
@@ -176,11 +176,12 @@ class GraphicsCore {
 
     private render () {
 
-        this.prevRenderTime = this.prevRenderTime || performance.now();
-        let delta = performance.now() - this.prevRenderTime;
-        this.prevRenderTime = performance.now();
+        let time = performance.now();
+        this.prevRenderTime = this.prevRenderTime || time;
+        let delta = time - this.prevRenderTime;
+        this.prevRenderTime = time;
 
-        this.animate( delta );
+        this.animate( time, delta );
         this.renderer.render( this.scene, this.camera );
 
         //
@@ -191,7 +192,7 @@ class GraphicsCore {
 
     public clear () {
 
-        if (  ! this.scene ) return;
+        if ( ! this.scene ) return;
         this.removeCameraShake();
 
         //

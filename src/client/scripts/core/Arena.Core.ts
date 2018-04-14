@@ -8,8 +8,11 @@ import { PlayerManager } from "./../managers/Player.Manager";
 import { TowerManager } from "./../managers/Tower.Manager";
 import { BoxManager } from "./../managers/Box.Manager";
 
+import { GfxCore } from "./../graphics/Core.Gfx";
 import { PlayerCore } from "./Player.Core";
+import { TowerCore } from "./objects/Tower.Core";
 import { ArenaNetwork } from "../network/Arena.Network";
+import { ToneMapping } from "three";
 
 //
 
@@ -41,6 +44,13 @@ class ArenaCore {
 
     public init ( params ) {
 
+        // setup GfxCore
+
+        GfxCore.clear();
+        GfxCore.init();
+
+        // setup managers
+
         TeamManager.init( params );
         PlayerManager.init();
         TowerManager.init();
@@ -54,21 +64,49 @@ class ArenaCore {
 
     };
 
-    public newTowers ( data ) {
+    public updateLeaderBoard ( data ) {
 
-        // todo
-
-    };
-
-    public newPlayers ( data ) {
-
-        // todo
+        // ui.updateLeaderboard( data.players );
+        // ui.updateTeamScore( data.teams );
 
     };
 
-    public newBoxes ( data ) {
+    public removePlayer ( player ) {
 
-        // todo
+        PlayerManager.remove( PlayerManager.getById( player.id ) );
+
+    };
+
+    public newTowers ( towers: Array<any> ) {
+
+        for ( let i = 0, il = towers.length; i < il; i ++ ) {
+
+            TowerManager.remove( TowerManager.getById( towers[ i ].id ) );
+            TowerManager.add( new TowerCore( towers[ i ] ) );
+
+        }
+
+    };
+
+    public newPlayers ( players: Array<any> ) {
+
+        for ( let i = 0, il = players.length; i < il; i ++ ) {
+
+            PlayerManager.remove( PlayerManager.getById( players[ i ].id ) );
+            PlayerManager.add( new PlayerCore( players[ i ] ) );
+
+        }
+
+    };
+
+    public newBoxes ( boxes: Array<any> ) {
+
+        for ( let i = 0, il = boxes.length; i < il; i ++ ) {
+
+            BoxManager.remove( BoxManager.getBoxById( boxes[ i ].id ) );
+            BoxManager.add( boxes[ i ] );
+
+        }
 
     };
 

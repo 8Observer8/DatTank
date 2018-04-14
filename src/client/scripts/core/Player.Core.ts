@@ -81,7 +81,7 @@ class PlayerCore {
 
     //
 
-    constructor ( arena, params ) {
+    constructor ( params ) {
 
         this.init( params );
 

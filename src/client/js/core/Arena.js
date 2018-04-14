@@ -3,27 +3,6 @@
  * DatTank Arena object
 */
 
-Game.Arena.prototype.init = function ( params ) {
-
-    view.clean();
-    view.setupScene();
-    view.addDecorations( params.decorations );
-    view.addTerrain();
-    view.addTeamZone();
-
-    this.initExplosions();
-
-    //
-
-    this.me = this.addPlayer( params.me );
-
-    //
-
-    ui.updateAmmo( this.me.ammo );
-    ui.updateHealth( this.me.health );
-
-};
-
 Game.Arena.prototype.initExplosions = function () {
 
     for ( var i = 0; i < 30; i ++ ) {
@@ -141,116 +120,6 @@ Game.Arena.prototype.updateExplosions = function ( delta ) {
 
 };
 
-Game.Arena.prototype.addPlayer = function ( data ) {
-
-    var player = new Game.Player( this, data );
-    this.playerManager.add( player );
-
-    return player;
-
-};
-
-Game.Arena.prototype.newPlayersInRange = function ( data ) {
-
-    var player;
-    var playerBinSize = 23;
-
-    for ( var i = 0, il = data.length / playerBinSize; i < il; i ++ ) {
-
-        player = {
-            id:             data[ i * playerBinSize + 0 ],
-            team:           data[ i * playerBinSize + 1 ],
-            position:   {
-                x:  data[ i * playerBinSize + 2 ],
-                y:  0,
-                z:  data[ i * playerBinSize + 3 ]
-            },
-            rotation:       data[ i * playerBinSize + 4 ] / 1000,
-            rotationTop:    data[ i * playerBinSize + 5 ] / 1000,
-            health:         data[ i * playerBinSize + 6 ],
-            moveDirection:  {
-                x:  data[ i * playerBinSize + 7 ],
-                y:  data[ i * playerBinSize + 8 ]
-            },
-            tank:   Game.Tank.typeIds[ data[ i * playerBinSize + 9 ] ],
-            login:  ''
-        };
-
-        for ( var j = 0; j < 13; j ++ ) {
-
-            player.login += String.fromCharCode( data[ i * playerBinSize + 10 + j ] );
-
-        }
-
-        this.playerManager.remove( player );
-        this.addPlayer( player );
-
-    }
-
-};
-
-Game.Arena.prototype.newTowersInRange = function ( data ) {
-
-    var tower;
-    var towerBinSize = 6;
-
-    for ( var i = 0, il = data.length / towerBinSize; i < il; i ++ ) {
-
-        tower = {
-            id:         data[ i * towerBinSize + 0 ],
-            team:       data[ i * towerBinSize + 1 ],
-            position:   {
-                x:  data[ i * towerBinSize + 2 ],
-                y:  0,
-                z:  data[ i * towerBinSize + 3 ]
-            },
-            rotation:   data[ i * towerBinSize + 4 ] / 1000,
-            health:     data[ i * towerBinSize + 5 ]
-        };
-
-        this.towerManager.remove( tower );
-        this.towerManager.add( new Game.Tower( this, tower ) );
-
-    }
-
-};
-
-Game.Arena.prototype.newBoxesInRange = function ( data ) {
-
-    var box;
-    var boxBinSize = 4;
-
-    //
-
-    for ( var i = 0, il = data.length / boxBinSize; i < il; i ++ ) {
-
-        box = {
-            id:         data[ i * boxBinSize + 0 ],
-            type:       Game.Box.Types[ data[ i * boxBinSize + 1 ] ],
-            position:   {
-                x:  data[ i * boxBinSize + 2 ],
-                y:  20,
-                z:  data[ i * boxBinSize + 3 ]
-            }
-        };
-
-        this.boxManager.remove( box );
-        this.boxManager.add( box );
-
-    }
-
-};
-
-Game.Arena.prototype.playerLeft = function ( player ) {
-
-    if ( this.playerManager.getById( player.id ) ) {
-
-        this.playerManager.remove( this.playerManager.getById( player.id ) );
-
-    }
-
-};
-
 Game.Arena.prototype.update = function ( time, delta ) {
 
     if ( this.stopped ) return;
@@ -333,21 +202,5 @@ Game.Arena.prototype.update = function ( time, delta ) {
         this.boxManager.remove( boxesToRemove[ i ] );
 
     }
-
-};
-
-Game.Arena.prototype.updateLeaderboard = function ( data ) {
-
-    ui.updateLeaderboard( data.players );
-    ui.updateTeamScore( data.teams );
-
-};
-
-//
-
-Game.Arena.prototype.addNetworkListeners = function () {
-
-    network.addMessageListener( 'BulletHit', this.showExplosion.bind( this ) );
-    network.addMessageListener( 'BoxRemove', this.proxyEventToBox.bind( this ) );
 
 };
