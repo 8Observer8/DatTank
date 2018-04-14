@@ -49,12 +49,9 @@ class NetworkCore {
         this.registerEvent( 'ArenaPlayerRespawn', EventDir.OUT, EventType.JSON, 4 );
         this.registerEvent( 'ArenaPlayerLeft', EventDir.IN, EventType.JSON, 6 );
         this.registerEvent( 'ArenaLeaderboardUpdate', EventDir.IN, EventType.JSON, 7 );
-
-        //
-
-        this.registerEvent( 'PlayersInRange', EventDir.IN, EventType.BIN, 50 );
-        this.registerEvent( 'TowersInRange', EventDir.IN, EventType.BIN, 60 );
-        this.registerEvent( 'BoxesInRange', EventDir.IN, EventType.BIN, 70 );
+        this.registerEvent( 'ArenaPlayersInRange', EventDir.IN, EventType.BIN, 50 );
+        this.registerEvent( 'ArenaTowersInRange', EventDir.IN, EventType.BIN, 60 );
+        this.registerEvent( 'ArenaBoxesInRange', EventDir.IN, EventType.BIN, 70 );
 
         this.registerEvent( 'PlayerFriendlyFire', EventDir.IN, EventType.BIN, 80 );
 

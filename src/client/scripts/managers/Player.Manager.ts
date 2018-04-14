@@ -11,13 +11,13 @@ import { Arena } from "./../core/Arena.Core";
 class PlayerManagerCore {
 
     private static instance: PlayerManagerCore;
-    private players: Array<PlayerCore>;
+    private players: Array<PlayerCore> = [];
 
     //
 
     public add ( player: PlayerCore ) {
 
-        if ( player.id === Arena.me.id ) {
+        if ( player.id === Arena.meId ) {
 
             Arena.me = player;
     
@@ -28,6 +28,8 @@ class PlayerManagerCore {
     };
 
     public remove ( player: PlayerCore ) {
+
+        if ( ! player ) return;
 
         var newPlayersList = [];
     

@@ -1,11 +1,6 @@
 
 Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
 
-    if ( this.status !== Game.Player.Alive ) return;
-    var player = this;
-
-    //
-
     if ( player.moveDirection.x !== 0 || player.moveDirection.y !== 0 ) {
 
         if ( player.tank.sounds.moving.buffer && ! player.tank.sounds.moving.isPlaying ) {
@@ -93,59 +88,6 @@ Game.Player.prototype.shoot = function ( bulletId ) {
         element.css( 'animation-duration', 1.2 * 1000 * 60 / this.tank.rpm + 'ms' );
 
     }
-
-};
-
-Game.Player.prototype.updateHealth = function ( health, killerId ) {
-
-    if ( this.status !== Game.Player.Alive ) return;
-
-    health = ( health !== undefined ) ? health : this.health;
-
-    this.tank.addHealthChangeLabel( health - this.health );
-
-    //
-
-    if ( Game.arena && Game.arena.me.id === this.id ) {
-
-        if ( health < this.health ) {
-
-            view.addCameraShake( 300, 3 );
-
-        }
-
-        ui.updateHealth( health );
-
-    }
-
-    //
-
-    this.health = health;
-
-    this.tank.updateLabel();
-
-    if ( this.health === 0 ) {
-
-        this.die( killerId );
-
-    } else if ( this.health <= 50 ) {
-
-        this.tank.showSmoke();
-
-    } else {
-
-        this.tank.hideSmoke();
-
-    }
-
-};
-
-Game.Player.prototype.updateAmmo = function ( value ) {
-
-    if ( this.status !== Game.Player.Alive ) return;
-
-    this.ammo = value;
-    ui.updateAmmo( this.ammo );
 
 };
 

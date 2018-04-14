@@ -22,6 +22,8 @@ class TowerManagerCore {
 
     public remove ( tower: TowerCore ) {
 
+        if ( ! tower ) return;
+
         var newTowerList = [];
 
         for ( var i = 0, il = this.towers.length; i < il; i ++ ) {

@@ -5,6 +5,8 @@
 
 import * as THREE from 'three';
 
+import { Game } from "./../Game";
+import { Arena } from "./../core/Arena.Core";
 import { LandscapeGfx } from "./objects/Landscape.Gfx";
 
 //
@@ -157,7 +159,7 @@ class GraphicsCore {
 
     };
 
-    private updateCamera ( position: THREE.Vector3, rotation: number ) {
+    private updateCamera ( position, rotation: number ) {
 
         this.camera.position.x = position.x - 100 * Math.sin( rotation ) + this.cameraOffset.x;
         this.camera.position.z = position.z - 100 * Math.cos( rotation ) + this.cameraOffset.y;
@@ -170,7 +172,11 @@ class GraphicsCore {
 
     private animate ( time: number, delta: number ) {
 
-        // todo
+        if ( ! Arena.me ) return;
+
+        //
+
+        this.updateCamera( Arena.me.tank.position, Arena.me.tank.rotation );
 
     };
 

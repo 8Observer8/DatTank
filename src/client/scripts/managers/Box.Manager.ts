@@ -22,6 +22,8 @@ class BoxManagerCore {
 
     public remove ( box ) {
 
+        if ( ! box ) return;
+
         var newBoxList = [];
 
         for ( var i = 0, il = this.boxes.length; i < il; i ++ ) {

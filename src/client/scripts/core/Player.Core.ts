@@ -34,9 +34,15 @@ class PlayerCore {
 
     //
 
-    private setTank ( tankName: string ) {
+    private setTank ( tankId: string ) {
     
-        this.tank = new Tanks[ tankName ]({ player: this });
+        let tankName = Tanks.getById( tankId );
+
+        if ( tankName ) {
+        
+            this.tank = new Tanks[ tankName ]({ player: this });
+
+        }
 
     };
 
@@ -85,6 +91,7 @@ class PlayerCore {
 
     private init ( params ) {
 
+        this.id = params.id;
         this.setTank( params.tank );
         this.tank.init( params );
         this.team = TeamManager.getById( params.team );

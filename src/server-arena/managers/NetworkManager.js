@@ -26,12 +26,9 @@ NetworkManager.prototype.init = function () {
     this.registerEvent( 'ArenaPlayerRespawn', 'in', 'json', 4 );
     this.registerEvent( 'ArenaPlayerLeft', 'out', 'json', 6 );
     this.registerEvent( 'ArenaLeaderboardUpdate', 'out', 'json', 7 );
-
-    //
-
-    this.registerEvent( 'PlayersInRange', 'out', 'bin', 50 );
-    this.registerEvent( 'TowersInRange', 'out', 'bin', 60 );
-    this.registerEvent( 'BoxesInRange', 'out', 'bin', 70 );
+    this.registerEvent( 'ArenaPlayersInRange', 'out', 'bin', 50 );
+    this.registerEvent( 'ArenaTowersInRange', 'out', 'bin', 60 );
+    this.registerEvent( 'ArenaBoxesInRange', 'out', 'bin', 70 );
 
     //
 

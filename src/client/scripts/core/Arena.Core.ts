@@ -24,6 +24,7 @@ class ArenaCore {
     private serverID: string;
 
     public me: PlayerCore;
+    public meId: number;
 
     private prevUpdateTime: number;
     private time: number;
@@ -40,9 +41,15 @@ class ArenaCore {
         this.serverIP = ip;
         this.serverID = id;
 
+        //
+
+        this.network.init();
+
     };
 
     public init ( params ) {
+
+        this.meId = params.me.id;
 
         // setup GfxCore
 

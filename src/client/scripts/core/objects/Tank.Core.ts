@@ -3,6 +3,8 @@
  * DatTank Tank general class
 */
 
+import { Arena } from "./../Arena.Core";
+import { UI } from "./../../ui/Core.UI";
 import { PlayerCore } from "./../Player.Core";
 
 import { TankNetwork } from "./../../network/Tank.Network";
@@ -51,7 +53,7 @@ class TankCore {
 
         this.moveDirection.x = directionX;
         this.moveDirection.y = directionZ;
-    
+
         this.positionCorrection.x = positionX - this.position.x;
         this.positionCorrection.y = 0;
         this.positionCorrection.z = positionZ - this.position.z;
@@ -69,19 +71,54 @@ class TankCore {
 
     public setAmmo ( value: number ) {
 
-        // todo
+        if ( this.health <= 0 ) return;
+
+        this.ammo = value;
+        UI.InGame.updateAmmo( this.ammo );
 
     };
 
     public setHealth ( value: number, trigger: any ) {
 
-        // todo
+        if ( this.health <= 0 ) return;
+
+        // this.tank.addHealthChangeLabel( health - this.health );
+
+        if ( Arena.me.id === this.id ) {
+
+            if ( value < this.health ) {
+
+                // view.addCameraShake( 300, 3 );
+
+            }
+
+            UI.InGame.updateHealth( value );
+
+        }
+
+        this.health = value;
+
+        // this.tank.updateLabel();
+
+        // if ( this.health === 0 ) {
+
+        //     this.die( killerId );
+
+        // } else if ( this.health <= 50 ) {
+
+        //     this.showSmoke();
+
+        // } else {
+
+        //     this.hideSmoke();
+
+        // }
 
     };
 
     private updateMovement ( time: number, delta: number ) {
 
-        // todo
+        //
 
     };
 
@@ -92,6 +129,8 @@ class TankCore {
     };
 
     public update ( time: number, delta: number ) {
+
+        if ( this.health <= 0 ) return;
 
         this.updateMovement( time, delta );
 
@@ -136,7 +175,26 @@ let TankList = {
     IS2:    IS2Tank,
     T29:    T29Tank,
     T44:    T44Tank,
-    T54:    T54Tank
+    T54:    T54Tank,
+    getById: function ( tankId ) {
+
+        for ( let item in TankList ) {
+
+            if ( typeof item === "string" ) {
+
+                if ( TankList[ item ].tid === tankId ) {
+
+                    return item;
+
+                }
+
+            }
+
+        }
+
+        return null;
+
+    }
 };
 
 //

@@ -17,6 +17,8 @@ class IS2Tank extends TankCore {
     static rpm: number = 4.88 * 10;
     static armour: number = 90;
 
+    static tid = 0;
+
     //
 
     public init () {

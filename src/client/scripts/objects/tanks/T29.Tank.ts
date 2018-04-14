@@ -17,6 +17,8 @@ class T29Tank extends TankCore {
     static rpm: number = 16.7 * 10;
     static armour: number = 102;
 
+    static tid = 1;
+
     //
 
     public init () {

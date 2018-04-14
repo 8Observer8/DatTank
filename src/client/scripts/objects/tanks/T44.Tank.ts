@@ -17,6 +17,8 @@ class T44Tank extends TankCore {
     static rpm: number = 10.7 * 10;
     static armour: number = 90;
 
+    static tid = 2;
+
     //
 
     public init () {

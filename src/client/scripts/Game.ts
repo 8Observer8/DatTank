@@ -123,5 +123,6 @@ export let Game = new GameCore();
 window['game'] = Game;
 window['game']['gfx'] = GfxCore;
 window['game']['ui'] = UI;
+window['game']['arena'] = Arena;
 
 $( document ).ready( Game.init.bind( Game ) );

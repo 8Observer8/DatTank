@@ -679,7 +679,7 @@ Player.prototype.update = function ( delta, time ) {
 
         }
 
-        networkManager.send( 'BoxesInRange', scope.socket, buffer, bufferView );
+        networkManager.send( 'ArenaBoxesInRange', scope.socket, buffer, bufferView );
 
     }
 
@@ -730,7 +730,7 @@ Player.prototype.update = function ( delta, time ) {
 
         }
 
-        networkManager.send( 'TowersInRange', scope.socket, buffer, bufferView );
+        networkManager.send( 'ArenaTowersInRange', scope.socket, buffer, bufferView );
 
     }
 
@@ -741,8 +741,6 @@ Player.prototype.update = function ( delta, time ) {
     for ( var i = 0, il = scope.arena.playerManager.players.length; i < il; i ++ ) {
 
         var player = scope.arena.playerManager.players[ i ];
-
-        if ( scope.id === player.id ) continue;
 
         if ( scope.isObjectInRange( player ) ) {
 
@@ -765,10 +763,11 @@ Player.prototype.update = function ( delta, time ) {
         var buffer = new ArrayBuffer( 2 + playerDataSize * newPlayersInRange.length );
         var bufferView = new Uint16Array( buffer );
         var player;
+        var item = 0;
 
-        for ( var i = 1, il = playerDataSize * newPlayersInRange.length + 1; i < il; i += playerDataSize ) {
+        for ( var i = 1, il = ( playerDataSize / 2 ) * newPlayersInRange.length + 1; i < il; i += playerDataSize / 2 ) {
 
-            player = newPlayersInRange[ ( i - 1 ) / playerDataSize ];
+            player = newPlayersInRange[ item ];
 
             bufferView[ i + 0 ] = player.id;
             bufferView[ i + 1 ] = player.team.id;
@@ -791,9 +790,11 @@ Player.prototype.update = function ( delta, time ) {
 
             }
 
+            item ++;
+
         }
 
-        networkManager.send( 'PlayersInRange', scope.socket, buffer, bufferView );
+        networkManager.send( 'ArenaPlayersInRange', scope.socket, buffer, bufferView );
 
     }
 

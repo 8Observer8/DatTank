@@ -73,7 +73,11 @@ class ArenaNetwork {
 
             }
 
+            players.push( player );
+
         }
+
+        Arena.newPlayers( players );
 
     };
 
