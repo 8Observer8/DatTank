@@ -105,7 +105,13 @@ class TankCore {
 
     public init ( params ) {
 
-        // todo
+        this.position.x = params.position.x;
+        this.position.y = params.position.y;
+        this.position.z = params.position.z;
+
+        this.rotation = params.rotation;
+        this.rotationCorrection = 0;
+        this.topRotation = params.rotationTop;
 
     };
 

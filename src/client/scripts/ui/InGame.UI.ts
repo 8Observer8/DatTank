@@ -5,15 +5,27 @@
 
 class UIInGameModule {
 
-    private game;
-    private uiCore;
+    public init () {
 
-    //
+        // nothing here
 
-    public init ( game ) {
+    };
 
-        this.game = game;
-        this.uiCore = game.ui;
+    public hideContinueBox () {
+
+        // todo
+
+    };
+
+    public updateHealth ( value: number ) {
+
+        // todo
+
+    };
+
+    public updateAmmo ( value: number ) {
+
+        // todo
 
     };
 

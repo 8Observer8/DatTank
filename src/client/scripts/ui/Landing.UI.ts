@@ -3,10 +3,12 @@
  * DatTank Landing UI module
 */
 
-class UILandingModule {
+import { UI } from "./Core.UI";
+import { Game } from "./../Game";
 
-    private game;
-    private uiCore;
+//
+
+class UILandingModule {
 
     public initPlayBtn () {
 
@@ -78,10 +80,7 @@ class UILandingModule {
 
     };
 
-    public init ( game ) {
-
-        this.game = game;
-        this.uiCore = game.ui;
+    public init () {
 
         // init sign in block
 
@@ -93,13 +92,13 @@ class UILandingModule {
         $('#signin-box #username').focus();
         $('#signin-box #username').keydown( ( event ) => {
 
-            if ( ! this.game.ready ) return;
+            if ( ! Game.ready ) return;
 
-            if ( event.keyCode === 13 && ! this.game.garage.isOpened ) {
+            if ( event.keyCode === 13 && ! Game.garage.isOpened ) {
 
                 event.stopPropagation();
                 document.activeElement['blur']();
-                this.game.garage.show();
+                Game.garage.show();
 
             }
 
@@ -107,8 +106,8 @@ class UILandingModule {
 
         //
 
-        $('#play-btn').click( this.game.garage.show.bind( this.game.garage ) );
-        $('#fullscreen-on-off').click( this.uiCore.toggleFullscreenMode.bind( this.uiCore ) );
+        $('#play-btn').click( Game.garage.show.bind( Game.garage ) );
+        $('#fullscreen-on-off').click( UI.toggleFullscreenMode.bind( UI ) );
 
         setTimeout( function () { $('.fb-like').animate( { opacity: 1 }, 500 ); }, 1000 );
         setTimeout( function () { $('.folow-btn').animate( { opacity: 1 }, 500 ); }, 1200 );

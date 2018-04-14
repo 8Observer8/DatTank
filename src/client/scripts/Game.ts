@@ -11,7 +11,7 @@ import { Garage } from "./garage/Core.Garage";
 import { ResourceManager } from "./managers/Resource.Manager";
 import { GameService } from "./services/Game.Service";
 import { Arena } from "./core/Arena.Core";
-import { UICore } from "./ui/Core.UI";
+import { UI } from "./ui/Core.UI";
 import { Logger } from "./utils/Logger";
 import { GfxCore } from "./graphics/Core.Gfx";
 
@@ -26,7 +26,6 @@ class GameCore {
     //
 
     public logger: Logger = new Logger();
-    public ui: UICore = new UICore();
     public garage: Garage = new Garage();
     public gameService: GameService = new GameService();
 
@@ -43,12 +42,12 @@ class GameCore {
 
         this.garage.init( this );
 
-        this.ui.init( this );
-        this.ui.modules.landing.setVersion( this.version );
+        UI.init();
+        UI.Landing.setVersion( this.version );
 
         //
 
-        this.gameService.getTopPlayers( this.ui.modules.landing.setTopPlayersBoard.bind( this.ui.modules.landing ) );
+        this.gameService.getTopPlayers( UI.Landing.setTopPlayersBoard.bind( UI.Landing ) );
         this.gameService.getFreeArena( this.preInitArena.bind( this ) );
 
         //
@@ -60,26 +59,26 @@ class GameCore {
     public preInitArena ( server ) {
 
         Arena.preInit( server.ip, server.id );
-        this.ui.modules.landing.initPlayBtn();
+        UI.Landing.initPlayBtn();
         this.ready = true;
 
     };
 
     public play () {
 
-        this.ui.modules.landing.hide();
+        UI.Landing.hide();
         this.garage.hide();
-        this.ui.modules.landing.showLoader();
+        UI.Landing.showLoader();
   
         //
 
         ResourceManager.load( ( progress ) => {
 
-            this.ui.modules.landing.setLoaderProgress( progress );
+            UI.Landing.setLoaderProgress( progress );
 
         }, () => {
 
-            this.ui.modules.landing.setLoaderLabelToInit();
+            UI.Landing.setLoaderLabelToInit();
             this.requestJoinArena();
 
         });
@@ -109,8 +108,8 @@ class GameCore {
     public joinArena ( data ) {
 
         Arena.init( data );
-        this.ui.modules.landing.hideLoader();
-        this.ui.modules.inGame.showViewport();
+        UI.Landing.hideLoader();
+        UI.InGame.showViewport();
 
         GfxCore.init();
 
@@ -120,8 +119,9 @@ class GameCore {
 
 //
 
-var game = new GameCore();
-window['game'] = game;
+export let Game = new GameCore();
+window['game'] = Game;
 window['game']['gfx'] = GfxCore;
+window['game']['ui'] = UI;
 
-$( document ).ready( game.init.bind( game ) );
+$( document ).ready( Game.init.bind( Game ) );

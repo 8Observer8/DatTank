@@ -10,12 +10,12 @@ import { UIInGameModule } from "./InGame.UI";
 
 class UICore {
 
-    private game;
+    private static instance: UICore;
 
-    public modules = {
-        landing:    new UILandingModule(),
-        inGame:     new UIInGameModule()
-    };
+    public Landing = new UILandingModule();
+    public InGame = new UIInGameModule();
+
+    //
 
     private onFullscreenModeChange () {
 
@@ -77,12 +77,10 @@ class UICore {
 
     };
 
-    public init ( game ) {
+    public init () {
 
-        this.game = game;
-
-        this.modules.landing.init( this.game );
-        this.modules.inGame.init( this.game );
+        this.Landing.init();
+        this.InGame.init();
 
         //
 
@@ -94,6 +92,20 @@ class UICore {
 
     };
 
+    //
+
+    constructor () {
+
+        if ( UICore.instance ) {
+
+            return UICore.instance;
+
+        }
+
+        UICore.instance = this;
+
+    };
+
 };
 
-export { UICore };
+export let UI = new UICore();

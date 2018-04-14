@@ -3,6 +3,7 @@
  * DatTank Garage core
 */
 
+import { Game } from "./../Game";
 import { GarageScene } from "./Scene.Garage";
 import { TankList as Tanks, TankList } from "./../core/objects/Tank.Core";
 
@@ -11,9 +12,6 @@ import { TankList as Tanks, TankList } from "./../core/objects/Tank.Core";
 class Garage {
 
     public isOpened: boolean = false;
-
-    private game;
-    private ui;
     private currentTank;
 
     public scene: GarageScene = new GarageScene();
@@ -22,13 +20,11 @@ class Garage {
 
     public init ( game ) {
 
-        this.game = game;
-        this.ui = game.ui.modules.garage;
         this.scene.init( this );
 
         //
 
-        $('.btn-pick').click( this.game.play.bind( this.game ) );
+        $('.btn-pick').click( Game.play.bind( Game ) );
         $('.close-tank-skins').click( this.hide.bind( this ) );
         $('#arrow1').click( this.prevTank.bind( this ) );
         $('#arrow2').click( this.nextTank.bind( this ) );
@@ -45,7 +41,7 @@ class Garage {
 
             case 13: // enter key
 
-                this.game.play();
+                Game.play();
                 break;
 
             case 27: // esc key
@@ -69,7 +65,7 @@ class Garage {
 
     public show () {
 
-        if ( ! this.game.ready ) return;
+        if ( ! Game.ready ) return;
 
         this.isOpened = true;
 
@@ -146,13 +142,13 @@ class Garage {
 
         //
 
-        var maxSpeed = 0;
-        var maxRpm = 0;
-        var maxArmour = 0;
-        var maxBullet = 0;
-        var maxAmmoCapacity = 0;
+        let maxSpeed = 0;
+        let maxRpm = 0;
+        let maxArmour = 0;
+        let maxBullet = 0;
+        let maxAmmoCapacity = 0;
 
-        for ( var tankName in TankList ) {
+        for ( let tankName in TankList ) {
 
             maxSpeed = Math.max( maxSpeed, TankList[ tankName ].speed );
             maxRpm = Math.max( maxRpm, TankList[ tankName ].rpm );

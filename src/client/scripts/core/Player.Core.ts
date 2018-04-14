@@ -9,6 +9,7 @@ import { TeamCore } from "./Team.Core";
 import { TankList as Tanks } from "./objects/Tank.Core";
 import { TeamManager } from "./../managers/Team.Manager";
 import { PlayerNetwork } from "./../network/Player.Network";
+import { UI } from "./../ui/Core.UI";
 
 //
 
@@ -48,8 +49,18 @@ class PlayerCore {
 
     public respawn ( params ) {
 
+        this.tank.dispose();
         this.status = Status.ALIVE;
         this.setTank( params.tank );
+        this.tank.init( params );
+
+        if ( Arena.me.id === this.id ) {
+
+            UI.InGame.updateHealth( this.tank.health );
+            UI.InGame.updateAmmo( this.tank.ammo );
+            UI.InGame.hideContinueBox();
+    
+        }    
 
     };
 
@@ -75,6 +86,7 @@ class PlayerCore {
     private init ( params ) {
 
         this.setTank( params.tank );
+        this.tank.init( params );
         this.team = TeamManager.getById( params.team );
 
     };
