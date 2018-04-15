@@ -54,26 +54,8 @@ Game.Player.prototype.updateDirectionMovement = function ( time, delta ) {
 
 Game.Player.prototype.shoot = function ( bulletId ) {
 
-    var scope = this;
-
-    if ( this.status !== Game.Player.Alive ) return;
-
-    if ( Game.arena.me.id === this.id ) {
-
-        this.ammo --;
-        ui.updateAmmo( this.ammo );
-
-    }
-
     this.tank.showBlastSmoke();
     this.tank.shootBullet( bulletId );
-
-    //
-
-    if ( Game.arena.me.id === this.id ) {
-
-
-    }
 
 };
 

@@ -45,7 +45,14 @@ class TankCore {
 
     public shoot ( id: number ) {
 
-        // todo
+        if ( this.health <= 0 ) return;
+
+        if ( this.player.id === Arena.me.id ) {
+
+            this.setAmmo( this.ammo - 1 );
+            UI.InGame.updateAmmo( 60 * 1000 / this.rpm );
+
+        }
 
     };
 

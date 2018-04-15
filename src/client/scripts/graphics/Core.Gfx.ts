@@ -36,13 +36,13 @@ class GraphicsCore {
     private raycaster: THREE.Raycaster;
     private prevRenderTime: number;
 
-    private windowWidth: number = 0;
-    private windowHeight: number = 0;
-
     private gfxSettings: GfxSettings = {
         quality:    Quality.MEDIUM,
         antialias:  false
     };
+
+    public windowWidth: number = 0;
+    public windowHeight: number = 0;
 
     public decorations: Array<object> = [];
     public sun: THREE.DirectionalLight;
