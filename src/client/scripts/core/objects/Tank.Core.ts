@@ -3,6 +3,7 @@
  * DatTank Tank general class
 */
 
+import * as THREE from 'three';
 import * as OMath from "./../../OMath/Core.OMath";
 
 import { Arena } from "./../Arena.Core";
@@ -44,6 +45,12 @@ class TankCore {
     protected gfx: TankGfx = new TankGfx();
 
     //
+
+    public get2DPosition () {
+
+        return this.gfx.get2DPosition();
+
+    };
 
     public shoot ( id: number ) {
 
@@ -178,6 +185,7 @@ import { IS2Tank } from "./../../objects/tanks/IS2.Tank";
 import { T29Tank } from "./../../objects/tanks/T29.Tank";
 import { T44Tank } from "./../../objects/tanks/T44.Tank";
 import { T54Tank } from "./../../objects/tanks/T54.Tank";
+import { GfxCore } from '../../graphics/Core.Gfx';
 
 let TankList = {
     IS2:    IS2Tank,

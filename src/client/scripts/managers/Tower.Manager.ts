@@ -14,9 +14,9 @@ class TowerManagerCore {
 
     //
 
-    public add ( tower: TowerCore ) {
+    public add ( params ) {
 
-        this.towers.push( tower );
+        // this.towers.push( tower );
 
     };
 
@@ -56,6 +56,16 @@ class TowerManagerCore {
         }
 
         return null;
+
+    };
+
+    public update ( time: number, delta: number ) {
+
+        for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
+
+            this.towers[ i ].update( time, delta );
+
+        }
 
     };
 

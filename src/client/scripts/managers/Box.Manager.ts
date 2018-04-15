@@ -14,9 +14,9 @@ class BoxManagerCore {
 
     //
 
-    public add ( box: BoxCore ) {
+    public add ( params ) {
 
-        this.boxes.push( box );
+        // this.boxes.push( box );
         
     };
 
@@ -64,7 +64,7 @@ class BoxManagerCore {
         for ( var i = 0, il = this.boxes.length; i < il; i ++ ) {
 
             this.boxes[ i ].update( time, delta );
-    
+
         }
 
     };

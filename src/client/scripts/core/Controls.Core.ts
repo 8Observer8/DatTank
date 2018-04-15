@@ -3,12 +3,18 @@
  * DatTank Controls core
 */
 
+import * as THREE from 'three';
+
 import { GfxCore } from "./../graphics/Core.Gfx";
 import * as OMath from "./../OMath/Core.OMath";
+
+import { Arena } from "./../core/Arena.Core";
 
 //
 
 class ControlsCore {
+
+    private static instance: ControlsCore;
 
     private pressedKey = {};
     private mousePos: OMath.Vec2 = new OMath.Vec2( 0.5, 0.5 );
@@ -42,7 +48,7 @@ class ControlsCore {
 
     };
 
-    private rotateTop () {
+    private rotateTop ( angle: number ) {
 
         // todo
 
@@ -264,8 +270,54 @@ class ControlsCore {
 
     };
 
+    //
+
+    public update ( time: number, delta: number ) {
+
+        let me = Arena.me;
+
+        if ( me.tank.moveDirection.x || me.tank.moveDirection.y || Math.abs( this.mousePos.x - this.prevMousePos.x ) > 0.02 || Math.abs( this.mousePos.y - this.prevMousePos.y ) > 0.02 ) {
+
+            let vector = me.tank.get2DPosition();
+
+            if ( this.prevMousePos.distanceTo( this.mousePos ) > 0.01 ) {
+
+                var angle = Math.atan2( - vector.y + this.mousePos.y, - vector.x + this.mousePos.x ) - Math.PI + me.tank.rotation;
+        
+                if ( Math.abs( angle - me.tank.topRotation ) > 0.003 ) {
+        
+                    this.rotateTop( angle );
+        
+                }
+        
+            }        
+
+        }
+
+    };
+
+    public init () {
+
+        // todo
+
+    };
+
+    //
+
+    constructor () {
+
+        if ( ControlsCore.instance ) {
+
+            return ControlsCore.instance;
+
+        }
+
+        ControlsCore.instance = this;
+
+    };
+
 };
 
 //
 
-export { ControlsCore };
+export let Controls = new ControlsCore();

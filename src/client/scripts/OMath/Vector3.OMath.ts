@@ -19,6 +19,13 @@ export class Vec3 {
 
     };
 
+    public distanceTo ( point: Vec3 ) {
+
+        // todo
+        return 0;
+
+    };
+
     //
 
     constructor ( x?: number, y?: number, z?: number ) {

@@ -9,6 +9,11 @@ import { Game } from "./../Game";
 import { Arena } from "./../core/Arena.Core";
 import { LandscapeGfx } from "./objects/Landscape.Gfx";
 
+import { BoxManager } from "./../managers/Box.Manager";
+import { TowerManager } from "./../managers/Tower.Manager";
+import { DecorationManager } from "./../managers/Decoration.Manager";
+import { Controls } from "./../core/Controls.Core";
+
 //
 
 enum Quality { LOW = 0.7, MEDIUM = 0.85, HIGH = 1 };
@@ -173,6 +178,13 @@ class GraphicsCore {
     private animate ( time: number, delta: number ) {
 
         if ( ! Arena.me ) return;
+
+        //
+
+        BoxManager.update( time, delta );
+        TowerManager.update( time, delta );
+        DecorationManager.update( time, delta );
+        Controls.update( time, delta );
 
         //
 
