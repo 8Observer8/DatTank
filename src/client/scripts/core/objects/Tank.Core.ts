@@ -3,6 +3,8 @@
  * DatTank Tank general class
 */
 
+import * as OMath from "./../../OMath/Core.OMath";
+
 import { Arena } from "./../Arena.Core";
 import { UI } from "./../../ui/Core.UI";
 import { PlayerCore } from "./../Player.Core";
@@ -35,7 +37,7 @@ class TankCore {
     public positionCorrection = { x: 0, y: 0, z: 0 };
     public rotationCorrection: number = 0;
 
-    public position = { x: 0, y: 0, z: 0 };
+    public position: OMath.Vec3 = new OMath.Vec3();
     public rotation: number = 0;
 
     protected network: TankNetwork = new TankNetwork();
@@ -149,16 +151,9 @@ class TankCore {
 
     };
 
-    public init ( params ) {
+    public init () {
 
-        this.position.x = params.position.x;
-        this.position.y = params.position.y;
-        this.position.z = params.position.z;
-        this.gfx.setPosition( this.position );
-
-        this.rotation = params.rotation;
-        this.rotationCorrection = 0;
-        this.topRotation = params.rotationTop;
+        this.gfx.init( this.title );
 
     };
 
@@ -166,7 +161,12 @@ class TankCore {
 
     constructor ( params ) {
 
-        this.init( params );
+        this.position.set( params.position.x, params.position.y, params.position.z );
+        this.gfx.setPosition( this.position );
+
+        this.rotation = params.rotation;
+        this.rotationCorrection = 0;
+        this.topRotation = params.rotationTop;
 
     };
 

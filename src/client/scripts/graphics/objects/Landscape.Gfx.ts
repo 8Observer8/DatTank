@@ -7,6 +7,8 @@ import * as THREE from 'three';
 
 import { GfxCore } from "./../Core.Gfx";
 import { ResourceManager } from "./../../managers/Resource.Manager";
+import { TeamManager } from '../../managers/Team.Manager';
+import { Scene } from 'three';
 
 //
 
@@ -32,7 +34,7 @@ class LandscapeGfx {
         this.terrainMesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( this.mapSize + this.mapExtraSize, this.mapSize + this.mapExtraSize ), new THREE.MeshBasicMaterial({ depthWrite: false, map: groundTexture, color: 0x777050 }) );
         this.terrainMesh.rotation.x = - Math.PI / 2;
         this.terrainMesh.renderOrder = 6;
-        GfxCore.scene.add( this.terrainMesh );
+        this.object.add( this.terrainMesh );
 
         // add grass
 
@@ -57,30 +59,59 @@ class LandscapeGfx {
         edgeTexture.wrapT = THREE.RepeatWrapping;
         edgeTexture.repeat.set( 50, 0.5 );
         material = new THREE.MeshBasicMaterial({ color: 0x999999, map: edgeTexture });
-    
+
         wall1 = new THREE.Mesh( new THREE.BoxGeometry( size + 2 * offset + wallWidth, wallWidth, wallWidth ), material );
         wall1.rotation.y += Math.PI / 2;
         wall1.position.set( size / 2 + offset, 1, 0 );
-        GfxCore.scene.add( wall1 );
-    
+        this.object.add( wall1 );
+
         wall2 = new THREE.Mesh( new THREE.BoxGeometry( size + 2 * offset + wallWidth, wallWidth, wallWidth ), material );
         wall2.rotation.y = - Math.PI / 2;
         wall2.position.set( - size / 2 - offset, 1, 0 );
-        GfxCore.scene.add( wall2 );
-    
+        this.object.add( wall2 );
+
         wall3 = new THREE.Mesh( new THREE.BoxGeometry( size + 2 * offset - wallWidth, wallWidth, wallWidth ), material );
         wall3.position.set( 0, 1, size / 2 + offset );
-        GfxCore.scene.add( wall3 );
-    
+        this.object.add( wall3 );
+
         wall4 = new THREE.Mesh( new THREE.BoxGeometry( size + 2 * offset - wallWidth, wallWidth, wallWidth ), material );
         wall4.position.set( 0, 1, - size / 2 - offset );
-        GfxCore.scene.add( wall4 );
+        this.object.add( wall4 );
 
     };
 
     private addTeamZones () {
 
-        // todo
+        let team;
+        let name, color, x, z;
+        let plane;
+        let baseTexture = ResourceManager.getTexture( 'Base-ground.png' );
+        let teams = TeamManager.getTeams();
+
+        //
+
+        for ( var i = 0, il = teams.length; i < il; i ++ ) {
+
+            if ( teams[ i ].id >= 1000 ) continue;
+            team = teams[ i ];
+
+            name = team.name;
+            color = + team.color.replace('#', '0x');
+            x = team.spawnPosition.x;
+            z = team.spawnPosition.z;
+
+            plane = new THREE.Mesh( new THREE.PlaneBufferGeometry( 200, 200 ), new THREE.MeshBasicMaterial({ map: baseTexture, color: color, transparent: true, opacity: 0.9, depthWrite: false }) );
+
+            plane.material.color.r = plane.material.color.r / 3 + 0.4;
+            plane.material.color.g = plane.material.color.g / 3 + 0.4;
+            plane.material.color.b = plane.material.color.b / 3 + 0.4;
+
+            plane.rotation.x = - Math.PI / 2;
+            plane.position.set( x, 2, z );
+            plane.renderOrder = 9;
+            this.object.add( plane );
+
+        }
 
     };
 
@@ -95,7 +126,7 @@ class LandscapeGfx {
         grassZone.scale.set( scale, scale, scale );
         grassZone.position.set( ( Math.random() - 0.5 ) * size, 0.1 + Math.random() / 10, ( Math.random() - 0.5 ) * size );
         grassZone.renderOrder = 8;
-        GfxCore.scene.add( grassZone );
+        this.object.add( grassZone );
 
     };
 
@@ -129,6 +160,8 @@ class LandscapeGfx {
         this.addWalls();
         this.addDecorations([]);
         this.addTeamZones();
+
+        GfxCore.scene.add( this.object );
 
     };
 

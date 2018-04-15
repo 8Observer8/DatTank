@@ -1,6 +1,6 @@
 /*
  * @author ohmed
- * DatTank Math Vector 3
+ * DatTank Math Vector3
 */
 
 export class Vec3 {

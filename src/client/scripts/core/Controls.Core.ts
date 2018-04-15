@@ -4,15 +4,15 @@
 */
 
 import { GfxCore } from "./../graphics/Core.Gfx";
-import { OMath } from "./../math/Core.Math";
+import * as OMath from "./../OMath/Core.OMath";
 
 //
 
 class ControlsCore {
 
     private pressedKey = {};
-    private mousePos = new OMath.Vec2( 0.5, 0.5 );
-    private prevMousePos = new OMath.Vec2( 0.5, 0.5 );
+    private mousePos: OMath.Vec2 = new OMath.Vec2( 0.5, 0.5 );
+    private prevMousePos: OMath.Vec2 = new OMath.Vec2( 0.5, 0.5 );
 
     private moveX = 0;
     private moveZ = 0;

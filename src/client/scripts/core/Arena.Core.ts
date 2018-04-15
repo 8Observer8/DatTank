@@ -12,7 +12,6 @@ import { GfxCore } from "./../graphics/Core.Gfx";
 import { PlayerCore } from "./Player.Core";
 import { TowerCore } from "./objects/Tower.Core";
 import { ArenaNetwork } from "../network/Arena.Network";
-import { ToneMapping } from "three";
 
 //
 
@@ -58,7 +57,7 @@ class ArenaCore {
 
         // setup managers
 
-        TeamManager.init( params );
+        TeamManager.init( params.teams );
         PlayerManager.init();
         TowerManager.init();
         BoxManager.init();

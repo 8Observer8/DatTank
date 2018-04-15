@@ -21,7 +21,11 @@ class IS2Tank extends TankCore {
 
     //
 
-    public init () {
+    constructor ( params ) {
+
+        super( params );
+
+        //
 
         this.title = IS2Tank.title;
         this.year = IS2Tank.year;
@@ -30,16 +34,6 @@ class IS2Tank extends TankCore {
         this.bullet = IS2Tank.bullet;
         this.rpm = IS2Tank.rpm;
         this.armour = IS2Tank.armour;
-
-        //
-
-        this.gfx.init( this.title );
-
-    };
-
-    constructor ( params ) {
-
-        super( params );
 
     };
 

@@ -21,7 +21,11 @@ class T54Tank extends TankCore {
 
     //
 
-    public init () {
+    constructor ( params ) {
+
+        super( params );
+
+        //
 
         this.title = T54Tank.title;
         this.year = T54Tank.year;
@@ -30,16 +34,6 @@ class T54Tank extends TankCore {
         this.bullet = T54Tank.bullet;
         this.rpm = T54Tank.rpm;
         this.armour = T54Tank.armour;
-
-        //
-
-        this.gfx.init( this.title );
-
-    };
-
-    constructor ( params ) {
-
-        super( params );
 
     };
 

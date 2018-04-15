@@ -5,6 +5,7 @@
 
 import * as THREE from 'three';
 
+import * as OMath from "./../../OMath/Core.OMath";
 import { GfxCore } from "./../Core.Gfx";
 import { ResourceManager } from "./../../managers/Resource.Manager";
 
@@ -22,7 +23,7 @@ class TankGfx {
 
     //
 
-    public setPosition ( position ) {
+    public setPosition ( position: OMath.Vec3 ) {
 
         this.object.position.x = position.x;
         this.object.position.y = position.y;

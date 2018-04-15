@@ -34,13 +34,14 @@ class PlayerCore {
 
     //
 
-    private setTank ( tankId: string ) {
+    private setTank ( tankId: string, params ) {
     
         let tankName = Tanks.getById( tankId );
 
         if ( tankName ) {
         
-            this.tank = new Tanks[ tankName ]({ player: this });
+            this.tank = new Tanks[ tankName ]( params );
+            this.tank.player = this;
 
         }
 
@@ -57,8 +58,8 @@ class PlayerCore {
 
         this.tank.dispose();
         this.status = Status.ALIVE;
-        this.setTank( params.tank );
-        this.tank.init( params );
+        this.setTank( params.tank, params );
+        this.tank.init();
 
         if ( Arena.me.id === this.id ) {
 
@@ -92,8 +93,8 @@ class PlayerCore {
     private init ( params ) {
 
         this.id = params.id;
-        this.setTank( params.tank );
-        this.tank.init( params );
+        this.setTank( params.tank, params );
+        this.tank.init();
         this.team = TeamManager.getById( params.team );
 
     };

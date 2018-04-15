@@ -37,6 +37,12 @@ class TeamManagerCore {
 
     };
 
+    public getTeams () {
+
+        return this.teams;
+
+    };
+
     //
 
     public init ( params ) {

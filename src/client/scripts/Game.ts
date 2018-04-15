@@ -11,6 +11,7 @@ import { Garage } from "./garage/Core.Garage";
 import { ResourceManager } from "./managers/Resource.Manager";
 import { GameService } from "./services/Game.Service";
 import { Arena } from "./core/Arena.Core";
+import { ControlsCore } from "./core/Controls.Core";
 import { UI } from "./ui/Core.UI";
 import { Logger } from "./utils/Logger";
 import { GfxCore } from "./graphics/Core.Gfx";
@@ -28,6 +29,7 @@ class GameCore {
     public logger: Logger = new Logger();
     public garage: Garage = new Garage();
     public gameService: GameService = new GameService();
+    public controls: ControlsCore = new ControlsCore();
 
     //
 
@@ -115,14 +117,23 @@ class GameCore {
 
     };
 
+    //
+
+    constructor () {
+
+        $( document ).ready( this.init.bind( this ) );
+
+    };
+
 };
 
 //
 
 export let Game = new GameCore();
+
+// for debuging
+
 window['game'] = Game;
 window['game']['gfx'] = GfxCore;
 window['game']['ui'] = UI;
 window['game']['arena'] = Arena;
-
-$( document ).ready( Game.init.bind( Game ) );
