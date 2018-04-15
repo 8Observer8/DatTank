@@ -72,20 +72,6 @@ Game.Player.prototype.shoot = function ( bulletId ) {
 
     if ( Game.arena.me.id === this.id ) {
 
-        scope.lastShot = Date.now();
-        var element = $('#empty-ammo-image');
-        // -> removing the class
-        element.removeClass('ammo-animation');
-        element.css( 'height', '100%' );
-
-        // -> triggering reflow / The actual magic /
-        // without this it wouldn't work. Try uncommenting the line and the transition won't be retriggered.
-        element[0].offsetWidth;
-        element.css( 'background-image', 'url(../resources/img/ammo.png)' );
-
-        // -> and re-adding the class
-        element.addClass('ammo-animation');
-        element.css( 'animation-duration', 1.2 * 1000 * 60 / this.tank.rpm + 'ms' );
 
     }
 

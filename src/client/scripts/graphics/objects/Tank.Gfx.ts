@@ -5,6 +5,7 @@
 
 import * as THREE from 'three';
 
+import { GfxCore } from "./../Core.Gfx";
 import { ResourceManager } from "./../../managers/Resource.Manager";
 
 //
@@ -21,44 +22,52 @@ class TankGfx {
 
     //
 
+    public setPosition ( position ) {
+
+        this.object.position.x = position.x;
+        this.object.position.y = position.y;
+        this.object.position.z = position.z;
+
+    };
+
     public init ( tankTitle: string ) {
 
-        // let materials = [];
-        // let tankBaseModel = ResourceManager.getModel( tankTitle + '-base' );
-        // let tankTopModel = ResourceManager.getModel( tankTitle + '-top' );
+        let materials = [];
+        let tankBaseModel = ResourceManager.getModel( tankTitle + '-bottom' );
+        let tankTopModel = ResourceManager.getModel( tankTitle + '-top' );
 
-        // // add tank base mesh
+        // add tank base mesh
 
-        // for ( let i = 0, il = tankBaseModel.material.length; i < il; i ++ ) {
-    
-        //     let material = tankBaseModel.material[ i ].clone();
-        //     material.map = material.map.clone();
-        //     material.map.needsUpdate = true;
-        //     material.morphTargets = true;
-        //     materials.push( material );
-    
-        // }
-    
-        // this.baseMesh = new THREE.Mesh( tankBaseModel.geometry, materials );
-        // this.baseMesh.scale.set( 10, 10, 10 );
-        // this.object.add( this.baseMesh );
+        for ( let i = 0, il = tankBaseModel.material.length; i < il; i ++ ) {
 
-        // // add tank top mesh
+            let material = tankBaseModel.material[ i ].clone();
+            material.map = material.map.clone();
+            material.map.needsUpdate = true;
+            material.morphTargets = true;
+            materials.push( material );
 
-        // materials = [];
-        // for ( var i = 0, il = tankTopModel.material.length; i < il; i ++ ) {
-    
-        //     materials.push( tankTopModel.material[ i ].clone() );
-        //     materials[ materials.length - 1 ].morphTargets = true;
-    
-        // }
-    
-        // this.topMesh = new THREE.Mesh( tankTopModel.geometry, materials );
-        // this.topMesh.scale.set( 10, 10, 10 );
-        // this.topMesh.position.y = 20;
-        // this.object.add( this.topMesh );
+        }
 
-        // // add tank shadow
+        this.baseMesh = new THREE.Mesh( tankBaseModel.geometry, materials );
+        this.baseMesh.scale.set( 10, 10, 10 );
+        this.object.add( this.baseMesh );
+
+        // add tank top mesh
+
+        materials = [];
+        for ( var i = 0, il = tankTopModel.material.length; i < il; i ++ ) {
+
+            materials.push( tankTopModel.material[ i ].clone() );
+            materials[ materials.length - 1 ].morphTargets = true;
+
+        }
+    
+        this.topMesh = new THREE.Mesh( tankTopModel.geometry, materials );
+        this.topMesh.scale.set( 10, 10, 10 );
+        this.topMesh.position.y = 20;
+        this.object.add( this.topMesh );
+
+        // add tank shadow
 
         // var tankShadowTexture = ResourceManager.getTexture( 'shadowTank.png' );
         // var tankShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: tankShadowTexture, transparent: true, depthWrite: false, opacity: 0.7 }) );
@@ -68,7 +77,7 @@ class TankGfx {
         // tankShadow.renderOrder = 10;
         // this.object.add( tankShadow );
 
-        // //
+        //
 
         // this.mixer = new THREE.AnimationMixer( this.topMesh );
 
@@ -86,7 +95,7 @@ class TankGfx {
 
         //
 
-        // view.scene.add( this.object );
+        GfxCore.scene.add( this.object );
 
     };
 

@@ -171,7 +171,7 @@ class NetworkCore {
     
             }
     
-            data = newData;
+            data = newData.buffer;
             data[0] = this.events.out[ eventName ].id;
     
         } else {

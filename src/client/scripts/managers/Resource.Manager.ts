@@ -224,7 +224,7 @@ class ResourceManagerCore {
 
         for ( var i = 0, il = this.models.length; i < il; i ++ ) {
 
-            if ( this.models[ i ].name === name ) {
+            if ( this.models[ i ].name === name + '.json' ) {
 
                 return this.models[ i ];
 

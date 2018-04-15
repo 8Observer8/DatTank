@@ -147,6 +147,7 @@ class TankCore {
         this.position.x = params.position.x;
         this.position.y = params.position.y;
         this.position.z = params.position.z;
+        this.gfx.setPosition( this.position );
 
         this.rotation = params.rotation;
         this.rotationCorrection = 0;
