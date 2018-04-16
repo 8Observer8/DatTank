@@ -33,8 +33,7 @@ OldCastle.prototype.toJSON = function () {
 
     return {
         id:         this.id,
-        name:       this.name,
-        type:       'oldCastle',
+        type:       'Ruin1',
         position:   this.position.toJSON(),
         rotation:   this.rotation,
         scale:      this.scale.toJSON()

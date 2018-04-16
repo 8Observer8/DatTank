@@ -54,7 +54,7 @@ class BoxGfx {
         this.mesh.position.x = box.position.x;
         this.mesh.position.y = box.position.y;
         this.mesh.position.z = box.position.z;
-    
+
         // view.scene.add( this.mesh );
 
     };

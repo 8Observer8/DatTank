@@ -17,6 +17,7 @@ import { Logger } from "./utils/Logger";
 import { GfxCore } from "./graphics/Core.Gfx";
 
 import { TowerManager } from "./managers/Tower.Manager";
+import { DecorationManager } from "./managers/Decoration.Manager";
 
 //
 
@@ -140,3 +141,4 @@ window['game']['gfx'] = GfxCore;
 window['game']['ui'] = UI;
 window['game']['arena'] = Arena;
 window['game']['towermanager'] = TowerManager;
+window['game']['decorationmanager'] = DecorationManager;

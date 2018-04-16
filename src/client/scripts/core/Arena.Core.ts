@@ -7,6 +7,7 @@ import { TeamManager } from "./../managers/Team.Manager";
 import { PlayerManager } from "./../managers/Player.Manager";
 import { TowerManager } from "./../managers/Tower.Manager";
 import { BoxManager } from "./../managers/Box.Manager";
+import { DecorationManager } from "./../managers/Decoration.Manager";
 
 import { GfxCore } from "./../graphics/Core.Gfx";
 import { PlayerCore } from "./Player.Core";
@@ -61,6 +62,7 @@ class ArenaCore {
         PlayerManager.init();
         TowerManager.init();
         BoxManager.init();
+        DecorationManager.init( params.decorations );
 
         //
 

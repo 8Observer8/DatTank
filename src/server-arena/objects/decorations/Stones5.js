@@ -37,8 +37,7 @@ Stones5.prototype.toJSON = function () {
 
     return {
         id:         this.id,
-        name:       this.name,
-        type:       'stone5',
+        type:       'Rock5',
         position:   this.position.toJSON(),
         rotation:   this.rotation,
         scale:      this.scale.toJSON()

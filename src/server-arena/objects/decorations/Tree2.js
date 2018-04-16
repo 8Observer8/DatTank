@@ -38,7 +38,7 @@ Tree2.prototype.toJSON = function () {
     return {
         id:         this.id,
         name:       this.name,
-        type:       'tree2',
+        type:       'Tree2',
         position:   this.position.toJSON(),
         rotation:   this.rotation,
         scale:      this.scale.toJSON()
