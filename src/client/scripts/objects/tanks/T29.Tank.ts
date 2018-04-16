@@ -3,7 +3,7 @@
  * DatTank Tank T29
 */
 
-import { TankCore, TankList } from "./../../core/objects/Tank.Core";
+import { TankCore } from "./../../core/objects/Tank.Core";
 
 //
 

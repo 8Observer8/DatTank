@@ -3,7 +3,7 @@
  * DatTank Tank T54
 */
 
-import { TankCore, TankList } from "./../../core/objects/Tank.Core";
+import { TankCore } from "./../../core/objects/Tank.Core";
 
 //
 
