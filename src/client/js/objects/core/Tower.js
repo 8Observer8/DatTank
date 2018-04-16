@@ -17,63 +17,8 @@ Game.Tower = function ( arena, params ) {
 
 Game.Tower.prototype.init = function () {
 
-    var towerBaseModel = resourceManager.getModel('Tower_base.json');
-    var towerTopModel = resourceManager.getModel('Tower_top.json');
-
-    //
-
-    var base = new THREE.Mesh( towerBaseModel.geometry, towerBaseModel.material );
-    base.rotation.y = 0;
-    base.scale.set( 27, 27, 27 );
-
-    for ( var i = 0, il = base.material.length; i < il; i ++ ) {
-
-        base.material[ i ] = base.material[ i ].clone();
-
-    }
-
-    //
-
-    var materials = [];
-    for ( var i = 0, il = towerTopModel.material.length; i < il; i ++ ) {
-
-        materials.push( towerTopModel.material[ i ].clone() );
-        materials[ materials.length - 1 ].morphTargets = true;
-
-    }
-
-    var top = new THREE.Mesh( towerTopModel.geometry, materials );
-    top.rotation.y = this.rotation;
-    top.scale.set( 27, 27, 27 );
-
-    //
-
-    this.object.add( base );
-    this.object.base = base;
-
-    this.object.add( top );
-    this.object.top = top;
-
-    view.scene.add( this.object );
-
-    //
-
-    this.object.position.set( this.position.x, this.position.y, this.position.z );
-
-    //
-
-    this.mixer = new THREE.AnimationMixer( top );
-
-    var shotAction = this.mixer.clipAction( towerTopModel.geometry.animations[0], top );
-    shotAction.setDuration( 0.5 ).setLoop( THREE.LoopOnce );
-    this.animations.shotAction = shotAction;
-
-    //
-
     this.initLabel();
     this.rotateTop( this.rotation, this.rotation );
-
-    this.addEventListeners();
 
 };
 
@@ -341,22 +286,6 @@ Game.Tower.prototype.updateHealth = function ( health ) {
 
 };
 
-Game.Tower.prototype.dispose = function () {
-
-    view.scene.remove( this.object );
-    view.scene.remove( this.changeTeamEffectPipe );
-
-    for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
-
-        view.scene.remove( this.bullets[ i ] );
-        view.scene.remove( this.bullets[ i ].trace );
-
-    }
-
-};
-
-//
-
 Game.Tower.prototype.animate = function ( delta ) {
 
     var newHealthChangeLabelsList = [];
@@ -473,16 +402,5 @@ Game.Tower.prototype.update = function ( delta ) {
         }
 
     }
-
-};
-
-Game.Tower.prototype.addEventListeners = function () {
-
-    var scope = this;
-
-    this.addEventListener( 'TowerRotateTop', function ( event ) { scope.rotateTop( event.data[1] / 1000, event.data[2] / 1000 ); });
-    this.addEventListener( 'TowerShoot', function ( event ) { scope.shoot( event.data[1] ); });
-    this.addEventListener( 'TowerChangeTeam', function ( event ) { scope.changeTeam( event.data[1], event.data[2] ); });
-    this.addEventListener( 'TowerUpdateHealth', function ( event ) { scope.updateHealth( event.data[1] ); });
 
 };

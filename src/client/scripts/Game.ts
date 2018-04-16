@@ -16,6 +16,8 @@ import { UI } from "./ui/Core.UI";
 import { Logger } from "./utils/Logger";
 import { GfxCore } from "./graphics/Core.Gfx";
 
+import { TowerManager } from "./managers/Tower.Manager";
+
 //
 
 class GameCore {
@@ -137,3 +139,4 @@ window['game'] = Game;
 window['game']['gfx'] = GfxCore;
 window['game']['ui'] = UI;
 window['game']['arena'] = Arena;
+window['game']['towermanager'] = TowerManager;

@@ -4,9 +4,9 @@
 */
 
 import { TankCore } from "./objects/Tank.Core";
+import { TankList as Tanks } from "./objects/Tank.Core";
 import { Arena } from "./Arena.Core";
 import { TeamCore } from "./Team.Core";
-import { TankList as Tanks } from "./objects/Tank.Core";
 import { TeamManager } from "./../managers/Team.Manager";
 import { PlayerNetwork } from "./../network/Player.Network";
 import { UI } from "./../ui/Core.UI";

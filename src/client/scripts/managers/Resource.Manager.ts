@@ -38,8 +38,8 @@ class ResourceManagerCore {
         'T54-bottom.json',
         'T54-top.json',
 
-        'Tower_base.json',
-        'Tower_top.json',
+        'T1-tower-base.json',
+        'T1-tower-top.json',
 
         'health_box.json',
         'ammo_box.json',

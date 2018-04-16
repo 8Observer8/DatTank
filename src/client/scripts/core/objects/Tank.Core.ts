@@ -17,8 +17,6 @@ import { TankGfx } from "./../../graphics/objects/Tank.Gfx";
 
 class TankCore {
 
-    static list: object;
-
     public id: number;
     public player: PlayerCore;
 

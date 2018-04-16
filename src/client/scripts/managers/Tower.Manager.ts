@@ -3,7 +3,8 @@
  * DatTank Arena tower manager
 */
 
-import { TowerCore } from "../core/objects/Tower.Core";
+import { TowerCore } from "./../core/objects/Tower.Core";
+import { TowerList as Towers } from "./../core/objects/Tower.Core";
 
 //
 
@@ -16,7 +17,10 @@ class TowerManagerCore {
 
     public add ( params ) {
 
-        // this.towers.push( tower );
+        let towerName = Towers.getById( params.tid || 0 );
+        let tower = new Towers[ towerName ]( params );
+        this.towers.push( tower );
+        tower.init();
 
     };
 

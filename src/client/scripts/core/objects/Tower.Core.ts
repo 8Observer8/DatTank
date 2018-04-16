@@ -5,14 +5,11 @@
 
 import { Arena } from "./../Arena.Core";
 
+import * as OMath from "./../../OMath/Core.OMath";
 import { TowerNetwork } from "./../../network/Tower.Network";
 import { TowerGfx } from "./../../graphics/objects/Tower.Gfx";
 import { TeamCore } from "./../Team.Core";
 import { TeamManager } from "./../../managers/Team.Manager";
-
-//
-
-let TowerList = {};
 
 //
 
@@ -23,7 +20,9 @@ class TowerCore {
 
     public health: number;
     public rotation: number;
-    public position = { x: 0, y: 0, z: 0 };
+    public position: OMath.Vec3 = new OMath.Vec3();
+
+    public title: string;
 
     protected network: TowerNetwork = new TowerNetwork();
     protected gfx: TowerGfx = new TowerGfx();
@@ -48,6 +47,12 @@ class TowerCore {
 
     };
 
+    public init () {
+
+        this.gfx.init( this.title );
+
+    };
+
     //
 
     constructor ( params ) {
@@ -56,9 +61,8 @@ class TowerCore {
         this.health = params.health;
         this.rotation = params.rotation;
 
-        this.position.x = params.position.x;
-        this.position.y = params.position.y;
-        this.position.z = params.position.z;
+        this.position.set( params.position.x, params.position.y, params.position.z );
+        this.gfx.setPosition( this.position );
 
     };
 
@@ -66,4 +70,34 @@ class TowerCore {
 
 //
 
+// get all towers and put into 'TowersList' object
+
+import { T1Tower } from "./../../objects/towers/T1.Tower";
+
+let TowerList = {
+    T1:     T1Tower,
+    getById: function ( towerId ) {
+
+        for ( let item in TowerList ) {
+
+            if ( typeof item === "string" ) {
+
+                if ( TowerList[ item ].tid === towerId ) {
+
+                    return item;
+
+                }
+
+            }
+
+        }
+
+        return null;
+
+    }
+};
+
+//
+
 export { TowerCore };
+export { TowerList };
