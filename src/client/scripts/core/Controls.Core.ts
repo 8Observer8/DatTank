@@ -31,26 +31,23 @@ class ControlsCore {
     private stopMovingLeft = false;
     private stopMovingRight = false;
 
-    private fireInterval: number = null;
-
     //
 
     private startShooting () {
 
-        // todo
+        Arena.me.tank.startShooting();
 
     };
 
     private stopShooting () {
 
-        clearInterval( this.fireInterval );
-        this.fireInterval = null;
+        Arena.me.tank.stopShooting();
 
     };
 
     private rotateTop ( angle: number ) {
 
-        // todo
+        Arena.me.tank.rotateTop( angle );
 
     };
 
@@ -97,9 +94,7 @@ class ControlsCore {
             case 2:
             case 3:
 
-                clearInterval( this.fireInterval );
-                this.fireInterval = setInterval( this.startShooting.bind( this ), 200 );
-                this.stopShooting();
+                this.startShooting();
                 break;
 
         }
@@ -202,8 +197,6 @@ class ControlsCore {
 
             case 32: // space
 
-                clearInterval( this.fireInterval );
-                this.fireInterval = setInterval( this.startShooting.bind( this ), 200 );
                 this.startShooting();
                 break;
 

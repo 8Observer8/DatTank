@@ -58,17 +58,18 @@ class NetworkCore {
         this.registerEvent( 'PlayerNewLevel', EventDir.IN, EventType.BIN, 90 );
         this.registerEvent( 'PlayerTankUpdateStats', EventDir.OUT, EventType.BIN, 91 );
 
-        this.registerEvent( 'PlayerTankRotateTop', EventDir.IN, EventType.BIN, 100 );
-        this.registerEvent( 'PlayerTankRotateTop', EventDir.OUT, EventType.BIN, 101 );
+        this.registerEvent( 'TankRotateTop', EventDir.IN, EventType.BIN, 100 );
+        this.registerEvent( 'TankRotateTop', EventDir.OUT, EventType.BIN, 101 );
 
-        this.registerEvent( 'PlayerTankMove', EventDir.IN, EventType.BIN, 111 );
-        this.registerEvent( 'PlayerTankMove', EventDir.OUT, EventType.BIN, 112 );
+        this.registerEvent( 'TankMove', EventDir.IN, EventType.BIN, 111 );
+        this.registerEvent( 'TankMove', EventDir.OUT, EventType.BIN, 112 );
 
-        this.registerEvent( 'PlayerTankShoot', EventDir.IN, EventType.BIN, 115 );
-        this.registerEvent( 'PlayerTankShoot', EventDir.OUT, EventType.BIN, 116 );
+        this.registerEvent( 'TankStartShooting', EventDir.OUT, EventType.BIN, 115 );
+        this.registerEvent( 'TankStopShooting', EventDir.OUT, EventType.BIN, 116 );
+        this.registerEvent( 'TankMakeShot', EventDir.IN, EventType.BIN, 117 );
 
-        this.registerEvent( 'PlayerTankUpdateHealth', EventDir.IN, EventType.BIN, 117 );
-        this.registerEvent( 'PlayerTankUpdateAmmo', EventDir.IN, EventType.BIN, 118 );
+        this.registerEvent( 'TankUpdateHealth', EventDir.IN, EventType.BIN, 118 );
+        this.registerEvent( 'TankUpdateAmmo', EventDir.IN, EventType.BIN, 119 );
 
         //
 

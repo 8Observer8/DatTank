@@ -50,7 +50,19 @@ class TankCore {
 
     };
 
-    public shoot ( id: number ) {
+    public startShooting () {
+
+        // todo
+
+    };
+
+    public stopShooting () {
+
+        // todo
+
+    };
+
+    public makeShot ( id: number ) {
 
         if ( this.health <= 0 ) return;
 
@@ -62,6 +74,21 @@ class TankCore {
         }
 
     };
+
+    public move ( directionX: number, directionZ: number ) {
+
+        this.network.move( directionX, directionZ );
+
+    };
+
+    public rotateTop ( angle: number ) {
+
+        angle -= this.rotation;
+        this.network.rotateTop( angle );
+
+    };
+
+    //
 
     public setMovement ( directionX: number, directionZ: number, positionX: number, positionZ: number, rotation: number ) {
 

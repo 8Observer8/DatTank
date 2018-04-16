@@ -37,17 +37,18 @@ NetworkManager.prototype.init = function () {
     this.registerEvent( 'PlayerNewLevel', 'out', 'bin', 90 );
     this.registerEvent( 'PlayerTankUpdateStats', 'in', 'bin', 91 );
 
-    this.registerEvent( 'PlayerTankRotateTop', 'out', 'bin', 100 );
-    this.registerEvent( 'PlayerTankRotateTop', 'in', 'bin', 101 );
+    this.registerEvent( 'RotateTop', 'out', 'bin', 100 );
+    this.registerEvent( 'RotateTop', 'in', 'bin', 101 );
 
-    this.registerEvent( 'PlayerTankMove', 'out', 'bin', 111 );
-    this.registerEvent( 'PlayerTankMove', 'in', 'bin', 112 );
+    this.registerEvent( 'TankMove', 'out', 'bin', 111 );
+    this.registerEvent( 'TankMove', 'in', 'bin', 112 );
 
-    this.registerEvent( 'PlayerTankShoot', 'out', 'bin', 115 );
-    this.registerEvent( 'PlayerTankShoot', 'in', 'bin', 116 );
+    this.registerEvent( 'TankStartShooting', 'in', 'bin', 115 );
+    this.registerEvent( 'TankStopShooting', 'in', 'bin', 116 );
+    this.registerEvent( 'TankMakeShot', 'out', 'bin', 117 );
 
-    this.registerEvent( 'PlayerTankUpdateHealth', 'out', 'bin', 117 );
-    this.registerEvent( 'PlayerTankUpdateAmmo', 'out', 'bin', 118 );
+    this.registerEvent( 'TankUpdateHealth', 'out', 'bin', 117 );
+    this.registerEvent( 'TankUpdateAmmo', 'out', 'bin', 118 );
 
     //
 

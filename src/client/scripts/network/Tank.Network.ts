@@ -25,6 +25,49 @@ class TankNetwork {
 
     //
 
+    public startShooting () {
+
+        let buffer = new ArrayBuffer( 2 );
+        let bufferView = new Int16Array( buffer );
+
+        Network.send( 'TankStartShooting', buffer, bufferView );
+
+    };
+
+    public stopShooting () {
+
+        let buffer = new ArrayBuffer( 2 );
+        let bufferView = new Int16Array( buffer );
+
+        Network.send( 'TankStopShooting', buffer, bufferView );
+
+    };
+
+    public rotateTop ( angle: number ) {
+
+        let buffer = new ArrayBuffer( 4 );
+        let bufferView = new Int16Array( buffer );
+
+        bufferView[ 1 ] = Math.floor( angle * 1000 );
+        Network.send( 'TankRotateTop', buffer, bufferView );
+
+    };
+
+    public move ( moveX, moveZ ) {
+
+        let buffer = new ArrayBuffer( 6 );
+        let bufferView = new Int16Array( buffer );
+
+        bufferView[ 0 ] = 0;
+        bufferView[ 1 ] = moveX;
+        bufferView[ 2 ] = moveZ;
+
+        Network.send( 'TankMove', buffer, bufferView );
+
+    };
+
+    //
+
     private setMove ( event ) {
 
         let data = event.data;
@@ -57,7 +100,7 @@ class TankNetwork {
         let data = event.data;
         if ( this.filter( data ) ) return;
 
-        this.tank.shoot( data[1] );
+        this.tank.makeShot( data[1] );
 
     };
 
