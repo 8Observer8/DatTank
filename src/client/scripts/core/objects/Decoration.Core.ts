@@ -3,10 +3,35 @@
  * DatTank Decoration general class
 */
 
+import * as THREE from 'three';
+
+import * as OMath from "./../../OMath/Core.OMath";
+import { DecorationGfx } from "./../../graphics/objects/Decoration.Gfx";
+import { ResourceManager } from "./../../managers/Resource.Manager";
+
+//
+
 class DecorationCore {
 
+    private object: THREE.Object3D = new THREE.Object3D();
     public id: number;
-    // todo
+    public title: string;
+    
+    protected gfx: DecorationGfx = new DecorationGfx();
+
+    //
+
+    public init ( decorationTitle: string ) {
+
+        // todo
+
+    };
+
+    public destroy () {
+
+        // todo
+
+    };
 
 };
 

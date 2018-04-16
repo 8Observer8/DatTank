@@ -9,7 +9,16 @@ import { DecorationCore } from "./../../../core/objects/Decoration.Core";
 
 class Ruin1Decoration extends DecorationCore {
 
-    // todo
+    static title: string = 'Ruin1';
+
+    //
+
+    constructor () {
+
+        super();
+        this.title = Ruin1Decoration.title;
+
+    };
 
 };
 
