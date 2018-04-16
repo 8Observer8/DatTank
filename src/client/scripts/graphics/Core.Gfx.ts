@@ -12,7 +12,7 @@ import { LandscapeGfx } from "./objects/Landscape.Gfx";
 import { BoxManager } from "./../managers/Box.Manager";
 import { TowerManager } from "./../managers/Tower.Manager";
 import { DecorationManager } from "./../managers/Decoration.Manager";
-import { Controls } from "./../core/Controls.Core";
+import { ControlsManager } from "./../managers/Control.Manager";
 
 //
 
@@ -184,7 +184,7 @@ class GraphicsCore {
         BoxManager.update( time, delta );
         TowerManager.update( time, delta );
         DecorationManager.update( time, delta );
-        Controls.update( time, delta );
+        ControlsManager.update( time, delta );
 
         //
 
