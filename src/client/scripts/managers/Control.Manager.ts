@@ -12,9 +12,9 @@ import { Arena } from "./../core/Arena.Core";
 
 //
 
-class ControlsCore {
+class ControlsManagerCore {
 
-    private static instance: ControlsCore;
+    private static instance: ControlsManagerCore;
 
     private pressedKey = {};
     private mousePos: OMath.Vec2 = new OMath.Vec2( 0.5, 0.5 );
@@ -299,13 +299,13 @@ class ControlsCore {
 
     constructor () {
 
-        if ( ControlsCore.instance ) {
+        if ( ControlsManagerCore.instance ) {
 
-            return ControlsCore.instance;
+            return ControlsManagerCore.instance;
 
         }
 
-        ControlsCore.instance = this;
+        ControlsManagerCore.instance = this;
 
     };
 
@@ -313,4 +313,4 @@ class ControlsCore {
 
 //
 
-export let Controls = new ControlsCore();
+export let ControlsManager = new ControlsManagerCore();

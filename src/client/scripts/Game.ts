@@ -9,9 +9,9 @@ import * as MobileDetect from "mobile-detect";
 import { Network } from "./network/Core.Network";
 import { Garage } from "./garage/Core.Garage";
 import { ResourceManager } from "./managers/Resource.Manager";
+import { ControlsManager } from "./managers/Control.Manager";
 import { GameService } from "./services/Game.Service";
 import { Arena } from "./core/Arena.Core";
-import { Controls } from "./core/Controls.Core";
 import { UI } from "./ui/Core.UI";
 import { Logger } from "./utils/Logger";
 import { GfxCore } from "./graphics/Core.Gfx";
@@ -113,7 +113,7 @@ class GameCore {
         Arena.init( data );
         UI.Landing.hideLoader();
         UI.InGame.showViewport();
-        Controls.init();
+        ControlsManager.init();
 
         GfxCore.init();
 
