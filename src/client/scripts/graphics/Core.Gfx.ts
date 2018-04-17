@@ -32,7 +32,6 @@ class GraphicsCore {
     public scene: THREE.Scene;
     public camera: THREE.PerspectiveCamera;
     private lookAtVector: THREE.Vector3 = new THREE.Vector3();
-    private audioListener: THREE.AudioListener;
     private cameraOffset = new THREE.Vector3();
     private shakeInterval: number = null;
 
@@ -49,6 +48,7 @@ class GraphicsCore {
     public windowWidth: number = 0;
     public windowHeight: number = 0;
 
+    public audioListener: THREE.AudioListener;
     public decorations: Array<object> = [];
     public sun: THREE.DirectionalLight;
     public landscape: LandscapeGfx = new LandscapeGfx();

@@ -7,6 +7,7 @@ import * as THREE from 'three';
 
 import * as OMath from "./../../OMath/Core.OMath";
 import { GfxCore } from "./../Core.Gfx";
+import { TankLabelGfx } from "./TankLabel.Gfx";
 import { TankCore } from "./../../core/objects/Tank.Core";
 import { ResourceManager } from "./../../managers/Resource.Manager";
 
@@ -19,11 +20,32 @@ class TankGfx {
     private baseMesh: THREE.Mesh;
     private mixer: THREE.AnimationMixer;
     private tank: TankCore;
+    private label: TankLabelGfx = new TankLabelGfx();
 
     private animations = {};
     private sounds = {};
 
     //
+
+    private initSounds () {
+
+        let movingSound = new THREE.PositionalAudio( GfxCore.audioListener );
+        movingSound.setBuffer( ResourceManager.getSound('tank_moving.wav') );
+        movingSound.setRefDistance( 11 );
+        movingSound.autoplay = false;
+        this.object.add( movingSound );
+        this.sounds['moving'] = movingSound;
+    
+        // this.sounds.explosion = new THREE.PositionalAudio( view.sound.listener );
+        // this.sounds.explosion.setBuffer( resourceManager.getSound('tank_explosion.wav') );
+        // this.sounds.explosion.loop = false;
+        // this.sounds.explosion.setRefDistance( 15 );
+        // this.sounds.explosion.autoplay = false;
+        // if ( this.player.id !== Game.arena.me ) this.sounds.explosion.setVolume(0.4);
+    
+        // this.object.add( this.sounds.explosion );
+
+    };
 
     public toggleMovementSound ( enable: boolean ) {
 
@@ -40,9 +62,9 @@ class TankGfx {
 
             if ( sound.isPlaying && ! enable ) {
 
-                sound.moving.stop();
-                sound.moving.startTime = false;
-                sound.moving.isPlaying = false;
+                sound.stop();
+                sound.startTime = false;
+                sound.isPlaying = false;
 
             }
 
@@ -193,7 +215,9 @@ class TankGfx {
 
         //
 
-        this.sounds['moving'] = ResourceManager.getSound('tank_moving.wav');
+        this.label.init( this.object );
+        this.label.update( this.tank.health, this.tank.armour, this.tank.player.team.color, this.tank.player.username );
+        this.initSounds();
 
         //
 

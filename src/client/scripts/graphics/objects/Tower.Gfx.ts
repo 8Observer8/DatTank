@@ -19,7 +19,7 @@ class TowerGfx {
     private mixer: THREE.AnimationMixer;
 
     private animations = {};
-    private sounds: Array<object>;
+    private sounds = {};
 
     //
 

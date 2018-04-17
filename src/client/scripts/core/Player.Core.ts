@@ -93,9 +93,10 @@ class PlayerCore {
     private init ( params ) {
 
         this.id = params.id;
+        this.username = params.login;
+        this.team = TeamManager.getById( params.team );
         this.setTank( params.tank, params );
         this.tank.init();
-        this.team = TeamManager.getById( params.team );
 
     };
 
