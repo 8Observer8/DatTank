@@ -3,41 +3,6 @@
  * Tank unit general class
 */
 
-Game.Tank = function ( params ) {
-
-    this.blastSmokeEnabled = false;
-    this.smokeEnabled = false;
-
-    //
-
-    this.prevPosition = new THREE.Vector3();
-    this.tracksOffset = 0;
-    this.tracks = [];
-
-    this.label = false;
-    this.ffLabel = false;
-    this.healthChangeLabels = [];
-
-};
-
-Game.Tank.prototype.init = function () {
-
-    this.initModel();
-    this.initBullets();
-    this.initSounds();
-    this.initTracks();
-    this.initLabel();
-
-    //
-
-    if ( this.player.health <= 0 ) {
-
-        this.destroy();
-
-    }
-
-};
-
 Game.Tank.prototype.initBullets = function () {
 
     for ( var i = 0; i < 5; i ++ ) {
@@ -357,24 +322,6 @@ Game.Tank.prototype.updateTracks = function () {
 
 };
 
-Game.Tank.prototype.setRotation = function ( angle ) {
-
-    this.object.rotation.y = angle;
-
-};
-
-Game.Tank.prototype.setTopRotation = function ( angle ) {
-
-    this.object.top.rotation.y = angle + Math.PI / 2;
-
-};
-
-Game.Tank.prototype.setPosition = function ( x, y, z ) {
-
-    this.object.position.set( x, y, z );
-
-};
-
 Game.Tank.prototype.hideBlastSmoke = function () {
 
     if ( ! this.effects.blastSmoke ) return;
@@ -673,64 +620,6 @@ Game.Tank.prototype.shootBullet = function ( bulletId ) {
 
 };
 
-Game.Tank.prototype.dispose = function () {
-
-    // stop all audio
-
-    for ( var s in this.sounds ) {
-
-        if ( this.sounds[ s ] ) this.sounds[ s ].pause();
-
-    }
-
-    // remove explosion objects from scene
-
-    if ( this.effects.explosion ) {
-
-        for ( var i = 0, il = this.effects.explosion.length; i < il; i ++ ) {
-
-            view.scene.remove( this.effects.explosion[ i ] );
-
-        }
-
-    }
-
-    // remove smoke objects from scene
-
-    if ( this.effects.blastSmoke ) {
-
-        for ( var i = 0, il = this.effects.blastSmoke.length; i < il; i ++ ) {
-
-            view.scene.remove( this.effects.blastSmoke[ i ] );
-
-        }
-
-    }
-
-    // remove bullets from scene
-
-    for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
-
-        view.scene.remove( this.bullets[ i ] );
-        view.scene.remove( this.bullets[ i ].trace );
-
-    }
-
-    // remove tracks from scene
-
-    for ( var i = 0, il = this.tracks.length; i < il; i ++ ) {
-
-        view.scene.remove( this.tracks[ i ].left );
-        view.scene.remove( this.tracks[ i ].right );
-
-    }
-
-    // remove tank object from scene
-
-    view.scene.remove( this.object );
-
-};
-
 Game.Tank.prototype.animate = function ( delta ) {
 
     var newHealthChangeLabelsList = [];
@@ -781,52 +670,6 @@ Game.Tank.prototype.animate = function ( delta ) {
             this.ffLabel.sprite.visible = false;
 
         }
-
-    }
-
-    // if tank moves update tracks
-
-    if ( this.object.base.material.length === 3 ) {
-
-        if ( this.player.moveDirection.x ) {
-
-            this.object.base.material[1].map.offset.y = this.object.base.material[1].map.offset.y - 0.005 * this.player.moveDirection.x;
-            if ( this.object.base.material[1].map.offset.y > 1 ) this.object.base.material[1].map.offset.y = 0;
-            this.object.base.material[1].needsUpdate = true;
-
-            this.object.base.material[2].map.offset.y = this.object.base.material[2].map.offset.y - 0.005 * this.player.moveDirection.x;
-            if ( this.object.base.material[2].map.offset.y > 1 ) this.object.base.material[2].map.offset.y = 0;
-            this.object.base.material[2].needsUpdate = true;
-
-        } else if ( this.player.moveDirection.y === -1 ) {
-
-            this.object.base.material[1].map.offset.y = this.object.base.material[1].map.offset.y - 0.005;
-            if ( this.object.base.material[1].map.offset.y > 1 ) this.object.base.material[1].map.offset.y = 0;
-            this.object.base.material[1].needsUpdate = true;
-
-            this.object.base.material[2].map.offset.y = this.object.base.material[2].map.offset.y + 0.005;
-            if ( this.object.base.material[2].map.offset.y > 1 ) this.object.base.material[2].map.offset.y = 0;
-            this.object.base.material[2].needsUpdate = true;
-
-        } else if ( this.player.moveDirection.y === 1 ) {
-
-            this.object.base.material[1].map.offset.y = this.object.base.material[1].map.offset.y + 0.005;
-            if ( this.object.base.material[1].map.offset.y > 1 ) this.object.base.material[1].map.offset.y = 0;
-            this.object.base.material[1].needsUpdate = true;
-
-            this.object.base.material[2].map.offset.y = this.object.base.material[2].map.offset.y - 0.005;
-            if ( this.object.base.material[2].map.offset.y > 1 ) this.object.base.material[2].map.offset.y = 0;
-            this.object.base.material[2].needsUpdate = true;
-
-        }
-
-    }
-
-    //
-
-    if ( this.mixer ) {
-
-        this.mixer.update( delta / 1000 );
 
     }
 

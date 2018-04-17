@@ -169,12 +169,12 @@ class TankCore {
 
                 this.position.x += ( speed * Math.sin( this.rotation ) * delta );
                 this.position.z += ( speed * Math.cos( this.rotation ) * delta );
-    
+
             } else if ( this.moveDirection.x < 0 ) {
-    
+
                 this.position.x -= ( speed * Math.sin( this.rotation ) * delta );
                 this.position.z -= ( speed * Math.cos( this.rotation ) * delta );
-    
+
             }
 
             this.rotation = this.rotation;
@@ -182,13 +182,13 @@ class TankCore {
             if ( this.moveDirection.y > 0 ) {
 
                 this.rotation += 0.001 * delta;
-    
+
             } else if ( this.moveDirection.y < 0 ) {
-    
+
                 this.rotation -= 0.001 * delta;
-    
+
             }
-    
+
             this.gfx.setRotation( this.rotation );
 
         } else {
@@ -211,7 +211,34 @@ class TankCore {
 
         if ( this.health <= 0 ) return;
 
+        //
+
+        let dx = this.positionCorrection.x * delta / 300;
+        let dz = this.positionCorrection.z * delta / 300;
+        let dr = this.rotationCorrection * delta / 100;
+
+        if ( Math.abs( dr ) > 0.001 ) {
+
+            this.rotationCorrection -= dr;
+            this.rotation += dr;
+            this.gfx.setRotation( this.rotation );
+
+        }
+
+        if ( Math.abs( dx ) > 0.1 || Math.abs( dz ) > 0.1 ) {
+
+            this.positionCorrection.x -= dx;
+            this.positionCorrection.z -= dz;
+
+            this.position.x += dx;
+            this.position.z += dz;
+
+        }
+
+        //
+
         this.updateMovement( time, delta );
+        this.gfx.update( time, delta );
 
     };
 
@@ -223,7 +250,7 @@ class TankCore {
 
     public init () {
 
-        this.gfx.init( this.title );
+        this.gfx.init( this );
         this.network.init( this );
 
     };

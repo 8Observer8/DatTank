@@ -208,30 +208,6 @@ Game.Player.prototype.updateStats = function ( name ) {
 
 Game.Player.prototype.update = function ( time, delta ) {
 
-    var dx = this.positionCorrection.x * delta / 300;
-    var dz = this.positionCorrection.z * delta / 300;
-    var dr = this.rotationCorrection * delta / 100;
-
-    if ( Math.abs( dr ) > 0.001 ) {
-
-        this.rotationCorrection -= dr;
-        this.rotation += dr;
-        this.tank.setRotation( this.rotation );
-
-    }
-
-    if ( Math.abs( dx ) > 0.1 || Math.abs( dz ) > 0.1 ) {
-
-        this.positionCorrection.x -= dx;
-        this.positionCorrection.z -= dz;
-
-        this.position.x += dx;
-        this.position.z += dz;
-
-    }
-
-    //
-
     var x, z;
     var dx, dz;
 

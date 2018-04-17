@@ -7,6 +7,7 @@ import * as THREE from 'three';
 
 import * as OMath from "./../../OMath/Core.OMath";
 import { GfxCore } from "./../Core.Gfx";
+import { TankCore } from "./../../core/objects/Tank.Core";
 import { ResourceManager } from "./../../managers/Resource.Manager";
 
 //
@@ -17,6 +18,7 @@ class TankGfx {
     private topMesh: THREE.Mesh;
     private baseMesh: THREE.Mesh;
     private mixer: THREE.AnimationMixer;
+    private tank: TankCore;
 
     private animations = {};
     private sounds = {};
@@ -77,12 +79,60 @@ class TankGfx {
         this.topMesh.rotation.y = angle + Math.PI / 2;
 
     };
+    
+    public update ( time: number, delta: number ) {
 
-    public init ( tankTitle: string ) {
+        let tank = this.tank;
+
+        // if tank moves update tracks
+
+        let track1Map = this.baseMesh.material[1].map;
+        let track2Map = this.baseMesh.material[2].map;
+
+        if ( tank.moveDirection.x ) {
+
+            track1Map.offset.y = track1Map.offset.y - 0.005 * tank.moveDirection.x;
+            if ( track1Map.offset.y > 1 ) track1Map.offset.y = 0;
+            // track1Map.needsUpdate = true;
+
+            track2Map.offset.y = track2Map.offset.y - 0.005 * tank.moveDirection.x;
+            if ( track2Map.offset.y > 1 ) track2Map.offset.y = 0;
+
+        } else if ( tank.moveDirection.y === -1 ) {
+
+            track1Map.offset.y = track1Map.offset.y - 0.005;
+            if ( track1Map.offset.y > 1 ) track1Map.offset.y = 0;
+
+            track2Map.offset.y = track2Map.offset.y + 0.005;
+            if ( track2Map.offset.y > 1 ) track2Map.offset.y = 0;
+
+        } else if ( tank.moveDirection.y === 1 ) {
+
+            track1Map.offset.y = track1Map.offset.y + 0.005;
+            if ( track1Map.offset.y > 1 ) track1Map.offset.y = 0;
+
+            track2Map.offset.y = track2Map.offset.y - 0.005;
+            if ( track2Map.offset.y > 1 ) track2Map.offset.y = 0;
+
+        }
+
+        //
+
+        if ( this.mixer ) {
+
+            this.mixer.update( delta / 1000 );
+
+        }
+
+    };
+
+    public init ( tank ) {
+
+        this.tank = tank;
 
         let materials = [];
-        let tankBaseModel = ResourceManager.getModel( 'tanks/' + tankTitle + '-bottom' );
-        let tankTopModel = ResourceManager.getModel( 'tanks/' + tankTitle + '-top' );
+        let tankBaseModel = ResourceManager.getModel( 'tanks/' + tank.title + '-bottom' );
+        let tankTopModel = ResourceManager.getModel( 'tanks/' + tank.title + '-top' );
 
         // add tank base mesh
 
@@ -117,13 +167,13 @@ class TankGfx {
 
         // add tank shadow
 
-        // var tankShadowTexture = ResourceManager.getTexture( 'shadowTank.png' );
-        // var tankShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: tankShadowTexture, transparent: true, depthWrite: false, opacity: 0.7 }) );
-        // tankShadow.scale.set( 13, 20, 1 );
-        // tankShadow.rotation.x = - Math.PI / 2;
-        // tankShadow.position.y += 0.5;
-        // tankShadow.renderOrder = 10;
-        // this.object.add( tankShadow );
+        var tankShadowTexture = ResourceManager.getTexture( 'shadowTank.png' );
+        var tankShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: tankShadowTexture, transparent: true, depthWrite: false, opacity: 0.7 }) );
+        tankShadow.scale.set( 13, 20, 1 );
+        tankShadow.rotation.x = - Math.PI / 2;
+        tankShadow.position.y += 0.5;
+        tankShadow.renderOrder = 10;
+        this.object.add( tankShadow );
 
         //
 
@@ -167,6 +217,22 @@ class TankGfx {
         }, 1100 );
 
         this.sounds['explosion'].play();
+
+    };
+
+    public dispose () {
+
+        // stop all audio
+
+        for ( var s in this.sounds ) {
+
+            if ( this.sounds[ s ] ) this.sounds[ s ].pause();
+
+        }
+
+        // remove tank object from scene
+
+        GfxCore.scene.remove( this.object );
 
     };
 
