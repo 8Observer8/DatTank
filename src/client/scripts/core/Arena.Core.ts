@@ -91,7 +91,7 @@ class ArenaCore {
         for ( let i = 0, il = towers.length; i < il; i ++ ) {
 
             TowerManager.remove( TowerManager.getById( towers[ i ].id ) );
-            TowerManager.add( new TowerCore( towers[ i ] ) );
+            TowerManager.add( towers[ i ] );
 
         }
 

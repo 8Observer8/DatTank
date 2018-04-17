@@ -18,6 +18,10 @@ class TowerCore {
     public id: number;
     public team: TeamCore;
 
+    public bullet: number;
+    public rpm: number;
+    public armour: number;
+
     public health: number;
     public rotation: number;
     public position: OMath.Vec3 = new OMath.Vec3();
@@ -49,7 +53,7 @@ class TowerCore {
 
     public init () {
 
-        this.gfx.init( this.title );
+        this.gfx.init( this );
 
     };
 

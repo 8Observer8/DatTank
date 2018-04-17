@@ -7,7 +7,9 @@ import * as THREE from 'three';
 
 import * as OMath from "./../../OMath/Core.OMath";
 import { GfxCore } from "./../Core.Gfx";
+import { TowerLabelGfx } from "./../objects/TowerLabel.Gfx";
 import { ResourceManager } from "./../../managers/Resource.Manager";
+import { TowerCore } from '../../core/objects/Tower.Core';
 
 //
 
@@ -17,17 +19,21 @@ class TowerGfx {
     private topMesh: THREE.Mesh;
     private baseMesh: THREE.Mesh;
     private mixer: THREE.AnimationMixer;
+    private tower: TowerCore;
+    private label: TowerLabelGfx = new TowerLabelGfx();
 
     private animations = {};
     private sounds = {};
 
     //
 
-    public init ( towerTitle: string ) {
+    public init ( tower ) {
+
+        this.tower = tower;
 
         let materials = [];
-        let towerBaseModel = ResourceManager.getModel( 'towers/' + towerTitle + '-base' );
-        let towerTopModel = ResourceManager.getModel( 'towers/' + towerTitle + '-top' );
+        let towerBaseModel = ResourceManager.getModel( 'towers/' + tower.title + '-base' );
+        let towerTopModel = ResourceManager.getModel( 'towers/' + tower.title + '-top' );
 
         // tower base part
 
@@ -71,6 +77,11 @@ class TowerGfx {
         let shotAction = this.mixer.clipAction( towerTopModel.geometry.animations[0], this.topMesh );
         shotAction.setDuration( 0.5 ).setLoop( THREE.LoopOnce, 1 );
         this.animations['shotAction'] = shotAction;
+
+        //
+
+        this.label.init( this.object );
+        this.label.update( this.tower.health, this.tower.armour, this.tower.team.color );
 
     };
 
