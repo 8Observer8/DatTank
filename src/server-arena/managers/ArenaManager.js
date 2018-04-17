@@ -191,10 +191,10 @@ ArenaManager.prototype.addNetworkListeners = function () {
 
     networkManager.addMessageListener( 'ArenaJoinRequest', this.playerJoin.bind( this ) );
     networkManager.addMessageListener( 'ArenaPlayerRespawn', this.proxyEventToPlayer.bind( this ) );
-    networkManager.addMessageListener( 'PlayerTankRotateTop', this.proxyEventToPlayer.bind( this ) );
-    networkManager.addMessageListener( 'PlayerTankMove', this.proxyEventToPlayer.bind( this ) );
-    networkManager.addMessageListener( 'PlayerTankShoot', this.proxyEventToPlayer.bind( this ) );
-    networkManager.addMessageListener( 'PlayerTankUpdateStats', this.proxyEventToPlayer.bind( this ) );
+    networkManager.addMessageListener( 'TankRotateTop', this.proxyEventToPlayer.bind( this ) );
+    networkManager.addMessageListener( 'TankMove', this.proxyEventToPlayer.bind( this ) );
+    networkManager.addMessageListener( 'TankShoot', this.proxyEventToPlayer.bind( this ) );
+    networkManager.addMessageListener( 'TankUpdateStats', this.proxyEventToPlayer.bind( this ) );
 
 };
 

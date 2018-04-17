@@ -186,6 +186,7 @@ class TankCore {
     public init () {
 
         this.gfx.init( this.title );
+        this.network.init( this );
 
     };
 

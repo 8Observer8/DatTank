@@ -13,6 +13,7 @@ import { GfxCore } from "./../graphics/Core.Gfx";
 import { PlayerCore } from "./Player.Core";
 import { TowerCore } from "./objects/Tower.Core";
 import { ArenaNetwork } from "../network/Arena.Network";
+import { ControlsManager } from "../managers/Control.Manager";
 
 //
 

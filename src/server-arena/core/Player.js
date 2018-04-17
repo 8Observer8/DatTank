@@ -249,7 +249,7 @@ Player.prototype.rotateTop = function ( angle ) {
     bufferView[1] = scope.id;
     bufferView[2] = Math.floor( 1000 * angle );
 
-    scope.sendEventToPlayersInRange( 'PlayerTankRotateTop', buffer, bufferView );
+    scope.sendEventToPlayersInRange( 'TankRotateTop', buffer, bufferView );
 
 };
 
@@ -846,10 +846,10 @@ Player.prototype.addEventListeners = function () {
     var scope = this;
 
     this.addEventListener( 'ArenaPlayerRespawn', function ( event ) { scope.respawn( event.data ); });
-    this.addEventListener( 'PlayerTankRotateTop', function ( event ) { scope.rotateTop( event.data[0] / 1000 ); });
-    this.addEventListener( 'PlayerTankMove', function ( event ) { scope.move( event.data[0], event.data[1] ); });
-    this.addEventListener( 'PlayerTankShoot', function ( event ) { scope.shoot(); });
-    this.addEventListener( 'PlayerTankUpdateStats', function ( event ) { scope.updateStats( event.data[0] ); });
+    this.addEventListener( 'TankRotateTop', function ( event ) { scope.rotateTop( event.data[0] / 1000 ); });
+    this.addEventListener( 'TankMove', function ( event ) { scope.move( event.data[0], event.data[1] ); });
+    this.addEventListener( 'TankShoot', function ( event ) { scope.shoot(); });
+    this.addEventListener( 'TankUpdateStats', function ( event ) { scope.updateStats( event.data[0] ); });
 
 };
 

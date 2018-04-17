@@ -178,7 +178,7 @@ class NetworkCore {
         } else {
     
             view[0] = this.events.out[ eventName ].id;
-    
+
         }
     
         this.transport.send( data, { binary: true, mask: true } );
@@ -218,7 +218,7 @@ class NetworkCore {
             data = new Int16Array( data, 2 );
     
         }
-    
+
         for ( var i = 0, il = listeners.length; i < il; i ++ ) {
     
             if ( listeners[ i ] ) {

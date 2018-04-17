@@ -17,9 +17,10 @@ class TankNetwork {
     private filter ( data ) : boolean {
 
         var tankId = ( data.id ) ? data.id : data[0];
-        if ( this.tank.id !== tankId ) return false;
 
-        return true;
+        if ( this.tank.player.id !== tankId ) return true; // tmp, need to replace later with tank id and not player id
+
+        return false;
 
     };
 
@@ -49,6 +50,7 @@ class TankNetwork {
         let bufferView = new Int16Array( buffer );
 
         bufferView[ 1 ] = Math.floor( angle * 1000 );
+
         Network.send( 'TankRotateTop', buffer, bufferView );
 
     };
@@ -68,54 +70,48 @@ class TankNetwork {
 
     //
 
-    private setMove ( event ) {
+    private setMove ( data ) {
 
-        let data = event.data;
         if ( this.filter( data ) ) return;
 
         this.tank.setMovement( data[1], data[2], data[3], data[4], data[5] );
 
     };
 
-    private setRotateTop ( event ) {
+    private setRotateTop ( data ) {
 
-        let data = event.data;
         if ( this.filter( data ) ) return;
 
         this.tank.setTopRotation( data[1] / 1000 );
 
     };
 
-    private setFriendlyFire ( event ) {
+    private setFriendlyFire ( data ) {
 
-        let data = event.data;
         if ( this.filter( data ) ) return;
 
         this.tank.friendlyFire();
 
     };
 
-    private setShoot ( event ) {
+    private setShoot ( data ) {
 
-        let data = event.data;
         if ( this.filter( data ) ) return;
 
         this.tank.makeShot( data[1] );
 
     };
 
-    private setHealth ( event ) {
+    private setHealth ( data ) {
 
-        let data = event.data;
         if ( this.filter( data ) ) return;
 
         this.tank.setHealth( data[1], data[2] );
 
     };
 
-    private setAmmo ( event ) {
+    private setAmmo ( data ) {
 
-        let data = event.data;
         if ( this.filter( data ) ) return;
 
         this.tank.setAmmo( data[1] );

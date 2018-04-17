@@ -37,8 +37,8 @@ NetworkManager.prototype.init = function () {
     this.registerEvent( 'PlayerNewLevel', 'out', 'bin', 90 );
     this.registerEvent( 'PlayerTankUpdateStats', 'in', 'bin', 91 );
 
-    this.registerEvent( 'RotateTop', 'out', 'bin', 100 );
-    this.registerEvent( 'RotateTop', 'in', 'bin', 101 );
+    this.registerEvent( 'TankRotateTop', 'out', 'bin', 100 );
+    this.registerEvent( 'TankRotateTop', 'in', 'bin', 101 );
 
     this.registerEvent( 'TankMove', 'out', 'bin', 111 );
     this.registerEvent( 'TankMove', 'in', 'bin', 112 );

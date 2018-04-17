@@ -114,7 +114,12 @@ class GameCore {
         Arena.init( data );
         UI.Landing.hideLoader();
         UI.InGame.showViewport();
-        ControlsManager.init();
+
+        setTimeout( () => {
+        
+            ControlsManager.init();
+
+        }, 100 );
 
         GfxCore.init();
 
@@ -143,3 +148,4 @@ window['game']['arena'] = Arena;
 window['game']['towermanager'] = TowerManager;
 window['game']['decorationmanager'] = DecorationManager;
 window['game']['resourcemanager'] = ResourceManager;
+window['game']['controlsmanager'] = ControlsManager;

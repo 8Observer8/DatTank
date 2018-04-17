@@ -41,6 +41,12 @@ class TankGfx {
 
     };
 
+    public setTopRotation ( angle: number ) {
+
+        this.topMesh.rotation.y = angle + Math.PI / 2;
+
+    };
+
     public init ( tankTitle: string ) {
 
         let materials = [];
@@ -107,12 +113,6 @@ class TankGfx {
         //
 
         GfxCore.scene.add( this.object );
-
-    };
-
-    public setTopRotation ( angle: number ) {
-
-        // todo
 
     };
 

@@ -19,8 +19,10 @@ export class Vec2 {
 
     public distanceTo ( point: Vec2 ) {
 
-        // todo
-        return 0;
+        let dx = this.x - point.x;
+        let dy = this.y - point.y;
+
+        return Math.sqrt( dx * dx + dy * dy );
 
     };
 

@@ -291,7 +291,8 @@ class ControlsManagerCore {
 
     public init () {
 
-        // todo
+        this.keyInit();
+        this.mouseInit();
 
     };
 
