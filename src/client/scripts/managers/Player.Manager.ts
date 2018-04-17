@@ -66,6 +66,16 @@ class PlayerManagerCore {
 
     };
 
+    public update ( time: number, delta: number ) {
+
+        for ( let i = 0, il = this.players.length; i < il; i ++ ) {
+
+            this.players[ i ].update( time, delta );
+
+        }
+
+    };
+
     public init () {
 
         // todo

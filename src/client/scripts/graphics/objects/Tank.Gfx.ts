@@ -19,9 +19,34 @@ class TankGfx {
     private mixer: THREE.AnimationMixer;
 
     private animations = {};
-    private sounds: Array<object>;
+    private sounds = {};
 
     //
+
+    public toggleMovementSound ( enable: boolean ) {
+
+        let sound = this.sounds['moving'];
+
+        if ( sound.buffer ) {
+
+            if ( ! sound.isPlaying && enable ) {
+
+                sound.play();
+                sound.isPlaying = true;
+
+            }
+
+            if ( sound.isPlaying && ! enable ) {
+
+                sound.moving.stop();
+                sound.moving.startTime = false;
+                sound.moving.isPlaying = false;
+
+            }
+
+        }
+
+    };
 
     public get2DPosition () {
 
@@ -38,6 +63,12 @@ class TankGfx {
         this.object.position.x = position.x;
         this.object.position.y = position.y;
         this.object.position.z = position.z;
+
+    };
+
+    public setRotation ( angle: number ) {
+
+        this.object.rotation.y = angle;
 
     };
 
@@ -109,6 +140,10 @@ class TankGfx {
         // var deathAction2 = this.mixer.clipAction( tankBaseModel.geometry.animations[0], this.baseMesh );
         // deathAction2.setDuration( 2 ).setLoop( THREE.LoopOnce, 1 );
         // this.animations['deathAction2'] = deathAction2;
+
+        //
+
+        this.sounds['moving'] = ResourceManager.getSound('tank_moving.wav');
 
         //
 

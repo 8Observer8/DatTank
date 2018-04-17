@@ -136,6 +136,10 @@ class ArenaCore {
 
         //
 
+        PlayerManager.update( time, delta );
+
+        //
+
         for ( var i = 0, il = Math.floor( delta / this.updateIntervalDuration ); i < il; i ++ ) {
 
             this.time += delta;

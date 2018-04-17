@@ -463,7 +463,7 @@ Player.prototype.move = function ( directionX, directionZ ) {
 
     //
 
-    scope.sendEventToPlayersInRange( 'PlayerTankMove', buffer, bufferView );
+    scope.sendEventToPlayersInRange( 'TankMove', buffer, bufferView );
 
 };
 

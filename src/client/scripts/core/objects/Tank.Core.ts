@@ -159,7 +159,45 @@ class TankCore {
 
     private updateMovement ( time: number, delta: number ) {
 
-        //
+        let speed = 0.09 * this.speed / 40;
+
+        if ( this.moveDirection.x !== 0 || this.moveDirection.y !== 0 ) {
+
+            this.gfx.toggleMovementSound( true );
+
+            if ( this.moveDirection.x > 0 ) {
+
+                this.position.x += ( speed * Math.sin( this.rotation ) * delta );
+                this.position.z += ( speed * Math.cos( this.rotation ) * delta );
+    
+            } else if ( this.moveDirection.x < 0 ) {
+    
+                this.position.x -= ( speed * Math.sin( this.rotation ) * delta );
+                this.position.z -= ( speed * Math.cos( this.rotation ) * delta );
+    
+            }
+
+            this.rotation = this.rotation;
+
+            if ( this.moveDirection.y > 0 ) {
+
+                this.rotation += 0.001 * delta;
+    
+            } else if ( this.moveDirection.y < 0 ) {
+    
+                this.rotation -= 0.001 * delta;
+    
+            }
+    
+            this.gfx.setRotation( this.rotation );
+
+        } else {
+
+            this.gfx.toggleMovementSound( false );
+
+        }
+
+        this.gfx.setPosition( this.position );
 
     };
 
@@ -196,6 +234,8 @@ class TankCore {
 
         this.position.set( params.position.x, params.position.y, params.position.z );
         this.gfx.setPosition( this.position );
+
+        this.health = params.health;
 
         this.rotation = params.rotation;
         this.rotationCorrection = 0;

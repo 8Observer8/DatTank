@@ -53,7 +53,7 @@ class ControlsManagerCore {
 
     private startMoving () {
 
-        // todo
+        Arena.me.tank.move( this.moveX, this.moveZ );
 
     };
 
