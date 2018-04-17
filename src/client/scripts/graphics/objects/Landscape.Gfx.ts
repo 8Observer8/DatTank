@@ -14,9 +14,10 @@ import { Scene } from 'three';
 
 class LandscapeGfx {
 
-    private decorations: Array<object> = [];
     private object:THREE.Object3D = new THREE.Object3D();
     private terrainMesh: THREE.Mesh;
+
+    public decorations: THREE.Object3D = new THREE.Object3D();
 
     private mapSize: number = 2430;
     private mapExtraSize = 1800;
@@ -130,38 +131,19 @@ class LandscapeGfx {
 
     };
 
-    private addDecorations ( decorations:Array<object> ) {
-
-        for ( let i = 0, il = decorations.length; i < il; i ++ ) {
-
-            let decoration = decorations[ i ];
-            // let model = Game.arena.decorationManager.list[ decoration.type ].model;
-
-            // let mesh = new THREE.Mesh( model.geometry, [ model.material[0].clone() ] );
-            // mesh.material[0].side = THREE.FrontSide;
-            // mesh.scale.set( decoration.scale.x, decoration.scale.y, decoration.scale.z );
-            // mesh.rotation.y = decoration.rotation;
-            // mesh.position.set( decoration.position.x, decoration.position.y, decoration.position.z );
-            // mesh.name = decoration.type;
-            // view.scene.add( mesh );
-            // this.decorations.push( mesh );
-
-            // this.addObjectShadow( decoration.type, mesh.position, mesh.scale, mesh.rotation );
-
-        }
-
-    };
-
     //
 
     public init () {
 
         this.addTerrain();
         this.addWalls();
-        this.addDecorations([]);
         this.addTeamZones();
 
+        this.object.name = 'landscape';
         GfxCore.scene.add( this.object );
+
+        this.decorations.name = 'decorations';
+        GfxCore.scene.add( this.decorations );
 
     };
 

@@ -45,7 +45,7 @@ class BoxGfx {
 
     public init ( box: BoxCore ) {
 
-        var boxModel = ResourceManager.getModel( box.type + '.json' );
+        var boxModel = ResourceManager.getModel( 'boxes/' + box.type );
 
         this.mesh = new THREE.Mesh( boxModel.geometry, boxModel.material );
         this.mesh.name = box.type;

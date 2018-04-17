@@ -44,8 +44,8 @@ class TankGfx {
     public init ( tankTitle: string ) {
 
         let materials = [];
-        let tankBaseModel = ResourceManager.getModel( tankTitle + '-bottom' );
-        let tankTopModel = ResourceManager.getModel( tankTitle + '-top' );
+        let tankBaseModel = ResourceManager.getModel( 'tanks/' + tankTitle + '-bottom' );
+        let tankTopModel = ResourceManager.getModel( 'tanks/' + tankTitle + '-top' );
 
         // add tank base mesh
 

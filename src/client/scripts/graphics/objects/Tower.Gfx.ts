@@ -26,8 +26,8 @@ class TowerGfx {
     public init ( towerTitle: string ) {
 
         let materials = [];
-        let towerBaseModel = ResourceManager.getModel( towerTitle + '-tower-base' );
-        let towerTopModel = ResourceManager.getModel( towerTitle + '-tower-top' );
+        let towerBaseModel = ResourceManager.getModel( 'towers/' + towerTitle + '-base' );
+        let towerTopModel = ResourceManager.getModel( 'towers/' + towerTitle + '-top' );
 
         // tower base part
 

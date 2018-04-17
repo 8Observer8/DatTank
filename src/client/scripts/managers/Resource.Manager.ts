@@ -26,39 +26,39 @@ class ResourceManagerCore {
     //
 
     private modelsList = [
-        'IS2-bottom.json',
-        'IS2-top.json',
+        'tanks/IS2-bottom.json',
+        'tanks/IS2-top.json',
 
-        'T29-bottom.json',
-        'T29-top.json',
+        'tanks/T29-bottom.json',
+        'tanks/T29-top.json',
 
-        'T44-bottom.json',
-        'T44-top.json',
+        'tanks/T44-bottom.json',
+        'tanks/T44-top.json',
 
-        'T54-bottom.json',
-        'T54-top.json',
+        'tanks/T54-bottom.json',
+        'tanks/T54-top.json',
 
-        'T1-tower-base.json',
-        'T1-tower-top.json',
+        'towers/T1-base.json',
+        'towers/T1-top.json',
 
-        'health_box.json',
-        'ammo_box.json',
+        'boxes/Health.json',
+        'boxes/Ammo.json',
 
-        'tree1.json',
-        'tree2.json',
-        'tree3.json',
-        'tree4.json',
-        'tree5.json',
-        'tree6.json',
-        'tree7.json',
-        'tree8.json',
+        'decorations/Tree1.json',
+        'decorations/Tree2.json',
+        'decorations/Tree3.json',
+        'decorations/Tree4.json',
+        'decorations/Tree5.json',
+        'decorations/Tree6.json',
+        'decorations/Tree7.json',
+        'decorations/Tree8.json',
 
-        'stone1.json',
-        'stone2.json',
-        'stone3.json',
-        'stone4.json',
+        'decorations/Rock1.json',
+        'decorations/Rock2.json',
+        'decorations/Rock3.json',
+        'decorations/Rock4.json',
 
-        'oldCastle.json'
+        'decorations/Ruin1.json'
     ];
 
     private texturesList = [
@@ -117,7 +117,7 @@ class ResourceManagerCore {
 
             g.computeFlatVertexNormals();
 
-            if ( modelName.indexOf('tree') !== -1 || modelName.indexOf('stone') !== -1 ) {
+            if ( modelName.indexOf('Tree') !== -1 || modelName.indexOf('Rock') !== -1 ) {
 
                 data.geometry = new THREE.BufferGeometry().fromGeometry( g );
 

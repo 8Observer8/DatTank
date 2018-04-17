@@ -5,14 +5,6 @@
 
 Game.Tank = function ( params ) {
 
-    this.animations = {};
-    this.effects = {};
-    this.sounds = {};
-    this.bullets = [];
-    this.object = false;
-
-    //
-
     this.blastSmokeEnabled = false;
     this.smokeEnabled = false;
 
@@ -26,16 +18,7 @@ Game.Tank = function ( params ) {
     this.ffLabel = false;
     this.healthChangeLabels = [];
 
-    //
-
-    this.type = 'tank';
-    this.name = false;
-
 };
-
-Game.Tank.prototype = {};
-
-//
 
 Game.Tank.prototype.init = function () {
 
@@ -857,14 +840,4 @@ Game.Tank.prototype.update = function ( delta ) {
     this.updateExplosion( delta );
     this.animate( delta );
 
-};
-
-Game.Tank.list = {};
-Game.Tank.numID = 0;
-
-Game.Tank.typeIds = {
-    0:  'IS2',
-    1:  'T29',
-    2:  'T44',
-    3:  'T54'
 };

@@ -13,9 +13,9 @@ class Rock1Decoration extends DecorationCore {
 
     //
 
-    constructor () {
+    constructor ( params ) {
 
-        super();
+        super( params );
         this.title = Rock1Decoration.title;
 
     };

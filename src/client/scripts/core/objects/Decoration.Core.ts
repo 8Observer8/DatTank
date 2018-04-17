@@ -15,20 +15,31 @@ class DecorationCore {
     public title: string;
     public position: OMath.Vec3 = new OMath.Vec3();
     public scale: OMath.Vec3 = new OMath.Vec3();
+    public rotation: number;
 
     protected gfx: DecorationGfx = new DecorationGfx();
 
     //
 
-    public init ( decorationTitle: string ) {
+    public init () {
 
-        // todo
+        this.gfx.init( this );
 
     };
 
     public destroy () {
 
         // todo
+
+    };
+
+    //
+
+    constructor ( params ) {
+
+        this.rotation = params.rotation;
+        this.position.set( params.position.x, params.position.y, params.position.z );
+        this.scale.set( params.scale.x, params.scale.y, params.scale.z );
 
     };
 
@@ -49,10 +60,6 @@ import { Rock1Decoration } from "./../../objects/decorations/rocks/Rock1.Decorat
 import { Rock2Decoration } from "./../../objects/decorations/rocks/Rock2.Decoration";
 import { Rock3Decoration } from "./../../objects/decorations/rocks/Rock3.Decoration";
 import { Rock4Decoration } from "./../../objects/decorations/rocks/Rock4.Decoration";
-import { Rock5Decoration } from "./../../objects/decorations/rocks/Rock5.Decoration";
-import { Rock6Decoration } from "./../../objects/decorations/rocks/Rock6.Decoration";
-import { Rock7Decoration } from "./../../objects/decorations/rocks/Rock7.Decoration";
-import { Rock8Decoration } from "./../../objects/decorations/rocks/Rock8.Decoration";
 
 import { Ruin1Decoration } from "./../../objects/decorations/ruins/Ruin1.Decoration";
 
@@ -71,10 +78,6 @@ let DecorationList = {
     Rock2:  Rock2Decoration,
     Rock3:  Rock3Decoration,
     Rock4:  Rock4Decoration,
-    Rock5:  Rock5Decoration,
-    Rock6:  Rock6Decoration,
-    Rock7:  Rock7Decoration,
-    Rock8:  Rock8Decoration,
 
     Ruin1:  Ruin1Decoration,
 

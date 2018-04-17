@@ -103,7 +103,7 @@ class GarageScene {
 
         };
 
-        loader.load( 'resources/models/garage-IS2.json', function ( geometry, materials ) {
+        loader.load( 'resources/models/garage/IS2.json', function ( geometry, materials ) {
 
             var model = new THREE.Mesh( geometry, materials );
             model.position.y += 0.4;
@@ -119,7 +119,7 @@ class GarageScene {
 
         });
 
-        loader.load( 'resources/models/garage-T29.json', function ( geometry, materials ) {
+        loader.load( 'resources/models/garage/T29.json', function ( geometry, materials ) {
 
             var model = new THREE.Mesh( geometry, materials );
             model.position.y += 0.4;
@@ -135,7 +135,7 @@ class GarageScene {
 
         });
 
-        loader.load( 'resources/models/garage-T44.json', function ( geometry, materials ) {
+        loader.load( 'resources/models/garage/T44.json', function ( geometry, materials ) {
 
             var model = new THREE.Mesh( geometry, materials );
             model.position.y += 0.4;
@@ -151,7 +151,7 @@ class GarageScene {
 
         });
 
-        loader.load( 'resources/models/garage-T54.json', function ( geometry, materials ) {
+        loader.load( 'resources/models/garage/T54.json', function ( geometry, materials ) {
 
             var model = new THREE.Mesh( geometry, materials );
             model.position.y += 0.4;
@@ -167,7 +167,7 @@ class GarageScene {
 
         });
 
-        loader.load( 'resources/models/garage.json', function ( geometry, materials ) {
+        loader.load( 'resources/models/garage/garage.json', function ( geometry, materials ) {
 
             var model = new THREE.Mesh( geometry, materials );
             model.castShadow = true;

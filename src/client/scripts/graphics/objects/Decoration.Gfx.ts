@@ -31,18 +31,24 @@ class DecorationGfx {
 
     public init ( decoration: DecorationCore ) {
 
-        let decorationModel = ResourceManager.getModel( decoration.title + '.json' );
+        let decorationModel = ResourceManager.getModel( 'decorations/' + decoration.title );
 
         let mesh = new THREE.Mesh( decorationModel.geometry, decorationModel.material );
-        mesh.name = decoration.title;
-        mesh.scale.set( 20, 20, 20 );
 
-        mesh.position.x = decoration.position.x;
-        mesh.position.y = decoration.position.y;
-        mesh.position.z = decoration.position.z;
+        this.object.name = decoration.title;
+
+        this.object.position.x = decoration.position.x;
+        this.object.position.y = decoration.position.y;
+        this.object.position.z = decoration.position.z;
+
+        this.object.rotation.y = decoration.rotation;
+
+        this.object.scale.x = decoration.scale.x;
+        this.object.scale.y = decoration.scale.y;
+        this.object.scale.z = decoration.scale.z;
 
         this.object.add( mesh );
-        GfxCore.scene.add( this.object );
+        GfxCore.landscape.decorations.add( this.object );
 
     };
 

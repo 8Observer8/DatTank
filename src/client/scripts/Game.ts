@@ -142,3 +142,4 @@ window['game']['ui'] = UI;
 window['game']['arena'] = Arena;
 window['game']['towermanager'] = TowerManager;
 window['game']['decorationmanager'] = DecorationManager;
+window['game']['resourcemanager'] = ResourceManager;

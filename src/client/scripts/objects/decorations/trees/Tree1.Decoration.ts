@@ -13,9 +13,9 @@ class Tree1Decoration extends DecorationCore {
 
     //
 
-    constructor () {
+    constructor ( params ) {
 
-        super();
+        super( params );
         this.title = Tree1Decoration.title;
 
     };

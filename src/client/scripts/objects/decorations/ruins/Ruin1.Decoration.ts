@@ -13,9 +13,9 @@ class Ruin1Decoration extends DecorationCore {
 
     //
 
-    constructor () {
+    constructor ( params ) {
 
-        super();
+        super( params );
         this.title = Ruin1Decoration.title;
 
     };
