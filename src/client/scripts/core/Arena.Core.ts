@@ -11,6 +11,7 @@ import { DecorationManager } from "./../managers/Decoration.Manager";
 import { ControlsManager } from "./../managers/Control.Manager";
 import { ExplosionManager } from "./../managers/Explosion.Manager";
 
+import * as OMath from "./../OMath/Core.OMath";
 import { GfxCore } from "./../graphics/Core.Gfx";
 import { PlayerCore } from "./Player.Core";
 import { TowerCore } from "./objects/Tower.Core";
@@ -64,7 +65,6 @@ class ArenaCore {
         PlayerManager.init();
         TowerManager.init();
         BoxManager.init();
-        ExplosionManager.init();
         DecorationManager.init( params.decorations );
 
         //
@@ -85,6 +85,12 @@ class ArenaCore {
     public removePlayer ( player ) {
 
         PlayerManager.remove( PlayerManager.getById( player.id ) );
+
+    };
+
+    public newExplosion ( position: OMath.Vec3 ) {
+
+        ExplosionManager.showExplosion( position );
 
     };
 
@@ -169,4 +175,4 @@ class ArenaCore {
 
 //
 
-export let Arena = new ArenaCore;
+export let Arena = new ArenaCore();

@@ -5,10 +5,17 @@
 
 import { Network } from "./../network/Core.Network";
 import { Arena } from "./../core/Arena.Core";
+import * as OMath from "./../OMath/Core.OMath";
 
 //
 
 class ArenaNetwork {
+
+    private newExplosion ( data ) {
+
+        Arena.newExplosion( new OMath.Vec3( data[2], 25, data[3] ) );
+
+    };
 
     private newTowers ( data ) {
 
@@ -109,12 +116,6 @@ class ArenaNetwork {
 
     };
 
-    private explosion ( data ) {
-
-        // todo
-
-    };
-
     private boxRemove ( data ) {
 
         // todo
@@ -137,7 +138,7 @@ class ArenaNetwork {
 
     public init () {
 
-        Network.addMessageListener( 'ArenaBulletHit', this.explosion.bind( this ) );
+        Network.addMessageListener( 'ArenaBulletHit', this.newExplosion.bind( this ) );
         Network.addMessageListener( 'ArenaBoxRemove', this.boxRemove.bind( this ) );
 
         Network.addMessageListener( 'ArenaPlayersInRange', this.newPlayers.bind( this ) );

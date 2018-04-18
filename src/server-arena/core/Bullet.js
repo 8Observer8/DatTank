@@ -62,7 +62,7 @@ Bullet.prototype.explode = function ( target ) {
     //
 
     this.active = false;
-    this.arena.sendEventToPlayersInRange( this.position, 'BulletHit', buffer, bufferView );
+    this.arena.sendEventToPlayersInRange( this.position, 'ArenaBulletHit', buffer, bufferView );
     this.arena.collisionManager.removeObject( this );
 
     //

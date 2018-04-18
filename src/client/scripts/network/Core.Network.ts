@@ -80,7 +80,7 @@ class NetworkCore {
 
         //
 
-        this.registerEvent( 'BulletHit', EventDir.IN, EventType.BIN, 300 );
+        this.registerEvent( 'ArenaBulletHit', EventDir.IN, EventType.BIN, 300 );
         this.registerEvent( 'BoxRemove', EventDir.IN, EventType.BIN, 301 );    
 
         // establish connection

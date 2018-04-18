@@ -13,6 +13,7 @@ import { BoxManager } from "./../managers/Box.Manager";
 import { TowerManager } from "./../managers/Tower.Manager";
 import { DecorationManager } from "./../managers/Decoration.Manager";
 import { ControlsManager } from "./../managers/Control.Manager";
+import { ExplosionManager } from "./../managers/Explosion.Manager";
 
 //
 
@@ -27,7 +28,7 @@ interface GfxSettings {
 
 class GraphicsCore {
 
-    private static instance;
+    private static instance: GraphicsCore;
 
     public scene: THREE.Scene;
     public camera: THREE.PerspectiveCamera;
@@ -104,6 +105,10 @@ class GraphicsCore {
         this.audioListener = new THREE.AudioListener();
         // if ( soundManager.muted ) this.sound.listener.setMasterVolume( 0 );
         this.camera.add( this.audioListener );
+
+        //
+
+        ExplosionManager.init();
 
         // user event handlers
 
@@ -185,6 +190,7 @@ class GraphicsCore {
         TowerManager.update( time, delta );
         DecorationManager.update( time, delta );
         ControlsManager.update( time, delta );
+        ExplosionManager.update( time, delta );
 
         //
 

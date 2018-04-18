@@ -121,8 +121,6 @@ class GameCore {
 
         }, 100 );
 
-        GfxCore.init();
-
     };
 
     //

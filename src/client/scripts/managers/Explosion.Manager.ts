@@ -45,6 +45,7 @@ class ExplosionManagerCore {
     public showExplosion ( position: OMath.Vec3 ) {
 
         let explosion = this.getNewExplosion();
+        explosion.setActive( position );
 
     };
 
@@ -53,8 +54,8 @@ class ExplosionManagerCore {
         for ( let i = 0; i < this.poolSize; i ++ ) {
 
             let explosion = new ExplosionGfx();
-            this.pool.push( explosion );
             explosion.init();
+            this.pool.push( explosion );
 
         }
 
