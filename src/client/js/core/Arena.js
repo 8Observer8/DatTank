@@ -3,114 +3,34 @@
  * DatTank Arena object
 */
 
-Game.Arena.prototype.initExplosions = function () {
-
-    for ( var i = 0; i < 30; i ++ ) {
-
-        var map = resourceManager.getTexture( 'explosion2.png' ).clone();
-        map.needsUpdate = true;
-        map.wrapS = THREE.RepeatWrapping;
-        map.wrapT = THREE.RepeatWrapping;
-        map.repeat.set( 0.25, 0.25 );
-        map.offset.set( 0, 0.75 );
-
-        var material = new THREE.SpriteMaterial({ map: map, color: 0xffffff, opacity: 0.7, fog: true });
-        var sprite = new THREE.Sprite( material );
-
-        sprite.scale.set( 80, 80, 80 );
-        sprite.visible = false;
-        view.scene.add( sprite );
-        this.effects.explosions.push( sprite );
-
-    }
-
-};
-
 Game.Arena.prototype.showExplosion = function ( data ) {
 
     var bulletId = data[0];
     var ownerId = data[1];
-    var position = { x: data[2], y: 25, z: data[3] };
 
     //
 
-    for ( var i = 0; i < this.effects.explosions.length; i ++ ) {
+    var shooter = this.playerManager.getById( ownerId );
+    if ( shooter ) {
 
-        var explosion = this.effects.explosions[ i ];
+        shooter = shooter.tank;
 
-        if ( ! explosion.visible ) {
+    } else {
 
-            explosion.position.set( position.x, position.y, position.z );
-            explosion.scale.set( 80, 80, 80 );
-            explosion.visible = true;
-
-            var shooter = this.playerManager.getById( ownerId );
-            if ( shooter ) {
-
-                shooter = shooter.tank;
-
-            } else {
-
-                shooter = this.towerManager.getById( ownerId );
-
-            }
-
-            if ( shooter ) {
-
-                var bulletsPool = shooter.bullets;
-                for ( var j = 0, jl = bulletsPool.length; j < jl; j ++ ) {
-
-                    if ( bulletsPool[ j ].bulletId === bulletId ) {
-
-                        bulletsPool[ j ].visible = false;
-                        bulletsPool[ j ].trace.visible = false;
-                        break;
-
-                    }
-
-                }
-
-            }
-
-            break;
-
-        }
+        shooter = this.towerManager.getById( ownerId );
 
     }
 
-};
+    if ( shooter ) {
 
-Game.Arena.prototype.updateExplosions = function ( delta ) {
+        var bulletsPool = shooter.bullets;
+        for ( var j = 0, jl = bulletsPool.length; j < jl; j ++ ) {
 
-    for ( var i = 0; i < this.effects.explosions.length; i ++ ) {
+            if ( bulletsPool[ j ].bulletId === bulletId ) {
 
-        var explosion = this.effects.explosions[ i ];
-
-        if ( ! explosion.visible ) continue;
-        explosion.time = explosion.time || 0;
-        explosion.time += delta;
-
-        if ( explosion.time > 50 ) {
-
-            if ( explosion.material.map.offset.y >= 0 ) {
-
-                explosion.material.map.offset.x += 0.25;
-                explosion.time = 0;
-
-                if ( explosion.material.map.offset.x === 1 && explosion.material.map.offset.y !== 0 ) {
-
-                    explosion.material.map.offset.x = 0;
-                    explosion.material.map.offset.y -= 0.25;
-
-                } else if ( explosion.material.map.offset.y === 0 && explosion.material.map.offset.x === 1 ) {
-
-                    explosion.scale.x = 80;
-                    explosion.scale.y = 80;
-                    explosion.visible = false;
-                    explosion.time = 0;
-                    explosion.material.map.offset.set( 0, 1 );
-
-                }
+                bulletsPool[ j ].visible = false;
+                bulletsPool[ j ].trace.visible = false;
+                break;
 
             }
 
@@ -121,18 +41,6 @@ Game.Arena.prototype.updateExplosions = function ( delta ) {
 };
 
 Game.Arena.prototype.update = function ( time, delta ) {
-
-    if ( this.stopped ) return;
-
-    this.updateExplosions( delta );
-
-    //
-
-    for ( var i = 0, il = this.playerManager.players.length; i < il; i ++ ) {
-
-        this.playerManager.players[ i ].update( time, delta );
-
-    }
 
     // remove out of range players
 

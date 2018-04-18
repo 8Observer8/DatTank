@@ -8,12 +8,13 @@ import { PlayerManager } from "./../managers/Player.Manager";
 import { TowerManager } from "./../managers/Tower.Manager";
 import { BoxManager } from "./../managers/Box.Manager";
 import { DecorationManager } from "./../managers/Decoration.Manager";
+import { ControlsManager } from "./../managers/Control.Manager";
+import { ExplosionManager } from "./../managers/Explosion.Manager";
 
 import { GfxCore } from "./../graphics/Core.Gfx";
 import { PlayerCore } from "./Player.Core";
 import { TowerCore } from "./objects/Tower.Core";
 import { ArenaNetwork } from "../network/Arena.Network";
-import { ControlsManager } from "../managers/Control.Manager";
 
 //
 
@@ -63,6 +64,7 @@ class ArenaCore {
         PlayerManager.init();
         TowerManager.init();
         BoxManager.init();
+        ExplosionManager.init();
         DecorationManager.init( params.decorations );
 
         //
