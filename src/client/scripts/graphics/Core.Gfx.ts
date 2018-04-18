@@ -70,6 +70,13 @@ class GraphicsCore {
 
     public init () {
 
+        if ( this.scene ) {
+
+            console.warn( 'GfxCore already inited!' );
+            return;
+
+        }
+
         // setup raycaster
 
         this.raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3(), 0, 5000 );

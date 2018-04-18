@@ -47,8 +47,8 @@ NetworkManager.prototype.init = function () {
     this.registerEvent( 'TankStopShooting', 'in', 'bin', 116 );
     this.registerEvent( 'TankMakeShot', 'out', 'bin', 117 );
 
-    this.registerEvent( 'TankUpdateHealth', 'out', 'bin', 117 );
-    this.registerEvent( 'TankUpdateAmmo', 'out', 'bin', 118 );
+    this.registerEvent( 'TankSetHealth', 'out', 'bin', 118 );
+    this.registerEvent( 'TankSetAmmo', 'out', 'bin', 119 );
 
     //
 

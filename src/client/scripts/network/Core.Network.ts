@@ -68,8 +68,8 @@ class NetworkCore {
         this.registerEvent( 'TankStopShooting', EventDir.OUT, EventType.BIN, 116 );
         this.registerEvent( 'TankMakeShot', EventDir.IN, EventType.BIN, 117 );
 
-        this.registerEvent( 'TankUpdateHealth', EventDir.IN, EventType.BIN, 118 );
-        this.registerEvent( 'TankUpdateAmmo', EventDir.IN, EventType.BIN, 119 );
+        this.registerEvent( 'TankSetHealth', EventDir.IN, EventType.BIN, 118 );
+        this.registerEvent( 'TankSetAmmo', EventDir.IN, EventType.BIN, 119 );
 
         //
 

@@ -138,8 +138,7 @@ class TankCore {
         }
 
         this.health = value;
-
-        // this.tank.updateLabel();
+        this.gfx.label.update( this.health, this.armour, this.player.team.color, this.player.username );
 
         // if ( this.health === 0 ) {
 

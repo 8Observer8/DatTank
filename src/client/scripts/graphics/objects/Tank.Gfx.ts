@@ -21,8 +21,8 @@ class TankGfx {
     private baseMesh: THREE.Mesh;
     private mixer: THREE.AnimationMixer;
     private tank: TankCore;
-    private label: TankLabelGfx = new TankLabelGfx();
     private traces: TankTracesGfx = new TankTracesGfx();
+    public label: TankLabelGfx = new TankLabelGfx();
 
     private animations = {};
     private sounds = {};

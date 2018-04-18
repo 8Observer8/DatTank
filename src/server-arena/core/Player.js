@@ -282,7 +282,7 @@ Player.prototype.changeHealth = function ( delta, killer ) {
 
     //
 
-    this.sendEventToPlayersInRange( 'PlayerTankUpdateHealth', buffer, bufferView );
+    this.sendEventToPlayersInRange( 'TankSetHealth', buffer, bufferView );
 
     //
 
