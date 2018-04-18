@@ -17,33 +17,36 @@ class TowerNetwork {
     private filter ( data ) : boolean {
 
         var towerId = ( data.id ) ? data.id : data[0];
-        if ( this.tower.id !== towerId ) return false;
 
-        return true;
+        if ( this.tower.id !== towerId ) return true;
+
+        return false;
 
     };
 
     //
 
-    private setTopRotation ( event ) {
+    private setTopRotation ( data ) {
+
+        if ( this.filter( data ) ) return;
+
+        this.tower.setTopRotation( data[1] / 1000, data[2] / 1000 );
+
+    };
+
+    private shoot ( data ) {
 
         // todo
 
     };
 
-    private shoot ( event ) {
+    private updateLeaderboard ( data ) {
 
         // todo
 
     };
 
-    private updateLeaderboard ( event ) {
-
-        // todo
-
-    };
-
-    private setHealth ( event ) {
+    private setHealth ( data ) {
 
         // todo
 

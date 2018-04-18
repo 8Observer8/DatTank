@@ -266,33 +266,6 @@ Game.Tower.prototype.animate = function ( delta ) {
 
 Game.Tower.prototype.update = function ( delta ) {
 
-    this.animate( delta );
-
-    //
-
-    var deltaRot = Utils.formatAngle( this.newRotation ) - Utils.formatAngle( this.rotation );
-
-    if ( deltaRot > Math.PI ) {
-
-        if ( deltaRot > 0 ) {
-
-            deltaRot = - 2 * Math.PI + deltaRot;
-
-        } else {
-
-            deltaRot = 2 * Math.PI + deltaRot;
-
-        }
-
-    }
-
-    if ( Math.abs( deltaRot ) > 0.01 ) {
-
-        this.rotation = Utils.formatAngle( this.rotation + Math.sign( deltaRot ) / 30 * ( delta / 50 ) );
-        this.object.top.rotation.y = this.rotation;
-
-    }
-
     for ( var bulletId in this.bullets ) {
 
         var bullet = this.bullets[ bulletId ];

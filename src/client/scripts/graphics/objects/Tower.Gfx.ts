@@ -87,7 +87,7 @@ class TowerGfx {
 
     public setTopRotation ( angle: number ) {
 
-        // todo
+        this.topMesh.rotation.y = angle;
 
     };
 

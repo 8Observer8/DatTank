@@ -24,6 +24,8 @@ class TowerCore {
 
     public health: number;
     public rotation: number;
+    public topRotation: number;
+    public targetTopRotation: number;
     public position: OMath.Vec3 = new OMath.Vec3();
 
     public title: string;
@@ -45,15 +47,53 @@ class TowerCore {
 
     };
 
+    public setTopRotation ( currentAngle: number, targetAngle?: number ) {
+
+        if ( targetAngle === undefined ) {
+
+            targetAngle = currentAngle;
+
+        }
+
+        //
+
+        this.topRotation = currentAngle;
+        this.targetTopRotation = targetAngle;
+
+    };
+
     public update ( time: number, delta: number ) {
 
-        // todo
+        let deltaRot = OMath.formatAngle( this.targetTopRotation ) - OMath.formatAngle( this.topRotation );
+
+        if ( deltaRot > Math.PI ) {
+    
+            if ( deltaRot > 0 ) {
+    
+                deltaRot = - 2 * Math.PI + deltaRot;
+    
+            } else {
+    
+                deltaRot = 2 * Math.PI + deltaRot;
+    
+            }
+    
+        }
+    
+        if ( Math.abs( deltaRot ) > 0.01 ) {
+    
+            this.topRotation = OMath.formatAngle( this.topRotation + OMath.sign( deltaRot ) / 30 * ( delta / 50 ) );
+            this.gfx.setTopRotation( this.topRotation );
+    
+        }
 
     };
 
     public init () {
 
         this.gfx.init( this );
+        this.network.init( this );
+        this.setTopRotation( this.topRotation );
 
     };
 
@@ -61,9 +101,11 @@ class TowerCore {
 
     constructor ( params ) {
 
+        this.id = params.id;
         this.team = TeamManager.getById( params.team );
         this.health = params.health;
-        this.rotation = params.rotation;
+        this.rotation = 0; // params.rotation;
+        this.topRotation = params.rotation;
 
         this.position.set( params.position.x, params.position.y, params.position.z );
         this.gfx.setPosition( this.position );

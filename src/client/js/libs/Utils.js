@@ -38,20 +38,6 @@ Utils.getScreenPos = (function () {
 
 }) ();
 
-Utils.formatAngle = function ( a ) {
-
-    a = a % ( 2 * Math.PI );
-
-    if ( a < 0 ) {
-
-        a += 2 * Math.PI;
-
-    }
-
-    return a;
-
-};
-
 Utils.addAngle = function ( a1, a2 ) {
 
     return Utils.formatAngle( a1 + a2 );
