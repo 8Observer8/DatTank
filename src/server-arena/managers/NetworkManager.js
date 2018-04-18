@@ -55,7 +55,7 @@ NetworkManager.prototype.init = function () {
     this.registerEvent( 'TowerRotateTop', 'out', 'bin', 200 );
     this.registerEvent( 'TowerShoot', 'out', 'bin', 201 );
     this.registerEvent( 'TowerChangeTeam', 'out', 'bin', 202 );
-    this.registerEvent( 'TowerUpdateHealth', 'out', 'bin', 203 );
+    this.registerEvent( 'TowerSetHealth', 'out', 'bin', 203 );
 
     //
 

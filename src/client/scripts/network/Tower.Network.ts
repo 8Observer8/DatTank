@@ -48,7 +48,9 @@ class TowerNetwork {
 
     private setHealth ( data ) {
 
-        // todo
+        if ( this.filter( data ) ) return;
+
+        this.tower.setHealth( data[1] );
 
     };
 

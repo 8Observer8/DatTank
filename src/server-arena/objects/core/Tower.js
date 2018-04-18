@@ -128,7 +128,7 @@ Tower.prototype.updateHealth = function ( delta ) {
     bufferView[ 1 ] = this.id;
     bufferView[ 2 ] = this.health;
 
-    this.sendEventToPlayersInRange( 'TowerUpdateHealth', buffer, bufferView );
+    this.sendEventToPlayersInRange( 'TowerSetHealth', buffer, bufferView );
 
 };
 

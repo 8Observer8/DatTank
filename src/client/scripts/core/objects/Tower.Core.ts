@@ -62,6 +62,13 @@ class TowerCore {
 
     };
 
+    public setHealth ( value: number ) {
+
+        this.health = value;
+        this.gfx.label.update( this.health, this.armour, this.team.color );
+
+    };
+
     public update ( time: number, delta: number ) {
 
         let deltaRot = OMath.formatAngle( this.targetTopRotation ) - OMath.formatAngle( this.topRotation );

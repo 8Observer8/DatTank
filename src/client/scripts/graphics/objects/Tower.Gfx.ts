@@ -20,7 +20,8 @@ class TowerGfx {
     private baseMesh: THREE.Mesh;
     private mixer: THREE.AnimationMixer;
     private tower: TowerCore;
-    private label: TowerLabelGfx = new TowerLabelGfx();
+
+    public label: TowerLabelGfx = new TowerLabelGfx();
 
     private animations = {};
     private sounds = {};
