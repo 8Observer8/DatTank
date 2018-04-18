@@ -1,6 +1,6 @@
 /*
  * @author ohmed
- * DatTank Tank tracks graphics class
+ * DatTank Tank ground traces graphics class
 */
 
 import * as THREE from 'three';
@@ -10,13 +10,13 @@ import { GfxCore } from "./../Core.Gfx";
 
 //
 
-class TankTracksGfx {
+class TankTracesGfx {
 
     private objects = [];
     private target: THREE.Object3D;
     private prevPosition: OMath.Vec3 = new OMath.Vec3();
-    private tracksOffset: number = 0;
-    private trackOffset = { l: 13, r: 13 };
+    private indexOffset: number = 0;
+    private tracePosOffset = { l: 13, r: 13 };
 
     //
 
@@ -26,7 +26,7 @@ class TankTracksGfx {
 
     };
 
-    private addTrackIfNeeded () {
+    private addTraceIfNeeded () {
 
         let rotation = this.target.rotation.y;
         let position = this.target.position;
@@ -36,7 +36,7 @@ class TankTracksGfx {
     
             var plane1, plane2;
     
-            var track = this.objects[ this.tracksOffset ];
+            var track = this.objects[ this.indexOffset ];
             plane1 = track.left;
             plane2 = track.right;
     
@@ -45,15 +45,15 @@ class TankTracksGfx {
             plane1.rotation.x = - Math.PI / 2;
             plane1.rotation.z = rotation;
             plane1.position.copy( position );
-            plane1.position.x += this.trackOffset.l * Math.cos( - rotation );
-            plane1.position.z += this.trackOffset.l * Math.sin( - rotation );
+            plane1.position.x += this.tracePosOffset.l * Math.cos( - rotation );
+            plane1.position.z += this.tracePosOffset.l * Math.sin( - rotation );
             plane1.position.y = 2.2;
     
             plane2.rotation.x = - Math.PI / 2;
             plane2.position.copy( position );
             plane2.rotation.z = rotation;
-            plane2.position.x -= this.trackOffset.r * Math.cos( - rotation );
-            plane2.position.z -= this.trackOffset.r * Math.sin( - rotation );
+            plane2.position.x -= this.tracePosOffset.r * Math.cos( - rotation );
+            plane2.position.z -= this.tracePosOffset.r * Math.sin( - rotation );
             plane2.position.y = 2.2;
     
             track.position.copy( position );
@@ -61,8 +61,8 @@ class TankTracksGfx {
             this.prevPosition.x = position.x;
             this.prevPosition.z = position.z;
     
-            this.tracksOffset ++;
-            if ( this.tracksOffset === 35 ) this.tracksOffset = 0;
+            this.indexOffset ++;
+            if ( this.indexOffset === 35 ) this.indexOffset = 0;
     
         }
 
@@ -70,7 +70,7 @@ class TankTracksGfx {
 
     public update ( time: number, delta: number ) {
 
-        this.addTrackIfNeeded();
+        this.addTraceIfNeeded();
 
         for ( let i = 0, il = this.objects.length; i < il; i ++ ) {
 
@@ -118,4 +118,4 @@ class TankTracksGfx {
 
 //
 
-export { TankTracksGfx };
+export { TankTracesGfx };

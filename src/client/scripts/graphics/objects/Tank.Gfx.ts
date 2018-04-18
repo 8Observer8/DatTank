@@ -10,7 +10,7 @@ import { GfxCore } from "./../Core.Gfx";
 import { TankLabelGfx } from "./TankLabel.Gfx";
 import { TankCore } from "./../../core/objects/Tank.Core";
 import { ResourceManager } from "./../../managers/Resource.Manager";
-import { TankTracksGfx } from './TankTracks.Gfx';
+import { TankTracesGfx } from './TankTraces.Gfx';
 
 //
 
@@ -22,7 +22,7 @@ class TankGfx {
     private mixer: THREE.AnimationMixer;
     private tank: TankCore;
     private label: TankLabelGfx = new TankLabelGfx();
-    private tracks: TankTracksGfx = new TankTracksGfx();
+    private traces: TankTracesGfx = new TankTracesGfx();
 
     private animations = {};
     private sounds = {};
@@ -103,8 +103,8 @@ class TankGfx {
         this.topMesh.rotation.y = angle + Math.PI / 2;
 
     };
-    
-    public update ( time: number, delta: number ) {
+
+    private updateTracks () {
 
         let tank = this.tank;
 
@@ -117,7 +117,6 @@ class TankGfx {
 
             track1Map.offset.y = track1Map.offset.y - 0.005 * tank.moveDirection.x;
             if ( track1Map.offset.y > 1 ) track1Map.offset.y = 0;
-            // track1Map.needsUpdate = true;
 
             track2Map.offset.y = track2Map.offset.y - 0.005 * tank.moveDirection.x;
             if ( track2Map.offset.y > 1 ) track2Map.offset.y = 0;
@@ -140,9 +139,12 @@ class TankGfx {
 
         }
 
-        //
+    };
+    
+    public update ( time: number, delta: number ) {
 
-        this.tracks.update( time, delta );
+        this.updateTracks();
+        this.traces.update( time, delta );
 
         //
 
@@ -221,7 +223,7 @@ class TankGfx {
 
         //
 
-        this.tracks.init( this.object );
+        this.traces.init( this.object );
         this.label.init( this.object );
         this.label.update( this.tank.health, this.tank.armour, this.tank.player.team.color, this.tank.player.username );
         this.initSounds();
