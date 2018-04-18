@@ -19,10 +19,13 @@ export class Vec3 {
 
     };
 
-    public distanceTo ( point: Vec3 ) {
+    public distanceTo ( point: Vec3 | THREE.Vector3 ) {
 
-        // todo
-        return 0;
+        let dx = this.x - point.x;
+        let dy = this.y - point.y;
+        let dz = this.z - point.z;
+
+        return Math.sqrt( dx * dx + dy * dy + dz * dz );
 
     };
 

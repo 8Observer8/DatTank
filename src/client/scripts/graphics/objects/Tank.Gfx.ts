@@ -10,6 +10,7 @@ import { GfxCore } from "./../Core.Gfx";
 import { TankLabelGfx } from "./TankLabel.Gfx";
 import { TankCore } from "./../../core/objects/Tank.Core";
 import { ResourceManager } from "./../../managers/Resource.Manager";
+import { TankTracksGfx } from './TankTracks.Gfx';
 
 //
 
@@ -21,6 +22,7 @@ class TankGfx {
     private mixer: THREE.AnimationMixer;
     private tank: TankCore;
     private label: TankLabelGfx = new TankLabelGfx();
+    private tracks: TankTracksGfx = new TankTracksGfx();
 
     private animations = {};
     private sounds = {};
@@ -140,6 +142,10 @@ class TankGfx {
 
         //
 
+        this.tracks.update( time, delta );
+
+        //
+
         if ( this.mixer ) {
 
             this.mixer.update( delta / 1000 );
@@ -215,6 +221,7 @@ class TankGfx {
 
         //
 
+        this.tracks.init( this.object );
         this.label.init( this.object );
         this.label.update( this.tank.health, this.tank.armour, this.tank.player.team.color, this.tank.player.username );
         this.initSounds();
