@@ -53,6 +53,7 @@ class GraphicsCore {
     public decorations: Array<object> = [];
     public sun: THREE.DirectionalLight;
     public landscape: LandscapeGfx = new LandscapeGfx();
+    public coreObjects = {};
 
     public lights = {
         ambient:    0xfff3bc,
@@ -85,6 +86,7 @@ class GraphicsCore {
 
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera( 60, this.windowWidth / this.windowHeight, 1, 900 );
+        this.camera.name = 'MainCamera';
         this.scene.add( this.camera );
 
         //
@@ -94,10 +96,13 @@ class GraphicsCore {
 
         // setup lights
 
+        let ambientLight = new THREE.AmbientLight( this.lights.ambient );
+        ambientLight.name = 'GlobalAmbientLight';
         this.sun = new THREE.DirectionalLight( this.lights.sun.color, this.lights.sun.intensity );
+        this.sun.name = 'GlobalSunLight';
         this.sun.position.copy( this.lights.sun.position );
         this.scene.add ( this.sun );
-        this.scene.add( new THREE.AmbientLight( this.lights.ambient ) );
+        this.scene.add( ambientLight );
 
         // add fog
 

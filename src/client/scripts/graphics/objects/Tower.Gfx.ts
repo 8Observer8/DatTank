@@ -69,7 +69,15 @@ class TowerGfx {
 
         //
 
-        GfxCore.scene.add( this.object );
+        if ( ! GfxCore.coreObjects['towers'] ) {
+
+            GfxCore.coreObjects['towers'] = new THREE.Object3D();
+            GfxCore.coreObjects['towers'].name = 'Towers';
+            GfxCore.scene.add( GfxCore.coreObjects['towers'] );
+
+        }
+
+        GfxCore.coreObjects['towers'].add( this.object );
 
         //
 

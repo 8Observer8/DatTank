@@ -17,6 +17,7 @@ class TankTracesGfx {
     private prevPosition: OMath.Vec3 = new OMath.Vec3();
     private indexOffset: number = 0;
     private tracePosOffset = { l: 13, r: 13 };
+    private object: THREE.Object3D = new THREE.Object3D();
 
     //
 
@@ -106,11 +107,23 @@ class TankTracesGfx {
     
             plane1.renderOrder = 10;
             plane2.renderOrder = 10;
-    
-            GfxCore.scene.add( plane1 );
-            GfxCore.scene.add( plane2 );
+
+            this.object.add( plane1 );
+            this.object.add( plane2 );
 
         }
+
+        //
+
+        if ( ! GfxCore.coreObjects['tank-tracks'] ) {
+
+            GfxCore.coreObjects['tank-tracks'] = new THREE.Object3D();
+            GfxCore.coreObjects['tank-tracks'].name = 'TankTracks';
+            GfxCore.scene.add( GfxCore.coreObjects['tank-tracks'] );
+
+        }
+
+        GfxCore.coreObjects['tank-tracks'].add( this.object );
 
     };
 

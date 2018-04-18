@@ -17,8 +17,6 @@ class LandscapeGfx {
     private object:THREE.Object3D = new THREE.Object3D();
     private terrainMesh: THREE.Mesh;
 
-    public decorations: THREE.Object3D = new THREE.Object3D();
-
     private mapSize: number = 2430;
     private mapExtraSize = 1800;
     private wallWidth = 30;
@@ -139,11 +137,8 @@ class LandscapeGfx {
         this.addWalls();
         this.addTeamZones();
 
-        this.object.name = 'landscape';
+        this.object.name = 'Landscape';
         GfxCore.scene.add( this.object );
-
-        this.decorations.name = 'decorations';
-        GfxCore.scene.add( this.decorations );
 
     };
 

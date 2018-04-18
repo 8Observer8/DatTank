@@ -230,7 +230,15 @@ class TankGfx {
 
         //
 
-        GfxCore.scene.add( this.object );
+        if ( ! GfxCore.coreObjects['tanks'] ) {
+
+            GfxCore.coreObjects['tanks'] = new THREE.Object3D();
+            GfxCore.coreObjects['tanks'].name = 'Tanks';
+            GfxCore.scene.add( GfxCore.coreObjects['tanks'] );
+
+        }
+
+        GfxCore.coreObjects['tanks'].add( this.object );
 
     };
 

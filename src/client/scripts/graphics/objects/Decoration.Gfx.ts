@@ -48,7 +48,18 @@ class DecorationGfx {
         this.object.scale.z = decoration.scale.z;
 
         this.object.add( mesh );
-        GfxCore.landscape.decorations.add( this.object );
+
+        //
+
+        if ( ! GfxCore.coreObjects['decorations'] ) {
+
+            GfxCore.coreObjects['decorations'] = new THREE.Object3D();
+            GfxCore.coreObjects['decorations'].name = 'Decorations';
+            GfxCore.scene.add( GfxCore.coreObjects['decorations'] );
+
+        }
+
+        GfxCore.coreObjects['decorations'].add( this.object );
 
     };
 

@@ -89,7 +89,15 @@ class ExplosionGfx {
 
         //
 
-        GfxCore.scene.add( this.object );
+        if ( ! GfxCore.coreObjects['explosions'] ) {
+
+            GfxCore.coreObjects['explosions'] = new THREE.Object3D();
+            GfxCore.coreObjects['explosions'].name = 'Explosions';
+            GfxCore.scene.add( GfxCore.coreObjects['explosions'] );
+
+        }
+
+        GfxCore.coreObjects['explosions'].add( this.object );
 
     };
 
