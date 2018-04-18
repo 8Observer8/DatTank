@@ -3,7 +3,7 @@
  * DatTank Arena explosion manager
 */
 
-import { ExplosionGfx } from "./../graphics/objects/Explosion.Gfx";
+import { ExplosionGfx } from "./../graphics/effects/Explosion.Gfx";
 import * as OMath from "./../OMath/Core.OMath";
 
 //

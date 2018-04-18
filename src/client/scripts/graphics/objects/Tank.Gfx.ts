@@ -7,10 +7,10 @@ import * as THREE from 'three';
 
 import * as OMath from "./../../OMath/Core.OMath";
 import { GfxCore } from "./../Core.Gfx";
-import { TankLabelGfx } from "./TankLabel.Gfx";
+import { TankLabelGfx } from "./../effects/TankLabel.Gfx";
 import { TankCore } from "./../../core/objects/Tank.Core";
 import { ResourceManager } from "./../../managers/Resource.Manager";
-import { TankTracesGfx } from './TankTraces.Gfx';
+import { TankTracesGfx } from './../effects/TankTraces.Gfx';
 
 //
 

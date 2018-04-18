@@ -7,7 +7,7 @@ import * as THREE from 'three';
 
 import * as OMath from "./../../OMath/Core.OMath";
 import { GfxCore } from "./../Core.Gfx";
-import { TowerLabelGfx } from "./../objects/TowerLabel.Gfx";
+import { TowerLabelGfx } from "./../effects/TowerLabel.Gfx";
 import { ResourceManager } from "./../../managers/Resource.Manager";
 import { TowerCore } from '../../core/objects/Tower.Core';
 
