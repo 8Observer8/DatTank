@@ -10,6 +10,7 @@ import { TowerNetwork } from "./../../network/Tower.Network";
 import { TowerGfx } from "./../../graphics/objects/Tower.Gfx";
 import { TeamCore } from "./../Team.Core";
 import { TeamManager } from "./../../managers/Team.Manager";
+import { HealthChangeLabelManager } from "./../../managers/HealthChangeLabel.Manager";
 
 //
 
@@ -63,6 +64,12 @@ class TowerCore {
     };
 
     public setHealth ( value: number ) {
+
+        if ( this.health - value !== 0 ) {
+
+            HealthChangeLabelManager.showHealthChangeLabel( new OMath.Vec3( this.position.x + 5 * ( Math.random() - 0.5 ), this.position.y, this.position.z + 5 * ( Math.random() - 0.5 ) ), value - this.health );
+
+        }
 
         this.health = value;
         this.gfx.label.update( this.health, this.armour, this.team.color );

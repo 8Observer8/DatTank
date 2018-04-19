@@ -12,6 +12,7 @@ import { PlayerCore } from "./../Player.Core";
 
 import { TankNetwork } from "./../../network/Tank.Network";
 import { TankGfx } from "./../../graphics/objects/Tank.Gfx";
+import { HealthChangeLabelManager } from "./../../managers/HealthChangeLabel.Manager";
 
 //
 
@@ -134,6 +135,12 @@ class TankCore {
             }
 
             UI.InGame.updateHealth( value );
+
+        }
+
+        if ( this.health - value !== 0 ) {
+
+            HealthChangeLabelManager.showHealthChangeLabel( new OMath.Vec3( this.position.x + 5 * ( Math.random() - 0.5 ), this.position.y, this.position.z + 5 * ( Math.random() - 0.5 ) ), value - this.health );
 
         }
 
@@ -278,6 +285,7 @@ import { T29Tank } from "./../../objects/tanks/T29.Tank";
 import { T44Tank } from "./../../objects/tanks/T44.Tank";
 import { T54Tank } from "./../../objects/tanks/T54.Tank";
 import { GfxCore } from '../../graphics/Core.Gfx';
+import { HealthChangeLabelGfx } from '../../graphics/effects/HealthChangeLabel.Gfx';
 
 let TankList = {
     IS2:    IS2Tank,

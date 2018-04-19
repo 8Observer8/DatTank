@@ -43,10 +43,10 @@ class HealthChangeLabelManagerCore {
 
     };
 
-    public showHealthChangeLabel ( position: OMath.Vec3 ) {
+    public showHealthChangeLabel ( position: OMath.Vec3, healthChange: number ) {
 
         let healthChangeLabel = this.getNewHealthChangeLabel();
-        healthChangeLabel.setActive( position );
+        healthChangeLabel.setActive( position, healthChange );
 
     };
 

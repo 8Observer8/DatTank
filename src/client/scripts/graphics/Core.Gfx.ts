@@ -14,6 +14,7 @@ import { TowerManager } from "./../managers/Tower.Manager";
 import { DecorationManager } from "./../managers/Decoration.Manager";
 import { ControlsManager } from "./../managers/Control.Manager";
 import { ExplosionManager } from "./../managers/Explosion.Manager";
+import { HealthChangeLabelManager } from "./../managers/HealthChangeLabel.Manager";
 
 //
 
@@ -121,6 +122,7 @@ class GraphicsCore {
         //
 
         ExplosionManager.init();
+        HealthChangeLabelManager.init();
 
         // user event handlers
 
@@ -203,6 +205,7 @@ class GraphicsCore {
         DecorationManager.update( time, delta );
         ControlsManager.update( time, delta );
         ExplosionManager.update( time, delta );
+        HealthChangeLabelManager.update( time, delta );
 
         //
 

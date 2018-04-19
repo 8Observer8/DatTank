@@ -75,36 +75,6 @@ Game.Tower.prototype.changeTeam = function ( team, newOwnerId, init ) {
 
 Game.Tower.prototype.animate = function ( delta ) {
 
-    var newHealthChangeLabelsList = [];
-    var visibleTime = 1000;
-
-    for ( var i = 0, il = this.healthChangeLabels.length; i < il; i ++ ) {
-
-        this.healthChangeLabels[ i ].time += delta;
-        this.healthChangeLabels[ i ].position.y = 45 + 50 * this.healthChangeLabels[ i ].time / visibleTime;
-
-        if ( this.healthChangeLabels[ i ].time > visibleTime / 4 ) {
-
-            this.healthChangeLabels[ i ].material.opacity = 0.5 - ( this.healthChangeLabels[ i ].time - visibleTime / 4 ) / ( 3 * visibleTime / 4 );
-
-        }
-
-        if ( this.healthChangeLabels[ i ].time > visibleTime ) {
-
-            this.object.remove( this.healthChangeLabels[ i ] );
-
-        } else {
-
-            newHealthChangeLabelsList.push( this.healthChangeLabels[ i ] );
-
-        }
-
-    }
-
-    this.healthChangeLabels = newHealthChangeLabelsList;
-
-    //
-
     if ( this.changeTeamEffectPipe.visible ) {
 
         var progress = this.changeTeamAnimationTime / 2000;

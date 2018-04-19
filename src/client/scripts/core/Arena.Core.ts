@@ -10,6 +10,7 @@ import { BoxManager } from "./../managers/Box.Manager";
 import { DecorationManager } from "./../managers/Decoration.Manager";
 import { ControlsManager } from "./../managers/Control.Manager";
 import { ExplosionManager } from "./../managers/Explosion.Manager";
+import { HealthChangeLabelManager } from "./../managers/HealthChangeLabel.Manager";
 
 import * as OMath from "./../OMath/Core.OMath";
 import { GfxCore } from "./../graphics/Core.Gfx";
