@@ -21,8 +21,9 @@ class BulletGfx {
     private bullet: THREE.Mesh;
     private sound: THREE.PositionalAudio;
 
-    private direction: OMath.Vec3;
+    private directionRotation: number;
     private position: OMath.Vec3;
+    private bulletSpeed: number = 10;
 
     //
 
@@ -34,17 +35,30 @@ class BulletGfx {
 
     public update ( time: number, delta: number ) {
 
-        // todo
+        if ( ! this.active ) return;
+
+        let x, z;
+        let dx, dz;
+
+        x = this.bullet.position.x + this.bulletSpeed * Math.cos( this.directionRotation ) * delta;
+        z = this.bullet.position.z + this.bulletSpeed * Math.sin( this.directionRotation ) * delta;
+        this.bullet.position.set( x, this.bullet.position.y, z );
+
+        this.trace.position.set( ( x + this.position.x ) / 2, this.position.y, ( z + this.position.z ) / 2 );
+        dx = x - this.position.x;
+        dz = z - this.position.z;
+        this.trace.scale.x = Math.sqrt( dx * dx + dz * dz ) / 3;
+        this.trace.material[0].opacity = Math.max( 0.5 - this.trace.scale.x / 280, 0 );    
 
     };
 
-    public setActive ( bulletId: number, position: OMath.Vec3, direction: OMath.Vec3 ) {
+    public setActive ( bulletId: number, position: OMath.Vec3, directionRotstion: number ) {
 
         this.active = true;
         this.id = bulletId;
         this.object.visible = true;
         this.position.copy( position );
-        this.direction.copy( direction );
+        this.directionRotation = directionRotstion;
 
         //
 

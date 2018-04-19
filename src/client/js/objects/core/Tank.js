@@ -1,40 +1,4 @@
 
-Game.Tank.prototype.addHealthChangeLabel = function ( delta ) {
-
-    var canvas, ctx, sprite, material;
-    var text = ( delta >= 0 ) ? '+' + Math.round( delta ) : Math.round( delta );
-    var color = ( delta >= 0 ) ? '#00ff00' : '#ff0000';
-
-    canvas = document.createElement( 'canvas' );
-    canvas.width = 128;
-    canvas.height = 64;
-
-    ctx = canvas.getContext('2d');
-
-    ctx.shadowColor = '#000';
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 0;
-    ctx.shadowBlur = 3;
-
-    ctx.fillStyle = color;
-    ctx.font = '35px Tahoma';
-    ctx.textAlign = 'left';
-    ctx.fillText( text, 30, 35 );
-
-    material = new THREE.SpriteMaterial({ map: new THREE.Texture( canvas ), color: 0xffffff, fog: true });
-    material.map.needsUpdate = true;
-
-    sprite = new THREE.Sprite( material );
-    sprite.position.set( 0, 35, 0 );
-    sprite.scale.set( 24, 12, 1 );
-    sprite.time = 0;
-
-    this.object.add( sprite );
-
-    this.healthChangeLabels.push( sprite );
-
-};
-
 Game.Tank.prototype.friendlyFire = function () {
 
     if ( ! this.ffLabel ) {

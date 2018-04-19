@@ -19,43 +19,6 @@ Game.Tower.prototype.initChangeTeamEffect = function () {
 
 };
 
-Game.Tower.prototype.addHealthChangeLabel = function ( delta ) {
-
-    var canvas, ctx, sprite, material;
-    var text = ( delta >= 0 ) ? '+' + Math.round( delta ) : Math.round( delta );
-    var color = ( delta >= 0 ) ? '#00ff00' : '#ff0000';
-
-    canvas = document.createElement( 'canvas' );
-    canvas.width = 128;
-    canvas.height = 64;
-
-    ctx = canvas.getContext('2d');
-
-    ctx.shadowColor = '#000';
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 0;
-    ctx.shadowBlur = 3;
-
-    ctx.fillStyle = color;
-    ctx.font = '35px Tahoma';
-    ctx.textAlign = 'left';
-    ctx.fillText( text, 30, 35 );
-
-    material = new THREE.SpriteMaterial({ map: new THREE.Texture( canvas ), color: 0xffffff, fog: true });
-    material.map.needsUpdate = true;
-
-    sprite = new THREE.Sprite( material );
-    sprite.position.set( 0, 35, 0 );
-    sprite.scale.set( 24, 12, 1 );
-    sprite.time = 0;
-    sprite.renderOrder = 5;
-
-    this.object.add( sprite );
-
-    this.healthChangeLabels.push( sprite );
-
-};
-
 Game.Tower.prototype.shoot = function ( bulletId ) {
 
     this.animations.shotAction.stop();
@@ -173,30 +136,6 @@ Game.Tower.prototype.animate = function ( delta ) {
     if ( this.mixer ) {
 
         this.mixer.update( delta / 1000 );
-
-    }
-
-};
-
-Game.Tower.prototype.update = function ( delta ) {
-
-    for ( var bulletId in this.bullets ) {
-
-        var bullet = this.bullets[ bulletId ];
-
-        if ( bullet.visible === true ) {
-
-            var x = bullet.position.x + this.bulletSpeed * Math.cos( bullet.directionRotation ) * delta;
-            var z = bullet.position.z + this.bulletSpeed * Math.sin( bullet.directionRotation ) * delta;
-            bullet.position.set( x, bullet.position.y, z );
-
-            bullet.trace.position.set( ( x + bullet.startPos.x ) / 2, bullet.position.y, ( z + bullet.startPos.z ) / 2 );
-            var dx = x - bullet.startPos.x;
-            var dz = z - bullet.startPos.z;
-            bullet.trace.scale.x = Math.sqrt( dx * dx + dz * dz ) / 3;
-            bullet.trace.material.opacity = Math.max( 0.5 - bullet.trace.scale.x / 280, 0 );
-
-        }
 
     }
 
