@@ -22,7 +22,7 @@ class BulletGfx {
     private sound: THREE.PositionalAudio;
 
     private directionRotation: number;
-    private position: OMath.Vec3;
+    private position: OMath.Vec3 = new OMath.Vec3();
     private bulletSpeed: number = 10;
 
     //
@@ -52,16 +52,16 @@ class BulletGfx {
 
     };
 
-    public setActive ( bulletId: number, position: OMath.Vec3, directionRotstion: number ) {
+    public setActive ( bulletId: number, position: OMath.Vec3, directionRotation: number ) {
 
         this.active = true;
         this.id = bulletId;
         this.object.visible = true;
         this.position.copy( position );
-        this.directionRotation = directionRotstion;
+        this.directionRotation = directionRotation;
 
         //
-
+console.log( position, bulletId, this.directionRotation );
         if ( this.sound.isPlaying ) {
 
             this.sound.stop();

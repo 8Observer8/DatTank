@@ -104,6 +104,7 @@ class TankNetwork {
         let y = 25;
         let z = data[4];
         let directionRotation = data[5] / 1000;
+        console.log( data );
 
         this.tank.makeShot( bulletId, new OMath.Vec3( x, y, z ), directionRotation );
 

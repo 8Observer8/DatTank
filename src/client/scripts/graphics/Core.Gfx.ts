@@ -15,6 +15,7 @@ import { DecorationManager } from "./../managers/Decoration.Manager";
 import { ControlsManager } from "./../managers/Control.Manager";
 import { ExplosionManager } from "./../managers/Explosion.Manager";
 import { HealthChangeLabelManager } from "./../managers/HealthChangeLabel.Manager";
+import { BulletManager } from '../managers/Bullet.Manager';
 
 //
 
@@ -121,6 +122,7 @@ class GraphicsCore {
 
         //
 
+        BulletManager.init();
         ExplosionManager.init();
         HealthChangeLabelManager.init();
 

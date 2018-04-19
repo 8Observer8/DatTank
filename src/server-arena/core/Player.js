@@ -500,8 +500,8 @@ Player.prototype.shoot = function () {
     if ( scope.shootTimeout ) return;
 
     scope.networkBuffers['shoot'] = scope.networkBuffers['shoot'] || {};
-    var buffer = scope.networkBuffers['shoot'].buffer || new ArrayBuffer( 10 );
-    var bufferView = scope.networkBuffers['shoot'].bufferView || new Uint16Array( buffer );
+    var buffer = scope.networkBuffers['shoot'].buffer || new ArrayBuffer( 12 );
+    var bufferView = scope.networkBuffers['shoot'].bufferView || new Int16Array( buffer );
     scope.networkBuffers['shoot'].buffer = buffer;
     scope.networkBuffers['shoot'].bufferView = bufferView;
 
@@ -532,7 +532,7 @@ Player.prototype.shoot = function () {
     bufferView[ 2 ] = bullet.id;
     bufferView[ 3 ] = bullet.position.x;
     bufferView[ 4 ] = bullet.position.z;
-    bufferView[ 5 ] = this.rotateTop * 1000;
+    bufferView[ 5 ] = scope.rotationTop * 1000;
 
     scope.sendEventToPlayersInRange( 'TankMakeShot', buffer, bufferView );
 
