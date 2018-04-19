@@ -99,12 +99,11 @@ class TankNetwork {
 
         if ( this.filter( data ) ) return;
 
-        let bulletId = data[2];
-        let x = data[3];
+        let bulletId = data[1];
+        let x = data[2];
         let y = 25;
-        let z = data[4];
-        let directionRotation = data[5] / 1000;
-        console.log( data );
+        let z = data[3];
+        let directionRotation = data[4] / 1000;
 
         this.tank.makeShot( bulletId, new OMath.Vec3( x, y, z ), directionRotation );
 
