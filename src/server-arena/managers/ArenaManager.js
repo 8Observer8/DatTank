@@ -193,7 +193,8 @@ ArenaManager.prototype.addNetworkListeners = function () {
     networkManager.addMessageListener( 'ArenaPlayerRespawn', this.proxyEventToPlayer.bind( this ) );
     networkManager.addMessageListener( 'TankRotateTop', this.proxyEventToPlayer.bind( this ) );
     networkManager.addMessageListener( 'TankMove', this.proxyEventToPlayer.bind( this ) );
-    networkManager.addMessageListener( 'TankShoot', this.proxyEventToPlayer.bind( this ) );
+    networkManager.addMessageListener( 'TankStartShooting', this.proxyEventToPlayer.bind( this ) );
+    networkManager.addMessageListener( 'TankStopShooting', this.proxyEventToPlayer.bind( this ) );
     networkManager.addMessageListener( 'TankUpdateStats', this.proxyEventToPlayer.bind( this ) );
 
 };

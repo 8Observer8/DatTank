@@ -3,6 +3,7 @@
  * DatTank Tank network handler
 */
 
+import * as OMath from "./../OMath/Core.OMath";
 import { Network } from "./../network/Core.Network";
 import { TankCore } from "./../core/objects/Tank.Core";
 
@@ -98,7 +99,13 @@ class TankNetwork {
 
         if ( this.filter( data ) ) return;
 
-        this.tank.makeShot( data[1] );
+        let bulletId = data[2];
+        let x = data[3];
+        let y = 25;
+        let z = data[4];
+        let directionRotation = data[5] / 1000;
+
+        this.tank.makeShot( bulletId, new OMath.Vec3( x, y, z ), directionRotation );
 
     };
 
@@ -128,6 +135,7 @@ class TankNetwork {
 
         Network.addMessageListener( 'TankFriendlyFire', this.setFriendlyFire.bind( this ) );
         Network.addMessageListener( 'TankMove', this.setMove.bind( this ) );
+        Network.addMessageListener( 'TankMakeShot', this.setShoot.bind( this ) );
         Network.addMessageListener( 'TankRotateTop', this.setRotateTop.bind( this ) );
         Network.addMessageListener( 'TankShoot', this.setShoot.bind( this ) );
         Network.addMessageListener( 'TankSetHealth', this.setHealth.bind( this ) );

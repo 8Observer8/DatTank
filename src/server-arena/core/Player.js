@@ -85,6 +85,8 @@ var Player = function ( arena, params ) {
     this.inRangeOf = {};
     this.viewRange = 600;
 
+    this.shootingInterval = false;
+
     //
 
     this.selectTank( params.tank );
@@ -467,6 +469,24 @@ Player.prototype.move = function ( directionX, directionZ ) {
 
 };
 
+Player.prototype.startShooting = function () {
+
+    var scope = this;
+
+    this.shootingInterval = setInterval( function () {
+
+        scope.shoot();
+
+    }, 100 );
+
+};
+
+Player.prototype.stopShooting = function () {
+
+    clearInterval( this.shootingInterval );
+
+};
+
 Player.prototype.shoot = function () {
 
     var scope = this;
@@ -480,7 +500,7 @@ Player.prototype.shoot = function () {
     if ( scope.shootTimeout ) return;
 
     scope.networkBuffers['shoot'] = scope.networkBuffers['shoot'] || {};
-    var buffer = scope.networkBuffers['shoot'].buffer || new ArrayBuffer( 6 );
+    var buffer = scope.networkBuffers['shoot'].buffer || new ArrayBuffer( 10 );
     var bufferView = scope.networkBuffers['shoot'].bufferView || new Uint16Array( buffer );
     scope.networkBuffers['shoot'].buffer = buffer;
     scope.networkBuffers['shoot'].bufferView = bufferView;
@@ -510,8 +530,11 @@ Player.prototype.shoot = function () {
 
     bufferView[ 1 ] = scope.id;
     bufferView[ 2 ] = bullet.id;
+    bufferView[ 3 ] = bullet.position.x;
+    bufferView[ 4 ] = bullet.position.z;
+    bufferView[ 5 ] = this.rotateTop * 1000;
 
-    scope.sendEventToPlayersInRange( 'PlayerTankShoot', buffer, bufferView );
+    scope.sendEventToPlayersInRange( 'TankMakeShot', buffer, bufferView );
 
 };
 
@@ -848,7 +871,8 @@ Player.prototype.addEventListeners = function () {
     this.addEventListener( 'ArenaPlayerRespawn', function ( event ) { scope.respawn( event.data ); });
     this.addEventListener( 'TankRotateTop', function ( event ) { scope.rotateTop( event.data[0] / 1000 ); });
     this.addEventListener( 'TankMove', function ( event ) { scope.move( event.data[0], event.data[1] ); });
-    this.addEventListener( 'TankShoot', function ( event ) { scope.shoot(); });
+    this.addEventListener( 'TankStartShooting', function ( event ) { scope.startShooting(); });
+    this.addEventListener( 'TankStopShooting', function ( event ) { scope.stopShooting(); });
     this.addEventListener( 'TankUpdateStats', function ( event ) { scope.updateStats( event.data[0] ); });
 
 };

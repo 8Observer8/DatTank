@@ -13,6 +13,7 @@ import { PlayerCore } from "./../Player.Core";
 import { TankNetwork } from "./../../network/Tank.Network";
 import { TankGfx } from "./../../graphics/objects/Tank.Gfx";
 import { HealthChangeLabelManager } from "./../../managers/HealthChangeLabel.Manager";
+import { BulletManager } from "./../../managers/Bullet.Manager";
 
 //
 
@@ -53,19 +54,21 @@ class TankCore {
 
     public startShooting () {
 
-        // todo
+        this.network.startShooting();
 
     };
 
     public stopShooting () {
 
-        // todo
+        this.network.stopShooting();
 
     };
 
-    public makeShot ( id: number ) {
+    public makeShot ( bulletId: number, position: OMath.Vec3, directionRotation: number ) {
 
         if ( this.health <= 0 ) return;
+
+        BulletManager.showBullet( bulletId, position, directionRotation );
 
         if ( this.player.id === Arena.me.id ) {
 
