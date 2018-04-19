@@ -532,7 +532,7 @@ Player.prototype.shoot = function () {
     bufferView[ 2 ] = bullet.id;
     bufferView[ 3 ] = bullet.position.x;
     bufferView[ 4 ] = bullet.position.z;
-    bufferView[ 5 ] = scope.rotationTop * 1000;
+    bufferView[ 5 ] = ( - scope.rotationTop - scope.rotation ) * 1000;
 
     scope.sendEventToPlayersInRange( 'TankMakeShot', buffer, bufferView );
 
@@ -882,12 +882,6 @@ Player.prototype.sendEventToPlayersInRange = function ( event, buffer, bufferVie
     var scope = this;
 
     //
-
-    if ( scope.socket ) {
-
-        networkManager.send( event, scope.socket, buffer, bufferView );
-
-    }
 
     for ( var i in scope.inRangeOf ) {
 

@@ -23,7 +23,7 @@ class BulletGfx {
 
     private directionRotation: number;
     private position: OMath.Vec3 = new OMath.Vec3();
-    private bulletSpeed: number = 10;
+    private bulletSpeed: number = 1.8;
 
     //
 
@@ -48,7 +48,7 @@ class BulletGfx {
         dx = x - this.position.x;
         dz = z - this.position.z;
         this.trace.scale.x = Math.sqrt( dx * dx + dz * dz ) / 3;
-        this.trace.material[0].opacity = Math.max( 0.5 - this.trace.scale.x / 280, 0 );    
+        this.trace.material['opacity'] = Math.max( 0.5 - this.trace.scale.x / 280, 0 );    
 
     };
 
@@ -58,10 +58,12 @@ class BulletGfx {
         this.id = bulletId;
         this.object.visible = true;
         this.position.copy( position );
+        this.bullet.position.set( this.position.x, this.position.y, this.position.z );
         this.directionRotation = directionRotation;
+        this.trace.rotation.z = - directionRotation;
 
         //
-console.log( position, bulletId, this.directionRotation );
+
         if ( this.sound.isPlaying ) {
 
             this.sound.stop();

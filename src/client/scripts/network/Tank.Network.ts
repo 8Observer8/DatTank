@@ -101,7 +101,7 @@ class TankNetwork {
 
         let bulletId = data[1];
         let x = data[2];
-        let y = 25;
+        let y = 20;
         let z = data[3];
         let directionRotation = data[4] / 1000;
 
@@ -137,7 +137,6 @@ class TankNetwork {
         Network.addMessageListener( 'TankMove', this.setMove.bind( this ) );
         Network.addMessageListener( 'TankMakeShot', this.setShoot.bind( this ) );
         Network.addMessageListener( 'TankRotateTop', this.setRotateTop.bind( this ) );
-        Network.addMessageListener( 'TankShoot', this.setShoot.bind( this ) );
         Network.addMessageListener( 'TankSetHealth', this.setHealth.bind( this ) );
         Network.addMessageListener( 'TankSetAmmo', this.setAmmo.bind( this ) );
 

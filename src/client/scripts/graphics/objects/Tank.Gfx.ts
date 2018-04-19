@@ -104,6 +104,12 @@ class TankGfx {
 
     };
 
+    public shoot () {
+
+        console.log('tank shoot');
+
+    };
+
     private updateTracks () {
 
         let tank = this.tank;

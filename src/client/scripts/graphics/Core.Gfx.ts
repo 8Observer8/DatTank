@@ -208,6 +208,7 @@ class GraphicsCore {
         ControlsManager.update( time, delta );
         ExplosionManager.update( time, delta );
         HealthChangeLabelManager.update( time, delta );
+        BulletManager.update( time, delta );
 
         //
 

@@ -69,6 +69,7 @@ class TankCore {
         if ( this.health <= 0 ) return;
 
         BulletManager.showBullet( bulletId, position, directionRotation );
+        this.gfx.shoot();
 
         if ( this.player.id === Arena.me.id ) {
 
