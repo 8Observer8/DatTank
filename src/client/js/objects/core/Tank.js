@@ -3,36 +3,6 @@
  * Tank unit general class
 */
 
-Game.Tank.prototype.initBullets = function () {
-
-    for ( var i = 0; i < 5; i ++ ) {
-
-        var bullet = new THREE.Mesh( new THREE.BoxGeometry( 2.5, 2.5, 2.5 ), new THREE.MeshBasicMaterial({ color: 0xff3333 }) );
-        bullet.visible = false;
-        this.bullets.push( bullet );
-        view.scene.add( bullet );
-
-        var bulletTrace = new THREE.Mesh( new THREE.PlaneGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 0.5, transparent: true }) );
-        bulletTrace.visible = false;
-        bulletTrace.rotation.x = - Math.PI / 2;
-        view.scene.add( bulletTrace );
-        bullet.trace = bulletTrace;
-        bullet.trace.renderOrder = 5;
-
-        bullet.soundShooting = new THREE.PositionalAudio( view.sound.listener );
-        bullet.soundShooting.setBuffer( resourceManager.getSound('tank_shooting.wav') );
-        bullet.soundShooting.loop = false;
-        bullet.soundShooting.setRefDistance( 30 );
-        bullet.soundShooting.autoplay = false;
-
-        if ( this.player.id !== Game.arena.me ) bullet.soundShooting.setVolume(0.4);
-
-        this.object.add( bullet.soundShooting );
-
-    }
-
-};
-
 Game.Tank.prototype.addHealthChangeLabel = function ( delta ) {
 
     var canvas, ctx, sprite, material;

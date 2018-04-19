@@ -6,6 +6,7 @@
 import * as THREE from 'three';
 
 import { GfxCore } from "./../Core.Gfx";
+import { ResourceManager } from "./../../managers/Resource.Manager";
 
 //
 
@@ -16,8 +17,15 @@ class BulletGfx {
     private object: THREE.Object3D = new THREE.Object3D();
     private trace: THREE.Mesh;
     private bullet: THREE.Mesh;
+    private sound: THREE.PositionalAudio;
 
     //
+
+    public dispose () {
+
+        // todo
+
+    };
 
     public update ( time: number, delta: number ) {
 
@@ -25,12 +33,29 @@ class BulletGfx {
 
     };
 
+    public setActive () {
+
+        this.active = true;
+
+    };
+
     public init () {
 
         this.bullet = new THREE.Mesh( new THREE.BoxGeometry( 2.5, 2.5, 2.5 ), new THREE.MeshBasicMaterial({ color: 0xff3333 }) );
-        this.bullet.visible = false;
-
         this.object.add( this.bullet );
+
+        this.trace = new THREE.Mesh( new THREE.PlaneGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 0.5, transparent: true }) );
+        this.trace.rotation.x = - Math.PI / 2;
+        this.trace.renderOrder = 5;
+        this.object.add( this.trace );
+
+        this.sound = new THREE.PositionalAudio( GfxCore.audioListener );
+        this.sound.setBuffer( ResourceManager.getSound('tank_shooting.wav') );
+        this.sound.setRefDistance( 30 );
+        this.sound.autoplay = false;
+        this.object.add( this.sound );
+
+        this.object.visible = false;
 
         //
 

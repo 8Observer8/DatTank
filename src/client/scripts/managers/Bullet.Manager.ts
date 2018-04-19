@@ -42,6 +42,13 @@ class BulletManagerCore {
 
     };
 
+    public showBullet ( position: OMath.Vec3, direction: OMath.Vec3 ) {
+
+        let bullet = this.getNewBullet();
+        bullet.setActive();
+
+    };
+
     public init () {
 
         for ( let i = 0; i < this.poolSize; i ++ ) {
