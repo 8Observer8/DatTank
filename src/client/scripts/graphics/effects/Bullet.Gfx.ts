@@ -5,6 +5,7 @@
 
 import * as THREE from 'three';
 
+import * as OMath from "./../../OMath/Core.OMath";
 import { GfxCore } from "./../Core.Gfx";
 import { ResourceManager } from "./../../managers/Resource.Manager";
 
@@ -13,11 +14,15 @@ import { ResourceManager } from "./../../managers/Resource.Manager";
 class BulletGfx {
 
     public active: boolean = false;
+    public id: number;
 
     private object: THREE.Object3D = new THREE.Object3D();
     private trace: THREE.Mesh;
     private bullet: THREE.Mesh;
     private sound: THREE.PositionalAudio;
+
+    private direction: OMath.Vec3;
+    private position: OMath.Vec3;
 
     //
 
@@ -33,9 +38,25 @@ class BulletGfx {
 
     };
 
-    public setActive () {
+    public setActive ( bulletId: number, position: OMath.Vec3, direction: OMath.Vec3 ) {
 
         this.active = true;
+        this.id = bulletId;
+        this.object.visible = true;
+        this.position.copy( position );
+        this.direction.copy( direction );
+
+        //
+
+        if ( this.sound.isPlaying ) {
+
+            this.sound.stop();
+            this.sound.startTime = 0;
+            this.sound.isPlaying = false;
+
+        }
+
+        this.sound.play();
 
     };
 

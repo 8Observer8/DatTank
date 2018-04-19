@@ -1,7 +1,3 @@
-/*
- * @author ohmed
- * Tower object class
-*/
 
 Game.Tower = function ( arena, params ) {
 
@@ -60,28 +56,7 @@ Game.Tower.prototype.addHealthChangeLabel = function ( delta ) {
 
 };
 
-Game.Tower.prototype.rotateTop = function ( oldAngle, newAngle ) {
-
-    this.newRotation = newAngle;
-
-    this.rotation = oldAngle;
-    this.object.top.rotation.y = oldAngle;
-
-};
-
 Game.Tower.prototype.shoot = function ( bulletId ) {
-
-    var bullet = false;
-
-    for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
-
-        bullet = this.bullets[ i ];
-        bullet.bulletId = bulletId;
-        if ( bullet.visible === false ) break;
-
-    }
-
-    //
 
     this.animations.shotAction.stop();
     this.animations.shotAction.play();
@@ -99,27 +74,6 @@ Game.Tower.prototype.shoot = function ( bulletId ) {
     bullet.trace.position.set( this.object.position.x + offsetX, 25, this.object.position.z + offsetZ );
     bullet.trace.rotation.z = - bullet.directionRotation;
     bullet.trace.scale.set( 1, 1, 1 );
-
-    //
-
-    if ( bullet.soundShooting.buffer ) {
-
-        if ( bullet.soundShooting.isPlaying ) {
-
-            bullet.soundShooting.stop();
-            bullet.soundShooting.startTime = 0;
-            bullet.soundShooting.isPlaying = false;
-
-        }
-
-        bullet.soundShooting.play();
-
-    }
-
-    //
-
-    bullet.visible = true;
-    bullet.trace.visible = true;
 
 };
 
@@ -153,17 +107,6 @@ Game.Tower.prototype.changeTeam = function ( team, newOwnerId, init ) {
     }
 
     this.updateLabel();
-
-};
-
-Game.Tower.prototype.updateHealth = function ( health ) {
-
-    var delta = health - this.health;
-
-    this.health = health;
-    this.updateLabel();
-
-    this.addHealthChangeLabel( delta );
 
 };
 

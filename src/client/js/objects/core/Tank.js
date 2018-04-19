@@ -1,7 +1,3 @@
-/*
- * @author ohmed
- * Tank unit general class
-*/
 
 Game.Tank.prototype.addHealthChangeLabel = function ( delta ) {
 
@@ -362,25 +358,11 @@ Game.Tank.prototype.updateSmoke = function () {
 
 Game.Tank.prototype.shootBullet = function ( bulletId ) {
 
-    var bullet = false;
-
-    for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
-
-        bullet = this.bullets[ i ];
-        bullet.bulletId = bulletId;
-        if ( bullet.visible === false ) break;
-
-    }
-
-    //
-
     this.animations.shotAction.stop();
     this.animations.shotAction.play();
 
     //
 
-    bullet.visible = true;
-    bullet.trace.visible = true;
     bullet.directionRotation = - this.object.top.rotation.y - this.object.rotation.y + Math.PI / 2;
 
     var offsetDist = 55;
@@ -393,20 +375,6 @@ Game.Tank.prototype.shootBullet = function ( bulletId ) {
     bullet.trace.position.set( this.object.position.x + offsetX, offsetY, this.object.position.z + offsetZ );
     bullet.trace.rotation.z = - bullet.directionRotation;
     bullet.trace.scale.set( 1, 1, 1 );
-
-    if ( bullet.soundShooting.buffer ) {
-
-        if ( bullet.soundShooting.isPlaying ) {
-
-            bullet.soundShooting.stop();
-            bullet.soundShooting.startTime = 0;
-            bullet.soundShooting.isPlaying = false;
-
-        }
-
-        bullet.soundShooting.play();
-
-    }
 
 };
 

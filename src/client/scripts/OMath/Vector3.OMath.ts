@@ -29,6 +29,14 @@ export class Vec3 {
 
     };
 
+    public copy ( point: Vec3 ) {
+
+        this.x = point.x;
+        this.y = point.y;
+        this.z = point.z;
+
+    };
+
     //
 
     constructor ( x?: number, y?: number, z?: number ) {

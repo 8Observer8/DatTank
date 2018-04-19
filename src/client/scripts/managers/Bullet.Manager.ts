@@ -42,10 +42,10 @@ class BulletManagerCore {
 
     };
 
-    public showBullet ( position: OMath.Vec3, direction: OMath.Vec3 ) {
+    public showBullet ( bulletId: number, position: OMath.Vec3, direction: OMath.Vec3 ) {
 
         let bullet = this.getNewBullet();
-        bullet.setActive();
+        bullet.setActive( bulletId, position, direction );
 
     };
 

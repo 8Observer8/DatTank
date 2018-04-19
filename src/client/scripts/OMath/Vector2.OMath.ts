@@ -26,6 +26,13 @@ export class Vec2 {
 
     };
 
+    public copy ( point: Vec2 ) {
+
+        this.x = point.x;
+        this.y = point.y;
+
+    };
+
     //
 
     constructor ( x?: number, y?: number ) {
