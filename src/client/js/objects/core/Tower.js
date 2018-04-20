@@ -24,20 +24,6 @@ Game.Tower.prototype.shoot = function ( bulletId ) {
     this.animations.shotAction.stop();
     this.animations.shotAction.play();
 
-    //
-
-    bullet.directionRotation = - this.object.top.rotation.y - this.object.rotation.y - 1.57;
-
-    var offsetDist = 55;
-    var offsetX = offsetDist * Math.cos( bullet.directionRotation );
-    var offsetZ = offsetDist * Math.sin( bullet.directionRotation );
-
-    bullet.startPos = new THREE.Vector3( this.object.position.x + offsetX, 25, this.object.position.z + offsetZ );
-    bullet.position.set( this.object.position.x + offsetX, 25, this.object.position.z + offsetZ );
-    bullet.trace.position.set( this.object.position.x + offsetX, 25, this.object.position.z + offsetZ );
-    bullet.trace.rotation.z = - bullet.directionRotation;
-    bullet.trace.scale.set( 1, 1, 1 );
-
 };
 
 Game.Tower.prototype.changeTeam = function ( team, newOwnerId, init ) {

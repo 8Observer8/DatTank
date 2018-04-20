@@ -11,6 +11,7 @@ import { TowerGfx } from "./../../graphics/objects/Tower.Gfx";
 import { TeamCore } from "./../Team.Core";
 import { TeamManager } from "./../../managers/Team.Manager";
 import { HealthChangeLabelManager } from "./../../managers/HealthChangeLabel.Manager";
+import { BulletManager } from "./../../managers/Bullet.Manager";
 
 //
 
@@ -36,9 +37,12 @@ class TowerCore {
 
     //
 
-    public shoot ( bulletId: number ) {
+    public makeShot ( bulletId: number, position: OMath.Vec3, directionRotation: number ) {
 
-        // todo
+        if ( this.health <= 0 ) return;
+
+        BulletManager.showBullet( bulletId, position, directionRotation );
+        // this.gfx.shoot();
 
     };
 

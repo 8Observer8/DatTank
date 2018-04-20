@@ -74,7 +74,7 @@ class NetworkCore {
         //
 
         this.registerEvent( 'TowerRotateTop', EventDir.IN, EventType.BIN, 200 );
-        this.registerEvent( 'TowerShoot', EventDir.IN, EventType.BIN, 201 );
+        this.registerEvent( 'TowerMakeShot', EventDir.IN, EventType.BIN, 201 );
         this.registerEvent( 'TowerChangeTeam', EventDir.IN, EventType.BIN, 202 );
         this.registerEvent( 'TowerSetHealth', EventDir.IN, EventType.BIN, 203 );
 

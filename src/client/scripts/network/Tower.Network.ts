@@ -5,6 +5,7 @@
 
 import { Network } from "./../network/Core.Network";
 import { TowerCore } from "./../core/objects/Tower.Core";
+import * as OMath from "./../OMath/Core.OMath";
 
 //
 
@@ -34,15 +35,17 @@ class TowerNetwork {
 
     };
 
-    private shoot ( data ) {
+    private setShoot ( data ) {
 
-        // todo
+        if ( this.filter( data ) ) return;
 
-    };
+        let bulletId = data[1];
+        let x = data[2];
+        let y = 20;
+        let z = data[3];
+        let directionRotation = data[4] / 1000;
 
-    private updateLeaderboard ( data ) {
-
-        // todo
+        this.tower.makeShot( bulletId, new OMath.Vec3( x, y, z ), directionRotation );
 
     };
 
@@ -51,6 +54,12 @@ class TowerNetwork {
         if ( this.filter( data ) ) return;
 
         this.tower.setHealth( data[1] );
+
+    };
+
+    private changeTeam ( data ) {
+
+        // todo
 
     };
 
@@ -63,8 +72,8 @@ class TowerNetwork {
         //
 
         Network.addMessageListener( 'TowerRotateTop', this.setTopRotation.bind( this ) );
-        Network.addMessageListener( 'TowerShoot', this.shoot.bind( this ) );
-        Network.addMessageListener( 'TowerChangeTeam', this.updateLeaderboard.bind( this ) );
+        Network.addMessageListener( 'TowerMakeShot', this.setShoot.bind( this ) );
+        Network.addMessageListener( 'TowerChangeTeam', this.changeTeam.bind( this ) );
         Network.addMessageListener( 'TowerSetHealth', this.setHealth.bind( this ) );
 
     };

@@ -320,28 +320,6 @@ Game.Tank.prototype.updateSmoke = function () {
 
 };
 
-Game.Tank.prototype.shootBullet = function ( bulletId ) {
-
-    this.animations.shotAction.stop();
-    this.animations.shotAction.play();
-
-    //
-
-    bullet.directionRotation = - this.object.top.rotation.y - this.object.rotation.y + Math.PI / 2;
-
-    var offsetDist = 55;
-    var offsetX = offsetDist * Math.cos( bullet.directionRotation );
-    var offsetY = this.object.top.position.y;
-    var offsetZ = offsetDist * Math.sin( bullet.directionRotation );
-
-    bullet.startPos = new THREE.Vector3( this.object.position.x + offsetX, offsetY, this.object.position.z + offsetZ );
-    bullet.position.set( this.object.position.x + offsetX, offsetY, this.object.position.z + offsetZ );
-    bullet.trace.position.set( this.object.position.x + offsetX, offsetY, this.object.position.z + offsetZ );
-    bullet.trace.rotation.z = - bullet.directionRotation;
-    bullet.trace.scale.set( 1, 1, 1 );
-
-};
-
 Game.Tank.prototype.animate = function ( delta ) {
 
     if ( this.ffLabel && this.ffLabel.sprite.visible ) {

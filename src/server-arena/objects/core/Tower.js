@@ -137,8 +137,8 @@ Tower.prototype.shoot = function ( target ) {
     var scope = this;
 
     scope.networkBuffers['shoot'] = scope.networkBuffers['shoot'] || {};
-    var buffer = scope.networkBuffers['shoot'].buffer || new ArrayBuffer( 6 );
-    var bufferView = scope.networkBuffers['shoot'].bufferView || new Uint16Array( buffer );
+    var buffer = scope.networkBuffers['shoot'].buffer || new ArrayBuffer( 12 );
+    var bufferView = scope.networkBuffers['shoot'].bufferView || new Int16Array( buffer );
     scope.networkBuffers['shoot'].buffer = buffer;
     scope.networkBuffers['shoot'].bufferView = bufferView;
 
@@ -174,16 +174,25 @@ Tower.prototype.shoot = function ( target ) {
 
     //
 
+    var position = { x: scope.position.x, y: 20, z: scope.position.z };
+    var offset = 45;
+    position.x += offset * Math.cos( - scope.rotation - Math.PI / 2 );
+    position.z += offset * Math.sin( - scope.rotation - Math.PI / 2 );
+
     var bullet = this.getInactiveBullet();
     if ( ! bullet ) return;
-    bullet.activate( this.position, this.rotation + Math.PI );
+    bullet.activate( position, this.rotation + Math.PI );
 
     //
 
     bufferView[1] = scope.id;
     bufferView[2] = bullet.id;
+    bufferView[3] = bullet.position.x;
+    bufferView[4] = bullet.position.z;
+    bufferView[5] = ( - scope.rotation - Math.PI / 2 ) * 1000;
+    console.log( bufferView, bullet.position );
 
-    scope.sendEventToPlayersInRange( 'TowerShoot', buffer, bufferView );
+    scope.sendEventToPlayersInRange( 'TowerMakeShot', buffer, bufferView );
 
 };
 

@@ -535,11 +535,11 @@ Player.prototype.shoot = function () {
 
     //
 
-    bufferView[ 1 ] = scope.id;
-    bufferView[ 2 ] = bullet.id;
-    bufferView[ 3 ] = bullet.position.x;
-    bufferView[ 4 ] = bullet.position.z;
-    bufferView[ 5 ] = ( - scope.rotationTop - scope.rotation ) * 1000;
+    bufferView[1] = scope.id;
+    bufferView[2] = bullet.id;
+    bufferView[3] = bullet.position.x;
+    bufferView[4] = bullet.position.z;
+    bufferView[5] = ( - scope.rotationTop - scope.rotation ) * 1000;
 
     scope.sendEventToPlayersInRange( 'TankMakeShot', buffer, bufferView );
 
