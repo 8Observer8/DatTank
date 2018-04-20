@@ -522,7 +522,14 @@ Player.prototype.shoot = function () {
     var bullet = this.getInactiveBullet();
     if ( ! bullet ) return;
 
-    bullet.activate( scope.position, scope.rotationTop + scope.rotation + Math.PI / 2 );
+    // compute proper position of bullet
+
+    var position = { x: scope.position.x, y: 20, z: scope.position.z };
+    var offset = 45;
+    position.x += offset * Math.cos( - scope.rotationTop - scope.rotation );
+    position.z += offset * Math.sin( - scope.rotationTop - scope.rotation );
+
+    bullet.activate( position, scope.rotationTop + scope.rotation + Math.PI / 2 );
 
     scope.ammo --;
 

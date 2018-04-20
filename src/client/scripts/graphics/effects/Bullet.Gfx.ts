@@ -20,6 +20,8 @@ class BulletGfx {
     private trace: THREE.Mesh;
     private bullet: THREE.Mesh;
     private sound: THREE.PositionalAudio;
+    private time: number = 0;
+    private flightDuration: number = 220;
 
     private directionRotation: number;
     private position: OMath.Vec3 = new OMath.Vec3();
@@ -37,6 +39,8 @@ class BulletGfx {
 
         if ( ! this.active ) return;
 
+        this.time += delta;
+
         let x, z;
         let dx, dz;
 
@@ -48,7 +52,22 @@ class BulletGfx {
         dx = x - this.position.x;
         dz = z - this.position.z;
         this.trace.scale.x = Math.sqrt( dx * dx + dz * dz ) / 3;
-        this.trace.material['opacity'] = Math.max( 0.5 - this.trace.scale.x / 280, 0 );    
+        this.trace.material['opacity'] = Math.max( 0.5 - this.trace.scale.x / 280, 0 );  
+
+        //
+
+        if ( this.time > this.flightDuration ) {
+
+            this.deactivate();
+
+        }
+
+    };
+
+    public deactivate () {
+
+        this.object.visible = false;
+        this.active = false;
 
     };
 
@@ -56,6 +75,7 @@ class BulletGfx {
 
         this.active = true;
         this.id = bulletId;
+        this.time = 0;
         this.object.visible = true;
         this.position.copy( position );
         this.bullet.position.set( this.position.x, this.position.y, this.position.z );
