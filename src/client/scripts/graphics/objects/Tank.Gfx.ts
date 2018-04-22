@@ -185,8 +185,9 @@ class TankGfx {
         materials = [];
         for ( var i = 0, il = tankTopModel.material.length; i < il; i ++ ) {
 
-            materials.push( tankTopModel.material[ i ].clone() );
-            materials[ materials.length - 1 ].morphTargets = true;
+            let material = tankTopModel.material[ i ].clone();
+            material.morphTargets = true;
+            materials.push( material );
 
         }
 
@@ -207,17 +208,19 @@ class TankGfx {
 
         //
 
-        this.mixer = new THREE.AnimationMixer( this.topMesh );
+        this.mixer = new THREE.AnimationMixer( this.object );
 
-        var shotAction = this.mixer.clipAction( tankTopModel.geometry.animations[0], this.topMesh );
+        let shotAction, deathAction1, deathAction2;
+
+        shotAction = this.mixer.clipAction( tankTopModel.geometry.animations[0], this.topMesh );
         shotAction.setDuration( 0.5 ).setLoop( THREE.LoopOnce, 1 );
         this.animations['shotAction'] = shotAction;
 
-        var deathAction1 = this.mixer.clipAction( tankTopModel.geometry.animations[1], this.topMesh );
+        deathAction1 = this.mixer.clipAction( tankTopModel.geometry.animations[1], this.topMesh );
         deathAction1.setDuration( 1 ).setLoop( THREE.LoopOnce, 1 );
         this.animations['deathAction1'] = deathAction1;
 
-        var deathAction2 = this.mixer.clipAction( tankBaseModel.geometry.animations[0], this.baseMesh );
+        deathAction2 = this.mixer.clipAction( tankBaseModel.geometry.animations[0], this.baseMesh );
         deathAction2.setDuration( 2 ).setLoop( THREE.LoopOnce, 1 );
         this.animations['deathAction2'] = deathAction2;
 
@@ -245,9 +248,9 @@ class TankGfx {
     public destroy () {
 
         this.animations['deathAction1'].stop();
-        this.animations['deathAction1'].play();
-
         this.animations['deathAction2'].stop();
+
+        this.animations['deathAction1'].play();
         this.animations['deathAction2'].play();
 
         setTimeout( () => {
@@ -257,7 +260,7 @@ class TankGfx {
 
         }, 1100 );
 
-        this.sounds['explosion'].play();
+        // this.sounds['explosion'].play();
 
     };
 

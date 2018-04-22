@@ -79,7 +79,7 @@ class TowerGfx {
 
         // tower top part
 
-        materials.length = 0;
+        materials = [];
 
         for ( let i = 0, il = towerTopModel.material.length; i < il; i ++ ) {
 
@@ -108,7 +108,7 @@ class TowerGfx {
 
         //
 
-        this.mixer = new THREE.AnimationMixer( this.topMesh );
+        this.mixer = new THREE.AnimationMixer( this.object );
 
         let shotAction = this.mixer.clipAction( towerTopModel.geometry.animations[0], this.topMesh );
         shotAction.setDuration( 0.5 ).setLoop( THREE.LoopOnce, 1 );
@@ -118,25 +118,6 @@ class TowerGfx {
 
         this.label.init( this.object );
         this.label.update( this.tower.health, this.tower.armour, this.tower.team.color );
-
-    };
-
-    public destroy () {
-
-        this.animations['deathAction1'].stop();
-        this.animations['deathAction1'].play();
-
-        this.animations['deathAction2'].stop();
-        this.animations['deathAction2'].play();
-
-        setTimeout( () => {
-
-            this.animations['deathAction1'].paused = true;
-            this.animations['deathAction2'].paused = true;
-
-        }, 1100 );
-
-        this.sounds['explosion'].play();
 
     };
 

@@ -93,6 +93,12 @@ class TankCore {
 
     };
 
+    public die () {
+
+        this.gfx.destroy();
+
+    };
+
     //
 
     public setMovement ( directionX: number, directionZ: number, positionX: number, positionZ: number, rotation: number ) {
@@ -128,8 +134,6 @@ class TankCore {
 
         if ( this.health <= 0 ) return;
 
-        // this.tank.addHealthChangeLabel( health - this.health );
-
         if ( Arena.me.id === this.id ) {
 
             if ( value < this.health ) {
@@ -151,19 +155,19 @@ class TankCore {
         this.health = value;
         this.gfx.label.update( this.health, this.armour, this.player.team.color, this.player.username );
 
-        // if ( this.health === 0 ) {
+        if ( this.health <= 0 ) {
 
-        //     this.die( killerId );
+            this.die();
 
-        // } else if ( this.health <= 50 ) {
+        } else if ( this.health <= 50 ) {
 
         //     this.showSmoke();
 
-        // } else {
+        } else {
 
         //     this.hideSmoke();
 
-        // }
+        }
 
     };
 
@@ -219,6 +223,7 @@ class TankCore {
 
     public update ( time: number, delta: number ) {
 
+        this.gfx.update( time, delta );
         if ( this.health <= 0 ) return;
 
         //
@@ -248,7 +253,6 @@ class TankCore {
         //
 
         this.updateMovement( time, delta );
-        this.gfx.update( time, delta );
 
     };
 

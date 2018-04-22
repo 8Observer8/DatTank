@@ -19,13 +19,6 @@ Game.Tower.prototype.initChangeTeamEffect = function () {
 
 };
 
-Game.Tower.prototype.shoot = function ( bulletId ) {
-
-    this.animations.shotAction.stop();
-    this.animations.shotAction.play();
-
-};
-
 Game.Tower.prototype.changeTeam = function ( team, newOwnerId, init ) {
 
     team = this.arena.teamManager.getById( team );
@@ -84,14 +77,6 @@ Game.Tower.prototype.animate = function ( delta ) {
             this.changeTeamEffectPipe.visible = false;
 
         }
-
-    }
-
-    //
-
-    if ( this.mixer ) {
-
-        this.mixer.update( delta / 1000 );
 
     }
 
