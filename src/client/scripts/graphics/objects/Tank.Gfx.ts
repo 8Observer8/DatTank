@@ -106,7 +106,8 @@ class TankGfx {
 
     public shoot () {
 
-        console.log('tank shoot');
+        this.animations['shotAction'].stop();
+        this.animations['shotAction'].play();
 
     };
 
@@ -151,14 +152,7 @@ class TankGfx {
 
         this.updateTracks();
         this.traces.update( time, delta );
-
-        //
-
-        if ( this.mixer ) {
-
-            this.mixer.update( delta / 1000 );
-
-        }
+        this.mixer.update( delta / 1000 );
 
     };
 
@@ -213,19 +207,19 @@ class TankGfx {
 
         //
 
-        // this.mixer = new THREE.AnimationMixer( this.topMesh );
+        this.mixer = new THREE.AnimationMixer( this.topMesh );
 
-        // var shotAction = this.mixer.clipAction( tankTopModel.geometry.animations[0], this.topMesh );
-        // shotAction.setDuration( 0.5 ).setLoop( THREE.LoopOnce, 1 );
-        // this.animations['shotAction'] = shotAction;
+        var shotAction = this.mixer.clipAction( tankTopModel.geometry.animations[0], this.topMesh );
+        shotAction.setDuration( 0.5 ).setLoop( THREE.LoopOnce, 1 );
+        this.animations['shotAction'] = shotAction;
 
-        // var deathAction1 = this.mixer.clipAction( tankTopModel.geometry.animations[1], this.topMesh );
-        // deathAction1.setDuration( 1 ).setLoop( THREE.LoopOnce, 1 );
-        // this.animations['deathAction1'] = deathAction1;
+        var deathAction1 = this.mixer.clipAction( tankTopModel.geometry.animations[1], this.topMesh );
+        deathAction1.setDuration( 1 ).setLoop( THREE.LoopOnce, 1 );
+        this.animations['deathAction1'] = deathAction1;
 
-        // var deathAction2 = this.mixer.clipAction( tankBaseModel.geometry.animations[0], this.baseMesh );
-        // deathAction2.setDuration( 2 ).setLoop( THREE.LoopOnce, 1 );
-        // this.animations['deathAction2'] = deathAction2;
+        var deathAction2 = this.mixer.clipAction( tankBaseModel.geometry.animations[0], this.baseMesh );
+        deathAction2.setDuration( 2 ).setLoop( THREE.LoopOnce, 1 );
+        this.animations['deathAction2'] = deathAction2;
 
         //
 

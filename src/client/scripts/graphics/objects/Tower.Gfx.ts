@@ -28,6 +28,12 @@ class TowerGfx {
 
     //
 
+    public update ( time: number, delta: number ) {
+
+        this.mixer.update( delta / 1000 );
+
+    };
+
     public setTopRotation ( angle: number ) {
 
         this.topMesh.rotation.y = angle;
@@ -44,7 +50,8 @@ class TowerGfx {
 
     public shoot () {
 
-        console.log('tank shoot');
+        this.animations['shotAction'].stop();
+        this.animations['shotAction'].play();
 
     };
 
@@ -83,7 +90,7 @@ class TowerGfx {
         }
 
         this.topMesh = new THREE.Mesh( towerTopModel.geometry, materials );
-        // this.topMesh.rotation.y = this.rotation;
+        this.topMesh.rotation.y = tower.rotation;
         this.topMesh.scale.set( 27, 27, 27 );
         this.object.add( this.topMesh );
 
@@ -101,7 +108,7 @@ class TowerGfx {
 
         //
 
-        this.mixer = new THREE.AnimationMixer( top );
+        this.mixer = new THREE.AnimationMixer( this.topMesh );
 
         let shotAction = this.mixer.clipAction( towerTopModel.geometry.animations[0], this.topMesh );
         shotAction.setDuration( 0.5 ).setLoop( THREE.LoopOnce, 1 );

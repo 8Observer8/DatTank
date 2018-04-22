@@ -42,7 +42,7 @@ class TowerCore {
         if ( this.health <= 0 ) return;
 
         BulletManager.showBullet( bulletId, position, directionRotation );
-        // this.gfx.shoot();
+        this.gfx.shoot();
 
     };
 
@@ -104,6 +104,8 @@ class TowerCore {
             this.gfx.setTopRotation( this.topRotation );
     
         }
+
+        this.gfx.update( time, delta );
 
     };
 
