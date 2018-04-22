@@ -28,6 +28,26 @@ class TowerGfx {
 
     //
 
+    public setTopRotation ( angle: number ) {
+
+        this.topMesh.rotation.y = angle;
+
+    };
+
+    public setPosition ( position: OMath.Vec3 ) {
+
+        this.object.position.x = position.x;
+        this.object.position.y = position.y;
+        this.object.position.z = position.z;
+
+    };
+
+    public shoot () {
+
+        console.log('tank shoot');
+
+    };
+
     public init ( tower ) {
 
         this.tower = tower;
@@ -91,20 +111,6 @@ class TowerGfx {
 
         this.label.init( this.object );
         this.label.update( this.tower.health, this.tower.armour, this.tower.team.color );
-
-    };
-
-    public setTopRotation ( angle: number ) {
-
-        this.topMesh.rotation.y = angle;
-
-    };
-
-    public setPosition ( position: OMath.Vec3 ) {
-
-        this.object.position.x = position.x;
-        this.object.position.y = position.y;
-        this.object.position.z = position.z;
 
     };
 

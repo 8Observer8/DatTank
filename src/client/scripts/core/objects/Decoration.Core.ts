@@ -21,6 +21,12 @@ class DecorationCore {
 
     //
 
+    public update ( time: number, delta: number ) {
+
+        this.gfx.update( time, delta );
+
+    };
+
     public init () {
 
         this.gfx.init( this );

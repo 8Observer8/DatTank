@@ -37,14 +37,14 @@ class TankGfx {
         movingSound.autoplay = false;
         this.object.add( movingSound );
         this.sounds['moving'] = movingSound;
-    
+
         // this.sounds.explosion = new THREE.PositionalAudio( view.sound.listener );
         // this.sounds.explosion.setBuffer( resourceManager.getSound('tank_explosion.wav') );
         // this.sounds.explosion.loop = false;
         // this.sounds.explosion.setRefDistance( 15 );
         // this.sounds.explosion.autoplay = false;
         // if ( this.player.id !== Game.arena.me ) this.sounds.explosion.setVolume(0.4);
-    
+
         // this.object.add( this.sounds.explosion );
 
     };
@@ -146,7 +146,7 @@ class TankGfx {
         }
 
     };
-    
+
     public update ( time: number, delta: number ) {
 
         this.updateTracks();
@@ -195,7 +195,7 @@ class TankGfx {
             materials[ materials.length - 1 ].morphTargets = true;
 
         }
-    
+
         this.topMesh = new THREE.Mesh( tankTopModel.geometry, materials );
         this.topMesh.scale.set( 10, 10, 10 );
         this.topMesh.position.y = 20;

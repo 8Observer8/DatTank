@@ -25,7 +25,42 @@ class DecorationGfx {
 
     public update ( time: number, delta: number ) {
 
-        // todo
+        var dx = this.object.position.x - GfxCore.camera.position.x;
+        var dz = this.object.position.z - GfxCore.camera.position.z;
+
+        if ( Math.sqrt( dx * dx + dz * dz ) < 100 ) {
+
+            for ( let i = 0, il = this.object.children[0]['material'].length; i < il; i ++ ) {
+
+                let object = this.object.children[0];
+                let material = object['material'][i];
+
+                material.side = THREE.BackSide;
+                material.transparent = true;
+                material.opacity = 0.2;
+                material.depthWrite = false;
+                material.depthTest = false;
+                object.renderOrder = 10;
+
+            }
+
+        } else {
+
+            for ( let i = 0, il = this.object.children[0]['material'].length; i < il; i ++ ) {
+
+                let object = this.object.children[0];
+                let material = object['material'][i];
+
+                material.side = THREE.FrontSide;
+                material.transparent = false;
+                material.opacity = 1;
+                material.depthWrite = true;
+                material.depthTest = true;
+                object.renderOrder = 0;
+
+            }
+
+        }
 
     };
 
@@ -33,7 +68,14 @@ class DecorationGfx {
 
         let decorationModel = ResourceManager.getModel( 'decorations/' + decoration.title );
 
-        let mesh = new THREE.Mesh( decorationModel.geometry, decorationModel.material );
+        let material = [];
+        for ( let i = 0, il = decorationModel.material.length; i < il; i ++ ) {
+
+            material.push( decorationModel.material[ i ].clone() );
+
+        }
+
+        let mesh = new THREE.Mesh( decorationModel.geometry, material );
 
         this.object.name = decoration.title;
 

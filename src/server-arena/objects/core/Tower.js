@@ -190,7 +190,6 @@ Tower.prototype.shoot = function ( target ) {
     bufferView[3] = bullet.position.x;
     bufferView[4] = bullet.position.z;
     bufferView[5] = ( - scope.rotation - Math.PI / 2 ) * 1000;
-    console.log( bufferView, bullet.position );
 
     scope.sendEventToPlayersInRange( 'TowerMakeShot', buffer, bufferView );
 
