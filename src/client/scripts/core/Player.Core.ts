@@ -10,10 +10,9 @@ import { TeamCore } from "./Team.Core";
 import { TeamManager } from "./../managers/Team.Manager";
 import { PlayerNetwork } from "./../network/Player.Network";
 import { UI } from "./../ui/Core.UI";
-
-//
-
-enum Status { ALIVE = 0, DEAD = 1 };
+import { TowerManager } from "../managers/Tower.Manager";
+import { PlayerManager } from "../managers/Player.Manager";
+import { TowerCore } from "./objects/Tower.Core";
 
 //
 
@@ -21,7 +20,6 @@ class PlayerCore {
 
     public id: number;
     public username: string;
-    public status: Status;
 
     public team: TeamCore;
     public tank: TankCore;
@@ -49,15 +47,14 @@ class PlayerCore {
 
     public triggerRespawn () {
 
-        var tank = localStorage.getItem( 'currentTank' ) || 'IS2';
+        let tank = localStorage.getItem( 'currentTank' ) || 'IS2';
         this.network.respawn( tank );
 
     };
 
     public respawn ( params ) {
 
-        this.tank.dispose();
-        this.status = Status.ALIVE;
+        this.dispose();
         this.setTank( params.tank, params );
         this.tank.init();
 
@@ -71,9 +68,31 @@ class PlayerCore {
 
     };
 
-    public die () {
+    public die ( trigger: number ) {
 
-        // todo
+        let killer = PlayerManager.getById( trigger ) || TowerManager.getById( trigger );
+
+        if ( this.id === Arena.me.id ) {
+
+            setTimeout( () => {
+
+                if ( killer instanceof TowerCore ) {
+
+                    UI.InGame.showContinueBox( '<br>' + killer.team.name + ' team tower', killer.team.color );
+
+                } else if ( killer instanceof TankCore ) {
+
+                    // ui.showContinueBox( killer.login, killer.team.color );
+
+                } else {
+
+                    UI.InGame.showContinueBox( '<br>stray bullet', '#555' );
+
+                }
+
+            }, 1400 );
+
+        }
 
     };
 
@@ -97,6 +116,7 @@ class PlayerCore {
         this.team = TeamManager.getById( params.team );
         this.setTank( params.tank, params );
         this.tank.init();
+        this.network.init( this );
 
     };
 

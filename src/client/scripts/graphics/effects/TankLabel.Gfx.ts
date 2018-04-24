@@ -56,7 +56,6 @@ class TankLabelGfx {
         // draw team color rect
 
         this.ctx.fillStyle = OMath.intToHex( teamColor );;
-        console.log( this.ctx.fillStyle, teamColor );
         this.ctx.fillRect( 0, 15, 25, 25 );
 
         // draw player login

@@ -45,18 +45,23 @@ class NetworkCore {
         this.registerEvent( 'ArenaJoinRequest', EventDir.OUT, EventType.JSON, 0 );
         this.registerEvent( 'ArenaJoinResponse', EventDir.IN, EventType.JSON, 1 );
         this.registerEvent( 'ArenaPlayerJoined', EventDir.IN, EventType.JSON, 2 );
-        this.registerEvent( 'ArenaPlayerRespawn', EventDir.IN, EventType.JSON, 3 );
-        this.registerEvent( 'ArenaPlayerRespawn', EventDir.OUT, EventType.JSON, 4 );
         this.registerEvent( 'ArenaPlayerLeft', EventDir.IN, EventType.JSON, 6 );
         this.registerEvent( 'ArenaLeaderboardUpdate', EventDir.IN, EventType.JSON, 7 );
         this.registerEvent( 'ArenaPlayersInRange', EventDir.IN, EventType.BIN, 50 );
         this.registerEvent( 'ArenaTowersInRange', EventDir.IN, EventType.BIN, 60 );
         this.registerEvent( 'ArenaBoxesInRange', EventDir.IN, EventType.BIN, 70 );
 
-        this.registerEvent( 'TankFriendlyFire', EventDir.IN, EventType.BIN, 80 );
+        //
+
+        this.registerEvent( 'PlayerRespawn', EventDir.IN, EventType.JSON, 3 );
+        this.registerEvent( 'PlayerRespawn', EventDir.OUT, EventType.JSON, 4 );
 
         this.registerEvent( 'PlayerNewLevel', EventDir.IN, EventType.BIN, 90 );
         this.registerEvent( 'PlayerTankUpdateStats', EventDir.OUT, EventType.BIN, 91 );
+
+        //
+
+        this.registerEvent( 'TankFriendlyFire', EventDir.IN, EventType.BIN, 80 );
 
         this.registerEvent( 'TankRotateTop', EventDir.IN, EventType.BIN, 100 );
         this.registerEvent( 'TankRotateTop', EventDir.OUT, EventType.BIN, 101 );
@@ -141,7 +146,7 @@ class NetworkCore {
 
     };
 
-    public send ( eventName: string, data: ArrayBuffer | boolean, view?: Int16Array | object | number | string ) {
+    public send ( eventName: string, data: ArrayBuffer | boolean | Int16Array, view?: Int16Array | object | number | string ) {
 
         if ( ! this.transport ) {
 
@@ -163,24 +168,24 @@ class NetworkCore {
 
             let stringData = JSON.stringify( view );
             let binData = TextEncoder.encode( stringData );
-    
-            var newData = new Uint16Array( binData.length + 1 );
-    
+
+            var newData = new Int16Array( binData.length + 1 );
+
             for ( var i = 0, il = binData.length; i < il; i ++ ) {
-    
+
                 newData[ i + 1 ] = binData[ i ];
-    
+
             }
-    
-            data = newData.buffer;
-            data[0] = this.events.out[ eventName ].id;
-    
+
+            newData[0] = this.events.out[ eventName ].id;
+            data = newData;
+
         } else {
-    
+
             view[0] = this.events.out[ eventName ].id;
 
         }
-    
+
         this.transport.send( data, { binary: true, mask: true } );
 
     };
@@ -198,7 +203,7 @@ class NetworkCore {
 
             console.warn( '[NETWORK] Event with ID:' + eventId + ' not found.' );
             return;
-    
+
         }
 
         //
@@ -212,21 +217,21 @@ class NetworkCore {
             data = new Int16Array( data, 2 );
             data = TextEncoder.decode( data );
             data = JSON.parse( data );
-    
+
         } else {
-    
+
             data = new Int16Array( data, 2 );
-    
+
         }
 
         for ( var i = 0, il = listeners.length; i < il; i ++ ) {
-    
+
             if ( listeners[ i ] ) {
-    
+
                 listeners[ i ]( data, eventName );
-    
+
             }
-    
+
         }
 
     };

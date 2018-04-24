@@ -158,6 +158,7 @@ class TankCore {
         if ( this.health <= 0 ) {
 
             this.die();
+            this.player.die( trigger );
 
         } else if ( this.health <= 50 ) {
 
@@ -258,7 +259,7 @@ class TankCore {
 
     public dispose () {
 
-        // todo
+        this.gfx.dispose();
 
     };
 

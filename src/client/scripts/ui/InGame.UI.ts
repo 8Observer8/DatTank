@@ -3,6 +3,12 @@
  * DatTank In Game UI module
 */
 
+import { Arena } from "../core/Arena.Core";
+import { UI } from "./../ui/Core.UI";
+import { Game } from "./../Game";
+
+//
+
 class UIInGameModule {
 
     public init () {
@@ -11,9 +17,38 @@ class UIInGameModule {
 
     };
 
+    public showContinueBox ( username, color ) {
+
+        // this.hideTankStatsUpdate();
+
+        $('#continue-box-wrapper #continue-btn').off();    
+        $('#continue-box-wrapper #continue-btn').click( () => {
+    
+            Arena.me.triggerRespawn();
+    
+        });
+    
+        $('#continue-box-wrapper').show();
+        $('#continue-box-wrapper #continue-box-wrapper-title').html('<p>Killed by <span style="color:'+ color + '">' + username +'</span></p>');
+        $('#continue-box-wrapper #change-tank').click( Game.garage.show.bind( Game.garage ) );
+    
+        setTimeout( function () {
+    
+            $('#continue-box-wrapper').css( 'opacity', 1 );
+    
+        }, 100 );
+
+    };
+
     public hideContinueBox () {
 
-        // todo
+        $('#continue-box-wrapper').css( 'opacity', 0 );
+
+        setTimeout( () => {
+    
+            $('#continue-box-wrapper').hide();
+    
+        }, 200);
 
     };
 

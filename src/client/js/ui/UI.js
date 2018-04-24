@@ -76,29 +76,6 @@ Game.UI.prototype.updateAmmo = function ( value ) {
 
 };
 
-Game.UI.prototype.showContinueBox = function ( playerlogin, playerColor ) {
-
-    $('#continue-box-wrapper #continue-btn').off();
-    this.hideTankStatsUpdate();
-
-    $('#continue-box-wrapper #continue-btn').click( function () {
-
-        Game.arena.me.respawn( false );
-
-    });
-
-    $('#continue-box-wrapper').show();
-    $('#continue-box-wrapper #continue-box-wrapper-title').html('<p>Killed by <span style="color:'+ playerColor + '">' + playerlogin +'</span></p>');
-    $('#continue-box-wrapper #change-tank').click( ui.showChoiceWindow.bind( ui ) );
-
-    setTimeout( function () {
-
-        $('#continue-box-wrapper').css( 'opacity', 1 );
-
-    }, 100 );
-
-};
-
 Game.UI.prototype.showKills = function ( killer, killed ) {
 
     var killerName = ( killer instanceof Game.Tower ) ? 'Tower' : killer.login;
@@ -110,18 +87,6 @@ Game.UI.prototype.showKills = function ( killer, killed ) {
         $('#kill-events p').first().remove();
 
     }
-
-};
-
-Game.UI.prototype.hideContinueBox = function () {
-
-    $('#continue-box-wrapper').css( 'opacity', 0 );
-
-    setTimeout( function () {
-
-        $('#continue-box-wrapper').hide();
-
-    }, 200);
 
 };
 

@@ -190,7 +190,7 @@ ArenaManager.prototype.proxyEventToArena = function ( data, socket, eventName ) 
 ArenaManager.prototype.addNetworkListeners = function () {
 
     networkManager.addMessageListener( 'ArenaJoinRequest', this.playerJoin.bind( this ) );
-    networkManager.addMessageListener( 'ArenaPlayerRespawn', this.proxyEventToPlayer.bind( this ) );
+    networkManager.addMessageListener( 'PlayerRespawn', this.proxyEventToPlayer.bind( this ) );
     networkManager.addMessageListener( 'TankRotateTop', this.proxyEventToPlayer.bind( this ) );
     networkManager.addMessageListener( 'TankMove', this.proxyEventToPlayer.bind( this ) );
     networkManager.addMessageListener( 'TankStartShooting', this.proxyEventToPlayer.bind( this ) );

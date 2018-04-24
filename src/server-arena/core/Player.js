@@ -166,7 +166,7 @@ Player.prototype.respawn = function ( tankName ) {
     var playerJSON = this.toPrivateJSON();
     this.position = newPosition;
 
-    this.sendEventToPlayersInRange( 'ArenaPlayerRespawn', false, { player: playerJSON } );
+    this.sendEventToPlayersInRange( 'PlayerRespawn', false, { id: this.id, player: playerJSON } );
 
     //
 
@@ -875,7 +875,8 @@ Player.prototype.addEventListeners = function () {
 
     var scope = this;
 
-    this.addEventListener( 'ArenaPlayerRespawn', function ( event ) { scope.respawn( event.data ); });
+    this.addEventListener( 'PlayerRespawn', function ( event ) { scope.respawn( event.data ); });
+
     this.addEventListener( 'TankRotateTop', function ( event ) { scope.rotateTop( event.data[0] / 1000 ); });
     this.addEventListener( 'TankMove', function ( event ) { scope.move( event.data[0], event.data[1] ); });
     this.addEventListener( 'TankStartShooting', function ( event ) { scope.startShooting(); });
@@ -911,7 +912,7 @@ Player.prototype.toPrivateJSON = function () {
         id:             this.id,
         login:          this.login,
         team:           this.team.id,
-        tank:           this.tank.title,
+        tank:           this.tank.typeId,
         health:         this.health,
         ammo:           this.ammo,
         rotation:       this.rotation,

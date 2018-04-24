@@ -22,8 +22,6 @@ NetworkManager.prototype.init = function () {
     this.registerEvent( 'ArenaJoinRequest', 'in', 'json', 0 );
     this.registerEvent( 'ArenaJoinResponse', 'out', 'json', 1 );
     this.registerEvent( 'ArenaPlayerJoined', 'out', 'json', 2 );
-    this.registerEvent( 'ArenaPlayerRespawn', 'out', 'json', 3 );
-    this.registerEvent( 'ArenaPlayerRespawn', 'in', 'json', 4 );
     this.registerEvent( 'ArenaPlayerLeft', 'out', 'json', 6 );
     this.registerEvent( 'ArenaLeaderboardUpdate', 'out', 'json', 7 );
     this.registerEvent( 'ArenaPlayersInRange', 'out', 'bin', 50 );
@@ -32,10 +30,15 @@ NetworkManager.prototype.init = function () {
 
     //
 
-    this.registerEvent( 'TankFriendlyFire', 'out', 'bin', 80 );
+    this.registerEvent( 'PlayerRespawn', 'out', 'json', 3 );
+    this.registerEvent( 'PlayerRespawn', 'in', 'json', 4 );
 
     this.registerEvent( 'PlayerNewLevel', 'out', 'bin', 90 );
     this.registerEvent( 'PlayerTankUpdateStats', 'in', 'bin', 91 );
+
+    //
+
+    this.registerEvent( 'TankFriendlyFire', 'out', 'bin', 80 );
 
     this.registerEvent( 'TankRotateTop', 'out', 'bin', 100 );
     this.registerEvent( 'TankRotateTop', 'in', 'bin', 101 );
@@ -193,8 +196,6 @@ NetworkManager.prototype.send = function ( eventName, socket, data, view ) {
         return false;
 
     }
-
-    if ( this.events.out[ eventName ].id === 500 ) x = 100 / a;
 
     if ( ! data ) {
 

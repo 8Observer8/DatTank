@@ -12,12 +12,6 @@ Game.Tank.prototype.reset = function () {
     this.hideExplosion();
     this.hideBlastSmoke();
 
-    for ( var i = 0, il = this.bullets.length; i < il; i ++ ) {
-
-        this.bullets[ i ].visible = false;
-
-    }
-
 };
 
 Game.Tank.prototype.hideBlastSmoke = function () {

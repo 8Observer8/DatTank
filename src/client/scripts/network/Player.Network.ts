@@ -17,21 +17,23 @@ class PlayerNetwork {
     private filter ( data ) : boolean {
 
         var playerId = ( data.id ) ? data.id : data[0];
-        if ( this.player.id !== playerId ) return false;
+        if ( this.player.id !== playerId ) return true;
 
-        return true;
+        return false;
 
     };
 
     //
 
-    private setRespawn ( event ) {
+    private setRespawn ( data ) {
 
-        // todo
+        if ( this.filter( data ) ) return;
+
+        this.player.respawn( data.player );
 
     };
 
-    private setLevel ( event ) {
+    private setLevel ( data ) {
 
         // todo
 
@@ -41,7 +43,7 @@ class PlayerNetwork {
 
     public respawn ( tank: string ) {
 
-        Network.send( 'ArenaPlayerRespawn', false, tank );
+        Network.send( 'PlayerRespawn', false, tank );
 
     };
 
@@ -53,7 +55,7 @@ class PlayerNetwork {
 
         //
 
-        Network.addMessageListener( 'PlayerRespawn', this.respawn.bind( this ) );
+        Network.addMessageListener( 'PlayerRespawn', this.setRespawn.bind( this ) );
         Network.addMessageListener( 'PlayerNewLevel', this.setLevel.bind( this ) );
 
     };
