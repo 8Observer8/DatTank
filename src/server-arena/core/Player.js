@@ -557,7 +557,7 @@ Player.prototype.friendlyFire = function () {
 
     bufferView[1] = this.id;
 
-    networkManager.send( 'PlayerFriendlyFire', this.socket, buffer, bufferView );
+    networkManager.send( 'TankFriendlyFire', this.socket, buffer, bufferView );
 
 };
 

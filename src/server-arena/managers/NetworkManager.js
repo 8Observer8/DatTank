@@ -32,7 +32,7 @@ NetworkManager.prototype.init = function () {
 
     //
 
-    this.registerEvent( 'PlayerFriendlyFire', 'out', 'bin', 80 );
+    this.registerEvent( 'TankFriendlyFire', 'out', 'bin', 80 );
 
     this.registerEvent( 'PlayerNewLevel', 'out', 'bin', 90 );
     this.registerEvent( 'PlayerTankUpdateStats', 'in', 'bin', 91 );

@@ -217,7 +217,7 @@ class TankCore {
 
     public friendlyFire () {
 
-        // todo
+        this.gfx.friendlyFireLabel.show();
 
     };
 

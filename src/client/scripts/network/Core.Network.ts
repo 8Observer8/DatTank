@@ -53,7 +53,7 @@ class NetworkCore {
         this.registerEvent( 'ArenaTowersInRange', EventDir.IN, EventType.BIN, 60 );
         this.registerEvent( 'ArenaBoxesInRange', EventDir.IN, EventType.BIN, 70 );
 
-        this.registerEvent( 'PlayerFriendlyFire', EventDir.IN, EventType.BIN, 80 );
+        this.registerEvent( 'TankFriendlyFire', EventDir.IN, EventType.BIN, 80 );
 
         this.registerEvent( 'PlayerNewLevel', EventDir.IN, EventType.BIN, 90 );
         this.registerEvent( 'PlayerTankUpdateStats', EventDir.OUT, EventType.BIN, 91 );
