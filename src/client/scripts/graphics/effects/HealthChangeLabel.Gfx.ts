@@ -23,7 +23,9 @@ class HealthChangeLabelGfx {
 
     public update ( time: number, delta: number ) {
 
+        if ( ! this.active ) return;
         this.time += delta;
+
         this.object.position.y += this.time / this.visibleTime;
 
         if ( this.time > this.visibleTime / 4 ) {

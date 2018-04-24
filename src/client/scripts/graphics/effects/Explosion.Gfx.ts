@@ -24,7 +24,6 @@ class ExplosionGfx {
     public update ( time: number, delta: number ) {
 
         if ( ! this.active ) return;
-        this.time = this.time || 0;
         this.time += delta;
 
         if ( this.time > 50 ) {
@@ -64,6 +63,7 @@ class ExplosionGfx {
 
     public setActive ( position: OMath.Vec3 ) {
 
+        this.time = 0;
         this.object.position.set( position.x, position.y, position.z );
         this.object.visible = true;
         this.active = true;

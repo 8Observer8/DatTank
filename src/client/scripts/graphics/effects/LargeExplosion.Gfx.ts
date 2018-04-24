@@ -24,8 +24,6 @@ class LargeExplosionGfx {
     public update ( time: number, delta: number ) {
 
         if ( ! this.active ) return;
-
-        this.time = this.time || 0;
         this.time += delta;
 
         if ( this.time > 50 ) {

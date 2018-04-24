@@ -24,8 +24,8 @@ class FriendlyFireLabelGfx {
     public update ( time: number, delta: number ) {
 
         if ( ! this.active ) return;
-
         this.time += delta;
+
         this.sprite.position.y = 45 + 20 * this.time / 3000;
 
         if ( this.time < 1500 ) {

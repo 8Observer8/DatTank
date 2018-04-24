@@ -162,11 +162,11 @@ class TankCore {
 
         } else if ( this.health <= 50 ) {
 
-        //     this.showSmoke();
+            this.gfx.damageSmoke.show();
 
         } else {
 
-        //     this.hideSmoke();
+            this.gfx.damageSmoke.hide();
 
         }
 

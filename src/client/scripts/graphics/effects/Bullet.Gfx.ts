@@ -38,7 +38,6 @@ class BulletGfx {
     public update ( time: number, delta: number ) {
 
         if ( ! this.active ) return;
-
         this.time += delta;
 
         let x, z;

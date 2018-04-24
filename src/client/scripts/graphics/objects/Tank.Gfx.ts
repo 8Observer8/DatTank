@@ -13,6 +13,7 @@ import { ResourceManager } from "./../../managers/Resource.Manager";
 import { TankTracesGfx } from './../effects/TankTraces.Gfx';
 import { LargeExplosionManager } from '../../managers/LargeExplosion.Manager';
 import { FriendlyFireLabelGfx } from '../effects/FriendlyFireLabel.Gfx';
+import { DamageSmokeGfx } from '../effects/DamageSmoke.Gfx';
 
 //
 
@@ -26,6 +27,7 @@ class TankGfx {
     private traces: TankTracesGfx = new TankTracesGfx();
     public label: TankLabelGfx = new TankLabelGfx();
     public friendlyFireLabel: FriendlyFireLabelGfx = new FriendlyFireLabelGfx();
+    public damageSmoke: DamageSmokeGfx = new DamageSmokeGfx();
 
     private animations = {};
     private sounds = {};
@@ -155,6 +157,7 @@ class TankGfx {
         this.updateTracks();
         this.traces.update( time, delta );
         this.friendlyFireLabel.update( time, delta );
+        this.damageSmoke.update( time, delta );
         this.mixer.update( delta / 1000 );
 
     };
@@ -230,6 +233,7 @@ class TankGfx {
         //
 
         this.friendlyFireLabel.init( this.object );
+        this.damageSmoke.init( this.object );
         this.traces.init( this.object );
         this.label.init( this.object );
         this.label.update( this.tank.health, this.tank.armour, this.tank.player.team.color, this.tank.player.username );
