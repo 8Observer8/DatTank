@@ -20,6 +20,7 @@ class DamageSmokeGfx {
     private time: number;
     private smokeDuration: number = 3000;
     private spriteTimeOffset: number = 3000 / 10;
+    private inactiveSprites: number = 0;
 
     public active: boolean = false;
 
@@ -27,13 +28,28 @@ class DamageSmokeGfx {
 
     public update ( time: number, delta: number ) {
 
-        if ( ! this.active ) return;
+        if ( ! this.active && this.inactiveSprites === this.sprites.length ) {
+            
+            this.object.visible = false;
+            return;
+
+        }
+
         this.time += delta;
 
         for ( var i = 0, il = this.sprites.length; i < il; i ++ ) {
 
             let sprite = this.sprites[ i ];
             let progress = ( ( this.time + i * this.spriteTimeOffset ) % this.smokeDuration ) / this.smokeDuration;
+
+            if ( sprite['inactive'] !== true && ! this.active && progress > 0.95 ) {
+
+                sprite['inactive'] = true;
+                this.inactiveSprites ++;
+
+            }
+
+            if ( sprite['inactive'] ) continue;
 
             sprite.position.y = 25 + 30 * progress;
             sprite.position.z = 2;
@@ -59,13 +75,19 @@ class DamageSmokeGfx {
 
         this.time = 0;
         this.object.visible = true;
+        this.inactiveSprites = 0;
         this.active = true;
+
+        for ( var i = 0, il = this.sprites.length; i < il; i ++ ) {
+
+            this.sprites[ i ]['inactive'] = false;
+
+        }
 
     };
 
     public hide () {
 
-        this.object.visible = false;
         this.active = false;
 
     };
