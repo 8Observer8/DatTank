@@ -5,6 +5,8 @@
 
 import * as THREE from 'three';
 
+import * as OMath from "./../../OMath/Core.OMath";
+
 //
 
 class TowerLabelGfx {
@@ -53,7 +55,8 @@ class TowerLabelGfx {
 
         // draw team color rect
 
-        this.ctx.fillStyle = teamColor;
+        this.ctx.fillStyle = OMath.intToHex( teamColor );
+        console.log( this.ctx.fillStyle );
         this.ctx.fillRect( 0, 15, 25, 25 );
 
         // draw player login

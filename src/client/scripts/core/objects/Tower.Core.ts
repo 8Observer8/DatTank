@@ -46,9 +46,12 @@ class TowerCore {
 
     };
 
-    public changeTeam ( team: TeamCore, newOwnerId: number ) {
+    public changeTeam ( newOwnerTeamId: number, killerId?: number ) {
 
-        // todo
+        this.team = TeamManager.getById( newOwnerTeamId );
+        this.health = 100;
+        this.gfx.changeTeam( this.team.color, killerId === undefined );
+        this.gfx.label.update( this.health, this.armour, this.team.color );
 
     };
 
@@ -114,6 +117,8 @@ class TowerCore {
         this.gfx.init( this );
         this.network.init( this );
         this.setTopRotation( this.topRotation );
+
+        this.changeTeam( this.team.id );
 
     };
 

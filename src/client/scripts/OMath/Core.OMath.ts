@@ -11,6 +11,19 @@ export { Vec3 };
 
 //
 
+export function intToHex ( value: number ) {
+
+    let result = value.toString(16);
+    while ( result.length < 6 ) {
+
+        result += '0' + result;
+
+    }
+
+    return '#' + result;
+
+};
+
 export function sign ( value: number ) {
 
     if ( value >= 0 ) {

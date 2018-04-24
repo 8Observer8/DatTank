@@ -17,7 +17,7 @@ class FriendlyFireLabelGfx {
     private object: THREE.Object3D = new THREE.Object3D();
     private time: number;
 
-    private active: boolean = false;
+    public active: boolean = false;
 
     //
 

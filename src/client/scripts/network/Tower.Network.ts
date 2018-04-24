@@ -59,7 +59,12 @@ class TowerNetwork {
 
     private changeTeam ( data ) {
 
-        // todo
+        if ( this.filter( data ) ) return;
+
+        let newTeamId = data[1];
+        let killerId = data[2];
+
+        this.tower.changeTeam( newTeamId, killerId );
 
     };
 

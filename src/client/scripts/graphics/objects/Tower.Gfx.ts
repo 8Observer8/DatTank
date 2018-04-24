@@ -10,6 +10,7 @@ import { GfxCore } from "./../Core.Gfx";
 import { TowerLabelGfx } from "./../effects/TowerLabel.Gfx";
 import { ResourceManager } from "./../../managers/Resource.Manager";
 import { TowerCore } from '../../core/objects/Tower.Core';
+import { TowerChangeTeamGfx } from '../effects/TowerChangeTeam.gfx';
 
 //
 
@@ -22,6 +23,7 @@ class TowerGfx {
     private tower: TowerCore;
 
     public label: TowerLabelGfx = new TowerLabelGfx();
+    public changeTeamEffect: TowerChangeTeamGfx = new TowerChangeTeamGfx();
 
     private animations = {};
     private sounds = {};
@@ -30,7 +32,23 @@ class TowerGfx {
 
     public update ( time: number, delta: number ) {
 
+        this.changeTeamEffect.update( time, delta );
         this.mixer.update( delta / 1000 );
+
+    };
+
+    public changeTeam ( color: number, skipAnimation: boolean ) {
+
+        this.topMesh.material[1].color.setHex( color );
+        this.baseMesh.material[1].color.setHex( color );
+
+        //
+
+        if ( ! skipAnimation ) {
+        
+            this.changeTeamEffect.show( color );
+
+        }
 
     };
 
@@ -116,8 +134,8 @@ class TowerGfx {
 
         //
 
+        this.changeTeamEffect.init( this.object );
         this.label.init( this.object );
-        this.label.update( this.tower.health, this.tower.armour, this.tower.team.color );
 
     };
 

@@ -11,11 +11,11 @@ import * as OMath from "./../OMath/Core.OMath";
 class TeamCore {
 
     private static colors = {
-        '0':        '#ff0000',
-        '1':        '#00ff00',
-        '2':        '#0000ff',
-        '3':        '#fcaa12',
-        '1000':     '#aaaaaa'
+        '0':        0xff0000,
+        '1':        0x00ff00,
+        '2':        0x0000ff,
+        '3':        0xfcaa12,
+        '1000':     0xaaaaaa
     };
 
     private static names = {
