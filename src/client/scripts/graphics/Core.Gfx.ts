@@ -16,6 +16,7 @@ import { ControlsManager } from "./../managers/Control.Manager";
 import { ExplosionManager } from "./../managers/Explosion.Manager";
 import { HealthChangeLabelManager } from "./../managers/HealthChangeLabel.Manager";
 import { BulletManager } from '../managers/Bullet.Manager';
+import { LargeExplosionManager } from '../managers/LargeExplosion.Manager';
 
 //
 
@@ -123,6 +124,7 @@ class GraphicsCore {
         //
 
         BulletManager.init();
+        LargeExplosionManager.init();
         ExplosionManager.init();
         HealthChangeLabelManager.init();
 
@@ -207,6 +209,7 @@ class GraphicsCore {
         DecorationManager.update( time, delta );
         ControlsManager.update( time, delta );
         ExplosionManager.update( time, delta );
+        LargeExplosionManager.update( time, delta );
         HealthChangeLabelManager.update( time, delta );
         BulletManager.update( time, delta );
 

@@ -11,6 +11,7 @@ import { TankLabelGfx } from "./../effects/TankLabel.Gfx";
 import { TankCore } from "./../../core/objects/Tank.Core";
 import { ResourceManager } from "./../../managers/Resource.Manager";
 import { TankTracesGfx } from './../effects/TankTraces.Gfx';
+import { LargeExplosionManager } from '../../managers/LargeExplosion.Manager';
 
 //
 
@@ -38,14 +39,13 @@ class TankGfx {
         this.object.add( movingSound );
         this.sounds['moving'] = movingSound;
 
-        // this.sounds.explosion = new THREE.PositionalAudio( view.sound.listener );
-        // this.sounds.explosion.setBuffer( resourceManager.getSound('tank_explosion.wav') );
-        // this.sounds.explosion.loop = false;
-        // this.sounds.explosion.setRefDistance( 15 );
-        // this.sounds.explosion.autoplay = false;
+        let explosionSound = new THREE.PositionalAudio( GfxCore.audioListener );
+        explosionSound.setBuffer( ResourceManager.getSound('tank_explosion.wav') );
+        explosionSound.setRefDistance( 15 );
+        explosionSound.autoplay = false;
         // if ( this.player.id !== Game.arena.me ) this.sounds.explosion.setVolume(0.4);
-
-        // this.object.add( this.sounds.explosion );
+        this.object.add( explosionSound );
+        this.sounds['explosion'] = explosionSound;
 
     };
 
@@ -260,7 +260,9 @@ class TankGfx {
 
         }, 1100 );
 
-        // this.sounds['explosion'].play();
+        LargeExplosionManager.showExplosion( this.tank.position );
+
+        this.sounds['explosion'].play();
 
     };
 
