@@ -9,8 +9,9 @@ import * as OMath from "./../../OMath/Core.OMath";
 import { GfxCore } from "./../Core.Gfx";
 import { TowerLabelGfx } from "./../effects/TowerLabel.Gfx";
 import { ResourceManager } from "./../../managers/Resource.Manager";
-import { TowerCore } from '../../core/objects/Tower.Core';
-import { TowerChangeTeamGfx } from '../effects/TowerChangeTeam.gfx';
+import { TowerCore } from './../../core/objects/Tower.Core';
+import { TowerChangeTeamGfx } from './../effects/TowerChangeTeam.gfx';
+import { BlastSmokeGfx } from './../effects/BlastSmoke.gfx';
 
 //
 
@@ -24,6 +25,7 @@ class TowerGfx {
 
     public label: TowerLabelGfx = new TowerLabelGfx();
     public changeTeamEffect: TowerChangeTeamGfx = new TowerChangeTeamGfx();
+    public blastSmoke: BlastSmokeGfx = new BlastSmokeGfx();
 
     private animations = {};
     private sounds = {};
@@ -33,6 +35,7 @@ class TowerGfx {
     public update ( time: number, delta: number ) {
 
         this.changeTeamEffect.update( time, delta );
+        this.blastSmoke.update( time, delta );
         this.mixer.update( delta / 1000 );
 
     };
@@ -70,6 +73,7 @@ class TowerGfx {
 
         this.animations['shotAction'].stop();
         this.animations['shotAction'].play();
+        this.blastSmoke.show();
 
     };
 
@@ -134,6 +138,7 @@ class TowerGfx {
 
         //
 
+        this.blastSmoke.init( this.topMesh, new OMath.Vec3( 0, 1, - 2 ) );
         this.changeTeamEffect.init( this.object );
         this.label.init( this.object );
 

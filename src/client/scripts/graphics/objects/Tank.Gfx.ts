@@ -14,6 +14,7 @@ import { TankTracesGfx } from './../effects/TankTraces.Gfx';
 import { LargeExplosionManager } from '../../managers/LargeExplosion.Manager';
 import { FriendlyFireLabelGfx } from '../effects/FriendlyFireLabel.Gfx';
 import { DamageSmokeGfx } from '../effects/DamageSmoke.Gfx';
+import { BlastSmokeGfx } from '../effects/BlastSmoke.Gfx';
 
 //
 
@@ -28,6 +29,7 @@ class TankGfx {
     public label: TankLabelGfx = new TankLabelGfx();
     public friendlyFireLabel: FriendlyFireLabelGfx = new FriendlyFireLabelGfx();
     public damageSmoke: DamageSmokeGfx = new DamageSmokeGfx();
+    public blastSmoke: BlastSmokeGfx = new BlastSmokeGfx();
 
     private animations = {};
     private sounds = {};
@@ -112,6 +114,7 @@ class TankGfx {
 
         this.animations['shotAction'].stop();
         this.animations['shotAction'].play();
+        this.blastSmoke.show();
 
     };
 
@@ -158,6 +161,7 @@ class TankGfx {
         this.traces.update( time, delta );
         this.friendlyFireLabel.update( time, delta );
         this.damageSmoke.update( time, delta );
+        this.blastSmoke.update( time, delta );
         this.mixer.update( delta / 1000 );
 
     };
@@ -234,6 +238,7 @@ class TankGfx {
 
         this.friendlyFireLabel.init( this.object );
         this.damageSmoke.init( this.object );
+        this.blastSmoke.init( this.topMesh, new OMath.Vec3( 0, 0, 5.5 ) );
         this.traces.init( this.object );
         this.label.init( this.object );
         this.label.update( this.tank.health, this.tank.armour, this.tank.player.team.color, this.tank.player.username );

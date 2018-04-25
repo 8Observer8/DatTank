@@ -52,7 +52,6 @@ class DamageSmokeGfx {
             if ( sprite['inactive'] ) continue;
 
             sprite.position.y = 25 + 30 * progress;
-            sprite.position.z = 2;
 
             if ( progress < 0.3 ) {
             
@@ -102,6 +101,7 @@ class DamageSmokeGfx {
         material.depthTest = true;
         material.depthWrite = false;
         this.object.visible = false;
+        this.object.position.z = 2;
 
         //
 
