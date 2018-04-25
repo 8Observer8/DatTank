@@ -15,7 +15,7 @@ class HealthChangeLabelGfx {
     private object: THREE.Object3D = new THREE.Object3D();
     private sprite: THREE.Sprite;
     private time: number;
-    private visibleTime: number = 3000;
+    private visibleTime: number = 2000;
     private position: OMath.Vec3;
 
     public active: boolean = false;
@@ -36,17 +36,11 @@ class HealthChangeLabelGfx {
 
         }
 
-        if ( this.time > this.visibleTime ) {
+        if ( progress >= 1 ) {
 
             this.deactivate();
 
         }
-
-    };
-
-    public dispose () {
-
-        // todo
 
     };
 

@@ -13,7 +13,7 @@ class HealthChangeLabelManagerCore {
     private static instance: HealthChangeLabelManagerCore;
 
     private pool: Array<HealthChangeLabelGfx> = [];
-    private poolSize: number = 20;
+    private poolSize: number = 30;
 
     //
 
