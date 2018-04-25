@@ -48,7 +48,7 @@ class TowerGfx {
         //
 
         if ( ! skipAnimation ) {
-        
+
             this.changeTeamEffect.show( color );
 
         }
@@ -147,7 +147,6 @@ class TowerGfx {
     public dispose () {
 
         GfxCore.scene.remove( this.object );
-        // GfxCore.scene.remove( this.changeTeamEffectPipe );
 
     };
 

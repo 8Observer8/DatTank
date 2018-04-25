@@ -68,6 +68,8 @@ class TowerCore {
         this.topRotation = currentAngle;
         this.targetTopRotation = targetAngle;
 
+        this.gfx.setTopRotation( this.topRotation );
+
     };
 
     public setHealth ( value: number ) {
@@ -109,6 +111,12 @@ class TowerCore {
         }
 
         this.gfx.update( time, delta );
+
+    };
+
+    public dispose () {
+
+        this.gfx.dispose();
 
     };
 

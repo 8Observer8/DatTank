@@ -1,11 +1,4 @@
 
-Game.Player.prototype.shoot = function ( bulletId ) {
-
-    this.tank.showBlastSmoke();
-    this.tank.shootBullet( bulletId );
-
-};
-
 Game.Player.prototype.die = function ( killerId ) {
 
     if ( this.id === Game.arena.me.id ) {

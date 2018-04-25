@@ -57,25 +57,6 @@ Game.UI.prototype.changeSound = function ( value, withoutSound ) {
 
 };
 
-Game.UI.prototype.showDisconectMessage = function () {
-
-    $('.disconnect-warning').show();
-
-};
-
-Game.UI.prototype.updateHealth = function ( value ) {
-
-    $('#health-number').html( value );
-    $('#empty-health-image').css( 'height', ( 100 - value ) + '%' );
-
-};
-
-Game.UI.prototype.updateAmmo = function ( value ) {
-
-    $('#ammo-number').html( value );
-
-};
-
 Game.UI.prototype.showKills = function ( killer, killed ) {
 
     var killerName = ( killer instanceof Game.Tower ) ? 'Tower' : killer.login;

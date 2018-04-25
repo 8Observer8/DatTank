@@ -16,6 +16,7 @@ class HealthChangeLabelGfx {
     private sprite: THREE.Sprite;
     private time: number;
     private visibleTime: number = 3000;
+    private position: OMath.Vec3;
 
     public active: boolean = false;
 
@@ -25,12 +26,13 @@ class HealthChangeLabelGfx {
 
         if ( ! this.active ) return;
         this.time += delta;
+        let progress = this.time / this.visibleTime;
 
-        this.object.position.y += this.time / this.visibleTime;
+        this.object.position.y = this.position.y + 10 * progress;
 
-        if ( this.time > this.visibleTime / 4 ) {
+        if ( progress > 0.25 ) {
 
-            this.sprite.material.opacity = 0.5 - ( this.time - this.visibleTime / 4 ) / ( 3 * this.visibleTime / 4 );
+            this.sprite.material.opacity = 0.5 - ( progress - 0.25 ) / ( 0.75 * 2 );
 
         }
 
@@ -84,6 +86,7 @@ class HealthChangeLabelGfx {
         this.object.visible = true;
         this.active = true;
         this.time = 0;
+        this.position = position;
 
     };
 

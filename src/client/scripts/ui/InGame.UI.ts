@@ -52,15 +52,22 @@ class UIInGameModule {
 
     };
 
+    public showDisconectMessage () {
+
+        $('.disconnect-warning').show();
+
+    };
+
     public updateHealth ( value: number ) {
 
-        // todo
+        $('#health-number').html( value + "" );
+        $('#empty-health-image').css( 'height', ( 100 - value ) + '%' );
 
     };
 
     public updateAmmo ( value: number ) {
 
-        // todo
+        $('#ammo-number').html( value + "" );
 
     };
 

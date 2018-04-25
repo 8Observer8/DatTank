@@ -34,7 +34,7 @@ class TowerManagerCore {
 
             if ( this.towers[ i ].id === tower.id ) {
 
-                // tower.dispose();
+                tower.dispose();
                 continue;
 
             }

@@ -16,7 +16,7 @@ export function intToHex ( value: number ) {
     let result = value.toString(16);
     while ( result.length < 6 ) {
 
-        result += '0' + result;
+        result = '0' + result;
 
     }
 
