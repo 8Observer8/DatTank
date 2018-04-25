@@ -4,13 +4,14 @@
 */
 
 import { BoxGfx } from "./../../graphics/objects/Box.Gfx";
+import * as OMath from "./../../OMath/Core.OMath";
 
 //
 
 class BoxCore {
 
     public id: number;
-    public position = { x: 0, y: 0, z: 0 };
+    public position: OMath.Vec3 = new OMath.Vec3();
     public type: string;
 
     protected gfx: BoxGfx = new BoxGfx();

@@ -17,28 +17,26 @@ class BoxManagerCore {
     public add ( params ) {
 
         // this.boxes.push( box );
-        
+
     };
 
-    public remove ( box ) {
+    public remove ( boxId: number ) {
 
-        if ( ! box ) return;
-
-        var newBoxList = [];
+        let newBoxList = [];
 
         for ( var i = 0, il = this.boxes.length; i < il; i ++ ) {
-    
-            if ( this.boxes[ i ].id === box.id ) {
-    
+
+            if ( this.boxes[ i ].id === boxId ) {
+
                 // this.boxes[ i ].remove();
                 continue;
-    
+
             }
-    
+
             newBoxList.push( this.boxes[ i ] );
-    
+
         }
-    
+
         this.boxes = newBoxList;
 
     };
@@ -46,19 +44,25 @@ class BoxManagerCore {
     public getBoxById ( boxId: number ) {
 
         for ( var i = 0, il = this.boxes.length; i < il; i ++ ) {
-    
+
             if ( this.boxes[ i ].id === boxId ) {
-    
+
                 return this.boxes[ i ];
-    
+
             }
-    
+
         }
-    
+
         return null;
-    
+
     };
-    
+
+    public get () {
+
+        return this.boxes;
+
+    };
+
     public update ( time: number, delta: number ) {
 
         for ( var i = 0, il = this.boxes.length; i < il; i ++ ) {

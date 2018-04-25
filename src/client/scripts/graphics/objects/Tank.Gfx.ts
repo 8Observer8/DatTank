@@ -291,7 +291,7 @@ class TankGfx {
 
         // remove tank object from scene
 
-        GfxCore.scene.remove( this.object );
+        GfxCore.coreObjects['tanks'].remove( this.object );
 
     };
 

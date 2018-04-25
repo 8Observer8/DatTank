@@ -35,6 +35,7 @@ class ArenaCore {
     private updateTimeRemainder: number = 0;
     private updateInterval: number;
     private updateIntervalDuration: number = 20;
+    private viewRange: number = 600;
 
     private network: ArenaNetwork = new ArenaNetwork();
 
@@ -85,7 +86,7 @@ class ArenaCore {
 
     public removePlayer ( player ) {
 
-        PlayerManager.remove( PlayerManager.getById( player.id ) );
+        PlayerManager.remove( player.id );
 
     };
 
@@ -99,7 +100,7 @@ class ArenaCore {
 
         for ( let i = 0, il = towers.length; i < il; i ++ ) {
 
-            TowerManager.remove( TowerManager.getById( towers[ i ].id ) );
+            TowerManager.remove( towers[ i ].id );
             TowerManager.add( towers[ i ] );
 
         }
@@ -110,7 +111,7 @@ class ArenaCore {
 
         for ( let i = 0, il = players.length; i < il; i ++ ) {
 
-            PlayerManager.remove( PlayerManager.getById( players[ i ].id ) );
+            PlayerManager.remove( players[ i ].id );
             PlayerManager.add( new PlayerCore( players[ i ] ) );
 
         }
@@ -121,7 +122,7 @@ class ArenaCore {
 
         for ( let i = 0, il = boxes.length; i < il; i ++ ) {
 
-            BoxManager.remove( BoxManager.getBoxById( boxes[ i ].id ) );
+            BoxManager.remove( boxes[ i ].id );
             BoxManager.add( boxes[ i ] );
 
         }
@@ -131,6 +132,82 @@ class ArenaCore {
     public dispose () {
 
         clearInterval( this.updateInterval );
+
+    };
+
+    private removeOutOfRangeObjects () {
+
+        // remove out of range players
+
+        let playersToRemove = [];
+        let players = PlayerManager.get();
+
+        for ( let i = 0, il = players.length; i < il; i ++ ) {
+
+            let player = players[ i ];
+
+            if ( ! player || player.id === this.me.id ) continue;
+            if ( player.tank.position.distanceTo( this.me.tank.position ) > this.viewRange ) {
+
+                playersToRemove.push( player );
+
+            }
+
+        }
+
+        for ( let i = 0, il = playersToRemove.length; i < il; i ++ ) {
+
+            PlayerManager.remove( playersToRemove[ i ] );
+
+        }
+
+        // remove out of range towers
+
+        let towersToRemove = [];
+        let towers = TowerManager.get();
+
+        for ( let i = 0, il = towers.length; i < il; i ++ ) {
+
+            let tower = towers[ i ];
+            if ( ! tower ) continue;
+
+            if ( tower.position.distanceTo( this.me.tank.position ) > this.viewRange ) {
+
+                towersToRemove.push( tower );
+
+            }
+
+        }
+
+        for ( let i = 0, il = towersToRemove.length; i < il; i ++ ) {
+
+            TowerManager.remove( towersToRemove[ i ] );
+
+        }
+
+        // remove out of range boxes
+
+        let boxesToRemove = [];
+        let boxes = BoxManager.get();
+
+        for ( var i = 0, il = boxes.length; i < il; i ++ ) {
+
+            var box = boxes[ i ];
+            if ( ! box ) continue;
+
+            if ( box.position.distanceTo( this.me.tank.position ) > this.viewRange ) {
+
+                boxesToRemove.push( box );
+
+            }
+
+        }
+
+        for ( var i = 0, il = boxesToRemove.length; i < il; i ++ ) {
+
+            BoxManager.remove( boxesToRemove[ i ] );
+
+        }
 
     };
 
@@ -146,6 +223,7 @@ class ArenaCore {
         //
 
         PlayerManager.update( time, delta );
+        this.removeOutOfRangeObjects();
 
         //
 

@@ -24,17 +24,15 @@ class TowerManagerCore {
 
     };
 
-    public remove ( tower: TowerCore ) {
-
-        if ( ! tower ) return;
+    public remove ( towerId: number ) {
 
         var newTowerList = [];
 
         for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
 
-            if ( this.towers[ i ].id === tower.id ) {
+            if ( this.towers[ i ].id === towerId ) {
 
-                tower.dispose();
+                this.towers[ i ].dispose();
                 continue;
 
             }
@@ -60,6 +58,12 @@ class TowerManagerCore {
         }
 
         return null;
+
+    };
+
+    public get () {
+
+        return this.towers;
 
     };
 

@@ -20,7 +20,6 @@ Game.UI = function () {
     // ui binding
 
     $('.stats-update-block .bonus .increase').click( this.updateTankStat.bind( this ) );
-    $( document ).on('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', this.onFullscreenModeChange.bind( this ) );
 
 };
 

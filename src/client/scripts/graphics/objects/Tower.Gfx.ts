@@ -146,7 +146,7 @@ class TowerGfx {
 
     public dispose () {
 
-        GfxCore.scene.remove( this.object );
+        GfxCore.coreObjects['towers'].remove( this.object );
 
     };
 

@@ -27,17 +27,15 @@ class PlayerManagerCore {
 
     };
 
-    public remove ( player: PlayerCore ) {
-
-        if ( ! player ) return;
+    public remove ( playerId: number ) {
 
         var newPlayersList = [];
     
         for ( var i = 0, il = this.players.length; i < il; i ++ ) {
     
-            if ( this.players[ i ].id === player.id ) {
+            if ( this.players[ i ].id === playerId ) {
     
-                player.tank.dispose();
+                this.players[ i ].tank.dispose();
                 continue;
     
             }
@@ -63,6 +61,12 @@ class PlayerManagerCore {
         }
     
         return null;
+
+    };
+
+    public get () {
+
+        return this.players;
 
     };
 
