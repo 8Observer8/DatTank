@@ -5,6 +5,7 @@
 
 import * as THREE from 'three';
 
+import * as OMath from "./../../OMath/Core.OMath";
 import { GfxCore } from "./../Core.Gfx";
 import { DecorationCore } from "./../../core/objects/Decoration.Core";
 import { ResourceManager } from "./../../managers/Resource.Manager";
@@ -19,7 +20,7 @@ class DecorationGfx {
 
     public dispose () {
 
-        // view.scene.remove( this.mesh );
+        GfxCore.coreObjects['decorations'].remove( this.object );
 
     };
 

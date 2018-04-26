@@ -30,6 +30,7 @@ class DecorationCore {
     public init () {
 
         this.gfx.init( this );
+        GfxCore.landscape.addShadow( this.title, this.position, this.scale, this.rotation );
 
     };
 
@@ -68,6 +69,7 @@ import { Rock3Decoration } from "./../../objects/decorations/rocks/Rock3.Decorat
 import { Rock4Decoration } from "./../../objects/decorations/rocks/Rock4.Decoration";
 
 import { Ruin1Decoration } from "./../../objects/decorations/ruins/Ruin1.Decoration";
+import { GfxCore } from "../../graphics/Core.Gfx";
 
 let DecorationList = {
 

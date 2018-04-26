@@ -5,6 +5,7 @@
 
 import * as THREE from 'three';
 
+import * as OMath from "./../../OMath/Core.OMath";
 import { GfxCore } from "./../Core.Gfx";
 import { ResourceManager } from "./../../managers/Resource.Manager";
 import { TeamManager } from '../../managers/Team.Manager';
@@ -126,6 +127,50 @@ class LandscapeGfx {
         grassZone.position.set( ( Math.random() - 0.5 ) * size, 0.1 + Math.random() / 10, ( Math.random() - 0.5 ) * size );
         grassZone.renderOrder = 8;
         this.object.add( grassZone );
+
+    };
+
+    public addShadow ( objectType: string, position: OMath.Vec3, scale: OMath.Vec3, rotation: number ) {
+
+        let shadowTexture;
+        let shadowMesh;
+        let shadowScale;
+
+        shadowTexture = ResourceManager.getTexture( objectType + '-shadow.png' );
+        shadowMesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ map: shadowTexture, transparent: true, depthWrite: false, opacity: 0.3 }) );
+        shadowMesh.geometry.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2) );
+        shadowMesh.material.transparent = true;
+        shadowMesh.position.copy( position );
+        shadowMesh.position.y = 0.5;
+        shadowMesh.renderOrder = 10;
+        this.object.add( shadowMesh );
+
+        // tmp
+
+        if ( objectType.indexOf('Rock') !== -1 ) {
+
+            if ( objectType === 'Rock3' ) {
+
+                shadowScale = scale.y;
+
+            } else {
+
+                shadowScale = 5 * scale.y;
+
+            }
+
+            shadowMesh.scale.set( shadowScale, shadowScale, shadowScale );
+            shadowMesh.position.x += shadowMesh.scale.y / 2;
+            shadowMesh.position.z += shadowMesh.scale.y / 2;
+
+        } else if ( objectType.indexOf('Tree') !== -1 ) {
+
+            shadowScale = 5 * scale.y;
+            shadowMesh.scale.set( shadowScale, shadowScale, shadowScale );
+            shadowMesh.position.x += shadowMesh.scale.y - 2;
+            shadowMesh.position.z += shadowMesh.scale.y - 4;
+
+        }
 
     };
 

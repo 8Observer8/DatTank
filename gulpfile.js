@@ -51,16 +51,13 @@ gulp.task( 'brf', function () {
     });
     
     b.plugin('tsify');
-    b.transform({global: true}, 'browserify-shim');
+    b.transform({ global: true }, 'browserify-shim');
 
     return b.bundle()
         .pipe( source('bundle.js') )
         .pipe( buffer() )
-        // .pipe($.sourcemaps.init({loadMaps: true}))
-        // .pipe($.sourcemaps.write('.'))
         .pipe( gulp.dest('./bin/client/scripts') )
         .pipe( gulpif( argv.prod, uglify() ) );
-        // .pipe( reload({stream: true}) );
 
 });
 
