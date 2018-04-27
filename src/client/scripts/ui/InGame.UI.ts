@@ -3,9 +3,11 @@
  * DatTank In Game UI module
 */
 
+import * as OMath from "./../OMath/Core.OMath";
 import { Arena } from "../core/Arena.Core";
 import { UI } from "./../ui/Core.UI";
 import { Game } from "./../Game";
+import { TeamCore } from "../core/Team.Core";
 
 //
 
@@ -21,21 +23,21 @@ class UIInGameModule {
 
         // this.hideTankStatsUpdate();
 
-        $('#continue-box-wrapper #continue-btn').off();    
+        $('#continue-box-wrapper #continue-btn').off();
         $('#continue-box-wrapper #continue-btn').click( () => {
-    
+
             Arena.me.triggerRespawn();
-    
+
         });
-    
+
         $('#continue-box-wrapper').show();
         $('#continue-box-wrapper #continue-box-wrapper-title').html('<p>Killed by <span style="color:'+ color + '">' + username +'</span></p>');
         $('#continue-box-wrapper #change-tank').click( Game.garage.show.bind( Game.garage ) );
-    
-        setTimeout( function () {
-    
+
+        setTimeout( () => {
+
             $('#continue-box-wrapper').css( 'opacity', 1 );
-    
+
         }, 100 );
 
     };
@@ -45,9 +47,9 @@ class UIInGameModule {
         $('#continue-box-wrapper').css( 'opacity', 0 );
 
         setTimeout( () => {
-    
+
             $('#continue-box-wrapper').hide();
-    
+
         }, 200);
 
     };
@@ -90,15 +92,108 @@ class UIInGameModule {
     };
 
     public showKills = function ( killer: string, killed: string, killerColor: string, killedColor: string ) {
-    
+
         $('#kill-events').append( '<p><span style="color:' + killerColor + '">' + killer +'</span> killed <span style="color:' + killedColor + '">' + killed + '</span>!</p>');
-    
+
         if ( $('#kill-events').children().length > 5 ) {
-    
+
             $('#kill-events p').first().remove();
-    
+
         }
-    
+
+    };
+
+    public updateLeaderboard ( players ) {
+
+        let me = Arena.me;
+        let names = $('#top-killers .player-name');
+        let kills = $('#top-killers .kills');
+        let teams = $('#top-killers .players-team-image');
+        let rows = $('#top-killers .killer-outer');
+        let meInTop = false;
+
+        rows.removeClass('myplace');
+
+        for ( let i = 0; i < 5; i ++ ) {
+
+            if ( i < players.length ) {
+
+                $( names[ i ] ).html( players[ i ].login );
+                $( kills[ i ] ).html( players[ i ].score + '/' + players[ i ].kills );
+                $( teams[ i ] ).css( 'background-color', OMath.intToHex( TeamCore.colors[ players[ i ].team ] ) );
+                $( rows[ i ] ).show();
+
+                if ( me && players[ i ].id === me.id ) {
+
+                    $( rows[ i ] ).addClass('myplace');
+                    meInTop = true;
+                    me.score = players[ i ].score;
+                    me.kills = players[ i ].kills;
+
+                }
+
+            } else {
+
+                $( rows[ i ] ).hide();
+
+            }
+
+        }
+
+        //
+
+        if ( ! meInTop ) {
+
+            let rank = 0;
+
+            for ( let i = 0, il = players.length; i < il; i ++ ) {
+
+                if ( me && players[ i ].id === me.id ) {
+
+                    rank = i + 1;
+                    me.score = players[ i ].score;
+                    me.kills = players[ i ].kills;
+                    break;
+
+                }
+
+            }
+
+            if ( rank === 0 ) return;
+
+            $('#top-killers .killer-outer.last .player-counter').html( '#' + rank );
+            $('#top-killers .killer-outer.last .player-name').html( me.username );
+            $('#top-killers .killer-outer.last .kills').html( me.score + '/' + me.kills );
+            $('#top-killers .killer-outer.last .players-team-image').css( 'background-color', OMath.intToHex( me.team.color ) );
+
+            $('#top-killers #divider').show();
+            $('#top-killers .killer-outer.last').show();
+
+            setTimeout( () => {
+                $('#top-killers .killer-outer.last').addClass('myplace');
+            }, 10 );
+
+        } else {
+
+            $('#top-killers #divider').hide();
+            $('#top-killers .killer-outer.last').hide();
+
+        }
+
+        // this.updateLevelProgress();
+
+    };
+
+    public updateTeamScore ( teams ) {
+
+        let list = $( '#team-params .team-number' );
+
+        for ( let i = 0, il = list.length; i < il; i ++ ) {
+
+            $( list[ i ] ).html( teams[ i ].score + '%' );
+
+        }
+
     };
 
     public showViewport () {

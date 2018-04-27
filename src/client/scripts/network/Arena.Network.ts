@@ -135,7 +135,7 @@ class ArenaNetwork {
 
     private updateLeaderboard ( data ) {
 
-        // todo
+        Arena.updateLeaderBoard( data.players, data.teams );
 
     };
 

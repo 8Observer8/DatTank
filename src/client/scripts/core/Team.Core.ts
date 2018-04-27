@@ -10,7 +10,7 @@ import * as OMath from "./../OMath/Core.OMath";
 
 class TeamCore {
 
-    private static colors = {
+    public static colors = {
         '0':        0xff0000,
         '1':        0x00ff00,
         '2':        0x0000ff,

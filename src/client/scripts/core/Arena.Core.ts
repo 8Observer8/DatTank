@@ -17,7 +17,8 @@ import { GfxCore } from "./../graphics/Core.Gfx";
 import { PlayerCore } from "./Player.Core";
 import { TowerCore } from "./objects/Tower.Core";
 import { ArenaNetwork } from "../network/Arena.Network";
-import { BulletManager } from "../managers/Bullet.Manager";
+import { BulletManager } from "./../managers/Bullet.Manager";
+import { UI } from "./../ui/Core.UI";
 
 //
 
@@ -78,10 +79,10 @@ class ArenaCore {
 
     };
 
-    public updateLeaderBoard ( data ) {
+    public updateLeaderBoard ( players, teams ) {
 
-        // ui.updateLeaderboard( data.players );
-        // ui.updateTeamScore( data.teams );
+        UI.InGame.updateLeaderboard( players );
+        UI.InGame.updateTeamScore( teams );
 
     };
 
