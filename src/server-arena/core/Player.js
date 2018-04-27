@@ -617,6 +617,7 @@ Player.prototype.die = function ( killer ) {
 
     this.moveDirection.x = 0;
     this.moveDirection.y = 0;
+    this.stopShooting();
 
     //
 

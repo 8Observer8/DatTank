@@ -37,7 +37,7 @@ class GraphicsCore {
     public camera: THREE.PerspectiveCamera;
     private lookAtVector: THREE.Vector3 = new THREE.Vector3();
     private cameraOffset = new THREE.Vector3();
-    private shakeInterval: number = null;
+    private cameraShakeInterval: number;
 
     private container;
     private renderer: THREE.WebGLRenderer;
@@ -168,7 +168,32 @@ class GraphicsCore {
 
     public addCameraShake ( duration: number, intensity: number ) {
 
-        // todo
+        var iter = 0;
+    
+        if ( this.cameraShakeInterval !== null ) {
+    
+            clearInterval( this.cameraShakeInterval );
+            this.cameraOffset.set( 0, 0, 0 );
+    
+        }
+
+        this.cameraShakeInterval = setInterval( () => {
+
+            this.cameraOffset.x = intensity * ( Math.random() - 0.5 ) * iter / 2;
+            this.cameraOffset.y = intensity * ( Math.random() - 0.5 ) * iter / 2;
+            this.cameraOffset.z = intensity * ( Math.random() - 0.5 ) * iter / 2;
+    
+            iter ++;
+    
+            if ( iter > Math.floor( ( duration - 100 ) / 40 ) ) {
+    
+                clearInterval( this.cameraShakeInterval );
+                this.cameraOffset.set( 0, 0, 0 );
+                this.cameraShakeInterval = null;
+    
+            }
+    
+        }, 40 );
 
     };
 
@@ -176,10 +201,10 @@ class GraphicsCore {
 
         this.camera.position.y = 400;
 
-        if ( this.shakeInterval !== null ) {
+        if ( this.cameraShakeInterval !== null ) {
 
-            clearInterval( this.shakeInterval );
-            this.shakeInterval = null;
+            clearInterval( this.cameraShakeInterval );
+            this.cameraShakeInterval = null;
 
         }
 

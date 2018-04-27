@@ -96,6 +96,7 @@ class TankCore {
     public die () {
 
         this.gfx.destroy();
+        GfxCore.addCameraShake( 1000, 1.5 );
 
     };
 
@@ -134,11 +135,11 @@ class TankCore {
 
         if ( this.health <= 0 ) return;
 
-        if ( Arena.me.id === this.id ) {
+        if ( Arena.me.id === this.player.id ) {
 
             if ( value < this.health ) {
 
-                // view.addCameraShake( 300, 3 );
+                GfxCore.addCameraShake( 300, 3 );
 
             }
 

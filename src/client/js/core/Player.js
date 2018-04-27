@@ -1,21 +1,11 @@
 
 Game.Player.prototype.die = function ( killerId ) {
 
-    if ( this.id === Game.arena.me.id ) {
-
-        view.addCameraShake( 1000, 1.5 );
-        controls.stopShooting();
-
-    }
-
     if ( killer ) {
 
         ui.showKills( killer, this );
 
     }
-
-    this.moveDirection.x = 0;
-    this.moveDirection.y = 0;
 
 };
 
