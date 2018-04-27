@@ -17,10 +17,6 @@ Game.UI = function () {
 
     }
 
-    // ui binding
-
-    $('.stats-update-block .bonus .increase').click( this.updateTankStat.bind( this ) );
-
 };
 
 Game.UI.prototype.changeQuality = function ( value, withoutSound ) {
@@ -53,76 +49,5 @@ Game.UI.prototype.changeSound = function ( value, withoutSound ) {
         soundManager.playMenuSound();
 
     }
-
-};
-
-Game.UI.prototype.updateLevelProgress = function () {
-
-    var levels = [ 0, 10, 30, 60, 100, 150, 250, 340, 500, 650, 1000, 1400, 1900, 2500, 3000, 3800, 4500, 5500, 6700, 7200, 8700, 9800, 12000 ];
-    var level = 0;
-
-    while ( levels[ level ] <= game.arena.me.score ) {
-
-        level ++;
-
-    }
-
-    level --;
-
-    var levelProgress = 100 * ( game.arena.me.score - levels[ level ] ) / ( levels[ level + 1 ] - levels[ level ] );
-    $('.level-indicator-block .title').html( 'Level ' + level + ' (' + Math.floor( levelProgress ) + '%)' );
-    $('.level-indicator-block .progress-bar .progress-indicator').css( 'width', levelProgress + '%' );
-
-};
-
-Game.UI.prototype.showTankStatsUpdate = function ( bonusLevels ) {
-
-    var tank = game.arena.me.tank;
-
-    $('.stats-update-block .bonus.speed .bonus-title span').html( tank.speed + ' -> ' + ( tank.speed + 3 ) );
-    $('.stats-update-block .bonus.rpm .bonus-title span').html( Math.floor( 100 * tank.rpm ) / 100 + ' -> ' + Math.floor( 100 * tank.rpm * 1.1 ) / 100 );
-    $('.stats-update-block .bonus.armour .bonus-title span').html( tank.armour + ' -> ' + ( tank.armour + 10 ) );
-    $('.stats-update-block .bonus.gun .bonus-title span').html( tank.bullet + ' -> ' + ( tank.bullet + 5 ) );
-    $('.stats-update-block .bonus.ammo-capacity .bonus-title span').html( tank.ammoCapacity + ' -> ' + ( tank.ammoCapacity + 15 ) );
-
-    $('.stats-update-block').show();
-    $('.level-indicator-block').hide();
-    $('.stats-update-block .title').html( 'You have ' + bonusLevels + ' bonus levels.' );
-
-};
-
-Game.UI.prototype.updateTankStat = function ( event ) {
-
-    var tank = game.arena.me.tank;
-    var statName = event.target.parentNode.className.replace('bonus ', '');
-    game.arena.me.updateStats( statName );
-
-    //
-
-    $('.stats-update-block .bonus.speed .bonus-title span').html( tank.speed + ' -> ' + ( tank.speed + 3 ) );
-    $('.stats-update-block .bonus.rpm .bonus-title span').html( Math.floor( 100 * tank.rpm ) / 100 + ' -> ' + Math.floor( 100 * tank.rpm * 1.1 ) / 100 );
-    $('.stats-update-block .bonus.armour .bonus-title span').html( tank.armour + ' -> ' + ( tank.armour + 10 ) );
-    $('.stats-update-block .bonus.gun .bonus-title span').html( tank.bullet + ' -> ' + ( tank.bullet + 5 ) );
-    $('.stats-update-block .bonus.ammo-capacity .bonus-title span').html( tank.ammoCapacity + ' -> ' + ( tank.ammoCapacity + 15 ) );
-
-    soundManager.playMenuSound();
-
-    //
-
-    game.arena.me.bonusLevels --;
-    $('.stats-update-block .title').html( 'You have ' + game.arena.me.bonusLevels + ' bonus levels.' );
-
-    if ( game.arena.me.bonusLevels === 0 ) {
-
-        this.hideTankStatsUpdate();
-
-    }
-
-};
-
-Game.UI.prototype.hideTankStatsUpdate = function () {
-
-    $('.stats-update-block').hide();
-    $('.level-indicator-block').show();
 
 };

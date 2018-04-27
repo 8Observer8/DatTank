@@ -35,9 +35,9 @@ class PlayerCore {
 
     public newLevel ( bonusLevels: number ) {
 
-        setTimeout( function () {
+        setTimeout( () => {
 
-            // UI.showTankStatsUpdate( bonusLevels );
+            UI.InGame.showTankStatsUpdate( bonusLevels );
 
         }, 3000 );
 
