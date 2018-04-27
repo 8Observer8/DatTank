@@ -1,14 +1,4 @@
 
-Game.Player.prototype.die = function ( killerId ) {
-
-    if ( killer ) {
-
-        ui.showKills( killer, this );
-
-    }
-
-};
-
 Game.Player.prototype.newLevel = function ( bonusLevels ) {
 
     setTimeout( function () {

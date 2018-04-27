@@ -3,6 +3,7 @@
  * DatTank Player core
 */
 
+import * as OMath from "./../OMath/Core.OMath";
 import { TankCore } from "./objects/Tank.Core";
 import { TankList as Tanks } from "./objects/Tank.Core";
 import { Arena } from "./Arena.Core";
@@ -71,6 +72,20 @@ class PlayerCore {
     public die ( trigger: number ) {
 
         let killer = PlayerManager.getById( trigger ) || TowerManager.getById( trigger );
+
+        if ( killer ) {
+
+            if ( killer instanceof PlayerCore ) {
+            
+                UI.InGame.showKills( killer['username'], this.username, OMath.intToHex( killer.team.color ), OMath.intToHex( this.team.color ) );
+
+            } else {
+
+                UI.InGame.showKills( 'Tower', this.username, OMath.intToHex( killer.team.color ), OMath.intToHex( this.team.color ) );
+
+            }
+
+        }
 
         if ( this.id === Arena.me.id ) {
 

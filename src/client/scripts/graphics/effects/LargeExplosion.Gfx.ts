@@ -16,6 +16,7 @@ class LargeExplosionGfx {
     private object: THREE.Object3D = new THREE.Object3D();
     private sprite: THREE.Sprite;
     private time: number;
+    private duration: number = 1000;
 
     public active: boolean = false;
 
@@ -26,52 +27,18 @@ class LargeExplosionGfx {
         if ( ! this.active ) return;
         this.time += delta;
 
-        if ( this.time > 50 ) {
+        let progress = this.time / this.duration;
+        let map = this.sprite.material.map;
 
-            if ( this.sprite.material.map.offset.y > 0 ) {
+        map.offset.x = Math.floor( 20 * progress ) % 5;
+        map.offset.y = Math.floor( Math.floor( 20 * progress ) / 5 );
 
-                this.sprite.material.map.offset.x += 0.2;
-                this.time = 0;
+        this.sprite.scale.x = 30 + 3 * Math.sin( progress );
+        this.sprite.scale.y = 30 + 3 * Math.sin( progress );
 
-            } else {
+        if ( progress >= 1 ) {
 
-                this.sprite.scale.x = 30 + 3 * Math.sin( this.time / 1000 );
-                this.sprite.scale.y = 30 + 3 * Math.sin( this.time / 1000 );
-
-                if ( this.time % 100 === 0 ) {
-
-                    this.sprite.material.map.offset.x += 0.2;
-                    if ( this.sprite.material.map.offset.x === 1 ) {
-
-                        this.sprite.material.map.offset.x = 0.2;
-
-                    }
-
-                }
-
-                return;
-
-            }
-
-            if ( this.sprite.material.map.offset.x === 1 ) {
-
-                if ( this.sprite.material.map.offset.y > 0 ) {
-
-                    this.sprite.material.map.offset.x = 0;
-                    this.sprite.material.map.offset.y -= 0.25;
-
-                    this.sprite.scale.x += 0.4;
-                    this.sprite.scale.y += 0.4;
-
-                }
-
-                if ( this.sprite.material.map.offset.y === 0.5 ) {
-
-                    // this.showSmoke( 1.2 );
-
-                }
-
-            }
+            this.active = false;
 
         }
 

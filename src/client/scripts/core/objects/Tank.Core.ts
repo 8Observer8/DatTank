@@ -96,7 +96,12 @@ class TankCore {
     public die () {
 
         this.gfx.destroy();
-        GfxCore.addCameraShake( 1000, 1.5 );
+
+        if ( this.player.id === Arena.me.id ) {
+        
+            GfxCore.addCameraShake( 1000, 1.5 );
+
+        }
 
     };
 

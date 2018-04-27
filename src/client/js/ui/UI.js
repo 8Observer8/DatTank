@@ -56,20 +56,6 @@ Game.UI.prototype.changeSound = function ( value, withoutSound ) {
 
 };
 
-Game.UI.prototype.showKills = function ( killer, killed ) {
-
-    var killerName = ( killer instanceof Game.Tower ) ? 'Tower' : killer.login;
-
-    $('#kill-events').append( '<p><span style="color:' + killer.team.color + '">' + killerName +'</span> killed <span style="color:' + killed.team.color + '">' + killed.login + '</span>!</p>');
-
-    if ( $('#kill-events').children().length > 5 ) {
-
-        $('#kill-events p').first().remove();
-
-    }
-
-};
-
 Game.UI.prototype.updateTeamScore = function ( teams ) {
 
     var list = $( '#team-params .team-number' );
