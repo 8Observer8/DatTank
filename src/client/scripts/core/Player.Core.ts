@@ -27,11 +27,68 @@ class PlayerCore {
 
     public kills: number;
     public score: number;
-    public bonusLevel: number;
+    public bonusLevels: number;
 
     private network: PlayerNetwork = new PlayerNetwork();
 
     //
+
+    public newLevel ( bonusLevels: number ) {
+
+        setTimeout( function () {
+
+            // UI.showTankStatsUpdate( bonusLevels );
+
+        }, 3000 );
+
+        this.bonusLevels = bonusLevels;
+
+    };
+
+    public updateStats ( name: string ) {
+
+        let stats = {
+            'speed':          0,
+            'rpm':            1,
+            'armour':         2,
+            'gun':            3,
+            'ammo-capacity':  4
+        };
+    
+        switch ( name ) {
+    
+            case 'speed':
+    
+                this.tank.speed += 3;
+                break;
+    
+            case 'rpm':
+    
+                this.tank.rpm *= 1.1;
+                break;
+    
+            case 'armour':
+    
+                this.tank.armour += 10;
+                break;
+    
+            case 'gun':
+    
+                this.tank.bullet += 5;
+                break;
+    
+            case 'ammo-capacity':
+    
+                this.tank.ammoCapacity += 15;
+                break;
+    
+            default:
+    
+                return false;
+    
+        }
+
+    };
 
     private setTank ( tankId: string, params ) {
     

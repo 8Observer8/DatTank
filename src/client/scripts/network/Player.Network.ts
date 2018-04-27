@@ -25,6 +25,16 @@ class PlayerNetwork {
 
     //
 
+    public setStatsUpdate ( statsId: number ) {
+
+        let buffer = new ArrayBuffer( 4 );
+        let bufferView = new Int16Array( buffer );
+        bufferView[1] = statsId;
+
+        Network.send( 'PlayerTankUpdateStats', buffer, bufferView );
+
+    };
+
     private setRespawn ( data ) {
 
         if ( this.filter( data ) ) return;
@@ -35,7 +45,11 @@ class PlayerNetwork {
 
     private setLevel ( data ) {
 
-        // todo
+        if ( this.filter( data ) ) return;
+
+        let bulletLevel = data[1];
+
+        this.player.newLevel( bulletLevel );
 
     };
 
