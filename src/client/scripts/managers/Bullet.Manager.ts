@@ -49,6 +49,20 @@ class BulletManagerCore {
 
     };
 
+    public hideBullet ( bulletId: number ) {
+
+        for ( let i = 0, il = this.pool.length; i < il; i ++ ) {
+
+            if ( this.pool[ i ].id === bulletId ) {
+
+                this.pool[ i ].deactivate();
+
+            }
+
+        }
+
+    };
+
     public init () {
 
         for ( let i = 0; i < this.poolSize; i ++ ) {

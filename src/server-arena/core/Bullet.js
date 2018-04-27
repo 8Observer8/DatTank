@@ -49,15 +49,14 @@ Bullet.prototype.explode = function ( target ) {
     //
 
     this.networkBuffers['BulletHit'] = this.networkBuffers['BulletHit'] || {};
-    var buffer = this.networkBuffers['BulletHit'].buffer || new ArrayBuffer( 10 );
-    var bufferView = this.networkBuffers['BulletHit'].bufferView || new Uint16Array( buffer );
+    var buffer = this.networkBuffers['BulletHit'].buffer || new ArrayBuffer( 8 );
+    var bufferView = this.networkBuffers['BulletHit'].bufferView || new Int16Array( buffer );
     this.networkBuffers['BulletHit'].buffer = buffer;
     this.networkBuffers['BulletHit'].bufferView = bufferView;
 
     bufferView[1] = this.id;
-    bufferView[2] = this.ownerId;
-    bufferView[3] = this.position.x;
-    bufferView[4] = this.position.z;
+    bufferView[2] = this.position.x;
+    bufferView[3] = this.position.z;
 
     //
 

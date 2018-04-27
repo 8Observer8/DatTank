@@ -13,7 +13,12 @@ class ArenaNetwork {
 
     private newExplosion ( data ) {
 
-        Arena.newExplosion( new OMath.Vec3( data[2], 25, data[3] ) );
+        let bulletId = data[0];
+        let x = data[1];
+        let y = 26;
+        let z = data[2];
+
+        Arena.newExplosion( new OMath.Vec3( x, y, z ), bulletId );
 
     };
 
