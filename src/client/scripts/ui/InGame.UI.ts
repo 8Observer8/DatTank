@@ -8,6 +8,7 @@ import { Arena } from "../core/Arena.Core";
 import { UI } from "./../ui/Core.UI";
 import { Game } from "./../Game";
 import { TeamCore } from "../core/Team.Core";
+import { GfxCore } from "../graphics/Core.Gfx";
 
 //
 
@@ -15,7 +16,8 @@ class UIInGameModule {
 
     public init () {
 
-        // nothing here
+        $('#viewport-graphics-quality').click( UI.changeQuality.bind( UI ) );
+        $('#viewport-sound-on-off').click( UI.changeSound.bind( UI ) );
 
     };
 

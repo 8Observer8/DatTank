@@ -56,6 +56,20 @@ class GameCore {
 
         //
 
+        if ( localStorage.getItem('hq') === 'true' ) {
+
+            UI.changeQuality( true, true );
+
+        }
+
+        if ( localStorage.getItem('sound') === 'true' ) {
+
+            UI.changeSound( true, true );
+
+        }
+
+        //
+
         console.log( 'Game [' + this.version + '] inited successfully.' );
 
     };
@@ -73,7 +87,7 @@ class GameCore {
         UI.Landing.hide();
         this.garage.hide();
         UI.Landing.showLoader();
-  
+
         //
 
         ResourceManager.load( ( progress ) => {
@@ -116,7 +130,7 @@ class GameCore {
         UI.InGame.showViewport();
 
         setTimeout( () => {
-        
+
             ControlsManager.init();
 
         }, 100 );

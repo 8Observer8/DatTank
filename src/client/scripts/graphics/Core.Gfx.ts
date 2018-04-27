@@ -20,7 +20,7 @@ import { LargeExplosionManager } from '../managers/LargeExplosion.Manager';
 
 //
 
-enum Quality { LOW = 0.7, MEDIUM = 0.85, HIGH = 1 };
+enum Quality { LOW = 0.6, MEDIUM = 0.85, HIGH = 1 };
 
 interface GfxSettings {
     quality:    Quality;
@@ -71,6 +71,24 @@ class GraphicsCore {
     public fog = { color: 0xc4c4c2, density: 0.0025 };
 
     //
+
+    public setQuality ( value ) {
+
+        if ( value === 'HIGH' ) {
+
+            this.gfxSettings.antialias = true;
+            this.gfxSettings.quality = Quality.HIGH;
+
+        } else if ( value === 'LOW' ) {
+
+            this.gfxSettings.antialias = false;
+            this.gfxSettings.quality = Quality.LOW;
+
+        }
+
+        GfxCore.updateRenderer();
+
+    };
 
     public init () {
 
@@ -155,7 +173,7 @@ class GraphicsCore {
 
     };
 
-    public updateRenderer () {
+    private updateRenderer () {
 
         $('#renderport').remove();
         $('#viewport').prepend('<canvas id="renderport"></canvas>');
