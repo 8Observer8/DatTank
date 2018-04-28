@@ -208,7 +208,7 @@ class TankGfx {
 
         // add tank shadow
 
-        var tankShadowTexture = ResourceManager.getTexture( 'shadowTank.png' );
+        var tankShadowTexture = ResourceManager.getTexture( 'Tank-shadow.png' );
         var tankShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: tankShadowTexture, transparent: true, depthWrite: false, opacity: 0.7 }) );
         tankShadow.scale.set( 13, 20, 1 );
         tankShadow.rotation.x = - Math.PI / 2;

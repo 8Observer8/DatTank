@@ -82,9 +82,9 @@ class ResourceManagerCore {
         'Rock3-shadow.png',
         'Rock4-shadow.png',
 
-        'shadowHouse.png',
+        'Ruin1-shadow.png',
 
-        'shadowTank.png',
+        'Tank-shadow.png',
 
         'explosion1.png',
         'explosion2.png'
