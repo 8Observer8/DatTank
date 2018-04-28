@@ -31,12 +31,12 @@ gulp.task( 'resources', function () {
 
 });
 
-// JS build
+// Libs build
 
-gulp.task( 'js', function () {
+gulp.task( 'libs', function () {
 
-    gulp.src('./src/client/js/**/*')
-        .pipe(gulp.dest('./bin/client/js/'));
+    gulp.src('./src/client/libs/**/*')
+        .pipe(gulp.dest('./bin/client/libs/'));
 
 });
 
@@ -110,7 +110,7 @@ gulp.task( 'server-arena', function () {
 
 // RUN
 
-gulp.task( 'run', [ 'resources', 'js', 'brf', 'html', 'css', 'server-master', 'server-arena' ], function () {
+gulp.task( 'run', [ 'resources', 'libs', 'brf', 'html', 'css', 'server-master', 'server-arena' ], function () {
 
     // nothing here
 
@@ -123,7 +123,7 @@ gulp.task( 'watch', function () {
     gulp.watch( './src/client/css/*', ['css']);
     gulp.watch( './src/client/*', ['html'] );
     gulp.watch( './src/client/scripts/**/*', ['brf'] );
-    gulp.watch( './src/client/js/**/*', ['js'] );
+    gulp.watch( './src/client/libs/**/*', ['libs'] );
     gulp.watch( './src/server-master/**/*', ['server-master'] );
     gulp.watch( './src/server-arena/**/*', ['server-arena'] );
 
