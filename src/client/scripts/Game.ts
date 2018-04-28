@@ -10,6 +10,7 @@ import { Network } from "./network/Core.Network";
 import { Garage } from "./garage/Core.Garage";
 import { ResourceManager } from "./managers/Resource.Manager";
 import { ControlsManager } from "./managers/Control.Manager";
+import { SoundManager } from "./managers/Sound.Manager";
 import { GameService } from "./services/Game.Service";
 import { Arena } from "./core/Arena.Core";
 import { UI } from "./ui/Core.UI";
@@ -48,6 +49,7 @@ class GameCore {
 
         UI.init();
         UI.Landing.setVersion( this.version );
+        SoundManager.init();
 
         //
 
@@ -87,6 +89,7 @@ class GameCore {
         UI.Landing.hide();
         this.garage.hide();
         UI.Landing.showLoader();
+        SoundManager.playSound('MenuClick');
 
         //
 

@@ -18,6 +18,7 @@ class UIInGameModule {
 
         $('#viewport-graphics-quality').click( UI.changeQuality.bind( UI ) );
         $('#viewport-sound-on-off').click( UI.changeSound.bind( UI ) );
+        $('#viewport-fullscreen-on-off').click( UI.toggleFullscreenMode.bind( UI ) );
 
     };
 

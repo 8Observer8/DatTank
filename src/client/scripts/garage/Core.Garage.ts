@@ -6,6 +6,7 @@
 import { Game } from "./../Game";
 import { GarageScene } from "./Scene.Garage";
 import { TankList as Tanks, TankList } from "./../core/objects/Tank.Core";
+import { SoundManager } from "./../managers/Sound.Manager";
 
 //
 
@@ -70,6 +71,7 @@ class Garage {
         this.isOpened = true;
 
         $('.tank-skins').show();
+        SoundManager.playSound('MenuClick');
 
         this.scene.reset();
         this.scene.resize();

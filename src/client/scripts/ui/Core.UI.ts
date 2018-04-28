@@ -6,6 +6,7 @@
 import { UILandingModule } from "./Landing.UI";
 import { UIInGameModule } from "./InGame.UI";
 import { GfxCore } from "./../graphics/Core.Gfx";
+import { SoundManager } from "./../managers/Sound.Manager";
 
 //
 
@@ -37,7 +38,7 @@ class UICore {
 
         if ( ! withoutSound ) {
 
-            // soundManager.playMenuSound();
+            SoundManager.playSound('MenuClick');
 
         }
 
@@ -49,11 +50,12 @@ class UICore {
         $('#sound-on-off').attr( 'sound', value );
         $('#viewport-sound-on-off').attr( 'sound', value );
         localStorage.setItem( 'sound', value );
-        // soundManager.toggleMute( ! value );
+
+        SoundManager.toggleMute( ! value );
 
         if ( ! withoutSound ) {
 
-            // soundManager.playMenuSound();
+            SoundManager.playSound('MenuClick');
 
         }
 
@@ -76,6 +78,8 @@ class UICore {
         value = ( typeof value === 'boolean' ) ? value : $( value.currentTarget ).attr('screen') !== 'true';
 
         //
+
+        SoundManager.playSound('MenuClick');
 
         if ( value ) {
 
