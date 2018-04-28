@@ -4,6 +4,7 @@
 */
 
 import { BoxGfx } from "./../../graphics/objects/Box.Gfx";
+import { BoxManager } from "./../../managers/Box.Manager";
 import * as OMath from "./../../OMath/Core.OMath";
 
 //
@@ -27,6 +28,7 @@ class BoxCore {
     public pick () {
 
         this.gfx.pick();
+        BoxManager.remove( this.id );
 
     };
 
@@ -42,9 +44,12 @@ class BoxCore {
 
     };
 
+    //
+
     constructor ( params ) {
 
-        //
+        this.id = params.id;
+        this.position.copy( params.position );
 
     };
 
@@ -56,8 +61,27 @@ import { HealthBox } from "./../../objects/boxes/Health.Box";
 import { AmmoBox } from "./../../objects/boxes/Ammo.Box";
 
 let BoxesList = {
-    Health:     HealthBox,
-    Ammo:       AmmoBox
+    HealthBox:  HealthBox,
+    AmmoBox:    AmmoBox,
+    getById: function ( boxId ) {
+
+        for ( let item in BoxesList ) {
+
+            if ( typeof item === "string" ) {
+
+                if ( BoxesList[ item ].bid === boxId ) {
+
+                    return item;
+
+                }
+
+            }
+
+        }
+
+        return null;
+
+    }
 };
 
 //

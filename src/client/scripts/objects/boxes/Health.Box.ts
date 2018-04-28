@@ -9,6 +9,10 @@ import { BoxCore } from "./../../core/objects/Box.Core";
 
 class HealthBox extends BoxCore {
 
+    static bid = 1;
+
+    //
+
     constructor ( params ) {
 
         super( params );

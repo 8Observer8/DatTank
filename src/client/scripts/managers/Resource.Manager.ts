@@ -41,8 +41,8 @@ class ResourceManagerCore {
         'towers/T1-base.json',
         'towers/T1-top.json',
 
-        'boxes/Health.json',
-        'boxes/Ammo.json',
+        'boxes/HealthBox.json',
+        'boxes/AmmoBox.json',
 
         'decorations/Tree1.json',
         'decorations/Tree2.json',

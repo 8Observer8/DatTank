@@ -3,7 +3,7 @@
  * DatTank Arena box manager
 */
 
-import { BoxCore } from "./../core/objects/Box.Core";
+import { BoxCore, BoxesList as Boxes } from "./../core/objects/Box.Core";
 
 //
 
@@ -16,7 +16,10 @@ class BoxManagerCore {
 
     public add ( params ) {
 
-        // this.boxes.push( box );
+        let boxType = Boxes.getById( params.type || 0 );
+        let box = new Boxes[ boxType ]( params );
+        box.init();
+        this.boxes.push( box );
 
     };
 
@@ -28,7 +31,7 @@ class BoxManagerCore {
 
             if ( this.boxes[ i ].id === boxId ) {
 
-                // this.boxes[ i ].remove();
+                this.boxes[ i ].remove();
                 continue;
 
             }

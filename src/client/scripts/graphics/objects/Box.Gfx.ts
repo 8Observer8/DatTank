@@ -5,6 +5,7 @@
 
 import * as THREE from 'three';
 
+import { GfxCore } from "./../Core.Gfx";
 import { BoxCore } from "./../../core/objects/Box.Core";
 import { ResourceManager } from "./../../managers/Resource.Manager";
 
@@ -19,19 +20,17 @@ class BoxGfx {
 
     public dispose () {
 
-        // view.scene.remove( this.mesh );
+        GfxCore.coreObjects['boxes'].remove( this.mesh );
 
     };
 
     public pick () {
 
-        // var sound = new THREE.PositionalAudio( view.sound.listener );
-        // sound.position.set( this.position.x, this.position.y, this.position.z );
-        // sound.setBuffer( resourceManager.getSound('box_pick.wav') );
-        // sound.loop = false;
-        // sound.setRefDistance( 200 );
-        // sound.play();
-        this.dispose();
+        let sound = new THREE.PositionalAudio( GfxCore.audioListener );
+        sound.position.copy( this.mesh.position );
+        sound.setBuffer( ResourceManager.getSound('box_pick.wav') );
+        sound.setRefDistance( 200 );
+        sound.play();
 
     };
 
@@ -55,7 +54,17 @@ class BoxGfx {
         this.mesh.position.y = box.position.y;
         this.mesh.position.z = box.position.z;
 
-        // view.scene.add( this.mesh );
+        //
+
+        if ( ! GfxCore.coreObjects['boxes'] ) {
+
+            GfxCore.coreObjects['boxes'] = new THREE.Object3D();
+            GfxCore.coreObjects['boxes'].name = 'Boxes';
+            GfxCore.scene.add( GfxCore.coreObjects['boxes'] );
+
+        }
+
+        GfxCore.coreObjects['boxes'].add( this.mesh );
 
     };
 

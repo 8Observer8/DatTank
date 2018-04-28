@@ -5,6 +5,7 @@
 
 import { Network } from "./../network/Core.Network";
 import { Arena } from "./../core/Arena.Core";
+import { BoxManager} from "./../managers/Box.Manager";
 import * as OMath from "./../OMath/Core.OMath";
 
 //
@@ -123,7 +124,14 @@ class ArenaNetwork {
 
     private boxRemove ( data ) {
 
-        // todo
+        let boxId = data[0];
+        let box = BoxManager.getBoxById( boxId );
+
+        if ( box ) {
+
+            box.pick();
+
+        }
 
     };
 

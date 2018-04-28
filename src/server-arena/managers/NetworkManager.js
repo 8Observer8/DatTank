@@ -63,7 +63,7 @@ NetworkManager.prototype.init = function () {
     //
 
     this.registerEvent( 'ArenaBulletHit', 'out', 'bin', 300 );
-    this.registerEvent( 'BoxRemove', 'out', 'bin', 301 );
+    this.registerEvent( 'ArenaBoxRemove', 'out', 'bin', 301 );
 
     // enable io
 
