@@ -129,7 +129,7 @@ Player.prototype.getInactiveBullet = function () {
 
 Player.prototype.respawn = function ( tankName ) {
 
-    tankName = tankName || ( this.tank ) ? this.tank.title : 'T44';
+    tankName = tankName || ( this.tank ? this.tank.title : 'T44' );
 
     var newPosition = new Game.Vec3( this.team.spawnPosition.x, this.team.spawnPosition.y, this.team.spawnPosition.z );
 
@@ -148,21 +148,14 @@ Player.prototype.respawn = function ( tankName ) {
 
     //
 
-    this.tank.speed = this.tank.origParams.speed;
-    this.moveSpeed = this.originalMoveSpeed * this.tank.speed / 40;
-    this.tank.armour = this.tank.origParams.armour;
-    this.tank.rpm = this.tank.origParams.rpm;
-    this.tank.ammoCapacity = this.tank.origParams.ammoCapacity;
-    this.tank.bullet = this.tank.origParams.bullet;
-
-    //
-
+    this.selectTank( tankName );
     this.status = Player.Alive;
     this.health = 100;
     this.ammo = this.tank.ammoCapacity;
     this.position.set( newPosition.x, newPosition.y, newPosition.z );
     this.rotation = 0;
     this.rotationTop = 0;
+
     var playerJSON = this.toPrivateJSON();
     this.position = newPosition;
 
@@ -170,7 +163,6 @@ Player.prototype.respawn = function ( tankName ) {
 
     //
 
-    this.selectTank( tankName );
     this.arena.updateLeaderboard();
 
     if ( ! this.collisionBox ) {

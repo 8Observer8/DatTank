@@ -86,10 +86,22 @@ class GameCore {
 
     public play () {
 
-        UI.Landing.hide();
         this.garage.hide();
-        UI.Landing.showLoader();
         SoundManager.playSound('MenuClick');
+
+        //
+
+        if ( Arena.me ) {
+
+            Arena.me.triggerRespawn();
+            return;
+
+        }
+
+        //
+
+        UI.Landing.hide();
+        UI.Landing.showLoader();
 
         //
 

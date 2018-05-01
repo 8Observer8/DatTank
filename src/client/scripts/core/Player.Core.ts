@@ -54,48 +54,48 @@ class PlayerCore {
             'gun':            3,
             'ammo-capacity':  4
         };
-    
+
         switch ( name ) {
-    
+
             case 'speed':
-    
+
                 this.tank.speed += 3;
                 break;
-    
+
             case 'rpm':
-    
+
                 this.tank.rpm *= 1.1;
                 break;
-    
+
             case 'armour':
-    
+
                 this.tank.armour += 10;
                 break;
-    
+
             case 'gun':
-    
+
                 this.tank.bullet += 5;
                 break;
-    
+
             case 'ammo-capacity':
-    
+
                 this.tank.ammoCapacity += 15;
                 break;
-    
+
             default:
-    
+
                 return false;
-    
+
         }
 
     };
 
     private setTank ( tankId: string, params ) {
-    
+
         let tankName = Tanks.getById( tankId );
 
         if ( tankName ) {
-        
+
             this.tank = new Tanks[ tankName ]( params );
             this.tank.player = this;
 
@@ -121,8 +121,8 @@ class PlayerCore {
             UI.InGame.updateHealth( this.tank.health );
             UI.InGame.updateAmmo( this.tank.ammo );
             UI.InGame.hideContinueBox();
-    
-        }    
+
+        }
 
     };
 
@@ -133,7 +133,7 @@ class PlayerCore {
         if ( killer ) {
 
             if ( killer instanceof PlayerCore ) {
-            
+
                 UI.InGame.showKills( killer['username'], this.username, OMath.intToHex( killer.team.color ), OMath.intToHex( this.team.color ) );
 
             } else {

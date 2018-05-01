@@ -49,7 +49,6 @@ class TankGfx {
         explosionSound.setBuffer( ResourceManager.getSound('tank_explosion.wav') );
         explosionSound.setRefDistance( 15 );
         explosionSound.autoplay = false;
-        // if ( this.player.id !== Game.arena.me ) this.sounds.explosion.setVolume(0.4);
         this.object.add( explosionSound );
         this.sounds['explosion'] = explosionSound;
 
