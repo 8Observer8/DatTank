@@ -9,6 +9,7 @@ import { Game } from "./../Game";
 import { Arena } from "./../core/Arena.Core";
 import { LandscapeGfx } from "./objects/Landscape.Gfx";
 
+import { SoundManager } from "./../managers/Sound.Manager";
 import { BoxManager } from "./../managers/Box.Manager";
 import { TowerManager } from "./../managers/Tower.Manager";
 import { DecorationManager } from "./../managers/Decoration.Manager";
@@ -136,7 +137,7 @@ class GraphicsCore {
         // setup sound listener
 
         this.audioListener = new THREE.AudioListener();
-        // if ( soundManager.muted ) this.sound.listener.setMasterVolume( 0 );
+        if ( SoundManager.muted ) this.audioListener.setMasterVolume( 0 );
         this.camera.add( this.audioListener );
 
         //

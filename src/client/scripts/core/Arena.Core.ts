@@ -58,14 +58,17 @@ class ArenaCore {
 
         this.meId = params.me.id;
 
+        // setup teams
+
+        TeamManager.init( params.teams );
+
         // setup GfxCore
 
         GfxCore.clear();
         GfxCore.init();
 
-        // setup managers
+        // setup all other managers
 
-        TeamManager.init( params.teams );
         PlayerManager.init();
         TowerManager.init();
         BoxManager.init();

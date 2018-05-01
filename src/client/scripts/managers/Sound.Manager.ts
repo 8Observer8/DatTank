@@ -10,7 +10,7 @@ import { GfxCore } from "./../graphics/Core.Gfx";
 class SoundManagerCore {
 
     private static instance: SoundManagerCore;
-    private muted: boolean;
+    public muted: boolean;
     private sounds = {};
 
     //

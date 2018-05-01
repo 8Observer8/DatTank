@@ -96,7 +96,7 @@ class LandscapeGfx {
             team = teams[ i ];
 
             name = team.name;
-            color = + team.color.replace('#', '0x');
+            color = new THREE.Color( OMath.intToHex( team.color ) );
             x = team.spawnPosition.x;
             z = team.spawnPosition.z;
 
