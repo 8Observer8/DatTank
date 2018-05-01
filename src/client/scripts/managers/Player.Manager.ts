@@ -23,6 +23,7 @@ class PlayerManagerCore {
     
         }
     
+        player.init();
         this.players.push( player );
 
     };

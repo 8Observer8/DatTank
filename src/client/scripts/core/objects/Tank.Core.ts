@@ -74,7 +74,7 @@ class TankCore {
         if ( this.player.id === Arena.me.id ) {
 
             this.setAmmo( this.ammo - 1 );
-            UI.InGame.updateAmmo( 60 * 1000 / this.rpm );
+            UI.InGame.setAmmoReloadAnimation( 60 * 1000 / this.rpm );
 
         }
 
@@ -98,7 +98,7 @@ class TankCore {
         this.gfx.destroy();
 
         if ( this.player.id === Arena.me.id ) {
-        
+
             GfxCore.addCameraShake( 1000, 1.5 );
 
         }
@@ -132,7 +132,12 @@ class TankCore {
         if ( this.health <= 0 ) return;
 
         this.ammo = value;
-        UI.InGame.updateAmmo( this.ammo );
+
+        if ( this.player.id === Arena.me.id ) {
+
+            UI.InGame.updateAmmo( this.ammo );
+
+        }
 
     };
 
@@ -284,6 +289,7 @@ class TankCore {
         this.gfx.setPosition( this.position );
 
         this.health = params.health;
+        this.ammo = params.ammo;
 
         this.rotation = params.rotation;
         this.rotationCorrection = 0;

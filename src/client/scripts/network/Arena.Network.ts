@@ -57,7 +57,7 @@ class ArenaNetwork {
 
         let players = [];
         let player;
-        let playerBinSize = 23;
+        let playerBinSize = 24;
 
         for ( let i = 0, il = data.length / playerBinSize; i < il; i ++ ) {
 
@@ -77,12 +77,13 @@ class ArenaNetwork {
                     y:  data[ i * playerBinSize + 8 ]
                 },
                 tank:   data[ i * playerBinSize + 9 ],
+                ammo:   data[ i * playerBinSize + 10 ],
                 login:  ''
             };
 
             for ( var j = 0; j < 13; j ++ ) {
 
-                player.login += String.fromCharCode( data[ i * playerBinSize + 10 + j ] );
+                player.login += String.fromCharCode( data[ i * playerBinSize + 11 + j ] );
 
             }
 

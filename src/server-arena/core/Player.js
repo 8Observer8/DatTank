@@ -331,7 +331,7 @@ Player.prototype.changeAmmo = function ( delta ) {
 
     if ( this.socket ) {
 
-        networkManager.send( 'PlayerTankUpdateAmmo', this.socket, buffer, bufferView );
+        networkManager.send( 'TankSetAmmo', this.socket, buffer, bufferView );
 
     }
 
@@ -790,9 +790,9 @@ Player.prototype.update = function ( delta, time ) {
 
     if ( this.socket && newPlayersInRange.length ) {
 
-        var playerDataSize = 20 + 13 * 2;
+        var playerDataSize = 22 + 13 * 2;
         var buffer = new ArrayBuffer( 2 + playerDataSize * newPlayersInRange.length );
-        var bufferView = new Uint16Array( buffer );
+        var bufferView = new Int16Array( buffer );
         var player;
         var item = 0;
 
@@ -810,12 +810,13 @@ Player.prototype.update = function ( delta, time ) {
             bufferView[ i + 7 ] = player.moveDirection.x;
             bufferView[ i + 8 ] = player.moveDirection.y;
             bufferView[ i + 9 ] = player.tank.typeId;
+            bufferView[ i + 10 ] = player.ammo;
 
             for ( var j = 0, jl = player.login.length; j < jl; j ++ ) {
 
                 if ( player.login[ j ] ) {
 
-                    bufferView[ i + 10 + j ] = + player.login[ j ].charCodeAt( 0 ).toString( 10 );
+                    bufferView[ i + 11 + j ] = + player.login[ j ].charCodeAt( 0 ).toString( 10 );
 
                 }
 

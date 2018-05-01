@@ -181,14 +181,19 @@ class PlayerCore {
 
     };
 
-    private init ( params ) {
+    public init () {
 
-        this.id = params.id;
-        this.username = params.login;
-        this.team = TeamManager.getById( params.team );
-        this.setTank( params.tank, params );
         this.tank.init();
         this.network.init( this );
+
+        //
+
+        if ( Arena.me && Arena.me.id === this.id ) {
+
+            UI.InGame.updateHealth( this.tank.health );
+            UI.InGame.updateAmmo( this.tank.ammo );
+
+        }
 
     };
 
@@ -196,7 +201,10 @@ class PlayerCore {
 
     constructor ( params ) {
 
-        this.init( params );
+        this.id = params.id;
+        this.username = params.login;
+        this.team = TeamManager.getById( params.team );
+        this.setTank( params.tank, params );
 
     };
 
