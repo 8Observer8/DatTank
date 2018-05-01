@@ -91,6 +91,7 @@ class HealthChangeLabelGfx {
         this.sprite.position.set( 0, 35, 0 );
         this.sprite.scale.set( 24, 12, 1 );
         this.object.add( this.sprite );
+        this.object.visible = false;
         
         //
 
