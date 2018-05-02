@@ -4,6 +4,7 @@
 */
 
 import { TextEncoder } from "./../utils/TextEncoder";
+import { UI } from "./../ui/Core.UI";
 
 //
 
@@ -128,7 +129,7 @@ class NetworkCore {
     private onDisconnected () {
 
         this.transport = false;
-        // ui.showDisconectMessage();
+        UI.InGame.showDisconectMessage();
 
         //
 
@@ -150,7 +151,7 @@ class NetworkCore {
 
         if ( ! this.transport ) {
 
-            console.error( '[NETWORK:SEND_MESSAGE] No network socket connection.' );
+            // console.error( '[NETWORK:SEND_MESSAGE] No network socket connection.' );
             return false;
 
         }

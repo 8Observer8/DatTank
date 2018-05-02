@@ -558,7 +558,8 @@
     display: none;
     position: absolute;
     bottom: 25px;
-    left: 20px;
+    width: 100%;
+    text-align: center;
     font-size: 22px;
     color: #ff4242;
 }
