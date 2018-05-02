@@ -197,6 +197,21 @@ class NetworkCore {
 
     };
 
+    public removeMessageListener ( eventName: string, callback ) {
+
+        let newMassageListenersList = [];
+
+        for ( let i = 0, il = this.messageListeners[ eventName ].length; i < il; i ++ ) {
+
+            if ( this.messageListeners[ eventName ][ i ] === callback ) continue;
+            newMassageListenersList.push( this.messageListeners[ eventName ][ i ] );
+
+        }
+
+        this.messageListeners[ eventName ] = newMassageListenersList;
+
+    };
+
     private triggerMessageListener ( eventId: number, data ) {
 
         if ( ! this.events.in[ eventId ] ) {

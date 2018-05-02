@@ -63,14 +63,26 @@ class PlayerNetwork {
 
     //
 
+    public dispose () {
+
+        Network.removeMessageListener( 'PlayerRespawn', this.setRespawn );
+        Network.removeMessageListener( 'PlayerNewLevel', this.setLevel );
+
+    };
+
     public init ( player: PlayerCore ) {
 
         this.player = player;
 
         //
 
-        Network.addMessageListener( 'PlayerRespawn', this.setRespawn.bind( this ) );
-        Network.addMessageListener( 'PlayerNewLevel', this.setLevel.bind( this ) );
+        this.setRespawn = this.setRespawn.bind( this );
+        this.setLevel = this.setLevel.bind( this );
+
+        //
+
+        Network.addMessageListener( 'PlayerRespawn', this.setRespawn );
+        Network.addMessageListener( 'PlayerNewLevel', this.setLevel );
 
     };
 

@@ -172,6 +172,7 @@ class PlayerCore {
 
         this.tank.dispose();
         this.tank = null;
+        this.network.dispose();
 
     };
 

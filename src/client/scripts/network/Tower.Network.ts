@@ -70,16 +70,32 @@ class TowerNetwork {
 
     //
 
+    public dispose () {
+
+        Network.removeMessageListener( 'TowerRotateTop', this.setTopRotation );
+        Network.removeMessageListener( 'TowerMakeShot', this.setShoot );
+        Network.removeMessageListener( 'TowerChangeTeam', this.changeTeam );
+        Network.removeMessageListener( 'TowerSetHealth', this.setHealth );
+
+    };
+
     public init ( tower ) {
 
         this.tower = tower;
 
         //
 
-        Network.addMessageListener( 'TowerRotateTop', this.setTopRotation.bind( this ) );
-        Network.addMessageListener( 'TowerMakeShot', this.setShoot.bind( this ) );
-        Network.addMessageListener( 'TowerChangeTeam', this.changeTeam.bind( this ) );
-        Network.addMessageListener( 'TowerSetHealth', this.setHealth.bind( this ) );
+        this.setTopRotation = this.setTopRotation.bind( this );
+        this.setShoot = this.setShoot.bind( this );
+        this.changeTeam = this.changeTeam.bind( this );
+        this.setHealth = this.setHealth.bind( this );
+
+        //
+
+        Network.addMessageListener( 'TowerRotateTop', this.setTopRotation );
+        Network.addMessageListener( 'TowerMakeShot', this.setShoot );
+        Network.addMessageListener( 'TowerChangeTeam', this.changeTeam );
+        Network.addMessageListener( 'TowerSetHealth', this.setHealth );
 
     };
 

@@ -117,6 +117,7 @@ class TowerCore {
     public dispose () {
 
         this.gfx.dispose();
+        this.network.dispose();
 
     };
 

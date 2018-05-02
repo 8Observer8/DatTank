@@ -127,18 +127,38 @@ class TankNetwork {
 
     //
 
+    public dispose () {
+
+        Network.removeMessageListener( 'TankFriendlyFire', this.setFriendlyFire );
+        Network.removeMessageListener( 'TankMove', this.setMove );
+        Network.removeMessageListener( 'TankMakeShot', this.setShoot );
+        Network.removeMessageListener( 'TankRotateTop', this.setRotateTop );
+        Network.removeMessageListener( 'TankSetHealth', this.setHealth );
+        Network.removeMessageListener( 'TankSetAmmo', this.setAmmo );
+
+    };
+
     public init ( tank ) {
 
         this.tank = tank;
 
         //
 
-        Network.addMessageListener( 'TankFriendlyFire', this.setFriendlyFire.bind( this ) );
-        Network.addMessageListener( 'TankMove', this.setMove.bind( this ) );
-        Network.addMessageListener( 'TankMakeShot', this.setShoot.bind( this ) );
-        Network.addMessageListener( 'TankRotateTop', this.setRotateTop.bind( this ) );
-        Network.addMessageListener( 'TankSetHealth', this.setHealth.bind( this ) );
-        Network.addMessageListener( 'TankSetAmmo', this.setAmmo.bind( this ) );
+        this.setFriendlyFire = this.setFriendlyFire.bind( this );
+        this.setMove = this.setMove.bind( this );
+        this.setShoot = this.setShoot.bind( this );
+        this.setRotateTop = this.setRotateTop.bind( this );
+        this.setHealth = this.setHealth.bind( this );
+        this.setAmmo = this.setAmmo.bind( this );
+
+        //
+
+        Network.addMessageListener( 'TankFriendlyFire', this.setFriendlyFire );
+        Network.addMessageListener( 'TankMove', this.setMove );
+        Network.addMessageListener( 'TankMakeShot', this.setShoot );
+        Network.addMessageListener( 'TankRotateTop', this.setRotateTop );
+        Network.addMessageListener( 'TankSetHealth', this.setHealth );
+        Network.addMessageListener( 'TankSetAmmo', this.setAmmo );
 
     };
 

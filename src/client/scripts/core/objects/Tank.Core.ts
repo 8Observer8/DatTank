@@ -271,6 +271,7 @@ class TankCore {
     public dispose () {
 
         this.gfx.dispose();
+        this.network.dispose();
 
     };
 
