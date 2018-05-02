@@ -50,7 +50,7 @@ gulp.task( 'brf', function () {
         debug: true
     });
     
-    b.plugin('tsify');
+    b.plugin('tsify', { "lib": ["es6", "dom"] });
     b.transform({ global: true }, 'browserify-shim');
 
     return b.bundle()

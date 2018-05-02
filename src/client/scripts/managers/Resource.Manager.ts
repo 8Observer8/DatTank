@@ -4,6 +4,7 @@
 */
 
 import * as THREE from 'three';
+import * as JSZip from 'JSZip';
 
 //
 
@@ -44,20 +45,6 @@ class ResourceManagerCore {
         'boxes/HealthBox.json',
         'boxes/AmmoBox.json',
 
-        'decorations/Tree1.json',
-        'decorations/Tree2.json',
-        'decorations/Tree3.json',
-        'decorations/Tree4.json',
-        'decorations/Tree5.json',
-        'decorations/Tree6.json',
-        'decorations/Tree7.json',
-        'decorations/Tree8.json',
-
-        'decorations/Rock1.json',
-        'decorations/Rock2.json',
-        'decorations/Rock3.json',
-        'decorations/Rock4.json',
-
         'decorations/Ruin1.json'
     ];
 
@@ -87,7 +74,9 @@ class ResourceManagerCore {
         'Tank-shadow.png',
 
         'explosion1.png',
-        'explosion2.png'
+        'explosion2.png',
+        'Rocks-texture.png',
+        'Flora-texture.png'
     ];
 
     private soundsList = [
@@ -97,11 +86,113 @@ class ResourceManagerCore {
         'box_pick.wav'
     ];
 
+    private packs = {
+        garage: {
+            url: '/resources/models.pack',
+            models: []
+        },
+        ingame: {
+            url: '/resources/ingame.pack',
+            models: [
+                'decorations/Rock1',
+                'decorations/Rock2',
+                'decorations/Rock3',
+                'decorations/Rock4',
+                'decorations/Tree1',
+                'decorations/Tree2',
+                'decorations/Tree3',
+                'decorations/Tree4',
+                'decorations/Tree5',
+                'decorations/Tree6',
+                'decorations/Tree7',
+                'decorations/Tree8'
+            ]
+        }
+    };
+
     //
 
     public init () {
 
         console.log( 'ResourceManager inited.' );
+        this.loadPack( this.packs.ingame );
+
+    };
+
+    private loadPack ( pack ) {
+
+        let request = new XMLHttpRequest();
+        request.addEventListener( 'load', ( event ) => {
+
+            let data = event.target['response'];
+            let decoder = new JSZip();
+            decoder.loadAsync( data ).then( ( zip ) => {
+
+                for ( let i = 0, il = pack.models.length; i < il; i ++ ) {
+
+                    let modelName = pack.models[ i ];
+
+                    zip.file( modelName + '.conf' ).async('text').then( ( configData ) => {
+
+                        let config = JSON.parse( configData );
+
+                        zip.file( modelName + '.bin' ).async('arraybuffer').then( ( buffer ) => {
+
+                            let model = {
+                                name:       modelName + '.json',
+                                geometry:   new THREE.BufferGeometry(),
+                                material:   [ new THREE.MeshLambertMaterial({ color: 0xaaaaaa }) ]
+                            };
+
+                            //
+
+                            let facesCount = config['metadata']['faces'];
+                            let verticesCount = facesCount * 3;
+
+                            let position = new Int16Array( buffer, 0, 3 * verticesCount );
+                            let uvs = new Int16Array( buffer, 2 * 3 * verticesCount, 2 * verticesCount );
+
+                            //
+
+                            let newPos = new Float32Array( position.length );
+                            let newUvs = new Float32Array( uvs.length );
+                            let positionAttr = new THREE.BufferAttribute( newPos, 3 );
+                            let uvsAttr = new THREE.BufferAttribute( newUvs, 2 );
+
+                            for ( var j = 0, jl = position.length; j < jl; j ++ ) {
+
+                                newPos[ j ] = position[ j ] / 1000;
+
+                            }
+
+                            for ( var j = 0, jl = uvs.length; j < jl; j ++ ) {
+
+                                newUvs[ j ] = uvs[ j ] / 10000;
+
+                            }
+
+                            model.geometry.addAttribute( 'position', positionAttr );
+                            model.geometry.addAttribute( 'uv', uvsAttr );
+                            model.geometry.computeVertexNormals();
+                            model.geometry.groups.push({ start: 0, materialIndex: 0, count: position.length });
+
+                            //
+
+                            this.models.push( model );
+
+                        });
+
+                    });
+
+                }
+
+            });
+
+        });
+
+        request.open( 'GET', pack.url, true );
+        request.responseType = 'arraybuffer';
+        request.send( null );
 
     };
 

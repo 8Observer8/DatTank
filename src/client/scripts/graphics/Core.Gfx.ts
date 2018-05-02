@@ -38,7 +38,7 @@ class GraphicsCore {
     public camera: THREE.PerspectiveCamera;
     private lookAtVector: THREE.Vector3 = new THREE.Vector3();
     private cameraOffset = new THREE.Vector3();
-    private cameraShakeInterval: number;
+    private cameraShakeInterval;
 
     private container;
     private renderer: THREE.WebGLRenderer;
