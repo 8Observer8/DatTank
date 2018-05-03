@@ -82,7 +82,7 @@ class DecorationGfx {
 
             material[0].map = ResourceManager.getTexture('Flora-texture.png');
 
-        } else if ( decoration.title.indexOf('Rock') !== -1 ) {
+        } else if ( decoration.title.indexOf('Rock') !== -1 || decoration.title.indexOf('Ruin') !== -1 ) {
 
             material[0].map = ResourceManager.getTexture('Rocks-texture.png');
 

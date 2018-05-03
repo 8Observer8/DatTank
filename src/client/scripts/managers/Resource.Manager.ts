@@ -43,9 +43,7 @@ class ResourceManagerCore {
         'towers/T1-top.json',
 
         'boxes/HealthBox.json',
-        'boxes/AmmoBox.json',
-
-        'decorations/Ruin1.json'
+        'boxes/AmmoBox.json'
     ];
 
     private texturesList = [
@@ -105,7 +103,8 @@ class ResourceManagerCore {
                 'decorations/Tree5',
                 'decorations/Tree6',
                 'decorations/Tree7',
-                'decorations/Tree8'
+                'decorations/Tree8',
+                'decorations/Ruin1'
             ]
         }
     };
