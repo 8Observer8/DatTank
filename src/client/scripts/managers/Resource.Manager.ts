@@ -104,7 +104,9 @@ class ResourceManagerCore {
                 'decorations/Tree6',
                 'decorations/Tree7',
                 'decorations/Tree8',
-                'decorations/Ruin1'
+                'decorations/Ruin1',
+                'towers/T1-base',
+                'towers/T1-top'
             ]
         }
     };
@@ -148,10 +150,10 @@ class ResourceManagerCore {
                             let facesCount = config['metadata']['faces'];
                             let verticesCount = facesCount * 3;
 
+                            // set model attributes
+
                             let position = new Int16Array( buffer, 0, 3 * verticesCount );
                             let uvs = new Int16Array( buffer, 2 * 3 * verticesCount, 2 * verticesCount );
-
-                            //
 
                             let newPos = new Float32Array( position.length );
                             let newUvs = new Float32Array( uvs.length );
@@ -174,6 +176,32 @@ class ResourceManagerCore {
                             model.geometry.addAttribute( 'uv', uvsAttr );
                             model.geometry.computeVertexNormals();
                             model.geometry.groups.push({ start: 0, materialIndex: 0, count: position.length });
+
+                            // set model morph buffers if needed
+
+                            var morphTargetsCount = config['metadata']['morphTargets'];
+
+                            if ( morphTargetsCount ) {
+                            
+                                model.geometry.morphAttributes.position = [];
+
+                                for ( var j = 0; j < morphTargetsCount; j ++ ) {
+
+                                    let morphInput = new Int16Array( buffer, 2 * ( 5 + 3 * j ) * verticesCount, 3 * verticesCount );
+                                    let morph = new Float32Array( morphInput.length );
+
+                                    for ( var k = 0, kl = morphInput.length; k < kl; k ++ ) {
+
+                                        morph[ k ] = morphInput[ k ] / 1000;
+
+                                    }
+
+                                    let morphAttr = new THREE.Float32BufferAttribute( morph, 3 );
+                                    model.geometry.morphAttributes.position.push( morphAttr );
+
+                                }
+
+                            }
 
                             //
 

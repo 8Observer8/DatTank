@@ -31,20 +31,38 @@ function convert () {
         bin:        false,
         metadata:   {
             metadata:   input.metadata,
-            materials:  input.materials
-        },
-        materials:  input.materials
+            materials:  input.materials,
+            groups:     []
+        }
     };
+
+    for ( var i = 0, il = buffGeometry.groups.length; i < il; i ++ ) {
+
+        var group = buffGeometry.groups[ i ];
+        packBinObject.metadata.groups.push( [ group.start, group.materialIndex, group.count ] );
+
+    }
 
     //
 
     var binObjLength = 0;
     var byteOffset = 0;
+    packBinObject.metadata.metadata.faces = geometry.faces.length;
 
     for ( var attrName in buffGeometry.attributes ) {
 
         if ( attrName === 'color' || attrName === 'normal' ) continue;
         binObjLength += buffGeometry.attributes[ attrName ].array.length * Int16Array.BYTES_PER_ELEMENT;
+
+    }
+
+    if ( buffGeometry.morphAttributes.position ) {
+
+        for ( var i = 0, il = buffGeometry.morphAttributes.position.length; i < il; i ++ ) {
+
+            binObjLength += buffGeometry.morphAttributes.position[ i ].array.length * Int16Array.BYTES_PER_ELEMENT;
+
+        }
 
     }
 
@@ -74,6 +92,24 @@ function convert () {
         }
 
         byteOffset += buffGeometry.attributes[ attrName ].array.length * Int16Array.BYTES_PER_ELEMENT;
+
+    }
+
+    if ( buffGeometry.morphAttributes.position ) {
+    
+        for ( var i = 0, il = buffGeometry.morphAttributes.position.length; i < il; i ++ ) {
+
+            var array = new Int16Array( packBinObject.bin, byteOffset, buffGeometry.morphAttributes.position[ i ].array.length );
+
+            for ( var j = 0, jl = buffGeometry.morphAttributes.position[ j ].array.length; j < jl; j ++ ) {
+
+                array[ j ] = Math.round( 1000 * buffGeometry.morphAttributes.position[ i ].array[ j ] );
+
+            }
+
+            byteOffset += buffGeometry.morphAttributes.position[ i ].array.length * Int16Array.BYTES_PER_ELEMENT;
+
+        }
 
     }
 
