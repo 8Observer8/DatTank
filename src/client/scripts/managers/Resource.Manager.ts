@@ -74,7 +74,8 @@ class ResourceManagerCore {
         'explosion1.png',
         'explosion2.png',
         'Rocks-texture.png',
-        'Flora-texture.png'
+        'Flora-texture.png',
+        'tower-texture.png'
     ];
 
     private soundsList = [
@@ -142,8 +143,14 @@ class ResourceManagerCore {
                             let model = {
                                 name:       modelName + '.json',
                                 geometry:   new THREE.BufferGeometry(),
-                                material:   [ new THREE.MeshLambertMaterial({ color: 0xaaaaaa }) ]
+                                material:   []
                             };
+
+                            for ( let i = 0, il = config.materials.length; i < il; i ++ ) {
+
+                                model.material.push( new THREE.MeshLambertMaterial({ color: 0xaaaaaa }) );
+
+                            }
 
                             //
 
@@ -175,15 +182,33 @@ class ResourceManagerCore {
                             model.geometry.addAttribute( 'position', positionAttr );
                             model.geometry.addAttribute( 'uv', uvsAttr );
                             model.geometry.computeVertexNormals();
-                            model.geometry.groups.push({ start: 0, materialIndex: 0, count: position.length });
+
+                            // set model groups
+
+                            for ( let i = 0, il = config.groups.length; i < il; i ++ ) {
+
+                                model.geometry.groups.push({
+                                    start:          config.groups[ i ][0],
+                                    materialIndex:  config.groups[ i ][1],
+                                    count:          config.groups[ i ][2]
+                                });
+
+                            }
 
                             // set model morph buffers if needed
 
                             var morphTargetsCount = config['metadata']['morphTargets'];
 
                             if ( morphTargetsCount ) {
-                            
+
                                 model.geometry.morphAttributes.position = [];
+                                model.geometry['morphTargets'] = [];
+
+                                for ( let i = 0, il = config.animations.length; i < il; i ++ ) {
+
+                                    model.geometry['morphTargets'].push({ name: config.animations[ i ].name });
+
+                                }
 
                                 for ( var j = 0; j < morphTargetsCount; j ++ ) {
 

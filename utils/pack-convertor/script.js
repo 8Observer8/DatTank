@@ -32,14 +32,30 @@ function convert () {
         metadata:   {
             metadata:   input.metadata,
             materials:  input.materials,
-            groups:     []
+            groups:     [],
+            animations: []
         }
     };
+
+    // process groups metadata
 
     for ( var i = 0, il = buffGeometry.groups.length; i < il; i ++ ) {
 
         var group = buffGeometry.groups[ i ];
         packBinObject.metadata.groups.push( [ group.start, group.materialIndex, group.count ] );
+
+    }
+
+    // process animations metadata
+
+    for ( var i = 0, il = geometry.animations.length; i < il; i ++ ) {
+
+        var animation = geometry.animations[ i ];
+
+        packBinObject.metadata.animations.push({
+            name:       animation.name,
+            duration:   animation.duration
+        });
 
     }
 

@@ -4,6 +4,7 @@
 */
 
 import * as THREE from 'three';
+import { MorphBlendMesh } from "./../utils/MorphMesh.Gfx";
 
 import * as OMath from "./../../OMath/Core.OMath";
 import { GfxCore } from "./../Core.Gfx";
@@ -18,7 +19,7 @@ import { BlastSmokeGfx } from './../effects/BlastSmoke.gfx';
 class TowerGfx {
 
     private object: THREE.Object3D = new THREE.Object3D();
-    private topMesh: THREE.Mesh;
+    private topMesh: MorphBlendMesh;
     private baseMesh: THREE.Mesh;
     private mixer: THREE.AnimationMixer;
     private tower: TowerCore;
@@ -36,7 +37,7 @@ class TowerGfx {
 
         this.changeTeamEffect.update( time, delta );
         this.blastSmoke.update( time, delta );
-        this.mixer.update( delta / 1000 );
+        this.topMesh.update( delta / 1000 );
 
     };
 
@@ -71,8 +72,8 @@ class TowerGfx {
 
     public shoot () {
 
-        this.animations['shotAction'].stop();
-        this.animations['shotAction'].play();
+        this.topMesh.stopAnimation('animation');
+        this.topMesh.playAnimation('animation');
         this.blastSmoke.show();
 
     };
@@ -90,6 +91,7 @@ class TowerGfx {
         for ( let i = 0, il = towerBaseModel.material.length; i < il; i ++ ) {
 
             let material = towerBaseModel.material[ i ].clone();
+            material.map = ResourceManager.getTexture('tower-texture.png');
             materials.push( material );
 
         }
@@ -111,7 +113,9 @@ class TowerGfx {
 
         }
 
-        this.topMesh = new THREE.Mesh( towerTopModel.geometry, materials );
+        materials[0].map = ResourceManager.getTexture('tower-texture.png');
+
+        this.topMesh = new MorphBlendMesh( towerTopModel.geometry, materials );
         this.topMesh.rotation.y = tower.rotation;
         this.topMesh.scale.set( 27, 27, 27 );
         this.object.add( this.topMesh );
@@ -127,14 +131,6 @@ class TowerGfx {
         }
 
         GfxCore.coreObjects['towers'].add( this.object );
-
-        //
-
-        this.mixer = new THREE.AnimationMixer( this.object );
-
-        let shotAction = this.mixer.clipAction( towerTopModel.geometry.animations[0], this.topMesh );
-        shotAction.setDuration( 0.5 ).setLoop( THREE.LoopOnce, 1 );
-        this.animations['shotAction'] = shotAction;
 
         //
 

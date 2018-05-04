@@ -7,13 +7,12 @@ import * as THREE from 'three';
 
 //
 
-class MorphBlendMesh {
+class MorphBlendMesh extends THREE.Mesh {
 
     private animationsMap;
     private animationsList;
     public geometry;
     public firstAnimation;
-    public morphTargetInfluences = [];
 
     //
 
@@ -28,6 +27,13 @@ class MorphBlendMesh {
 			var frameTime = animation.duration / animation.length;
 
 			animation.time += animation.direction * delta;
+
+			if ( animation.time> animation.duration ) {
+
+				animation.active = false;
+				return;
+
+			}
 
 			if ( animation.mirroredLoop ) {
 
@@ -302,20 +308,14 @@ class MorphBlendMesh {
 
     constructor ( geometry, material ) {
 
-	    THREE.Mesh.call( this, geometry, material );
+	    super( geometry, material );
 
         this.animationsMap = {};
-        this.animationsList = [];
+		this.animationsList = [];
 
-	    var numFrames = this.geometry.morphTargets.length;
-	    var name = "__default";
+		//
 
-        var startFrame = 0;
-        var endFrame = numFrames - 1;
-	    var fps = numFrames / 1;
-
-        this.createAnimation( name, startFrame, endFrame, fps );
-        this.setAnimationWeight( name, 1 );
+	    this.autoCreateAnimations( 3 );
 
     };
 
