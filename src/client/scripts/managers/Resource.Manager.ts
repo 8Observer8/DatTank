@@ -19,6 +19,7 @@ class ResourceManagerCore {
     private loadedModels: number = 0;
     private loadedTextures: number = 0;
     private loadedSounds: number = 0;
+    private loadedPacks: number = 0;
 
     private modelLoader: THREE.JSONLoader = new THREE.JSONLoader();
     private textureLoader: THREE.TextureLoader = new THREE.TextureLoader();
@@ -85,6 +86,10 @@ class ResourceManagerCore {
         'box_pick.wav'
     ];
 
+    private packsList = [
+        'ingame'
+    ];
+
     private packs = {
         garage: {
             url: '/resources/models.pack',
@@ -117,13 +122,15 @@ class ResourceManagerCore {
     public init () {
 
         console.log( 'ResourceManager inited.' );
-        this.loadPack( this.packs.ingame );
 
     };
 
-    private loadPack ( pack ) {
+    private loadPack ( packName: string, callback ) {
 
+        let processedItems = 0;
         let request = new XMLHttpRequest();
+        let pack = this.packs[ packName ];
+
         request.addEventListener( 'load', ( event ) => {
 
             let data = event.target['response'];
@@ -231,6 +238,13 @@ class ResourceManagerCore {
                             //
 
                             this.models.push( model );
+                            processedItems ++;
+
+                            if ( processedItems === pack.models.length ) {
+
+                                callback();
+
+                            }
 
                         });
 
@@ -311,6 +325,20 @@ class ResourceManagerCore {
 
         let loadedItems = this.loadedModels + this.loadedTextures + this.loadedSounds;
         let progress = loadedItems / ( loadedItems + this.soundsList.length + this.modelsList.length + this.texturesList.length );
+
+        if ( this.packsList.length ) {
+
+            this.loadPack( this.packsList.pop(), this.load.bind( this, onProgress, onFinish ) );
+
+            if ( onProgress ) {
+
+                onProgress( progress );
+
+            }
+
+            return;
+
+        }
 
         if ( this.modelsList.length ) {
 
