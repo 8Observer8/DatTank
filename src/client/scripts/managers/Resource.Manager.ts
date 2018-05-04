@@ -257,8 +257,6 @@ class ResourceManagerCore {
                             this.models.push( model );
                             processedItems ++;
 
-                            console.log( model );
-
                             if ( processedItems === pack.models.length ) {
 
                                 callback();

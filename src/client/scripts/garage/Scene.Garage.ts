@@ -83,13 +83,18 @@ class GarageScene {
 
     };
 
-    public loadModels () {
+    public initModels () {
 
-        let model, mesh;
+        if ( Object.keys( this.models ).length !== 0 ) return;
+
+        let model, mesh, texture;
+        let textureLoader = new THREE.TextureLoader();
 
         model = ResourceManager.getModel('IS2');
-        mesh = new THREE.Mesh( model.geometry, model.materials );
-        mesh.position.y += 0.4;
+        mesh = new THREE.Mesh( model.geometry, model.material );
+        texture = textureLoader.load( '/resources/textures/IS2.jpg' );
+        mesh.material[0].map = texture;
+        mesh.material[0].color = new THREE.Color( 0xbbbbbb );
         mesh.visible = true;
         mesh.castShadow = true;
         mesh.receiveShadow = true;
@@ -98,8 +103,10 @@ class GarageScene {
         this.models['IS2'] = mesh;
 
         model = ResourceManager.getModel('T29');
-        mesh = new THREE.Mesh( model.geometry, model.materials );
-        mesh.position.y += 0.4;
+        mesh = new THREE.Mesh( model.geometry, model.material );
+        texture = textureLoader.load( '/resources/textures/T29.jpg' );
+        mesh.material[0].map = texture;
+        mesh.material[0].color = new THREE.Color( 0xbbbbbb );
         mesh.visible = true;
         mesh.castShadow = true;
         mesh.receiveShadow = true;
@@ -108,8 +115,10 @@ class GarageScene {
         this.models['T29'] = mesh;
 
         model = ResourceManager.getModel('T44');
-        mesh = new THREE.Mesh( model.geometry, model.materials );
-        mesh.position.y += 0.4;
+        mesh = new THREE.Mesh( model.geometry, model.material );
+        texture = textureLoader.load( '/resources/textures/T44.jpg' );
+        mesh.material[0].map = texture;
+        mesh.material[0].color = new THREE.Color( 0xbbbbbb );
         mesh.visible = true;
         mesh.castShadow = true;
         mesh.receiveShadow = true;
@@ -118,8 +127,10 @@ class GarageScene {
         this.models['T44'] = mesh;
 
         model = ResourceManager.getModel('T54');
-        mesh = new THREE.Mesh( model.geometry, model.materials );
-        mesh.position.y += 0.4;
+        mesh = new THREE.Mesh( model.geometry, model.material );
+        texture = textureLoader.load( '/resources/textures/T54.jpg' );
+        mesh.material[0].map = texture;
+        mesh.material[0].color = new THREE.Color( 0xbbbbbb );
         mesh.visible = true;
         mesh.castShadow = true;
         mesh.receiveShadow = true;
@@ -128,10 +139,8 @@ class GarageScene {
         this.models['T54'] = mesh;
 
         model = ResourceManager.getModel('Garage');
-        mesh = new THREE.Mesh( model.geometry, model.materials );
-        mesh.castShadow = true;
+        mesh = new THREE.Mesh( model.geometry, [ new THREE.MeshPhongMaterial({ color: 0xaaaaaa }) ] );
         mesh.receiveShadow = true;
-        mesh.position.y += 0.4;
         this.scene.add( mesh );
 
         this.garage.onLoadedResources();
@@ -153,7 +162,7 @@ class GarageScene {
 
     public reset () {
 
-        this.loadModels();
+        this.initModels();
         this.camera.position.set( Math.cos( this.timer * this.tankRotationSpeed ) * 10, 4, Math.sin( this.timer * this.tankRotationSpeed ) * 10 );
         this.camera.lookAt( this.scene.position );
 

@@ -88,7 +88,9 @@ class Garage {
     public nextTank () {
 
         let tankList = Object.keys( Tanks );
+        tankList.pop();
         let currentIndex = tankList.indexOf( this.currentTank );
+        if ( currentIndex === tankList.length - 1 ) currentIndex = -1;
 
         let newTank = tankList[ currentIndex + 1 ];
         this.selectTank( newTank );
@@ -98,6 +100,7 @@ class Garage {
     public prevTank () {
 
         let tankList = Object.keys( Tanks );
+        tankList.pop();
         let currentIndex = tankList.indexOf( this.currentTank );
         if ( currentIndex === 0 ) currentIndex = tankList.length;
 
