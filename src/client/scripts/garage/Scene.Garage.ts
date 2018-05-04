@@ -5,6 +5,8 @@
 
 import * as THREE from 'three';
 
+import { ResourceManager } from "./../managers/Resource.Manager";
+
 //
 
 class GarageScene {
@@ -76,108 +78,63 @@ class GarageScene {
 
         //
 
-        this.loadModels();
         this.resize();
         this.render();
 
     };
 
-    private loadModels () {
+    public loadModels () {
 
-        let scope = this;
-        let loader = new THREE.JSONLoader();
-        let loaded = 0;
-        let totalToLoad = 5;
+        let model, mesh;
 
-        //
+        model = ResourceManager.getModel('IS2');
+        mesh = new THREE.Mesh( model.geometry, model.materials );
+        mesh.position.y += 0.4;
+        mesh.visible = true;
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+        mesh.scale.set( 0.8, 0.8, 0.8 );
+        this.scene.add( mesh );
+        this.models['IS2'] = mesh;
 
-        function loadedCallback () {
+        model = ResourceManager.getModel('T29');
+        mesh = new THREE.Mesh( model.geometry, model.materials );
+        mesh.position.y += 0.4;
+        mesh.visible = true;
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+        mesh.scale.set( 0.8, 0.8, 0.8 );
+        this.scene.add( mesh );
+        this.models['T29'] = mesh;
 
-            loaded ++;
+        model = ResourceManager.getModel('T44');
+        mesh = new THREE.Mesh( model.geometry, model.materials );
+        mesh.position.y += 0.4;
+        mesh.visible = true;
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+        mesh.scale.set( 0.8, 0.8, 0.8 );
+        this.scene.add( mesh );
+        this.models['T44'] = mesh;
 
-            if ( loaded === totalToLoad ) {
+        model = ResourceManager.getModel('T54');
+        mesh = new THREE.Mesh( model.geometry, model.materials );
+        mesh.position.y += 0.4;
+        mesh.visible = true;
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+        mesh.scale.set( 0.8, 0.8, 0.8 );
+        this.scene.add( mesh );
+        this.models['T54'] = mesh;
 
-                scope.garage.onLoadedResources();
+        model = ResourceManager.getModel('Garage');
+        mesh = new THREE.Mesh( model.geometry, model.materials );
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+        mesh.position.y += 0.4;
+        this.scene.add( mesh );
 
-            }
-
-        };
-
-        loader.load( 'resources/models/garage/IS2.json', function ( geometry, materials ) {
-
-            var model = new THREE.Mesh( geometry, materials );
-            model.position.y += 0.4;
-            model.visible = true;
-            model.castShadow = true;
-            model.receiveShadow = true;
-            model.scale.set( 0.8, 0.8, 0.8 );
-
-            scope.scene.add( model );
-            scope.models['IS2'] = model;
-
-            loadedCallback();
-
-        });
-
-        loader.load( 'resources/models/garage/T29.json', function ( geometry, materials ) {
-
-            var model = new THREE.Mesh( geometry, materials );
-            model.position.y += 0.4;
-            model.visible = true;
-            model.castShadow = true;
-            model.receiveShadow = true;
-            model.scale.set( 0.8, 0.8, 0.8 );
-
-            scope.scene.add( model );
-            scope.models['T29'] = model;
-
-            loadedCallback();
-
-        });
-
-        loader.load( 'resources/models/garage/T44.json', function ( geometry, materials ) {
-
-            var model = new THREE.Mesh( geometry, materials );
-            model.position.y += 0.4;
-            model.visible = true;
-            model.castShadow = true;
-            model.receiveShadow = true;
-            model.scale.set( 0.8, 0.8, 0.8 );
-
-            scope.scene.add( model );
-            scope.models['T44'] = model;
-
-            loadedCallback();
-
-        });
-
-        loader.load( 'resources/models/garage/T54.json', function ( geometry, materials ) {
-
-            var model = new THREE.Mesh( geometry, materials );
-            model.position.y += 0.4;
-            model.visible = true;
-            model.castShadow = true;
-            model.receiveShadow = true;
-            model.scale.set( 0.8, 0.8, 0.8 );
-
-            scope.scene.add( model );
-            scope.models['T54'] = model;
-
-            loadedCallback();
-
-        });
-
-        loader.load( 'resources/models/garage/garage.json', function ( geometry, materials ) {
-
-            var model = new THREE.Mesh( geometry, materials );
-            model.castShadow = true;
-            model.receiveShadow = true;
-            model.position.y += 0.4;
-            scope.scene.add( model );
-
-            loadedCallback();
-
-        });
+        this.garage.onLoadedResources();
 
     };
 
@@ -196,6 +153,7 @@ class GarageScene {
 
     public reset () {
 
+        this.loadModels();
         this.camera.position.set( Math.cos( this.timer * this.tankRotationSpeed ) * 10, 4, Math.sin( this.timer * this.tankRotationSpeed ) * 10 );
         this.camera.lookAt( this.scene.position );
 

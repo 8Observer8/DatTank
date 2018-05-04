@@ -48,14 +48,18 @@ function convert () {
 
     // process animations metadata
 
-    for ( var i = 0, il = geometry.animations.length; i < il; i ++ ) {
+    if ( geometry.animations ) {
+    
+        for ( var i = 0, il = geometry.animations.length; i < il; i ++ ) {
 
-        var animation = geometry.animations[ i ];
+            var animation = geometry.animations[ i ];
 
-        packBinObject.metadata.animations.push({
-            name:       animation.name,
-            duration:   animation.duration
-        });
+            packBinObject.metadata.animations.push({
+                name:       animation.name,
+                duration:   animation.duration
+            });
+
+        }
 
     }
 

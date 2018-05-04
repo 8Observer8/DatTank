@@ -92,8 +92,14 @@ class ResourceManagerCore {
 
     private packs = {
         garage: {
-            url: '/resources/models.pack',
-            models: []
+            url: '/resources/garage.pack',
+            models: [
+                'Garage',
+                'IS2',
+                'T29',
+                'T44',
+                'T54'
+            ]
         },
         ingame: {
             url: '/resources/ingame.pack',
@@ -122,6 +128,12 @@ class ResourceManagerCore {
     public init () {
 
         console.log( 'ResourceManager inited.' );
+
+        this.loadPack('garage', function () {
+
+            console.log('done');
+
+        });
 
     };
 
@@ -167,12 +179,8 @@ class ResourceManagerCore {
                             // set model attributes
 
                             let position = new Int16Array( buffer, 0, 3 * verticesCount );
-                            let uvs = new Int16Array( buffer, 2 * 3 * verticesCount, 2 * verticesCount );
-
                             let newPos = new Float32Array( position.length );
-                            let newUvs = new Float32Array( uvs.length );
                             let positionAttr = new THREE.BufferAttribute( newPos, 3 );
-                            let uvsAttr = new THREE.BufferAttribute( newUvs, 2 );
 
                             for ( var j = 0, jl = position.length; j < jl; j ++ ) {
 
@@ -180,15 +188,24 @@ class ResourceManagerCore {
 
                             }
 
-                            for ( var j = 0, jl = uvs.length; j < jl; j ++ ) {
+                            model.geometry.addAttribute( 'position', positionAttr );
+                            model.geometry.computeVertexNormals();
 
-                                newUvs[ j ] = uvs[ j ] / 10000;
+                            if ( config.metadata.uvs ) {
+
+                                let uvs = new Int16Array( buffer, 2 * 3 * verticesCount, 2 * verticesCount );
+                                let newUvs = new Float32Array( uvs.length );
+                                let uvsAttr = new THREE.BufferAttribute( newUvs, 2 );
+
+                                for ( var j = 0, jl = uvs.length; j < jl; j ++ ) {
+
+                                    newUvs[ j ] = uvs[ j ] / 10000;
+
+                                }
+
+                                model.geometry.addAttribute( 'uv', uvsAttr );
 
                             }
-
-                            model.geometry.addAttribute( 'position', positionAttr );
-                            model.geometry.addAttribute( 'uv', uvsAttr );
-                            model.geometry.computeVertexNormals();
 
                             // set model groups
 
@@ -239,6 +256,8 @@ class ResourceManagerCore {
 
                             this.models.push( model );
                             processedItems ++;
+
+                            console.log( model );
 
                             if ( processedItems === pack.models.length ) {
 
