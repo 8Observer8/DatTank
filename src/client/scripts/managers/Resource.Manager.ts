@@ -74,9 +74,8 @@ class ResourceManagerCore {
 
         'explosion1.png',
         'explosion2.png',
-        'Rocks-texture.png',
-        'Flora-texture.png',
-        'tower-texture.png'
+        'tower-texture.png',
+        'Decorations.jpg'
     ];
 
     private soundsList = [
