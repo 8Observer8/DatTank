@@ -47,6 +47,7 @@ class BoxGfx {
         var boxModel = ResourceManager.getModel( 'boxes/' + box.type );
 
         this.mesh = new THREE.Mesh( boxModel.geometry, boxModel.material );
+        this.mesh.material[0].map = ResourceManager.getTexture('Boxes.jpg');
         this.mesh.name = box.type;
         this.mesh.scale.set( 20, 20, 20 );
 

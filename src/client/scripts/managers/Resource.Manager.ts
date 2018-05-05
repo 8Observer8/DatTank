@@ -41,10 +41,7 @@ class ResourceManagerCore {
         'tanks/T54-top.json',
 
         'towers/T1-base.json',
-        'towers/T1-top.json',
-
-        'boxes/HealthBox.json',
-        'boxes/AmmoBox.json'
+        'towers/T1-top.json'
     ];
 
     private texturesList = [
@@ -75,7 +72,8 @@ class ResourceManagerCore {
         'explosion1.png',
         'explosion2.png',
         'tower-texture.png',
-        'Decorations.jpg'
+        'Decorations.jpg',
+        'Boxes.jpg'
     ];
 
     private soundsList = [
@@ -116,6 +114,8 @@ class ResourceManagerCore {
                 'decorations/Tree7',
                 'decorations/Tree8',
                 'decorations/Ruin1',
+                'boxes/AmmoBox',
+                'boxes/HealthBox',
                 'towers/T1-base',
                 'towers/T1-top'
             ]
