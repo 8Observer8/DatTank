@@ -28,9 +28,6 @@ class ResourceManagerCore {
     //
 
     private modelsList = [
-        'tanks/IS2-bottom.json',
-        'tanks/IS2-top.json',
-
         'tanks/T29-bottom.json',
         'tanks/T29-top.json',
 
@@ -73,7 +70,12 @@ class ResourceManagerCore {
         'explosion2.png',
         'tower-texture.png',
         'Decorations.jpg',
-        'Boxes.jpg'
+        'Boxes.jpg',
+
+        'IS2.jpg',
+        'T29.jpg',
+        'T44.jpg',
+        'T54.jpg',
     ];
 
     private soundsList = [
@@ -117,7 +119,11 @@ class ResourceManagerCore {
                 'boxes/AmmoBox',
                 'boxes/HealthBox',
                 'towers/T1-base',
-                'towers/T1-top'
+                'towers/T1-top',
+                'tanks/IS2-bottom',
+                'tanks/IS2-top',
+                'tanks/T29-bottom',
+                'tanks/T29-top'
             ]
         }
     };

@@ -178,8 +178,9 @@ class TankGfx {
         for ( let i = 0, il = tankBaseModel.material.length; i < il; i ++ ) {
 
             let material = tankBaseModel.material[ i ].clone();
-            material.map = material.map.clone();
+            material.map = ResourceManager.getTexture( tank.title + '.jpg' ).clone();
             material.map.needsUpdate = true;
+            material.map.wrapS = material.map.wrapT = THREE.RepeatWrapping;
             material.morphTargets = true;
             materials.push( material );
 
@@ -195,6 +196,8 @@ class TankGfx {
         for ( var i = 0, il = tankTopModel.material.length; i < il; i ++ ) {
 
             let material = tankTopModel.material[ i ].clone();
+            material.map = ResourceManager.getTexture( tank.title + '.jpg' ).clone();
+            material.map.needsUpdate = true;
             material.morphTargets = true;
             materials.push( material );
 
@@ -202,7 +205,6 @@ class TankGfx {
 
         this.topMesh = new THREE.Mesh( tankTopModel.geometry, materials );
         this.topMesh.scale.set( 10, 10, 10 );
-        this.topMesh.position.y = 20;
         this.object.add( this.topMesh );
 
         // add tank shadow
@@ -221,17 +223,17 @@ class TankGfx {
 
         let shotAction, deathAction1, deathAction2;
 
-        shotAction = this.mixer.clipAction( tankTopModel.geometry.animations[0], this.topMesh );
-        shotAction.setDuration( 0.5 ).setLoop( THREE.LoopOnce, 1 );
-        this.animations['shotAction'] = shotAction;
+        // shotAction = this.mixer.clipAction( tankTopModel.geometry.animations[0], this.topMesh );
+        // shotAction.setDuration( 0.5 ).setLoop( THREE.LoopOnce, 1 );
+        // this.animations['shotAction'] = shotAction;
 
-        deathAction1 = this.mixer.clipAction( tankTopModel.geometry.animations[1], this.topMesh );
-        deathAction1.setDuration( 1 ).setLoop( THREE.LoopOnce, 1 );
-        this.animations['deathAction1'] = deathAction1;
+        // deathAction1 = this.mixer.clipAction( tankTopModel.geometry.animations[1], this.topMesh );
+        // deathAction1.setDuration( 1 ).setLoop( THREE.LoopOnce, 1 );
+        // this.animations['deathAction1'] = deathAction1;
 
-        deathAction2 = this.mixer.clipAction( tankBaseModel.geometry.animations[0], this.baseMesh );
-        deathAction2.setDuration( 2 ).setLoop( THREE.LoopOnce, 1 );
-        this.animations['deathAction2'] = deathAction2;
+        // deathAction2 = this.mixer.clipAction( tankBaseModel.geometry.animations[0], this.baseMesh );
+        // deathAction2.setDuration( 2 ).setLoop( THREE.LoopOnce, 1 );
+        // this.animations['deathAction2'] = deathAction2;
 
         //
 
