@@ -28,12 +28,6 @@ class ResourceManagerCore {
     //
 
     private modelsList = [
-        'tanks/T29-bottom.json',
-        'tanks/T29-top.json',
-
-        'tanks/T44-bottom.json',
-        'tanks/T44-top.json',
-
         'tanks/T54-bottom.json',
         'tanks/T54-top.json',
 
@@ -123,7 +117,9 @@ class ResourceManagerCore {
                 'tanks/IS2-bottom',
                 'tanks/IS2-top',
                 'tanks/T29-bottom',
-                'tanks/T29-top'
+                'tanks/T29-top',
+                'tanks/T44-bottom',
+                'tanks/T44-top'
             ]
         }
     };

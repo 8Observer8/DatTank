@@ -111,8 +111,8 @@ class TankGfx {
 
     public shoot () {
 
-        this.animations['shotAction'].stop();
-        this.animations['shotAction'].play();
+        // this.animations['shotAction'].stop();
+        // this.animations['shotAction'].play();
         this.blastSmoke.show();
 
     };
