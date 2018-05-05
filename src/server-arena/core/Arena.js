@@ -39,7 +39,7 @@ Arena.prototype.init = function ( callback ) {
     this.towerManager.init();
     this.decorationManager.init({
 
-        trees1:     { type: 'Tree1', count: 5 },
+        trees1:     { type: 'Tree1', count: 10 },
         trees2:     { type: 'Tree2', count: 30 },
         trees3:     { type: 'Tree3', count: 10 },
         trees4:     { type: 'Tree4', count: 20 },
@@ -51,9 +51,7 @@ Arena.prototype.init = function ( callback ) {
         stones1:    { type: 'Stones1', count: 5 },
         stones2:    { type: 'Stones2', count: 5 },
         stones3:    { type: 'Stones3', count: 50 },
-        stones4:    { type: 'Stones4', count: 10 },
-
-        oldCastle:  { type: 'OldCastle', count: 3 }
+        stones4:    { type: 'Stones4', count: 10 }
 
     });
     this.botManager.init();

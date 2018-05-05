@@ -21,8 +21,8 @@ Tree1.prototype = Object.create( Game.Decoration.prototype );
 
 Tree1.prototype.init = function () {
 
-    var sizeXZ = 5 * Math.random() + 45;
-    this.scale = new Game.Vec3( sizeXZ, 5 * Math.random() + 65, sizeXZ );
+    var sizeXZ = 15 * Math.random() + 45;
+    this.scale = new Game.Vec3( sizeXZ, 15 * Math.random() + 40, sizeXZ );
 
     this.sizeX = this.size.x * this.scale.x;
     this.sizeY = this.size.y * this.scale.y;

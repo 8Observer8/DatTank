@@ -29,7 +29,7 @@ class LandscapeGfx {
         var groundTexture = ResourceManager.getTexture( 'Ground.jpg' );
         groundTexture.wrapS = THREE.RepeatWrapping;
         groundTexture.wrapT = THREE.RepeatWrapping;
-        groundTexture.repeat.set( 30, 30 );
+        groundTexture.repeat.set( 40, 40 );
 
         this.terrainMesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( this.mapSize + this.mapExtraSize, this.mapSize + this.mapExtraSize ), new THREE.MeshBasicMaterial({ depthWrite: false, map: groundTexture, color: 0x777050 }) );
         this.terrainMesh.rotation.x = - Math.PI / 2;
