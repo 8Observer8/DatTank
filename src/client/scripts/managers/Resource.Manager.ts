@@ -27,13 +27,7 @@ class ResourceManagerCore {
 
     //
 
-    private modelsList = [
-        'tanks/T54-bottom.json',
-        'tanks/T54-top.json',
-
-        'towers/T1-base.json',
-        'towers/T1-top.json'
-    ];
+    private modelsList = [];
 
     private texturesList = [
         'smoke.png',
@@ -119,7 +113,9 @@ class ResourceManagerCore {
                 'tanks/T29-bottom',
                 'tanks/T29-top',
                 'tanks/T44-bottom',
-                'tanks/T44-top'
+                'tanks/T44-top',
+                'tanks/T54-bottom',
+                'tanks/T54-top'
             ]
         }
     };
