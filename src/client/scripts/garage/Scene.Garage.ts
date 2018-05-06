@@ -96,7 +96,7 @@ class GarageScene {
             let object = new THREE.Object3D();
             let texture = textureLoader.load( '/resources/textures/' + modelName + '.jpg' );
 
-            model = ResourceManager.getModel( modelName + '-top' );
+            model = ResourceManager.getModel( 'tanks/' + modelName + '-top' );
             for ( let i = 0, il = model.material.length; i < il; i ++ ) {
 
                 model.material[ i ].map = texture;
@@ -109,7 +109,7 @@ class GarageScene {
             mesh.scale.set( 0.8, 0.8, 0.8 );
             object.add( mesh );
 
-            model = ResourceManager.getModel( modelName + '-bottom' );
+            model = ResourceManager.getModel( 'tanks/' + modelName + '-bottom' );
             for ( let i = 0, il = model.material.length; i < il; i ++ ) {
 
                 model.material[ i ].map = texture;

@@ -241,6 +241,7 @@ class MorphBlendMesh extends THREE.Mesh {
 		let pattern = /([a-z]+)_?(\d+)/i;
 		let firstAnimation, frameRanges = {};
 		let geometry = this.geometry;
+		geometry.morphTargets = geometry.morphTargets || [];
 
 		for ( let i = 0, il = geometry.morphTargets.length; i < il; i ++ ) {
 

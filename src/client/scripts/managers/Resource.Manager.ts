@@ -82,14 +82,14 @@ class ResourceManagerCore {
             url: '/resources/garage.pack',
             models: [
                 'Garage',
-                'IS2-bottom',
-                'IS2-top',
-                'T29-bottom',
-                'T29-top',
-                'T44-bottom',
-                'T44-top',
-                'T54-bottom',
-                'T54-top'
+                'tanks/IS2-bottom',
+                'tanks/IS2-top',
+                'tanks/T29-bottom',
+                'tanks/T29-top',
+                'tanks/T44-bottom',
+                'tanks/T44-top',
+                'tanks/T54-bottom',
+                'tanks/T54-top'
             ]
         },
         ingame: {
@@ -107,7 +107,7 @@ class ResourceManagerCore {
                 'decorations/Tree6',
                 'decorations/Tree7',
                 'decorations/Tree8',
-                'decorations/Ruin1',
+                // 'decorations/Ruin1',
                 'boxes/AmmoBox',
                 'boxes/HealthBox',
                 'towers/T1-base',
