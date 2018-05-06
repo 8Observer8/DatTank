@@ -4,6 +4,7 @@
 */
 
 import * as THREE from 'three';
+import { MorphBlendMesh } from "./../utils/MorphMesh.Gfx";
 
 import * as OMath from "./../../OMath/Core.OMath";
 import { GfxCore } from "./../Core.Gfx";
@@ -21,8 +22,8 @@ import { BlastSmokeGfx } from '../effects/BlastSmoke.Gfx';
 class TankGfx {
 
     private object: THREE.Object3D = new THREE.Object3D();
-    private topMesh: THREE.Mesh;
-    private baseMesh: THREE.Mesh;
+    private topMesh: MorphBlendMesh;
+    private baseMesh: MorphBlendMesh;
     private mixer: THREE.AnimationMixer;
     private tank: TankCore;
     private traces: TankTracesGfx = new TankTracesGfx();
@@ -111,8 +112,7 @@ class TankGfx {
 
     public shoot () {
 
-        // this.animations['shotAction'].stop();
-        // this.animations['shotAction'].play();
+        this.topMesh.playAnimation('shoot');
         this.blastSmoke.show();
 
     };
@@ -161,7 +161,9 @@ class TankGfx {
         this.friendlyFireLabel.update( time, delta );
         this.damageSmoke.update( time, delta );
         this.blastSmoke.update( time, delta );
-        this.mixer.update( delta / 1000 );
+        
+        this.topMesh.update( delta / 1000 );
+        this.baseMesh.update( delta / 1000 );
 
     };
 
@@ -186,7 +188,7 @@ class TankGfx {
 
         }
 
-        this.baseMesh = new THREE.Mesh( tankBaseModel.geometry, materials );
+        this.baseMesh = new MorphBlendMesh( tankBaseModel.geometry, materials );
         this.baseMesh.scale.set( 10, 10, 10 );
         this.object.add( this.baseMesh );
 
@@ -203,7 +205,7 @@ class TankGfx {
 
         }
 
-        this.topMesh = new THREE.Mesh( tankTopModel.geometry, materials );
+        this.topMesh = new MorphBlendMesh( tankTopModel.geometry, materials );
         this.topMesh.scale.set( 10, 10, 10 );
         this.object.add( this.topMesh );
 
@@ -216,24 +218,6 @@ class TankGfx {
         tankShadow.position.y += 0.5;
         tankShadow.renderOrder = 10;
         this.object.add( tankShadow );
-
-        //
-
-        this.mixer = new THREE.AnimationMixer( this.object );
-
-        let shotAction, deathAction1, deathAction2;
-
-        // shotAction = this.mixer.clipAction( tankTopModel.geometry.animations[0], this.topMesh );
-        // shotAction.setDuration( 0.5 ).setLoop( THREE.LoopOnce, 1 );
-        // this.animations['shotAction'] = shotAction;
-
-        // deathAction1 = this.mixer.clipAction( tankTopModel.geometry.animations[1], this.topMesh );
-        // deathAction1.setDuration( 1 ).setLoop( THREE.LoopOnce, 1 );
-        // this.animations['deathAction1'] = deathAction1;
-
-        // deathAction2 = this.mixer.clipAction( tankBaseModel.geometry.animations[0], this.baseMesh );
-        // deathAction2.setDuration( 2 ).setLoop( THREE.LoopOnce, 1 );
-        // this.animations['deathAction2'] = deathAction2;
 
         //
 
@@ -261,11 +245,8 @@ class TankGfx {
 
     public destroy () {
 
-        this.animations['deathAction1'].stop();
-        this.animations['deathAction2'].stop();
-
-        this.animations['deathAction1'].play();
-        this.animations['deathAction2'].play();
+        this.topMesh.playAnimation('death');
+        this.baseMesh.playAnimation('death');
 
         setTimeout( () => {
 

@@ -82,10 +82,14 @@ class ResourceManagerCore {
             url: '/resources/garage.pack',
             models: [
                 'Garage',
-                'IS2',
-                'T29',
-                'T44',
-                'T54'
+                'IS2-bottom',
+                'IS2-top',
+                'T29-bottom',
+                'T29-top',
+                'T44-bottom',
+                'T44-top',
+                'T54-bottom',
+                'T54-top'
             ]
         },
         ingame: {
@@ -107,15 +111,7 @@ class ResourceManagerCore {
                 'boxes/AmmoBox',
                 'boxes/HealthBox',
                 'towers/T1-base',
-                'towers/T1-top',
-                'tanks/IS2-bottom',
-                'tanks/IS2-top',
-                'tanks/T29-bottom',
-                'tanks/T29-top',
-                'tanks/T44-bottom',
-                'tanks/T44-top',
-                'tanks/T54-bottom',
-                'tanks/T54-top'
+                'towers/T1-top'
             ]
         }
     };
@@ -162,7 +158,7 @@ class ResourceManagerCore {
                                 material:   []
                             };
 
-                            for ( let i = 0, il = config.materials.length; i < il; i ++ ) {
+                            for ( let i = 0, il = config['meta'].materials; i < il; i ++ ) {
 
                                 model.material.push( new THREE.MeshLambertMaterial({ color: 0xaaaaaa }) );
 
@@ -170,7 +166,7 @@ class ResourceManagerCore {
 
                             //
 
-                            let facesCount = config['metadata']['faces'];
+                            let facesCount = config['meta']['faces'];
                             let verticesCount = facesCount * 3;
 
                             // set model attributes
@@ -188,7 +184,7 @@ class ResourceManagerCore {
                             model.geometry.addAttribute( 'position', positionAttr );
                             model.geometry.computeVertexNormals();
 
-                            if ( config.metadata.uvs ) {
+                            if ( config.meta.uvs !== false ) {
 
                                 let uvs = new Int16Array( buffer, 2 * 3 * verticesCount, 2 * verticesCount );
                                 let newUvs = new Float32Array( uvs.length );
@@ -218,7 +214,7 @@ class ResourceManagerCore {
 
                             // set model morph buffers if needed
 
-                            var morphTargetsCount = config['metadata']['morphTargets'];
+                            var morphTargetsCount = config['meta']['morphTargets'];
 
                             if ( morphTargetsCount ) {
 
@@ -227,7 +223,11 @@ class ResourceManagerCore {
 
                                 for ( let i = 0, il = config.animations.length; i < il; i ++ ) {
 
-                                    model.geometry['morphTargets'].push({ name: config.animations[ i ].name });
+                                    for ( let j = 0, jl = config.animations[ i ].end - config.animations[ i ].start; j < jl; j ++ ) {
+                                    
+                                        model.geometry['morphTargets'].push({ name: config.animations[ i ].name + j });
+
+                                    }
 
                                 }
 

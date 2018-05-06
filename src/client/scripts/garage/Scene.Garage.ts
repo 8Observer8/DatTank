@@ -90,53 +90,42 @@ class GarageScene {
         let model, mesh, texture;
         let textureLoader = new THREE.TextureLoader();
 
-        model = ResourceManager.getModel('IS2');
-        mesh = new THREE.Mesh( model.geometry, model.material );
-        texture = textureLoader.load( '/resources/textures/IS2.jpg' );
-        mesh.material[0].map = texture;
-        mesh.material[0].color = new THREE.Color( 0xbbbbbb );
-        mesh.visible = true;
-        mesh.castShadow = true;
-        mesh.receiveShadow = true;
-        mesh.scale.set( 0.8, 0.8, 0.8 );
-        this.scene.add( mesh );
-        this.models['IS2'] = mesh;
+        for ( let i = 0; i < 4; i ++ ) {
 
-        model = ResourceManager.getModel('T29');
-        mesh = new THREE.Mesh( model.geometry, model.material );
-        texture = textureLoader.load( '/resources/textures/T29.jpg' );
-        mesh.material[0].map = texture;
-        mesh.material[0].color = new THREE.Color( 0xbbbbbb );
-        mesh.visible = true;
-        mesh.castShadow = true;
-        mesh.receiveShadow = true;
-        mesh.scale.set( 0.8, 0.8, 0.8 );
-        this.scene.add( mesh );
-        this.models['T29'] = mesh;
+            let modelName = ['IS2', 'T29', 'T44', 'T54'][ i ];
+            let object = new THREE.Object3D();
+            let texture = textureLoader.load( '/resources/textures/' + modelName + '.jpg' );
 
-        model = ResourceManager.getModel('T44');
-        mesh = new THREE.Mesh( model.geometry, model.material );
-        texture = textureLoader.load( '/resources/textures/T44.jpg' );
-        mesh.material[0].map = texture;
-        mesh.material[0].color = new THREE.Color( 0xbbbbbb );
-        mesh.visible = true;
-        mesh.castShadow = true;
-        mesh.receiveShadow = true;
-        mesh.scale.set( 0.8, 0.8, 0.8 );
-        this.scene.add( mesh );
-        this.models['T44'] = mesh;
+            model = ResourceManager.getModel( modelName + '-top' );
+            for ( let i = 0, il = model.material.length; i < il; i ++ ) {
 
-        model = ResourceManager.getModel('T54');
-        mesh = new THREE.Mesh( model.geometry, model.material );
-        texture = textureLoader.load( '/resources/textures/T54.jpg' );
-        mesh.material[0].map = texture;
-        mesh.material[0].color = new THREE.Color( 0xbbbbbb );
-        mesh.visible = true;
-        mesh.castShadow = true;
-        mesh.receiveShadow = true;
-        mesh.scale.set( 0.8, 0.8, 0.8 );
-        this.scene.add( mesh );
-        this.models['T54'] = mesh;
+                model.material[ i ].map = texture;
+                model.material[ i ].color = new THREE.Color( 0xbbbbbb );
+
+            }
+            mesh = new THREE.Mesh( model.geometry, model.material );
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
+            mesh.scale.set( 0.8, 0.8, 0.8 );
+            object.add( mesh );
+
+            model = ResourceManager.getModel( modelName + '-bottom' );
+            for ( let i = 0, il = model.material.length; i < il; i ++ ) {
+
+                model.material[ i ].map = texture;
+                model.material[ i ].color = new THREE.Color( 0xbbbbbb );
+
+            }
+            mesh = new THREE.Mesh( model.geometry, model.material );
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
+            mesh.scale.set( 0.8, 0.8, 0.8 );
+            object.add( mesh );
+
+            this.scene.add( object );
+            this.models[ modelName ] = object;
+
+        }
 
         model = ResourceManager.getModel('Garage');
         mesh = new THREE.Mesh( model.geometry, [ new THREE.MeshPhongMaterial({ color: 0xaaaaaa }) ] );

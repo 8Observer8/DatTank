@@ -29,9 +29,13 @@ function convert () {
 
     var packBinObject = {
         bin:        false,
-        metadata:   {
-            metadata:   input.metadata,
-            materials:  input.materials,
+        data:   {
+            meta:   {
+                vertices:       0,
+                faces:          0,
+                morphTargets:   0,
+                materials:      object.materials.length
+            },
             groups:     [],
             animations: []
         }
@@ -42,24 +46,32 @@ function convert () {
     for ( var i = 0, il = buffGeometry.groups.length; i < il; i ++ ) {
 
         var group = buffGeometry.groups[ i ];
-        packBinObject.metadata.groups.push( [ group.start, group.materialIndex, group.count ] );
+        packBinObject.data.groups.push( [ group.start, group.materialIndex, group.count ] );
 
     }
 
     // process animations metadata
 
     if ( geometry.animations ) {
+
+        var offset = 0;
     
         for ( var i = 0, il = geometry.animations.length; i < il; i ++ ) {
 
             var animation = geometry.animations[ i ];
 
-            packBinObject.metadata.animations.push({
+            packBinObject.data.animations.push({
                 name:       animation.name,
-                duration:   animation.duration
+                duration:   animation.duration,
+                start:      offset,
+                end:        offset + animation.tracks.length
             });
 
+            offset += animation.tracks.length;
+
         }
+
+        packBinObject.data.meta.morphTargets = offset;
 
     }
 
@@ -67,7 +79,9 @@ function convert () {
 
     var binObjLength = 0;
     var byteOffset = 0;
-    packBinObject.metadata.metadata.faces = geometry.faces.length;
+
+    packBinObject.data.meta.vertices = geometry.vertices.length;
+    packBinObject.data.meta.faces = geometry.faces.length;
 
     for ( var attrName in buffGeometry.attributes ) {
 
@@ -150,7 +164,7 @@ function convert () {
         var a = document.createElement("a");
         document.body.appendChild( a );
         a.style = "display: none";
-        var blob = new Blob( [ JSON.stringify( packBinObject.metadata ) ], { type: "text/plain" } );
+        var blob = new Blob( [ JSON.stringify( packBinObject.data ) ], { type: "text/plain" } );
         var url = window.URL.createObjectURL( blob );
         a.href = url;
         a.download = 'model.conf';
