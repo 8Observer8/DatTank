@@ -31,6 +31,9 @@ class ControlsManagerCore {
     private stopMovingLeft = false;
     private stopMovingRight = false;
 
+    private intersectPlane: THREE.Mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 10000, 10000 ), new THREE.MeshBasicMaterial({ visible: false }) );
+    private raycaster: THREE.Raycaster = new THREE.Raycaster();
+
     //
 
     private startShooting () {
@@ -276,11 +279,17 @@ class ControlsManagerCore {
 
         if ( me.tank.moveDirection.x || me.tank.moveDirection.y || Math.abs( this.mousePos.x - this.prevMousePos.x ) > 0.02 || Math.abs( this.mousePos.y - this.prevMousePos.y ) > 0.02 ) {
 
-            let vector = me.tank.get2DPosition();
+            this.raycaster.setFromCamera( this.mousePos, GfxCore.camera );
+            let intersects = this.raycaster.intersectObjects( [ this.intersectPlane ] );
 
-            if ( this.prevMousePos.distanceTo( this.mousePos ) > 0.01 ) {
+            if ( intersects.length === 1 && this.prevMousePos.distanceTo( this.mousePos ) > 0.01 ) {
 
-                var angle = Math.atan2( - vector.y + this.mousePos.y, - vector.x + this.mousePos.x ) - Math.PI + me.tank.rotation;
+                this.prevMousePos.copy( this.mousePos );
+
+                let vector = intersects[0].point;
+                let center = Arena.me.tank.position;
+
+                var angle = Math.atan2( - vector.x + center.x, - vector.z + center.z ) + Math.PI / 2;
         
                 if ( Math.abs( angle - me.tank.topRotation ) > 0.003 ) {
         
@@ -295,6 +304,10 @@ class ControlsManagerCore {
     };
 
     public init () {
+
+        this.intersectPlane.position.y = 20;
+        this.intersectPlane.rotation.x = - Math.PI / 2;
+        GfxCore.scene.add( this.intersectPlane );
 
         this.keyInit();
         this.mouseInit();

@@ -46,12 +46,6 @@ class TankCore {
 
     //
 
-    public get2DPosition () {
-
-        return this.gfx.get2DPosition();
-
-    };
-
     public startShooting () {
 
         this.network.startShooting();

@@ -80,16 +80,6 @@ class TankGfx {
 
     };
 
-    public get2DPosition () {
-
-        let vector = new THREE.Vector3();
-        vector.setFromMatrixPosition( this.topMesh.matrixWorld );
-        vector.project( GfxCore.camera );
-
-        return vector;
-
-    };
-
     public setPosition ( position: OMath.Vec3 ) {
 
         this.object.position.x = position.x;

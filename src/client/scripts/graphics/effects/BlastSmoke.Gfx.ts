@@ -95,7 +95,7 @@ class BlastSmokeGfx {
         material.depthWrite = false;
 
         this.object.position.x += offset.x;
-        this.object.position.y += offset.y;
+        this.object.position.y += offset.y + 2;
         this.object.position.z += offset.z;
 
         for ( var i = 0; i < this.spriteNumber; i ++ ) {
