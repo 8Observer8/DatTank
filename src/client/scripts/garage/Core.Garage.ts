@@ -87,8 +87,7 @@ class Garage {
 
     public nextTank () {
 
-        let tankList = Object.keys( Tanks );
-        tankList.pop();
+        let tankList = Tanks.getList();
         let currentIndex = tankList.indexOf( this.currentTank );
         if ( currentIndex === tankList.length - 1 ) currentIndex = -1;
 
@@ -99,8 +98,7 @@ class Garage {
 
     public prevTank () {
 
-        let tankList = Object.keys( Tanks );
-        tankList.pop();
+        let tankList = Tanks.getList();
         let currentIndex = tankList.indexOf( this.currentTank );
         if ( currentIndex === 0 ) currentIndex = tankList.length;
 
@@ -152,8 +150,11 @@ class Garage {
         let maxArmour = 0;
         let maxBullet = 0;
         let maxAmmoCapacity = 0;
+        let tanks = TankList.getList();
 
-        for ( let tankName in TankList ) {
+        for ( let i = 0, il = tanks.length; i < il; i ++ ) {
+
+            let tankName = tanks[ i ];
 
             maxSpeed = Math.max( maxSpeed, TankList[ tankName ].speed );
             maxRpm = Math.max( maxRpm, TankList[ tankName ].rpm );

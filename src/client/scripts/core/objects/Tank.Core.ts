@@ -318,7 +318,7 @@ let TankList = {
 
         for ( let item in TankList ) {
 
-            if ( typeof item === "string" ) {
+            if ( TankList[ item ].tid !== undefined ) {
 
                 if ( TankList[ item ].tid === tankId ) {
 
@@ -331,6 +331,23 @@ let TankList = {
         }
 
         return null;
+
+    },
+    getList: function () {
+
+        let list = [];
+
+        for ( let item in TankList ) {
+
+            if ( TankList[ item ].tid !== undefined ) {
+
+                list.push( item );
+
+            }
+
+        }
+
+        return list;
 
     }
 };
