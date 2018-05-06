@@ -127,9 +127,14 @@ class ControlsManagerCore {
 
     };
 
-    private mouseInit () {
+    public mouseInit () {
 
         let viewport = $('#viewport #renderport, #kill-events');
+
+        viewport.off('mousedown');
+        viewport.off('mousemove');
+        viewport.off('mouseup');
+        viewport.off('contextmenu');
 
         viewport.bind( 'mousedown', this.mouseDown.bind( this ) );
         viewport.bind( 'mousemove', this.mouseMove.bind( this ) );

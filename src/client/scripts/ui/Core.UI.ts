@@ -7,6 +7,7 @@ import { UILandingModule } from "./Landing.UI";
 import { UIInGameModule } from "./InGame.UI";
 import { GfxCore } from "./../graphics/Core.Gfx";
 import { SoundManager } from "./../managers/Sound.Manager";
+import { ControlsManager } from "./../managers/Control.Manager";
 
 //
 
@@ -35,6 +36,8 @@ class UICore {
             GfxCore.setQuality('LOW');
 
         }
+
+        ControlsManager.mouseInit();
 
         if ( ! withoutSound ) {
 
