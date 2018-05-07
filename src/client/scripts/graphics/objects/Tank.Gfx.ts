@@ -111,6 +111,12 @@ class TankGfx {
 
         let tank = this.tank;
 
+        if ( tank.health <= 0 ) {
+
+            return;
+
+        }
+
         // if tank moves update tracks
 
         let track1Map = this.baseMesh.material[1].map;
