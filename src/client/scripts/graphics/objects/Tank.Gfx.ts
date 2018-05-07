@@ -24,7 +24,6 @@ class TankGfx {
     private object: THREE.Object3D = new THREE.Object3D();
     private topMesh: MorphBlendMesh;
     private baseMesh: MorphBlendMesh;
-    private mixer: THREE.AnimationMixer;
     private tank: TankCore;
     private traces: TankTracesGfx = new TankTracesGfx();
     public label: TankLabelGfx = new TankLabelGfx();
@@ -32,7 +31,6 @@ class TankGfx {
     public damageSmoke: DamageSmokeGfx = new DamageSmokeGfx();
     public blastSmoke: BlastSmokeGfx = new BlastSmokeGfx();
 
-    private animations = {};
     private sounds = {};
 
     //

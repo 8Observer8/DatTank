@@ -4,11 +4,12 @@
 */
 
 import * as OMath from "./../OMath/Core.OMath";
-import { Arena } from "../core/Arena.Core";
+import { Arena } from "./../core/Arena.Core";
 import { UI } from "./../ui/Core.UI";
 import { Game } from "./../Game";
-import { TeamCore } from "../core/Team.Core";
-import { GfxCore } from "../graphics/Core.Gfx";
+import { TeamCore } from "./../core/Team.Core";
+import { GfxCore } from "./../graphics/Core.Gfx";
+import { SoundManager } from "./../managers/Sound.Manager";
 
 //
 
@@ -24,6 +25,8 @@ class UIInGameModule {
 
     public updateTankStat ( event ) {
 
+        if ( Arena.me.tank.health <= 0 ) return;
+
         let tank = Arena.me.tank;
         let statName = event.target.parentNode.className.replace('bonus ', '');
         Arena.me.updateStats( statName );
@@ -36,7 +39,7 @@ class UIInGameModule {
         $('.stats-update-block .bonus.gun .bonus-title span').html( tank.bullet + ' -> ' + ( tank.bullet + 5 ) );
         $('.stats-update-block .bonus.ammo-capacity .bonus-title span').html( tank.ammoCapacity + ' -> ' + ( tank.ammoCapacity + 15 ) );
 
-        // soundManager.playMenuSound();
+        SoundManager.playSound('MenuClick');
 
         //
 
@@ -52,6 +55,8 @@ class UIInGameModule {
     };
 
     public showTankStatsUpdate ( bonusLevels ) {
+
+        if ( Arena.me.tank.health <= 0 ) return;
 
         let tank = Arena.me.tank;
 

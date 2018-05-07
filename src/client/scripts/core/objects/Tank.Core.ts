@@ -94,6 +94,7 @@ class TankCore {
         if ( this.player.id === Arena.me.id ) {
 
             GfxCore.addCameraShake( 1000, 1.5 );
+            UI.InGame.hideTankStatsUpdate();
 
         }
 

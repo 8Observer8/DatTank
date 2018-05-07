@@ -21,14 +21,12 @@ class TowerGfx {
     private object: THREE.Object3D = new THREE.Object3D();
     private topMesh: MorphBlendMesh;
     private baseMesh: THREE.Mesh;
-    private mixer: THREE.AnimationMixer;
     private tower: TowerCore;
 
     public label: TowerLabelGfx = new TowerLabelGfx();
     public changeTeamEffect: TowerChangeTeamGfx = new TowerChangeTeamGfx();
     public blastSmoke: BlastSmokeGfx = new BlastSmokeGfx();
 
-    private animations = {};
     private sounds = {};
 
     //
@@ -72,8 +70,7 @@ class TowerGfx {
 
     public shoot () {
 
-        this.topMesh.stopAnimation('animation');
-        this.topMesh.playAnimation('animation');
+        this.topMesh.playAnimation('shoot');
         this.blastSmoke.show();
 
     };

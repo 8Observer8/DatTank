@@ -150,11 +150,11 @@ class PlayerCore {
 
                 if ( killer instanceof TowerCore ) {
 
-                    UI.InGame.showContinueBox( '<br>' + killer.team.name + ' team tower', killer.team.color );
+                    UI.InGame.showContinueBox( '<br>' + killer.team.name + ' team tower', OMath.intToHex( killer.team.color ) );
 
                 } else if ( killer instanceof TankCore ) {
 
-                    UI.InGame.showContinueBox( killer.username, killer.team.color );
+                    UI.InGame.showContinueBox( killer.username, OMath.intToHex( killer.team.color ) );
 
                 } else {
 
