@@ -380,6 +380,13 @@ Player.prototype.changeScore = function ( delta ) {
 Player.prototype.updateStats = function ( statId ) {
 
     var stats = [ 'speed', 'rpm', 'armour', 'gun', 'ammoCapacity' ];
+    var levelsStats = {
+        speed:          [ 5, 3, 2, 2, 2, 3, 1, 3, 3, 2, 5, 3, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+        rpm:            [ 30, 20, 20, 15, 10, 15, 20, 20, 30, 40, 30, 20, 10, 10, 20, 30, 20, 10, 20, 20, 20, 10, 15 ],
+        armour:         [ 40, 30, 20, 20, 30, 40, 50, 20, 30, 50, 30, 20, 10, 10, 20, 20, 30, 20, 10, 15, 20, 10, 10 ],
+        gun:            [ 20, 15, 15, 20, 15, 10, 5, 5, 10, 15, 20, 30, 35, 40, 20, 10, 15, 15, 20, 10, 10, 10, 30 ],
+        ammoCapacity:   [ 30, 20, 20, 40, 30, 20, 5, 5, 10, 20, 15, 20, 15, 30, 20, 10, 15, 15, 10, 10, 10, 20, 30 ]
+    };
     var statName = stats[ statId ];
 
     if ( this.bonusLevels <= 0 ) return false;
@@ -389,28 +396,28 @@ Player.prototype.updateStats = function ( statId ) {
 
         case 'speed':
 
-            this.tank.speed += 3;
+            this.tank.speed += levelsStats['speed'][ this.level - this.bonusLevels ];
             this.moveSpeed = this.originalMoveSpeed * this.tank.speed / 40;
             break;
 
         case 'rpm':
 
-            this.tank.rpm *= 1.1;
+            this.tank.rpm += levelsStats['rpm'][ this.level - this.bonusLevels ];
             break;
 
         case 'armour':
 
-            this.tank.armour += 10;
+            this.tank.armour += levelsStats['armour'][ this.level - this.bonusLevels ];
             break;
 
         case 'gun':
 
-            this.tank.bullet += 5;
+            this.tank.bullet += levelsStats['gun'][ this.level - this.bonusLevels ];
             break;
 
         case 'ammoCapacity':
 
-            this.tank.ammoCapacity += 15;
+            this.tank.ammoCapacity += levelsStats['ammoCapacity'][ this.level - this.bonusLevels ];
             break;
 
         default:
