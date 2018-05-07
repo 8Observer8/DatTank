@@ -249,10 +249,7 @@ class UIInGameModule {
 
             $('#top-killers #divider').show();
             $('#top-killers .killer-outer.last').show();
-
-            setTimeout( () => {
-                $('#top-killers .killer-outer.last').addClass('myplace');
-            }, 10 );
+            $('#top-killers .killer-outer.last').addClass('myplace');
 
         } else {
 
