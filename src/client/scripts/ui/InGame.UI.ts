@@ -104,6 +104,8 @@ class UIInGameModule {
 
         this.hideTankStatsUpdate();
 
+        $('#viewport #renderport').addClass('dead');
+
         $('#continue-box-wrapper #continue-btn').off();
         $('#continue-box-wrapper #continue-btn').click( () => {
 
@@ -125,6 +127,7 @@ class UIInGameModule {
 
     public hideContinueBox () {
 
+        $('#viewport #renderport').removeClass('dead');
         $('#continue-box-wrapper').css( 'opacity', 0 );
 
         setTimeout( () => {

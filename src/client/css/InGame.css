@@ -336,9 +336,12 @@
     height: 100% !important;
     z-index: 0;
     cursor: url('../resources/img/cursor.png'), auto;
+    transition: filter 2s ease;
 }
 
-
+#viewport #renderport.dead {
+    filter: blur(2px) grayscale(0.8) sepia(1);
+}
 
 /**/
 
