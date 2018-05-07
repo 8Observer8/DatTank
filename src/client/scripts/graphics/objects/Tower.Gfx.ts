@@ -83,7 +83,7 @@ class TowerGfx {
         this.tower = tower;
 
         let materials = [];
-        let towerBaseModel = ResourceManager.getModel( 'towers/' + tower.title + '-base' );
+        let towerBaseModel = ResourceManager.getModel( 'towers/' + tower.title + '-bottom' );
         let towerTopModel = ResourceManager.getModel( 'towers/' + tower.title + '-top' );
 
         // tower base part
@@ -98,7 +98,7 @@ class TowerGfx {
 
         this.baseMesh = new THREE.Mesh( towerBaseModel.geometry, materials );
         this.baseMesh.rotation.y = 0;
-        this.baseMesh.scale.set( 27, 27, 27 );
+        this.baseMesh.scale.set( 10, 10, 10 );
         this.object.add( this.baseMesh );
 
         // tower top part
@@ -117,7 +117,7 @@ class TowerGfx {
 
         this.topMesh = new MorphBlendMesh( towerTopModel.geometry, materials );
         this.topMesh.rotation.y = tower.rotation;
-        this.topMesh.scale.set( 27, 27, 27 );
+        this.topMesh.scale.set( 10, 10, 10 );
         this.object.add( this.topMesh );
 
         //
@@ -134,7 +134,7 @@ class TowerGfx {
 
         //
 
-        this.blastSmoke.init( this.topMesh, new OMath.Vec3( 0, 1, - 2 ) );
+        this.blastSmoke.init( this.topMesh, new OMath.Vec3( 0, 0, - 6.5 ) );
         this.changeTeamEffect.init( this.object );
         this.label.init( this.object );
 

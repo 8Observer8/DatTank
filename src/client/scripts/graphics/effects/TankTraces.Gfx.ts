@@ -23,7 +23,7 @@ class TankTracesGfx {
 
     public dispose () {
 
-        //
+        GfxCore.coreObjects['tank-tracks'].remove( this.object );
 
     };
 

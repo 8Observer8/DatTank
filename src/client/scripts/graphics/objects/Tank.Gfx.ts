@@ -252,6 +252,10 @@ class TankGfx {
 
     public dispose () {
 
+        // dispose tank traces
+
+        this.traces.dispose();
+
         // stop all audio
 
         for ( var s in this.sounds ) {

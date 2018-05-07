@@ -110,7 +110,7 @@ class ResourceManagerCore {
                 // 'decorations/Ruin1',
                 'boxes/AmmoBox',
                 'boxes/HealthBox',
-                'towers/T1-base',
+                'towers/T1-bottom',
                 'towers/T1-top'
             ]
         }
