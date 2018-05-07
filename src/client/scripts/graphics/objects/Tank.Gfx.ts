@@ -244,13 +244,6 @@ class TankGfx {
         this.topMesh.playAnimation('death');
         this.baseMesh.playAnimation('death');
 
-        setTimeout( () => {
-
-            this.animations['deathAction1'].paused = true;
-            this.animations['deathAction2'].paused = true;
-
-        }, 1100 );
-
         LargeExplosionManager.showExplosion( this.tank.position );
 
         this.sounds['explosion'].play();

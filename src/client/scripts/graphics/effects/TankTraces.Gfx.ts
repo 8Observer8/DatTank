@@ -123,7 +123,7 @@ class TankTracesGfx {
 
         }
 
-        // GfxCore.coreObjects['tank-tracks'].add( this.object );
+        GfxCore.coreObjects['tank-tracks'].add( this.object );
 
     };
 

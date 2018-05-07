@@ -154,7 +154,7 @@ class PlayerCore {
 
                 } else if ( killer instanceof TankCore ) {
 
-                    // ui.showContinueBox( killer.login, killer.team.color );
+                    UI.InGame.showContinueBox( killer.username, killer.team.color );
 
                 } else {
 
@@ -172,7 +172,12 @@ class PlayerCore {
 
         this.tank.dispose();
         this.tank = null;
-        this.network.dispose();
+
+        if ( Arena.me.id !== this.id ) {
+        
+            this.network.dispose();
+
+        }
 
     };
 
