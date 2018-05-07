@@ -185,6 +185,7 @@ class TankGfx {
         this.baseMesh = new MorphBlendMesh( tankBaseModel.geometry, materials );
         this.baseMesh.scale.set( 10, 10, 10 );
         this.object.add( this.baseMesh );
+        this.object.rotation.y = tank.rotation;
 
         // add tank top mesh
 

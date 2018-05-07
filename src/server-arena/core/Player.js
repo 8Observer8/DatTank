@@ -78,7 +78,7 @@ var Player = function ( arena, params ) {
 
     this.position = new Game.Vec3();
     this.deltaPosition = new Game.Vec3();
-    this.rotation = 0;
+    this.rotation = Math.random() * Math.PI * 2;
     this.rotationTop = - Math.PI / 2;
 
     this.networkBuffers = {};
@@ -153,8 +153,8 @@ Player.prototype.respawn = function ( tankName ) {
     this.health = 100;
     this.ammo = this.tank.ammoCapacity;
     this.position.set( newPosition.x, newPosition.y, newPosition.z );
-    this.rotation = 0;
-    this.rotationTop = 0;
+    this.rotation = Math.random() * Math.PI * 2;
+    this.rotationTop = - Math.PI / 2;
 
     var playerJSON = this.toPrivateJSON();
     this.position = newPosition;
