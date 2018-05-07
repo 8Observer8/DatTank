@@ -91,7 +91,7 @@ class ArenaCore {
 
     public removePlayer ( player ) {
 
-        PlayerManager.remove( player.id );
+        PlayerManager.remove( [ player.id ] );
 
     };
 
@@ -106,7 +106,7 @@ class ArenaCore {
 
         for ( let i = 0, il = towers.length; i < il; i ++ ) {
 
-            TowerManager.remove( towers[ i ].id );
+            TowerManager.remove( [ towers[ i ].id ] );
             TowerManager.add( towers[ i ] );
 
         }
@@ -117,7 +117,7 @@ class ArenaCore {
 
         for ( let i = 0, il = players.length; i < il; i ++ ) {
 
-            PlayerManager.remove( players[ i ].id );
+            PlayerManager.remove( [ players[ i ].id ] );
             PlayerManager.add( new PlayerCore( players[ i ] ) );
 
         }
@@ -128,7 +128,7 @@ class ArenaCore {
 
         for ( let i = 0, il = boxes.length; i < il; i ++ ) {
 
-            BoxManager.remove( boxes[ i ].id );
+            BoxManager.remove( [ boxes[ i ].id ] );
             BoxManager.add( boxes[ i ] );
 
         }
@@ -155,17 +155,13 @@ class ArenaCore {
             if ( ! player || player.id === this.me.id ) continue;
             if ( player.tank.position.distanceTo( this.me.tank.position ) > this.viewRange ) {
 
-                playersToRemove.push( player );
+                playersToRemove.push( player.id );
 
             }
 
         }
 
-        for ( let i = 0, il = playersToRemove.length; i < il; i ++ ) {
-
-            PlayerManager.remove( playersToRemove[ i ] );
-
-        }
+        PlayerManager.remove( playersToRemove );
 
         // remove out of range towers
 
@@ -179,17 +175,13 @@ class ArenaCore {
 
             if ( tower.position.distanceTo( this.me.tank.position ) > this.viewRange ) {
 
-                towersToRemove.push( tower );
+                towersToRemove.push( tower.id );
 
             }
 
         }
 
-        for ( let i = 0, il = towersToRemove.length; i < il; i ++ ) {
-
-            TowerManager.remove( towersToRemove[ i ] );
-
-        }
+        TowerManager.remove( towersToRemove );
 
         // remove out of range boxes
 
@@ -203,17 +195,13 @@ class ArenaCore {
 
             if ( box.position.distanceTo( this.me.tank.position ) > this.viewRange ) {
 
-                boxesToRemove.push( box );
+                boxesToRemove.push( box.id );
 
             }
 
         }
 
-        for ( var i = 0, il = boxesToRemove.length; i < il; i ++ ) {
-
-            BoxManager.remove( boxesToRemove[ i ] );
-
-        }
+        BoxManager.remove( boxesToRemove );
 
     };
 

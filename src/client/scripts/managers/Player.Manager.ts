@@ -28,13 +28,13 @@ class PlayerManagerCore {
 
     };
 
-    public remove ( playerId: number ) {
+    public remove ( playerIds: Array<number> ) {
 
         var newPlayersList = [];
     
         for ( var i = 0, il = this.players.length; i < il; i ++ ) {
     
-            if ( this.players[ i ].id === playerId ) {
+            if ( playerIds.indexOf( this.players[ i ].id ) !== -1 ) {
     
                 this.players[ i ].dispose();
                 continue;

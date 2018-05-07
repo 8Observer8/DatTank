@@ -28,7 +28,7 @@ class BoxCore {
     public pick () {
 
         this.gfx.pick();
-        BoxManager.remove( this.id );
+        BoxManager.remove( [ this.id ] );
 
     };
 

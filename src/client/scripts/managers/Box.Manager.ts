@@ -23,13 +23,13 @@ class BoxManagerCore {
 
     };
 
-    public remove ( boxId: number ) {
+    public remove ( boxIds: Array<number> ) {
 
         let newBoxList = [];
 
         for ( var i = 0, il = this.boxes.length; i < il; i ++ ) {
 
-            if ( this.boxes[ i ].id === boxId ) {
+            if ( boxIds.indexOf( this.boxes[ i ].id ) !== -1 ) {
 
                 this.boxes[ i ].remove();
                 continue;

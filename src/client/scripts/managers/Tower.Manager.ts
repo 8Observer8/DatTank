@@ -24,13 +24,13 @@ class TowerManagerCore {
 
     };
 
-    public remove ( towerId: number ) {
+    public remove ( towerIds: Array<number> ) {
 
         var newTowerList = [];
 
         for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
 
-            if ( this.towers[ i ].id === towerId ) {
+            if ( towerIds.indexOf( this.towers[ i ].id ) !== -1 ) {
 
                 this.towers[ i ].dispose();
                 continue;
