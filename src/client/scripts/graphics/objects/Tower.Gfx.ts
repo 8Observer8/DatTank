@@ -116,6 +116,7 @@ class TowerGfx {
         this.topMesh.rotation.y = tower.rotation;
         this.topMesh.scale.set( 10, 10, 10 );
         this.object.add( this.topMesh );
+        this.topMesh.setAnimationFPS( 'shoot', 6 );
 
         //
 

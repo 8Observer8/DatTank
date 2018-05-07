@@ -203,6 +203,7 @@ class TankGfx {
         this.topMesh = new MorphBlendMesh( tankTopModel.geometry, materials );
         this.topMesh.scale.set( 10, 10, 10 );
         this.object.add( this.topMesh );
+        this.topMesh.setAnimationFPS( 'shoot', 6 );
 
         // add tank shadow
 

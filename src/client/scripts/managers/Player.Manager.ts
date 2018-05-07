@@ -36,7 +36,7 @@ class PlayerManagerCore {
     
             if ( this.players[ i ].id === playerId ) {
     
-                this.players[ i ].tank.dispose();
+                this.players[ i ].dispose();
                 continue;
     
             }
