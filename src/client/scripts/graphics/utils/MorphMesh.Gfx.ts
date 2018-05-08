@@ -28,7 +28,7 @@ class MorphBlendMesh extends THREE.Mesh {
 
 			animation.time += animation.direction * delta;
 
-			if ( animation.time> animation.duration ) {
+			if ( animation.time > animation.duration ) {
 
 				animation.active = false;
 				return;
@@ -97,7 +97,21 @@ class MorphBlendMesh extends THREE.Mesh {
 
 		}
 
-    };
+	};
+	
+	public setFrame ( name: string, frame: number ) {
+
+		let animation = this.animationsMap[ name ];
+
+		for ( let i = 0, il = animation.length; i < il; i ++ ) {
+		
+			this.morphTargetInfluences[ i ] = 0;
+
+		}
+
+		this.morphTargetInfluences[ animation.start + frame ] = 1;
+
+	};
 
     public setAnimationDirectionForward ( name: string ) {
 

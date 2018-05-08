@@ -275,6 +275,12 @@ class TankCore {
         this.gfx.init( this );
         this.network.init( this );
 
+        if ( this.health <= 0 ) {
+
+            this.gfx.makeTankDestroyed();
+
+        }
+
     };
 
     //

@@ -250,6 +250,14 @@ class TankGfx {
 
     };
 
+    public makeTankDestroyed () {
+
+        this.topMesh.setFrame( 'death', 3 );
+        this.baseMesh.setFrame( 'death', 3 );
+        this.damageSmoke.show();
+
+    };
+
     public dispose () {
 
         // dispose tank traces
