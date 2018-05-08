@@ -252,9 +252,8 @@ class TankGfx {
 
     public makeTankDestroyed () {
 
-        this.topMesh.setFrame( 'death', 3 );
-        this.baseMesh.setFrame( 'death', 3 );
-        this.damageSmoke.show();
+        this.topMesh.setFrame( 'death', 2 );
+        this.baseMesh.setFrame( 'death', 2 );
 
     };
 

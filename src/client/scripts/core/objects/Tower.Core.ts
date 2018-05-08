@@ -48,8 +48,15 @@ class TowerCore {
 
     public changeTeam ( newOwnerTeamId: number, killerId?: number ) {
 
+        if ( killerId !== undefined ) {
+
+            this.health = 100;
+
+        }
+
+        //
+
         this.team = TeamManager.getById( newOwnerTeamId );
-        this.health = 100;
         this.gfx.changeTeam( this.team.color, killerId === undefined );
         this.gfx.label.update( this.health, this.armour, this.team.color );
 
