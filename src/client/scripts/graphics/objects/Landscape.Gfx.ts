@@ -137,8 +137,8 @@ class LandscapeGfx {
         let shadowScale;
 
         shadowTexture = ResourceManager.getTexture( objectType + '-shadow.png' );
-        shadowMesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ map: shadowTexture, transparent: true, depthWrite: false, opacity: 0.3 }) );
-        shadowMesh.geometry.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2) );
+        shadowMesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ map: shadowTexture, transparent: true, depthWrite: false, opacity: 0.35 }) );
+        shadowMesh.geometry.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2 ) );
         shadowMesh.material.transparent = true;
         shadowMesh.position.copy( position );
         shadowMesh.position.y = 0.5;
@@ -151,7 +151,7 @@ class LandscapeGfx {
 
             if ( objectType === 'Rock3' ) {
 
-                shadowScale = scale.y;
+                shadowScale = scale.y / 5;
 
             } else {
 
@@ -165,7 +165,7 @@ class LandscapeGfx {
 
         } else if ( objectType.indexOf('Tree') !== -1 ) {
 
-            shadowScale = 5 * scale.y;
+            shadowScale = scale.y;
             shadowMesh.scale.set( shadowScale, shadowScale, shadowScale );
             shadowMesh.position.x += shadowMesh.scale.y - 2;
             shadowMesh.position.z += shadowMesh.scale.y - 4;
