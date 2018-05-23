@@ -28,7 +28,7 @@ class UIInGameModule {
         if ( Arena.me.tank.health <= 0 ) return;
 
         let tank = Arena.me.tank;
-        let statName = event.target.parentNode.className.replace('bonus ', '');
+        let statName = ( typeof event === 'string' ) ? event : event.target.parentNode.className.replace( 'bonus ', '' );
         Arena.me.updateStats( statName );
         var levelsStats = {
             speed:          [ 5, 3, 2, 2, 2, 3, 1, 3, 3, 2, 5, 3, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
@@ -83,11 +83,45 @@ class UIInGameModule {
         $('.stats-update-block .bonus.gun .bonus-title span').html( tank.bullet + ' -> ' + ( tank.bullet + levelsStats['gun'][ tank.player.level ] ) );
         $('.stats-update-block .bonus.ammo-capacity .bonus-title span').html( tank.ammoCapacity + ' -> ' + ( tank.ammoCapacity + levelsStats['ammoCapacity'][ tank.player.level ] ) );
 
-
         $('.stats-update-block').show();
         $('.level-indicator-block').hide();
         $('.stats-update-block .title').html( 'You have ' + bonusLevels + ' bonus levels.' );
         $('.stats-update-block .bonus .increase').click( this.updateTankStat.bind( this ) );
+
+        $( document ).bind( 'keypress', this.statsUpdateByKey.bind( this ) );
+
+    };
+
+    private statsUpdateByKey ( event ) {
+
+        switch ( event.keyCode ) {
+
+            case 49:
+
+                this.updateTankStat('speed');
+                break;
+
+            case 50:
+
+                this.updateTankStat('rpm');
+                break;
+
+            case 51:
+
+                this.updateTankStat('armour');
+                break;
+
+            case 52:
+
+                this.updateTankStat('gun');
+                break;
+
+            case 53:
+
+                this.updateTankStat('ammoCapacity');
+                break;
+
+        }
 
     };
 
@@ -114,6 +148,7 @@ class UIInGameModule {
 
         $('.stats-update-block').hide();
         $('.level-indicator-block').show();
+        $( document ).unbind( 'keypress' );
 
     };
 
