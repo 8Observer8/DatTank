@@ -12,20 +12,20 @@ class LoggerCore {
     public newEvent ( eventName: string, category: string ) {
 
         if ( ! eventName ) {
-    
+
             console.log( 'Unknown event "' + eventName + '".' );
             return;
-    
+
         }
-    
+
         category = category || 'arena';
-    
+
         ga('send', {
             hitType:        'event',
             eventCategory:  category,
             eventAction:    eventName
         });
-    
+
     };
 
     constructor () {

@@ -124,7 +124,7 @@ class ResourceManagerCore {
 
         this.loadPack('garage', function () {
 
-            console.log('done');
+            // nothing here
 
         });
 

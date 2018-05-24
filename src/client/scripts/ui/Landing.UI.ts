@@ -5,6 +5,7 @@
 
 import { UI } from "./Core.UI";
 import { Game } from "./../Game";
+import { Logger } from "../utils/Logger";
 
 //
 
@@ -111,6 +112,10 @@ class UILandingModule {
 
         $('#graphics-quality').click( UI.changeQuality.bind( UI ) );
         $('#sound-on-off').click( UI.changeSound.bind( UI ) );
+
+        $('.share-btns .btn-share-vk').mousedown( Logger.newEvent.bind( Logger, 'ShareVK', 'game' ) );
+        $('.share-btns .btn-share-fb').mousedown( Logger.newEvent.bind( Logger, 'ShareFB', 'game' ) );
+        $('.share-btns .btn-share-tw').mousedown( Logger.newEvent.bind( Logger, 'ShareTW', 'game' ) );
 
         setTimeout( function () { $('.fb-like').animate( { opacity: 1 }, 500 ); }, 1000 );
         setTimeout( function () { $('.folow-btn').animate( { opacity: 1 }, 500 ); }, 1200 );
