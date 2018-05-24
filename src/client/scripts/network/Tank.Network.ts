@@ -12,6 +12,7 @@ import { TankCore } from "./../core/objects/Tank.Core";
 class TankNetwork {
 
     private tank: TankCore;
+    private buffers = {};
 
     //
 
@@ -29,8 +30,26 @@ class TankNetwork {
 
     public startShooting () {
 
-        let buffer = new ArrayBuffer( 2 );
-        let bufferView = new Int16Array( buffer );
+        let buffer, bufferView;
+
+        if ( ! this.buffers['StartShooting'] ) {
+
+            buffer = new ArrayBuffer( 2 );
+            bufferView = new Int16Array( buffer );
+
+            this.buffers['StartShooting'] = {
+                buffer:     buffer,
+                view:       bufferView
+            };
+
+        } else {
+
+            buffer = this.buffers['StartShooting'].buffer;
+            bufferView = this.buffers['StartShooting'].view;
+
+        }
+
+        //
 
         Network.send( 'TankStartShooting', buffer, bufferView );
 
@@ -38,8 +57,26 @@ class TankNetwork {
 
     public stopShooting () {
 
-        let buffer = new ArrayBuffer( 2 );
-        let bufferView = new Int16Array( buffer );
+        let buffer, bufferView;
+
+        if ( ! this.buffers['stopShooting'] ) {
+
+            buffer = new ArrayBuffer( 2 );
+            bufferView = new Int16Array( buffer );
+
+            this.buffers['stopShooting'] = {
+                buffer:     buffer,
+                view:       bufferView
+            };
+
+        } else {
+
+            buffer = this.buffers['stopShooting'].buffer;
+            bufferView = this.buffers['stopShooting'].view;
+
+        }
+
+        //
 
         Network.send( 'TankStopShooting', buffer, bufferView );
 
@@ -47,8 +84,26 @@ class TankNetwork {
 
     public rotateTop ( angle: number ) {
 
-        let buffer = new ArrayBuffer( 4 );
-        let bufferView = new Int16Array( buffer );
+        let buffer, bufferView;
+
+        if ( ! this.buffers['RotateTop'] ) {
+
+            buffer = new ArrayBuffer( 4 );
+            bufferView = new Int16Array( buffer );
+
+            this.buffers['RotateTop'] = {
+                buffer:     buffer,
+                view:       bufferView
+            };
+
+        } else {
+
+            buffer = this.buffers['RotateTop'].buffer;
+            bufferView = this.buffers['RotateTop'].view;
+
+        }
+
+        //
 
         bufferView[ 1 ] = Math.floor( angle * 1000 );
 
@@ -58,8 +113,26 @@ class TankNetwork {
 
     public move ( moveX, moveZ ) {
 
-        let buffer = new ArrayBuffer( 6 );
-        let bufferView = new Int16Array( buffer );
+        let buffer, bufferView;
+
+        if ( ! this.buffers['Move'] ) {
+
+            buffer = new ArrayBuffer( 6 );
+            bufferView = new Int16Array( buffer );
+
+            this.buffers['Move'] = {
+                buffer:     buffer,
+                view:       bufferView
+            };
+
+        } else {
+
+            buffer = this.buffers['Move'].buffer;
+            bufferView = this.buffers['Move'].view;
+
+        }
+
+        //
 
         bufferView[ 0 ] = 0;
         bufferView[ 1 ] = moveX;

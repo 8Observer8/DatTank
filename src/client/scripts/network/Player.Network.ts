@@ -11,6 +11,7 @@ import { PlayerCore } from "./../core/Player.Core";
 class PlayerNetwork {
 
     private player: PlayerCore;
+    private buffers = {};
 
     //
 
@@ -27,8 +28,27 @@ class PlayerNetwork {
 
     public setStatsUpdate ( statsId: number ) {
 
-        let buffer = new ArrayBuffer( 4 );
-        let bufferView = new Int16Array( buffer );
+        let buffer, bufferView;
+
+        if ( ! this.buffers['StatsUpdate'] ) {
+
+            buffer = new ArrayBuffer( 4 );
+            bufferView = new Int16Array( buffer );
+
+            this.buffers['StatsUpdate'] = {
+                buffer:     buffer,
+                view:       bufferView
+            };
+
+        } else {
+
+            buffer = this.buffers['StatsUpdate'].buffer;
+            bufferView = this.buffers['StatsUpdate'].view;
+
+        }
+
+        //
+
         bufferView[1] = statsId;
 
         Network.send( 'PlayerTankUpdateStats', buffer, bufferView );
