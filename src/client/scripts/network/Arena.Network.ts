@@ -83,7 +83,11 @@ class ArenaNetwork {
 
             for ( var j = 0; j < 13; j ++ ) {
 
-                player.login += String.fromCharCode( data[ i * playerBinSize + 11 + j ] );
+                if ( data[ i * playerBinSize + 11 + j ] !== 0 ) {
+                
+                    player.login += String.fromCharCode( data[ i * playerBinSize + 11 + j ] );
+
+                }
 
             }
 
