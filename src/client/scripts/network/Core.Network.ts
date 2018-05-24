@@ -21,7 +21,7 @@ class NetworkCore {
     private messageListeners: object = {};
     private initCallback;
 
-    private host: string = window.location.hostname;
+    private host: string;
 
     private events = {
         in:     {},
@@ -30,7 +30,7 @@ class NetworkCore {
 
     //
 
-    public init ( callback ) {
+    public init ( server, callback ) {
 
         if ( this.transport ) {
 
@@ -40,6 +40,7 @@ class NetworkCore {
         }
 
         this.initCallback = callback;
+        this.host = server.ip;
 
         // register network events
 

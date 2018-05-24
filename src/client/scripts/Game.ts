@@ -34,6 +34,8 @@ class GameCore {
     public garage: Garage = new Garage();
     public gameService: GameService = new GameService();
 
+    private currentServer;
+
     //
 
     public init () {
@@ -79,6 +81,7 @@ class GameCore {
     public preInitArena ( server ) {
 
         Arena.preInit( server.ip, server.id );
+        this.currentServer = server;
         UI.Landing.initPlayBtn();
         this.ready = true;
 
@@ -122,7 +125,7 @@ class GameCore {
 
         Network.addMessageListener( 'ArenaJoinResponse', this.joinArena.bind( this ) );
 
-        Network.init( () => {
+        Network.init( this.currentServer, () => {
 
             let login = $('#username').val() || localStorage.getItem('login') || '';
             localStorage.setItem( 'login', login + '' );

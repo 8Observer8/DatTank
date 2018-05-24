@@ -45,13 +45,15 @@ gulp.task( 'libs', function () {
 gulp.task( 'brf', function () {
 
     var b = browserify({
-        entries: './src/client/scripts/Game.ts',
-        transform: babelify,
-        debug: true
+        entries:    './src/client/scripts/Game.ts',
+        transform:  babelify,
+        debug:      ! argv.prod
     });
     
     b.plugin('tsify', { "lib": ["es6", "dom"] });
+    b.plugin('tinyify', { flat: false });
     b.transform({ global: true }, 'browserify-shim');
+    b.transform('uglifyify', { global: true });
 
     return b.bundle()
         .pipe( source('bundle.js') )
