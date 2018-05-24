@@ -3,7 +3,11 @@
  * DatTank events logger
 */
 
-class Logger {
+class LoggerCore {
+
+    private static instance: LoggerCore;
+
+    //
 
     public newEvent ( eventName: string, category: string ) {
 
@@ -22,10 +26,22 @@ class Logger {
             eventAction:    eventName
         });
     
-    };    
+    };
+
+    constructor () {
+
+        if ( LoggerCore.instance ) {
+
+            return LoggerCore.instance;
+
+        }
+
+        LoggerCore.instance = this;
+
+    };
 
 };
 
 //
 
-export { Logger };
+export let Logger = new LoggerCore();

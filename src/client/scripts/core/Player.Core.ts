@@ -4,6 +4,7 @@
 */
 
 import * as OMath from "./../OMath/Core.OMath";
+import { Logger } from "./../utils/Logger";
 import { TankCore } from "./objects/Tank.Core";
 import { TankList as Tanks } from "./objects/Tank.Core";
 import { Arena } from "./Arena.Core";
@@ -48,6 +49,14 @@ class PlayerCore {
     };
 
     public updateStats ( name: string ) {
+
+        if ( Arena.me.id === this.id ) {
+
+            Logger.newEvent( 'LevelUp', 'game' );
+
+        }
+
+        //
 
         let stats = {
             'speed':          0,
@@ -118,6 +127,10 @@ class PlayerCore {
 
         let tank = localStorage.getItem( 'currentTank' ) || 'IS2';
         this.network.respawn( tank );
+
+        //
+
+        Logger.newEvent( 'Respawn', 'game' );
 
     };
 

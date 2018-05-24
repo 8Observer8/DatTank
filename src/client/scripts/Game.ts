@@ -30,7 +30,6 @@ class GameCore {
 
     //
 
-    public logger: Logger = new Logger();
     public garage: Garage = new Garage();
     public gameService: GameService = new GameService();
 
@@ -90,6 +89,7 @@ class GameCore {
     public play () {
 
         this.garage.hide();
+        Logger.newEvent( 'Play', 'game' );
         SoundManager.playSound('MenuClick');
 
         //

@@ -53,7 +53,12 @@ gulp.task( 'brf', function () {
     b.plugin('tsify', { "lib": ["es6", "dom"] });
     b.plugin('tinyify', { flat: false });
     b.transform({ global: true }, 'browserify-shim');
-    b.transform('uglifyify', { global: true });
+
+    if ( argv.prod ) {
+    
+        b.transform('uglifyify', { global: true });
+
+    }
 
     return b.bundle()
         .pipe( source('bundle.js') )

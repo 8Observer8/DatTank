@@ -6,6 +6,7 @@
 import { Arena } from "./../Arena.Core";
 
 import * as OMath from "./../../OMath/Core.OMath";
+import { Logger } from "./../../utils/Logger";
 import { TowerNetwork } from "./../../network/Tower.Network";
 import { TowerGfx } from "./../../graphics/objects/Tower.Gfx";
 import { TeamCore } from "./../Team.Core";
@@ -51,6 +52,10 @@ class TowerCore {
         if ( killerId !== undefined ) {
 
             this.health = 100;
+
+        } else if ( Arena.me && killerId === Arena.me.id ) {
+
+            Logger.newEvent( 'TowerCached', 'game' );
 
         }
 

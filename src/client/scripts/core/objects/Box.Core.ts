@@ -5,6 +5,7 @@
 
 import { BoxGfx } from "./../../graphics/objects/Box.Gfx";
 import { BoxManager } from "./../../managers/Box.Manager";
+import { Logger } from "./../../utils/Logger";
 import * as OMath from "./../../OMath/Core.OMath";
 
 //
@@ -29,6 +30,7 @@ class BoxCore {
 
         this.gfx.pick();
         BoxManager.remove( [ this.id ] );
+        Logger.newEvent( 'BoxPicked', 'game' );
 
     };
 

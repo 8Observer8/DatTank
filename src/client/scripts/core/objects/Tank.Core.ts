@@ -6,6 +6,7 @@
 import * as THREE from 'three';
 import * as OMath from "./../../OMath/Core.OMath";
 
+import { Logger } from "./../../utils/Logger";
 import { Arena } from "./../Arena.Core";
 import { UI } from "./../../ui/Core.UI";
 import { PlayerCore } from "./../Player.Core";
@@ -67,6 +68,7 @@ class TankCore {
 
         if ( this.player.id === Arena.me.id ) {
 
+            Logger.newEvent( 'Shot', 'game' );
             this.setAmmo( this.ammo - 1 );
             UI.InGame.setAmmoReloadAnimation( 60 * 1000 / this.rpm );
 
@@ -93,6 +95,7 @@ class TankCore {
 
         if ( this.player.id === Arena.me.id ) {
 
+            Logger.newEvent( 'Kill', 'game' );
             GfxCore.addCameraShake( 1000, 1.5 );
             UI.InGame.hideTankStatsUpdate();
 
