@@ -335,6 +335,18 @@ class UIInGameModule {
 
     };
 
+    public updateFPS ( value: number ) {
+
+        $('.fps-value').html( value.toString() );
+
+    };
+
+    public updatePing ( value: number ) {
+
+        $('.ping-value').html( value.toString() );
+
+    };
+
 };
 
 //

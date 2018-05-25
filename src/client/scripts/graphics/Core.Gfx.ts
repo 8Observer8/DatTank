@@ -6,6 +6,7 @@
 import * as THREE from 'three';
 
 import { Game } from "./../Game";
+import { UI } from "./../ui/Core.UI";
 import { Arena } from "./../core/Arena.Core";
 import { LandscapeGfx } from "./objects/Landscape.Gfx";
 
@@ -58,6 +59,9 @@ class GraphicsCore {
     public sun: THREE.DirectionalLight;
     public landscape: LandscapeGfx = new LandscapeGfx();
     public coreObjects = {};
+
+    private frames: number = 0;
+    private lastFPSUpdate: number = 0;
 
     public lights = {
         ambient:    0xfff3bc,
@@ -188,12 +192,12 @@ class GraphicsCore {
     public addCameraShake ( duration: number, intensity: number ) {
 
         var iter = 0;
-    
+
         if ( this.cameraShakeInterval !== null ) {
-    
+
             clearInterval( this.cameraShakeInterval );
             this.cameraOffset.set( 0, 0, 0 );
-    
+
         }
 
         this.cameraShakeInterval = setInterval( () => {
@@ -201,17 +205,17 @@ class GraphicsCore {
             this.cameraOffset.x = intensity * ( Math.random() - 0.5 ) * iter / 2;
             this.cameraOffset.y = intensity * ( Math.random() - 0.5 ) * iter / 2;
             this.cameraOffset.z = intensity * ( Math.random() - 0.5 ) * iter / 2;
-    
+
             iter ++;
-    
+
             if ( iter > Math.floor( ( duration - 100 ) / 40 ) ) {
-    
+
                 clearInterval( this.cameraShakeInterval );
                 this.cameraOffset.set( 0, 0, 0 );
                 this.cameraShakeInterval = null;
-    
+
             }
-    
+
         }, 40 );
 
     };
@@ -272,6 +276,18 @@ class GraphicsCore {
 
         this.animate( time, delta );
         this.renderer.render( this.scene, this.camera );
+
+        //
+
+        if ( time - this.lastFPSUpdate > 1000 ) {
+
+            UI.InGame.updateFPS( this.frames );
+            this.lastFPSUpdate = time;
+            this.frames = 0;
+
+        }
+
+        this.frames ++;
 
         //
 

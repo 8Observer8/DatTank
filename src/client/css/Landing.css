@@ -385,6 +385,12 @@
 
 /* garage */
 
+.skin-name {
+    color: #fffdfd;
+    padding: 20px 10px 0px;
+    margin: 0;
+}
+
 .tank-skins {
     position: absolute;
     top: 0px;

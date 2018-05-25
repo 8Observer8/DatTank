@@ -45,7 +45,7 @@ class UILandingModule {
         $('#graphics-quality').hide();
         $('#sound-on-off').hide();
         $('#fullscreen-on-off').hide();
-        $('#share-btn').hide();
+        $('.share-btns').hide();
         $('.top-left-like-btns').hide();
         $('.new-features-box').hide();
         $('.top-players-score').hide();

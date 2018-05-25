@@ -88,7 +88,12 @@ class NetworkCore {
         //
 
         this.registerEvent( 'ArenaBulletHit', EventDir.IN, EventType.BIN, 300 );
-        this.registerEvent( 'ArenaBoxRemove', EventDir.IN, EventType.BIN, 301 );    
+        this.registerEvent( 'ArenaBoxRemove', EventDir.IN, EventType.BIN, 301 );
+
+        //
+
+        this.registerEvent( 'PING', EventDir.OUT, EventType.BIN, 1000 );
+        this.registerEvent( 'PONG', EventDir.IN, EventType.BIN, 1001 );
 
         // establish connection
 
@@ -101,6 +106,9 @@ class NetworkCore {
         this.transport.addEventListener( 'close', this.onDisconnected.bind( this ) );
         this.transport.addEventListener( 'error', this.onError.bind( this ) );
         this.transport.addEventListener( 'message', this.onMessage.bind( this ) );
+
+        this.addMessageListener( 'PONG', this.gotPong );
+        setInterval( this.sendPing.bind( this ), 5000 );
 
         //
 
@@ -272,6 +280,24 @@ class NetworkCore {
             };
 
         }
+
+    };
+
+    private sendPing () {
+
+        let buffer = new ArrayBuffer( 4 );
+        let bufferView = new Int16Array( buffer );
+
+        bufferView[1] = Date.now() % 1000;
+
+        this.send( 'PING', buffer, bufferView );
+
+    };
+
+    private gotPong ( data ) {
+
+        let ping = Math.round( ( ( Date.now() % 1000 ) - data[0] ) / 2 );
+        UI.InGame.updatePing( ping );
 
     };
 

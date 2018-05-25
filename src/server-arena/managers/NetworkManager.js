@@ -65,10 +65,19 @@ NetworkManager.prototype.init = function () {
     this.registerEvent( 'ArenaBulletHit', 'out', 'bin', 300 );
     this.registerEvent( 'ArenaBoxRemove', 'out', 'bin', 301 );
 
+    //
+
+    this.registerEvent( 'PING', 'in', 'bin', 1000 );
+    this.registerEvent( 'PONG', 'out', 'bin', 1001 );
+
     // enable io
 
     this.io = new WebSocketServer({ port: environment.web.socketPort });
     this.io.on( 'connection', this.onConnect.bind( this ) );
+
+    //
+
+    this.addMessageListener( 'PING', this.gotPing.bind( this ) );
 
     //
 
@@ -220,6 +229,15 @@ NetworkManager.prototype.send = function ( eventName, socket, data, view ) {
     }
 
     socket.send( data, { binary: true } );
+
+};
+
+NetworkManager.prototype.gotPing = function ( data, socket ) {
+
+    var buffer = new ArrayBuffer( 4 );
+    var bufferView = new Uint16Array( buffer );
+    bufferView[1] = data[0];
+    this.send( 'PONG', socket, buffer, bufferView );
 
 };
 
