@@ -1,4 +1,25 @@
 
+#help {
+    position: absolute;
+    top: 16px;
+    right: 188px;
+    width: 50px;
+    height: 50px;
+    background-image: url(/resources/img/help.png);
+    background-size: 100%;
+    opacity: 0.7;
+    transition: opacity 200ms ease;
+}
+
+#help:hover {
+    opacity: 0.85;
+}
+
+#help:active {
+    top: 17px;
+    opacity: 1;
+}
+
 /**/
 
 #fullscreen-on-off {
@@ -11,7 +32,6 @@
     background-size: 100% 200%;
     opacity: 0.7;
     transition: opacity 200ms ease;
-    cursor: url('../resources/img/cursor.png'), auto;
 }
 
 #fullscreen-on-off:hover {
@@ -39,7 +59,6 @@
     background-size: 100% 200%;
     opacity: 0.7;
     transition: opacity 200ms ease;
-    cursor: url('../resources/img/cursor.png'), auto;
 }
 
 #graphics-quality:hover {
@@ -67,7 +86,6 @@
     background-size: 100% 200%;
     opacity: 0.7;
     transition: opacity 200ms ease;
-    cursor: url('../resources/img/cursor.png'), auto;
 }
 
 #sound-on-off:hover {
