@@ -112,6 +112,9 @@ class UILandingModule {
 
         $('#graphics-quality').click( UI.changeQuality.bind( UI ) );
         $('#sound-on-off').click( UI.changeSound.bind( UI ) );
+        $('#help').click( UI.showHelp.bind( UI ) );
+        $('.help-popup .close').click( UI.hideHelp.bind( UI ) );
+        $('.help-popup .ok-btn').click( UI.hideHelp.bind( UI ) );
 
         $('.share-btns .btn-share-vk').mousedown( Logger.newEvent.bind( Logger, 'ShareVK', 'game' ) );
         $('.share-btns .btn-share-fb').mousedown( Logger.newEvent.bind( Logger, 'ShareFB', 'game' ) );

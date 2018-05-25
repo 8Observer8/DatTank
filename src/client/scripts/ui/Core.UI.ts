@@ -20,6 +20,20 @@ class UICore {
 
     //
 
+    public showHelp () {
+
+        SoundManager.playSound('MenuClick');
+        $('.help-popup').show();
+
+    };
+
+    public hideHelp () {
+
+        SoundManager.playSound('MenuClick');
+        $('.help-popup').hide();
+
+    };
+
     public changeQuality ( value, withoutSound ) {
 
         value = ( typeof value === 'boolean' ) ? value : $( value.currentTarget ).attr('hq') !== 'true';
