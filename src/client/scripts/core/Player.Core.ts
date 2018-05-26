@@ -145,6 +145,7 @@ class PlayerCore {
             UI.InGame.updateHealth( this.tank.health );
             UI.InGame.updateAmmo( this.tank.ammo );
             UI.InGame.hideContinueBox();
+            UI.InGame.refreshAds();
 
         }
 

@@ -24,6 +24,12 @@ class UIInGameModule {
 
     };
 
+    public refreshAds () {
+
+        window['googletag'].pubads().refresh();
+
+    };
+
     public updateTankStat ( event ) {
 
         if ( Arena.me.tank.health <= 0 ) return;
