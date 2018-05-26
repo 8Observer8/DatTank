@@ -49,6 +49,7 @@ class UILandingModule {
         $('.top-left-like-btns').hide();
         $('.new-features-box').hide();
         $('.top-players-score').hide();
+        $('#IOG_CP').hide();
 
     };
 
@@ -121,7 +122,7 @@ class UILandingModule {
         $('.share-btns .btn-share-tw').mousedown( Logger.newEvent.bind( Logger, 'ShareTW', 'game' ) );
 
         setTimeout( function () { $('.fb-like').animate( { opacity: 1 }, 500 ); }, 1000 );
-        setTimeout( function () { $('.folow-btn').animate( { opacity: 1 }, 500 ); }, 1200 );
+        setTimeout( function () { $('.folow-btn').animate( { opacity: 1 }, 500 ); }, 1600 );
 
     };
 

@@ -4,7 +4,7 @@
 #continue-box-wrapper {
     display: none;
     position: absolute;
-    top: 26%;
+    top: 15%;
     left: 0px;
     width: 100%;
     height: 100%;
@@ -334,7 +334,7 @@
     right: 20px;
     bottom: 10px;
     height: 50px;
-    width: 250px;
+    width: 200px;
     color: burlywood;
     cursor: url('../resources/img/cursor.png'), auto;
 }
