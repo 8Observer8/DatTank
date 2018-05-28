@@ -153,8 +153,8 @@ class UIInGameModule {
 
     public hideTankStatsUpdate () {
 
+        $('.level-indicator-block').hide();
         $('.stats-update-block').hide();
-        $('.level-indicator-block').show();
         $( document ).unbind( 'keypress' );
 
     };
@@ -188,6 +188,7 @@ class UIInGameModule {
 
         $('#viewport #renderport').removeClass('dead');
         $('#continue-box-wrapper').css( 'opacity', 0 );
+        $('.level-indicator-block').show();
 
         setTimeout( () => {
 
