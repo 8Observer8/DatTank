@@ -361,7 +361,6 @@ Player.prototype.changeScore = function ( delta ) {
             this.networkBuffers['NewLevel'].bufferView = bufferView;
 
             this.bonusLevels = level - this.level;
-            this.level = level;
             bufferView[ 1 ] = this.id;
             bufferView[ 2 ] = this.bonusLevels;
 
@@ -391,6 +390,9 @@ Player.prototype.updateStats = function ( statId ) {
 
     if ( this.bonusLevels <= 0 ) return false;
     this.bonusLevels --;
+    this.level ++;
+
+    //
 
     switch ( statName ) {
 

@@ -32,12 +32,12 @@ class TowerLabelGfx {
     
         // draw health red bg
 
-        this.ctx.fillStyle = '#9e0e0e';
+        this.ctx.fillStyle = OMath.intToHex( OMath.darkerColor( teamColor, 0.3 ) );
         this.ctx.fillRect( 0, 0, 300, 10 );
 
         // draw health green indicator
 
-        this.ctx.fillStyle = '#00ff00';
+        this.ctx.fillStyle = OMath.intToHex( teamColor );
         this.ctx.fillRect( 0, 0, width * ( health / 100 ), 10 );
 
         // draw health 'amout' lines based on armour

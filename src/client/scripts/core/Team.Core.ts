@@ -13,7 +13,7 @@ class TeamCore {
     public static colors = {
         '0':        0xff0000,
         '1':        0x00ff00,
-        '2':        0x0000ff,
+        '2':        0x07d5ff,
         '3':        0xfcaa12,
         '1000':     0xaaaaaa
     };

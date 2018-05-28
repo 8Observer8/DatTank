@@ -11,6 +11,20 @@ export { Vec3 };
 
 //
 
+export function darkerColor ( value: number, coef: number ) {
+
+    let r = Math.floor( value / 65536 );
+    let g = Math.floor( value / 256 ) % 256;
+    let b = value % 256;
+
+    r = Math.floor( r * coef );
+    g = Math.floor( g * coef );
+    b = Math.floor( b * coef );
+
+    return r * 65536 + g * 256 + b;
+
+};
+
 export function intToHex ( value: number ) {
 
     let result = value.toString(16);

@@ -49,13 +49,13 @@ gulp.task( 'brf', function () {
         transform:  babelify,
         debug:      ! argv.prod
     });
-    
+
     b.plugin('tsify', { "lib": ["es6", "dom"] });
-    b.plugin('tinyify', { flat: false });
     b.transform({ global: true }, 'browserify-shim');
 
     if ( argv.prod ) {
-    
+
+        b.plugin('tinyify', { flat: false });
         b.transform('uglifyify', { global: true });
 
     }
