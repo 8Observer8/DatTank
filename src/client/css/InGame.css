@@ -54,9 +54,9 @@
     margin: 2px;
 }
 
-#continue-box-wrapper #continue-box #share-btns .folow-btn {
-    float: left;
-    margin: 2px;
+#continue-box-wrapper #continue-box #share-btns .twitter-follow-button {
+    padding-top: 2px;
+    padding-left: 10px;
 }
 
 #continue-box-wrapper #continue-box #continue-btn {
