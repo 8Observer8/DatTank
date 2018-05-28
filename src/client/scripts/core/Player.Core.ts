@@ -59,11 +59,11 @@ class PlayerCore {
         //
 
         let stats = {
-            'speed':          0,
-            'rpm':            1,
-            'armour':         2,
-            'gun':            3,
-            'ammo-capacity':  4
+            'speed':        0,
+            'rpm':          1,
+            'armour':       2,
+            'gun':          3,
+            'ammoCapacity': 4
         };
         var levelsStats = {
             speed:          [ 5, 3, 2, 2, 2, 3, 1, 3, 3, 2, 5, 3, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
@@ -95,7 +95,7 @@ class PlayerCore {
                 this.tank.bullet += levelsStats['gun'][ this.level ];
                 break;
 
-            case 'ammo-capacity':
+            case 'ammoCapacity':
 
                 this.tank.ammoCapacity += levelsStats['ammoCapacity'][ this.level ];
                 break;
@@ -106,6 +106,7 @@ class PlayerCore {
 
         }
 
+        this.network.statsUpdate( stats[ name ] );
         this.level ++;
 
     };
@@ -139,6 +140,9 @@ class PlayerCore {
         this.dispose();
         this.setTank( params.tank, params );
         this.tank.init();
+        this.level = 0;
+
+        //
 
         if ( Arena.me.id === this.id ) {
 
@@ -199,7 +203,7 @@ class PlayerCore {
         this.tank = null;
 
         if ( Arena.me.id !== this.id ) {
-        
+
             this.network.dispose();
 
         }

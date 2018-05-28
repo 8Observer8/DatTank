@@ -26,7 +26,27 @@ class PlayerNetwork {
 
     //
 
-    public setStatsUpdate ( statsId: number ) {
+    private setRespawn ( data ) {
+
+        if ( this.filter( data ) ) return;
+
+        this.player.respawn( data.player );
+
+    };
+
+    private setLevel ( data ) {
+
+        if ( this.filter( data ) ) return;
+
+        let bulletLevel = data[1];
+
+        this.player.newLevel( bulletLevel );
+
+    };
+
+    //
+
+    public statsUpdate ( statsId: number ) {
 
         let buffer, bufferView;
 
@@ -54,26 +74,6 @@ class PlayerNetwork {
         Network.send( 'PlayerTankUpdateStats', buffer, bufferView );
 
     };
-
-    private setRespawn ( data ) {
-
-        if ( this.filter( data ) ) return;
-
-        this.player.respawn( data.player );
-
-    };
-
-    private setLevel ( data ) {
-
-        if ( this.filter( data ) ) return;
-
-        let bulletLevel = data[1];
-
-        this.player.newLevel( bulletLevel );
-
-    };
-
-    //
 
     public respawn ( tank: string ) {
 

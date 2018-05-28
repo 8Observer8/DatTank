@@ -195,7 +195,7 @@ ArenaManager.prototype.addNetworkListeners = function () {
     networkManager.addMessageListener( 'TankMove', this.proxyEventToPlayer.bind( this ) );
     networkManager.addMessageListener( 'TankStartShooting', this.proxyEventToPlayer.bind( this ) );
     networkManager.addMessageListener( 'TankStopShooting', this.proxyEventToPlayer.bind( this ) );
-    networkManager.addMessageListener( 'TankUpdateStats', this.proxyEventToPlayer.bind( this ) );
+    networkManager.addMessageListener( 'PlayerTankUpdateStats', this.proxyEventToPlayer.bind( this ) );
 
 };
 

@@ -67,7 +67,6 @@ class NetworkCore {
 
         this.registerEvent( 'TankRotateTop', EventDir.IN, EventType.BIN, 100 );
         this.registerEvent( 'TankRotateTop', EventDir.OUT, EventType.BIN, 101 );
-
         this.registerEvent( 'TankMove', EventDir.IN, EventType.BIN, 111 );
         this.registerEvent( 'TankMove', EventDir.OUT, EventType.BIN, 112 );
 

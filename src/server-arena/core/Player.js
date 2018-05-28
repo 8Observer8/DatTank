@@ -158,6 +158,8 @@ Player.prototype.respawn = function ( tankName ) {
 
     var playerJSON = this.toPrivateJSON();
     this.position = newPosition;
+    this.bonusLevels = 0;
+    this.level = 0;
 
     this.sendEventToPlayersInRange( 'PlayerRespawn', false, { id: this.id, player: playerJSON } );
 
@@ -179,7 +181,6 @@ Player.prototype.respawn = function ( tankName ) {
 
     //
 
-    this.level = 0;
     this.changeScore( - Math.floor( 1 * this.score / 3 ) );
 
 };
@@ -346,11 +347,7 @@ Player.prototype.changeScore = function ( delta ) {
 
     level --;
 
-    if ( this.level > level ) {
-
-        this.level = level;
-
-    } else if ( this.level < level ) {
+    if ( this.level + this.bonusLevels < level || delta < 0 ) {
 
         if ( this.socket ) {
 
@@ -388,38 +385,36 @@ Player.prototype.updateStats = function ( statId ) {
     };
     var statName = stats[ statId ];
 
-    if ( this.bonusLevels <= 0 ) return false;
-    this.bonusLevels --;
-    this.level ++;
+    console.log( 'zz', this.level, this.bonusLevels );
 
-    //
+    if ( this.bonusLevels <= 0 ) return false;
 
     switch ( statName ) {
 
         case 'speed':
 
-            this.tank.speed += levelsStats['speed'][ this.level - this.bonusLevels ];
+            this.tank.speed += levelsStats['speed'][ this.level + 1 ];
             this.moveSpeed = this.originalMoveSpeed * this.tank.speed / 40;
             break;
 
         case 'rpm':
 
-            this.tank.rpm += levelsStats['rpm'][ this.level - this.bonusLevels ];
+            this.tank.rpm += levelsStats['rpm'][ this.level + 1 ];
             break;
 
         case 'armour':
 
-            this.tank.armour += levelsStats['armour'][ this.level - this.bonusLevels ];
+            this.tank.armour += levelsStats['armour'][ this.level + 1 ];
             break;
 
         case 'gun':
 
-            this.tank.bullet += levelsStats['gun'][ this.level - this.bonusLevels ];
+            this.tank.bullet += levelsStats['gun'][ this.level + 1 ];
             break;
 
         case 'ammoCapacity':
 
-            this.tank.ammoCapacity += levelsStats['ammoCapacity'][ this.level - this.bonusLevels ];
+            this.tank.ammoCapacity += levelsStats['ammoCapacity'][ this.level + 1 ];
             break;
 
         default:
@@ -427,6 +422,11 @@ Player.prototype.updateStats = function ( statId ) {
             return false;
 
     }
+
+    //
+
+    this.bonusLevels --;
+    this.level ++;
 
 };
 
@@ -884,7 +884,7 @@ Player.prototype.addEventListeners = function () {
     this.addEventListener( 'TankMove', function ( event ) { scope.move( event.data[0], event.data[1] ); });
     this.addEventListener( 'TankStartShooting', function ( event ) { scope.startShooting(); });
     this.addEventListener( 'TankStopShooting', function ( event ) { scope.stopShooting(); });
-    this.addEventListener( 'TankUpdateStats', function ( event ) { scope.updateStats( event.data[0] ); });
+    this.addEventListener( 'PlayerTankUpdateStats', function ( event ) { scope.updateStats( event.data[0] ); });
 
 };
 

@@ -41,9 +41,9 @@ class UIInGameModule {
         SoundManager.playSound('MenuClick');
         this.hideTankStatsUpdate();
 
-        console.log('z', Arena.me.bonusLevels);
+        //
 
-        if ( Arena.me.bonusLevels !== 0 ) {
+        if ( Arena.me.bonusLevels > 0 ) {
 
             this.showTankStatsUpdate( Arena.me.bonusLevels )
 
