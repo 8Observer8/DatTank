@@ -83,8 +83,6 @@ gulp.task( 'css', function () {
 gulp.task( 'html', function () {
 
     gulp.src('./src/client/*.html')
-        .pipe( gulpif( argv.prod, useref() ) )
-        .pipe( gulpif( argv.prod, gulpif( '*.js', uglify() ) ) )
         .pipe( gulp.dest('./bin/client/') );
 
 });
@@ -106,8 +104,15 @@ gulp.task( 'server-master', function () {
 
 gulp.task( 'server-arena', function () {
 
-    gulp.src('./src/server-arena/**/*')
-        .pipe( gulp.dest('./bin/server-arena/') );
+    gulp.src('./src/server-arena/**/*.ts')
+        .pipe(ts({
+            "noImplicitAny": true,
+            "lib": [
+                "dom",
+                "es6"
+            ],
+        }))
+        .pipe( gulp.dest('./bin/server-arena') );
 
     //
 
