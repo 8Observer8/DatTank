@@ -3,70 +3,6 @@
  * DatTank Arena object
 */
 
-var Arena = function ( callback ) {
-
-    if ( Arena.numIds > 1000 ) Arena.numIds = 0;
-    this.id = Arena.numIds ++;
-
-    this.teamManager = new Game.TeamManager( this, {} );
-    this.playerManager = new Game.PlayerManager( this, {} );
-    this.towerManager = new Game.TowerManager( this, {} );
-    this.decorationManager = new Game.DecorationManager( this, {} );
-    this.botManager = new Game.BotManager( this, {} );
-    this.boxManager = new Game.BoxManager( this, {} );
-    this.collisionManager = new Game.CollisionManager( this, {} );
-
-    this.updateInterval = false;
-    this.currentTime = false;
-    this.prevUpdateTime = Date.now();
-    this.disposed = false;
-
-    this.leaderboardUpdateTimeout = false;
-
-    //
-
-    this.init( callback );
-
-};
-
-Arena.prototype = {};
-
-//
-
-Arena.prototype.init = function ( callback ) {
-
-    this.teamManager.init( 4 );
-    this.towerManager.init();
-    this.decorationManager.init({
-
-        trees1:     { type: 'Tree1', count: 10 },
-        trees2:     { type: 'Tree2', count: 30 },
-        trees3:     { type: 'Tree3', count: 10 },
-        trees4:     { type: 'Tree4', count: 20 },
-        trees5:     { type: 'Tree5', count: 50 },
-        trees6:     { type: 'Tree6', count: 20 },
-        trees7:     { type: 'Tree7', count: 30 },
-        trees8:     { type: 'Tree8', count: 60 },
-
-        stones1:    { type: 'Stones1', count: 5 },
-        stones2:    { type: 'Stones2', count: 5 },
-        stones3:    { type: 'Stones3', count: 50 },
-        stones4:    { type: 'Stones4', count: 10 }
-
-    });
-    this.botManager.init();
-    this.boxManager.init();
-
-    //
-
-    this.updateInterval = setInterval( this.update.bind( this ), 40 );
-
-    //
-
-    callback( this );
-
-};
-
 Arena.prototype.addPlayer = function ( params ) {
 
     // dispose extra bots if needed
@@ -302,7 +238,3 @@ Arena.prototype.clear = function () {
 
 Arena.numIds = 0;
 Arena.NeutralTeam = 1000;
-
-//
-
-module.exports = Arena;

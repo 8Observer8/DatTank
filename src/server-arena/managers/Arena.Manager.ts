@@ -3,7 +3,7 @@
  * DatTank Arena Manager system
 */
 
-import { Arena } from "./../core/Arena.Core";
+import { ArenaCore } from "./../core/Arena.Core";
 
 //
 
@@ -18,7 +18,7 @@ class ArenaManagerCore {
 
     public addArena () {
 
-        let arena = new Arena();
+        let arena = new ArenaCore();
         this.arenas.push( arena );
 
         return arena;
@@ -71,7 +71,7 @@ class ArenaManagerCore {
 
     public findArena () {
 
-        let arena: Arena;
+        let arena: ArenaCore;
         let minArena = false;
         let avgArena = false;
         let players = false;
@@ -149,7 +149,7 @@ class ArenaManagerCore {
 
     public playerJoin ( data: any, socket: any ) {
 
-        let arena: Arena = this.findArena();
+        let arena: ArenaCore = this.findArena();
         // let player = arena.addPlayer({ login: data.login, tank: data.tank, socket: socket });
         // let response = arena.toJSON();
         // response.me = player.toPrivateJSON();

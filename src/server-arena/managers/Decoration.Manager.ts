@@ -1,13 +1,13 @@
 /*
  * @author ohmed
- * DatTank Player manager sys
+ * DatTank Decoration manager sys
 */
 
 import { ArenaCore } from "./../core/Arena.Core";
 
 //
 
-class PlayerManager {
+class DecorationManager {
 
     public init () {
 
@@ -25,4 +25,4 @@ class PlayerManager {
 
 //
 
-export { PlayerManager };
+export { DecorationManager };

@@ -1,13 +1,13 @@
 /*
  * @author ohmed
- * DatTank Player manager sys
+ * DatTank Box manager sys
 */
 
 import { ArenaCore } from "./../core/Arena.Core";
 
 //
 
-class PlayerManager {
+class BoxManager {
 
     public init () {
 
@@ -25,4 +25,4 @@ class PlayerManager {
 
 //
 
-export { PlayerManager };
+export { BoxManager };
