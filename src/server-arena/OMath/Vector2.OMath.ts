@@ -33,6 +33,21 @@ export class Vec2 {
 
     };
 
+    public clone () {
+
+        return new Vec2( this.x, this.y );
+
+    };
+
+    public toJSON () {
+
+        return {
+            x:  this.x,
+            y:  this.y
+        };
+
+    };
+
     //
 
     constructor ( x?: number, y?: number ) {

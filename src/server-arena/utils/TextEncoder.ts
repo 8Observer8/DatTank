@@ -1,9 +1,9 @@
 /*
- * Taken from https://github.com/feross/buffer/blob/master/index.js
- * Thanks Feross et al! :-)
+ * @author ohmed
+ * TextEncoder JSON -> BIN convertor
 */
 
-function utf8ToBytes ( string, units ) {
+let utf8ToBytes = function ( string: string, units?: number ) {
 
     units = units || Infinity
     var codePoint
@@ -86,57 +86,71 @@ function utf8ToBytes ( string, units ) {
 
 };
 
-function utf8Slice ( buf, start, end ) {
+let utf8Slice = function ( buf: any, start: number, end: number ) {
 
-    var res = ''
-    var tmp = ''
-    end = Math.min(buf.length, end || Infinity)
+    var res = '';
+    var tmp = '';
+    end = Math.min( buf.length, end || Infinity );
     start = start || 0;
 
-    for (var i = start; i < end; i++) {
-        if (buf[i] <= 0x7F) {
-            res += decodeUtf8Char(tmp) + String.fromCharCode(buf[i])
-            tmp = ''
+    for ( var i = start; i < end; i ++ ) {
+
+        if ( buf[ i ] <= 0x7F ) {
+
+            res += decodeUtf8Char( tmp ) + String.fromCharCode( buf[ i ] );
+            tmp = '';
+
         } else {
-            tmp += '%' + buf[i].toString(16)
+
+            tmp += '%' + buf[ i ].toString(16);
+
         }
+
     }
 
-    return res + decodeUtf8Char(tmp);
+    return res + decodeUtf8Char( tmp );
 
 };
 
-function decodeUtf8Char ( str ) {
+let decodeUtf8Char = function ( str: string ) {
 
     try {
-        return decodeURIComponent(str)
-    } catch (err) {
-        return String.fromCharCode(0xFFFD) // UTF 8 invalid char
+
+        return decodeURIComponent( str );
+
+    } catch ( err ) {
+
+        return String.fromCharCode( 0xFFFD ) // UTF 8 invalid char
+
     }
 
 };
 
-var encode = function ( str ) {
+let encode = function ( str: string ) {
 
     var result;
 
-    if ('undefined' === typeof Uint8Array) {
-        result = utf8ToBytes(str);
+    if ( 'undefined' === typeof Uint16Array ) {
+
+        result = utf8ToBytes( str );
+
     } else {
-        result = new Uint8Array(utf8ToBytes(str));
+
+        result = new Uint16Array( utf8ToBytes( str ) );
+
     }
 
     return result;
 
 };
 
-var decode = function (bytes) {
+let decode = function ( bytes: any ) {
 
-    return utf8Slice(bytes, 0, bytes.length);
+    return utf8Slice( bytes, 0, bytes.length );
 
 };
 
-module.exports = {
+export let TextEncoder = {
     encode: encode,
     decode: decode
 };
