@@ -5,14 +5,6 @@
 
 var Player = function ( arena, params ) {
 
-    params = params || {};
-
-    Game.EventDispatcher.call( this );
-
-    if ( Player.numIds > 1000 ) Player.numIds = 0;
-
-    this.id = Player.numIds ++;
-    this.arena = arena || false;
     this.login = params.login || false;
 
     //
@@ -96,10 +88,6 @@ var Player = function ( arena, params ) {
     this.type = 'Player';
 
 };
-
-Player.prototype = Object.create( Game.EventDispatcher.prototype );
-
-//
 
 Player.prototype.initBulletPool = function () {
 
@@ -907,30 +895,3 @@ Player.prototype.sendEventToPlayersInRange = function ( event, buffer, bufferVie
     }
 
 };
-
-Player.prototype.toPrivateJSON = function () {
-
-    return {
-
-        id:             this.id,
-        login:          this.login,
-        team:           this.team.id,
-        tank:           this.tank.typeId,
-        health:         this.health,
-        ammo:           this.ammo,
-        rotation:       this.rotation,
-        rotationTop:    this.rotationTop,
-        position:       this.position,
-        moveDirection:  { x: this.moveDirection.x, y: this.moveDirection.y }
-
-    };
-
-};
-
-Player.numIds = 1;
-Player.Alive = 100;
-Player.Dead = 110;
-
-//
-
-module.exports = Player;

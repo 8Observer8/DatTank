@@ -107,6 +107,7 @@ gulp.task( 'server-arena', function () {
     gulp.src('./src/server-arena/**/*.ts')
         .pipe(ts({
             "noImplicitAny": true,
+            "suppressImplicitAnyIndexErrors": true,
             "lib": [
                 "dom",
                 "es6"
