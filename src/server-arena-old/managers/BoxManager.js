@@ -1,30 +1,3 @@
-/*
- * @author ohmed
- * Arena boxes manager
-*/
-
-var BoxManager = function ( arena, params ) {
-
-    this.arena = arena;
-
-    this.boxes = [];
-    this.count = params.count || 25;
-
-};
-
-BoxManager.prototype = {};
-
-//
-
-BoxManager.prototype.init = function () {
-
-    for ( var i = 0; i < this.count; i ++ ) {
-
-        this.add({ type: ( Math.random() > 0.4 ) ? 'Ammo' : 'Health' });
-
-    }
-
-};
 
 BoxManager.prototype.add = function ( params ) {
 
@@ -86,30 +59,3 @@ BoxManager.prototype.remove = function ( box ) {
     this.add({ type: ( Math.random() > 0.4 ) ? 'Ammo' : 'Health' });
 
 };
-
-BoxManager.prototype.getInRange = function ( player ) {
-
-    var dx, dz;
-    var range = 40;
-    var result = [];
-
-    for ( var i = 0, il = this.boxes.length; i < il; i ++ ) {
-
-        dx = this.boxes[ i ].position.x - player.position.x;
-        dz = this.boxes[ i ].position.z - player.position.z;
-
-        if ( Math.sqrt( Math.pow( dx, 2 ) + Math.pow( dz, 2 ) ) < range ) {
-
-            result.push( this.boxes[ i ] );
-
-        }
-
-    }
-
-    return result;
-
-};
-
-//
-
-module.exports = BoxManager;
