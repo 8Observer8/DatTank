@@ -15,6 +15,14 @@ class DecorationManager {
 
     };
 
+    public toJSON () {
+
+        // todo
+
+    };
+
+    //
+
     constructor ( arena: ArenaCore ) {
 
         // todo
