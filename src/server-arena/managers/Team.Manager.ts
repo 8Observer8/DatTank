@@ -57,6 +57,12 @@ class TeamManager {
 
     };
 
+    public get () {
+
+        return this.teams;
+
+    };
+
     public init ( teamNum: number ) {
 
         teamNum = teamNum || 4;

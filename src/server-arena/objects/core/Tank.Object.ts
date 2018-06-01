@@ -1,12 +1,18 @@
 /*
  * @author ohmed
- * Tank Core class
+ * Tank Object class
 */
 
-class TankCore {
+import * as OMath from "./../../OMath/Core.OMath";
+
+//
+
+class TankObject {
+
+    public position: OMath.Vec3 = new OMath.Vec3();
 
 };
 
 //
 
-export { TankCore };
+export { TankObject };

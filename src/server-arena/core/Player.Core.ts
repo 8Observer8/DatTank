@@ -3,22 +3,37 @@
  * DatTank Player Core
 */
 
-import { TeamCore } from "./../core/Team.Core";
 import { ArenaCore } from "./Arena.Core";
+import { TeamCore } from "./../core/Team.Core";
+import { TankObject } from "./../objects/core/Tank.Object";
 
 //
 
 class PlayerCore {
 
+    private arena: ArenaCore;
+
     public id: number;
     public team: TeamCore;
     public socket: any;
 
-    private arena: ArenaCore;
+    public tank: TankObject;
 
     //
 
     public respawn () {
+
+        // todo
+
+    };
+
+    public changeAmmo ( value: number ) {
+
+        // todo
+
+    };
+
+    public changeHealth ( value: number ) {
 
         // todo
 

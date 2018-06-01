@@ -8,7 +8,7 @@ import { ArenaCore } from "./../../core/Arena.Core";
 
 //
 
-class BoxCore {
+class BoxObject {
 
     private static numIds = 0;
     private static Types = {
@@ -53,8 +53,8 @@ class BoxCore {
 
     constructor ( arena: ArenaCore, params: any ) {
 
-        if ( BoxCore.numIds > 1000 ) BoxCore.numIds = 0;
-        this.id = BoxCore.numIds ++;
+        if ( BoxObject.numIds > 1000 ) BoxObject.numIds = 0;
+        this.id = BoxObject.numIds ++;
         this.arena = arena;
 
         this.position.copy( params.position );
@@ -65,4 +65,4 @@ class BoxCore {
 
 //
 
-export { BoxCore };
+export { BoxObject };

@@ -3,11 +3,18 @@
  * DatTank Collision manager sys
 */
 
+import * as OMath from "./../OMath/Core.OMath";
 import { ArenaCore } from "./../core/Arena.Core";
 
 //
 
 class CollisionManager {
+
+    public isPlaceFree ( position: OMath.Vec3, radius: number ) {
+
+        // todo
+
+    };
 
     public clear () {
 
