@@ -3,18 +3,6 @@
  * DatTank Networking
 */
 
-var TextEncoder = require( './../utils/TextEncoder' );
-var WebSocketServer = require('ws').Server;
-
-//
-
-var NetworkManager = function () {
-
-    this.io = false;
-    this.messageListeners = {};
-
-};
-
 NetworkManager.prototype.init = function () {
 
     // register events
@@ -70,18 +58,9 @@ NetworkManager.prototype.init = function () {
     this.registerEvent( 'PING', 'in', 'bin', 1000 );
     this.registerEvent( 'PONG', 'out', 'bin', 1001 );
 
-    // enable io
-
-    this.io = new WebSocketServer({ port: environment.web.socketPort });
-    this.io.on( 'connection', this.onConnect.bind( this ) );
-
     //
 
     this.addMessageListener( 'PING', this.gotPing.bind( this ) );
-
-    //
-
-    console.log( '> DatTank ArenaServer: Network started on port ' + environment.web.socketPort );
 
 };
 
@@ -240,10 +219,3 @@ NetworkManager.prototype.gotPing = function ( data, socket ) {
     this.send( 'PONG', socket, buffer, bufferView );
 
 };
-
-NetworkManager.prototype.events = {
-    in:     {},
-    out:    {}
-};
-
-module.exports = NetworkManager;
