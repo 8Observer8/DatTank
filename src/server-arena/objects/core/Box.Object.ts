@@ -29,7 +29,7 @@ class BoxObject {
 
     init () {
 
-        // this.arena.collisionManager.addObject( this, 'circle' );
+        this.arena.collisionManager.addObject( this, 'circle', false );
 
     };
 

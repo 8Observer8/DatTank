@@ -20,6 +20,7 @@ import { CollisionManager } from "./../managers/Collision.Manager";
 class ArenaCore {
 
     private static numIds: number = 0;
+    public static NeutralTeam = 1000;
 
     public id: number;
 

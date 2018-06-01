@@ -16,6 +16,18 @@ class CollisionManager {
 
     };
 
+    public addObject ( object: any, type: string, dynamic: boolean ) {
+
+        // todo
+
+    };
+
+    public removeObject ( object: any ) {
+
+        // todo
+
+    };
+
     public clear () {
 
         // todo
