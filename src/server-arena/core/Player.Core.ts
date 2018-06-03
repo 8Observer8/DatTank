@@ -27,6 +27,12 @@ class PlayerCore {
 
     };
 
+    public changeScore ( delta: number ) {
+
+        // todo
+
+    };
+
     public changeAmmo ( value: number ) {
 
         // todo

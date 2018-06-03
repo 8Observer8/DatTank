@@ -26,15 +26,15 @@ class BulletObject {
 
     //
 
-    public activate ( position: OMath.Vec3, angle: number ) {
+    public activate ( position: OMath.Vec3, angle: number, ownerId: number ) {
 
         this.active = true;
-        this.position.x = position.x;
-        this.position.y = 25;
-        this.position.z = position.z;
-    
+        this.position.set( position.x, 25, position.z );
+
         this.angle = angle;
         this.flytime = 220;
+
+        this.ownerId = ownerId;
     
         //
     
@@ -92,9 +92,6 @@ class BulletObject {
         if ( BulletObject.numIds > 1000 ) BulletObject.numIds = 0;
         this.id = BulletObject.numIds ++;
         this.arena = arena;
-
-        this.ownerId = params.ownerId;
-        this.position.copy( params.position );
 
     };
 

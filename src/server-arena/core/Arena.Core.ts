@@ -14,6 +14,8 @@ import { TowerManager } from "./../managers/Tower.Manager";
 import { DecorationManager } from "./../managers/Decoration.Manager";
 import { BoxManager } from "./../managers/Box.Manager";
 import { CollisionManager } from "./../managers/Collision.Manager";
+import { ArenaNetwork } from "./../network/Arena.Network";
+import { BulletManager } from "../managers/Bullet.Manager";
 
 //
 
@@ -24,6 +26,7 @@ class ArenaCore {
 
     public id: number;
 
+    public bulletManager: BulletManager;
     public teamManager: TeamManager;
     public playerManager: PlayerManager;
     public botManager: BotManager;
@@ -39,6 +42,8 @@ class ArenaCore {
     private leaderboardUpdateTimeout: any;
 
     private updateRate = 40;
+
+    public network: ArenaNetwork;
 
     //
 
@@ -190,6 +195,8 @@ class ArenaCore {
         if ( ArenaCore.numIds > 1000 ) ArenaCore.numIds = 0;
         this.id = ArenaCore.numIds ++;
 
+        this.network = new ArenaNetwork( this );
+        this.bulletManager = new BulletManager( this );
         this.teamManager = new TeamManager( this );
         this.playerManager = new PlayerManager( this );
         this.botManager = new BotManager( this );

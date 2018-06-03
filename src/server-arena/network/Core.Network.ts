@@ -17,6 +17,8 @@ enum EventType { BIN = 0, JSON = 1 };
 
 class NetworkCore {
 
+    private static instance;
+
     private io: any;
 
     private messageListeners = {};
@@ -91,7 +93,7 @@ class NetworkCore {
         let arrayBuffer = data.buffer.slice( data.byteOffset, data.byteOffset + data.byteLength );
         let eventId = new Int16Array( arrayBuffer, 0, 1 )[ 0 ];
         let content = new Int16Array( arrayBuffer, 2 );
-    
+
         this.triggerMessageListener( eventId, content, socket );
 
     };
@@ -113,24 +115,24 @@ class NetworkCore {
 
             data = JSON.stringify( dataView );
             data = TextEncoder.encode( data );
-    
-            var newData = new Int16Array( data.length + 1 );
-    
-            for ( var i = 0, il = data.length; i < il; i ++ ) {
-    
+
+            let newData = new Int16Array( data.length + 1 );
+
+            for ( let i = 0, il = data.length; i < il; i ++ ) {
+
                 newData[ i + 1 ] = data[ i ];
-    
+
             }
-    
+
             data = newData;
             data[0] = this.events.out[ eventName ].id;
-    
+
         } else {
-    
+
             dataView[0] = this.events.out[ eventName ].id;
-    
+
         }
-    
+
         socket.send( data, { binary: true } );
 
     };
@@ -252,6 +254,20 @@ class NetworkCore {
         //
 
         console.log( '> DatTank ArenaServer: Network started on port ' + Environment.web.socketPort );
+
+    };
+
+    //
+
+    constructor () {
+
+        if ( NetworkCore.instance ) {
+
+            return NetworkCore.instance;
+
+        }
+
+        NetworkCore.instance = this;
 
     };
 

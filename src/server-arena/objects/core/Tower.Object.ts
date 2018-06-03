@@ -5,25 +5,283 @@
 
 import * as OMath from "./../../OMath/Core.OMath";
 import { ArenaCore } from "./../../core/Arena.Core";
+import { TeamCore } from "./../../core/Team.Core";
+import { PlayerCore } from "./../../core/Player.Core";
+import { BulletManager } from "./../../managers/Bullet.Manager";
+import { TankObject } from "./../core/Tank.Object";
+import { BulletObject } from "./../core/Bullet.Object";
+import { TowerNetwork } from "./../../network/Tower.Network";
 
 //
 
 class TowerObject {
 
+    private static numIds = 100;
+
     public id: number;
+    public team: TeamCore;
+    public health: number = 100;
+    public size: OMath.Vec3 = new OMath.Vec3( 35, 35, 35 );
     public position: OMath.Vec3 = new OMath.Vec3();
+    public rotation: number = 0;
+    public newRotation: number = 0;
+    public target: TankObject;
+
+    public range: number = 300;
+    public armour: number;
+    public bullet: number = 120;
+    public collisionBox: any;
+
+    public type = 'Tower';
+
+    public arena: ArenaCore;
+
+    private cooldown = 1300;
+    private shootTime: number;
+    private bulletsPool: Array<BulletObject> = [];
+
+    private sinceHitRegeneraionLimit: number = 5000;
+    private sinceHitTime: number;
+    private sinceRegenerationLimit: number = 2000;
+    private sinceRegenerationTime: number;
+
+    private inRangeOf: object = {};
+
+    public network: TowerNetwork;
 
     //
 
-    public hit ( triggerId: number ) {
+    public shoot ( target: TankObject ) {
 
-        // todo
+        let dx = target.position.x - this.position.x;
+        let dz = target.position.z - this.position.z;
+        let rotation, delta;
+
+        if ( dz === 0 && dx !== 0 ) {
+
+            rotation = ( dx > 0 ) ? - Math.PI : 0;
+
+        } else {
+
+            rotation = - Math.PI / 2 - Math.atan2( dz, dx );
+
+        }
+
+        delta = OMath.formatAngle( rotation ) - OMath.formatAngle( this.rotation );
+
+        if ( Math.abs( delta ) > 0.5 ) return;
+
+        //
+
+        if ( Date.now() - this.shootTime < this.cooldown ) {
+
+            return;
+    
+        }
+    
+        this.shootTime = Date.now();
+
+        //
+
+        let position = new OMath.Vec3( this.position.x, 20, this.position.z );
+        let offset = 45;
+        position.x += offset * Math.cos( - this.rotation - Math.PI / 2 );
+        position.z += offset * Math.sin( - this.rotation - Math.PI / 2 );    
+
+        let bullet = this.arena.bulletManager.getInactiveBullet();
+        if ( ! bullet ) return;
+        bullet.activate( position, this.rotation + Math.PI, this.id );
+
+        this.network.makeShot( bullet );
+
+    };
+
+    public changeHealth ( delta: number ) {
+
+        let health = Math.max( Math.min( this.health - delta, 100 ), 0 );
+        if ( health === this.health ) return;
+        this.health = health;
+
+        this.network.setHealth();
+
+    };
+
+    public hit ( killerId: number ) {
+
+        let killer = this.arena.playerManager.getById( killerId );
+        if ( ! killer ) return;
+
+        if ( killer.team.id === this.team.id ) {
+
+            killer.tank.friendlyFire();
+            return;
+
+        }
+
+        //
+
+        this.sinceHitTime = 0;
+        this.sinceRegenerationTime = 0;
+
+        this.changeHealth( Math.floor( 20 * ( killer.tank.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ) ) );
+
+        killer.changeScore( 1 );
+        this.arena.updateLeaderboard();
+
+        //
+
+        if ( this.health === 0 ) {
+
+            this.changeTeam( killer.team, killer.id );
+            killer.changeScore( 5 );
+            // game.updateTopList( killer.login, killer.score, killer.kills );
+            this.arena.updateLeaderboard();
+    
+        }
+
+    };
+
+    public changeTeam ( team: TeamCore, killerId: number ) {
+
+        team.towers ++;
+        this.team.towers --;
+        this.team = team;
+        this.health = 100;
+
+        this.arena.updateLeaderboard();
+        this.network.changeTeam( killerId );
+
+    };
+
+    public getTarget ( players: Array<PlayerCore> ) {
+
+        let dist;
+        let target: PlayerCore = null;
+        let minDistance = this.range;
+
+        //
+
+        for ( let i = 0, il = players.length; i < il; i ++ ) {
+
+            if ( players[ i ].team.id === this.team.id || players[ i ].tank.health <= 0 ) {
+
+                continue;
+
+            }
+
+            //
+
+            dist = this.position.distanceTo( players[ i ].tank.position );
+
+            if ( dist > this.range ) continue;
+
+            if ( dist < minDistance ) {
+
+                minDistance = dist;
+                target = players[ i ];
+
+            }
+
+        }
+
+        //
+
+        return target;
+
+    };
+
+    public rotateTop ( target: TankObject, delta: number ) {
+
+        let dx = target.position.x - this.position.x;
+        let dz = target.position.z - this.position.z;
+        let newRotation, deltaRot;
+
+        if ( dz === 0 && dx !== 0 ) {
+
+            newRotation = ( dx > 0 ) ? - Math.PI : 0;
+
+        } else {
+
+            newRotation = - Math.PI / 2 - Math.atan2( dz, dx );
+
+        }
+
+        newRotation = OMath.formatAngle( newRotation );
+
+        //
+
+        deltaRot = this.newRotation - this.rotation;
+
+        if ( deltaRot > Math.PI ) {
+
+            if ( delta > 0 ) {
+
+                deltaRot = - 2 * Math.PI + deltaRot;
+
+            } else {
+
+                deltaRot = 2 * Math.PI + deltaRot;
+
+            }
+
+        }
+
+        if ( Math.abs( deltaRot ) > 0.01 ) {
+
+            this.rotation = OMath.formatAngle( this.rotation + Math.sign( deltaRot ) / 30 * ( delta / 50 ) );
+
+        }
+
+        //
+
+        if ( Math.abs( newRotation - this.newRotation ) > 0.15 ) {
+
+            this.newRotation = newRotation;
+            this.network.setTopRotation();
+
+        }
+
+        //
+
+        if ( Date.now() - this.shootTime > this.cooldown && deltaRot < 0.5 ) {
+
+            this.shoot( target );
+
+        }
 
     };
 
     public update ( delta: number, time: number ) {
 
-        // todo
+        let target = this.getTarget( this.arena.playerManager.getPlayers() );
+
+        if ( ! target ) {
+
+            this.target = null;
+
+        } else {
+
+            this.target = target.tank;
+            this.rotateTop( target.tank, delta );
+
+        }
+
+        this.sinceHitTime += delta;
+
+        if ( this.sinceHitTime > this.sinceHitRegeneraionLimit ) {
+
+            if ( this.sinceRegenerationTime > this.sinceRegenerationLimit ) {
+
+                this.changeHealth( - 5 );
+                this.sinceRegenerationTime = 0;
+
+            } else {
+
+                this.sinceRegenerationTime += delta;
+
+            }
+
+        }
 
     };
 
@@ -37,7 +295,18 @@ class TowerObject {
 
     constructor ( arena: ArenaCore, params: any ) {
 
-        // todo
+        this.arena = arena;
+
+        if ( TowerObject.numIds > 2000 ) TowerObject.numIds = 1000;
+        this.id = TowerObject.numIds ++;
+
+        this.team = params.team;
+        this.shootTime = Date.now();
+
+        this.position.set( this.position.x, this.position.y, this.position.z );
+        this.arena.collisionManager.addObject( this, 'box', false );
+
+        this.network = new TowerNetwork( this );
 
     };
 

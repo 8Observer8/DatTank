@@ -4,10 +4,34 @@
 */
 
 import { ArenaCore } from "./../core/Arena.Core";
+import { BulletObject } from "./../objects/core/Bullet.Object";
 
 //
 
 class BulletManager {
+
+    private bulletCount: number = 30;
+    private bullets: Array<BulletObject> = [];
+
+    public arena: ArenaCore;
+
+    //
+
+    public getInactiveBullet () {
+
+        for ( var i = 0; i < this.bullets.length; i ++ ) {
+
+            if ( ! this.bullets[ i ].active ) {
+
+                return this.bullets[ i ];
+
+            }
+
+        }
+
+        return null;
+
+    };
 
     public init () {
 
@@ -17,7 +41,15 @@ class BulletManager {
 
     constructor ( arena: ArenaCore ) {
 
-        // todo
+        this.arena = arena;
+
+        //
+
+        for ( var i = 0; i < 10; i ++ ) {
+
+            this.bullets.push( new BulletObject( this.arena, {} ) );
+
+        }
 
     };
 
