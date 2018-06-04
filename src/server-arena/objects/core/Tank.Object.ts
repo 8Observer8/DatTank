@@ -11,6 +11,7 @@ import { PlayerCore } from "./../../core/Player.Core";
 class TankObject {
 
     public id: number;
+    public title: string;
     public position: OMath.Vec3 = new OMath.Vec3();
     public health: number = 100;
 
@@ -18,6 +19,9 @@ class TankObject {
     public bullet: number;
     public speed: number;
     public rpm: number;
+    public ammoCapacity: number;
+
+    public typeId: number;
 
     public player: PlayerCore;
 

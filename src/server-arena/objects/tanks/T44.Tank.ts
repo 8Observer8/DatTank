@@ -1,13 +1,13 @@
 /*
  * @author ohmed
- * Tank "IS2" unit class
+ * Tank "T44" unit class
 */
 
 import { TankObject } from "./../core/Tank.Object";
 
 //
 
-class IS2Tank extends TankObject {
+class T44Tank extends TankObject {
 
     public origParams: object = {};
 
@@ -19,14 +19,14 @@ class IS2Tank extends TankObject {
 
         //
 
-        this.title = 'IS2';
-        this.typeId = 0;
+        this.title = 'T44';
+        this.typeId = 2;
 
         this.armour = 90;
-        this.bullet = 122;
-        this.speed = 37;
-        this.rpm = 4.88 * 10;
-        this.ammoCapacity = 36;
+        this.bullet = 85;
+        this.speed = 51;
+        this.rpm = 10.7 * 10;
+        this.ammoCapacity = 64;
 
         this.origParams = {
             armour:         this.armour,
@@ -42,4 +42,4 @@ class IS2Tank extends TankObject {
 
 //
 
-export { IS2Tank };
+export { T44Tank };
