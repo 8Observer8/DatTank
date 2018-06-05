@@ -32,7 +32,7 @@ class TowerNetwork {
         bufferView[4] = bullet.position.z;
         bufferView[5] = ( - this.tower.rotation - Math.PI / 2 ) * 1000;
 
-        this.arena.network.sendEventToPlayersInRange( 'TowerMakeShot', buffer, bufferView );
+        this.arena.network.sendEventToPlayersInRange( this.tower.position, 'TowerMakeShot', buffer, bufferView );
 
     };
 
@@ -49,7 +49,7 @@ class TowerNetwork {
         bufferView[ 1 ] = this.tower.id;
         bufferView[ 2 ] = this.tower.health;
 
-        this.arena.network.sendEventToPlayersInRange( 'TowerSetHealth', buffer, bufferView );
+        this.arena.network.sendEventToPlayersInRange( this.tower.position, 'TowerSetHealth', buffer, bufferView );
 
     };
 
@@ -67,17 +67,17 @@ class TowerNetwork {
         bufferView[ 2 ] = this.tower.team.id;
         bufferView[ 3 ] = killerId;
 
-        this.arena.network.sendEventToPlayersInRange( 'TowerChangeTeam', buffer, bufferView );
+        this.arena.network.sendEventToPlayersInRange( this.tower.position, 'TowerChangeTeam', buffer, bufferView );
 
     };
 
     public setTopRotation () {
 
-        this.buffers['rotateTop'] = this.buffers['rotateTop'] || {};
-        var buffer = this.buffers['rotateTop'].buffer || new ArrayBuffer( 8 );
-        var bufferView = this.buffers['rotateTop'].bufferView || new Int16Array( buffer );
-        this.buffers['rotateTop'].buffer = buffer;
-        this.buffers['rotateTop'].bufferView = bufferView;
+        this.buffers['SetTopRotation'] = this.buffers['SetTopRotation'] || {};
+        var buffer = this.buffers['SetTopRotation'].buffer || new ArrayBuffer( 8 );
+        var bufferView = this.buffers['SetTopRotation'].bufferView || new Int16Array( buffer );
+        this.buffers['SetTopRotation'].buffer = buffer;
+        this.buffers['SetTopRotation'].bufferView = bufferView;
 
         //
 
@@ -85,7 +85,7 @@ class TowerNetwork {
         bufferView[2] = Math.floor( 1000 * this.tower.rotation );
         bufferView[3] = Math.floor( 1000 * this.tower.newRotation );
 
-        this.arena.network.sendEventToPlayersInRange( 'TowerRotateTop', buffer, bufferView );
+        this.arena.network.sendEventToPlayersInRange( this.tower.position, 'TowerRotateTop', buffer, bufferView );
 
     };
 

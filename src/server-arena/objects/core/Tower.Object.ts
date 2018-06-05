@@ -32,8 +32,6 @@ class TowerObject {
     public bullet: number = 120;
     public collisionBox: any;
 
-    public type = 'Tower';
-
     public arena: ArenaCore;
 
     private cooldown = 1300;
@@ -48,6 +46,7 @@ class TowerObject {
     private inRangeOf: object = {};
 
     public network: TowerNetwork;
+    public readonly type = 'Tower';
 
     //
 

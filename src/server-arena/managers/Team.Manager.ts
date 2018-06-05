@@ -57,7 +57,7 @@ class TeamManager {
 
     };
 
-    public get () {
+    public getTeams () {
 
         return this.teams;
 

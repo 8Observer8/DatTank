@@ -18,6 +18,12 @@ class BotCore {
 
     //
 
+    public die () {
+
+        // todo
+
+    };
+
     public update ( delta: number, time: number ) {
 
         // todo

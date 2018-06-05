@@ -19,7 +19,19 @@ export class Vec3 {
 
     };
 
-    public distanceTo ( point: Vec3 | THREE.Vector3 ) {
+    public length () {
+
+        return Math.sqrt( this.x * this.x + this.y * this.y + this.z * this.z );
+
+    };
+
+    public sum ( vec: Vec3 ) {
+
+        return new Vec3( this.x + vec.x, this.y + vec.y, this.z + vec.z );
+
+    };
+
+    public distanceTo ( point: Vec3 ) {
 
         let dx = this.x - point.x;
         let dy = this.y - point.y;

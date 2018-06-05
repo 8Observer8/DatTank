@@ -3,8 +3,10 @@
  * DatTank Arena Core
 */
 
+import * as OMath from "./../OMath/Core.OMath";
 import { PlayerCore } from "./Player.Core";
 import { BotCore } from "./Bot.Core";
+import { TeamCore } from "./Team.Core";
 
 import { ArenaManager } from "./../managers/Arena.Manager";
 import { TeamManager } from "./../managers/Team.Manager";
@@ -14,8 +16,9 @@ import { TowerManager } from "./../managers/Tower.Manager";
 import { DecorationManager } from "./../managers/Decoration.Manager";
 import { BoxManager } from "./../managers/Box.Manager";
 import { CollisionManager } from "./../managers/Collision.Manager";
+import { BulletManager } from "./../managers/Bullet.Manager";
+import { TankManager } from "./../managers/Tank.Manager";
 import { ArenaNetwork } from "./../network/Arena.Network";
-import { BulletManager } from "../managers/Bullet.Manager";
 
 //
 
@@ -28,6 +31,7 @@ class ArenaCore {
 
     public bulletManager: BulletManager;
     public teamManager: TeamManager;
+    public tankManager: TankManager;
     public playerManager: PlayerManager;
     public botManager: BotManager;
     public towerManager: TowerManager;
@@ -88,7 +92,7 @@ class ArenaCore {
 
             player.team.removePlayer( player.id );
             player.dispose();
-            // this.announce( 'ArenaPlayerLeft', null, { id: player.id } );
+            this.network.sendEventToAllPlayers( 'ArenaPlayerLeft', null, { id: player.id } );
     
         }
     
@@ -120,7 +124,53 @@ class ArenaCore {
 
     public updateLeaderboard () {
 
-        // todo
+        function update () {
+
+            if ( this.disposed ) return;
+
+            let players: Array<PlayerCore> = this.playerManager.getPlayers();
+            let teams: Array<TeamCore> = this.teamManager.getTeams();
+            let towersCount: number = this.towerManager.getTowers();
+            let playersJSON = [];
+            let teamsJSON = [];
+
+            OMath.sortByProperty( players, 'score' );
+
+            for ( let i = 0, il = players.length; i < il; i ++ ) {
+
+                playersJSON.push({
+                    id:         this.playerManager.players[ i ].id,
+                    login:      this.playerManager.players[ i ].login,
+                    team:       this.playerManager.players[ i ].team.id,
+                    kills:      this.playerManager.players[ i ].kills,
+                    score:      this.playerManager.players[ i ].score
+                });
+
+            }
+
+            //
+
+            for ( let i = 0, il = teams.length; i < il; i ++ ) {
+
+                if ( teams[ i ].id === 1000 ) continue;
+
+                teamsJSON.push({
+                    id:         teams[ i ].id,
+                    score:      Math.floor( 100 * teams[ i ].towers / towersCount )
+                });
+
+            }
+
+            //
+
+            this.announce( 'ArenaLeaderboardUpdate', null, { players: playersJSON, teams: teamsJSON } );
+
+        };
+
+        //
+
+        clearTimeout( this.leaderboardUpdateTimeout );
+        this.leaderboardUpdateTimeout = setTimeout( update.bind( this ), 200 );
 
     };
 
@@ -196,6 +246,7 @@ class ArenaCore {
         this.id = ArenaCore.numIds ++;
 
         this.network = new ArenaNetwork( this );
+        this.tankManager = new TankManager( this );
         this.bulletManager = new BulletManager( this );
         this.teamManager = new TeamManager( this );
         this.playerManager = new PlayerManager( this );

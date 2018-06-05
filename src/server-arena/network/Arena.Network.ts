@@ -3,7 +3,9 @@
  * DatTank Arena Network handler
 */
 
+import * as OMath from "./../OMath/Core.OMath";
 import { ArenaCore } from "./../core/Arena.Core";
+import { Network } from "./Core.Network";
 
 //
 
@@ -13,9 +15,33 @@ class ArenaNetwork {
 
     //
 
-    public sendEventToPlayersInRange ( eventName: string, data: ArrayBuffer, dataView?: Int16Array ) {
+    public sendEventToPlayersInRange ( position: OMath.Vec3, eventName: string, data: ArrayBuffer, dataView?: Int16Array | Object ) {
 
-        // todo
+        let players = this.arena.playerManager.getPlayers();
+
+        for ( let i = 0, il = players.length; i < il; i ++ ) {
+
+            let player = players[ i ];
+
+            if ( position.distanceTo( player.tank.position ) > 600 ) continue;
+            if ( ! player.socket ) continue;
+
+            Network.send( eventName, player.socket, data, dataView );
+
+        }
+
+    };
+
+    public sendEventToAllPlayers ( eventName: string, data: ArrayBuffer, dataView?: Int16Array | Object ) {
+
+        let players = this.arena.playerManager.getPlayers();
+
+        for ( let i = 0, il = players.length; i < il; i ++ ) {
+
+            if ( ! players[ i ].socket ) continue;
+            Network.send( eventName, players[ i ].socket, data, dataView );
+
+        }
 
     };
 

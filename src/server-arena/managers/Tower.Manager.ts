@@ -38,6 +38,12 @@ class TowerManager {
 
     };
 
+    public getTowers () {
+
+        return this.towers;
+
+    };
+
     public update ( delta: number, time: number ) {
 
         for ( var i = 0, il = this.towers.length; i < il; i ++ ) {

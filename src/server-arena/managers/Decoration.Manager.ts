@@ -31,7 +31,7 @@ class DecorationManager {
         var x, z;
         var scale, scaleH;
         var count, type;
-        let teams = this.arena.teamManager.get();
+        let teams = this.arena.teamManager.getTeams();
     
         for ( var decorationName in DecorationManager.structure ) {
     

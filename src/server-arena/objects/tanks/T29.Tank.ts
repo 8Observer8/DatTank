@@ -4,6 +4,7 @@
 */
 
 import { TankObject } from "./../core/Tank.Object";
+import { PlayerCore } from "./../../core/Player.Core";
 
 //
 
@@ -13,9 +14,9 @@ class T29Tank extends TankObject {
 
     //
 
-    constructor () {
+    constructor ( player: PlayerCore ) {
 
-        super();
+        super( player );
 
         //
 

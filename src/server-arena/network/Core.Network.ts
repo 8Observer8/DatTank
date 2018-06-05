@@ -17,7 +17,7 @@ enum EventType { BIN = 0, JSON = 1 };
 
 class NetworkCore {
 
-    private static instance;
+    private static instance: NetworkCore;
 
     private io: any;
 
@@ -98,7 +98,7 @@ class NetworkCore {
 
     };
 
-    private send ( eventName: string, socket: ws, data: any, dataView?: any ) {
+    public send ( eventName: string, socket: ws, data: any, dataView?: any ) {
 
         if ( ! socket || socket.readyState !== 1 ) return;
 

@@ -62,7 +62,7 @@ class PlayerManager {
     
         }
     
-        return false;
+        return null;
 
     };
 

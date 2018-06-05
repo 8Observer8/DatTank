@@ -14,7 +14,7 @@ class AmmoBoxObject extends BoxObject {
     public pickUp ( player: PlayerCore ) {
 
         this.dispose();
-        player.changeAmmo( this.amount );
+        player.tank.changeAmmo( this.amount );
 
     };
 

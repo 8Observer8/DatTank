@@ -11,6 +11,28 @@ export { Vec3 };
 
 //
 
+export function sortByProperty ( array: Array<object>, property: string ) {
+
+    for ( var i = 0; i < array.length; i ++ ) {
+
+        for ( var j = i; j < array.length; j ++ ) {
+
+            if ( array[ i ][ property ] < array[ j ][ property ] ) {
+
+                var tmp = array[ i ];
+                array[ i ] = array[ j ];
+                array[ j ] = tmp;
+
+            }
+
+        }
+
+    }
+
+    return array;
+
+};
+
 export function sign ( value: number ) {
 
     if ( value >= 0 ) {
