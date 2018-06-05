@@ -100,6 +100,12 @@ class BoxManager {
 
     };
 
+    public getBoxes () {
+
+        return this.boxes;
+
+    };
+
     public init () {
 
         for ( var i = 0; i < this.boxNum; i ++ ) {

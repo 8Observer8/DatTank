@@ -5,7 +5,7 @@
 
 import * as OMath from "./../OMath/Core.OMath";
 import { ArenaCore } from "./../core/Arena.Core";
-import { DecorationCore } from "./../objects/core/Decoration.Object";
+import { DecorationObject } from "./../objects/core/Decoration.Object";
 
 //
 
@@ -16,11 +16,11 @@ class DecorationManager {
     };
 
     public arena: ArenaCore;
-    private decorations: Array<DecorationCore> = [];
+    private decorations: Array<DecorationObject> = [];
 
     //
 
-    public add ( decoration: DecorationCore ) {
+    public add ( decoration: DecorationObject ) {
 
         this.decorations.push( decoration );
 
@@ -45,7 +45,7 @@ class DecorationManager {
     
                 //
     
-                if ( ! DecorationCore[ type ].canPlace( this.arena, x, z ) ) continue;
+                if ( ! DecorationObject[ type ].canPlace( this.arena, x, z ) ) continue;
     
                 var placedOnBase = false;
     
@@ -68,7 +68,7 @@ class DecorationManager {
     
                 //
     
-                var decoration = new DecorationCore[ type ]( this.arena, { position: new OMath.Vec3( x, 0, z ) });
+                var decoration = new DecorationObject[ type ]( this.arena, { position: new OMath.Vec3( x, 0, z ) });
     
                 this.decorations.push( decoration );
 

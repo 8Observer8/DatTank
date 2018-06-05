@@ -10,6 +10,7 @@ import { ArenaCore } from "./Arena.Core";
 import { BotCore } from "./Bot.Core";
 import { TeamCore } from "./Team.Core";
 import { TankObject } from "./../objects/core/Tank.Object";
+import { PlayerNetwork } from "../network/Player.Network";
 
 import { IS2Tank } from "./../objects/tanks/IS2.Tank";
 import { T29Tank } from "./../objects/tanks/T29.Tank";
@@ -22,6 +23,34 @@ class PlayerCore {
 
     public static Dead: number = 0;
     public static Alive: number = 1;
+
+    private static levelScore = {
+        0:      0,
+        1:      10,
+        2:      30,
+        3:      60,
+        4:      100,
+        5:      150,
+        6:      250,
+        7:      340,
+        8:      500,
+        9:      650,
+        10:     1000,
+        11:     1400,
+        12:     1900,
+        13:     2500,
+        14:     3000,
+        15:     3800,
+        16:     4500,
+        17:     5500,
+        18:     6700,
+        19:     7200,
+        20:     8700,
+        21:     9800,
+        22:     12000
+    };
+
+    //
 
     public arena: ArenaCore;
     public bot: BotCore;
@@ -38,6 +67,7 @@ class PlayerCore {
 
     public team: TeamCore;
     public tank: TankObject;
+    public network: PlayerNetwork;
 
     public readonly type: string = 'Player';
 
@@ -79,7 +109,31 @@ class PlayerCore {
 
     public changeScore ( delta: number ) {
 
-        // todo
+        let level = 0;
+        this.score += delta;
+        
+        while ( PlayerCore.levelScore[ level ] <= this.score ) {
+
+            level ++;
+    
+        }
+
+        level --;
+
+        if ( this.level + this.bonusLevels < level || delta < 0 ) {
+
+            if ( this.socket ) {
+
+                this.bonusLevels = level - this.level;
+                this.network.updateLevel();
+
+            } else if ( this.bot ) {
+
+                this.bot.levelUp();
+
+            }
+
+        }
 
     };
 
@@ -128,6 +182,7 @@ class PlayerCore {
     constructor ( arena: ArenaCore, params: any ) {
 
         this.arena = arena;
+        this.network = new PlayerNetwork( this );
 
         this.login = params.login || this.getGuestLogin();
         this.status = PlayerCore.Alive;

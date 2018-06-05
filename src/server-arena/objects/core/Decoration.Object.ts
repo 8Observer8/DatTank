@@ -8,7 +8,7 @@ import { ArenaCore } from "./../../core/Arena.Core";
 
 //
 
-class DecorationCore {
+class DecorationObject {
 
     private static numId: number = 1;
 
@@ -16,16 +16,25 @@ class DecorationCore {
     public arena: ArenaCore;
     public name: string;
     public collisionBox: any;
+    public type: string = '';
 
     public rotation: number = 0;
+    public radius: number;
     public scale: OMath.Vec3 = new OMath.Vec3();
     public position: OMath.Vec3 = new OMath.Vec3();
+    public size: OMath.Vec3 = new OMath.Vec3();
 
     //
 
     public toJSON () {
 
-        // todo
+        return {
+            id:         this.id,
+            type:       this.type,
+            position:   this.position.toJSON(),
+            rotation:   this.rotation,
+            scale:      this.scale.toJSON()
+        };
 
     };
 
@@ -35,8 +44,8 @@ class DecorationCore {
 
         this.arena = arena;
 
-        if ( DecorationCore.numId > 1000 ) DecorationCore.numId = 0;
-        this.id = DecorationCore.numId ++;
+        if ( DecorationObject.numId > 1000 ) DecorationObject.numId = 0;
+        this.id = DecorationObject.numId ++;
 
         this.rotation = params.rotation || 0;
         this.position.set( params.position.x, params.position.y, params.position.z );
@@ -49,4 +58,4 @@ class DecorationCore {
 
 //
 
-export { DecorationCore };
+export { DecorationObject };

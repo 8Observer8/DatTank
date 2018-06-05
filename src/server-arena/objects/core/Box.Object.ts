@@ -21,6 +21,7 @@ class BoxObject {
     public radius: number = 10;
     public position: OMath.Vec3 = new OMath.Vec3();
     public type: string = 'Box';
+    public typeId: number;
     public amount: number = 0;
 
     protected arena: ArenaCore;

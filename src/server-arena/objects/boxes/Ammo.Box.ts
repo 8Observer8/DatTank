@@ -24,6 +24,7 @@ class AmmoBoxObject extends BoxObject {
 
         super( arena, params );
         this.type = 'AmmoBox';
+        this.typeId = 0;
         this.amount = 40;
 
     };

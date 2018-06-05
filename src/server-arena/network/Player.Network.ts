@@ -37,6 +37,23 @@ class PlayerNetwork {
 
     // send via network
 
+    public updateLevel () {
+
+        this.buffers['NewLevel'] = this.buffers['NewLevel'] || {};
+        var buffer = this.buffers['NewLevel'].buffer || new ArrayBuffer( 6 );
+        var bufferView = this.buffers['NewLevel'].bufferView || new Int16Array( buffer );
+        this.buffers['NewLevel'].buffer = buffer;
+        this.buffers['NewLevel'].bufferView = bufferView;
+
+        //
+
+        bufferView[ 1 ] = this.player.id;
+        bufferView[ 2 ] = this.player.bonusLevels;
+
+        Network.send( 'PlayerNewLevel', this.player.socket, buffer, bufferView );
+
+    };
+
     //
 
     constructor ( player: PlayerCore ) {

@@ -8,11 +8,23 @@ import { PlayerCore } from "./../../core/Player.Core";
 import { TeamCore } from "../../core/Team.Core";
 import { ArenaCore } from "../../core/Arena.Core";
 import { TowerObject } from "./Tower.Object";
+import { BoxObject } from "./Box.Object";
 import { TankNetwork } from "./../../network/Tank.Network";
 
 //
 
 class TankObject {
+
+    private static statsList = [ 'speed', 'rpm', 'armour', 'gun', 'ammoCapacity' ];
+    private static levelStatsChange = {
+        speed:          [  5,  3,  2,  2,  2,  3,  1,  3,  3,  2,  5,  3,  3,  2,  1,  1,  1,  1,  1,  1,  1,  1,  1 ],
+        rpm:            [ 30, 20, 20, 15, 10, 15, 20, 20, 30, 40, 30, 20, 10, 10, 20, 30, 20, 10, 20, 20, 20, 10, 15 ],
+        armour:         [ 40, 30, 20, 20, 30, 40, 50, 20, 30, 50, 30, 20, 10, 10, 20, 20, 30, 20, 10, 15, 20, 10, 10 ],
+        gun:            [ 20, 15, 15, 20, 15, 10,  5,  5, 10, 15, 20, 30, 35, 40, 20, 10, 15, 15, 20, 10, 10, 10, 30 ],
+        ammoCapacity:   [ 30, 20, 20, 40, 30, 20,  5,  5, 10, 20, 15, 20, 15, 30, 20, 10, 15, 15, 10, 10, 10, 20, 30 ]
+    };
+
+    //
 
     public id: number;
     public title: string;
@@ -32,7 +44,7 @@ class TankObject {
     public rpm: number;
     public ammoCapacity: number;
 
-    private moveDirection: OMath.Vec2 = new OMath.Vec2();
+    public moveDirection: OMath.Vec2 = new OMath.Vec2();
     public moveSpeed: number = 0.09;
     public originalMoveSpeed: number = 0.09;
 
@@ -56,6 +68,54 @@ class TankObject {
     public network: TankNetwork;
 
     //
+
+    public updateStats ( statId: number ) {
+
+        let statName = TankObject.statsList[ statId ];
+        let levelsStats = TankObject.levelStatsChange;
+        let level = this.player.level;
+        if ( this.player.bonusLevels <= 0 ) return;
+
+        //
+
+        switch ( statName ) {
+
+            case 'speed':
+    
+                this.speed += levelsStats['speed'][ level + 1 ];
+                this.moveSpeed = this.originalMoveSpeed * this.speed / 40;
+                break;
+    
+            case 'rpm':
+    
+                this.rpm += levelsStats['rpm'][ level + 1 ];
+                break;
+    
+            case 'armour':
+    
+                this.armour += levelsStats['armour'][ level + 1 ];
+                break;
+    
+            case 'gun':
+    
+                this.bullet += levelsStats['gun'][ level + 1 ];
+                break;
+    
+            case 'ammoCapacity':
+    
+                this.ammoCapacity += levelsStats['ammoCapacity'][ level + 1 ];
+                break;
+    
+            default:
+    
+                return;
+    
+        }
+
+        this.player.bonusLevels --;
+        this.player.level ++;
+
+    };
 
     public setRespawnPosition () {
 
@@ -254,10 +314,163 @@ class TankObject {
 
     };
 
-    public isObjectInRange ( target: TankObject | TowerObject ) {
+    public isObjectInRange ( target: TankObject | TowerObject | BoxObject ) {
 
         let distance = this.position.distanceTo( target.position );
         return ( distance < this.viewRange );
+
+    };
+
+    //
+
+    public regenerationUpdate ( delta: number ) {
+
+        this.sinceHitTime += delta;
+
+        if ( this.sinceHitTime > this.sinceHitRegeneraionLimit ) {
+
+            if ( this.sinceRegenerationTime > this.sinceRegenerationLimit ) {
+
+                this.changeHealth( 2 );
+                this.sinceRegenerationTime = 0;
+
+            } else {
+
+                this.sinceRegenerationTime += delta;
+
+            }
+
+        }
+
+    };
+
+    public updatePosition ( delta: number ) {
+
+        if ( this.moveDirection.x !== 0 || this.moveDirection.y !== 0 ) {
+
+            if ( this.moveDirection.x > 0 ) {
+
+                this.deltaPosition.x = + this.moveSpeed * Math.sin( this.rotation ) * delta;
+                this.deltaPosition.z = + this.moveSpeed * Math.cos( this.rotation ) * delta;
+
+            } else if ( this.moveDirection.x < 0 ) {
+
+                this.deltaPosition.x = - this.moveSpeed * Math.sin( this.rotation ) * delta;
+                this.deltaPosition.z = - this.moveSpeed * Math.cos( this.rotation ) * delta;
+
+            } else {
+
+                this.deltaPosition.x = 0;
+                this.deltaPosition.z = 0;
+
+            }
+
+            //
+
+            if ( this.moveDirection.y > 0 ) {
+
+                this.rotation += 0.001 * delta;
+
+            } else if ( this.moveDirection.y < 0 ) {
+
+                this.rotation -= 0.001 * delta;
+
+            }
+
+        }
+
+    };
+
+    public updateObjectsInRange () {
+
+        let newBoxesInRange: Array<BoxObject> = [];
+        let newTowersInRange: Array<TowerObject> = [];
+        let newTanksInRange: Array<TankObject> = [];
+
+        let boxes = this.arena.boxManager.getBoxes();
+        let tanks = this.arena.tankManager.getTanks();
+        let towers = this.arena.towerManager.getTowers();
+
+        // check boxes in range
+
+        for ( let i = 0, il = boxes.length; i < il; i ++ ) {
+
+            let box = boxes[ i ];
+
+            if ( this.isObjectInRange( box ) ) {
+
+                if ( this.inRangeOf[ 'b-' + box.id ] ) continue;
+
+                this.inRangeOf[ 'b-' + box.id ] = box;
+                newBoxesInRange.push( box );
+
+            } else {
+
+                delete this.inRangeOf[ 'b-' + box.id ];
+
+            }
+
+        }
+
+        this.network.updateBoxesInRange( newBoxesInRange );
+
+        // check towers in range
+
+        for ( let i = 0, il = towers.length; i < il; i ++ ) {
+
+            let tower = towers[ i ];
+
+            if ( this.isObjectInRange( tower ) ) {
+
+                if ( this.inRangeOf[ 't-' + tower.id ] ) continue;
+
+                this.inRangeOf[ 't-' + tower.id ] = tower;
+                tower.inRangeOf[ 'p-' + this.id ] = this;
+                newTowersInRange.push( tower );
+
+            } else {
+
+                delete this.inRangeOf[ 't-' + tower.id ];
+                delete tower.inRangeOf[ 'p-' + this.id ];
+
+            }
+
+        }
+
+        this.network.updateTowersInRange( newTowersInRange );
+
+        // check tanks in range
+
+        for ( let i = 0, il = tanks.length; i < il; i ++ ) {
+
+            let tank = tanks[ i ];
+
+            if ( this.isObjectInRange( tank ) ) {
+
+                if ( this.inRangeOf[ 'tk-' + tank.id ] ) continue;
+
+                this.inRangeOf[ 'tk-' + tank.id ] = tank;
+                newTanksInRange.push( tank );
+
+            } else {
+
+                delete this.inRangeOf[ 'tk-' + tank.id ];
+
+            }
+
+        }
+
+        this.network.updateTanksInRange( newTanksInRange );
+
+    };
+
+    public update ( delta: number, time: number ) {
+
+        if ( this.health <= 0 ) return;
+
+        this.regenerationUpdate( delta );
+        this.updatePosition( delta );
+        this.updateObjectsInRange();
 
     };
 

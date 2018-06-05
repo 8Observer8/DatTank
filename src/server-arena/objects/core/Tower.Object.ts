@@ -43,7 +43,7 @@ class TowerObject {
     private sinceRegenerationLimit: number = 2000;
     private sinceRegenerationTime: number;
 
-    private inRangeOf: object = {};
+    public inRangeOf: object = {};
 
     public network: TowerNetwork;
     public readonly type = 'Tower';

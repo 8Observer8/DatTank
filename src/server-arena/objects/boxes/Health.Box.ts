@@ -24,6 +24,7 @@ class HealthBoxObject extends BoxObject {
 
         super( arena, params );
         this.type = 'HealthBox';
+        this.typeId = 1;
         this.amount = 20;
 
     };
