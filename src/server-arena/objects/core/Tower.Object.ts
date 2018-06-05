@@ -19,6 +19,7 @@ class TowerObject {
     private static numIds = 100;
 
     public id: number;
+    public title: string;
     public team: TeamCore;
     public health: number = 100;
     public size: OMath.Vec3 = new OMath.Vec3( 35, 35, 35 );

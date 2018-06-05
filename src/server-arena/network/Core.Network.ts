@@ -189,6 +189,13 @@ class NetworkCore {
 
     public init () {
 
+        if ( this.io ) {
+
+            console.error('NetworkCore: Network already inited.');
+            return;
+
+        }
+
         // register events
 
         this.registerEvent( 'ArenaJoinRequest', EventDir.IN, EventType.JSON, 0 );

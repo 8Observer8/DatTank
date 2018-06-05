@@ -177,6 +177,12 @@ class PlayerCore {
 
     };
 
+    public toJSON () {
+
+        // todo
+
+    };
+
     //
 
     constructor ( arena: ArenaCore, params: any ) {

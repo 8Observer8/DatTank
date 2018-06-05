@@ -5,6 +5,7 @@
 
 import * as OMath from "./../OMath/Core.OMath";
 import { ArenaCore } from "./../core/Arena.Core";
+import { PlayerCore } from "./../core/Player.Core";
 import { Network } from "./Core.Network";
 
 //
@@ -45,11 +46,24 @@ class ArenaNetwork {
 
     };
 
+    public joinArena ( player: PlayerCore ) {
+
+        let response = this.arena.toJSON();
+        response['me'] = player.toJSON();
+
+        Network.send( 'ArenaJoinResponse', player.socket, false, response );
+
+    };
+
     //
 
     constructor ( arena: ArenaCore ) {
 
         this.arena = arena;
+
+        //
+
+        // todo: add event handlers
 
     };
 

@@ -5,6 +5,7 @@
 
 import { Environment } from "./environments/Detect.Environment";
 import { ArenaManager } from "./managers/Arena.Manager";
+import { Network } from "./network/Core.Network";
 
 let http = require('http');
 let ip = require('ip');
@@ -99,6 +100,8 @@ export class Game {
 
     public init () {
 
+        Network.init();
+
         this.updateInterval = setInterval( this.reportToMaster.bind( this ), this.updateIntervalTime );
         this.reportToMaster();
 
@@ -117,6 +120,7 @@ export class Game {
 
         this.id = ( new Date().getTime() ).toString(36);
         this.init();
+
         Game.instance = this;
 
     };

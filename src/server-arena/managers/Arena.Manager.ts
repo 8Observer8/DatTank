@@ -45,21 +45,23 @@ class ArenaManagerCore {
     public removeEmptyArenas () {
 
         let newArenaList = [];
-        let arena = false;
 
         if ( this.arenas.length === 1 ) return;
 
         for ( let i = 0, il = this.arenas.length; i < il; i ++ ) {
 
-            arena = this.arenas[ i ];
+            let arena = this.arenas[ i ];
+            let players = arena.playerManager.getPlayers();
+            let bots = arena.botManager.getBots();
 
-            // if ( ! arena || ! arena.playerManager.players ) continue;
-            // if ( arena.playerManager.players.length - arena.botManager.bots.length === 0 ) {
+            if ( ! arena || ! players ) continue;
 
-            //     arena.clear();
-            //     continue;
+            if ( players.length - bots.length === 0 ) {
 
-            // }
+                arena.clear();
+                continue;
+
+            }
 
             newArenaList.push( arena );
 
@@ -72,11 +74,8 @@ class ArenaManagerCore {
     public findArena () {
 
         let arena: ArenaCore;
-        let minArena = false;
-        let avgArena = false;
-        let players = false;
-        let bots = false;
-        let livePlayers = false;
+        let minArena: ArenaCore;
+        let avgArena: ArenaCore;
 
         this.removeEmptyArenas();
 
@@ -85,21 +84,22 @@ class ArenaManagerCore {
         for ( let i = 0, il = this.arenas.length; i < il; i ++ ) {
 
             arena = this.arenas[ i ];
-            // players = arena.playerManager.players;
-            // bots = arena.botManager.bots;
-            // livePlayers = players.length - bots.length;
 
-            // if ( livePlayers < this.maxPlayersInArena && players > 5 ) {
+            let players = arena.playerManager.getPlayers();
+            let bots = arena.botManager.getBots();
+            let livePlayers = players.length - bots.length;
 
-            //     avgArena = this.arenas[ i ];
+            if ( livePlayers < this.maxPlayersInArena && players.length > 5 ) {
 
-            // }
+                avgArena = this.arenas[ i ];
 
-            // if ( ( ! minArena && livePlayers < this.maxPlayersInArena ) || ( minArena && livePlayers < minArena.playerManager.players.length - minArena.botManager.bots.length ) ) {
+            }
 
-            //     minArena = arena;
+            if ( ( ! minArena && livePlayers < this.maxPlayersInArena ) || ( minArena && livePlayers < minArena.playerManager.getPlayers().length - minArena.botManager.getBots().length ) ) {
 
-            // }
+                minArena = arena;
+
+            }
 
         }
 
@@ -150,11 +150,9 @@ class ArenaManagerCore {
     public playerJoin ( data: any, socket: any ) {
 
         let arena: ArenaCore = this.findArena();
-        // let player = arena.addPlayer({ login: data.login, tank: data.tank, socket: socket });
-        // let response = arena.toJSON();
-        // response.me = player.toPrivateJSON();
+        let player = arena.addPlayer({ login: data.login, tank: data.tank, socket: socket });
 
-        // networkManager.send( 'ArenaJoinResponse', socket, false, response );
+        arena.network.joinArena( player );
 
     };
 
