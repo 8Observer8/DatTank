@@ -296,6 +296,8 @@ class TankObject {
 
     constructor ( params ) {
 
+        this.id = params.id;
+
         this.position.set( params.position.x, params.position.y, params.position.z );
         this.gfx.setPosition( this.position );
 

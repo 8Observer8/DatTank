@@ -88,7 +88,7 @@ class TankNetwork {
 
         if ( ! this.buffers['RotateTop'] ) {
 
-            buffer = new ArrayBuffer( 4 );
+            buffer = new ArrayBuffer( 6 );
             bufferView = new Int16Array( buffer );
 
             this.buffers['RotateTop'] = {
@@ -105,7 +105,8 @@ class TankNetwork {
 
         //
 
-        bufferView[ 1 ] = Math.floor( angle * 1000 );
+        bufferView[ 1 ] = this.tank.id;
+        bufferView[ 2 ] = Math.floor( angle * 1000 );
 
         Network.send( 'TankRotateTop', buffer, bufferView );
 
