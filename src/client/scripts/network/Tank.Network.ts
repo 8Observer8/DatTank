@@ -118,7 +118,7 @@ class TankNetwork {
 
         if ( ! this.buffers['Move'] ) {
 
-            buffer = new ArrayBuffer( 6 );
+            buffer = new ArrayBuffer( 8 );
             bufferView = new Int16Array( buffer );
 
             this.buffers['Move'] = {
@@ -135,9 +135,9 @@ class TankNetwork {
 
         //
 
-        bufferView[ 0 ] = 0;
-        bufferView[ 1 ] = moveX;
-        bufferView[ 2 ] = moveZ;
+        bufferView[ 1 ] = this.tank.id;
+        bufferView[ 2 ] = moveX;
+        bufferView[ 3 ] = moveZ;
 
         Network.send( 'TankMove', buffer, bufferView );
 

@@ -282,6 +282,7 @@ class TankObject {
         if ( this.moveDirection.x === directionX && this.moveDirection.y === directionY ) return;
 
         this.moveDirection.set( directionX, directionY );
+        this.network.updateMovement( this.moveDirection );
 
     };
 

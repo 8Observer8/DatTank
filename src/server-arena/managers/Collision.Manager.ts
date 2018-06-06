@@ -133,7 +133,7 @@ class CollisionManager {
             object = this.objects[ i ];
             if ( ! object ) continue;
 
-            if ( object.parent.type === 'Player' ) {
+            if ( object.parent.type === 'Tank' ) {
 
                 object.body.position[0] = ( object.parent.deltaPosition ) ? object.parent.position.x + 3 * object.parent.deltaPosition.x : object.parent.position.x;
                 object.body.position[1] = ( object.parent.deltaPosition ) ? object.parent.position.z + 3 * object.parent.deltaPosition.z : object.parent.position.z;
@@ -169,7 +169,7 @@ class CollisionManager {
 
             object = this.objects[ i ];
 
-            if ( object.parent.type !== 'Player' ) continue;
+            if ( object.parent.type !== 'Tank' ) continue;
 
             if ( Math.abs( object.parent.position.x + object.parent.deltaPosition.x ) > 1270 ||
                  Math.abs( object.parent.position.z + object.parent.deltaPosition.z ) > 1270 ) {
@@ -211,7 +211,7 @@ class CollisionManager {
 
                 obstacle = ( event.bodyA === object.body ) ? event.bodyB : event.bodyA;
 
-                if ( object.parent.type === 'Player' && obstacle.parent.type !== 'Bullet' && obstacle.parent.type !== 'Box' ) {
+                if ( object.parent.type === 'Tank' && obstacle.parent.type !== 'Bullet' && obstacle.parent.type !== 'Box' ) {
 
                     object.collision = true;
 
@@ -224,7 +224,7 @@ class CollisionManager {
 
                     }
 
-                } else if ( object.parent.type === 'Player' && obstacle.parent.type === 'Box' && ! obstacle.parent.removed ) {
+                } else if ( object.parent.type === 'Tank' && obstacle.parent.type === 'Box' && ! obstacle.parent.removed ) {
 
                     obstacle.parent.pickUp( object.parent );
                     this.arena.boxManager.remove( obstacle.parent );
@@ -249,7 +249,7 @@ class CollisionManager {
 
                 obstacle = ( event.bodyA === object.body ) ? event.bodyB : event.bodyA;
 
-                if ( object.parent.type === 'Player' && obstacle.parent.type !== 'Bullet' ) {
+                if ( object.parent.type === 'Tank' && obstacle.parent.type !== 'Bullet' ) {
 
                     object.collision = false;
 

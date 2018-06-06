@@ -44,8 +44,8 @@ class TankNetwork {
 
         if ( this.filter( data ) ) return;
 
-        let x = data[0];
-        let y = data[1];
+        let x = data[1];
+        let y = data[2];
         this.tank.setMovement( x, y );
 
     };
