@@ -37,8 +37,8 @@ class BoxObject {
     dispose () {
 
         // this.networkBuffers['RemoveBox'] = this.networkBuffers['RemoveBox'] || {};
-        // var buffer = this.networkBuffers['RemoveBox'].buffer || new ArrayBuffer( 4 );
-        // var bufferView = this.networkBuffers['RemoveBox'].bufferView || new Uint16Array( buffer );
+        // let buffer = this.networkBuffers['RemoveBox'].buffer || new ArrayBuffer( 4 );
+        // let bufferView = this.networkBuffers['RemoveBox'].bufferView || new Uint16Array( buffer );
         // this.networkBuffers['RemoveBox'].buffer = buffer;
         // this.networkBuffers['RemoveBox'].bufferView = bufferView;
 

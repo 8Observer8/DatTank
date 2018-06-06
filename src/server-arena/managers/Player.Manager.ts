@@ -17,7 +17,7 @@ class PlayerManager {
 
     public add ( player: PlayerCore ) {
 
-        var team = this.arena.teamManager.getWeakest();
+        let team = this.arena.teamManager.getWeakest();
         team.addPlayer( player );
         this.players.push( player );
 
@@ -25,12 +25,12 @@ class PlayerManager {
 
     public remove ( playerId: number ) {
 
-        var newPlayerList = [];
-        var removed = false;
+        let newPlayerList = [];
+        let removed = false;
 
         //
 
-        for ( var i = 0, il = this.players.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.players.length; i < il; i ++ ) {
 
             if ( this.players[ i ].id === playerId ) {
 
@@ -51,7 +51,7 @@ class PlayerManager {
 
     public getById ( playerId: number ) {
 
-        for ( var i = 0, il = this.players.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.players.length; i < il; i ++ ) {
 
             if ( this.players[ i ].id === playerId ) {
 
@@ -73,7 +73,7 @@ class PlayerManager {
 
     public update ( delta: number, time: number ) {
 
-        for ( var i = 0, il = this.players.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.players.length; i < il; i ++ ) {
 
             this.players[ i ].update( delta, time );
 

@@ -25,7 +25,7 @@ class Rock1Decoration extends DecorationObject {
 
         this.type = 'Rock1';
 
-        var sizeXZ = 5 * Math.random() + 20;
+        let sizeXZ = 5 * Math.random() + 20;
         this.scale = new OMath.Vec3( sizeXZ, 5 * Math.random() + 20, sizeXZ );
         this.size.set( 0.8 * this.scale.x, 0.8 * this.scale.y, 0.8 * this.scale.z );
         this.rotation = Math.random() * Math.PI * 2;

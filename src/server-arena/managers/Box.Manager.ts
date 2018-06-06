@@ -57,10 +57,10 @@ class BoxManager {
 
     public remove ( box: BoxObject ) {
 
-        var newBoxList = [];
+        let newBoxList = [];
         box.removed = true;
 
-        for ( var i = 0, il = this.boxes.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.boxes.length; i < il; i ++ ) {
 
             if ( this.boxes[ i ].id === box.id ) continue;
             newBoxList.push( this.boxes[ i ] );
@@ -108,7 +108,7 @@ class BoxManager {
 
     public init () {
 
-        for ( var i = 0; i < this.boxNum; i ++ ) {
+        for ( let i = 0; i < this.boxNum; i ++ ) {
 
             this.add({ type: ( Math.random() > 0.4 ) ? 'Ammo' : 'Health' });
 

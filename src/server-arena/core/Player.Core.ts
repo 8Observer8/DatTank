@@ -10,7 +10,7 @@ import { ArenaCore } from "./Arena.Core";
 import { BotCore } from "./Bot.Core";
 import { TeamCore } from "./Team.Core";
 import { TankObject } from "./../objects/core/Tank.Object";
-import { PlayerNetwork } from "../network/Player.Network";
+import { PlayerNetwork } from "./../network/Player.Network";
 
 import { IS2Tank } from "./../objects/tanks/IS2.Tank";
 import { T29Tank } from "./../objects/tanks/T29.Tank";
@@ -66,6 +66,7 @@ class PlayerCore {
     public score: number = 0;
     public level: number = 0;
     public bonusLevels = 0;
+    public tankName: string;
 
     public team: TeamCore;
     public tank: TankObject;
@@ -89,6 +90,7 @@ class PlayerCore {
         this.tank = new TanksList[ tankName ]( this );
         this.tank.moveSpeed = this.tank.originalMoveSpeed * this.tank.speed / 40;
         this.tank.ammo = this.tank.ammoCapacity;
+        this.arena.tankManager.add( this.tank );
 
     };
 
@@ -211,7 +213,7 @@ class PlayerCore {
 
         }
 
-        this.selectTank( params.tank );
+        this.tankName = params.tank;
 
     };
 

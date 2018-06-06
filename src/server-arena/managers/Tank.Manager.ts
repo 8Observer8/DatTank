@@ -46,9 +46,9 @@ class TankManager {
 
     public update ( delta: number, time: number ) {
 
-        for ( var i = 0, il = this.tanks.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.tanks.length; i < il; i ++ ) {
 
-            // this.tanks[ i ].update( delta, time );
+            this.tanks[ i ].update( delta, time );
 
         }
 

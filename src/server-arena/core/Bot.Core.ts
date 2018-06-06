@@ -143,7 +143,7 @@ class BotCore {
 
         if ( ! this.player.tank.moveDirection.x ) {
 
-            var x = ( Math.random() > 0.5 ) ? 1 : -1;
+            let x = ( Math.random() > 0.5 ) ? 1 : -1;
             this.player.tank.setMovement( x, this.player.tank.moveDirection.y );
             this.moveDuration = Math.floor( 8000 * Math.random() ) + 1000;
 
@@ -151,7 +151,7 @@ class BotCore {
 
         if ( this.rotateBaseDuration === null ) {
 
-            var y = Math.floor( 3 * Math.random() ) - 1;
+            let y = Math.floor( 3 * Math.random() ) - 1;
             this.player.tank.setMovement( this.player.tank.moveDirection.x, y );
             this.rotateBaseDuration = Math.floor( 500 * Math.random() ) + 500;
 

@@ -25,9 +25,9 @@ class BotManager {
 
     public remove ( bot: BotCore ) {
 
-        var newBotList = [];
+        let newBotList = [];
 
-        for ( var i = 0, il = this.bots.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.bots.length; i < il; i ++ ) {
 
             if ( this.bots[ i ].player.id === bot.player.id ) continue;
             newBotList.push( this.bots[ i ] );
@@ -51,7 +51,7 @@ class BotManager {
 
     public getById ( botId: number ) {
 
-        for ( var i = 0, il = this.bots.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.bots.length; i < il; i ++ ) {
 
             if ( this.bots[ i ].id === botId ) {
 
@@ -67,7 +67,7 @@ class BotManager {
 
     public update ( delta: number, time: number ) {
 
-        for ( var i = 0, il = this.bots.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.bots.length; i < il; i ++ ) {
 
             this.bots[ i ].update( delta, time );
 
@@ -77,7 +77,7 @@ class BotManager {
 
     public init () {
 
-        for ( var i = 0; i < this.botNum; i ++ ) {
+        for ( let i = 0; i < this.botNum; i ++ ) {
 
             this.add( new BotCore( this.arena ) );
 

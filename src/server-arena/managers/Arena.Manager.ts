@@ -132,7 +132,7 @@ class ArenaManagerCore {
 
     public getArenaById ( arenaId: number ) {
 
-        for ( var i = 0, il = this.arenas.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.arenas.length; i < il; i ++ ) {
 
             if ( this.arenas[ i ].id === arenaId ) {
 

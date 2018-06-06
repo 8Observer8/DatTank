@@ -74,8 +74,8 @@ class TowerNetwork {
     public setTopRotation () {
 
         this.buffers['SetTopRotation'] = this.buffers['SetTopRotation'] || {};
-        var buffer = this.buffers['SetTopRotation'].buffer || new ArrayBuffer( 8 );
-        var bufferView = this.buffers['SetTopRotation'].bufferView || new Int16Array( buffer );
+        let buffer = this.buffers['SetTopRotation'].buffer || new ArrayBuffer( 8 );
+        let bufferView = this.buffers['SetTopRotation'].bufferView || new Int16Array( buffer );
         this.buffers['SetTopRotation'].buffer = buffer;
         this.buffers['SetTopRotation'].bufferView = bufferView;
 

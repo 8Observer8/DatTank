@@ -19,7 +19,7 @@ class BulletManager {
 
     public getInactiveBullet () {
 
-        for ( var i = 0; i < this.bullets.length; i ++ ) {
+        for ( let i = 0; i < this.bullets.length; i ++ ) {
 
             if ( ! this.bullets[ i ].active ) {
 
@@ -45,7 +45,7 @@ class BulletManager {
 
         //
 
-        for ( var i = 0; i < 10; i ++ ) {
+        for ( let i = 0; i < 10; i ++ ) {
 
             this.bullets.push( new BulletObject( this.arena, {} ) );
 

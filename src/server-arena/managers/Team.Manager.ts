@@ -23,9 +23,9 @@ class TeamManager {
 
     public getWeakest () {
 
-        var weakestTeam = this.teams[0];
+        let weakestTeam = this.teams[0];
 
-        for ( var i = 1, il = this.teams.length; i < il; i ++ ) {
+        for ( let i = 1, il = this.teams.length; i < il; i ++ ) {
 
             if ( this.teams[ i ].id >= 1000 ) continue;
 
@@ -43,7 +43,7 @@ class TeamManager {
 
     public getById ( teamId: number ) {
 
-        for ( var i = 0, il = this.teams.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.teams.length; i < il; i ++ ) {
 
             if ( this.teams[ i ].id === teamId ) {
 
@@ -67,7 +67,7 @@ class TeamManager {
 
         teamNum = teamNum || 4;
 
-        for ( var i = 0; i < teamNum; i ++ ) {
+        for ( let i = 0; i < teamNum; i ++ ) {
 
             this.add( new TeamCore( i ) );
 

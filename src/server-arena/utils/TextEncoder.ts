@@ -6,11 +6,11 @@
 let utf8ToBytes = function ( string: string, units?: number ) {
 
     units = units || Infinity
-    var codePoint
-    var length = string.length
-    var leadSurrogate = null
-    var bytes = []
-    var i = 0
+    let codePoint
+    let length = string.length
+    let leadSurrogate = null
+    let bytes = []
+    let i = 0
 
     for (; i < length; i++) {
         codePoint = string.charCodeAt(i)
@@ -88,12 +88,12 @@ let utf8ToBytes = function ( string: string, units?: number ) {
 
 let utf8Slice = function ( buf: any, start: number, end: number ) {
 
-    var res = '';
-    var tmp = '';
+    let res = '';
+    let tmp = '';
     end = Math.min( buf.length, end || Infinity );
     start = start || 0;
 
-    for ( var i = start; i < end; i ++ ) {
+    for ( let i = start; i < end; i ++ ) {
 
         if ( buf[ i ] <= 0x7F ) {
 
@@ -128,7 +128,7 @@ let decodeUtf8Char = function ( str: string ) {
 
 let encode = function ( str: string ) {
 
-    var result;
+    let result;
 
     if ( 'undefined' === typeof Uint16Array ) {
 

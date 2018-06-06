@@ -46,7 +46,7 @@ class TowerManager {
 
     public update ( delta: number, time: number ) {
 
-        for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.towers.length; i < il; i ++ ) {
 
             this.towers[ i ].update( delta, time );
 

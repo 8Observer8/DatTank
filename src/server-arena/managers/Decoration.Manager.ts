@@ -122,9 +122,9 @@ class DecorationManager {
 
     public toJSON () {
 
-        var decorations = [];
+        let decorations = [];
 
-        for ( var i = 0, il = this.decorations.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.decorations.length; i < il; i ++ ) {
 
             decorations.push( this.decorations[ i ].toJSON() );
 

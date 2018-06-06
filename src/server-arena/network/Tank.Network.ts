@@ -226,7 +226,7 @@ class TankNetwork {
         let bufferView = new Int16Array( buffer );
         let offset;
 
-        for ( var i = 0, il = towers.length; i < il; i ++ ) {
+        for ( let i = 0, il = towers.length; i < il; i ++ ) {
 
             let tower = towers[ i ];
             offset = 1 + params * i;
@@ -257,7 +257,7 @@ class TankNetwork {
         let bufferView = new Int16Array( buffer );
         let item = 0;
 
-        for ( var i = 1, il = ( tankDataSize / 2 ) * tanks.length + 1; i < il; i += tankDataSize / 2 ) {
+        for ( let i = 1, il = ( tankDataSize / 2 ) * tanks.length + 1; i < il; i += tankDataSize / 2 ) {
 
             let tank = tanks[ item ];
 

@@ -57,7 +57,7 @@ class ArenaCore {
 
         if ( params.socket && ArenaManager.maxPlayersInArena - this.playerManager.getPlayers().length - 2 < 0 ) {
 
-            var bot = this.botManager.getBots()[0];
+            let bot = this.botManager.getBots()[0];
 
             if ( bot ) {
 
@@ -69,7 +69,7 @@ class ArenaCore {
 
         //
 
-        var player = new PlayerCore( this, { login: params.login, tank: params.tank, socket: params.socket });
+        let player = new PlayerCore( this, { login: params.login, tank: params.tank, socket: params.socket });
         this.playerManager.add( player );
 
         //
@@ -98,7 +98,7 @@ class ArenaCore {
 
         //
 
-        for ( var i = this.playerManager.getPlayers().length; i < this.botManager.botNum; i ++ ) {
+        for ( let i = this.playerManager.getPlayers().length; i < this.botManager.botNum; i ++ ) {
 
             this.botManager.add( new BotCore( this ) );
 
@@ -217,6 +217,7 @@ class ArenaCore {
 
         this.botManager.update( delta, time );
         this.playerManager.update( delta, time );
+        this.tankManager.update( delta, time );
         this.towerManager.update( delta, time );
 
         //

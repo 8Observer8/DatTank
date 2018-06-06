@@ -48,7 +48,7 @@ class TeamCore {
 
         let newPlayersList = [];
 
-        for ( var i = 0, il = this.players.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.players.length; i < il; i ++ ) {
 
             if ( this.players[ i ].id === playerId ) continue;
             newPlayersList.push( this.players[ i ] );

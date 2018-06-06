@@ -40,8 +40,8 @@ class PlayerNetwork {
     public updateLevel () {
 
         this.buffers['NewLevel'] = this.buffers['NewLevel'] || {};
-        var buffer = this.buffers['NewLevel'].buffer || new ArrayBuffer( 6 );
-        var bufferView = this.buffers['NewLevel'].bufferView || new Int16Array( buffer );
+        let buffer = this.buffers['NewLevel'].buffer || new ArrayBuffer( 6 );
+        let bufferView = this.buffers['NewLevel'].bufferView || new Int16Array( buffer );
         this.buffers['NewLevel'].buffer = buffer;
         this.buffers['NewLevel'].bufferView = bufferView;
 

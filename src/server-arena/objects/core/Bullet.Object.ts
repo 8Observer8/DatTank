@@ -47,8 +47,8 @@ class BulletObject {
         if ( target && target.id === this.ownerId ) return;
 
         // this.networkBuffers['BulletHit'] = this.networkBuffers['BulletHit'] || {};
-        // var buffer = this.networkBuffers['BulletHit'].buffer || new ArrayBuffer( 8 );
-        // var bufferView = this.networkBuffers['BulletHit'].bufferView || new Int16Array( buffer );
+        // let buffer = this.networkBuffers['BulletHit'].buffer || new ArrayBuffer( 8 );
+        // let bufferView = this.networkBuffers['BulletHit'].bufferView || new Int16Array( buffer );
         // this.networkBuffers['BulletHit'].buffer = buffer;
         // this.networkBuffers['BulletHit'].bufferView = bufferView;
     
