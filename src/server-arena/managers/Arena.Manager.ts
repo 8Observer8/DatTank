@@ -3,7 +3,10 @@
  * DatTank Arena Manager system
 */
 
+import * as ws from "ws";
+
 import { ArenaCore } from "./../core/Arena.Core";
+import { ArenaManagerNetwork } from "./../network/ArenaManager.Network";
 
 //
 
@@ -13,6 +16,8 @@ class ArenaManagerCore {
 
     private arenas: any = [];
     public maxPlayersInArena: number = 24;
+
+    public network: ArenaManagerNetwork;
 
     //
 
@@ -147,7 +152,7 @@ class ArenaManagerCore {
 
     };
 
-    public playerJoin ( data: any, socket: any ) {
+    public playerJoin ( data: any, socket: ws ) {
 
         let arena: ArenaCore = this.findArena();
         let player = arena.addPlayer({ login: data.login, tank: data.tank, socket: socket });
@@ -165,6 +170,8 @@ class ArenaManagerCore {
             return ArenaManagerCore.instance;
 
         }
+
+        this.network = new ArenaManagerNetwork();
 
         ArenaManagerCore.instance = this;
 

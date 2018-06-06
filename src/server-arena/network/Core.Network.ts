@@ -159,7 +159,7 @@ class NetworkCore {
         let eventType = this.events.in[ eventId ].dataType;
         let listeners = this.messageListeners[ eventName ] || [];
 
-        if ( eventType === 'json' ) {
+        if ( eventType === EventType.JSON ) {
 
             data = TextEncoder.decode( data );
             data = JSON.parse( data );

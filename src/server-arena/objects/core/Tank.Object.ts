@@ -484,11 +484,11 @@ class TankObject {
 
     constructor ( player: PlayerCore ) {
 
-        this.network = new TankNetwork( this );
         this.player = player;
         this.arena = player.arena;
         this.team =  player.team;
 
+        this.network = new TankNetwork( this );
         this.arena.collisionManager.addObject( this, 'circle', true );
 
     };

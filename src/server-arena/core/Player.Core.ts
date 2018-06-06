@@ -73,7 +73,7 @@ class PlayerCore {
 
     //
 
-    public selectTank ( tankName?: string ) {
+    public selectTank ( tankName: string = 'T29' ) {
 
         let TanksList = {
             'IS2':    IS2Tank,
@@ -84,7 +84,7 @@ class PlayerCore {
 
         //
 
-        this.tank = new TanksList[ tankName ]();
+        this.tank = new TanksList[ tankName ]( this );
         this.tank.moveSpeed = this.tank.originalMoveSpeed * this.tank.speed / 40;
         this.tank.ammo = this.tank.ammoCapacity;
 

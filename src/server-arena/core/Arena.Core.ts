@@ -163,7 +163,7 @@ class ArenaCore {
 
             //
 
-            this.announce( 'ArenaLeaderboardUpdate', null, { players: playersJSON, teams: teamsJSON } );
+            this.network.sendEventToAllPlayers( 'ArenaLeaderboardUpdate', null, { players: playersJSON, teams: teamsJSON } );
 
         };
 
