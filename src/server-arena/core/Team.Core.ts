@@ -40,7 +40,6 @@ class TeamCore {
 
         this.players.push( player );
         player.team = this;
-        player.respawn();
 
     };
 

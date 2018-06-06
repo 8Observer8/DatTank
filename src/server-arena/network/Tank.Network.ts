@@ -252,7 +252,7 @@ class TankNetwork {
 
         //
 
-        let tankDataSize = 22 + 13 * 2;
+        let tankDataSize = 24 + 13 * 2;
         let buffer = new ArrayBuffer( 2 + tankDataSize * tanks.length );
         let bufferView = new Int16Array( buffer );
         let item = 0;
@@ -272,12 +272,13 @@ class TankNetwork {
             bufferView[ i + 8 ] = tank.moveDirection.y;
             bufferView[ i + 9 ] = tank.typeId;
             bufferView[ i + 10 ] = tank.ammo;
+            bufferView[ i + 11 ] = tank.player.id;
 
             for ( let j = 0, jl = tank.player.login.length; j < jl; j ++ ) {
 
                 if ( tank.player.login[ j ] ) {
 
-                    bufferView[ i + 11 + j ] = + tank.player.login[ j ].charCodeAt( 0 ).toString( 10 );
+                    bufferView[ i + 12 + j ] = + tank.player.login[ j ].charCodeAt( 0 ).toString( 10 );
 
                 }
 
@@ -287,7 +288,7 @@ class TankNetwork {
 
         }
 
-        Network.send( 'ArenaPlayersInRange', this.tank.player.socket, buffer, bufferView );
+        Network.send( 'ArenaTanksInRange', this.tank.player.socket, buffer, bufferView );
 
     };
 

@@ -203,7 +203,7 @@ class NetworkCore {
         this.registerEvent( 'ArenaPlayerJoined', EventDir.OUT, EventType.JSON, 2 );
         this.registerEvent( 'ArenaPlayerLeft', EventDir.OUT, EventType.JSON, 6 );
         this.registerEvent( 'ArenaLeaderboardUpdate', EventDir.OUT, EventType.JSON, 7 );
-        this.registerEvent( 'ArenaPlayersInRange', EventDir.OUT, EventType.BIN, 50 );
+        this.registerEvent( 'ArenaTanksInRange', EventDir.OUT, EventType.BIN, 50 );
         this.registerEvent( 'ArenaTowersInRange', EventDir.OUT, EventType.BIN, 60 );
         this.registerEvent( 'ArenaBoxesInRange', EventDir.OUT, EventType.BIN, 70 );
 

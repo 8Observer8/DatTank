@@ -111,9 +111,9 @@ class PlayerCore {
 
     };
 
-    private setTank ( tankId: string, params ) {
+    private setTank ( params ) {
 
-        let tankName = Tanks.getById( tankId );
+        let tankName = Tanks.getById( params.type );
 
         if ( tankName ) {
 
@@ -138,7 +138,7 @@ class PlayerCore {
     public respawn ( params ) {
 
         this.dispose();
-        this.setTank( params.tank, params );
+        this.setTank( params );
         this.tank.init();
         this.level = 0;
 
@@ -239,7 +239,7 @@ class PlayerCore {
         this.id = params.id;
         this.username = params.login;
         this.team = TeamManager.getById( params.team );
-        this.setTank( params.tank, params );
+        this.setTank( params.tank );
 
     };
 
