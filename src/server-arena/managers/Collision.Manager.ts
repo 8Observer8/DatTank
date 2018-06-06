@@ -178,12 +178,12 @@ class CollisionManager {
                 continue;
 
             }
-    
+
             if ( ! object.collision && object.parent.deltaPosition ) {
 
                 object.parent.position.x += object.parent.deltaPosition.x;
                 object.parent.position.z += object.parent.deltaPosition.z;
-    
+
                 object.parent.deltaPosition.x = 0;
                 object.parent.deltaPosition.z = 0;
 
@@ -202,7 +202,7 @@ class CollisionManager {
     private collisionStart ( event: any ) {
 
         let object, target, obstacle;
-    
+
         for ( let i = 0; i < this.objects.length; i ++ ) {
 
             object = this.objects[ i ];

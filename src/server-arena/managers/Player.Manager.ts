@@ -27,25 +27,24 @@ class PlayerManager {
 
         var newPlayerList = [];
         var removed = false;
-    
+
         //
-    
+
         for ( var i = 0, il = this.players.length; i < il; i ++ ) {
-    
+
             if ( this.players[ i ].id === playerId ) {
-    
-                // this.arena.collisionManager.removeObject( this.players[ i ] );
+
                 removed = true;
                 continue;
-    
+
             }
-    
+
             newPlayerList.push( this.players[ i ] );
-    
+
         }
-    
+
         this.players = newPlayerList;
-    
+
         return removed;
 
     };
@@ -55,13 +54,13 @@ class PlayerManager {
         for ( var i = 0, il = this.players.length; i < il; i ++ ) {
 
             if ( this.players[ i ].id === playerId ) {
-    
+
                 return this.players[ i ];
-    
+
             }
-    
+
         }
-    
+
         return null;
 
     };
@@ -77,7 +76,7 @@ class PlayerManager {
         for ( var i = 0, il = this.players.length; i < il; i ++ ) {
 
             this.players[ i ].update( delta, time );
-    
+
         }
 
     };

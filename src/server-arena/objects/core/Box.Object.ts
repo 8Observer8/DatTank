@@ -41,11 +41,11 @@ class BoxObject {
         // var bufferView = this.networkBuffers['RemoveBox'].bufferView || new Uint16Array( buffer );
         // this.networkBuffers['RemoveBox'].buffer = buffer;
         // this.networkBuffers['RemoveBox'].bufferView = bufferView;
-    
+
         // bufferView[1] = this.id;
-    
+
         // //
-    
+
         // this.arena.sendEventToPlayersInRange( this.position, 'ArenaBoxRemove', buffer, bufferView );
 
     };

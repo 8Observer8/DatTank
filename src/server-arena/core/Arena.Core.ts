@@ -93,31 +93,31 @@ class ArenaCore {
             player.team.removePlayer( player.id );
             player.dispose();
             this.network.sendEventToAllPlayers( 'ArenaPlayerLeft', null, { id: player.id } );
-    
+
         }
-    
+
         //
-    
+
         for ( var i = this.playerManager.getPlayers().length; i < this.botManager.botNum; i ++ ) {
-    
+
             this.botManager.add( new BotCore( this ) );
-    
+
         }
-    
+
         //
-    
+
         if ( player.socket ) {
-    
+
             ArenaManager.removeEmptyArenas();
-    
+
         }
-    
+
         //
-    
+
         if ( ! this.disposed ) {
-    
+
             this.updateLeaderboard();
-    
+
         }
 
     };
@@ -178,9 +178,9 @@ class ArenaCore {
 
         clearInterval( this.updateInterval );
         this.collisionManager.clear();
-    
+
         //
-    
+
         this.teamManager = null;
         this.playerManager = null;
         this.botManager = null;
@@ -188,7 +188,7 @@ class ArenaCore {
         this.decorationManager = null;
         this.boxManager = null;
         this.collisionManager = null;
-    
+
         this.disposed = true;
 
     };
@@ -212,15 +212,15 @@ class ArenaCore {
         let time = Date.now();
         let delta = time - this.prevUpdateTime;
         this.prevUpdateTime = time;
-    
+
         // update managers
-    
+
         this.botManager.update( delta, time );
         this.playerManager.update( delta, time );
         this.towerManager.update( delta, time );
-    
+
         //
-    
+
         this.collisionManager.update( delta / 3, time );
         this.collisionManager.update( delta / 3, time );
         this.collisionManager.update( delta / 3, time );

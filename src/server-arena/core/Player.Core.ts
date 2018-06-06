@@ -113,11 +113,11 @@ class PlayerCore {
 
         let level = 0;
         this.score += delta;
-        
+
         while ( PlayerCore.levelScore[ level ] <= this.score ) {
 
             level ++;
-    
+
         }
 
         level --;

@@ -72,41 +72,41 @@ class DecorationManager {
             Rock4:      Rock4Decoration,
             Ruins1:     Ruins1Decoration
         };
-    
+
         for ( let decorationType in DecorationManager.structure ) {
-    
+
             let count = DecorationManager.structure[ decorationType ].count;
             let DecorationType = DecorationsList[ decorationType ];
-    
+
             while ( count ) {
-    
+
                 let position = new OMath.Vec3( 2350 * ( Math.random() - 0.5 ), 0, 2350 * ( Math.random() - 0.5 ) );
-    
+
                 //
 
                 if ( ! DecorationType.canPlace( this.arena, position ) ) continue;
-    
+
                 let placedOnBase = false;
-    
+
                 for ( let i = 0, il = teams.length; i < il; i ++ ) {
-    
+
                     let spawnPosition = teams[ i ].spawnPosition;
                     let dx = spawnPosition.x - position.x;
                     let dz = spawnPosition.z - position.z;
-    
+
                     if ( Math.sqrt( dx * dx + dz * dz ) < 150 ) {
-    
+
                         placedOnBase = true;
                         break;
-    
+
                     }
-    
+
                 }
-    
+
                 if ( placedOnBase ) continue;
-    
+
                 //
-    
+
                 let decoration = new DecorationType( this.arena, { position: new OMath.Vec3( position.x, 0, position.z ) });
                 this.decorations.push( decoration );
 
@@ -125,11 +125,11 @@ class DecorationManager {
         var decorations = [];
 
         for ( var i = 0, il = this.decorations.length; i < il; i ++ ) {
-    
+
             decorations.push( this.decorations[ i ].toJSON() );
-    
+
         }
-    
+
         return decorations;
 
     };

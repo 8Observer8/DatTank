@@ -76,9 +76,9 @@ class TowerObject {
         if ( Date.now() - this.shootTime < this.cooldown ) {
 
             return;
-    
+
         }
-    
+
         this.shootTime = Date.now();
 
         //
@@ -86,7 +86,7 @@ class TowerObject {
         let position = new OMath.Vec3( this.position.x, 20, this.position.z );
         let offset = 45;
         position.x += offset * Math.cos( - this.rotation - Math.PI / 2 );
-        position.z += offset * Math.sin( - this.rotation - Math.PI / 2 );    
+        position.z += offset * Math.sin( - this.rotation - Math.PI / 2 );
 
         let bullet = this.arena.bulletManager.getInactiveBullet();
         if ( ! bullet ) return;
@@ -136,7 +136,7 @@ class TowerObject {
             killer.changeScore( 5 );
             // game.updateTopList( killer.login, killer.score, killer.kills );
             this.arena.updateLeaderboard();
-    
+
         }
 
     };

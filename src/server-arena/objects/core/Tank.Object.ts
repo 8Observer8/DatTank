@@ -82,35 +82,35 @@ class TankObject {
         switch ( statName ) {
 
             case 'speed':
-    
+
                 this.speed += levelsStats['speed'][ level + 1 ];
                 this.moveSpeed = this.originalMoveSpeed * this.speed / 40;
                 break;
-    
+
             case 'rpm':
-    
+
                 this.rpm += levelsStats['rpm'][ level + 1 ];
                 break;
-    
+
             case 'armour':
-    
+
                 this.armour += levelsStats['armour'][ level + 1 ];
                 break;
-    
+
             case 'gun':
-    
+
                 this.bullet += levelsStats['gun'][ level + 1 ];
                 break;
-    
+
             case 'ammoCapacity':
-    
+
                 this.ammoCapacity += levelsStats['ammoCapacity'][ level + 1 ];
                 break;
-    
+
             default:
-    
+
                 return;
-    
+
         }
 
         this.player.bonusLevels --;

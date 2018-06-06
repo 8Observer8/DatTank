@@ -28,19 +28,18 @@ class BotManager {
         var newBotList = [];
 
         for ( var i = 0, il = this.bots.length; i < il; i ++ ) {
-    
+
             if ( this.bots[ i ].player.id === bot.player.id ) continue;
-    
             newBotList.push( this.bots[ i ] );
-    
+
         }
-    
+
         bot.removed = true;
         this.bots = newBotList;
-    
+
         //
-    
-        this.arena.removePlayer( bot.player );    
+
+        this.arena.removePlayer( bot.player );
 
     };
 
@@ -55,13 +54,13 @@ class BotManager {
         for ( var i = 0, il = this.bots.length; i < il; i ++ ) {
 
             if ( this.bots[ i ].id === botId ) {
-    
+
                 return this.bots[ i ];
-    
+
             }
-    
+
         }
-    
+
         return false;
 
     };
@@ -71,8 +70,8 @@ class BotManager {
         for ( var i = 0, il = this.bots.length; i < il; i ++ ) {
 
             this.bots[ i ].update( delta, time );
-    
-        }    
+
+        }
 
     };
 

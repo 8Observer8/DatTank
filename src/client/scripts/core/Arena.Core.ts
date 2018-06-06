@@ -225,7 +225,7 @@ class ArenaCore {
 
             this.time += delta;
             this.update( this.time, this.updateIntervalDuration );
-    
+
         }
 
     };
