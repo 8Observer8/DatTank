@@ -1,6 +1,6 @@
 /*
  * @author ohmed
- * DatTank Decoration general class
+ * DatTank Decoration Object class
 */
 
 import * as OMath from "./../../OMath/Core.OMath";
@@ -9,7 +9,7 @@ import { ResourceManager } from "./../../managers/Resource.Manager";
 
 //
 
-class DecorationCore {
+class DecorationObject {
 
     public id: number;
     public title: string;
@@ -113,5 +113,5 @@ let DecorationList = {
 
 //
 
-export { DecorationCore };
+export { DecorationObject };
 export { DecorationList };

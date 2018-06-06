@@ -5,13 +5,13 @@
 
 import * as OMath from "./../OMath/Core.OMath";
 import { Network } from "./../network/Core.Network";
-import { TankCore } from "./../core/objects/Tank.Core";
+import { TankObject } from "./../objects/core/Tank.Object";
 
 //
 
 class TankNetwork {
 
-    private tank: TankCore;
+    private tank: TankObject;
     private buffers = {};
 
     //

@@ -3,11 +3,11 @@
  * DatTank Tree decoration
 */
 
-import { DecorationCore } from "./../../../core/objects/Decoration.Core";
+import { DecorationObject } from "./../../../objects/core/Decoration.Object";
 
 //
 
-class Tree8Decoration extends DecorationCore {
+class Tree8Decoration extends DecorationObject {
 
     static title: string = 'Tree8';
 

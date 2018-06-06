@@ -3,11 +3,11 @@
  * DatTank Ruin decoration
 */
 
-import { DecorationCore } from "./../../../core/objects/Decoration.Core";
+import { DecorationObject } from "./../../../objects/core/Decoration.Object";
 
 //
 
-class Ruin1Decoration extends DecorationCore {
+class Ruin1Decoration extends DecorationObject {
 
     static title: string = 'Ruin1';
 

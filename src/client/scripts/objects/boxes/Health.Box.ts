@@ -3,11 +3,11 @@
  * DatTank HealthBox
 */
 
-import { BoxCore } from "./../../core/objects/Box.Core";
+import { BoxObject } from "./../../objects/core/Box.Object";
 
 //
 
-class HealthBox extends BoxCore {
+class HealthBox extends BoxObject {
 
     static bid = 1;
 

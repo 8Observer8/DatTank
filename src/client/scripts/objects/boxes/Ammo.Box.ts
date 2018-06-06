@@ -3,11 +3,11 @@
  * DatTank AmmoBox
 */
 
-import { BoxCore } from "./../../core/objects/Box.Core";
+import { BoxObject } from "./../../objects/core/Box.Object";
 
 //
 
-class AmmoBox extends BoxCore {
+class AmmoBox extends BoxObject {
 
     static bid = 0;
 

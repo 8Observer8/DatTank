@@ -9,7 +9,7 @@ import { MorphBlendMesh } from "./../utils/MorphMesh.Gfx";
 import * as OMath from "./../../OMath/Core.OMath";
 import { GfxCore } from "./../Core.Gfx";
 import { TankLabelGfx } from "./../effects/TankLabel.Gfx";
-import { TankCore } from "./../../core/objects/Tank.Core";
+import { TankObject } from "./../../objects/core/Tank.Object";
 import { ResourceManager } from "./../../managers/Resource.Manager";
 import { TankTracesGfx } from './../effects/TankTraces.Gfx';
 import { LargeExplosionManager } from '../../managers/LargeExplosion.Manager';
@@ -24,7 +24,7 @@ class TankGfx {
     private object: THREE.Object3D = new THREE.Object3D();
     private topMesh: MorphBlendMesh;
     private baseMesh: MorphBlendMesh;
-    private tank: TankCore;
+    private tank: TankObject;
     private traces: TankTracesGfx = new TankTracesGfx();
     public label: TankLabelGfx = new TankLabelGfx();
     public friendlyFireLabel: FriendlyFireLabelGfx = new FriendlyFireLabelGfx();

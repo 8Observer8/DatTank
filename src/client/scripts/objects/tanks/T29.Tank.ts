@@ -3,11 +3,11 @@
  * DatTank Tank T29
 */
 
-import { TankCore } from "./../../core/objects/Tank.Core";
+import { TankObject } from "./../../objects/core/Tank.Object";
 
 //
 
-class T29Tank extends TankCore {
+class T29Tank extends TankObject {
 
     static title: string = 'T29';
     static year: number = 1946;

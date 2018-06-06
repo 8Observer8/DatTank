@@ -15,7 +15,7 @@ import { HealthChangeLabelManager } from "./../managers/HealthChangeLabel.Manage
 import * as OMath from "./../OMath/Core.OMath";
 import { GfxCore } from "./../graphics/Core.Gfx";
 import { PlayerCore } from "./Player.Core";
-import { TowerCore } from "./objects/Tower.Core";
+import { TowerObject } from "./../objects/core/Tower.Object";
 import { ArenaNetwork } from "../network/Arena.Network";
 import { BulletManager } from "./../managers/Bullet.Manager";
 import { UI } from "./../ui/Core.UI";

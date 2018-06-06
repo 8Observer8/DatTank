@@ -10,7 +10,7 @@ import * as OMath from "./../../OMath/Core.OMath";
 import { GfxCore } from "./../Core.Gfx";
 import { TowerLabelGfx } from "./../effects/TowerLabel.Gfx";
 import { ResourceManager } from "./../../managers/Resource.Manager";
-import { TowerCore } from './../../core/objects/Tower.Core';
+import { TowerObject } from './../../objects/core/Tower.Object';
 import { TowerChangeTeamGfx } from './../effects/TowerChangeTeam.gfx';
 import { BlastSmokeGfx } from './../effects/BlastSmoke.gfx';
 
@@ -21,7 +21,7 @@ class TowerGfx {
     private object: THREE.Object3D = new THREE.Object3D();
     private topMesh: MorphBlendMesh;
     private baseMesh: THREE.Mesh;
-    private tower: TowerCore;
+    private tower: TowerObject;
 
     public label: TowerLabelGfx = new TowerLabelGfx();
     public changeTeamEffect: TowerChangeTeamGfx = new TowerChangeTeamGfx();

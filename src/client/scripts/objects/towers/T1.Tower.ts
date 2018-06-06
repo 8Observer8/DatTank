@@ -3,11 +3,11 @@
  * DatTank Tower T1
 */
 
-import { TowerCore } from "./../../core/objects/Tower.Core";
+import { TowerObject } from "./../../objects/core/Tower.Object";
 
 //
 
-class T1Tower extends TowerCore {
+class T1Tower extends TowerObject {
 
     static title: string = 'T1';
     static tid = 0;

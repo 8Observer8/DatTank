@@ -7,7 +7,7 @@ import * as THREE from 'three';
 
 import * as OMath from "./../../OMath/Core.OMath";
 import { GfxCore } from "./../Core.Gfx";
-import { DecorationCore } from "./../../core/objects/Decoration.Core";
+import { DecorationObject } from "./../../objects/core/Decoration.Object";
 import { ResourceManager } from "./../../managers/Resource.Manager";
 
 //
@@ -65,7 +65,7 @@ class DecorationGfx {
 
     };
 
-    public init ( decoration: DecorationCore ) {
+    public init ( decoration: DecorationObject ) {
 
         let decorationModel = ResourceManager.getModel( 'decorations/' + decoration.title );
 

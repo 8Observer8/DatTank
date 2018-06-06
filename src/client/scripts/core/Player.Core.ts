@@ -5,8 +5,9 @@
 
 import * as OMath from "./../OMath/Core.OMath";
 import { Logger } from "./../utils/Logger";
-import { TankCore } from "./objects/Tank.Core";
-import { TankList as Tanks } from "./objects/Tank.Core";
+import { TowerObject } from "./../objects/core/Tower.Object";
+import { TankObject } from "./../objects/core/Tank.Object";
+import { TankList as Tanks } from "./../objects/core/Tank.Object";
 import { Arena } from "./Arena.Core";
 import { TeamCore } from "./Team.Core";
 import { TeamManager } from "./../managers/Team.Manager";
@@ -14,7 +15,6 @@ import { PlayerNetwork } from "./../network/Player.Network";
 import { UI } from "./../ui/Core.UI";
 import { TowerManager } from "../managers/Tower.Manager";
 import { PlayerManager } from "../managers/Player.Manager";
-import { TowerCore } from "./objects/Tower.Core";
 
 //
 
@@ -24,7 +24,7 @@ class PlayerCore {
     public username: string;
 
     public team: TeamCore;
-    public tank: TankCore;
+    public tank: TankObject;
 
     public kills: number;
     public score: number;
@@ -177,13 +177,13 @@ class PlayerCore {
 
             setTimeout( () => {
 
-                if ( killer instanceof TowerCore ) {
+                if ( killer instanceof TowerObject ) {
 
                     UI.InGame.showContinueBox( '<br>' + killer.team.name + ' team tower', OMath.intToHex( killer.team.color ) );
 
-                } else if ( killer instanceof TankCore ) {
+                } else if ( killer instanceof TankObject ) {
 
-                    UI.InGame.showContinueBox( killer.username, OMath.intToHex( killer.team.color ) );
+                    UI.InGame.showContinueBox( killer.player.username, OMath.intToHex( killer.player.team.color ) );
 
                 } else {
 

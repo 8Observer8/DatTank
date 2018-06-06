@@ -6,7 +6,7 @@
 import * as THREE from 'three';
 
 import { GfxCore } from "./../Core.Gfx";
-import { BoxCore } from "./../../core/objects/Box.Core";
+import { BoxObject } from "./../../objects/core/Box.Object";
 import { ResourceManager } from "./../../managers/Resource.Manager";
 
 //
@@ -42,7 +42,7 @@ class BoxGfx {
 
     };
 
-    public init ( box: BoxCore ) {
+    public init ( box: BoxObject ) {
 
         var boxModel = ResourceManager.getModel( 'boxes/' + box.type );
 

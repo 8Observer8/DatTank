@@ -3,15 +3,15 @@
  * DatTank Arena tower manager
 */
 
-import { TowerCore } from "./../core/objects/Tower.Core";
-import { TowerList as Towers } from "./../core/objects/Tower.Core";
+import { TowerObject } from "./../objects/core/Tower.Object";
+import { TowerList as Towers } from "./../objects/core/Tower.Object";
 
 //
 
 class TowerManagerCore {
 
     private static instance: TowerManagerCore;
-    private towers: Array<TowerCore> = [];
+    private towers: Array<TowerObject> = [];
 
     //
 

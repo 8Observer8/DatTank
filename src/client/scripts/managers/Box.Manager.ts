@@ -3,14 +3,14 @@
  * DatTank Arena box manager
 */
 
-import { BoxCore, BoxesList as Boxes } from "./../core/objects/Box.Core";
+import { BoxObject, BoxesList as Boxes } from "./../objects/core/Box.Object";
 
 //
 
 class BoxManagerCore {
 
     private static instance: BoxManagerCore;
-    private boxes: Array<BoxCore> = [];
+    private boxes: Array<BoxObject> = [];
 
     //
 

@@ -1,15 +1,15 @@
 /*
  * @author ohmed
- * DatTank Tank general class
+ * DatTank Tank Object class
 */
 
 import * as THREE from 'three';
 import * as OMath from "./../../OMath/Core.OMath";
 
 import { Logger } from "./../../utils/Logger";
-import { Arena } from "./../Arena.Core";
+import { Arena } from "./../../core/Arena.Core";
 import { UI } from "./../../ui/Core.UI";
-import { PlayerCore } from "./../Player.Core";
+import { PlayerCore } from "./../../core/Player.Core";
 
 import { TankNetwork } from "./../../network/Tank.Network";
 import { TankGfx } from "./../../graphics/objects/Tank.Gfx";
@@ -18,7 +18,7 @@ import { BulletManager } from "./../../managers/Bullet.Manager";
 
 //
 
-class TankCore {
+class TankObject {
 
     public id: number;
     public player: PlayerCore;
@@ -364,5 +364,5 @@ let TankList = {
 
 //
 
-export { TankCore };
+export { TankObject };
 export { TankList };

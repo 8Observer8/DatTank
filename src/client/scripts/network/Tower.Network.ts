@@ -4,14 +4,14 @@
 */
 
 import { Network } from "./../network/Core.Network";
-import { TowerCore } from "./../core/objects/Tower.Core";
+import { TowerObject } from "./../objects/core/Tower.Object";
 import * as OMath from "./../OMath/Core.OMath";
 
 //
 
 class TowerNetwork {
 
-    private tower: TowerCore;
+    private tower: TowerObject;
 
     //
 

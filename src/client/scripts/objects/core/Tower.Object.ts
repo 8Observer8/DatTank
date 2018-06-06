@@ -1,22 +1,22 @@
 /*
  * @author ohmed
- * DatTank Tower general class
+ * DatTank Tower Object class
 */
 
-import { Arena } from "./../Arena.Core";
+import { Arena } from "./../../core/Arena.Core";
 
 import * as OMath from "./../../OMath/Core.OMath";
 import { Logger } from "./../../utils/Logger";
 import { TowerNetwork } from "./../../network/Tower.Network";
 import { TowerGfx } from "./../../graphics/objects/Tower.Gfx";
-import { TeamCore } from "./../Team.Core";
+import { TeamCore } from "./../../core/Team.Core";
 import { TeamManager } from "./../../managers/Team.Manager";
 import { HealthChangeLabelManager } from "./../../managers/HealthChangeLabel.Manager";
 import { BulletManager } from "./../../managers/Bullet.Manager";
 
 //
 
-class TowerCore {
+class TowerObject {
 
     public id: number;
     public team: TeamCore;
@@ -191,5 +191,5 @@ let TowerList = {
 
 //
 
-export { TowerCore };
+export { TowerObject };
 export { TowerList };

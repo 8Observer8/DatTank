@@ -3,11 +3,11 @@
  * DatTank Tank IS2
 */
 
-import { TankCore } from "./../../core/objects/Tank.Core";
+import { TankObject } from "./../../objects/core/Tank.Object";
 
 //
 
-class IS2Tank extends TankCore {
+class IS2Tank extends TankObject {
 
     static title: string = 'IS2';
     static year: number = 1950;

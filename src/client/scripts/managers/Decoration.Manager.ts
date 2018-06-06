@@ -3,8 +3,8 @@
  * DatTank Arena decoration manager
 */
 
-import { DecorationCore } from "./../core/objects/Decoration.Core";
-import { DecorationList as Decorations } from "./../core/objects/Decoration.Core";
+import { DecorationObject } from "./../objects/core/Decoration.Object";
+import { DecorationList as Decorations } from "./../objects/core/Decoration.Object";
 import { GfxCore } from "./../graphics/Core.Gfx";
 
 //

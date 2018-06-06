@@ -5,7 +5,7 @@
 
 import { Game } from "./../Game";
 import { GarageScene } from "./Scene.Garage";
-import { TankList as Tanks, TankList } from "./../core/objects/Tank.Core";
+import { TankList as Tanks, TankList } from "./../objects/core/Tank.Object";
 import { SoundManager } from "./../managers/Sound.Manager";
 
 //

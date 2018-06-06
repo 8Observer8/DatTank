@@ -1,6 +1,6 @@
 /*
  * @author ohmed
- * DatTank Box general class
+ * DatTank Box Object class
 */
 
 import { BoxGfx } from "./../../graphics/objects/Box.Gfx";
@@ -10,7 +10,7 @@ import * as OMath from "./../../OMath/Core.OMath";
 
 //
 
-class BoxCore {
+class BoxObject {
 
     public id: number;
     public position: OMath.Vec3 = new OMath.Vec3();
@@ -88,5 +88,5 @@ let BoxesList = {
 
 //
 
-export { BoxCore };
+export { BoxObject };
 export { BoxesList };
