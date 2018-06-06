@@ -174,7 +174,7 @@ class CollisionManager {
             if ( Math.abs( object.parent.position.x + object.parent.deltaPosition.x ) > 1270 ||
                  Math.abs( object.parent.position.z + object.parent.deltaPosition.z ) > 1270 ) {
 
-                object.parent.move( 0, object.parent.moveDirection.y );
+                object.parent.setMovement( 0, object.parent.moveDirection.y );
                 continue;
 
             }
@@ -189,7 +189,7 @@ class CollisionManager {
 
             } else {
 
-                object.parent.move( 0, object.parent.moveDirection.y );
+                object.parent.setMovement( 0, object.parent.moveDirection.y );
 
             }
 

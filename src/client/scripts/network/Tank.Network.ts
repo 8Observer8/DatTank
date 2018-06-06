@@ -19,9 +19,7 @@ class TankNetwork {
     private filter ( data ) : boolean {
 
         var tankId = ( data.id ) ? data.id : data[0];
-
-        if ( this.tank.player.id !== tankId ) return true; // tmp, need to replace later with tank id and not player id
-
+        if ( this.tank.id !== tankId ) return true;
         return false;
 
     };
@@ -34,7 +32,7 @@ class TankNetwork {
 
         if ( ! this.buffers['StartShooting'] ) {
 
-            buffer = new ArrayBuffer( 2 );
+            buffer = new ArrayBuffer( 4 );
             bufferView = new Int16Array( buffer );
 
             this.buffers['StartShooting'] = {
@@ -51,6 +49,10 @@ class TankNetwork {
 
         //
 
+        bufferView[ 1 ] = this.tank.id;
+
+        //
+
         Network.send( 'TankStartShooting', buffer, bufferView );
 
     };
@@ -61,7 +63,7 @@ class TankNetwork {
 
         if ( ! this.buffers['stopShooting'] ) {
 
-            buffer = new ArrayBuffer( 2 );
+            buffer = new ArrayBuffer( 4 );
             bufferView = new Int16Array( buffer );
 
             this.buffers['stopShooting'] = {
@@ -75,6 +77,10 @@ class TankNetwork {
             bufferView = this.buffers['stopShooting'].view;
 
         }
+
+        //
+
+        bufferView[ 1 ] = this.tank.id;
 
         //
 

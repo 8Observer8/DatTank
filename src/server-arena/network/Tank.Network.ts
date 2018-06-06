@@ -54,7 +54,7 @@ class TankNetwork {
 
         if ( this.filter( data ) ) return;
 
-        // todo
+        this.tank.startShooting();
 
     };
 
@@ -62,7 +62,7 @@ class TankNetwork {
 
         if ( this.filter( data ) ) return;
 
-        // todo
+        this.tank.stopShooting();
 
     };
 
@@ -148,11 +148,11 @@ class TankNetwork {
 
     public makeShoot ( bullet: BulletObject ) {
 
-        this.buffers['shoot'] = this.buffers['shoot'] || {};
-        let buffer = this.buffers['shoot'].buffer || new ArrayBuffer( 12 );
-        let bufferView = this.buffers['shoot'].bufferView || new Int16Array( buffer );
-        this.buffers['shoot'].buffer = buffer;
-        this.buffers['shoot'].bufferView = bufferView;
+        this.buffers['MakeShot'] = this.buffers['MakeShot'] || {};
+        let buffer = this.buffers['MakeShot'].buffer || new ArrayBuffer( 12 );
+        let bufferView = this.buffers['MakeShot'].bufferView || new Int16Array( buffer );
+        this.buffers['MakeShot'].buffer = buffer;
+        this.buffers['MakeShot'].bufferView = bufferView;
 
         //
 
