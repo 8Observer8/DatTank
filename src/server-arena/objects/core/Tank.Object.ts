@@ -15,6 +15,7 @@ import { TankNetwork } from "./../../network/Tank.Network";
 
 class TankObject {
 
+    private static numIds = 1;
     private static statsList = [ 'speed', 'rpm', 'armour', 'gun', 'ammoCapacity' ];
     private static levelStatsChange = {
         speed:          [  5,  3,  2,  2,  2,  3,  1,  3,  3,  2,  5,  3,  3,  2,  1,  1,  1,  1,  1,  1,  1,  1,  1 ],
@@ -480,9 +481,27 @@ class TankObject {
 
     };
 
+    public toJSON () {
+
+        return {
+            id:             this.id,
+            typeId:         this.typeId,
+            health:         this.health,
+            ammo:           this.ammo,
+            rotation:       this.rotation,
+            rotationTop:    this.rotationTop,
+            position:       this.position.toJSON(),
+            moveDirection:  this.moveDirection.toJSON()
+        };
+
+    };
+
     //
 
     constructor ( player: PlayerCore ) {
+
+        if ( TankObject.numIds > 1000 ) TankObject.numIds = 1;
+        this.id = TankObject.numIds ++;
 
         this.player = player;
         this.arena = player.arena;

@@ -3,10 +3,12 @@
  * DatTank Arena network handler
 */
 
+import * as OMath from "./../OMath/Core.OMath";
 import { Network } from "./../network/Core.Network";
 import { Arena } from "./../core/Arena.Core";
-import { BoxManager} from "./../managers/Box.Manager";
-import * as OMath from "./../OMath/Core.OMath";
+import { BoxManager } from "./../managers/Box.Manager";
+import { ControlsManager } from "./../managers/Control.Manager";
+import { UI } from "./../ui/Core.UI";
 
 //
 
@@ -152,9 +154,25 @@ class ArenaNetwork {
 
     };
 
+    private joinArena ( data ) {
+
+        Arena.init( data );
+        UI.Landing.hideLoader();
+        UI.InGame.showViewport();
+
+        setTimeout( () => {
+
+            ControlsManager.init();
+
+        }, 100 );
+
+    };
+
     //
 
     public init () {
+
+        Network.addMessageListener( 'ArenaJoinResponse', this.joinArena.bind( this ) );
 
         Network.addMessageListener( 'ArenaBulletHit', this.newExplosion.bind( this ) );
         Network.addMessageListener( 'ArenaBoxRemove', this.boxRemove.bind( this ) );

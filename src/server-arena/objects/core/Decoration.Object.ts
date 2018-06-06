@@ -14,7 +14,6 @@ class DecorationObject {
 
     public id: number;
     public arena: ArenaCore;
-    public name: string;
     public collisionBox: any;
     public type: string = '';
 
@@ -49,8 +48,6 @@ class DecorationObject {
 
         this.rotation = params.rotation || 0;
         this.position.set( params.position.x, params.position.y, params.position.z );
-        this.scale.set( params.scale.x, params.scale.y, params.scale.z );
-        this.name = params.name || '';
 
     };
 

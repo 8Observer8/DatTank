@@ -24,7 +24,7 @@ import { DecorationManager } from "./managers/Decoration.Manager";
 
 class GameCore {
 
-    public version: string = 'v0.5.3';
+    public version: string = 'v0.5.4';
     public isMobile: boolean;
     public ready: boolean = false;
 
@@ -123,8 +123,6 @@ class GameCore {
 
     public requestJoinArena () {
 
-        Network.addMessageListener( 'ArenaJoinResponse', this.joinArena.bind( this ) );
-
         Network.init( this.currentServer, () => {
 
             let login = $('#username').val() || localStorage.getItem('login') || '';
@@ -138,20 +136,6 @@ class GameCore {
             }, 1000 );
 
         });
-
-    };
-
-    public joinArena ( data ) {
-
-        Arena.init( data );
-        UI.Landing.hideLoader();
-        UI.InGame.showViewport();
-
-        setTimeout( () => {
-
-            ControlsManager.init();
-
-        }, 100 );
 
     };
 

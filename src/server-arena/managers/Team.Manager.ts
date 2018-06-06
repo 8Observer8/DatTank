@@ -79,7 +79,15 @@ class TeamManager {
 
     public toJSON () {
 
-        // todo
+        let teamsJSON = [];
+
+        for ( let i = 0, il = this.teams.length; i < il; i ++ ) {
+
+            teamsJSON.push( this.teams[ i ].toJSON() );
+
+        }
+
+        return teamsJSON;
 
     };
 

@@ -50,6 +50,8 @@ class PlayerCore {
         22:     12000
     };
 
+    private static numIds = 1;
+
     //
 
     public arena: ArenaCore;
@@ -179,13 +181,21 @@ class PlayerCore {
 
     public toJSON () {
 
-        // todo
+        return {
+            id:             this.id,
+            login:          this.login,
+            team:           this.team.id,
+            tank:           this.tank.toJSON()
+        };
 
     };
 
     //
 
     constructor ( arena: ArenaCore, params: any ) {
+
+        if ( PlayerCore.numIds > 1000 ) PlayerCore.numIds = 1;
+        this.id = PlayerCore.numIds ++;
 
         this.arena = arena;
         this.network = new PlayerNetwork( this );
