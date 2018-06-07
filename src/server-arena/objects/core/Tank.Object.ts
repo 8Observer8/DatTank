@@ -148,16 +148,14 @@ class TankObject {
 
     };
 
-    public hit ( killerId: number ) {
+    public hit ( killer: TowerObject | TankObject ) {
 
         if ( this.health <= 0 ) return;
-
-        let arena = this.player.arena;
-        let killer = ( killerId < 1000 ) ? arena.tankManager.getById( killerId ) : arena.towerManager.getById( killerId );
         if ( ! killer ) return;
 
         //
 
+        let arena = this.player.arena;
         this.sinceHitTime = 0;
         this.sinceRegenerationTime = 0;
 
@@ -253,7 +251,7 @@ class TankObject {
         position.x += offset * Math.cos( - this.rotationTop - this.rotation );
         position.z += offset * Math.sin( - this.rotationTop - this.rotation );
 
-        bullet.activate( position, this.rotationTop + this.rotation + Math.PI / 2, this.id );
+        bullet.activate( position, this.rotationTop + this.rotation + Math.PI / 2, this );
         this.ammo --;
 
         this.network.makeShoot( bullet );

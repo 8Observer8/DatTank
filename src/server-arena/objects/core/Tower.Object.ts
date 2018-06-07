@@ -29,7 +29,7 @@ class TowerObject {
     public target: TankObject;
 
     public range: number = 300;
-    public armour: number;
+    public armour: number = 230;
     public bullet: number = 120;
     public collisionBox: any;
 
@@ -90,7 +90,7 @@ class TowerObject {
 
         let bullet = this.arena.bulletManager.getInactiveBullet();
         if ( ! bullet ) return;
-        bullet.activate( position, this.rotation + Math.PI, this.id );
+        bullet.activate( position, this.rotation + Math.PI, this );
 
         this.network.makeShot( bullet );
 
@@ -98,22 +98,24 @@ class TowerObject {
 
     public changeHealth ( delta: number ) {
 
-        let health = Math.max( Math.min( this.health - delta, 100 ), 0 );
-        if ( health === this.health ) return;
+        if ( this.health <= 0 ) return;
+
+        let health = this.health + delta;
+        health = Math.max( Math.min( 100, health ), 0 );
+        if ( this.health === health ) return;
         this.health = health;
 
-        this.network.setHealth();
+        this.network.updateHealth();
 
     };
 
-    public hit ( killerId: number ) {
+    public hit ( killer: TankObject | TowerObject ) {
 
-        let killer = this.arena.playerManager.getById( killerId );
         if ( ! killer ) return;
 
-        if ( killer.team.id === this.team.id ) {
+        if ( killer instanceof TankObject && killer.team.id === this.team.id ) {
 
-            killer.tank.friendlyFire();
+            killer.friendlyFire();
             return;
 
         }
@@ -123,19 +125,23 @@ class TowerObject {
         this.sinceHitTime = 0;
         this.sinceRegenerationTime = 0;
 
-        this.changeHealth( Math.floor( 20 * ( killer.tank.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ) ) );
+        this.changeHealth( - 20 * ( killer.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ) );
 
-        killer.changeScore( 1 );
-        this.arena.updateLeaderboard();
-
-        //
-
-        if ( this.health === 0 ) {
-
-            this.changeTeam( killer.team, killer.id );
-            killer.changeScore( 5 );
-            // game.updateTopList( killer.login, killer.score, killer.kills );
+        if ( killer instanceof TankObject ) {
+            
+            killer.player.changeScore( 1 );
             this.arena.updateLeaderboard();
+
+            //
+
+            if ( this.health === 0 ) {
+
+                this.changeTeam( killer.team, killer.id );
+                killer.player.changeScore( 5 );
+                // game.updateTopList( killer.login, killer.score, killer.kills );
+                this.arena.updateLeaderboard();
+
+            }
 
         }
 
@@ -237,7 +243,7 @@ class TowerObject {
         if ( Math.abs( newRotation - this.newRotation ) > 0.15 ) {
 
             this.newRotation = newRotation;
-            this.network.setTopRotation();
+            this.network.updateTopRotation();
 
         }
 

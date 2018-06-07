@@ -17,7 +17,7 @@ class BulletObject {
     private arena: ArenaCore;
     public id: number;
     public active: boolean = false;
-    public ownerId: number;
+    public owner: TankObject | TowerObject;
     public position: OMath.Vec3 = new OMath.Vec3();
     public angle: number = 0;
     public flytime: number = 0;
@@ -27,14 +27,14 @@ class BulletObject {
 
     //
 
-    public activate ( position: OMath.Vec3, angle: number, ownerId: number ) {
+    public activate ( position: OMath.Vec3, angle: number, owner: TankObject | TowerObject ) {
 
         this.active = true;
         this.position.set( position.x, 25, position.z );
 
         this.angle = angle;
         this.flytime = 220;
-        this.ownerId = ownerId;
+        this.owner = owner;
     
         //
     
@@ -44,7 +44,7 @@ class BulletObject {
 
     public detonate ( target?: TankObject | TowerObject ) {
 
-        if ( target && target.id === this.ownerId ) return;
+        if ( target && target.id === this.owner.id ) return;
 
         this.active = false;
         this.arena.collisionManager.removeObject( this );        
@@ -54,7 +54,7 @@ class BulletObject {
 
         if ( target && target.hit ) {
 
-            target.hit( this.ownerId );
+            target.hit( this.owner );
 
         }
 

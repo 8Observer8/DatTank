@@ -16,15 +16,17 @@ class BoxObject {
         'Health':   1
     };
 
+    //
+
+    public arena: ArenaCore;
     public id: number;
     public removed: boolean = false;
     public radius: number = 10;
     public position: OMath.Vec3 = new OMath.Vec3();
-    public type: string = 'Box';
     public typeId: number;
     public amount: number = 0;
 
-    protected arena: ArenaCore;
+    public type: string = 'Box';
 
     //
 

@@ -36,7 +36,7 @@ class TowerNetwork {
 
     };
 
-    public setHealth () {
+    public updateHealth () {
 
         this.buffers['SetHealth'] = this.buffers['SetHealth'] || {};
         let buffer = this.buffers['SetHealth'].buffer || new ArrayBuffer( 6 );
@@ -71,7 +71,7 @@ class TowerNetwork {
 
     };
 
-    public setTopRotation () {
+    public updateTopRotation () {
 
         this.buffers['SetTopRotation'] = this.buffers['SetTopRotation'] || {};
         let buffer = this.buffers['SetTopRotation'].buffer || new ArrayBuffer( 8 );
