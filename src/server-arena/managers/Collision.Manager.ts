@@ -74,7 +74,7 @@ class CollisionManager {
 
         if ( type === 'box' ) {
 
-            shape = new p2.Box({ width: object.sizeX, height: object.sizeZ });
+            shape = new p2.Box({ width: object.size.x, height: object.size.z });
 
         } else if ( type === 'circle' ) {
 
