@@ -3,6 +3,7 @@
  * DatTank Tower manager sys
 */
 
+import * as OMath from "./../OMath/Core.OMath";
 import { ArenaCore } from "./../core/Arena.Core";
 import { TowerObject } from "./../objects/core/Tower.Object";
 
@@ -57,15 +58,16 @@ class TowerManager {
     public init () {
 
         let team = this.arena.teamManager.getById( ArenaCore.NeutralTeam );
+        let pos = new OMath.Vec3();
 
         for ( let i = 0; i < 5; i ++ ) {
 
             for ( let j = 0; j < 5; j ++ ) {
 
-                let x = ( 0.5 - i / 4 ) * 1900;
-                let z = ( 0.5 - j / 4 ) * 1900;
+                pos.x = ( 0.5 - i / 4 ) * 1900;
+                pos.z = ( 0.5 - j / 4 ) * 1900;
 
-                this.add( new TowerObject( this.arena, { team: team, position: { x: x, y: 0, z: z } } ) );
+                this.add( new TowerObject( this.arena, { team: team, position: pos } ) );
 
             }
 

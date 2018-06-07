@@ -303,7 +303,7 @@ class TowerObject {
         this.team = params.team;
         this.shootTime = Date.now();
 
-        this.position.set( this.position.x, this.position.y, this.position.z );
+        this.position.set( params.position.x, params.position.y, params.position.z );
         this.arena.collisionManager.addObject( this, 'box', false );
 
         this.network = new TowerNetwork( this );

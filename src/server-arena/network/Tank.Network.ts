@@ -220,7 +220,6 @@ class TankNetwork {
 
         //
 
-        let params = 6;
         let towerDataSize = 12;
         let buffer = new ArrayBuffer( 2 + towerDataSize * towers.length );
         let bufferView = new Int16Array( buffer );
@@ -229,7 +228,7 @@ class TankNetwork {
         for ( let i = 0, il = towers.length; i < il; i ++ ) {
 
             let tower = towers[ i ];
-            offset = 1 + params * i;
+            offset = 1 + ( towerDataSize / 2 ) * i;
 
             bufferView[ offset + 0 ] = tower.id;
             bufferView[ offset + 1 ] = tower.team.id;

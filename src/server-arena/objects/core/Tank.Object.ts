@@ -427,13 +427,13 @@ class TankObject {
                 if ( this.inRangeOf[ 't-' + tower.id ] ) continue;
 
                 this.inRangeOf[ 't-' + tower.id ] = tower;
-                tower.inRangeOf[ 'p-' + this.id ] = this;
+                tower.inRangeOf[ 'tk-' + this.id ] = this;
                 newTowersInRange.push( tower );
 
             } else {
 
                 delete this.inRangeOf[ 't-' + tower.id ];
-                delete tower.inRangeOf[ 'p-' + this.id ];
+                delete tower.inRangeOf[ 'tk-' + this.id ];
 
             }
 
