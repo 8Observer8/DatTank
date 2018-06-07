@@ -26,29 +26,13 @@ class BoxObject {
     public typeId: number;
     public amount: number = 0;
 
-    public type: string = 'Box';
+    public readonly type: string = 'Box';
 
     //
 
-    init () {
+    public dispose () {
 
-        this.arena.collisionManager.addObject( this, 'circle', false );
-
-    };
-
-    dispose () {
-
-        // this.networkBuffers['RemoveBox'] = this.networkBuffers['RemoveBox'] || {};
-        // let buffer = this.networkBuffers['RemoveBox'].buffer || new ArrayBuffer( 4 );
-        // let bufferView = this.networkBuffers['RemoveBox'].bufferView || new Uint16Array( buffer );
-        // this.networkBuffers['RemoveBox'].buffer = buffer;
-        // this.networkBuffers['RemoveBox'].bufferView = bufferView;
-
-        // bufferView[1] = this.id;
-
-        // //
-
-        // this.arena.sendEventToPlayersInRange( this.position, 'ArenaBoxRemove', buffer, bufferView );
+        this.arena.network.boxPicked( this );
 
     };
 
@@ -61,6 +45,7 @@ class BoxObject {
         this.arena = arena;
 
         this.position.copy( params.position );
+        this.arena.collisionManager.addObject( this, 'circle', false );
 
     };
 
