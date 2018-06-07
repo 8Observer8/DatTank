@@ -278,7 +278,7 @@ class TowerObject {
 
             if ( this.sinceRegenerationTime > this.sinceRegenerationLimit ) {
 
-                this.changeHealth( - 5 );
+                this.changeHealth( 5 );
                 this.sinceRegenerationTime = 0;
 
             } else {
@@ -308,6 +308,7 @@ class TowerObject {
 
         this.team = params.team;
         this.shootTime = Date.now();
+        this.sinceHitTime = Date.now();
 
         this.position.set( params.position.x, params.position.y, params.position.z );
         this.arena.collisionManager.addObject( this, 'box', false );
