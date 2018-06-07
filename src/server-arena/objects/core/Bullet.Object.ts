@@ -23,6 +23,7 @@ class BulletObject {
     public flytime: number = 0;
     public speed: number = 1.8;
     public radius: number = 10;
+    public readonly type: string = 'Bullet';
 
     //
 
@@ -33,7 +34,6 @@ class BulletObject {
 
         this.angle = angle;
         this.flytime = 220;
-
         this.ownerId = ownerId;
     
         //
@@ -46,19 +46,9 @@ class BulletObject {
 
         if ( target && target.id === this.ownerId ) return;
 
-        // this.networkBuffers['BulletHit'] = this.networkBuffers['BulletHit'] || {};
-        // let buffer = this.networkBuffers['BulletHit'].buffer || new ArrayBuffer( 8 );
-        // let bufferView = this.networkBuffers['BulletHit'].bufferView || new Int16Array( buffer );
-        // this.networkBuffers['BulletHit'].buffer = buffer;
-        // this.networkBuffers['BulletHit'].bufferView = bufferView;
-    
-        // bufferView[1] = this.id;
-        // bufferView[2] = this.position.x;
-        // bufferView[3] = this.position.z;
-
         this.active = false;
-        // this.arena.sendEventToPlayersInRange( this.position, 'ArenaBulletHit', buffer, bufferView );
         this.arena.collisionManager.removeObject( this );        
+        this.arena.network.explosion( this );
 
         //
 

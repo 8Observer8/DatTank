@@ -220,7 +220,7 @@ class CollisionManager {
                     target = ( event.bodyA == object.body ) ? event.bodyB : event.bodyA;
                     if ( target.parent.type !== 'Bullet' ) {
 
-                        object.parent.explode( target.parent );
+                        object.parent.detonate( target.parent );
 
                     }
 

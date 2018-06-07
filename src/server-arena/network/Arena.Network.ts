@@ -6,6 +6,7 @@
 import * as OMath from "./../OMath/Core.OMath";
 import { ArenaCore } from "./../core/Arena.Core";
 import { PlayerCore } from "./../core/Player.Core";
+import { BulletObject } from "../objects/core/Bullet.Object";
 import { Network } from "./Core.Network";
 
 //
@@ -13,6 +14,7 @@ import { Network } from "./Core.Network";
 class ArenaNetwork {
 
     private arena: ArenaCore;
+    private buffers: object = {};
 
     //
 
@@ -52,6 +54,24 @@ class ArenaNetwork {
         response['me'] = player.toJSON();
 
         Network.send( 'ArenaJoinResponse', player.socket, false, response );
+
+    };
+
+    public explosion ( bullet: BulletObject ) {
+
+        this.buffers['BulletExplosion'] = this.buffers['BulletExplosion'] || {};
+        let buffer = this.buffers['BulletExplosion'].buffer || new ArrayBuffer( 8 );
+        let bufferView = this.buffers['BulletExplosion'].bufferView || new Int16Array( buffer );
+        this.buffers['BulletExplosion'].buffer = buffer;
+        this.buffers['BulletExplosion'].bufferView = bufferView;
+
+        //
+
+        bufferView[1] = bullet.id;
+        bufferView[2] = bullet.position.x;
+        bufferView[3] = bullet.position.z;
+
+        this.sendEventToPlayersInRange( bullet.position, 'ArenaBulletHit', buffer, bufferView );
 
     };
 
