@@ -117,6 +117,7 @@ class ArenaCore {
 
         for ( let i = 0, il = players.length; i < il; i ++ ) {
 
+            if ( Arena.me && players[ i ].id === Arena.me.id ) continue;
             PlayerManager.remove( [ players[ i ].id ] );
             PlayerManager.add( new PlayerCore( players[ i ] ) );
 

@@ -57,6 +57,12 @@ class ArenaNetwork {
 
     };
 
+    public playerLeft ( player: PlayerCore ) {
+
+        // todo
+
+    };
+
     public explosion ( bullet: BulletObject ) {
 
         this.buffers['BulletExplosion'] = this.buffers['BulletExplosion'] || {};

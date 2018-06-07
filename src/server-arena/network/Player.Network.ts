@@ -31,11 +31,20 @@ class PlayerNetwork {
 
         if ( this.filter( data ) ) return;
 
-        // todo
+        let tankTypeId = data[1];
+        let tankList = { 0: 'IS2', 1: 'T29', 2: 'T44', 3: 'T54' };
+        let tankName = tankList[ tankTypeId ];
+        this.player.respawn( tankName );
 
     };
 
     // send via network
+
+    public confirmRespawn () {
+
+        this.arena.network.sendEventToAllPlayers( 'PlayerRespawn', null, this.player.toJSON() );
+
+    };
 
     public updateLevel () {
 

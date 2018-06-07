@@ -120,6 +120,25 @@ class TankObject {
 
     public setRespawnPosition () {
 
+        // clear tank from all inRange arrays
+
+        let tanks = this.arena.tankManager.getTanks();
+        let towers = this.arena.towerManager.getTowers();
+
+        for ( let i = 0, il = tanks.length; i < il; i ++ ) {
+
+            delete tanks[ i ].inRangeOf[ 'tk-' + this.id ];
+
+        }
+
+        for ( let i = 0, il = towers.length; i < il; i ++ ) {
+
+            delete towers[ i ].inRangeOf[ 'tk-' + this.id ];
+
+        }
+
+        //
+
         let position = new OMath.Vec3( this.team.spawnPosition.x, this.team.spawnPosition.y, this.team.spawnPosition.z );
         let offset = new OMath.Vec3();
 

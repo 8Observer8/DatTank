@@ -45,6 +45,7 @@ class ExplosionManagerCore {
     public showExplosion ( position: OMath.Vec3 ) {
 
         let explosion = this.getNewExplosion();
+        if ( ! explosion ) return;
         explosion.setActive( position );
 
     };

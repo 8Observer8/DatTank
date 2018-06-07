@@ -94,20 +94,33 @@ class PlayerCore {
 
     };
 
-    public respawn ( tankName?: string ) {
+    public spawn ( tankName?: string ) {
 
-        tankName = tankName || ( this.tank ? this.tank.title : 'T44' );
+        tankName = tankName || 'T44';
 
         this.selectTank( tankName );
         this.tank.setRespawnPosition();
+        this.arena.updateLeaderboard();
+
+    };
+
+    public respawn ( tankName: string ) {
+
+        tankName = tankName || ( this.tank ? this.tank.title : 'T44' );
+
         this.status = PlayerCore.Alive;
         this.bonusLevels = 0;
         this.level = 0;
 
-        // todo
-
+        this.tank.dispose();
+        this.arena.tankManager.remove( this.tank.id );
+        this.selectTank( tankName );
+        this.tank.setRespawnPosition();
+        this.status = PlayerCore.Alive;
         this.changeScore( - Math.floor( 1 * this.score / 3 ) );
         this.arena.updateLeaderboard();
+
+        this.network.confirmRespawn();
 
     };
 
@@ -149,7 +162,8 @@ class PlayerCore {
 
     public dispose () {
 
-        // todo
+        this.tank.dispose();
+        this.arena.tankManager.remove( this.tank.id );
 
     };
 

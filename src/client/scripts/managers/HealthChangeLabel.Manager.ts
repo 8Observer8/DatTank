@@ -46,6 +46,7 @@ class HealthChangeLabelManagerCore {
     public showHealthChangeLabel ( position: OMath.Vec3, healthChange: number ) {
 
         let healthChangeLabel = this.getNewHealthChangeLabel();
+        if ( ! healthChangeLabel ) return;
         healthChangeLabel.setActive( position, healthChange );
 
     };

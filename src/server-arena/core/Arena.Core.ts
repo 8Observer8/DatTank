@@ -71,7 +71,7 @@ class ArenaCore {
 
         let player = new PlayerCore( this, { login: params.login, socket: params.socket });
         this.playerManager.add( player );
-        player.respawn( params.tank );
+        player.spawn( params.tank );
 
         //
 
@@ -93,7 +93,7 @@ class ArenaCore {
 
             player.team.removePlayer( player.id );
             player.dispose();
-            this.network.sendEventToAllPlayers( 'ArenaPlayerLeft', null, { id: player.id } );
+            this.network.playerLeft( player );
 
         }
 

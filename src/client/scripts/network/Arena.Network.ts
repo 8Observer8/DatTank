@@ -81,7 +81,7 @@ class ArenaNetwork {
                         x:  data[ i * playerBinSize + 7 ],
                         y:  data[ i * playerBinSize + 8 ]
                     },
-                    type:   data[ i * playerBinSize + 9 ],
+                    typeId: data[ i * playerBinSize + 9 ],
                     ammo:   data[ i * playerBinSize + 10 ]
                 }
             };

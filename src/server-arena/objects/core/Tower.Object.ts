@@ -29,7 +29,7 @@ class TowerObject {
     public target: TankObject;
 
     public range: number = 300;
-    public armour: number = 230;
+    public armour: number = 150;
     public bullet: number = 120;
     public collisionBox: any;
 

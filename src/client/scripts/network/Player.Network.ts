@@ -30,7 +30,7 @@ class PlayerNetwork {
 
         if ( this.filter( data ) ) return;
 
-        this.player.respawn( data.player );
+        this.player.respawn( data );
 
     };
 
@@ -75,9 +75,33 @@ class PlayerNetwork {
 
     };
 
-    public respawn ( tank: string ) {
+    public respawn ( tankId: number ) {
 
-        Network.send( 'PlayerRespawn', false, tank );
+        let buffer, bufferView;
+
+        if ( ! this.buffers['Respawn'] ) {
+
+            buffer = new ArrayBuffer( 6 );
+            bufferView = new Int16Array( buffer );
+
+            this.buffers['Respawn'] = {
+                buffer:     buffer,
+                view:       bufferView
+            };
+
+        } else {
+
+            buffer = this.buffers['Respawn'].buffer;
+            bufferView = this.buffers['Respawn'].view;
+
+        }
+
+        //
+
+        bufferView[1] = this.player.id;
+        bufferView[2] = tankId;
+
+        Network.send( 'PlayerRespawn', buffer, bufferView );
 
     };
 

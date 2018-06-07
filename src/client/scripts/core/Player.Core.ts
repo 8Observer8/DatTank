@@ -113,7 +113,7 @@ class PlayerCore {
 
     private setTank ( params ) {
 
-        let tankName = Tanks.getById( params.type );
+        let tankName = Tanks.getById( params.typeId );
 
         if ( tankName ) {
 
@@ -126,8 +126,8 @@ class PlayerCore {
 
     public triggerRespawn () {
 
-        let tank = localStorage.getItem( 'currentTank' ) || 'IS2';
-        this.network.respawn( tank );
+        let tankName = localStorage.getItem( 'currentTank' ) || 'IS2';
+        this.network.respawn( Tanks[ tankName ].tid );
 
         //
 
@@ -137,19 +137,21 @@ class PlayerCore {
 
     public respawn ( params ) {
 
-        this.dispose();
-        this.setTank( params );
-        this.tank.init();
-        this.level = 0;
-
-        //
-
         if ( Arena.me.id === this.id ) {
+
+            this.tank.dispose();
+            this.setTank( params.tank );
+            this.tank.init();
+            this.level = 0;
 
             UI.InGame.updateHealth( this.tank.health );
             UI.InGame.updateAmmo( this.tank.ammo );
             UI.InGame.hideContinueBox();
             UI.InGame.refreshAds();
+
+        } else {
+
+            Arena.removePlayer( this );
 
         }
 
@@ -199,14 +201,14 @@ class PlayerCore {
 
     public dispose () {
 
-        this.tank.dispose();
-        this.tank = null;
+        if ( this.tank ) {
 
-        if ( Arena.me.id !== this.id ) {
-
-            this.network.dispose();
+            this.tank.dispose();
+            this.tank = null;
 
         }
+
+        this.network.dispose();
 
     };
 
