@@ -10,6 +10,7 @@ import { ArenaCore } from "./Arena.Core";
 import { BotCore } from "./Bot.Core";
 import { TeamCore } from "./Team.Core";
 import { TankObject } from "./../objects/core/Tank.Object";
+import { TowerObject } from "./../objects/core/Tower.Object";
 import { PlayerNetwork } from "./../network/Player.Network";
 
 import { IS2Tank } from "./../objects/tanks/IS2.Tank";
@@ -75,6 +76,12 @@ class PlayerCore {
     public readonly type: string = 'Player';
 
     //
+
+    public die ( killer: TankObject | TowerObject ) {
+
+        this.arena.network.playerDied( this, killer );
+
+    };
 
     public selectTank ( tankName: string = 'T29' ) {
 

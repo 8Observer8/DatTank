@@ -178,7 +178,11 @@ class TankObject {
         this.sinceHitTime = 0;
         this.sinceRegenerationTime = 0;
 
-        this.changeHealth( - 20 * ( killer.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ), killer );
+        if ( killer.team.id !== this.player.team.id ) {
+
+            this.changeHealth( - 20 * ( killer.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ), killer );
+
+        }
 
         if ( killer instanceof TankObject ) {
 
@@ -229,7 +233,6 @@ class TankObject {
             if ( killer instanceof PlayerCore ) {
 
                 killer.changeScore( 10 );
-                // game.updateTopList( killer.login, killer.score, killer.kills );
 
             }
 
@@ -304,6 +307,8 @@ class TankObject {
     };
 
     public die ( killer: TankObject | TowerObject ) {
+
+        this.player.die( killer );
 
         this.player.status = PlayerCore.Dead;
         this.player.death ++;

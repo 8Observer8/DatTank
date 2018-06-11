@@ -236,47 +236,23 @@ class BotCore {
 
         if ( target && minDist < 280 ) {
 
-            let dx = target.position.x - this.player.tank.position.x;
-            let dz = target.position.z - this.player.tank.position.z;
+            let dx = this.player.tank.position.x - target.position.x;
+            let dz = this.player.tank.position.z - target.position.z;
             let rotation, deltaAngle;
 
-            if ( dz === 0 && dx !== 0 ) {
-
-                rotation = ( dx > 0 ) ? - Math.PI : 0;
-
-            } else {
-
-                rotation = - Math.PI / 2 - Math.atan2( dz, dx );
-
-            }
-
-            rotation += Math.PI / 2 - this.player.tank.rotation;
+            rotation = Math.atan2( dx, dz ) + Math.PI / 2 - this.player.tank.rotation;
             deltaAngle = OMath.formatAngle( rotation ) - OMath.formatAngle( this.player.tank.rotationTop );
+            deltaAngle = ( deltaAngle > Math.PI ) ? deltaAngle - 2 * Math.PI : deltaAngle;
+            deltaAngle = ( deltaAngle < - Math.PI ) ? - deltaAngle + 2 * Math.PI : deltaAngle;
 
-            if ( Math.abs( delta ) > Math.PI ) {
+            if ( Math.abs( deltaAngle ) > 0.1 && Date.now() - this.lastTopRotate > 40 ) {
 
-                if ( delta > 0 ) {
-
-                    delta = - 2 * Math.PI + delta;
-
-                } else {
-
-                    delta = 2 * Math.PI + delta;
-
-                }
-
-            }
-
-            if ( Math.abs( delta / 2 ) > 0.1 && Date.now() - this.lastTopRotate > 400 ) {
-
-                let topRotation = this.player.tank.rotationTop + delta / 2;
-                topRotation = OMath.formatAngle( topRotation );
-                this.player.tank.setTopRotation( topRotation );
+                this.player.tank.setTopRotation( this.player.tank.rotationTop + Math.sign( deltaAngle ) / 15 );
                 this.lastTopRotate = Date.now();
 
             }
 
-            if ( Math.random() < 0.3 && minDist < 280 ) {
+            if ( deltaAngle < 0.2 && minDist < 280 ) {
 
                 this.player.tank.makeShot();
 
@@ -293,6 +269,7 @@ class BotCore {
         this.arena = arena;
         this.maxKills = Math.floor( Math.random() * 60 ) + 8;
         this.login = this.pickLogin();
+        this.lastTopRotate = Date.now();
 
         this.init();
 

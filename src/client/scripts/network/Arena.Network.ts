@@ -14,6 +14,15 @@ import { UI } from "./../ui/Core.UI";
 
 class ArenaNetwork {
 
+    private playerDied ( data ) {
+
+        let player = data.player;
+        let killer = data.killer;
+
+        Arena.playerKilled( player, killer );
+
+    };
+
     private newExplosion ( data ) {
 
         let bulletId = data[0];
@@ -186,6 +195,8 @@ class ArenaNetwork {
 
         Network.addMessageListener( 'ArenaPlayerLeft', this.playerLeft.bind( this ) );
         Network.addMessageListener( 'ArenaLeaderboardUpdate', this.updateLeaderboard.bind( this ) );
+
+        Network.addMessageListener( 'ArenaPlayerDied', this.playerDied.bind( this ) );
 
     };
 

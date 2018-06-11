@@ -23,7 +23,7 @@ class CollisionManager {
 
         let body, shape;
         let n = this.world.narrowphase;
-        let dummyBody = new p2.Body({ position: [ position.x, position.y ] });
+        let dummyBody = new p2.Body({ position: [ position.x, position.z ] });
         let dummyShape = new p2.Circle({ radius: radius });
         dummyBody.addShape( dummyShape );
 

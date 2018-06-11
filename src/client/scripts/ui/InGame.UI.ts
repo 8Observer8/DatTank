@@ -220,7 +220,7 @@ class UIInGameModule {
 
     };
 
-    public showKills = function ( killer: string, killed: string, killerColor: string, killedColor: string ) {
+    public showKills ( killer: string, killed: string, killerColor: string, killedColor: string ) {
 
         $('#kill-events').append( '<p><span style="color:' + killerColor + '">' + killer +'</span> killed <span style="color:' + killedColor + '">' + killed + '</span>!</p>');
 

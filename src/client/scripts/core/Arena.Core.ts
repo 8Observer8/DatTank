@@ -89,6 +89,47 @@ class ArenaCore {
 
     };
 
+    public playerKilled ( player, killer ) {
+
+        let playerTeam = TeamManager.getById( player.teamId );
+        let killerTeam = TeamManager.getById( killer.teamId );
+
+        if ( killer.type === 'player' ) {
+
+            UI.InGame.showKills( killer.login, player.login, OMath.intToHex( killerTeam.color ), OMath.intToHex( playerTeam.color ) );
+
+        } else if ( killer.type === 'tower' ) {
+
+            UI.InGame.showKills( 'Tower', player.login, OMath.intToHex( killerTeam.color ), OMath.intToHex( playerTeam.color ) );
+
+        }
+
+        //
+
+        if ( player.id === Arena.me.id ) {
+
+            setTimeout( () => {
+
+                if ( killer.type === 'tower' ) {
+
+                    UI.InGame.showContinueBox( '<br>' + killerTeam.name + ' team tower', OMath.intToHex( killerTeam.color ) );
+
+                } else if ( killer.type === 'player' ) {
+
+                    UI.InGame.showContinueBox( killer.login, OMath.intToHex( killerTeam.color ) );
+
+                } else {
+
+                    UI.InGame.showContinueBox( '<br>stray bullet', '#555' );
+
+                }
+
+            }, 1400 );
+
+        }
+
+    };
+
     public removePlayer ( player ) {
 
         PlayerManager.remove( [ player.id ] );

@@ -159,43 +159,7 @@ class PlayerCore {
 
     public die ( trigger: number ) {
 
-        let killer = PlayerManager.getById( trigger ) || TowerManager.getById( trigger );
-
-        if ( killer ) {
-
-            if ( killer instanceof PlayerCore ) {
-
-                UI.InGame.showKills( killer['username'], this.username, OMath.intToHex( killer.team.color ), OMath.intToHex( this.team.color ) );
-
-            } else {
-
-                UI.InGame.showKills( 'Tower', this.username, OMath.intToHex( killer.team.color ), OMath.intToHex( this.team.color ) );
-
-            }
-
-        }
-
-        if ( this.id === Arena.me.id ) {
-
-            setTimeout( () => {
-
-                if ( killer instanceof TowerObject ) {
-
-                    UI.InGame.showContinueBox( '<br>' + killer.team.name + ' team tower', OMath.intToHex( killer.team.color ) );
-
-                } else if ( killer instanceof TankObject ) {
-
-                    UI.InGame.showContinueBox( killer.player.username, OMath.intToHex( killer.player.team.color ) );
-
-                } else {
-
-                    UI.InGame.showContinueBox( '<br>stray bullet', '#555' );
-
-                }
-
-            }, 1400 );
-
-        }
+        // nothing here
 
     };
 

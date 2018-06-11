@@ -6,6 +6,8 @@
 import * as OMath from "./../OMath/Core.OMath";
 import { ArenaCore } from "./../core/Arena.Core";
 import { PlayerCore } from "./../core/Player.Core";
+import { TowerObject } from "../objects/core/Tower.Object";
+import { TankObject } from "../objects/core/Tank.Object";
 import { BulletObject } from "../objects/core/Bullet.Object";
 import { BoxObject } from "./../objects/core/Box.Object";
 import { Network } from "./Core.Network";
@@ -55,6 +57,32 @@ class ArenaNetwork {
         response['me'] = player.toJSON();
 
         Network.send( 'ArenaJoinResponse', player.socket, false, response );
+
+    };
+
+    public playerDied ( player: PlayerCore, killer: TankObject | TowerObject ) {
+
+        let data;
+
+        if ( killer instanceof TankObject ) {
+            
+            data = {
+                player: { id: player.id, login: player.login, teamId: player.team.id },
+                killer: { type: 'player', id: killer.id, login: killer.player.login, teamId: killer.team.id }
+            };
+
+        } else if ( killer instanceof TowerObject ) {
+
+            data = {
+                player: { id: player.id, login: player.login, teamId: player.team.id },
+                killer: { type: 'tower', id: killer.id, teamId: killer.team.id }
+            };
+
+        }
+
+        //
+
+        this.sendEventToAllPlayers( 'ArenaPlayerDied', null, data );
 
     };
 
