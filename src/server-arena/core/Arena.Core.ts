@@ -39,10 +39,11 @@ class ArenaCore {
     public boxManager: BoxManager;
     public collisionManager: CollisionManager;
 
+    public disposed: boolean = false;
+
     private updateInterval: any;
-    private currentTime: number;
     private prevUpdateTime: number;
-    private disposed: boolean = false;
+
     private leaderboardUpdateTimeout: any;
 
     private updateRate = 40;
@@ -131,7 +132,7 @@ class ArenaCore {
 
             let players: Array<PlayerCore> = this.playerManager.getPlayers();
             let teams: Array<TeamCore> = this.teamManager.getTeams();
-            let towersCount: number = this.towerManager.getTowers();
+            let towersCount: number = this.towerManager.getTowers().length;
             let playersJSON = [];
             let teamsJSON = [];
 
@@ -258,7 +259,6 @@ class ArenaCore {
         this.boxManager = new BoxManager( this );
         this.collisionManager = new CollisionManager( this );
 
-        this.currentTime = Date.now();
         this.prevUpdateTime = Date.now();
 
         //

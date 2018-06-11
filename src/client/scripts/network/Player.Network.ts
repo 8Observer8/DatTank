@@ -52,7 +52,7 @@ class PlayerNetwork {
 
         if ( ! this.buffers['StatsUpdate'] ) {
 
-            buffer = new ArrayBuffer( 4 );
+            buffer = new ArrayBuffer( 6 );
             bufferView = new Int16Array( buffer );
 
             this.buffers['StatsUpdate'] = {
@@ -69,7 +69,8 @@ class PlayerNetwork {
 
         //
 
-        bufferView[1] = statsId;
+        bufferView[1] = this.player.id;
+        bufferView[2] = statsId;
 
         Network.send( 'PlayerTankUpdateStats', buffer, bufferView );
 

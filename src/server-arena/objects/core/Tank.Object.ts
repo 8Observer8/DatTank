@@ -83,28 +83,28 @@ class TankObject {
 
             case 'speed':
 
-                this.speed += levelsStats['speed'][ level + 1 ];
+                this.speed += levelsStats['speed'][ level ];
                 this.moveSpeed = this.originalMoveSpeed * this.speed / 40;
                 break;
 
             case 'rpm':
 
-                this.rpm += levelsStats['rpm'][ level + 1 ];
+                this.rpm += levelsStats['rpm'][ level ];
                 break;
 
             case 'armour':
 
-                this.armour += levelsStats['armour'][ level + 1 ];
+                this.armour += levelsStats['armour'][ level ];
                 break;
 
             case 'gun':
 
-                this.bullet += levelsStats['gun'][ level + 1 ];
+                this.bullet += levelsStats['gun'][ level ];
                 break;
 
             case 'ammoCapacity':
 
-                this.ammoCapacity += levelsStats['ammoCapacity'][ level + 1 ];
+                this.ammoCapacity += levelsStats['ammoCapacity'][ level ];
                 break;
 
             default:
@@ -224,7 +224,7 @@ class TankObject {
 
         if ( this.health === 0 ) {
 
-            // this.die( killer );
+            this.die( killer );
 
             if ( killer instanceof PlayerCore ) {
 
@@ -304,8 +304,6 @@ class TankObject {
     };
 
     public die ( killer: TankObject | TowerObject ) {
-
-        if ( this.health <= 0 ) return;
 
         this.player.status = PlayerCore.Dead;
         this.player.death ++;

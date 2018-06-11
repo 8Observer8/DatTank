@@ -3,6 +3,7 @@
  * DatTank Player Object Network handler
 */
 
+import * as ws from "ws";
 import { Network } from "./../network/Core.Network";
 import { PlayerCore } from "./../core/Player.Core";
 import { ArenaCore } from "./../core/Arena.Core";
@@ -17,24 +18,34 @@ class PlayerNetwork {
 
     //
 
-    private filter ( data: Int16Array ) : boolean {
+    private filter ( data: Int16Array, socket: ws ) : boolean {
 
         let playerId = data[0];
         if ( this.player.id !== playerId ) return true;
+        if ( socket['player'].id !== playerId ) return true;
         return false;
 
     };
 
     // network events handlers
 
-    private setRespawn ( data: Int16Array ) {
+    private setRespawn ( data: Int16Array, socket: ws ) {
 
-        if ( this.filter( data ) ) return;
+        if ( this.filter( data, socket ) ) return;
 
         let tankTypeId = data[1];
         let tankList = { 0: 'IS2', 1: 'T29', 2: 'T44', 3: 'T54' };
         let tankName = tankList[ tankTypeId ];
         this.player.respawn( tankName );
+
+    };
+
+    private setTankStatsUpdte ( data: Int16Array, socket: ws ) {
+
+        if ( this.filter( data, socket ) ) return;
+
+        let statsId = data[1];
+        this.player.tank.updateStats( statsId );
 
     };
 
@@ -73,10 +84,12 @@ class PlayerNetwork {
         //
 
         this.setRespawn = this.setRespawn.bind( this );
+        this.setTankStatsUpdte = this.setTankStatsUpdte.bind( this );
 
         //
 
         Network.addMessageListener( 'PlayerRespawn', this.setRespawn );
+        Network.addMessageListener( 'PlayerTankUpdateStats', this.setTankStatsUpdte );
 
     };
 

@@ -3,6 +3,7 @@
  * DatTank Tank Object Network handler
 */
 
+import * as ws from "ws";
 import * as OMath from "./../OMath/Core.OMath";
 import { Network } from "./../network/Core.Network";
 import { TankObject } from "./../objects/core/Tank.Object";
@@ -21,28 +22,29 @@ class TankNetwork {
 
     //
 
-    private filter ( data: Int16Array ) : boolean {
+    private filter ( data: Int16Array, socket: ws ) : boolean {
 
         let tankId = data[0];
         if ( this.tank.id !== tankId ) return true;
+        if ( socket['player'].tank.id !== tankId ) return true;
         return false;
 
     };
 
     // network events handlers
 
-    private setTopRotation ( data: Int16Array ) {
+    private setTopRotation ( data: Int16Array, socket: ws ) {
 
-        if ( this.filter( data ) ) return;
+        if ( this.filter( data, socket ) ) return;
 
         let angle = data[1] / 1000;
         this.tank.setTopRotation( angle );
 
     };
 
-    private setMovement ( data: Int16Array ) {
+    private setMovement ( data: Int16Array, socket: ws ) {
 
-        if ( this.filter( data ) ) return;
+        if ( this.filter( data, socket ) ) return;
 
         let x = data[1];
         let y = data[2];
@@ -50,27 +52,19 @@ class TankNetwork {
 
     };
 
-    private setShootStart ( data: Int16Array ) {
+    private setShootStart ( data: Int16Array, socket: ws ) {
 
-        if ( this.filter( data ) ) return;
+        if ( this.filter( data, socket ) ) return;
 
         this.tank.startShooting();
 
     };
 
-    private setShootStop ( data: Int16Array ) {
+    private setShootStop ( data: Int16Array, socket: ws ) {
 
-        if ( this.filter( data ) ) return;
+        if ( this.filter( data, socket ) ) return;
 
         this.tank.stopShooting();
-
-    };
-
-    private setStatsUpdate ( data: Int16Array ) {
-
-        if ( this.filter( data ) ) return;
-
-        // todo
 
     };
 
@@ -310,7 +304,6 @@ class TankNetwork {
         this.setMovement = this.setMovement.bind( this );
         this.setShootStart = this.setShootStart.bind( this );
         this.setShootStop = this.setShootStop.bind( this );
-        this.setStatsUpdate = this.setStatsUpdate.bind( this );
 
         //
 
@@ -318,7 +311,6 @@ class TankNetwork {
         Network.addMessageListener( 'TankMove', this.setMovement );
         Network.addMessageListener( 'TankStartShooting', this.setShootStart );
         Network.addMessageListener( 'TankStopShooting', this.setShootStop );
-        Network.addMessageListener( 'TankStatsUpdate', this.setStatsUpdate );
 
     };
 

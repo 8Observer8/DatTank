@@ -40,8 +40,8 @@ class BotCore {
     public removed: boolean = false;
     public login: string;
 
-    private moveDuration: number;
-    private rotateBaseDuration: number;
+    private moveDuration: number = null;
+    private rotateBaseDuration: number = null;
     private maxKills: number;
     private lastTopRotate: number;
 
@@ -68,7 +68,7 @@ class BotCore {
 
         } else {
 
-            setTimeout( function () {
+            setTimeout( () => {
 
                 if ( this.arena.disposed ) return;
                 this.arena.botManager.remove( this );
@@ -104,7 +104,7 @@ class BotCore {
 
         }
 
-        this.login = login;
+        return login;
 
     };
 
@@ -292,6 +292,7 @@ class BotCore {
 
         this.arena = arena;
         this.maxKills = Math.floor( Math.random() * 60 ) + 8;
+        this.login = this.pickLogin();
 
         this.init();
 

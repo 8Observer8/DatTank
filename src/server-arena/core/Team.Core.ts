@@ -22,7 +22,7 @@ class TeamCore {
     public players: Array<PlayerCore> = [];
     public kills: number = 0;
     public death: number = 0;
-    public towers: number = 1;
+    public towers: number = 0;
     public spawnPosition: OMath.Vec3 = new OMath.Vec3();
 
     //
@@ -32,7 +32,7 @@ class TeamCore {
         this.players = [];
         this.kills = 0;
         this.death = 0;
-        this.towers = 1;
+        this.towers = 0;
 
     };
 
