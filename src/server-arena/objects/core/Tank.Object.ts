@@ -282,6 +282,7 @@ class TankObject {
 
     public startShooting () {
 
+        clearInterval( this.shootingInterval );
         this.shootingInterval = setInterval( () => {
 
             this.makeShot();
