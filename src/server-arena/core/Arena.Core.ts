@@ -180,6 +180,7 @@ class ArenaCore {
 
         clearInterval( this.updateInterval );
         this.collisionManager.clear();
+        this.network.dispose();
 
         //
 

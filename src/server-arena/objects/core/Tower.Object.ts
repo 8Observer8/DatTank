@@ -28,7 +28,7 @@ class TowerObject {
     public newRotation: number = 0;
     public target: TankObject;
 
-    public range: number = 300;
+    public range: number = 500;
     public armour: number = 150;
     public bullet: number = 120;
     public collisionBox: any;

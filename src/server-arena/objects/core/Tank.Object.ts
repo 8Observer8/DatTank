@@ -499,6 +499,7 @@ class TankObject {
 
     public dispose () {
 
+        this.network.dispose();
         this.arena.collisionManager.removeObject( this );
 
     };

@@ -91,6 +91,12 @@ class TowerNetwork {
 
     //
 
+    private dispose () {
+
+        // todo
+
+    };
+
     constructor ( tower: TowerObject ) {
 
         this.arena = tower.arena;

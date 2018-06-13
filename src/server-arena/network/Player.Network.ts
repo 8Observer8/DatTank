@@ -76,6 +76,13 @@ class PlayerNetwork {
 
     //
 
+    public dispose () {
+
+        Network.removeMessageListener( 'PlayerRespawn', this.setRespawn );
+        Network.removeMessageListener( 'PlayerTankUpdateStats', this.setTankStatsUpdte );
+
+    };
+
     constructor ( player: PlayerCore ) {
 
         this.player = player;

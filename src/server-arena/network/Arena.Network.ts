@@ -128,6 +128,12 @@ class ArenaNetwork {
 
     //
 
+    public dispose () {
+
+        // todo
+
+    };
+
     constructor ( arena: ArenaCore ) {
 
         this.arena = arena;

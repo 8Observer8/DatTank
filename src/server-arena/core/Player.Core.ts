@@ -124,7 +124,17 @@ class PlayerCore {
         this.selectTank( tankName );
         this.tank.setRespawnPosition();
         this.status = PlayerCore.Alive;
-        this.changeScore( - Math.floor( 1 * this.score / 3 ) );
+
+        if ( this.socket ) {
+
+            this.changeScore( - Math.floor( 1 * this.score / 3 ) );
+
+        } else {
+
+            if ( Math.random() < 0.35 ) this.changeScore( - Math.floor( 1 * this.score / 6 ) );
+
+        }
+
         this.arena.updateLeaderboard();
 
         this.network.confirmRespawn();
@@ -169,6 +179,7 @@ class PlayerCore {
 
     public dispose () {
 
+        this.network.dispose();
         this.tank.dispose();
         this.arena.tankManager.remove( this.tank.id );
 

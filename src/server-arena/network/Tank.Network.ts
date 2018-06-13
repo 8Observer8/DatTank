@@ -287,9 +287,12 @@ class TankNetwork {
 
     //
 
-    private dispose () {
+    public dispose () {
 
-        // todo
+        Network.removeMessageListener( 'TankRotateTop', this.setTopRotation );
+        Network.removeMessageListener( 'TankMove', this.setMovement );
+        Network.removeMessageListener( 'TankStartShooting', this.setShootStart );
+        Network.removeMessageListener( 'TankStopShooting', this.setShootStop );
 
     };
 

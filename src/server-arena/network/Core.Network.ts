@@ -144,6 +144,21 @@ class NetworkCore {
 
     };
 
+    public removeMessageListener ( eventName: string, callback: Function ) {
+
+        let newMassageListenersList = [];
+
+        for ( let i = 0, il = this.messageListeners[ eventName ].length; i < il; i ++ ) {
+
+            if ( this.messageListeners[ eventName ][ i ] === callback ) continue;
+            newMassageListenersList.push( this.messageListeners[ eventName ][ i ] );
+
+        }
+
+        this.messageListeners[ eventName ] = newMassageListenersList;
+
+    };
+
     private triggerMessageListener ( eventId: number, data: any, socket: ws ) {
 
         if ( ! this.events.in[ eventId ] ) {
