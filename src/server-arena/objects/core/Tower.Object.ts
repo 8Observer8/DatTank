@@ -7,7 +7,6 @@ import * as OMath from "./../../OMath/Core.OMath";
 import { ArenaCore } from "./../../core/Arena.Core";
 import { TeamCore } from "./../../core/Team.Core";
 import { PlayerCore } from "./../../core/Player.Core";
-import { BulletManager } from "./../../managers/Bullet.Manager";
 import { TankObject } from "./../core/Tank.Object";
 import { BulletObject } from "./../core/Bullet.Object";
 import { TowerNetwork } from "./../../network/Tower.Network";
@@ -138,7 +137,6 @@ class TowerObject {
 
                 this.changeTeam( killer.team, killer.id );
                 killer.player.changeScore( 5 );
-                // game.updateTopList( killer.login, killer.score, killer.kills );
                 this.arena.updateLeaderboard();
 
             }

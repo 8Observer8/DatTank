@@ -5,7 +5,7 @@
 
 import * as ws from "ws";
 
-import * as OMath from "./../OMath/Core.OMath";
+import { Game } from "./../Game";
 import { ArenaCore } from "./Arena.Core";
 import { BotCore } from "./Bot.Core";
 import { TeamCore } from "./Team.Core";
@@ -155,6 +155,12 @@ class PlayerCore {
         level --;
 
         if ( this.level + this.bonusLevels < level || delta < 0 ) {
+
+            if ( delta > 0 ) {
+
+                Game.updateTopList( this.login, this.score, this.kills );
+
+            }
 
             if ( this.socket ) {
 

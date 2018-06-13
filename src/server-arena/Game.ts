@@ -12,9 +12,9 @@ let ip = require('ip');
 
 //
 
-export class Game {
+class GameCore {
 
-    private static instance: Game;
+    private static instance: GameCore;
 
     public id: string;
 
@@ -111,18 +111,18 @@ export class Game {
 
     constructor () {
 
-        if ( Game.instance ) {
+        if ( GameCore.instance ) {
 
-            console.warn('Game instance already created!');
-            return Game.instance;
+            return GameCore.instance;
 
         }
 
         this.id = ( new Date().getTime() ).toString(36);
-        this.init();
 
-        Game.instance = this;
+        GameCore.instance = this;
 
     };
 
 };
+
+export let Game = new GameCore();
