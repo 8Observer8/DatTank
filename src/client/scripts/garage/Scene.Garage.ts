@@ -24,6 +24,7 @@ class GarageScene {
     private ambientlight: THREE.AmbientLight;
     private spotLight: THREE.SpotLight;
 
+    private initModelsTimeout: number;
     private timer: number = 0;
     private lastFrameTime: number = 0;
     private tankRotationSpeed: number = 0.00015;
@@ -150,6 +151,18 @@ class GarageScene {
     };
 
     public reset () {
+
+        if ( ResourceManager.loadedPacks.indexOf('garage') === -1 ) {
+
+            clearTimeout( this.initModelsTimeout );
+            this.initModelsTimeout = setTimeout( this.reset.bind( this ), 200 );
+            return;
+
+        }
+
+        $('.garage .btn-pick').show();
+        $('.garage .characteristics').show();
+        $('.garage .loading').hide();
 
         this.initModels();
         this.camera.position.set( Math.cos( this.timer * this.tankRotationSpeed ) * 10, 4, Math.sin( this.timer * this.tankRotationSpeed ) * 10 );

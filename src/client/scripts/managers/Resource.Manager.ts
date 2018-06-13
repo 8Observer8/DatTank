@@ -19,7 +19,7 @@ class ResourceManagerCore {
     private loadedModels: number = 0;
     private loadedTextures: number = 0;
     private loadedSounds: number = 0;
-    private loadedPacks: number = 0;
+    public loadedPacks: Array<string> = [];
 
     private modelLoader: THREE.JSONLoader = new THREE.JSONLoader();
     private textureLoader: THREE.TextureLoader = new THREE.TextureLoader();
@@ -257,6 +257,7 @@ class ResourceManagerCore {
                             if ( processedItems === pack.models.length ) {
 
                                 callback();
+                                this.loadedPacks.push( packName );
 
                             }
 

@@ -25,11 +25,11 @@ class Garage {
 
         //
 
-        $('.btn-pick').click( Game.play.bind( Game ) );
-        $('.close-tank-skins').click( this.hide.bind( this ) );
-        $('#arrow1').click( this.prevTank.bind( this ) );
-        $('#arrow2').click( this.nextTank.bind( this ) );
-        $('.choice-skins .tank').click( this.selectTank.bind( this ) );
+        $('.garage .btn-pick').click( Game.play.bind( Game ) );
+        $('.garage .close-btn').click( this.hide.bind( this ) );
+        $('.garage .arrow-left').click( this.prevTank.bind( this ) );
+        $('.garage .arrow-right').click( this.nextTank.bind( this ) );
+        $('.garage .tank-list .tank').click( this.selectTank.bind( this ) );
         $( document ).keydown( this.keyDown.bind( this ) );
 
     };
@@ -70,7 +70,7 @@ class Garage {
 
         this.isOpened = true;
 
-        $('.tank-skins').show();
+        $('.garage').show();
         SoundManager.playSound('MenuClick');
 
         this.scene.reset();
@@ -81,7 +81,7 @@ class Garage {
     public hide () {
 
         this.isOpened = false;
-        $('.tank-skins').hide();
+        $('.garage').hide();
 
     };
 
@@ -109,14 +109,14 @@ class Garage {
 
     public selectTank ( event? ) {
 
-        $('.choice-skins .tank.active').removeClass('active');
+        $('.garage .tank-list .tank.active').removeClass('active');
 
         let tankId;
 
         if ( event && typeof event === 'string' ) {
 
             tankId = event;
-            $( '#' + tankId ).addClass( 'active' );
+            $( '.garage #' + tankId ).addClass( 'active' );
 
         } else if ( event ) {
 
@@ -126,7 +126,7 @@ class Garage {
         } else {
 
             tankId = localStorage.getItem( 'currentTank' ) || 'IS2';
-            $( '#' + tankId ).addClass( 'active' );
+            $( '.garage #' + tankId ).addClass( 'active' );
 
         }
 
@@ -136,12 +136,12 @@ class Garage {
 
         //
 
-        $('.skin-name').html( 'Tank: ' + tankType.title );
-        $('.specification-txt#speed').html( tankType.speed + 'km/h' );
-        $('.specification-txt#rpm').html( tankType.rpm + 'rpm' );
-        $('.specification-txt#armour').html( tankType.armour + 'mm' );
-        $('.specification-txt#bullet').html( tankType.bullet + 'mm' );
-        $('.specification-txt#ammoCapacity').html( tankType.ammoCapacity );
+        $('.garage .tank-title').html( 'Tank: ' + tankType.title );
+        $('.garage .characteristics .param#speed .value').html( tankType.speed + 'km/h' );
+        $('.garage .characteristics .param#rpm .value').html( tankType.rpm + 'rpm' );
+        $('.garage .characteristics .param#armour .value').html( tankType.armour + 'mm' );
+        $('.garage .characteristics .param#bullet .value').html( tankType.bullet + 'mm' );
+        $('.garage .characteristics .param#ammoCapacity .value').html( tankType.ammoCapacity );
 
         //
 

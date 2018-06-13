@@ -486,13 +486,7 @@
 
 /* garage */
 
-.skin-name {
-    color: #fffdfd;
-    padding: 20px 10px 0px;
-    margin: 0;
-}
-
-.tank-skins {
+.garage {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -503,7 +497,7 @@
     background: rgba(0,0,0,0.8);
 }
 
-.select-tank-skins {
+.garage .garage-wrapper {
     position: relative;
     min-width: 318px;
     min-height: 311px;
@@ -514,7 +508,16 @@
     height: 80%;
 }
 
-.select-tank-skins canvas {
+.garage .loading {
+    position: absolute;
+    top: 40%;
+    left: calc( 50% - 35px );
+    font: normal 18px arial;
+    color: #fff;
+    z-index: 10;
+}
+
+.garage canvas {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -525,7 +528,13 @@
     background: rgba(153, 153, 153, 1);
 }
 
-.close-tank-skins {
+.garage .tank-title {
+    color: #fffdfd;
+    padding: 20px 10px 0px;
+    margin: 0;
+}
+
+.garage .close-btn {
     position: inherit;
     float: right;
     padding: 10px;
@@ -536,29 +545,15 @@
     font-size: 30px;
 }
 
-.select-window {
+.garage .tank-list {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0px;
-    left: 0px;
-}
-
-.tankskin {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-
-.choice-skins {
-    position: absolute;
-    bottom: 36px;
+    bottom: 15px;
     border: none;
-    left: calc( 50% - 210px );
-    width: 420px;
+    left: calc( 50% - 220px );
+    width: 440px;
 }
 
-.arrows {
+.garage .tank-list .arrows {
     position: relative;
     display: inline-block;
     width: 30px;
@@ -567,11 +562,11 @@
     transition: background 400ms ease;
 }
 
-.arrows:hover {
+.garage .tank-list .arrows:hover {
     background: rgba( 200, 200, 200, 0.1 );
 }
 
-.arrows img {
+.garage .tank-list .arrows img {
     position: absolute;
     width: 12px;
     height: 16px;
@@ -579,7 +574,7 @@
     left: calc( 50% - 6px );
 }
 
-.choice-skins .tank {
+.garage .tank-list .tank {
     position: relative;
     width: 84px;
     height: 60px;
@@ -588,20 +583,16 @@
     transition: opacity 200ms ease;
 }
 
-.choice-skins .tank:hover {
+.garage .tank-list .tank:hover {
     opacity: 0.9;
 }
 
-.choice-skins .tank .tank-img {
+.garage .tank-list .tank .tank-img {
     width: 84px;
     height: 60px;
 }
 
-.choice-skins .new-img {
-    position: absolute;
-}
-
-.choice-skins .title {
+.garage .tank-list .title {
     width: 100%;
     text-align: center;
     color: #bbb;
@@ -610,21 +601,21 @@
     transition: opacity 200ms ease;
 }
 
-.choice-skins .tank:hover .title {
+.garage .tank-list .tank:hover .title {
     opacity: 1;
 }
 
-.choice-skins .tank.active {
+.garage .tank-list .tank.active {
     opacity: 1;
 }
 
-.choice-skins .tank.active .tank-img {
+.garage .tank-list .tank.active .tank-img {
     border-bottom: 3px solid #00b6ff;
 }
 
-.container-specification {
+.garage .characteristics {
+    display: none;
     position: absolute;
-    position: relative;
     width: 280px;
     top: 10%;
     left: 5%;
@@ -632,7 +623,7 @@
     padding-bottom: 20px;
 }
 
-.line-characteristics {
+.garage .characteristics .param {
     position: relative;
     display: inline-flex;
     width: 100%;
@@ -640,7 +631,13 @@
     margin: 20px 0;
 }
 
-.specification-txt {
+.garage .characteristics .param .title {
+    position: absolute;
+    left: 10px;
+    margin: 0;
+}
+
+.garage .characteristics .param .value {
     position: absolute;
     right: 10px;
     margin: 0;
@@ -651,13 +648,7 @@
     padding-top: 3px;
 }
 
-.specification-value {
-    position: absolute;
-    left: 10px;
-    margin: 0;
-}
-
-.counter-characteristicks {
+.garage .characteristics .param .progress-wrapper {
     position: absolute;
     width: 130px;
     height: 8px;
@@ -667,7 +658,7 @@
     top: 5px;
 }
 
-.counter-characteristicks .color {
+.garage .characteristics .param .progress-wrapper .progress {
     background-color: #34b83c;
     height: 100%;
     border-radius: inherit;
@@ -689,6 +680,7 @@
 }
 
 .btn-pick {
+    display: none;
     position: absolute;
     left: calc( 50% - 50px );
     color: white;

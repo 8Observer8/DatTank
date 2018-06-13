@@ -232,17 +232,14 @@
             <div class="icon"></div>
         </div>
 
-        <div class="tank-skins">
-            <div class="select-tank-skins">
+        <div class="garage">
+            <div class="garage-wrapper">
+                <div class="loading">Loading...</div>
                 <canvas id="garage-viewport"></canvas>
-                <div class="close-tank-skins">&#10006;</div>
-                <div class="select-window">
-                    <div id="skin" class="tankskin"></div>
-                </div>
-
-                <div class="choice-skins">
-                    <div id="arrow1" class="arrows">
-                        <img class="arrows-left" src="/resources/img/arrow1_inv.png">
+                <div class="close-btn">&#10006;</div>
+                <div class="tank-list">
+                    <div class="arrow-left arrows">
+                        <img src="/resources/img/arrow1_inv.png">
                     </div>
                     <div class="tank" id="IS2" >
                         <img class="tank-img" src="/resources/img/tank-ico-1.png">
@@ -260,47 +257,46 @@
                         <img class="tank-img" src="/resources/img/tank-ico-4.png">
                         <div class="title">T-54</div>
                     </div>
-                    <div id="arrow2" class="arrows">
-                        <img class="arrows-right" src="/resources/img/arrow2_inv.png">
+                    <div class="arrow-right arrows">
+                        <img src="/resources/img/arrow2_inv.png">
                     </div>
                 </div>
-
-                <div class="container-specification">
-                    <h2 class="skin-name"></h2>
-                    <div class="line-characteristics">
-                        <p class="specification-txt" id="speed"></p>
-                        <div class="counter-characteristicks" id="speed">
-                            <div class="color"></div>
+                <div class="characteristics">
+                    <h2 class="tank-title"></h2>
+                    <div class="param" id="speed">
+                        <p class="title">Speed:</p>
+                        <div class="progress-wrapper">
+                            <div class="progress"></div>
                         </div>
-                        <p class="specification-value">Speed:</p>
+                        <p class="value"></p>
                     </div>
-                    <div class="line-characteristics">
-                        <p class="specification-txt" id="rpm"></p>
-                        <div class="counter-characteristicks" id="rpm">
-                            <div class="color"></div>
+                    <div class="param" id="rpm">
+                        <p class="title">Reload:</p>
+                        <div class="progress-wrapper">
+                            <div class="progress"></div>
                         </div>
-                        <p class="specification-value">Reload:</p>
+                        <p class="value"></p>
                     </div>
-                    <div class="line-characteristics">
-                        <p class="specification-txt" id="armour"></p>
-                        <div class="counter-characteristicks" id="armour">
-                            <div class="color"></div>
+                    <div class="param" id="armour">
+                        <p class="title">Armour:</p>
+                        <div class="progress-wrapper">
+                            <div class="progress"></div>
                         </div>
-                        <p class="specification-value">Armour:</p>
+                        <p class="value"></p>
                     </div>
-                    <div class="line-characteristics">
-                        <p class="specification-txt" id="bullet"></p>
-                        <div class="counter-characteristicks" id="bullet">
-                            <div class="color"></div>
+                    <div class="param" id="bullet">
+                        <p class="title">Gun:</p>
+                        <div class="progress-wrapper">
+                            <div class="progress"></div>
                         </div>
-                        <p class="specification-value">Gun:</p>
+                        <p class="value"></p>
                     </div>
-                    <div class="line-characteristics">
-                        <p class="specification-txt" id="ammoCapacity"></p>
-                        <div class="counter-characteristicks" id="ammoCapacity">
-                            <div class="color"></div>
+                    <div class="param" id="ammoCapacity">
+                        <p class="title">Ammo:</p>
+                        <div class="progress-wrapper">
+                            <div class="progress"></div>
                         </div>
-                        <p class="specification-value">Ammo:</p>
+                        <p class="value"></p>
                     </div>
                 </div>
                 <div class="btn-pick">Bring it on!</div>
