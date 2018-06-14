@@ -139,7 +139,7 @@ class TankObject {
 
     };
 
-    public setHealth ( value: number, trigger: any ) {
+    public setHealth ( value: number ) {
 
         if ( this.health <= 0 ) return;
 

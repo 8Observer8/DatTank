@@ -88,6 +88,7 @@ class PlayerCore {
             case 'armour':
 
                 this.tank.armour += levelsStats['armour'][ this.level ];
+                this.tank.setHealth( this.tank.health );
                 break;
 
             case 'gun':

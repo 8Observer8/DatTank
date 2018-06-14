@@ -193,7 +193,7 @@ class TankNetwork {
 
         if ( this.filter( data ) ) return;
 
-        this.tank.setHealth( data[1], data[2] );
+        this.tank.setHealth( data[1] );
 
     };
 
