@@ -166,11 +166,11 @@ class Garage {
 
         //
 
-        $('.counter-characteristicks#speed .color').css({ 'width': Math.round( 100 * tankType.speed / maxSpeed ) + '%' });
-        $('.counter-characteristicks#rpm .color').css({ 'width': Math.round( 100 * tankType.rpm / maxRpm ) + '%' });
-        $('.counter-characteristicks#armour .color').css({ 'width': Math.round( 100 * tankType.armour / maxArmour ) + '%' });
-        $('.counter-characteristicks#bullet .color').css({ 'width': Math.round( 100 * tankType.bullet / maxBullet ) + '%' });
-        $('.counter-characteristicks#ammoCapacity .color').css({ 'width': Math.round( 100 * tankType.ammoCapacity / maxAmmoCapacity ) + '%' });
+        $('.garage .characteristics .param#speed .progress').css({ 'width': Math.round( 100 * tankType.speed / maxSpeed ) + '%' });
+        $('.garage .characteristics .param#rpm .progress').css({ 'width': Math.round( 100 * tankType.rpm / maxRpm ) + '%' });
+        $('.garage .characteristics .param#armour .progress').css({ 'width': Math.round( 100 * tankType.armour / maxArmour ) + '%' });
+        $('.garage .characteristics .param#bullet .progress').css({ 'width': Math.round( 100 * tankType.bullet / maxBullet ) + '%' });
+        $('.garage .characteristics .param#ammoCapacity .progress').css({ 'width': Math.round( 100 * tankType.ammoCapacity / maxAmmoCapacity ) + '%' });
 
         //
 

@@ -59,6 +59,7 @@ class BoxManager {
 
         let newBoxList = [];
         box.removed = true;
+        this.arena.collisionManager.removeObject( box );
 
         for ( let i = 0, il = this.boxes.length; i < il; i ++ ) {
 
@@ -68,8 +69,6 @@ class BoxManager {
         }
 
         this.boxes = newBoxList;
-
-        // this.arena.collisionManager.removeObject( box );
 
         //
 
