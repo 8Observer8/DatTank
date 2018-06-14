@@ -138,7 +138,6 @@ class ArenaNetwork {
 
         if ( message[0] !== '/' ) {
 
-            message = message.substr( 1, message.length - 1 );
             let players = player.team.players;
 
             for ( let i = 0, il = players.length; i < il; i ++ ) {
@@ -146,17 +145,21 @@ class ArenaNetwork {
                 Network.send( 'ArenaChatMessage', players[ i ].socket, null, {
                     login:      player.login,
                     teamId:     player.team.id,
-                    message:    message
+                    message:    message,
+                    onlyTeam:   true
                 });
 
             }
 
         } else {
 
+            message = message.substr( 1, message.length - 1 );
+
             this.sendEventToAllPlayers( 'ArenaChatMessage', null, {
                 login:      player.login,
                 teamId:     player.team.id,
-                message:    message
+                message:    message,
+                onlyTeam:   false
             });
 
         }

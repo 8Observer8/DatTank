@@ -3,8 +3,10 @@
  * DatTank Chat UI module
 */
 
+import * as OMath from "./../OMath/Core.OMath";
 import { UI } from "./Core.UI";
 import { Arena } from "./../core/Arena.Core";
+import { TeamManager } from "./../managers/Team.Manager";
 import { Network } from "./../network/Core.Network";
 
 //
@@ -56,6 +58,13 @@ class UIChatModule {
             }
 
         }
+
+    };
+
+    public newMessage ( params ) {
+
+        let teamColor = OMath.intToHex( OMath.darkerColor( TeamManager.getById( params.teamId ).color, 0.85 ) );
+        $('.chat .message-block').append('<div class="message"><span style="color: ' + teamColor + '">' + ( params.onlyTeam ? '[TEAM] ' : '[ALL] ' ) + params.login + ':</span> ' + params.message + '</div>');
 
     };
 

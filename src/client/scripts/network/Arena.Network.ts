@@ -182,8 +182,7 @@ class ArenaNetwork {
 
     private newChatMessage ( data ) {
 
-        // todo
-        console.log( data );
+        UI.Chat.newMessage( data );
 
     };
 
