@@ -191,7 +191,7 @@
 
 #kill-events {
     position: absolute;
-    left: 1%;
+    left: 20px;
     top: 20%;
     color: white;
 }
@@ -334,7 +334,6 @@
     right: 20px;
     bottom: 10px;
     height: 50px;
-    width: 200px;
     color: burlywood;
     cursor: url('../resources/img/cursor.png'), auto;
 }
@@ -342,7 +341,6 @@
 #ammo {
     float: left;
     height: 100%;
-    width: 50%;
 }
 
 #ammo-image {
@@ -370,7 +368,6 @@
     height: 100%;
     float: left;
     font-size: 32px;
-    width: 50px;
     text-align: center;
     display: flex;
     align-items: center;
@@ -379,7 +376,7 @@
 #health {
     float: left;
     height: 100%;
-    width: 50%;
+    margin-left: 10px;
 }
 
 #health-image {
@@ -402,7 +399,6 @@
     height: 100%;
     float: left;
     font-size: 32px;
-    width: 50px;
     text-align: center;
     display: flex;
     align-items: center;
@@ -477,6 +473,12 @@
 .fps-ping .label {
     display: inline-block;
     width: 35px;
+}
+
+.fps-ping .fps-value, .fps-ping .ping-value {
+    display: inline-block;
+    text-align: right;
+    width: 20px;
 }
 
 .leaderboard {
@@ -567,7 +569,7 @@
 .level-indicator-block {
     position: absolute;
     bottom: 20px;
-    left: 50px;
+    left: 20px;
     width: 250px;
     height: 30px;
 }

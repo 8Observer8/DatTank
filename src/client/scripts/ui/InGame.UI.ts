@@ -130,7 +130,7 @@ class UIInGameModule {
         level --;
 
         let levelProgress = 100 * ( Arena.me.score - levels[ level ] ) / ( levels[ level + 1 ] - levels[ level ] );
-        $('.level-indicator-block .title').html( 'Level ' + level + ' (' + Math.floor( levelProgress ) + '%)' );
+        $('.level-indicator-block .title').html( 'Level ' + ( level + 1 ) + ' <sup style="font-size: 12px">' + Math.floor( levelProgress ) + '%</sup>' );
         $('.level-indicator-block .progress-bar .progress-indicator').css( 'width', levelProgress + '%' );
 
     };
