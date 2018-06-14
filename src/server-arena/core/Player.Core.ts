@@ -92,6 +92,12 @@ class PlayerCore {
             'T54':    T54Tank
         };
 
+        if ( ! TanksList[ tankName ] ) {
+
+            tankName = 'T29';
+
+        }
+
         //
 
         this.tank = new TanksList[ tankName ]( this );
