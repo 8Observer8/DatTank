@@ -202,9 +202,11 @@
     margin: 3px;
 }
 
+/* sign in block */
+
 #signin-box-wrapper {
     position: absolute;
-    top: 19%;
+    top: calc( 25% - 100px );
     left: 0px;
     width: 100%;
     z-index: 1;

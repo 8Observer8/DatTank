@@ -17,6 +17,7 @@ class TankTracesGfx {
     private prevPosition: OMath.Vec3 = new OMath.Vec3();
     private indexOffset: number = 0;
     private tracePosOffset = { l: 13, r: 13 };
+    private traceVisibleDuration: number = 1500;
     private object: THREE.Object3D = new THREE.Object3D();
 
     //
@@ -75,7 +76,7 @@ class TankTracesGfx {
 
         for ( let i = 0, il = this.objects.length; i < il; i ++ ) {
 
-            this.objects[ i ].material.opacity = 1 - Math.min( Date.now() - this.objects[ i ].lastUpdate, 2300 ) / 2300;
+            this.objects[ i ].material.opacity = 1 - Math.min( Date.now() - this.objects[ i ].lastUpdate, this.traceVisibleDuration ) / this.traceVisibleDuration;
     
         }
 
