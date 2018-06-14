@@ -180,6 +180,13 @@ class ArenaNetwork {
 
     };
 
+    private newChatMessage ( data ) {
+
+        // todo
+        console.log( data );
+
+    };
+
     //
 
     public init () {
@@ -197,6 +204,8 @@ class ArenaNetwork {
         Network.addMessageListener( 'ArenaLeaderboardUpdate', this.updateLeaderboard.bind( this ) );
 
         Network.addMessageListener( 'ArenaPlayerDied', this.playerDied.bind( this ) );
+
+        Network.addMessageListener( 'ArenaChatMessage', this.newChatMessage.bind( this ) );
 
     };
 

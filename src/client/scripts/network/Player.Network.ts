@@ -106,6 +106,15 @@ class PlayerNetwork {
 
     };
 
+    public sendChatMessage ( message: string ) {
+
+        Network.send( 'PlayerChatMessage', false, {
+            playerId: this.player.id,
+            message: message
+        });
+
+    };
+
     //
 
     public dispose () {

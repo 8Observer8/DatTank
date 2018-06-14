@@ -1,0 +1,18 @@
+/* In-game Chat */
+
+.chat {
+    position: absolute;
+    left: 15px;
+    bottom: 20px;
+}
+
+.chat .message-input {
+    display: none;
+    width: 250px;
+    font: normal 15px/27px 'Roboto';
+    background: rgba(0,0,0,0.6);
+    border: 0px;
+    color: #fff;
+    padding: 3px 15px;
+    outline: none;
+}

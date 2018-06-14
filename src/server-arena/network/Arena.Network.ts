@@ -3,6 +3,7 @@
  * DatTank Arena Network handler
 */
 
+import * as ws from "ws";
 import * as OMath from "./../OMath/Core.OMath";
 import { ArenaCore } from "./../core/Arena.Core";
 import { PlayerCore } from "./../core/Player.Core";
@@ -128,6 +129,42 @@ class ArenaNetwork {
 
     //
 
+    private newChatMessage ( data: any, socket: ws ) {
+
+        if ( data.playerId !== socket['player'].id ) return;
+
+        let player = socket['player'];
+        let message = data.message;
+
+        if ( message[0] !== '/' ) {
+
+            message = message.substr( 1, message.length - 1 );
+            let players = player.team.players;
+
+            for ( let i = 0, il = players.length; i < il; i ++ ) {
+
+                Network.send( 'ArenaChatMessage', players[ i ].socket, null, {
+                    login:      player.login,
+                    teamId:     player.team.id,
+                    message:    message
+                });
+
+            }
+
+        } else {
+
+            this.sendEventToAllPlayers( 'ArenaChatMessage', null, {
+                login:      player.login,
+                teamId:     player.team.id,
+                message:    message
+            });
+
+        }
+
+    };
+
+    //
+
     public dispose () {
 
         // todo
@@ -140,7 +177,7 @@ class ArenaNetwork {
 
         //
 
-        // todo: add event handlers
+        Network.addMessageListener( 'ArenaChatMessage', this.newChatMessage.bind( this ) );
 
     };
 

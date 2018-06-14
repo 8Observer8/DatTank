@@ -53,6 +53,8 @@ class NetworkCore {
         this.registerEvent( 'ArenaTanksInRange', EventDir.IN, EventType.BIN, 50 );
         this.registerEvent( 'ArenaTowersInRange', EventDir.IN, EventType.BIN, 60 );
         this.registerEvent( 'ArenaBoxesInRange', EventDir.IN, EventType.BIN, 70 );
+        this.registerEvent( 'ArenaChatMessage', EventDir.OUT, EventType.JSON, 75 );
+        this.registerEvent( 'ArenaChatMessage', EventDir.IN, EventType.JSON, 76 );
 
         //
 

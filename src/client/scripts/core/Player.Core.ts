@@ -158,12 +158,6 @@ class PlayerCore {
 
     };
 
-    public die ( trigger: number ) {
-
-        // nothing here
-
-    };
-
     public dispose () {
 
         if ( this.tank ) {

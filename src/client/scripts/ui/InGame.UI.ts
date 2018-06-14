@@ -8,12 +8,15 @@ import { Arena } from "./../core/Arena.Core";
 import { UI } from "./../ui/Core.UI";
 import { Game } from "./../Game";
 import { TeamCore } from "./../core/Team.Core";
-import { GfxCore } from "./../graphics/Core.Gfx";
 import { SoundManager } from "./../managers/Sound.Manager";
 
 //
 
 class UIInGameModule {
+
+    public opened: boolean = false;
+
+    //
 
     public init () {
 
@@ -34,7 +37,6 @@ class UIInGameModule {
 
         if ( Arena.me.tank.health <= 0 ) return;
 
-        let tank = Arena.me.tank;
         let statName = ( typeof event === 'string' ) ? event : event.target.parentNode.className.replace( 'bonus ', '' );
         Arena.me.updateStats( statName );
         Arena.me.bonusLevels --;
@@ -48,6 +50,18 @@ class UIInGameModule {
             this.showTankStatsUpdate( Arena.me.bonusLevels )
 
         }
+
+    };
+
+    public showLevelIndicator () {
+
+        $('.level-indicator-block').show();
+
+    };
+
+    public hideLevelIndicator () {
+
+        $('.level-indicator-block').hide();
 
     };
 
@@ -75,11 +89,19 @@ class UIInGameModule {
         $('.stats-update-block .bonus.ammo-capacity .bonus-title span').html( tank.ammoCapacity + ' -> ' + ( tank.ammoCapacity + levelsStats['ammoCapacity'][ tank.player.level ] ) );
 
         $('.stats-update-block').show();
-        $('.level-indicator-block').hide();
+        this.hideLevelIndicator();
         $('.stats-update-block .title').html( 'You have ' + bonusLevels + ' bonus levels.' );
         $('.stats-update-block .bonus .increase').click( this.updateTankStat.bind( this ) );
 
         $( document ).bind( 'keypress', this.statsUpdateByKey.bind( this ) );
+
+    };
+
+    public hideTankStatsUpdate () {
+
+        this.showLevelIndicator();
+        $('.stats-update-block').hide();
+        $( document ).unbind( 'keypress' );
 
     };
 
@@ -135,18 +157,10 @@ class UIInGameModule {
 
     };
 
-    public hideTankStatsUpdate () {
-
-        $('.level-indicator-block').show();
-        $('.stats-update-block').hide();
-        $( document ).unbind( 'keypress' );
-
-    };
-
     public showContinueBox ( username, color ) {
 
         this.hideTankStatsUpdate();
-        $('.level-indicator-block').hide();
+        this.hideLevelIndicator();
 
         $('#viewport #renderport').addClass('dead');
 
@@ -173,7 +187,7 @@ class UIInGameModule {
 
         $('#viewport #renderport').removeClass('dead');
         $('#continue-box-wrapper').css( 'opacity', 0 );
-        $('.level-indicator-block').show();
+        this.showLevelIndicator();
 
         setTimeout( () => {
 
@@ -325,6 +339,7 @@ class UIInGameModule {
     public showViewport () {
 
         $('#viewport').show();
+        this.opened = true;
 
     };
 
