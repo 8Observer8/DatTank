@@ -73,12 +73,52 @@ class PlayerCore {
     public tank: TankObject;
     public network: PlayerNetwork;
 
+    private lastKills: Array<any> = [];
+    private killTimeDist: number = 30000;
+    private lastKillSerie: any = { value: null, time: null };
+
     public readonly type: string = 'Player';
 
     //
 
+    public checkKillSerie () {
+
+        let killSerieLength = 0;
+        let newKillSerieList = [];
+        this.lastKills.push( Date.now() );
+
+        for ( let i = this.lastKills.length - 1; i >= 0; i -- ) {
+
+            let index = this.lastKills.length - i - 1;
+            if ( Date.now() - this.lastKills[ i ] <= index * this.killTimeDist ) {
+
+                killSerieLength ++;
+                newKillSerieList.push( this.lastKills[ i ] );
+
+            }
+
+        }
+
+        this.lastKills = newKillSerieList;
+
+        if ( this.lastKillSerie.value !== killSerieLength || Date.now() - this.lastKillSerie.time < 60 * 1000 ) {
+        
+            this.lastKillSerie.time = Date.now();
+            this.lastKillSerie.value = killSerieLength;
+
+            if ( killSerieLength === 2 || killSerieLength === 3 || killSerieLength === 10 ) {
+            
+                this.network.killSerie( killSerieLength );
+
+            }
+
+        }
+
+    };
+
     public die ( killer: TankObject | TowerObject ) {
 
+        this.lastKills = [];
         this.arena.network.playerDied( this, killer );
 
     };

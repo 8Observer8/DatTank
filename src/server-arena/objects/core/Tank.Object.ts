@@ -309,6 +309,8 @@ class TankObject {
 
     public die ( killer: TankObject | TowerObject ) {
 
+        if ( this.player.status !== PlayerCore.Alive ) return;
+
         this.player.die( killer );
 
         this.player.status = PlayerCore.Dead;
@@ -319,6 +321,7 @@ class TankObject {
         if ( killer instanceof TankObject ) {
 
             killer.player.kills ++;
+            killer.player.checkKillSerie();
 
         }
 

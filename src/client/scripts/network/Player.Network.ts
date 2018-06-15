@@ -44,6 +44,14 @@ class PlayerNetwork {
 
     };
 
+    private setKillSerie ( data ) {
+
+        if ( this.filter( data ) ) return;
+
+        console.log( this.player.username, data[1] );
+
+    };
+
     //
 
     public statsUpdate ( statsId: number ) {
@@ -121,6 +129,7 @@ class PlayerNetwork {
 
         Network.removeMessageListener( 'PlayerRespawn', this.setRespawn );
         Network.removeMessageListener( 'PlayerNewLevel', this.setLevel );
+        Network.removeMessageListener( 'PlayerKillSerie', this.setKillSerie );
 
     };
 
@@ -132,11 +141,13 @@ class PlayerNetwork {
 
         this.setRespawn = this.setRespawn.bind( this );
         this.setLevel = this.setLevel.bind( this );
+        this.setKillSerie = this.setKillSerie.bind( this );
 
         //
 
         Network.addMessageListener( 'PlayerRespawn', this.setRespawn );
         Network.addMessageListener( 'PlayerNewLevel', this.setLevel );
+        Network.addMessageListener( 'PlayerKillSerie', this.setKillSerie );
 
     };
 

@@ -232,6 +232,8 @@ class NetworkCore {
         this.registerEvent( 'PlayerNewLevel', EventDir.OUT, EventType.BIN, 90 );
         this.registerEvent( 'PlayerTankUpdateStats', EventDir.IN, EventType.BIN, 91 );
 
+        this.registerEvent( 'PlayerKillSerie', EventDir.OUT, EventType.BIN, 95 );
+
         //
 
         this.registerEvent( 'TankFriendlyFire', EventDir.OUT, EventType.BIN, 80 );
