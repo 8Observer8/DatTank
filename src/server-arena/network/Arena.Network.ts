@@ -134,7 +134,7 @@ class ArenaNetwork {
         if ( data.playerId !== socket['player'].id ) return;
 
         let player = socket['player'];
-        let message = data.message;
+        let message = data.message.substr( 0, 30 );
 
         if ( message[0] !== '/' ) {
 

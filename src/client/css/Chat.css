@@ -6,6 +6,17 @@
     bottom: 20px;
 }
 
+.chat .chat-info {
+    position: fixed;
+    left: calc( 50% - 100px );
+    bottom: -20px;
+    color: rgba( 255, 255, 255, 0.7 );
+    font: normal 14px 'Roboto';
+    text-align: center;
+    width: 200px;
+    transition: bottom 200ms ease-in;
+}
+
 .chat .message-input {
     display: none;
     width: 250px;
@@ -17,14 +28,26 @@
     outline: none;
 }
 
+.chat .message-block-separate {
+    display: block;
+}
+
 .chat .message-block {
+    display: none;
+}
+
+.chat .message-block, .chat .message-block-separate {
     position: absolute;
     bottom: 45px;
     width: 250px;
 }
 
-.chat .message-block .message {
+.chat .message-block .message, .chat .message-block-separate .message {
     padding-bottom: 3px;
     color: rgba( 255, 255, 255, 0.8 );
     text-shadow: 1px 1px 2px #000;
+}
+
+.chat .message-block .message .author, .chat .message-block-separate .message .author {
+    padding-right: 5px;
 }

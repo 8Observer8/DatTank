@@ -14,21 +14,42 @@ import { Network } from "./../network/Core.Network";
 class UIChatModule {
 
     public opened: boolean = false;
+    private usedChat: boolean = false;
 
     //
 
     private showChatMessageInput () {
 
+        $('.chat .message-block').show();
+        $('.chat .message-block-separate').hide();
         $('.chat .message-input').show();
         UI.InGame.hideLevelIndicator();
         $('.chat .message-input').focus();
+
+        localStorage.setItem( 'UsedChat', 'true' );
+        this.usedChat = true;
+        this.hideHelpInfo();
 
     };
 
     private hideChatMessageInput () {
 
+        $('.chat .message-block').hide();
+        $('.chat .message-block-separate').show();
         $('.chat .message-input').hide();
         UI.InGame.showLevelIndicator();
+
+    };
+
+    private showHelpInfo () {
+
+        $('.chat .chat-info').css( 'bottom', '20px' );
+
+    };
+
+    private hideHelpInfo () {
+
+        $('.chat .chat-info').css( 'bottom', '-20px' );
 
     };
 
@@ -63,8 +84,48 @@ class UIChatModule {
 
     public newMessage ( params ) {
 
+        let messages = $('.chat .message-block .message');
+
+        for ( let i = messages.length; i > 5; i -- ) {
+
+            messages[ messages.length - i ].remove();
+
+        }
+
+        let messagesSeparate = $('.chat .message-block-separate .message');
+
+        for ( let i = messagesSeparate.length; i > 5; i -- ) {
+
+            messagesSeparate[ messagesSeparate.length - i ].remove();
+
+        }
+
+        //
+
         let teamColor = OMath.intToHex( OMath.darkerColor( TeamManager.getById( params.teamId ).color, 0.85 ) );
-        $('.chat .message-block').append('<div class="message"><span style="color: ' + teamColor + '">' + ( params.onlyTeam ? '[TEAM] ' : '[ALL] ' ) + params.login + ':</span> ' + params.message + '</div>');
+        let messageDom = $('<div class="message"><span class="author" style="color: ' + teamColor + '"></span><span class="message-text"></span></div>');
+        messageDom.find('.author').text( ( params.onlyTeam ? '[TEAM] ' : '[ALL] ' ) + params.login + ':' );
+        messageDom.find('.message-text').text( params.message );
+
+        $('.chat .message-block').append( messageDom );
+
+        messageDom = $('<div class="message"><span class="author" style="color: ' + teamColor + '"></span><span class="message-text"></span></div>');
+        messageDom.find('.author').text( ( params.onlyTeam ? '[TEAM] ' : '[ALL] ' ) + params.login + ':' );
+        messageDom.find('.message-text').text( params.message );
+        $('.chat .message-block-separate').append( messageDom );
+
+        let lastMsgSeparate = $('.chat .message-block-separate .message').last();
+
+        setTimeout( () => {
+
+            lastMsgSeparate.animate({ opacity: 0 }, 3000 );
+            setTimeout( () => {
+
+                lastMsgSeparate.remove();
+
+            }, 3000 );
+
+        }, 3500 );
 
     };
 
@@ -73,6 +134,13 @@ class UIChatModule {
         $( window ).bind( 'keypress', this.keypress.bind( this ) );
         $('.chat .message-input').keydown( ( event ) => { event.stopPropagation(); } );
         $('.chat .message-input').keyup( ( event ) => { event.stopPropagation(); } );
+
+        this.usedChat = ( localStorage.getItem('UsedChat') === 'true' );
+        if ( ! this.usedChat ) {
+
+            setTimeout( this.showHelpInfo.bind( this ), 8000 );
+
+        }
 
     };
 
