@@ -343,6 +343,12 @@ class UIInGameModule {
 
     };
 
+    public showKillSerie ( playerId: number, playerLogin: string, playerTeamId: number, serieLength: number ) {
+
+        // todo
+
+    };
+
     public updateFPS ( value: number ) {
 
         $('.fps-value').html( value.toString() );

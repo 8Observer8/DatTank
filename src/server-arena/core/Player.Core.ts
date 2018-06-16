@@ -102,12 +102,12 @@ class PlayerCore {
         this.lastKills = newKillSerieList;
 
         if ( this.lastKillSerie.value !== killSerieLength || Date.now() - this.lastKillSerie.time < 60 * 1000 ) {
-        
+
             this.lastKillSerie.time = Date.now();
             this.lastKillSerie.value = killSerieLength;
 
             if ( killSerieLength === 2 || killSerieLength === 3 || killSerieLength === 10 ) {
-            
+
                 this.network.killSerie( killSerieLength );
 
             }

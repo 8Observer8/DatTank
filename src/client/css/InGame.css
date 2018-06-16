@@ -192,7 +192,7 @@
 #kill-events {
     position: absolute;
     left: 20px;
-    top: 20%;
+    top: 55px;
     color: white;
 }
 
@@ -408,7 +408,7 @@
     top: 10px;
     position: absolute;
     width: 380px;
-    left: calc(50% - 160px);
+    left: calc(50% - 190px);
     color: burlywood;
 }
 

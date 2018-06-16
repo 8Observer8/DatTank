@@ -76,18 +76,12 @@ class PlayerNetwork {
 
     public killSerie ( serie: number ) {
 
-        this.buffers['KillSerie'] = this.buffers['KillSerie'] || {};
-        let buffer = this.buffers['KillSerie'].buffer || new ArrayBuffer( 6 );
-        let bufferView = this.buffers['KillSerie'].bufferView || new Int16Array( buffer );
-        this.buffers['KillSerie'].buffer = buffer;
-        this.buffers['KillSerie'].bufferView = bufferView;
-
-        //
-
-        bufferView[ 1 ] = this.player.id;
-        bufferView[ 2 ] = serie;
-
-        this.arena.network.sendEventToPlayersInRange( this.player.tank.position, 'PlayerKillSerie', buffer, bufferView );
+        this.arena.network.sendEventToPlayersInRange( this.player.tank.position, 'ArenaKillSerie', null, {
+            id:     this.player.id,
+            login:  this.player.login,
+            team:   this.player.team.id,
+            serie:  serie
+        });
 
     };
 

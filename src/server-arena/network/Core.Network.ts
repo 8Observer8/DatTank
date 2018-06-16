@@ -224,6 +224,8 @@ class NetworkCore {
         this.registerEvent( 'ArenaBoxesInRange', EventDir.OUT, EventType.BIN, 70 );
         this.registerEvent( 'ArenaChatMessage', EventDir.IN, EventType.JSON, 75 );
         this.registerEvent( 'ArenaChatMessage', EventDir.OUT, EventType.JSON, 76 );
+        this.registerEvent( 'ArenaKillSerie', EventDir.OUT, EventType.JSON, 95 );
+
         //
 
         this.registerEvent( 'PlayerRespawn', EventDir.OUT, EventType.JSON, 3 );
@@ -231,8 +233,6 @@ class NetworkCore {
 
         this.registerEvent( 'PlayerNewLevel', EventDir.OUT, EventType.BIN, 90 );
         this.registerEvent( 'PlayerTankUpdateStats', EventDir.IN, EventType.BIN, 91 );
-
-        this.registerEvent( 'PlayerKillSerie', EventDir.OUT, EventType.BIN, 95 );
 
         //
 

@@ -186,9 +186,23 @@ class ArenaNetwork {
 
     };
 
+    private setKillSerie ( data ) {
+
+        let playerId = data.id;
+        let playerLogin = data.login;
+        let teamId = data.team;
+        let serieLength = data.serie;
+
+        UI.InGame.showKillSerie( playerId, playerLogin, teamId, serieLength );
+
+    };
+
     //
 
     public init () {
+
+
+        Network.addMessageListener( 'ArenaKillSerie', this.setKillSerie.bind( this ) );
 
         Network.addMessageListener( 'ArenaJoinResponse', this.joinArena.bind( this ) );
 
