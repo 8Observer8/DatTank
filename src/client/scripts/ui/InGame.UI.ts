@@ -9,12 +9,14 @@ import { UI } from "./../ui/Core.UI";
 import { Game } from "./../Game";
 import { TeamCore } from "./../core/Team.Core";
 import { SoundManager } from "./../managers/Sound.Manager";
+import { TeamManager } from "./../managers/Team.Manager";
 
 //
 
 class UIInGameModule {
 
     public opened: boolean = false;
+    private hideGlobalLabelTimeout: any;
 
     //
 
@@ -234,13 +236,19 @@ class UIInGameModule {
 
     };
 
-    public showKills ( killer: string, killed: string, killerColor: string, killedColor: string ) {
+    public showKills ( killerId: number, killer: string, killed: string, killerColor: string, killedColor: string ) {
 
         $('#kill-events').append( '<p><span style="color:' + killerColor + '">' + killer +'</span> killed <span style="color:' + killedColor + '">' + killed + '</span>!</p>');
 
         if ( $('#kill-events').children().length > 5 ) {
 
             $('#kill-events p').first().remove();
+
+        }
+
+        if ( killerId === Arena.me.id ) {
+
+            this.setGlobalLabel( 'Fu.. You killed <span style="color:' + killedColor + '">' + killed + '</span>!!' );
 
         }
 
@@ -345,7 +353,34 @@ class UIInGameModule {
 
     public showKillSerie ( playerId: number, playerLogin: string, playerTeamId: number, serieLength: number ) {
 
-        // todo
+        let team = TeamManager.getById( playerTeamId );
+        let serieNames = { 2: 'DOUBLE-KILL', 3: 'TRIPPLE-KILL' };
+        let serieName = serieNames[ serieLength ];
+
+        if ( playerId !== Arena.me.id ) {
+
+            $('#kill-events').append( '<p><span style="color:' + team.color + '">' + playerLogin +'</span> made a ' + serieName + '</span>!</p>');
+
+            if ( $('#kill-events').children().length > 5 ) {
+    
+                $('#kill-events p').first().remove();
+    
+            }
+
+        } else {
+
+            this.setGlobalLabel( 'You made <span style="color: #c44;"' + serieName + '</span>!' );
+
+        }
+
+    };
+
+    public setGlobalLabel ( text: string ) {
+
+        $('#viewport .global-top-label').animate({ opacity: 1 }, 200 );
+        $('#viewport .global-top-label').html( text );
+        clearTimeout( this.hideGlobalLabelTimeout );
+        this.hideGlobalLabelTimeout = setTimeout( () => { $('#viewport .global-top-label').animate({ opacity: 0 }, 500 ); }, 2000 );
 
     };
 

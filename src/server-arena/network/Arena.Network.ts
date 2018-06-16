@@ -69,7 +69,7 @@ class ArenaNetwork {
             
             data = {
                 player: { id: player.id, login: player.login, teamId: player.team.id },
-                killer: { type: 'player', id: killer.id, login: killer.player.login, teamId: killer.team.id }
+                killer: { type: 'player', id: killer.player.id, login: killer.player.login, teamId: killer.team.id }
             };
 
         } else if ( killer instanceof TowerObject ) {

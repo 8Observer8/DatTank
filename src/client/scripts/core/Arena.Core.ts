@@ -96,11 +96,11 @@ class ArenaCore {
 
         if ( killer.type === 'player' ) {
 
-            UI.InGame.showKills( killer.login, player.login, OMath.intToHex( killerTeam.color ), OMath.intToHex( playerTeam.color ) );
+            UI.InGame.showKills( killer.id, killer.login, player.login, OMath.intToHex( killerTeam.color ), OMath.intToHex( playerTeam.color ) );
 
         } else if ( killer.type === 'tower' ) {
 
-            UI.InGame.showKills( 'Tower', player.login, OMath.intToHex( killerTeam.color ), OMath.intToHex( playerTeam.color ) );
+            UI.InGame.showKills( killer.id, 'Tower', player.login, OMath.intToHex( killerTeam.color ), OMath.intToHex( playerTeam.color ) );
 
         }
 

@@ -211,7 +211,12 @@ class PlayerCore {
             if ( this.socket ) {
 
                 this.bonusLevels = level - this.level;
-                this.network.updateLevel();
+
+                if ( this.bonusLevels > 0 ) {
+
+                    this.network.updateLevel();
+
+                }
 
             } else if ( this.bot ) {
 
