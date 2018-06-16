@@ -5,7 +5,6 @@
 
 import * as THREE from 'three';
 
-import { Game } from "./../Game";
 import { UI } from "./../ui/Core.UI";
 import { Arena } from "./../core/Arena.Core";
 import { LandscapeGfx } from "./objects/Landscape.Gfx";
@@ -41,9 +40,8 @@ class GraphicsCore {
     private cameraOffset = new THREE.Vector3();
     private cameraShakeInterval;
 
-    private container;
-    private renderer: THREE.WebGLRenderer;
-    private raycaster: THREE.Raycaster;
+    public container;
+    public renderer: THREE.WebGLRenderer;
     private prevRenderTime: number;
 
     private gfxSettings: GfxSettings = {
@@ -103,10 +101,6 @@ class GraphicsCore {
             return;
 
         }
-
-        // setup raycaster
-
-        this.raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3(), 0, 5000 );
 
         // setup camera and scene
 

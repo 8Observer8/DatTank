@@ -107,7 +107,7 @@ class LandscapeGfx {
             plane.material.color.b = plane.material.color.b / 3 + 0.4;
 
             plane.rotation.x = - Math.PI / 2;
-            plane.position.set( x, 2, z );
+            plane.position.set( x, 0.3, z );
             plane.renderOrder = 9;
             this.object.add( plane );
 
@@ -124,7 +124,7 @@ class LandscapeGfx {
         let grassZone = new THREE.Mesh( new THREE.PlaneBufferGeometry( 240, 240 ), new THREE.MeshBasicMaterial({ map: grassTexture, color: 0x779977, transparent: true, depthWrite: false }) );
         grassZone.rotation.set( - Math.PI / 2, 0, Math.random() * Math.PI );
         grassZone.scale.set( scale, scale, scale );
-        grassZone.position.set( ( Math.random() - 0.5 ) * size, 0.1 + Math.random() / 10, ( Math.random() - 0.5 ) * size );
+        grassZone.position.set( ( Math.random() - 0.5 ) * size, 0.02 + Math.random() / 20, ( Math.random() - 0.5 ) * size );
         grassZone.renderOrder = 8;
         this.object.add( grassZone );
 
