@@ -354,7 +354,7 @@ class UIInGameModule {
     public showKillSerie ( playerId: number, playerLogin: string, playerTeamId: number, serieLength: number ) {
 
         let team = TeamManager.getById( playerTeamId );
-        let serieNames = { 2: 'DOUBLE-KILL', 3: 'TRIPPLE-KILL' };
+        let serieNames = { 2: 'DOUBLE-KILL', 3: 'TRIPPLE-KILL', 10: 'MONSTER-KILL' };
         let serieName = serieNames[ serieLength ];
 
         if ( playerId !== Arena.me.id ) {
@@ -369,7 +369,7 @@ class UIInGameModule {
 
         } else {
 
-            this.setGlobalLabel( 'You made <span style="color: #c44;"' + serieName + '</span>!' );
+            this.setGlobalLabel( 'You made <span style="color: #c44;">' + serieName + '</span>!' );
 
         }
 
@@ -377,10 +377,16 @@ class UIInGameModule {
 
     public setGlobalLabel ( text: string ) {
 
+        clearTimeout( this.hideGlobalLabelTimeout );
+        $('#viewport .global-top-label').stop();
         $('#viewport .global-top-label').animate({ opacity: 1 }, 200 );
         $('#viewport .global-top-label').html( text );
-        clearTimeout( this.hideGlobalLabelTimeout );
-        this.hideGlobalLabelTimeout = setTimeout( () => { $('#viewport .global-top-label').animate({ opacity: 0 }, 500 ); }, 2000 );
+
+        this.hideGlobalLabelTimeout = setTimeout( function () {
+
+            $('#viewport .global-top-label').animate({ opacity: 0 }, 500 );
+
+        }, 2000 );
 
     };
 

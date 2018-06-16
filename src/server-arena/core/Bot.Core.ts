@@ -44,6 +44,7 @@ class BotCore {
     private rotateBaseDuration: number = null;
     private maxKills: number;
     private lastTopRotate: number;
+    private readonly delayAfterSpawn: number = 1500;
 
     private arena: ArenaCore;
 
@@ -140,6 +141,7 @@ class BotCore {
     public update ( delta: number, time: number ) {
 
         if ( this.player.tank.health <= 0 ) return;
+        if ( Date.now() - this.player.spawnTime < this.delayAfterSpawn ) return;
 
         if ( ! this.player.tank.moveDirection.x ) {
 

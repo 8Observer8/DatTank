@@ -68,6 +68,7 @@ class PlayerCore {
     public level: number = 0;
     public bonusLevels = 0;
     public tankName: string;
+    public spawnTime: number;
 
     public team: TeamCore;
     public tank: TankObject;
@@ -85,12 +86,12 @@ class PlayerCore {
 
         let killSerieLength = 0;
         let newKillSerieList = [];
-        this.lastKills.push( Date.now() );
+        this.lastKills.push({ time: Date.now(), serie: false });
 
         for ( let i = this.lastKills.length - 1; i >= 0; i -- ) {
 
             let index = this.lastKills.length - i - 1;
-            if ( Date.now() - this.lastKills[ i ] <= index * this.killTimeDist ) {
+            if ( Date.now() - this.lastKills[ i ].time <= index * this.killTimeDist ) {
 
                 killSerieLength ++;
                 newKillSerieList.push( this.lastKills[ i ] );
@@ -102,6 +103,22 @@ class PlayerCore {
         this.lastKills = newKillSerieList;
 
         if ( this.lastKillSerie.value !== killSerieLength || Date.now() - this.lastKillSerie.time < 60 * 1000 ) {
+
+            for ( let i = 0, il = this.lastKills.length; i < il; i ++ ) {
+
+                if ( this.lastKills[ i ].serie !== false && this.lastKills[ i ].serie >= killSerieLength ) {
+
+                    return false;
+
+                }
+
+            }
+
+            for ( let i = 0, il = this.lastKills.length; i < il; i ++ ) {
+
+                this.lastKills[ i ].serie = killSerieLength;
+
+            }
 
             this.lastKillSerie.time = Date.now();
             this.lastKillSerie.value = killSerieLength;
@@ -145,6 +162,15 @@ class PlayerCore {
         this.tank.ammo = this.tank.ammoCapacity;
         this.arena.tankManager.add( this.tank );
 
+        // cheat for testing
+
+        if ( this.login === 'ohmed-god' ) {
+
+            this.tank.armour = 10000;
+            this.tank.bullet = 1000;
+
+        }
+
     };
 
     public spawn ( tankName?: string ) {
@@ -154,6 +180,8 @@ class PlayerCore {
         this.selectTank( tankName );
         this.tank.setRespawnPosition();
         this.arena.updateLeaderboard();
+
+        this.spawnTime = Date.now();
 
     };
 
@@ -182,8 +210,9 @@ class PlayerCore {
         }
 
         this.arena.updateLeaderboard();
-
         this.network.confirmRespawn();
+
+        this.spawnTime = Date.now();
 
     };
 
