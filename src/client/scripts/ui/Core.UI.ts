@@ -25,6 +25,7 @@ class UICore {
 
     public showHelp () {
 
+        Logger.newEvent( 'OpenHelp', 'game' );
         SoundManager.playSound('MenuClick');
         $('.help-popup').show();
 
