@@ -35,8 +35,8 @@ class TankObject {
     public ammo: number;
 
     public topRotation: number = 0;
-    public moveDirection = { x: 0, y: 0, z: 0 };
-    public positionCorrection = { x: 0, y: 0, z: 0 };
+    public moveDirection = new OMath.Vec2();
+    public positionCorrection = new OMath.Vec3();
     public rotationCorrection: number = 0;
 
     public position: OMath.Vec3 = new OMath.Vec3();
@@ -307,6 +307,8 @@ class TankObject {
         this.rotationCorrection = 0;
         this.topRotation = params.rotationTop;
 
+        this.moveDirection.set( params.moveDirection.x, params.moveDirection.y );
+
     };
 
 };
@@ -317,8 +319,7 @@ import { IS2Tank } from "./../../objects/tanks/IS2.Tank";
 import { T29Tank } from "./../../objects/tanks/T29.Tank";
 import { T44Tank } from "./../../objects/tanks/T44.Tank";
 import { T54Tank } from "./../../objects/tanks/T54.Tank";
-import { GfxCore } from '../../graphics/Core.Gfx';
-import { HealthChangeLabelGfx } from '../../graphics/effects/HealthChangeLabel.Gfx';
+import { GfxCore } from "./../../graphics/Core.Gfx";
 
 let TankList = {
     IS2:    IS2Tank,

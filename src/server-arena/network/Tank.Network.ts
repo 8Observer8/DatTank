@@ -214,7 +214,7 @@ class TankNetwork {
 
         //
 
-        let towerDataSize = 12;
+        let towerDataSize = 14;
         let buffer = new ArrayBuffer( 2 + towerDataSize * towers.length );
         let bufferView = new Int16Array( buffer );
         let offset;
@@ -230,11 +230,11 @@ class TankNetwork {
             bufferView[ offset + 3 ] = tower.position.z;
             bufferView[ offset + 4 ] = tower.rotation * 1000;
             bufferView[ offset + 5 ] = tower.health;
+            bufferView[ offset + 6 ] = tower.newRotation * 1000;
 
         }
 
         Network.send( 'ArenaTowersInRange', this.tank.player.socket, buffer, bufferView );
-
 
     };
 

@@ -152,6 +152,7 @@ class TowerObject {
         this.health = params.health;
         this.rotation = 0; // params.rotation;
         this.topRotation = params.rotation;
+        this.targetTopRotation = params.newRotation;
 
         this.position.set( params.position.x, params.position.y, params.position.z );
         this.gfx.setPosition( this.position );
