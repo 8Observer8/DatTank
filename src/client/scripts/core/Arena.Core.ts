@@ -136,9 +136,9 @@ class ArenaCore {
 
     };
 
-    public newExplosion ( position: OMath.Vec3, bulletId: number ) {
+    public newExplosion ( position: OMath.Vec3, bulletId: number, explosionType: number ) {
 
-        ExplosionManager.showExplosion( position );
+        ExplosionManager.showExplosion( position, explosionType );
         BulletManager.hideBullet( bulletId );
 
     };

@@ -109,10 +109,10 @@ class ArenaNetwork {
 
     };
 
-    public explosion ( bullet: BulletObject ) {
+    public explosion ( bullet: BulletObject, explosionType: number ) {
 
         this.buffers['BulletExplosion'] = this.buffers['BulletExplosion'] || {};
-        let buffer = this.buffers['BulletExplosion'].buffer || new ArrayBuffer( 8 );
+        let buffer = this.buffers['BulletExplosion'].buffer || new ArrayBuffer( 10 );
         let bufferView = this.buffers['BulletExplosion'].bufferView || new Int16Array( buffer );
         this.buffers['BulletExplosion'].buffer = buffer;
         this.buffers['BulletExplosion'].bufferView = bufferView;
@@ -122,6 +122,7 @@ class ArenaNetwork {
         bufferView[1] = bullet.id;
         bufferView[2] = bullet.position.x;
         bufferView[3] = bullet.position.z;
+        bufferView[4] = explosionType;
 
         this.sendEventToPlayersInRange( bullet.position, 'ArenaBulletHit', buffer, bufferView );
 

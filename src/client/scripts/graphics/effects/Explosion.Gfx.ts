@@ -17,6 +17,8 @@ class ExplosionGfx {
     private sprite: THREE.Sprite;
     private time: number;
 
+    private maps: Array<THREE.Texture> = [];
+
     public active: boolean = false;
 
     //
@@ -61,7 +63,23 @@ class ExplosionGfx {
 
     };
 
-    public setActive ( position: OMath.Vec3 ) {
+    public setActive ( position: OMath.Vec3, type: number ) {
+
+        switch ( type ) {
+
+            case 0:
+
+                this.sprite.material.map = this.maps[0];
+                break;
+
+            case 1:
+
+                this.sprite.material.map = this.maps[1];
+                break;
+
+        }
+
+        //
 
         this.time = 0;
         this.object.position.set( position.x, position.y, position.z );
@@ -72,14 +90,25 @@ class ExplosionGfx {
 
     public init () {
 
-        let map = ResourceManager.getTexture( 'explosion2.png' ).clone();
-        map.wrapS = THREE.RepeatWrapping;
-        map.wrapT = THREE.RepeatWrapping;
-        map.repeat.set( 0.25, 0.25 );
-        map.offset.set( 0, 0.75 );
-        map.needsUpdate = true;
+        let map1 = ResourceManager.getTexture( 'explosion2.png' ).clone();
+        map1.wrapS = THREE.RepeatWrapping;
+        map1.wrapT = THREE.RepeatWrapping;
+        map1.repeat.set( 0.25, 0.25 );
+        map1.offset.set( 0, 0.75 );
+        map1.needsUpdate = true;
+        this.maps.push( map1 );
 
-        let material = new THREE.SpriteMaterial({ map: map, color: 0xffffff, opacity: 0.7, fog: true });
+        let map2 = ResourceManager.getTexture( 'explosion3.png' ).clone();
+        map2.wrapS = THREE.RepeatWrapping;
+        map2.wrapT = THREE.RepeatWrapping;
+        map2.repeat.set( 0.25, 0.25 );
+        map2.offset.set( 0, 0.75 );
+        map2.needsUpdate = true;
+        this.maps.push( map2 );
+
+        //
+
+        let material = new THREE.SpriteMaterial({ color: 0xffffff, opacity: 0.7, fog: true });
         this.sprite = new THREE.Sprite( material );
 
         this.sprite.scale.set( 80, 80, 80 );

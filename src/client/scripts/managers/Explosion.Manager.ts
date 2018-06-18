@@ -42,11 +42,11 @@ class ExplosionManagerCore {
 
     };
 
-    public showExplosion ( position: OMath.Vec3 ) {
+    public showExplosion ( position: OMath.Vec3, type: number ) {
 
         let explosion = this.getNewExplosion();
         if ( ! explosion ) return;
-        explosion.setActive( position );
+        explosion.setActive( position, type );
 
     };
 

@@ -56,6 +56,7 @@ class ResourceManagerCore {
 
         'explosion1.png',
         'explosion2.png',
+        'explosion3.png',
         'tower-texture.png',
         'Decorations.jpg',
         'Boxes.jpg',

@@ -48,7 +48,7 @@ class BulletObject {
 
         this.active = false;
         this.arena.collisionManager.removeObject( this );        
-        this.arena.network.explosion( this );
+        this.arena.network.explosion( this, ( target && target.hit ) ? 1 : 0 );
 
         //
 

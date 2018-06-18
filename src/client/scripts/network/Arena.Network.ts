@@ -29,8 +29,9 @@ class ArenaNetwork {
         let x = data[1];
         let y = 26;
         let z = data[2];
+        let type = data[3];
 
-        Arena.newExplosion( new OMath.Vec3( x, y, z ), bulletId );
+        Arena.newExplosion( new OMath.Vec3( x, y, z ), bulletId, type );
 
     };
 
