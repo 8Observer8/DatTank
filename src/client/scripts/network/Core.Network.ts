@@ -47,7 +47,7 @@ class NetworkCore {
         this.registerEvent( 'ArenaJoinRequest', EventDir.OUT, EventType.JSON, 0 );
         this.registerEvent( 'ArenaJoinResponse', EventDir.IN, EventType.JSON, 1 );
         this.registerEvent( 'ArenaPlayerJoined', EventDir.IN, EventType.JSON, 2 );
-        this.registerEvent( 'ArenaPlayerLeft', EventDir.IN, EventType.JSON, 6 );
+        this.registerEvent( 'ArenaPlayerLeft', EventDir.IN, EventType.BIN, 6 );
         this.registerEvent( 'ArenaLeaderboardUpdate', EventDir.IN, EventType.JSON, 7 );
         this.registerEvent( 'ArenaPlayerDied', EventDir.IN, EventType.JSON, 10 );
         this.registerEvent( 'ArenaTanksInRange', EventDir.IN, EventType.BIN, 50 );

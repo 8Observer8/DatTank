@@ -89,7 +89,17 @@ class ArenaNetwork {
 
     public playerLeft ( player: PlayerCore ) {
 
-        // todo
+        this.buffers['PlayerLeft'] = this.buffers['PlayerLeft'] || {};
+        let buffer = this.buffers['PlayerLeft'].buffer || new ArrayBuffer( 4 );
+        let bufferView = this.buffers['PlayerLeft'].bufferView || new Uint16Array( buffer );
+        this.buffers['PlayerLeft'].buffer = buffer;
+        this.buffers['PlayerLeft'].bufferView = bufferView;
+
+        //
+
+        bufferView[ 1 ] = player.id;
+
+        this.sendEventToPlayersInRange( player.tank.position, 'ArenaPlayerLeft', buffer, bufferView );
 
     };
 

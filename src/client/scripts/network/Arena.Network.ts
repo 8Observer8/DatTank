@@ -8,6 +8,7 @@ import { Network } from "./../network/Core.Network";
 import { Arena } from "./../core/Arena.Core";
 import { BoxManager } from "./../managers/Box.Manager";
 import { ControlsManager } from "./../managers/Control.Manager";
+import { PlayerManager } from "./../managers/Player.Manager";
 import { UI } from "./../ui/Core.UI";
 
 //
@@ -158,7 +159,10 @@ class ArenaNetwork {
 
     private playerLeft ( data ) {
 
-        // todo
+        let playerId = data[0];
+        let player = PlayerManager.getById( playerId );
+
+        Arena.removePlayer( player );
 
     };
 
@@ -205,21 +209,15 @@ class ArenaNetwork {
 
 
         Network.addMessageListener( 'ArenaKillSerie', this.setKillSerie.bind( this ) );
-
         Network.addMessageListener( 'ArenaJoinResponse', this.joinArena.bind( this ) );
-
         Network.addMessageListener( 'ArenaBulletHit', this.newExplosion.bind( this ) );
         Network.addMessageListener( 'ArenaBoxRemove', this.boxRemove.bind( this ) );
-
         Network.addMessageListener( 'ArenaTanksInRange', this.newTanks.bind( this ) );
         Network.addMessageListener( 'ArenaTowersInRange', this.newTowers.bind( this ) );
         Network.addMessageListener( 'ArenaBoxesInRange', this.newBoxes.bind( this ) );
-
         Network.addMessageListener( 'ArenaPlayerLeft', this.playerLeft.bind( this ) );
         Network.addMessageListener( 'ArenaLeaderboardUpdate', this.updateLeaderboard.bind( this ) );
-
         Network.addMessageListener( 'ArenaPlayerDied', this.playerDied.bind( this ) );
-
         Network.addMessageListener( 'ArenaChatMessage', this.newChatMessage.bind( this ) );
 
     };

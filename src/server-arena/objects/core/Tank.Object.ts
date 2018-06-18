@@ -36,7 +36,7 @@ class TankObject {
     public radius: number = 25;
     public health: number = 100;
     public ammo: number;
-    public viewRange: number = 600;
+    public viewRange: number = 750;
 
     public range: number = 300;
     public armour: number;

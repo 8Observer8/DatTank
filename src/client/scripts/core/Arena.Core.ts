@@ -8,14 +8,11 @@ import { PlayerManager } from "./../managers/Player.Manager";
 import { TowerManager } from "./../managers/Tower.Manager";
 import { BoxManager } from "./../managers/Box.Manager";
 import { DecorationManager } from "./../managers/Decoration.Manager";
-import { ControlsManager } from "./../managers/Control.Manager";
 import { ExplosionManager } from "./../managers/Explosion.Manager";
-import { HealthChangeLabelManager } from "./../managers/HealthChangeLabel.Manager";
 
 import * as OMath from "./../OMath/Core.OMath";
 import { GfxCore } from "./../graphics/Core.Gfx";
 import { PlayerCore } from "./Player.Core";
-import { TowerObject } from "./../objects/core/Tower.Object";
 import { ArenaNetwork } from "../network/Arena.Network";
 import { BulletManager } from "./../managers/Bullet.Manager";
 import { UI } from "./../ui/Core.UI";
@@ -37,7 +34,7 @@ class ArenaCore {
     private updateTimeRemainder: number = 0;
     private updateInterval: number;
     private updateIntervalDuration: number = 20;
-    private viewRange: number = 600;
+    private viewRange: number = 750;
 
     private network: ArenaNetwork = new ArenaNetwork();
 
