@@ -59,13 +59,13 @@ class GameCore {
 
         //
 
-        if ( localStorage.getItem('hq') === 'true' ) {
+        if ( localStorage.getItem('hq') === 'true' || localStorage.getItem('hq') === null ) {
 
             UI.changeQuality( true, true );
 
         }
 
-        if ( localStorage.getItem('sound') === 'true' ) {
+        if ( localStorage.getItem('sound') === 'true' || localStorage.getItem('sound') === null ) {
 
             UI.changeSound( true, true );
 

@@ -71,26 +71,12 @@ class UIInGameModule {
 
         if ( Arena.me.tank.health <= 0 ) return;
 
-        let tank = Arena.me.tank;
-
-        var levelsStats = {
-            speed:          [ 5, 3, 2, 2, 2, 3, 1, 3, 3, 2, 5, 3, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-            rpm:            [ 30, 20, 20, 15, 10, 15, 20, 20, 30, 40, 30, 20, 10, 10, 20, 30, 20, 10, 20, 20, 20, 10, 15 ],
-            armour:         [ 40, 30, 20, 20, 30, 40, 50, 20, 30, 50, 30, 20, 10, 10, 20, 20, 30, 20, 10, 15, 20, 10, 10 ],
-            gun:            [ 20, 15, 15, 20, 15, 10, 5, 5, 10, 15, 20, 30, 35, 40, 20, 10, 15, 15, 20, 10, 10, 10, 30 ],
-            ammoCapacity:   [ 30, 20, 20, 40, 30, 20, 5, 5, 10, 20, 15, 20, 15, 30, 20, 10, 15, 15, 10, 10, 10, 20, 30 ]
-        };
-
         $('.stats-update-block .bonus .increase').off();
         $( document ).unbind( 'keypress' );
 
-        $('.stats-update-block .bonus.speed .bonus-title span').html( tank.speed + ' -> ' + ( tank.speed + levelsStats['speed'][ tank.player.level ] ) );
-        $('.stats-update-block .bonus.rpm .bonus-title span').html( tank.rpm + ' -> ' + ( tank.rpm + levelsStats['rpm'][ tank.player.level ] ) );
-        $('.stats-update-block .bonus.armour .bonus-title span').html( tank.armour + ' -> ' + ( tank.armour + levelsStats['armour'][ tank.player.level ] ) );
-        $('.stats-update-block .bonus.gun .bonus-title span').html( tank.bullet + ' -> ' + ( tank.bullet + levelsStats['gun'][ tank.player.level ] ) );
-        $('.stats-update-block .bonus.ammo-capacity .bonus-title span').html( tank.ammoCapacity + ' -> ' + ( tank.ammoCapacity + levelsStats['ammoCapacity'][ tank.player.level ] ) );
-
         $('.stats-update-block').show();
+        $('.stats-update-block').attr('opened', 'true');
+        $('.chat .message-block-separate').hide();
         this.hideLevelIndicator();
         $('.stats-update-block .title').html( 'You have ' + bonusLevels + ' bonus levels.' );
         $('.stats-update-block .bonus .increase').click( this.updateTankStat.bind( this ) );
@@ -103,6 +89,8 @@ class UIInGameModule {
 
         this.showLevelIndicator();
         $('.stats-update-block').hide();
+        $('.chat .message-block-separate').show();
+        $('.stats-update-block').attr('opened', 'false');
         $( document ).unbind( 'keypress' );
 
     };

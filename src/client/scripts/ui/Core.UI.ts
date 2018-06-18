@@ -3,6 +3,7 @@
  * DatTank global UI core
 */
 
+import { Logger } from "./../utils/Logger";
 import { UILandingModule } from "./Landing.UI";
 import { UIInGameModule } from "./InGame.UI";
 import { UIChatModule } from "./Chat.UI";
@@ -57,6 +58,7 @@ class UICore {
 
         if ( ! withoutSound ) {
 
+            Logger.newEvent( 'SettingsHQChange', 'game' );
             SoundManager.playSound('MenuClick');
 
         }
@@ -74,6 +76,7 @@ class UICore {
 
         if ( ! withoutSound ) {
 
+            Logger.newEvent( 'SettingsSoundChange', 'game' );
             SoundManager.playSound('MenuClick');
 
         }

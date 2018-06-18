@@ -636,10 +636,10 @@
 
 .stats-update-block .bonus-title {
     position: absolute;
-    left: 0px;
+    left: 45px;
     color: #ccc;
-    font-size: 17px;
-    width: 217px;
+    font-size: 15px;
+    padding-top: 5px;
 }
 
 .stats-update-block .bonus-title span {
@@ -650,10 +650,10 @@
 
 .stats-update-block .increase {
     position: absolute;
-    right: 0px;
+    left: 0px;
     display: block;
     text-align: center;
-    width: 27px;
+    width: 30px;
     color: #ccc;
     font-size: 17px;
     font-weight: 700;

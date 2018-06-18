@@ -4,6 +4,7 @@
 */
 
 import * as OMath from "./../OMath/Core.OMath";
+import { Logger } from "./../utils/Logger";
 import { UI } from "./Core.UI";
 import { Arena } from "./../core/Arena.Core";
 import { TeamManager } from "./../managers/Team.Manager";
@@ -23,12 +24,25 @@ class UIChatModule {
         $('.chat .message-block').show();
         $('.chat .message-block-separate').hide();
         $('.chat .message-input').show();
-        UI.InGame.hideLevelIndicator();
+
+        if ( $('.stats-update-block').attr('opened') === 'true' ) {
+
+            $('.stats-update-block').hide();
+            $('.chat .message-block-separate').show();
+
+        }
+
+        $('.level-indicator-block').hide();
+
         $('.chat .message-input').focus();
 
         localStorage.setItem( 'UsedChat', 'true' );
         this.usedChat = true;
         this.hideHelpInfo();
+
+        //
+
+        Logger.newEvent( 'ChatOpened', 'game' );
 
     };
 
@@ -37,7 +51,20 @@ class UIChatModule {
         $('.chat .message-block').hide();
         $('.chat .message-block-separate').show();
         $('.chat .message-input').hide();
-        UI.InGame.showLevelIndicator();
+
+        if ( $('.stats-update-block').attr('opened') === 'true' ) {
+
+            $('.level-indicator-block').hide();
+            $('.stats-update-block').show();
+            $('.chat .message-block-separate').hide();
+
+        } else {
+
+            $('.level-indicator-block').show();
+            $('.stats-update-block').hide();
+            $('.chat .message-block-separate').show();
+
+        }
 
     };
 
@@ -75,6 +102,7 @@ class UIChatModule {
 
                 Network.send( 'ArenaChatMessage', false, { playerId: Arena.me.id, message: inputValue } );
                 $('.chat .message-input').val('');
+                Logger.newEvent( 'ChatNewMessage', 'game' );
 
             }
 
