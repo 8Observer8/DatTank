@@ -250,7 +250,7 @@ class TankGfx {
         this.blastSmoke.init( this.topMesh, new OMath.Vec3( 0, 0, 5.5 ) );
         this.traces.init( this.object );
         this.label.init( this.object );
-        this.label.update( this.tank.health, this.tank.armour, this.tank.player.team.color, this.tank.player.username );
+        this.label.update( this.tank.health, this.tank.armour, this.tank.player.team.color, this.tank.overheating, this.tank.player.username );
         this.initSounds();
 
         //

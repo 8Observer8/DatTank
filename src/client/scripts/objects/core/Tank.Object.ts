@@ -31,6 +31,7 @@ class TankObject {
     public rpm: number;
     public armour: number;
 
+    public overheating: number = -1;
     public health: number;
     public ammo: number;
 
@@ -59,9 +60,16 @@ class TankObject {
 
     };
 
-    public makeShot ( bulletId: number, position: OMath.Vec3, directionRotation: number ) {
+    public makeShot ( bulletId: number, position: OMath.Vec3, directionRotation: number, overheating: number ) {
 
         if ( this.health <= 0 ) return;
+
+        if ( Arena.meId === this.player.id ) {
+
+            this.overheating = overheating;
+            this.gfx.label.update( this.health, this.armour, this.player.team.color, this.overheating, this.player.username );
+
+        }
 
         BulletManager.showBullet( bulletId, position, directionRotation );
         this.gfx.shoot();
@@ -162,7 +170,7 @@ class TankObject {
         }
 
         this.health = value;
-        this.gfx.label.update( this.health, this.armour, this.player.team.color, this.player.username );
+        this.gfx.label.update( this.health, this.armour, this.player.team.color, this.overheating, this.player.username );
 
         if ( this.health <= 0 ) {
 
@@ -235,6 +243,13 @@ class TankObject {
         this.gfx.update( time, delta );
         if ( this.health <= 0 ) return;
 
+        if ( this.overheating > 0 ) {
+
+            this.overheating -= 0.2 * delta / 16;
+            this.gfx.label.update( this.health, this.armour, this.player.team.color, this.overheating, this.player.username );
+
+        }
+
         //
 
         let dx = this.positionCorrection.x * delta / 300;
@@ -273,6 +288,12 @@ class TankObject {
     };
 
     public init () {
+
+        if ( Arena.meId === this.player.id ) {
+
+            this.overheating = 0;
+
+        }
 
         this.gfx.init( this );
         this.network.init( this );

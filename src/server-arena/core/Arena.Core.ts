@@ -43,14 +43,39 @@ class ArenaCore {
 
     private updateInterval: any;
     private prevUpdateTime: number;
-
     private leaderboardUpdateTimeout: any;
-
     private updateRate = 40;
 
     public network: ArenaNetwork;
 
     //
+
+    public removeObjectFromRangeParams ( object: any ) {
+
+        let tanks = this.tankManager.getTanks();
+        let towers = this.towerManager.getTowers();
+
+        for ( let i = 0, il = tanks.length; i < il; i ++ ) {
+
+            if ( tanks[ i ].inRangeOf[ object.type + '-' + object.id ] ) {
+
+                delete tanks[ i ].inRangeOf[ object.type + '-' + object.id ];
+
+            }
+
+        }
+
+        for ( let i = 0, il = towers.length; i < il; i ++ ) {
+
+            if ( towers[ i ].inRangeOf[ object.type + '-' + object.id ] ) {
+
+                delete towers[ i ].inRangeOf[ object.type + '-' + object.id ];
+
+            }
+
+        }
+
+    };
 
     public addPlayer ( params: any ) {
 

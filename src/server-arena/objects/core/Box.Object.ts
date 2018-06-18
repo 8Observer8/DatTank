@@ -32,6 +32,7 @@ class BoxObject {
 
     public dispose () {
 
+        this.arena.removeObjectFromRangeParams( this );
         this.arena.network.boxPicked( this );
 
     };

@@ -51,6 +51,7 @@ class TankObject {
 
     public deltaPosition: OMath.Vec3 = new OMath.Vec3();
 
+    public overheating: number = 0;
     private shootTimeout: any;
     private shootingInterval: any;
     private sinceHitRegeneraionLimit: number = 5000;
@@ -127,13 +128,13 @@ class TankObject {
 
         for ( let i = 0, il = tanks.length; i < il; i ++ ) {
 
-            delete tanks[ i ].inRangeOf[ 'tk-' + this.id ];
+            delete tanks[ i ].inRangeOf[ 'tank-' + this.id ];
 
         }
 
         for ( let i = 0, il = towers.length; i < il; i ++ ) {
 
-            delete towers[ i ].inRangeOf[ 'tk-' + this.id ];
+            delete towers[ i ].inRangeOf[ 'tank-' + this.id ];
 
         }
 
@@ -262,6 +263,15 @@ class TankObject {
             this.shootTimeout = false;
 
         }, 1000 * 60 / this.rpm );
+
+        // overheating
+
+        if ( this.overheating >= 80 ) return;
+        this.overheating *= 1.2;
+        this.overheating += 12;
+        this.overheating = Math.min( this.overheating, 100 );
+
+        //
 
         let bullet = this.arena.bulletManager.getInactiveBullet();
         if ( ! bullet ) return;
@@ -425,14 +435,14 @@ class TankObject {
 
             if ( this.isObjectInRange( box ) ) {
 
-                if ( this.inRangeOf[ 'b-' + box.id ] ) continue;
+                if ( this.inRangeOf[ 'Box-' + box.id ] ) continue;
 
-                this.inRangeOf[ 'b-' + box.id ] = box;
+                this.inRangeOf[ 'Box-' + box.id ] = box;
                 newBoxesInRange.push( box );
 
             } else {
 
-                delete this.inRangeOf[ 'b-' + box.id ];
+                delete this.inRangeOf[ 'Box-' + box.id ];
 
             }
 
@@ -448,16 +458,16 @@ class TankObject {
 
             if ( this.isObjectInRange( tower ) ) {
 
-                if ( this.inRangeOf[ 't-' + tower.id ] ) continue;
+                if ( this.inRangeOf[ 'Tower-' + tower.id ] ) continue;
 
-                this.inRangeOf[ 't-' + tower.id ] = tower;
-                tower.inRangeOf[ 'tk-' + this.id ] = this;
+                this.inRangeOf[ 'Tower-' + tower.id ] = tower;
+                tower.inRangeOf[ 'Tank-' + this.id ] = this;
                 newTowersInRange.push( tower );
 
             } else {
 
-                delete this.inRangeOf[ 't-' + tower.id ];
-                delete tower.inRangeOf[ 'tk-' + this.id ];
+                delete this.inRangeOf[ 'Tower-' + tower.id ];
+                delete tower.inRangeOf[ 'Tank-' + this.id ];
 
             }
 
@@ -473,14 +483,14 @@ class TankObject {
 
             if ( this.isObjectInRange( tank ) ) {
 
-                if ( this.inRangeOf[ 'tk-' + tank.id ] ) continue;
+                if ( this.inRangeOf[ 'Tank-' + tank.id ] ) continue;
 
-                this.inRangeOf[ 'tk-' + tank.id ] = tank;
+                this.inRangeOf[ 'Tank-' + tank.id ] = tank;
                 newTanksInRange.push( tank );
 
             } else {
 
-                delete this.inRangeOf[ 'tk-' + tank.id ];
+                delete this.inRangeOf[ 'Tank-' + tank.id ];
 
             }
 
@@ -494,6 +504,12 @@ class TankObject {
 
         if ( this.health <= 0 ) return;
 
+        if ( this.overheating > 0 ) {
+
+            this.overheating -= 0.2 * delta / 20;
+
+        }
+
         this.regenerationUpdate( delta );
         this.updatePosition( delta );
         this.updateObjectsInRange();
@@ -503,6 +519,7 @@ class TankObject {
     public dispose () {
 
         this.network.dispose();
+        this.arena.removeObjectFromRangeParams( this );
         this.arena.collisionManager.removeObject( this );
 
     };

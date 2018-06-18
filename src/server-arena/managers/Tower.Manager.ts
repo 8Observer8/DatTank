@@ -75,20 +75,6 @@ class TowerManager {
 
     };
 
-    public toJSON () {
-
-        let towers = [];
-
-        for ( let i = 0, il = this.towers.length; i < il; i ++ ) {
-
-            towers.push( this.towers[ i ].toJSON() );
-
-        }
-
-        return towers;
-
-    };
-
     //
 
     constructor ( arena: ArenaCore ) {

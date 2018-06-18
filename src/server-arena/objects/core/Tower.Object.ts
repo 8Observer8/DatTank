@@ -34,9 +34,8 @@ class TowerObject {
 
     public arena: ArenaCore;
 
-    private cooldown = 1300;
+    private cooldown = 2000;
     private shootTime: number;
-    private bulletsPool: Array<BulletObject> = [];
 
     private sinceHitRegeneraionLimit: number = 5000;
     private sinceHitTime: number;
@@ -68,7 +67,7 @@ class TowerObject {
 
         delta = OMath.formatAngle( rotation ) - OMath.formatAngle( this.rotation );
 
-        if ( Math.abs( delta ) > 0.5 ) return;
+        if ( Math.abs( delta ) > 0.2 ) return;
 
         //
 
@@ -286,12 +285,6 @@ class TowerObject {
             }
 
         }
-
-    };
-
-    public toJSON () {
-
-        // todo
 
     };
 

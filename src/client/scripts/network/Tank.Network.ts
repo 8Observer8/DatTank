@@ -184,8 +184,9 @@ class TankNetwork {
         let y = 20;
         let z = data[3];
         let directionRotation = data[4] / 1000;
+        let overheating = data[5];
 
-        this.tank.makeShot( bulletId, new OMath.Vec3( x, y, z ), directionRotation );
+        this.tank.makeShot( bulletId, new OMath.Vec3( x, y, z ), directionRotation, overheating );
 
     };
 

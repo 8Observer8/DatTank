@@ -30,7 +30,7 @@ class ArenaNetwork {
 
             let player = players[ i ];
 
-            if ( position.distanceTo( player.tank.position ) > 600 ) continue;
+            if ( position.distanceTo( player.tank.position ) > player.tank.viewRange ) continue;
             if ( ! player.socket ) continue;
 
             Network.send( eventName, player.socket, data, dataView );
