@@ -36,21 +36,7 @@ class ResourceManagerCore {
         'Base-ground.png',
         'brick.jpg',
 
-        'Tree1-shadow.png',
-        'Tree2-shadow.png',
-        'Tree3-shadow.png',
-        'Tree4-shadow.png',
-        'Tree5-shadow.png',
-        'Tree6-shadow.png',
-        'Tree7-shadow.png',
-        'Tree8-shadow.png',
-
-        'Rock1-shadow.png',
-        'Rock2-shadow.png',
-        'Rock3-shadow.png',
-        'Rock4-shadow.png',
-
-        'Ruin1-shadow.png',
+        'shadows.png',
 
         'Tank-shadow.png',
 

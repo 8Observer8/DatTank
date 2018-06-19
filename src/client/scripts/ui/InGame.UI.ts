@@ -226,7 +226,7 @@ class UIInGameModule {
 
     public showKills ( killerId: number, killer: string, killed: string, killerColor: string, killedColor: string ) {
 
-        $('#kill-events').append( '<p><span style="color:' + killerColor + '">' + killer +'</span> killed <span style="color:' + killedColor + '">' + killed + '</span>!</p>');
+        $('#kill-events').append( '<p><span style="font-weight: bold; color:' + killerColor + '">' + killer +'</span> killed <span style="font-weight: bold; color:' + killedColor + '">' + killed + '</span>!</p>');
 
         if ( $('#kill-events').children().length > 5 ) {
 
@@ -347,7 +347,7 @@ class UIInGameModule {
 
         if ( playerId !== Arena.me.id ) {
 
-            $('#kill-events').append( '<p><span style="color:' + team.color + '">' + playerLogin +'</span> made a ' + serieName + '</span>!</p>');
+            $('#kill-events').append( '<p><span style="font-weight: bold; color:' + OMath.intToHex( team.color ) + '">' + playerLogin +'</span> made a <b>' + serieName + '</b></span>!</p>');
 
             if ( $('#kill-events').children().length > 5 ) {
     

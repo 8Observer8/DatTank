@@ -17,6 +17,7 @@ class Rock4Decoration extends DecorationObject {
 
         super( params );
         this.title = Rock4Decoration.title;
+        this.uvOffset.set( 0, 1 );
 
     };
 

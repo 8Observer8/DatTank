@@ -13,7 +13,7 @@ class Rock2Decoration extends DecorationObject {
 
     public static canPlace ( arena: ArenaCore, position: OMath.Vec3 ) {
 
-        return arena.collisionManager.isPlaceFree( new OMath.Vec3( position.x - 20, 0, position.z ), 20 ) && arena.collisionManager.isPlaceFree( new OMath.Vec3( position.x + 20, 0, position.z ), 20 );
+        return arena.collisionManager.isPlaceFree( new OMath.Vec3( position.x, 0, position.z - 20 ), 20 ) && arena.collisionManager.isPlaceFree( new OMath.Vec3( position.x, 0, position.z + 20 ), 20 );
 
     };
 
@@ -27,9 +27,8 @@ class Rock2Decoration extends DecorationObject {
 
         let sizeXZ = 5 * Math.random() + 20;
         this.scale = new OMath.Vec3( sizeXZ, 5 * Math.random() + 20, sizeXZ );
-        this.size.set( 7 * this.scale.x, 0.8 * this.scale.y, 2 * this.scale.z );
-        this.rotation = Math.random() * Math.PI * 2;
-        this.rotation = 0;
+        this.size.set( 2 * this.scale.x, 0.8 * this.scale.y, 7 * this.scale.z );
+        this.rotation = Math.PI / 2;
 
         this.arena.collisionManager.addObject( this, 'box', false );
 

@@ -60,12 +60,12 @@ class TowerManager {
         let team = this.arena.teamManager.getById( ArenaCore.NeutralTeam );
         let pos = new OMath.Vec3();
 
-        for ( let i = 0; i < 5; i ++ ) {
+        for ( let i = 0; i < 3; i ++ ) {
 
-            for ( let j = 0; j < 5; j ++ ) {
+            for ( let j = 0; j < 3; j ++ ) {
 
-                pos.x = ( 0.5 - i / 4 ) * 1900;
-                pos.z = ( 0.5 - j / 4 ) * 1900;
+                pos.x = ( 0.5 - i / 2 ) * 1900;
+                pos.z = ( 0.5 - j / 2 ) * 1900;
 
                 this.add( new TowerObject( this.arena, { team: team, position: pos } ) );
 

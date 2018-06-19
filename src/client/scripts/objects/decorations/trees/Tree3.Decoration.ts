@@ -17,6 +17,7 @@ class Tree3Decoration extends DecorationObject {
 
         super( params );
         this.title = Tree3Decoration.title;
+        this.uvOffset.set( 0, 2 );
 
     };
 

@@ -16,6 +16,7 @@ class DecorationObject {
     public position: OMath.Vec3 = new OMath.Vec3();
     public scale: OMath.Vec3 = new OMath.Vec3();
     public rotation: number;
+    public uvOffset: OMath.Vec2 = new OMath.Vec2();
 
     protected gfx: DecorationGfx = new DecorationGfx();
 
@@ -30,7 +31,7 @@ class DecorationObject {
     public init () {
 
         this.gfx.init( this );
-        GfxCore.landscape.addShadow( this.title, this.position, this.scale, this.rotation );
+        GfxCore.landscape.addShadow( this.title, this.position, this.scale, this.rotation, this.uvOffset );
 
     };
 

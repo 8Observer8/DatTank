@@ -53,9 +53,11 @@ class TowerObject {
 
             this.health = 100;
 
-        } else if ( Arena.me && killerId === Arena.me.id ) {
+            if ( Arena.me && killerId === Arena.me.id ) {
 
-            Logger.newEvent( 'TowerCached', 'game' );
+                Logger.newEvent( 'TowerCached', 'game' );
+
+            }
 
         }
 

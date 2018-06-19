@@ -300,6 +300,7 @@ class NetworkCore {
     private gotPong ( data ) {
 
         let ping = Math.round( ( ( Date.now() % 1000 ) - data[0] ) / 2 );
+        ping = ( ping < 0 ) ? ping + 500 : ping;
         UI.InGame.updatePing( ping );
 
     };

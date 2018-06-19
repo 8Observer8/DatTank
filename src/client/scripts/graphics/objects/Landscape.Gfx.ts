@@ -16,7 +16,10 @@ import { Scene } from 'three';
 class LandscapeGfx {
 
     private object:THREE.Object3D = new THREE.Object3D();
+
     private terrainMesh: THREE.Mesh;
+    private shadowMaterial: THREE.MeshBasicMaterial;
+    private grassMaterial: THREE.MeshBasicMaterial;
 
     private mapSize: number = 2430;
     private mapExtraSize = 1800;
@@ -119,9 +122,15 @@ class LandscapeGfx {
 
         let size = this.mapSize;
         let scale = Math.random() / 2 + 0.3;
-        let grassTexture = ResourceManager.getTexture( 'Grass.png' );
 
-        let grassZone = new THREE.Mesh( new THREE.PlaneBufferGeometry( 240, 240 ), new THREE.MeshBasicMaterial({ map: grassTexture, color: 0x779977, transparent: true, depthWrite: false }) );
+        if ( ! this.grassMaterial ) {
+
+            let grassTexture = ResourceManager.getTexture( 'Grass.png' );
+            this.grassMaterial = new THREE.MeshBasicMaterial({ map: grassTexture, color: 0x779977, transparent: true, depthWrite: false });
+
+        }
+
+        let grassZone = new THREE.Mesh( new THREE.PlaneBufferGeometry( 240, 240 ), this.grassMaterial );
         grassZone.rotation.set( - Math.PI / 2, 0, Math.random() * Math.PI );
         grassZone.scale.set( scale, scale, scale );
         grassZone.position.set( ( Math.random() - 0.5 ) * size, 0.02 + Math.random() / 20, ( Math.random() - 0.5 ) * size );
@@ -130,16 +139,34 @@ class LandscapeGfx {
 
     };
 
-    public addShadow ( objectType: string, position: OMath.Vec3, scale: OMath.Vec3, rotation: number ) {
+    public addShadow ( objectType: string, position: OMath.Vec3, scale: OMath.Vec3, rotation: number, uvOffset: OMath.Vec2 ) {
 
-        let shadowTexture;
         let shadowMesh;
         let shadowScale;
 
-        shadowTexture = ResourceManager.getTexture( objectType + '-shadow.png' );
-        shadowMesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ map: shadowTexture, transparent: true, depthWrite: false, opacity: 0.35 }) );
+        if ( ! this.shadowMaterial ) {
+
+            let shadowTexture = ResourceManager.getTexture( 'shadows.png' );
+            this.shadowMaterial = new THREE.MeshBasicMaterial({ map: shadowTexture, transparent: true, depthWrite: false, opacity: 0.35 });
+
+        }
+
+        shadowMesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), this.shadowMaterial );
+
+        for ( let i = 0, il = shadowMesh.geometry.attributes.uv.array.length; i < il; i += 2 ) {
+
+            shadowMesh.geometry.attributes.uv.array[ i + 0 ] += uvOffset.x;
+            shadowMesh.geometry.attributes.uv.array[ i + 1 ] += uvOffset.y;
+
+            shadowMesh.geometry.attributes.uv.array[ i + 0 ] /= 4;
+            shadowMesh.geometry.attributes.uv.array[ i + 1 ] /= 4;
+
+            shadowMesh.geometry.attributes.uv.array[ i + 1 ] = 1 - shadowMesh.geometry.attributes.uv.array[ i + 1 ];
+
+        }
+
         shadowMesh.geometry.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2 ) );
-        shadowMesh.material.transparent = true;
+        shadowMesh.geometry.applyMatrix( new THREE.Matrix4().makeRotationY( - Math.PI / 2 ) );
         shadowMesh.position.copy( position );
         shadowMesh.position.y = 0.5;
         shadowMesh.renderOrder = 10;

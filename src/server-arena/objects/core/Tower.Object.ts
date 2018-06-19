@@ -8,7 +8,6 @@ import { ArenaCore } from "./../../core/Arena.Core";
 import { TeamCore } from "./../../core/Team.Core";
 import { PlayerCore } from "./../../core/Player.Core";
 import { TankObject } from "./../core/Tank.Object";
-import { BulletObject } from "./../core/Bullet.Object";
 import { TowerNetwork } from "./../../network/Tower.Network";
 
 //
@@ -28,8 +27,8 @@ class TowerObject {
     public target: TankObject;
 
     public range: number = 500;
-    public armour: number = 150;
-    public bullet: number = 70;
+    public armour: number = 100;
+    public bullet: number = 50;
     public collisionBox: any;
 
     public arena: ArenaCore;
