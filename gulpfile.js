@@ -26,7 +26,7 @@ var arenaProcesses = [];
 
 gulp.task( 'resources', function () {
 
-    gulp.src('./src/client/resources/**/*')
+    return gulp.src('./src/client/resources/**/*')
         .pipe(gulp.dest('./bin/client/resources/'));
 
 });
@@ -35,7 +35,7 @@ gulp.task( 'resources', function () {
 
 gulp.task( 'libs', function () {
 
-    gulp.src('./src/client/libs/**/*')
+    return gulp.src('./src/client/libs/**/*')
         .pipe(gulp.dest('./bin/client/libs/'));
 
 });
@@ -72,7 +72,7 @@ gulp.task( 'brf', function () {
 
 gulp.task( 'css', function () {
 
-    gulp.src('./src/client/css/*')
+    return gulp.src('./src/client/css/*')
         .pipe( concat('all.css') )
         .pipe( gulp.dest('./bin/client/css/') );
 
@@ -82,7 +82,7 @@ gulp.task( 'css', function () {
 
 gulp.task( 'html', function () {
 
-    gulp.src('./src/client/*.html')
+    return gulp.src('./src/client/*.html')
         .pipe( gulp.dest('./bin/client/') );
 
 });
@@ -91,20 +91,23 @@ gulp.task( 'html', function () {
 
 gulp.task( 'server-master', function () {
 
-    gulp.src('./src/server-master/**/*')
+    return gulp.src('./src/server-master/**/*')
         .pipe( gulp.dest('./bin/server-master/') );
 
-    //
+});
+
+gulp.task( 'start-server-master', function ( done ) {
 
     restartMasterServer();
+    return done();
 
 });
 
 // Arena-Server
 
 gulp.task( 'server-arena', function () {
-
-    gulp.src('./src/server-arena/**/*.ts')
+    
+    return gulp.src('./src/server-arena/**/*.ts')
         .pipe(ts({
             "noImplicitAny": true,
             "suppressImplicitAnyIndexErrors": true,
@@ -115,36 +118,35 @@ gulp.task( 'server-arena', function () {
         }))
         .pipe( gulp.dest('./bin/server-arena') );
 
-    //
+});
 
-    setTimeout( restartArenaServer, 1000 );
+gulp.task( 'start-server-arena', function ( done ) {
+
+    restartArenaServer();
+    return done();
 
 });
 
 // RUN
 
-gulp.task( 'run', [ 'resources', 'libs', 'brf', 'html', 'css', 'server-master', 'server-arena' ], function () {
-
-    // nothing here
-
-});
+gulp.task( 'run', gulp.series( 'resources', 'libs', 'brf', 'html', 'css', 'server-master', 'start-server-master', 'server-arena', 'start-server-arena' ));
 
 // Watch
 
 gulp.task( 'watch', function () {
 
-    gulp.watch( './src/client/css/*', ['css']);
-    gulp.watch( './src/client/*', ['html'] );
-    gulp.watch( './src/client/scripts/**/*', ['brf'] );
-    gulp.watch( './src/client/libs/**/*', ['libs'] );
-    gulp.watch( './src/server-master/**/*', ['server-master'] );
-    gulp.watch( './src/server-arena/**/*', ['server-arena'] );
+    gulp.watch( './src/client/css/*', gulp.series( 'css' ) );
+    gulp.watch( './src/client/*', gulp.series( 'html' ) );
+    gulp.watch( './src/client/scripts/**/*', gulp.series( 'brf' ) );
+    gulp.watch( './src/client/libs/**/*', gulp.series( 'libs' ) );
+    gulp.watch( './src/server-master/**/*', gulp.series( 'server-master', 'start-server-master' ) );
+    gulp.watch( './src/server-arena/**/*', gulp.series( 'server-arena', 'start-server-arena' ) );
 
 });
 
 // Default
 
-gulp.task( 'default', [ 'watch', 'run' ] );
+gulp.task( 'default', gulp.parallel( 'watch', 'run' ) );
 
 //
 
