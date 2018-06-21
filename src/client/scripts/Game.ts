@@ -24,7 +24,7 @@ import { DecorationManager } from "./managers/Decoration.Manager";
 
 class GameCore {
 
-    public version: string = 'v0.5.8';
+    public version: string = 'v0.5.9';
     public isMobile: boolean;
     public ready: boolean = false;
 

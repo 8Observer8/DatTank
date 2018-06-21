@@ -46,7 +46,7 @@ class BoxObject {
         this.arena = arena;
 
         this.position.copy( params.position );
-        this.arena.collisionManager.addObject( this, 'circle', false );
+        // this.arena.collisionManager.addObject( this, 'circle', false );
 
     };
 

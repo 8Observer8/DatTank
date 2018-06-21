@@ -36,6 +36,16 @@ class TankGfx {
 
     //
 
+    public rotateTankXAxis ( delta: number ) {
+
+        this.topMesh.rotation.x += delta;
+        this.baseMesh.rotation.x += delta;
+
+        this.topMesh.rotation.x *= 0.9;
+        this.baseMesh.rotation.x *= 0.9;
+        
+    };
+
     private initSounds () {
 
         let movingSound = new THREE.PositionalAudio( GfxCore.audioListener );

@@ -3,7 +3,6 @@
  * DatTank Tank Object class
 */
 
-import * as THREE from 'three';
 import * as OMath from "./../../OMath/Core.OMath";
 
 import { Logger } from "./../../utils/Logger";
@@ -15,6 +14,7 @@ import { TankNetwork } from "./../../network/Tank.Network";
 import { TankGfx } from "./../../graphics/objects/Tank.Gfx";
 import { HealthChangeLabelManager } from "./../../managers/HealthChangeLabel.Manager";
 import { BulletManager } from "./../../managers/Bullet.Manager";
+import { CollisionManager } from "./../../managers/Collision.Manager";
 
 //
 
@@ -42,9 +42,14 @@ class TankObject {
 
     public position: OMath.Vec3 = new OMath.Vec3();
     public rotation: number = 0;
+    public size: OMath.Vec3 = new OMath.Vec3( 20, 10, 20 );
+
+    public prevForwardVelocity: number = 0;
 
     protected network: TankNetwork = new TankNetwork();
     protected gfx: TankGfx = new TankGfx();
+
+    public readonly type: string = 'Tank';
 
     //
 
@@ -196,17 +201,17 @@ class TankObject {
 
             this.gfx.toggleMovementSound( true );
 
-            if ( this.moveDirection.x > 0 ) {
+            // if ( this.moveDirection.x > 0 ) {
 
-                this.position.x += ( speed * Math.sin( this.rotation ) * delta );
-                this.position.z += ( speed * Math.cos( this.rotation ) * delta );
+            //     this.position.x += ( speed * Math.sin( this.rotation ) * delta );
+            //     this.position.z += ( speed * Math.cos( this.rotation ) * delta );
 
-            } else if ( this.moveDirection.x < 0 ) {
+            // } else if ( this.moveDirection.x < 0 ) {
 
-                this.position.x -= ( speed * Math.sin( this.rotation ) * delta );
-                this.position.z -= ( speed * Math.cos( this.rotation ) * delta );
+            //     this.position.x -= ( speed * Math.sin( this.rotation ) * delta );
+            //     this.position.z -= ( speed * Math.cos( this.rotation ) * delta );
 
-            }
+            // }
 
             this.rotation = this.rotation;
 
@@ -264,15 +269,15 @@ class TankObject {
 
         }
 
-        if ( Math.abs( dx ) > 0.1 || Math.abs( dz ) > 0.1 ) {
+        // if ( Math.abs( dx ) > 0.1 || Math.abs( dz ) > 0.1 ) {
 
-            this.positionCorrection.x -= dx;
-            this.positionCorrection.z -= dz;
+        //     this.positionCorrection.x -= dx;
+        //     this.positionCorrection.z -= dz;
 
-            this.position.x += dx;
-            this.position.z += dz;
+        //     this.position.x += dx;
+        //     this.position.z += dz;
 
-        }
+        // }
 
         //
 
@@ -309,6 +314,8 @@ class TankObject {
             this.gfx.makeTankDestroyed();
 
         }
+
+        CollisionManager.addObject( this, 'box', true );
 
     };
 

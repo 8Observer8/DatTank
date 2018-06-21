@@ -301,7 +301,7 @@ class TowerObject {
         this.sinceHitTime = Date.now();
 
         this.position.set( params.position.x, params.position.y, params.position.z );
-        this.arena.collisionManager.addObject( this, 'box', false );
+        // this.arena.collisionManager.addObject( this, 'box', false );
 
         this.network = new TowerNetwork( this );
 

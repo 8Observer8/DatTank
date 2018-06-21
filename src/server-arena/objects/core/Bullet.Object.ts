@@ -38,7 +38,7 @@ class BulletObject {
     
         //
     
-        this.arena.collisionManager.addObject( this, 'circle', true );
+        // this.arena.collisionManager.addObject( this, 'circle', true );
 
     };
 

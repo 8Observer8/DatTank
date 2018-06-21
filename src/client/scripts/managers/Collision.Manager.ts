@@ -1,0 +1,157 @@
+/*
+ * @author ohmed
+ * DatTank Arena collision manager
+*/
+
+import * as Cannon from "cannon";
+
+//
+
+class CollisionManagerCore {
+
+    private static instance: CollisionManagerCore;
+
+    private world: Cannon.World;
+    private objects: Array<any> = [];
+
+    //
+
+    public addObject ( object, type, isDynamic ) {
+
+        let shape;
+        let collisionBox = {
+            parent:     object,
+            type:       type,
+            body:       new Cannon.Body({ mass: ( isDynamic ) ? 1000 : 0 }),
+            sensor:     false,
+            collision:  false
+        };
+
+        if ( type === 'box' ) {
+
+            shape = new Cannon.Box( new Cannon.Vec3( object.size.x / 2, 10, object.size.z / 2 ) );
+
+        } else if ( type === 'circle' ) {
+
+            shape = new Cannon.Cylinder( object.radius, object.radius, 20, 8 );
+
+        }
+
+        collisionBox.body.position.set( object.position.x, 20, object.position.z );
+        collisionBox.body['parent'] = object;
+        collisionBox.body['name'] = object.type;
+        collisionBox.body.addShape( shape );
+        collisionBox.body.type = ( ! isDynamic ) ? Cannon.Body.STATIC : Cannon.Body.DYNAMIC;
+
+        //
+
+        this.world.addBody( collisionBox.body );
+        this.objects.push( collisionBox );
+        object.collisionBox = collisionBox;
+
+    };
+
+    public update ( time: number, delta: number ) {
+
+        if ( delta === 0 ) return;
+
+        for ( let i = 0, il = this.objects.length; i < il; i ++ ) {
+
+            let object = this.objects[ i ];
+            if ( ! object ) continue;
+
+            if ( object.parent.type === 'Tank' ) {
+
+                let speed = object.body.velocity.distanceTo( new Cannon.Vec3( 0, object.body.velocity.y, 0 ) );
+
+                if ( speed < 140 && object.parent.moveDirection.x ) {
+
+                    let forceAmount = 5000 * ( 1 - speed / 140 );
+                    let force = new Cannon.Vec3( forceAmount * Math.sin( object.parent.rotation ), 0, forceAmount * Math.cos( object.parent.rotation ) );
+                    if ( object.parent.moveDirection.x < 0 ) force = force.negate();
+                    object.body.applyLocalImpulse( force, new Cannon.Vec3( 0, 0, 0 ), delta );
+
+                } else {
+
+                    object.body.velocity.x /= 1.025;
+                    object.body.velocity.z /= 1.025;
+
+                }
+
+                let direction = ( object.parent.moveDirection.x > 0 ) ? 0 : Math.PI;
+                let vx = speed * Math.sin( object.parent.rotation + direction );
+                let vz = speed * Math.cos( object.parent.rotation + direction );
+                let forwardVelocity = new Cannon.Vec3( vx, 0, vz ).distanceTo( new Cannon.Vec3() );
+                let movementDirecton = Math.sign( object.body.velocity.x * Math.sin( object.parent.rotation ) );
+
+                if ( speed > 5 && object.parent.moveDirection.x !== 0 ) {
+
+                    object.body.velocity.x += ( vx - object.body.velocity.x ) / 8;
+                    object.body.velocity.z += ( vz - object.body.velocity.z ) / 8;
+
+                }
+
+                //
+
+                // if ( forwardVelocity < 130 ) {
+                
+                    let dfv = forwardVelocity - object.parent['prevForwardVelocity'];
+                    console.log( dfv );
+                    dfv = movementDirecton * dfv;
+                    object.parent.gfx.rotateTankXAxis( - Math.sign( dfv ) * Math.min( Math.abs( dfv ), 8 ) / 100 / Math.PI );
+                    object.parent['prevForwardVelocity'] = forwardVelocity;
+
+                // }
+
+                //
+
+                object.parent.position.set( object.body.position.x, object.body.position.y, object.body.position.z );
+
+            }
+
+        }
+
+        this.world.step( delta / 1000 );
+
+    };
+
+    public init () {
+
+        // init world
+
+        this.world = new Cannon.World();
+        this.world.gravity.set( 0, -9, 0 );
+        // this.world.defaultContactMaterial.contactEquationStiffness = 5e7;
+        // this.world.defaultContactMaterial.contactEquationRelaxation = 4;
+        this.world.defaultContactMaterial.friction = 0;
+
+        // add ground
+
+        let groundShape = new Cannon.Plane();
+        let groundBody = new Cannon.Body({ mass: 0 });
+        groundBody['name'] = 'ground';
+        groundBody.addShape( groundShape );
+        groundBody.quaternion.setFromAxisAngle( new Cannon.Vec3( 1, 0, 0 ), - Math.PI / 2 );
+        this.world.addBody( groundBody );
+
+    };
+
+    //
+
+    constructor () {
+
+        if ( CollisionManagerCore.instance ) {
+
+            return CollisionManagerCore.instance;
+
+        }
+
+        CollisionManagerCore.instance = this;
+
+    };
+
+};
+
+//
+
+export let CollisionManager = new CollisionManagerCore();

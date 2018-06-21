@@ -15,6 +15,7 @@ import { GfxCore } from "./../graphics/Core.Gfx";
 import { PlayerCore } from "./Player.Core";
 import { ArenaNetwork } from "../network/Arena.Network";
 import { BulletManager } from "./../managers/Bullet.Manager";
+import { CollisionManager } from "./../managers/Collision.Manager";
 import { UI } from "./../ui/Core.UI";
 
 //
@@ -66,6 +67,7 @@ class ArenaCore {
 
         // setup all other managers
 
+        CollisionManager.init();
         PlayerManager.init();
         TowerManager.init();
         BoxManager.init();
@@ -255,6 +257,7 @@ class ArenaCore {
 
         //
 
+        CollisionManager.update( time, delta );
         PlayerManager.update( time, delta );
         this.removeOutOfRangeObjects();
 
