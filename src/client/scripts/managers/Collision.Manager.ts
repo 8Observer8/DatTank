@@ -3,7 +3,10 @@
  * DatTank Arena collision manager
 */
 
+import * as THREE from 'three';
 import * as Cannon from "cannon";
+
+import { GfxCore } from "./../graphics/Core.Gfx";
 
 //
 
@@ -24,12 +27,19 @@ class CollisionManagerCore {
             type:       type,
             body:       new Cannon.Body({ mass: ( isDynamic ) ? 1000 : 0 }),
             sensor:     false,
-            collision:  false
+            collision:  false,
+            visualObj:  null
         };
 
         if ( type === 'box' ) {
 
-            shape = new Cannon.Box( new Cannon.Vec3( object.size.x / 2, 10, object.size.z / 2 ) );
+            shape = new Cannon.Box( new Cannon.Vec3( object.size.x / 2, object.size.y / 2, object.size.z / 2 ) );
+
+            // collision box
+
+            let visualObj = new THREE.Mesh( new THREE.BoxGeometry( object.size.x, object.size.y, object.size.z ), new THREE.MeshBasicMaterial({ color: 0xff0000, opacity: 0.2, transparent: true }) );
+            GfxCore.scene.add( visualObj );
+            collisionBox.visualObj = visualObj;
 
         } else if ( type === 'circle' ) {
 
@@ -37,11 +47,27 @@ class CollisionManagerCore {
 
         }
 
-        collisionBox.body.position.set( object.position.x, 20, object.position.z );
+        collisionBox.body.position.set( object.position.x, object.position.y, object.position.z );
+        collisionBox.body.quaternion.setFromEuler( 0, object.rotation, 0, 'XYZ' );
+
         collisionBox.body['parent'] = object;
         collisionBox.body['name'] = object.type;
         collisionBox.body.addShape( shape );
         collisionBox.body.type = ( ! isDynamic ) ? Cannon.Body.STATIC : Cannon.Body.DYNAMIC;
+
+        if ( isDynamic ) {
+
+            collisionBox.body.addEventListener( 'collide', function ( e ) {
+
+                if ( e.body['name'] !== 'ground' ) {
+
+                    console.log( collisionBox.body['name'], e.body['name'] );
+
+                }
+
+            });
+
+        }
 
         //
 
@@ -67,14 +93,14 @@ class CollisionManagerCore {
                 if ( speed < 140 && object.parent.moveDirection.x ) {
 
                     let forceAmount = 5000 * ( 1 - speed / 140 );
-                    let force = new Cannon.Vec3( forceAmount * Math.sin( object.parent.rotation ), 0, forceAmount * Math.cos( object.parent.rotation ) );
+                    let force = new Cannon.Vec3( 0, 0, forceAmount );
                     if ( object.parent.moveDirection.x < 0 ) force = force.negate();
                     object.body.applyLocalImpulse( force, new Cannon.Vec3( 0, 0, 0 ), delta );
 
                 } else {
 
-                    object.body.velocity.x /= 1.025;
-                    object.body.velocity.z /= 1.025;
+                    object.body.velocity.x /= 1 + 0.05 * ( delta / 20 );
+                    object.body.velocity.z /= 1 + 0.05 * ( delta / 20 );
 
                 }
 
@@ -86,28 +112,27 @@ class CollisionManagerCore {
 
                 if ( speed > 5 && object.parent.moveDirection.x !== 0 ) {
 
-                    object.body.velocity.x += ( vx - object.body.velocity.x ) / 8;
-                    object.body.velocity.z += ( vz - object.body.velocity.z ) / 8;
+                    object.body.velocity.x += ( vx - object.body.velocity.x ) / 8 * ( delta / 20 );
+                    object.body.velocity.z += ( vz - object.body.velocity.z ) / 8 * ( delta / 20 );
 
                 }
 
                 //
-
-                // if ( forwardVelocity < 130 ) {
                 
-                    let dfv = forwardVelocity - object.parent['prevForwardVelocity'];
-                    console.log( dfv );
-                    dfv = movementDirecton * dfv;
-                    object.parent.gfx.rotateTankXAxis( - Math.sign( dfv ) * Math.min( Math.abs( dfv ), 8 ) / 100 / Math.PI );
-                    object.parent['prevForwardVelocity'] = forwardVelocity;
-
-                // }
+                let dfv = forwardVelocity - object.parent['prevForwardVelocity'];
+                dfv = movementDirecton * dfv;
+                object.parent.gfx.rotateTankXAxis( - Math.sign( dfv ) * Math.min( Math.abs( dfv ), 8 ) / 100 / Math.PI );
+                object.parent['prevForwardVelocity'] = forwardVelocity;
 
                 //
 
                 object.parent.position.set( object.body.position.x, object.body.position.y, object.body.position.z );
+                object.body.quaternion.setFromEuler( 0, object.parent.rotation, 0, 'XYZ' );
 
             }
+
+            object.visualObj.position.set( object.body.position.x, object.body.position.y + object.parent.size.y, object.body.position.z );
+            object.visualObj.quaternion.set( object.body.quaternion.x, object.body.quaternion.y, object.body.quaternion.z, object.body.quaternion.w );
 
         }
 
@@ -120,9 +145,8 @@ class CollisionManagerCore {
         // init world
 
         this.world = new Cannon.World();
-        this.world.gravity.set( 0, -9, 0 );
-        // this.world.defaultContactMaterial.contactEquationStiffness = 5e7;
-        // this.world.defaultContactMaterial.contactEquationRelaxation = 4;
+        this.world.gravity.set( 0, -20, 0 );
+        this.world.defaultContactMaterial.contactEquationStiffness = 100000;
         this.world.defaultContactMaterial.friction = 0;
 
         // add ground

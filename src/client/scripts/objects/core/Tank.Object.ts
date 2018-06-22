@@ -42,13 +42,14 @@ class TankObject {
 
     public position: OMath.Vec3 = new OMath.Vec3();
     public rotation: number = 0;
-    public size: OMath.Vec3 = new OMath.Vec3( 20, 10, 20 );
+    public size: OMath.Vec3 = new OMath.Vec3( 30, 10, 70 );
 
     public prevForwardVelocity: number = 0;
 
     protected network: TankNetwork = new TankNetwork();
     protected gfx: TankGfx = new TankGfx();
 
+    public collisionBox: any;
     public readonly type: string = 'Tank';
 
     //
@@ -201,20 +202,6 @@ class TankObject {
 
             this.gfx.toggleMovementSound( true );
 
-            // if ( this.moveDirection.x > 0 ) {
-
-            //     this.position.x += ( speed * Math.sin( this.rotation ) * delta );
-            //     this.position.z += ( speed * Math.cos( this.rotation ) * delta );
-
-            // } else if ( this.moveDirection.x < 0 ) {
-
-            //     this.position.x -= ( speed * Math.sin( this.rotation ) * delta );
-            //     this.position.z -= ( speed * Math.cos( this.rotation ) * delta );
-
-            // }
-
-            this.rotation = this.rotation;
-
             if ( this.moveDirection.y > 0 ) {
 
                 this.rotation += 0.001 * delta;
@@ -269,15 +256,15 @@ class TankObject {
 
         }
 
-        // if ( Math.abs( dx ) > 0.1 || Math.abs( dz ) > 0.1 ) {
+        if ( Math.abs( dx ) > 0.1 || Math.abs( dz ) > 0.1 ) {
 
-        //     this.positionCorrection.x -= dx;
-        //     this.positionCorrection.z -= dz;
+            this.positionCorrection.x -= dx;
+            this.positionCorrection.z -= dz;
 
-        //     this.position.x += dx;
-        //     this.position.z += dz;
+            this.collisionBox.body.position.x += dx;
+            this.collisionBox.body.position.z += dz;
 
-        // }
+        }
 
         //
 
@@ -325,7 +312,7 @@ class TankObject {
 
         this.id = params.id;
 
-        this.position.set( params.position.x, params.position.y, params.position.z );
+        this.position.set( params.position.x, 20, params.position.z );
         this.gfx.setPosition( this.position );
 
         this.health = params.health;

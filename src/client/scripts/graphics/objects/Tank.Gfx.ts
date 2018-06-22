@@ -22,7 +22,7 @@ import { BlastSmokeGfx } from '../effects/BlastSmoke.Gfx';
 
 class TankGfx {
 
-    private object: THREE.Object3D = new THREE.Object3D();
+    public object: THREE.Object3D = new THREE.Object3D();
     private topMesh: MorphBlendMesh;
     private baseMesh: MorphBlendMesh;
     private tank: TankObject;

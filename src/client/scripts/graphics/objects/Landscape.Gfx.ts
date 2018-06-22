@@ -9,7 +9,6 @@ import * as OMath from "./../../OMath/Core.OMath";
 import { GfxCore } from "./../Core.Gfx";
 import { ResourceManager } from "./../../managers/Resource.Manager";
 import { TeamManager } from '../../managers/Team.Manager';
-import { Scene } from 'three';
 
 //
 

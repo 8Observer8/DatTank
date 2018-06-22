@@ -13,6 +13,7 @@ import { TeamCore } from "./../../core/Team.Core";
 import { TeamManager } from "./../../managers/Team.Manager";
 import { HealthChangeLabelManager } from "./../../managers/HealthChangeLabel.Manager";
 import { BulletManager } from "./../../managers/Bullet.Manager";
+import { CollisionManager } from "./../../managers/Collision.Manager";
 
 //
 
@@ -30,6 +31,7 @@ class TowerObject {
     public topRotation: number;
     public targetTopRotation: number;
     public position: OMath.Vec3 = new OMath.Vec3();
+    public size: OMath.Vec3 = new OMath.Vec3( 50, 40, 50 );
 
     public title: string;
 
@@ -142,6 +144,8 @@ class TowerObject {
         this.setTopRotation( this.topRotation );
 
         this.changeTeam( this.team.id );
+
+        CollisionManager.addObject( this, 'box', false );
 
     };
 

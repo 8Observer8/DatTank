@@ -20,7 +20,7 @@ class TowerObject {
     public title: string;
     public team: TeamCore;
     public health: number = 100;
-    public size: OMath.Vec3 = new OMath.Vec3( 35, 35, 35 );
+    public size: OMath.Vec3 = new OMath.Vec3( 50, 40, 50 );
     public position: OMath.Vec3 = new OMath.Vec3();
     public rotation: number = 0;
     public newRotation: number = 0;
@@ -301,7 +301,7 @@ class TowerObject {
         this.sinceHitTime = Date.now();
 
         this.position.set( params.position.x, params.position.y, params.position.z );
-        // this.arena.collisionManager.addObject( this, 'box', false );
+        this.arena.collisionManager.addObject( this, 'box', false );
 
         this.network = new TowerNetwork( this );
 

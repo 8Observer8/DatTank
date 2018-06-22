@@ -68,14 +68,14 @@ class CollisionManager {
         let collisionBox = {
             parent:     object,
             type:       type,
-            body:       new Cannon.Body({ mass: ( isDynamic ) ? 100 : 0 }),
+            body:       new Cannon.Body({ mass: ( isDynamic ) ? 1000 : 0 }),
             sensor:     false,
             collision:  false
         };
 
         if ( type === 'box' ) {
 
-            shape = new Cannon.Box( new Cannon.Vec3( object.size.x / 2, 10, object.size.z / 2 ) );
+            shape = new Cannon.Box( new Cannon.Vec3( object.size.x / 2, object.size.y / 2, object.size.z / 2 ) );
 
         } else if ( type === 'circle' ) {
 
@@ -83,15 +83,17 @@ class CollisionManager {
 
         }
 
-        collisionBox.body.position.set( object.position.x, 40, object.position.z );
+        collisionBox.body.position.set( object.position.x, object.position.y, object.position.z );
+        collisionBox.body.quaternion.setFromEuler( 0, object.rotation, 0, 'XYZ' );
+
         collisionBox.body['parent'] = object;
         collisionBox.body['name'] = object.type;
         collisionBox.body.addShape( shape );
         collisionBox.body.type = ( ! isDynamic ) ? Cannon.Body.STATIC : Cannon.Body.DYNAMIC;
 
         if ( isDynamic ) {
-        
-            collisionBox.body.addEventListener( 'collide', function ( e ) {
+
+            collisionBox.body.addEventListener( 'collide', function ( e: any ) {
 
                 if ( e.body['name'] !== 'ground' ) {
 
@@ -115,26 +117,26 @@ class CollisionManager {
 
         let newObjectList = [];
 
-        for ( let i = 0, il = this.objects.length; i < il; i ++ ) {
+        // for ( let i = 0, il = this.objects.length; i < il; i ++ ) {
 
-            if ( this.objects[ i ].parent.type + this.objects[ i ].parent.id === object.type + object.id ) {
+        //     if ( this.objects[ i ].parent.type + this.objects[ i ].parent.id === object.type + object.id ) {
 
-                this.world.removeBody( this.objects[ i ].body );
-                continue;
+        //         this.world.removeBody( this.objects[ i ].body );
+        //         continue;
 
-            }
+        //     }
 
-            newObjectList.push( this.objects[ i ] );
+        //     newObjectList.push( this.objects[ i ] );
 
-        }
+        // }
 
-        this.objects = newObjectList;
+        // this.objects = newObjectList;
 
     };
 
     public clear () {
 
-        this.world.clear();
+        // this.world.clear();
         this.objects = null;
 
     };
@@ -148,88 +150,45 @@ class CollisionManager {
 
             if ( object.parent.type === 'Tank' ) {
 
-                let velocity = new Cannon.Vec3();
-                object.body.getVelocityAtWorldPoint( new Cannon.Vec3( 0, 0, 0 ), velocity );
+                let speed = object.body.velocity.distanceTo( new Cannon.Vec3( 0, object.body.velocity.y, 0 ) );
 
-                if ( velocity.distanceTo( new Cannon.Vec3() ) < 300 && object.parent.moveDirection.x ) {
-                
-                    let forceAmount = 1000;
-                    let force = new Cannon.Vec3( forceAmount * Math.sin( object.parent.rotation ), 0, forceAmount * Math.cos( object.parent.rotation ) );
+                if ( speed < 140 && object.parent.moveDirection.x ) {
+
+                    let forceAmount = 5000 * ( 1 - speed / 140 );
+                    let force = new Cannon.Vec3( 0, 0, forceAmount );
                     if ( object.parent.moveDirection.x < 0 ) force = force.negate();
                     object.body.applyLocalImpulse( force, new Cannon.Vec3( 0, 0, 0 ), delta );
-                    console.log( force, object.body.position, velocity.distanceTo( new Cannon.Vec3() ) );
 
                 } else {
 
-                    object.body.velocity.x /= 2;
-                    object.body.velocity.y /= 2;
-                    object.body.velocity.z /= 2;
+                    object.body.velocity.x /= 1 + 0.05 * ( delta / 20 );
+                    object.body.velocity.z /= 1 + 0.05 * ( delta / 20 );
 
                 }
 
+                let direction = ( object.parent.moveDirection.x > 0 ) ? 0 : Math.PI;
+                let vx = speed * Math.sin( object.parent.rotation + direction );
+                let vz = speed * Math.cos( object.parent.rotation + direction );
+
+                if ( speed > 5 && object.parent.moveDirection.x !== 0 ) {
+
+                    object.body.velocity.x += ( vx - object.body.velocity.x ) / 8 * ( delta / 20 );
+                    object.body.velocity.z += ( vz - object.body.velocity.z ) / 8 * ( delta / 20 );
+
+                }
+
+                //
+
                 object.parent.position.set( object.body.position.x, object.body.position.y, object.body.position.z );
+                object.body.quaternion.setFromEuler( 0, object.parent.rotation, 0, 'XYZ' );
 
             }
-
-        //         object.body.position[0] = ( object.parent.deltaPosition ) ? object.parent.position.x + 3 * object.parent.deltaPosition.x : object.parent.position.x;
-        //         object.body.position[1] = ( object.parent.deltaPosition ) ? object.parent.position.z + 3 * object.parent.deltaPosition.z : object.parent.position.z;
-        //         object.body.angle = object.parent.rotation;
-
-        //     } else if ( object.parent.type === 'Bullet' ) {
-
-        //         if ( object.parent.active ) {
-
-        //             object.parent.update( delta );
-        //             object.body.position[0] = object.parent.position.x;
-        //             object.body.position[1] = object.parent.position.z;
-
-        //             if ( Math.abs( object.body.position[0] ) > 1270 || Math.abs( object.body.position[1] ) > 1270 ) {
-
-        //                 object.parent.detonate();
-
-        //             }
-
-        //         }
-
-        //     }
 
         }
 
         //
 
         this.world.step( delta / 1000 );
-
-        //
-
-        // for ( let i = 0, il = this.objects.length; i < il; i ++ ) {
-
-        //     object = this.objects[ i ];
-
-        //     if ( object.parent.type !== 'Tank' ) continue;
-
-        //     if ( Math.abs( object.parent.position.x + object.parent.deltaPosition.x ) > 1270 ||
-        //          Math.abs( object.parent.position.z + object.parent.deltaPosition.z ) > 1270 ) {
-
-        //         object.parent.setMovement( 0, object.parent.moveDirection.y );
-        //         continue;
-
-        //     }
-
-        //     if ( ! object.collision && object.parent.deltaPosition ) {
-
-        //         object.parent.position.x += object.parent.deltaPosition.x;
-        //         object.parent.position.z += object.parent.deltaPosition.z;
-
-        //         object.parent.deltaPosition.x = 0;
-        //         object.parent.deltaPosition.z = 0;
-
-        //     } else {
-
-        //         object.parent.setMovement( 0, object.parent.moveDirection.y );
-
-        //     }
-
-        // }
 
     };
 
@@ -306,7 +265,9 @@ class CollisionManager {
         // init world
 
         this.world = new Cannon.World();
-        this.world.gravity.set( 0, -9.82, 0 );
+        this.world.gravity.set( 0, -20, 0 );
+        this.world.defaultContactMaterial.contactEquationStiffness = 100000;
+        this.world.defaultContactMaterial.friction = 0;
 
         // add ground
 
@@ -316,11 +277,6 @@ class CollisionManager {
         groundBody.addShape( groundShape );
         groundBody.quaternion.setFromAxisAngle( new Cannon.Vec3( 1, 0, 0 ), - Math.PI / 2 );
         this.world.addBody( groundBody );
-
-        // this.world = new p2.World({ gravity: [ 0, 0 ] });
-        // this.world.applyDamping = false;
-        // this.world.applyGravity = false;
-        // this.world.applySpringForces = false;
 
     };
 

@@ -37,7 +37,7 @@ class TankObject {
     public health: number = 100;
     public ammo: number;
     public viewRange: number = 750;
-    public size: OMath.Vec3 = new OMath.Vec3( 40, 10, 20 );
+    public size: OMath.Vec3 = new OMath.Vec3( 30, 10, 70 );
 
     public range: number = 300;
     public armour: number;
