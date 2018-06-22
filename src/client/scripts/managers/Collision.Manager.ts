@@ -43,7 +43,13 @@ class CollisionManagerCore {
 
         } else if ( type === 'circle' ) {
 
-            shape = new Cannon.Cylinder( object.radius, object.radius, 20, 8 );
+            shape = new Cannon.Cylinder( object.radius, object.radius, 40, 6 );
+
+            // collision cylinder
+
+            let visualObj = new THREE.Mesh( new THREE.CylinderGeometry( object.radius, object.radius, 40 ), new THREE.MeshBasicMaterial({ color: 0xff0000, opacity: 0.2, transparent: true }) );
+            // GfxCore.scene.add( visualObj );
+            collisionBox.visualObj = visualObj;
 
         }
 
@@ -131,7 +137,7 @@ class CollisionManagerCore {
 
             }
 
-            object.visualObj.position.set( object.body.position.x, object.body.position.y + object.parent.size.y / 2, object.body.position.z );
+            object.visualObj.position.set( object.body.position.x, object.body.position.y + ( object.parent.size ) ? object.parent.size.y / 2 : 40, object.body.position.z );
             object.visualObj.quaternion.set( object.body.quaternion.x, object.body.quaternion.y, object.body.quaternion.z, object.body.quaternion.w );
 
         }

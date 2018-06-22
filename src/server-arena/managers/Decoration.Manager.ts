@@ -28,18 +28,18 @@ import { Ruins1Decoration } from "./../objects/decorations/ruins/Ruins1.Decorati
 class DecorationManager {
 
     private static structure = {
-        // 'Tree1':   { count: 10 },
-        // 'Tree2':   { count: 20 },
-        // 'Tree3':   { count: 10 },
-        // 'Tree4':   { count: 10 },
-        // 'Tree5':   { count: 20 },
-        // 'Tree6':   { count: 20 },
-        // 'Tree7':   { count: 20 },
-        // 'Tree8':   { count: 20 },
-        // 'Rock1':   { count: 5 },
-        // 'Rock2':   { count: 5 },
-        // 'Rock3':   { count: 20 },
-        // 'Rock4':   { count: 10 },
+        'Tree1':   { count: 10 },
+        'Tree2':   { count: 20 },
+        'Tree3':   { count: 10 },
+        'Tree4':   { count: 10 },
+        'Tree5':   { count: 20 },
+        'Tree6':   { count: 20 },
+        'Tree7':   { count: 20 },
+        'Tree8':   { count: 20 },
+        'Rock1':   { count: 5 },
+        'Rock2':   { count: 5 },
+        'Rock3':   { count: 20 },
+        'Rock4':   { count: 10 },
         // 'Ruins1':  { count: 0 }
     };
 

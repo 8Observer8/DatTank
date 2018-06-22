@@ -27,7 +27,7 @@ class Rock2Decoration extends DecorationObject {
 
         let sizeXZ = 5 * Math.random() + 20;
         this.scale = new OMath.Vec3( sizeXZ, 5 * Math.random() + 20, sizeXZ );
-        this.size.set( 2 * this.scale.x, 0.8 * this.scale.y, 7 * this.scale.z );
+        this.size.set( 7 * this.scale.x, 100, 2.5 * this.scale.z );
         this.rotation = Math.PI / 2;
 
         this.arena.collisionManager.addObject( this, 'box', false );

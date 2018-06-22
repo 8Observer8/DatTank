@@ -27,11 +27,11 @@ class Rock1Decoration extends DecorationObject {
 
         let sizeXZ = 5 * Math.random() + 20;
         this.scale = new OMath.Vec3( sizeXZ, 5 * Math.random() + 20, sizeXZ );
-        this.size.set( 0.8 * this.scale.x, 0.8 * this.scale.y, 0.8 * this.scale.z );
+        this.size.set( 1.2 * this.scale.x, 100, 1.2 * this.scale.z );
         this.rotation = Math.PI / 2;
 
-        this.arena.collisionManager.addObject( { position: { x: this.position.x, z: this.position.z + 50 }, radius: 14 }, 'circle', false );
-        this.arena.collisionManager.addObject( { position: { x: this.position.x, z: this.position.z - 50 }, radius: 14 }, 'circle', false );
+        this.arena.collisionManager.addObject( { rotation: 0, position: { x: this.position.x, y: 0, z: this.position.z + 40 }, size: this.size }, 'box', false );
+        this.arena.collisionManager.addObject( { rotation: 0, position: { x: this.position.x, y: 0, z: this.position.z - 45 }, size: this.size }, 'box', false );
 
     };
 

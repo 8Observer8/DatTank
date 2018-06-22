@@ -27,11 +27,10 @@ class Tree2Decoration extends DecorationObject {
 
         let sizeXZ = 15 * Math.random() + 30;
         this.scale.set( sizeXZ, 15 * Math.random() + 30, sizeXZ );
-        this.size.set( 0.8 * this.scale.x, 0.8 * this.scale.y, 0.8 * this.scale.z );
+        this.size.set( 20, 40, 20 );
         this.rotation = Math.random() * Math.PI * 2;
-        this.radius = 4;
 
-        this.arena.collisionManager.addObject( this, 'circle', false );
+        this.arena.collisionManager.addObject( this, 'box', false );
 
     };
 
