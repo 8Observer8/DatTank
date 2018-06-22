@@ -71,38 +71,38 @@ class ArenaNetwork {
 
         let players = [];
         let player;
-        let playerBinSize = 25;
+        let playerBinSize = 26;
 
         for ( let i = 0, il = data.length / playerBinSize; i < il; i ++ ) {
 
             player = {
-                id:             data[ i * playerBinSize + 11 ],
+                id:             data[ i * playerBinSize + 12 ],
                 login:          '',
                 team:           data[ i * playerBinSize + 1 ],
                 tank:           {
                     id:             data[ i * playerBinSize + 0 ],
                     position:   {
                         x:  data[ i * playerBinSize + 2 ],
-                        y:  0,
-                        z:  data[ i * playerBinSize + 3 ]
+                        y:  data[ i * playerBinSize + 3 ],
+                        z:  data[ i * playerBinSize + 4 ]
                     },
-                    rotation:       data[ i * playerBinSize + 4 ] / 1000,
-                    rotationTop:    data[ i * playerBinSize + 5 ] / 1000,
-                    health:         data[ i * playerBinSize + 6 ],
+                    rotation:       data[ i * playerBinSize + 5 ] / 1000,
+                    rotationTop:    data[ i * playerBinSize + 6 ] / 1000,
+                    health:         data[ i * playerBinSize + 7 ],
                     moveDirection:  {
-                        x:  data[ i * playerBinSize + 7 ],
-                        y:  data[ i * playerBinSize + 8 ]
+                        x:  data[ i * playerBinSize + 8 ],
+                        y:  data[ i * playerBinSize + 9 ]
                     },
-                    typeId: data[ i * playerBinSize + 9 ],
-                    ammo:   data[ i * playerBinSize + 10 ]
+                    typeId: data[ i * playerBinSize + 10 ],
+                    ammo:   data[ i * playerBinSize + 11 ]
                 }
             };
 
             for ( var j = 0; j < 13; j ++ ) {
 
-                if ( data[ i * playerBinSize + 12 + j ] !== 0 ) {
+                if ( data[ i * playerBinSize + 13 + j ] !== 0 ) {
                 
-                    player.login += String.fromCharCode( data[ i * playerBinSize + 12 + j ] );
+                    player.login += String.fromCharCode( data[ i * playerBinSize + 13 + j ] );
 
                 }
 

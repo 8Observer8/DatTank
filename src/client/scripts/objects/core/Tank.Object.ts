@@ -42,7 +42,7 @@ class TankObject {
 
     public position: OMath.Vec3 = new OMath.Vec3();
     public rotation: number = 0;
-    public size: OMath.Vec3 = new OMath.Vec3( 30, 10, 70 );
+    public size: OMath.Vec3 = new OMath.Vec3( 30, 25, 70 );
 
     public prevForwardVelocity: number = 0;
 
@@ -312,7 +312,9 @@ class TankObject {
 
         this.id = params.id;
 
-        this.position.set( params.position.x, 20, params.position.z );
+        params.position.y += 15;
+
+        this.position.set( params.position.x, params.position.y, params.position.z );
         this.gfx.setPosition( this.position );
 
         this.health = params.health;

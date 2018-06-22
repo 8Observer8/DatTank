@@ -246,7 +246,7 @@ class TankNetwork {
 
         //
 
-        let tankDataSize = 24 + 13 * 2;
+        let tankDataSize = 13 * 2 + 13 * 2;
         let buffer = new ArrayBuffer( 2 + tankDataSize * tanks.length );
         let bufferView = new Int16Array( buffer );
         let item = 0;
@@ -258,21 +258,22 @@ class TankNetwork {
             bufferView[ i + 0 ] = tank.id;
             bufferView[ i + 1 ] = tank.team.id;
             bufferView[ i + 2 ] = tank.position.x;
-            bufferView[ i + 3 ] = tank.position.z;
-            bufferView[ i + 4 ] = tank.rotation * 1000;
-            bufferView[ i + 5 ] = tank.rotationTop * 1000;
-            bufferView[ i + 6 ] = tank.health;
-            bufferView[ i + 7 ] = tank.moveDirection.x;
-            bufferView[ i + 8 ] = tank.moveDirection.y;
-            bufferView[ i + 9 ] = tank.typeId;
-            bufferView[ i + 10 ] = tank.ammo;
-            bufferView[ i + 11 ] = tank.player.id;
+            bufferView[ i + 3 ] = tank.position.y;
+            bufferView[ i + 4 ] = tank.position.z;
+            bufferView[ i + 5 ] = tank.rotation * 1000;
+            bufferView[ i + 6 ] = tank.rotationTop * 1000;
+            bufferView[ i + 7 ] = tank.health;
+            bufferView[ i + 8 ] = tank.moveDirection.x;
+            bufferView[ i + 9 ] = tank.moveDirection.y;
+            bufferView[ i + 10 ] = tank.typeId;
+            bufferView[ i + 11 ] = tank.ammo;
+            bufferView[ i + 12 ] = tank.player.id;
 
             for ( let j = 0, jl = tank.player.login.length; j < jl; j ++ ) {
 
                 if ( tank.player.login[ j ] ) {
 
-                    bufferView[ i + 12 + j ] = + tank.player.login[ j ].charCodeAt( 0 ).toString( 10 );
+                    bufferView[ i + 13 + j ] = + tank.player.login[ j ].charCodeAt( 0 ).toString( 10 );
 
                 }
 

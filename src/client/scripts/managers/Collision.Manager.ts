@@ -38,7 +38,7 @@ class CollisionManagerCore {
             // collision box
 
             let visualObj = new THREE.Mesh( new THREE.BoxGeometry( object.size.x, object.size.y, object.size.z ), new THREE.MeshBasicMaterial({ color: 0xff0000, opacity: 0.2, transparent: true }) );
-            GfxCore.scene.add( visualObj );
+            // GfxCore.scene.add( visualObj );
             collisionBox.visualObj = visualObj;
 
         } else if ( type === 'circle' ) {
@@ -126,12 +126,12 @@ class CollisionManagerCore {
 
                 //
 
-                object.parent.position.set( object.body.position.x, object.body.position.y, object.body.position.z );
+                object.parent.position.set( object.body.position.x, object.body.position.y - 10, object.body.position.z );
                 object.body.quaternion.setFromEuler( 0, object.parent.rotation, 0, 'XYZ' );
 
             }
 
-            object.visualObj.position.set( object.body.position.x, object.body.position.y + object.parent.size.y, object.body.position.z );
+            object.visualObj.position.set( object.body.position.x, object.body.position.y + object.parent.size.y / 2, object.body.position.z );
             object.visualObj.quaternion.set( object.body.quaternion.x, object.body.quaternion.y, object.body.quaternion.z, object.body.quaternion.w );
 
         }
@@ -146,7 +146,7 @@ class CollisionManagerCore {
 
         this.world = new Cannon.World();
         this.world.gravity.set( 0, -20, 0 );
-        this.world.defaultContactMaterial.contactEquationStiffness = 100000;
+        this.world.defaultContactMaterial.contactEquationStiffness = 200000;
         this.world.defaultContactMaterial.friction = 0;
 
         // add ground

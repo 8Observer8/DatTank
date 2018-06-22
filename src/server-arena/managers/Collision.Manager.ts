@@ -179,7 +179,7 @@ class CollisionManager {
 
                 //
 
-                object.parent.position.set( object.body.position.x, object.body.position.y, object.body.position.z );
+                object.parent.position.set( object.body.position.x, object.body.position.y - 10, object.body.position.z );
                 object.body.quaternion.setFromEuler( 0, object.parent.rotation, 0, 'XYZ' );
 
             }
@@ -266,7 +266,7 @@ class CollisionManager {
 
         this.world = new Cannon.World();
         this.world.gravity.set( 0, -20, 0 );
-        this.world.defaultContactMaterial.contactEquationStiffness = 100000;
+        this.world.defaultContactMaterial.contactEquationStiffness = 200000;
         this.world.defaultContactMaterial.friction = 0;
 
         // add ground

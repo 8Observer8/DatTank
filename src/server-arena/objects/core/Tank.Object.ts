@@ -37,7 +37,7 @@ class TankObject {
     public health: number = 100;
     public ammo: number;
     public viewRange: number = 750;
-    public size: OMath.Vec3 = new OMath.Vec3( 30, 10, 70 );
+    public size: OMath.Vec3 = new OMath.Vec3( 30, 25, 70 );
 
     public range: number = 300;
     public armour: number;
@@ -157,7 +157,7 @@ class TankObject {
         this.rotation = Math.random() * Math.PI * 2;
         this.rotationTop = - Math.PI / 2;
 
-        this.collisionBox['body'].position.set( this.position.x, 40, this.position.z );
+        this.collisionBox['body'].position.set( this.position.x, this.position.y, this.position.z );
 
     };
 
@@ -382,36 +382,13 @@ class TankObject {
 
     public updatePosition ( delta: number ) {
 
-        if ( this.moveDirection.x !== 0 || this.moveDirection.y !== 0 ) {
+        if ( this.moveDirection.y > 0 ) {
 
-            // if ( this.moveDirection.x > 0 ) {
+            this.rotation += 0.001 * delta;
 
-            //     this.deltaPosition.x = + this.moveSpeed * Math.sin( this.rotation ) * delta;
-            //     this.deltaPosition.z = + this.moveSpeed * Math.cos( this.rotation ) * delta;
+        } else if ( this.moveDirection.y < 0 ) {
 
-            // } else if ( this.moveDirection.x < 0 ) {
-
-            //     this.deltaPosition.x = - this.moveSpeed * Math.sin( this.rotation ) * delta;
-            //     this.deltaPosition.z = - this.moveSpeed * Math.cos( this.rotation ) * delta;
-
-            // } else {
-
-            //     this.deltaPosition.x = 0;
-            //     this.deltaPosition.z = 0;
-
-            // }
-
-            //
-
-            if ( this.moveDirection.y > 0 ) {
-
-                this.rotation += 0.001 * delta;
-
-            } else if ( this.moveDirection.y < 0 ) {
-
-                this.rotation -= 0.001 * delta;
-
-            }
+            this.rotation -= 0.001 * delta;
 
         }
 

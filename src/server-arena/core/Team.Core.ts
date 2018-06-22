@@ -11,11 +11,11 @@ import { PlayerCore } from "./Player.Core";
 class TeamCore {
 
     private static StartPositions = {
-        '0':        new OMath.Vec3(   950, 1,   950 ),
-        '1':        new OMath.Vec3( - 950, 1,   950 ),
-        '2':        new OMath.Vec3(   950, 1, - 950 ),
-        '3':        new OMath.Vec3( - 950, 1, - 950 ),
-        '1000':     new OMath.Vec3(     0, 0,     0 ),
+        '0':        new OMath.Vec3(   950, 10,   950 ),
+        '1':        new OMath.Vec3( - 950, 10,   950 ),
+        '2':        new OMath.Vec3(   950, 10, - 950 ),
+        '3':        new OMath.Vec3( - 950, 10, - 950 ),
+        '1000':     new OMath.Vec3(     0, 10,     0 ),
     };
 
     public id: number;
