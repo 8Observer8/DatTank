@@ -137,7 +137,7 @@ class CollisionManagerCore {
 
             }
 
-            object.visualObj.position.set( object.body.position.x, object.body.position.y + ( object.parent.size ) ? object.parent.size.y / 2 : 40, object.body.position.z );
+            object.visualObj.position.set( object.body.position.x, object.body.position.y + ( ( object.parent.size ) ? object.parent.size.y / 2 : 40 ), object.body.position.z );
             object.visualObj.quaternion.set( object.body.quaternion.x, object.body.quaternion.y, object.body.quaternion.z, object.body.quaternion.w );
 
         }

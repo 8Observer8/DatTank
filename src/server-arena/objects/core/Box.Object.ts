@@ -21,8 +21,9 @@ class BoxObject {
     public arena: ArenaCore;
     public id: number;
     public removed: boolean = false;
-    public radius: number = 10;
+    public size: OMath.Vec3 = new OMath.Vec3( 5, 5, 5 );
     public position: OMath.Vec3 = new OMath.Vec3();
+    public rotation: number = 0;
     public typeId: number;
     public amount: number = 0;
 
@@ -46,7 +47,7 @@ class BoxObject {
         this.arena = arena;
 
         this.position.copy( params.position );
-        // this.arena.collisionManager.addObject( this, 'circle', false );
+        this.arena.collisionManager.addObject( this, 'box', false, true );
 
     };
 

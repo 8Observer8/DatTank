@@ -62,7 +62,7 @@ class CollisionManager {
 
     };
 
-    public addObject ( object: any, type: string = 'circle', isDynamic: boolean ) {
+    public addObject ( object: any, type: string = 'circle', isDynamic: boolean, onlyIntersect?: boolean ) {
 
         let shape;
         let collisionBox = {
@@ -83,6 +83,8 @@ class CollisionManager {
 
         }
 
+        if ( onlyIntersect ) collisionBox.body.collisionResponse = false;
+
         collisionBox.body.position.set( object.position.x, object.position.y, object.position.z );
         collisionBox.body.quaternion.setFromEuler( 0, object.rotation, 0, 'XYZ' );
 
@@ -93,11 +95,14 @@ class CollisionManager {
 
         if ( isDynamic ) {
 
-            collisionBox.body.addEventListener( 'collide', function ( e: any ) {
+            collisionBox.body.addEventListener( 'collide', ( e: any ) => {
 
-                if ( e.body['name'] !== 'ground' ) {
+                if ( e.body['name'] === 'ground' ) return;
 
-                    console.log( collisionBox.body['name'], e.body['name'] );
+                if ( e.body['name'] === 'Box' && object.type === 'Tank' ) {
+
+                    e.body.parent.pickUp( object );
+                    this.arena.boxManager.remove( e.body.parent );
 
                 }
 
@@ -117,20 +122,20 @@ class CollisionManager {
 
         let newObjectList = [];
 
-        // for ( let i = 0, il = this.objects.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.objects.length; i < il; i ++ ) {
 
-        //     if ( this.objects[ i ].parent.type + this.objects[ i ].parent.id === object.type + object.id ) {
+            if ( this.objects[ i ].parent.type + this.objects[ i ].parent.id === object.type + object.id ) {
 
-        //         this.world.removeBody( this.objects[ i ].body );
-        //         continue;
+                this.world.remove( this.objects[ i ].body );
+                continue;
 
-        //     }
+            }
 
-        //     newObjectList.push( this.objects[ i ] );
+            newObjectList.push( this.objects[ i ] );
 
-        // }
+        }
 
-        // this.objects = newObjectList;
+        this.objects = newObjectList;
 
     };
 
