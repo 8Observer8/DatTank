@@ -22,41 +22,44 @@ class CollisionManager {
 
     public isPlaceFree ( position: OMath.Vec3, radius: number ) {
 
-        // let body, shape;
-        // let n = this.world.narrowphase;
-        // let dummyBody = new p2.Body({ position: [ position.x, position.z ] });
-        // let dummyShape = new p2.Circle({ radius: radius });
-        // dummyBody.addShape( dummyShape );
+        let body, shape;
+        let n = this.world['narrowphase'];
+        let dummyBody = new Cannon.Body({ mass: 0 });
+        dummyBody.position.set( position.x, position.y, position.z );
+        dummyBody.type = Cannon.Body.STATIC;
+        dummyBody.collisionResponse = false;
 
-        // let hitTestVec = p2.vec2.create();
+        let dummyShape = new Cannon.Box( new Cannon.Vec3( radius / 2, 100, radius / 2 ) );
+        dummyBody.addShape( dummyShape );
 
-        // // Check bodies
+        // Check bodies
 
-        // for ( let i = 0, il = this.objects.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.objects.length; i < il; i ++ ) {
 
-        //     body = this.objects[ i ].body;
+            body = this.objects[ i ].body;
+            shape = body.shapes[0];
 
-        //     for ( let j = 0, jl = body.shapes.length; j !== jl; j ++ ) {
+            if ( shape instanceof Cannon.Box ) {
 
-        //         shape = body.shapes[ j ];
+                let tmpResult = n.result;
+                n.result = [];
+                n.currentContactMaterial = this.world.defaultContactMaterial;
 
-        //         // Get shape world position + angle
+                n['boxBox']( shape, dummyShape, body.position, dummyBody.position, body.quaternion, dummyBody.quaternion, body, dummyBody );
 
-        //         p2.vec2.rotate( hitTestVec, shape.position, body.angle );
-        //         p2.vec2.add( hitTestVec, hitTestVec, body.position );
+                let result = n.result.length;
+                n.result = tmpResult;
+                n.currentContactMaterial = false;
 
-        //         let angle = shape.angle + body.angle;
+                if ( result ) {
 
-        //         if ( ( shape instanceof p2.Circle && n['circleCircle']( dummyBody, dummyShape, dummyBody.position, 0, body, shape, body.position, 0, true ) ) ||
-        //              ( shape instanceof p2.Convex && n['circleConvex']( dummyBody, dummyShape, dummyBody.position, 0, body, shape, body.position, angle, true ) ) ) {
+                    return false;
 
-        //             return false;
+                }
 
-        //         }
+            }
 
-        //     }
-
-        // }
+        }
 
         return true;
 

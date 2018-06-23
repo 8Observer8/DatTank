@@ -15,7 +15,7 @@ import { HealthBoxObject } from "./../objects/boxes/Health.Box";
 
 class BoxManager {
 
-    private boxNum: number = 25;
+    private boxNum: number = 20;
     private boxes: Array<BoxObject> = [];
     private arena: ArenaCore;
 
@@ -28,7 +28,7 @@ class BoxManager {
 
         params.type = params.type || 'Ammo';
 
-        while ( ! position || ! this.arena.collisionManager.isPlaceFree( new OMath.Vec3( position.x, 0, position.z ), 50 ) ) {
+        while ( ! position || ! this.arena.collisionManager.isPlaceFree( new OMath.Vec3( position.x, 10, position.z ), 30 ) ) {
 
             position = new OMath.Vec3( Math.floor( 2000 * ( Math.random() - 0.5 ) ), 20, Math.floor( 2000 * ( Math.random() - 0.5 ) ) );
 
@@ -56,6 +56,8 @@ class BoxManager {
     };
 
     public remove ( box: BoxObject ) {
+
+        if ( box.removed ) return;
 
         let newBoxList = [];
         box.removed = true;
