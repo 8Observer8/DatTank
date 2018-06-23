@@ -4,7 +4,6 @@
 */
 
 import * as Cannon from "cannon";
-import * as p2 from "p2";
 
 import * as OMath from "./../OMath/Core.OMath";
 import { ArenaCore } from "./../core/Arena.Core";
@@ -98,18 +97,7 @@ class CollisionManager {
 
         if ( isDynamic ) {
 
-            collisionBox.body.addEventListener( 'collide', ( e: any ) => {
-
-                if ( e.body['name'] === 'ground' ) return;
-
-                if ( e.body['name'] === 'Box' && object.type === 'Tank' ) {
-
-                    e.body.parent.pickUp( object );
-                    this.arena.boxManager.remove( e.body.parent );
-
-                }
-
-            });
+            collisionBox.body.addEventListener( 'collide', this.collisionEvent.bind( this, object ) );
 
         }
 
@@ -202,63 +190,14 @@ class CollisionManager {
 
     //
 
-    private collisionStart ( event: any ) {
+    private collisionEvent ( object: any, event: any ) {
 
-        let object, target, obstacle;
+        if ( event.body['name'] === 'ground' ) return;
 
-        for ( let i = 0; i < this.objects.length; i ++ ) {
+        if ( event.body['name'] === 'Box' && object.type === 'Tank' ) {
 
-            object = this.objects[ i ];
-
-            if ( event.bodyA === object.body || event.bodyB === object.body ) {
-
-                obstacle = ( event.bodyA === object.body ) ? event.bodyB : event.bodyA;
-
-                if ( object.parent.type === 'Tank' && obstacle.parent.type !== 'Bullet' && obstacle.parent.type !== 'Box' ) {
-
-                    object.collision = true;
-
-                } else if ( object.parent.type === 'Bullet' && object.parent.active && obstacle.parent.type !== 'Box' ) {
-
-                    target = ( event.bodyA == object.body ) ? event.bodyB : event.bodyA;
-                    if ( target.parent.type !== 'Bullet' ) {
-
-                        object.parent.detonate( target.parent );
-
-                    }
-
-                } else if ( object.parent.type === 'Tank' && obstacle.parent.type === 'Box' && ! obstacle.parent.removed ) {
-
-                    obstacle.parent.pickUp( object.parent );
-                    this.arena.boxManager.remove( obstacle.parent );
-
-                }
-
-            }
-
-        }
-
-    };
-
-    private collisionEnd ( event: any ) {
-
-        let object, obstacle;
-
-        for ( let i = 0; i < this.objects.length; i ++ ) {
-
-            object = this.objects[ i ];
-
-            if ( event.bodyA === object.body || event.bodyB === object.body ) {
-
-                obstacle = ( event.bodyA === object.body ) ? event.bodyB : event.bodyA;
-
-                if ( object.parent.type === 'Tank' && obstacle.parent.type !== 'Bullet' ) {
-
-                    object.collision = false;
-
-                }
-
-            }
+            event.body.parent.pickUp( object );
+            this.arena.boxManager.remove( event.body.parent );
 
         }
 
