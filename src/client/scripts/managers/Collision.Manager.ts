@@ -3,8 +3,10 @@
  * DatTank Arena collision manager
 */
 
-import * as THREE from 'three';
+
 import * as Cannon from "cannon";
+import * as THREE from "three";
+import * as OMath from "./../OMath/Core.OMath";
 
 import { GfxCore } from "./../graphics/Core.Gfx";
 
@@ -163,6 +165,13 @@ class CollisionManagerCore {
         groundBody.addShape( groundShape );
         groundBody.quaternion.setFromAxisAngle( new Cannon.Vec3( 1, 0, 0 ), - Math.PI / 2 );
         this.world.addBody( groundBody );
+
+        // add map borders
+
+        this.addObject( { rotation: 0, position: new OMath.Vec3(   1315, 0,      0 ), size: new OMath.Vec3( 30, 100, 2630 ) }, 'box', false );
+        this.addObject( { rotation: 0, position: new OMath.Vec3( - 1315, 0,      0 ), size: new OMath.Vec3( 30, 100, 2630 ) }, 'box', false );
+        this.addObject( { rotation: 0, position: new OMath.Vec3(      0, 0,   1315 ), size: new OMath.Vec3( 2630, 100, 30 ) }, 'box', false );
+        this.addObject( { rotation: 0, position: new OMath.Vec3(      0, 0, - 1315 ), size: new OMath.Vec3( 2630, 100, 30 ) }, 'box', false );
 
     };
 
