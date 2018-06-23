@@ -85,6 +85,27 @@ class CollisionManagerCore {
 
     };
 
+    public removeObject ( object: any ) {
+
+        let newObjectList = [];
+
+        for ( let i = 0, il = this.objects.length; i < il; i ++ ) {
+
+            if ( this.objects[ i ].parent.type + this.objects[ i ].parent.id === object.type + object.id ) {
+
+                this.world.remove( this.objects[ i ].body );
+                continue;
+
+            }
+
+            newObjectList.push( this.objects[ i ] );
+
+        }
+
+        this.objects = newObjectList;
+
+    };
+
     public update ( time: number, delta: number ) {
 
         if ( delta === 0 ) return;

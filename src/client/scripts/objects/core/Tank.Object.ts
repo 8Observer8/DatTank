@@ -276,6 +276,7 @@ class TankObject {
 
         this.gfx.dispose();
         this.network.dispose();
+        CollisionManager.removeObject( this );
 
     };
 

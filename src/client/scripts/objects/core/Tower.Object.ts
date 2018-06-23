@@ -55,7 +55,7 @@ class TowerObject {
 
             this.health = 100;
 
-            if ( Arena.me && killerId === Arena.me.id ) {
+            if ( killerId === Arena.meId ) {
 
                 Logger.newEvent( 'TowerCached', 'game' );
 
@@ -134,6 +134,7 @@ class TowerObject {
 
         this.gfx.dispose();
         this.network.dispose();
+        CollisionManager.removeObject( this );
 
     };
 
