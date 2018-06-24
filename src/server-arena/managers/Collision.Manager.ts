@@ -156,37 +156,45 @@ class CollisionManager {
 
             if ( object.parent.type === 'Tank' ) {
 
-                let speed = object.body.velocity.distanceTo( new Cannon.Vec3( 0, object.body.velocity.y, 0 ) );
+                if ( object.parent.health <= 0 ) {
 
-                if ( speed < 140 && object.parent.moveDirection.x ) {
-
-                    let forceAmount = 5000 * ( 1 - speed / 140 );
-                    let force = new Cannon.Vec3( 0, 0, forceAmount );
-                    if ( object.parent.moveDirection.x < 0 ) force = force.negate();
-                    object.body.applyLocalImpulse( force, new Cannon.Vec3( 0, 0, 0 ), delta );
+                    object.body.velocity.set( 0, 0, 0 );
 
                 } else {
 
-                    object.body.velocity.x /= 1 + 0.05 * ( delta / 20 );
-                    object.body.velocity.z /= 1 + 0.05 * ( delta / 20 );
+                    let speed = object.body.velocity.distanceTo( new Cannon.Vec3( 0, object.body.velocity.y, 0 ) );
+
+                    if ( speed < 140 && object.parent.moveDirection.x ) {
+
+                        let forceAmount = 5000 * ( 1 - speed / 140 );
+                        let force = new Cannon.Vec3( 0, 0, forceAmount );
+                        if ( object.parent.moveDirection.x < 0 ) force = force.negate();
+                        object.body.applyLocalImpulse( force, new Cannon.Vec3( 0, 0, 0 ), delta );
+
+                    } else {
+
+                        object.body.velocity.x /= 1 + 0.05 * ( delta / 20 );
+                        object.body.velocity.z /= 1 + 0.05 * ( delta / 20 );
+
+                    }
+
+                    let direction = ( object.parent.moveDirection.x > 0 ) ? 0 : Math.PI;
+                    let vx = speed * Math.sin( object.parent.rotation + direction );
+                    let vz = speed * Math.cos( object.parent.rotation + direction );
+
+                    if ( speed > 5 && object.parent.moveDirection.x !== 0 ) {
+
+                        object.body.velocity.x += ( vx - object.body.velocity.x ) / 8 * ( delta / 20 );
+                        object.body.velocity.z += ( vz - object.body.velocity.z ) / 8 * ( delta / 20 );
+
+                    }
+
+                    //
+
+                    object.parent.position.set( object.body.position.x, object.body.position.y - 10, object.body.position.z );
+                    object.body.quaternion.setFromEuler( 0, object.parent.rotation, 0, 'XYZ' );
 
                 }
-
-                let direction = ( object.parent.moveDirection.x > 0 ) ? 0 : Math.PI;
-                let vx = speed * Math.sin( object.parent.rotation + direction );
-                let vz = speed * Math.cos( object.parent.rotation + direction );
-
-                if ( speed > 5 && object.parent.moveDirection.x !== 0 ) {
-
-                    object.body.velocity.x += ( vx - object.body.velocity.x ) / 8 * ( delta / 20 );
-                    object.body.velocity.z += ( vz - object.body.velocity.z ) / 8 * ( delta / 20 );
-
-                }
-
-                //
-
-                object.parent.position.set( object.body.position.x, object.body.position.y - 10, object.body.position.z );
-                object.body.quaternion.setFromEuler( 0, object.parent.rotation, 0, 'XYZ' );
 
             } else if ( object.parent.type === 'Bullet' ) {
 
