@@ -18,11 +18,12 @@ class BulletObject {
     public id: number;
     public active: boolean = false;
     public owner: TankObject | TowerObject;
+    public size: OMath.Vec3 = new OMath.Vec3( 20, 20, 20 );
     public position: OMath.Vec3 = new OMath.Vec3();
+    public rotation: number = 0;
     public angle: number = 0;
     public flytime: number = 0;
     public speed: number = 1.8;
-    public size: OMath.Vec3 = new OMath.Vec3( 5, 5, 5 );
     public readonly type: string = 'Bullet';
 
     //
@@ -30,15 +31,15 @@ class BulletObject {
     public activate ( position: OMath.Vec3, angle: number, owner: TankObject | TowerObject ) {
 
         this.active = true;
-        this.position.set( position.x, 25, position.z );
+        this.position.set( position.x, 8, position.z );
 
         this.angle = angle;
-        this.flytime = 220;
+        this.flytime = 300;
         this.owner = owner;
     
         //
     
-        // this.arena.collisionManager.addObject( this, 'box', true );
+        this.arena.collisionManager.addObject( this, 'box', true, true );
 
     };
 
@@ -46,8 +47,7 @@ class BulletObject {
 
         if ( target && target.id === this.owner.id ) return;
 
-        this.active = false;
-        this.arena.collisionManager.removeObject( this );        
+        this.active = false;     
         this.arena.network.explosion( this, ( target && target.hit ) ? 1 : 0 );
 
         //
@@ -56,21 +56,6 @@ class BulletObject {
 
             target.hit( this.owner );
 
-        }
-
-    };
-
-    public update ( delta: number, time: number ) {
-
-        this.position.x = this.position.x + this.speed * Math.sin( this.angle ) * delta;
-        this.position.z = this.position.z + this.speed * Math.cos( this.angle ) * delta;
-    
-        this.flytime -= delta;
-    
-        if ( this.flytime < 0 ) {
-    
-            this.detonate();
-    
         }
 
     };

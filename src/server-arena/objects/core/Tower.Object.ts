@@ -20,7 +20,7 @@ class TowerObject {
     public title: string;
     public team: TeamCore;
     public health: number = 100;
-    public size: OMath.Vec3 = new OMath.Vec3( 50, 40, 50 );
+    public size: OMath.Vec3 = new OMath.Vec3( 50, 80, 50 );
     public position: OMath.Vec3 = new OMath.Vec3();
     public rotation: number = 0;
     public newRotation: number = 0;

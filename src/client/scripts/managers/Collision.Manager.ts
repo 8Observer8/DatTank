@@ -147,7 +147,7 @@ class CollisionManagerCore {
                 }
 
                 //
-                
+
                 let dfv = forwardVelocity - object.parent['prevForwardVelocity'];
                 dfv = movementDirecton * dfv;
                 object.parent.gfx.rotateTankXAxis( - Math.sign( dfv ) * Math.min( Math.abs( dfv ), 8 ) / 100 / Math.PI );

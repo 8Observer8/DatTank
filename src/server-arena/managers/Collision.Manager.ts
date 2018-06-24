@@ -132,7 +132,17 @@ class CollisionManager {
 
     public clear () {
 
-        // this.world.clear();
+        this.world.solver.removeAllEquations();
+
+        let bodies = this.world.bodies;
+        let i = bodies.length;
+
+        while ( i -- ) {
+
+            this.world.remove( bodies[ i ] );
+
+        }
+
         this.objects = null;
 
     };
@@ -180,8 +190,31 @@ class CollisionManager {
 
             } else if ( object.parent.type === 'Bullet' ) {
 
-                // object.body.position
-                // todo
+                if ( object.parent.active === false ) {
+
+                    this.removeObject( object.parent );
+                    continue;
+
+                }
+
+                object.parent.flytime -= delta;
+
+                if ( object.parent.flytime < 0 ) {
+
+                    object.parent.detonate();
+                    return;
+
+                }
+
+                if ( object.body.velocity.distanceTo( new Cannon.Vec3( 0, object.body.velocity.y, 0 ) ) === 0 ) {
+
+                    let bulletSpeed = 1200;
+                    object.body.velocity.set( bulletSpeed * Math.sin( object.parent.angle ), 0, bulletSpeed * Math.cos( object.parent.angle ) );
+
+                }
+
+                object.body.velocity.y = 0;
+                object.parent.position.set( object.body.position.x, object.body.position.y, object.body.position.z );
 
             }
 
@@ -201,8 +234,21 @@ class CollisionManager {
 
         if ( event.body['name'] === 'Box' && object.type === 'Tank' ) {
 
+            if ( event.body.parent.removed ) return;
             event.body.parent.pickUp( object );
             this.arena.boxManager.remove( event.body.parent );
+
+        }
+
+        if ( object.type === 'Bullet' && event.body.collisionResponse === true ) {
+
+            if ( ! object.active ) return;
+
+            if ( ( event.body.parent.type === 'Tank' && object.owner.id !== event.body.parent.id ) || event.body.parent.type !== 'Tank' ) {
+
+                object.detonate( event.body.parent );
+
+            }
 
         }
 
