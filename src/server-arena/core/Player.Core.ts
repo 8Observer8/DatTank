@@ -158,7 +158,6 @@ class PlayerCore {
         //
 
         this.tank = new TanksList[ tankName ]( this );
-        this.tank.moveSpeed = this.tank.originalMoveSpeed * this.tank.speed / 40;
         this.tank.ammo = this.tank.ammoCapacity;
         this.arena.tankManager.add( this.tank );
 

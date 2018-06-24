@@ -196,8 +196,6 @@ class TankObject {
 
     private updateMovement ( time: number, delta: number ) {
 
-        let speed = 0.09 * this.speed / 40;
-
         if ( this.moveDirection.x !== 0 || this.moveDirection.y !== 0 ) {
 
             this.gfx.toggleMovementSound( true );

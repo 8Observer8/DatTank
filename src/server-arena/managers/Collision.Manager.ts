@@ -163,10 +163,11 @@ class CollisionManager {
                 } else {
 
                     let speed = object.body.velocity.distanceTo( new Cannon.Vec3( 0, object.body.velocity.y, 0 ) );
+                    let maxSpeed = object.parent.speed * 3;
 
-                    if ( speed < 140 && object.parent.moveDirection.x ) {
+                    if ( speed < maxSpeed && object.parent.moveDirection.x ) {
 
-                        let forceAmount = 5000 * ( 1 - speed / 140 );
+                        let forceAmount = 8000 * ( 1 - speed / maxSpeed );
                         let force = new Cannon.Vec3( 0, 0, forceAmount );
                         if ( object.parent.moveDirection.x < 0 ) force = force.negate();
                         object.body.applyLocalImpulse( force, new Cannon.Vec3( 0, 0, 0 ), delta );

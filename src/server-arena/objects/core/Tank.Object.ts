@@ -47,9 +47,6 @@ class TankObject {
     public ammoCapacity: number;
 
     public moveDirection: OMath.Vec2 = new OMath.Vec2();
-    public moveSpeed: number = 0.09;
-    public originalMoveSpeed: number = 0.09;
-
     public deltaPosition: OMath.Vec3 = new OMath.Vec3();
 
     public overheating: number = 0;
@@ -86,7 +83,6 @@ class TankObject {
             case 'speed':
 
                 this.speed += levelsStats['speed'][ level ];
-                this.moveSpeed = this.originalMoveSpeed * this.speed / 40;
                 break;
 
             case 'rpm':
