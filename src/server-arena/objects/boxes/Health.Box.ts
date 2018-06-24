@@ -13,7 +13,7 @@ class HealthBoxObject extends BoxObject {
 
     public pickUp ( tank: TankObject ) {
 
-        this.dispose();
+        this.dispose( tank.player );
         tank.changeHealth( this.amount );
 
     };

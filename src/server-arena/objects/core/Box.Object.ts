@@ -5,6 +5,7 @@
 
 import * as OMath from "./../../OMath/Core.OMath";
 import { ArenaCore } from "./../../core/Arena.Core";
+import { PlayerCore } from "./../../core/Player.Core";
 
 //
 
@@ -31,10 +32,10 @@ class BoxObject {
 
     //
 
-    public dispose () {
+    public dispose ( player: PlayerCore ) {
 
         this.arena.removeObjectFromRangeParams( this );
-        this.arena.network.boxPicked( this );
+        this.arena.network.boxPicked( this, player );
 
     };
 

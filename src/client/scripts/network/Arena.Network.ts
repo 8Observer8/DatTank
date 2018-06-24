@@ -147,11 +147,12 @@ class ArenaNetwork {
     private boxRemove ( data ) {
 
         let boxId = data[0];
+        let playerId = data[1];
         let box = BoxManager.getBoxById( boxId );
 
         if ( box ) {
 
-            box.pick();
+            box.pick( playerId );
 
         }
 

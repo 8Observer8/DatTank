@@ -178,6 +178,11 @@ class CollisionManager {
                 object.parent.position.set( object.body.position.x, object.body.position.y - 10, object.body.position.z );
                 object.body.quaternion.setFromEuler( 0, object.parent.rotation, 0, 'XYZ' );
 
+            } else if ( object.parent.type === 'Bullet' ) {
+
+                // object.body.position
+                // todo
+
             }
 
         }

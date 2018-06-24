@@ -133,7 +133,7 @@ class TowerObject {
 
             if ( this.health === 0 ) {
 
-                this.changeTeam( killer.team, killer.id );
+                this.changeTeam( killer.team, killer.player.id );
                 killer.player.changeScore( 5 );
                 this.arena.updateLeaderboard();
 

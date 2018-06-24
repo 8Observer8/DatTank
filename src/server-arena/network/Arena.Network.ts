@@ -103,10 +103,10 @@ class ArenaNetwork {
 
     };
 
-    public boxPicked ( box: BoxObject ) {
+    public boxPicked ( box: BoxObject, player: PlayerCore ) {
 
         this.buffers['RemoveBox'] = this.buffers['RemoveBox'] || {};
-        let buffer = this.buffers['RemoveBox'].buffer || new ArrayBuffer( 4 );
+        let buffer = this.buffers['RemoveBox'].buffer || new ArrayBuffer( 6 );
         let bufferView = this.buffers['RemoveBox'].bufferView || new Uint16Array( buffer );
         this.buffers['RemoveBox'].buffer = buffer;
         this.buffers['RemoveBox'].bufferView = bufferView;
@@ -114,6 +114,7 @@ class ArenaNetwork {
         //
 
         bufferView[ 1 ] = box.id;
+        bufferView[ 2 ] = player.id;
 
         this.sendEventToPlayersInRange( box.position, 'ArenaBoxRemove', buffer, bufferView );
 

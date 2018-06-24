@@ -3,10 +3,12 @@
  * DatTank Box Object class
 */
 
+import * as OMath from "./../../OMath/Core.OMath";
+
+import { Arena } from "./../../core/Arena.Core";
 import { BoxGfx } from "./../../graphics/objects/Box.Gfx";
 import { BoxManager } from "./../../managers/Box.Manager";
 import { Logger } from "./../../utils/Logger";
-import * as OMath from "./../../OMath/Core.OMath";
 
 //
 
@@ -26,11 +28,16 @@ class BoxObject {
 
     };
 
-    public pick () {
+    public pick ( playerId: number ) {
 
         this.gfx.pick();
         BoxManager.remove( [ this.id ] );
-        Logger.newEvent( 'BoxPicked', 'game' );
+
+        if ( Arena.meId === playerId ) {
+        
+            Logger.newEvent( 'BoxPicked', 'game' );
+
+        }
 
     };
 

@@ -22,7 +22,7 @@ class BulletObject {
     public angle: number = 0;
     public flytime: number = 0;
     public speed: number = 1.8;
-    public radius: number = 10;
+    public size: OMath.Vec3 = new OMath.Vec3( 5, 5, 5 );
     public readonly type: string = 'Bullet';
 
     //
@@ -38,7 +38,7 @@ class BulletObject {
     
         //
     
-        // this.arena.collisionManager.addObject( this, 'circle', true );
+        // this.arena.collisionManager.addObject( this, 'box', true );
 
     };
 
