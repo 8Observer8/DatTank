@@ -68,6 +68,15 @@ gulp.task( 'brf', function () {
 
 });
 
+// JS
+
+gulp.task( 'js', function () {
+
+    return gulp.src('./src/client/scripts/**/*.js')
+        .pipe( gulp.dest('./bin/client/scripts/') );
+
+});
+
 // CSS
 
 gulp.task( 'css', function () {
@@ -129,7 +138,7 @@ gulp.task( 'start-server-arena', function ( done ) {
 
 // RUN
 
-gulp.task( 'run', gulp.series( 'resources', 'libs', 'brf', 'html', 'css', 'server-master', 'start-server-master', 'server-arena', 'start-server-arena' ));
+gulp.task( 'run', gulp.series( 'resources', 'js', 'libs', 'brf', 'html', 'css', 'server-master', 'start-server-master', 'server-arena', 'start-server-arena' ));
 
 // Watch
 
@@ -137,7 +146,8 @@ gulp.task( 'watch', function () {
 
     gulp.watch( './src/client/css/*', gulp.series( 'css' ) );
     gulp.watch( './src/client/*', gulp.series( 'html' ) );
-    gulp.watch( './src/client/scripts/**/*', gulp.series( 'brf' ) );
+    gulp.watch( './src/client/scripts/**/*.js', gulp.series( 'js' ) );
+    gulp.watch( './src/client/scripts/**/*.ts', gulp.series( 'brf' ) );
     gulp.watch( './src/client/libs/**/*', gulp.series( 'libs' ) );
     gulp.watch( './src/server-master/**/*', gulp.series( 'server-master', 'start-server-master' ) );
     gulp.watch( './src/server-arena/**/*', gulp.series( 'server-arena', 'start-server-arena' ) );

@@ -67,7 +67,6 @@ class ArenaCore {
 
         // setup all other managers
 
-        CollisionManager.init();
         PlayerManager.init();
         TowerManager.init();
         BoxManager.init();
@@ -260,15 +259,6 @@ class ArenaCore {
         CollisionManager.update( time, delta );
         PlayerManager.update( time, delta );
         this.removeOutOfRangeObjects();
-
-        //
-
-        for ( var i = 0, il = Math.floor( delta / this.updateIntervalDuration ); i < il; i ++ ) {
-
-            this.time += delta;
-            this.update( this.time, this.updateIntervalDuration );
-
-        }
 
     };
 

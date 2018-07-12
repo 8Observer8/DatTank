@@ -38,7 +38,9 @@ class TankObject {
     public topRotation: number = 0;
     public moveDirection = new OMath.Vec2();
     public positionCorrection = new OMath.Vec3();
+    public positionCorrectionDelta = new OMath.Vec3();
     public rotationCorrection: number = 0;
+    public acceleration: number = 0;
 
     public position: OMath.Vec3 = new OMath.Vec3();
     public rotation: number = 0;
@@ -194,7 +196,24 @@ class TankObject {
 
     };
 
-    private updateMovement ( time: number, delta: number ) {
+    public updateMovement ( delta: number ) {
+
+        let dx = this.positionCorrection.x * delta / 300;
+        let dz = this.positionCorrection.z * delta / 300;
+        let dr = this.rotationCorrection * delta / 100;
+
+        if ( Math.abs( dr ) > 0.001 ) {
+
+            this.rotationCorrection -= dr;
+            this.rotation += dr;
+
+        }
+
+        if ( Math.abs( dx ) > 0.1 || Math.abs( dz ) > 0.1 ) {
+
+            this.positionCorrectionDelta.set( dx, 0, dz );
+
+        }
 
         if ( this.moveDirection.x !== 0 || this.moveDirection.y !== 0 ) {
 
@@ -210,8 +229,6 @@ class TankObject {
 
             }
 
-            this.gfx.setRotation( this.rotation );
-
         } else {
 
             this.gfx.toggleMovementSound( false );
@@ -219,6 +236,8 @@ class TankObject {
         }
 
         this.gfx.setPosition( this.position );
+        this.gfx.setRotation( this.rotation );
+        this.gfx.rotateTankXAxis( this.acceleration );
 
     };
 
@@ -239,34 +258,6 @@ class TankObject {
             this.gfx.label.update( this.health, this.armour, this.player.team.color, this.overheating, this.player.username );
 
         }
-
-        //
-
-        let dx = this.positionCorrection.x * delta / 300;
-        let dz = this.positionCorrection.z * delta / 300;
-        let dr = this.rotationCorrection * delta / 100;
-
-        if ( Math.abs( dr ) > 0.001 ) {
-
-            this.rotationCorrection -= dr;
-            this.rotation += dr;
-            this.gfx.setRotation( this.rotation );
-
-        }
-
-        if ( Math.abs( dx ) > 0.1 || Math.abs( dz ) > 0.1 ) {
-
-            this.positionCorrection.x -= dx;
-            this.positionCorrection.z -= dz;
-
-            this.collisionBox.body.position.x += dx;
-            this.collisionBox.body.position.z += dz;
-
-        }
-
-        //
-
-        this.updateMovement( time, delta );
 
     };
 

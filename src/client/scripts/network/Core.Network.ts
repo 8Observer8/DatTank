@@ -100,7 +100,7 @@ class NetworkCore {
 
         // establish connection
 
-        this.transport = new WebSocket( 'ws://' + this.host + ':8085/ws/game' );
+        this.transport = new WebSocket( 'ws://' + this.host + '/ws/game' );
         this.transport.binaryType = 'arraybuffer';
 
         // add event handlers

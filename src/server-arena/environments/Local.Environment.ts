@@ -9,7 +9,7 @@ export let LocalEnvironment = {
 
     web: {
         host:       'http://localhost',
-        socketPort: 8085
+        socketPort: 80
     },
 
     master: {
