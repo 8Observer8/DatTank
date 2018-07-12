@@ -17,12 +17,12 @@ self.onmessage = function ( e ) {
     var data = e.data;
 
     switch ( data.type ) {
-        
+
         case 'init':
 
             initWorld();
             break;
-    
+
         case 'addObject':
 
             addObject( data.object, data.shapeType, data.isDynamic );
@@ -147,12 +147,12 @@ function update ( delta, objectsInfo ) {
             }
 
             if ( object.body.velocity.y > 0 ) {
-            
-                object.body.velocity.y = Math.min( object.body.velocity.y, 1 );
+
+                object.body.velocity.y = Math.min( object.body.velocity.y, 4 );
 
             } else {
 
-                object.body.velocity.y = Math.max( object.body.velocity.y, - 1 );
+                object.body.velocity.y = Math.max( object.body.velocity.y, - 4 );
 
             }
 

@@ -177,7 +177,7 @@ class TankGfx {
 
         this.interpolationTime += delta;
         let progress = this.interpolationTime / CollisionManager.updateRate;
-        progress = 1;//Math.min( progress, 1 );
+        progress = Math.min( progress, 1 );
 
         this.object.rotation.y = progress * this.tank.rotation + ( 1 - progress ) * this.tank.prevRotation;
 

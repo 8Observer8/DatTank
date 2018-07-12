@@ -179,6 +179,16 @@ class CollisionManager {
 
                     }
 
+                    if ( object.body.velocity.y > 0 ) {
+
+                        object.body.velocity.y = Math.min( object.body.velocity.y, 4 );
+
+                    } else {
+
+                        object.body.velocity.y = Math.max( object.body.velocity.y, - 4 );
+
+                    }
+
                     let direction = ( object.parent.moveDirection.x > 0 ) ? 0 : Math.PI;
                     let vx = speed * Math.sin( object.parent.rotation + direction );
                     let vz = speed * Math.cos( object.parent.rotation + direction );

@@ -33,7 +33,7 @@ class ArenaCore {
     private prevUpdateTime: number;
     private time: number;
     private updateInterval: number;
-    private updateIntervalDuration: number = 20;
+    private updateIntervalDuration: number = 40;
     private viewRange: number = 780;
 
     private network: ArenaNetwork = new ArenaNetwork();
