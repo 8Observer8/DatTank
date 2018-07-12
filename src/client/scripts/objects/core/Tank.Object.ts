@@ -46,10 +46,13 @@ class TankObject {
     public rotation: number = 0;
     public size: OMath.Vec3 = new OMath.Vec3( 30, 25, 70 );
 
+    public prevPosition: OMath.Vec3 = new OMath.Vec3();
+    public prevRotation: number = 0;
+
     public prevForwardVelocity: number = 0;
 
     protected network: TankNetwork = new TankNetwork();
-    protected gfx: TankGfx = new TankGfx();
+    public gfx: TankGfx = new TankGfx();
 
     public collisionBox: any;
     public readonly type: string = 'Tank';
@@ -198,6 +201,9 @@ class TankObject {
 
     public updateMovement ( delta: number ) {
 
+        this.prevPosition.copy( this.position );
+        this.prevRotation = this.rotation;
+
         let dx = this.positionCorrection.x * delta / 300;
         let dz = this.positionCorrection.z * delta / 300;
         let dr = this.rotationCorrection * delta / 100;
@@ -235,9 +241,8 @@ class TankObject {
 
         }
 
-        this.gfx.setPosition( this.position );
-        this.gfx.setRotation( this.rotation );
         this.gfx.rotateTankXAxis( this.acceleration );
+        this.gfx.interpolationTime = 0;
 
     };
 
@@ -249,7 +254,9 @@ class TankObject {
 
     public update ( time: number, delta: number ) {
 
+        // this.updateMovement( delta );
         this.gfx.update( time, delta );
+
         if ( this.health <= 0 ) return;
 
         if ( this.overheating > 0 ) {
@@ -303,12 +310,14 @@ class TankObject {
         this.id = params.id;
 
         this.position.set( params.position.x, params.position.y, params.position.z );
+        this.prevPosition.copy( this.position );
         this.gfx.setPosition( this.position );
 
         this.health = params.health;
         this.ammo = params.ammo;
 
         this.rotation = params.rotation;
+        this.prevRotation = this.rotation;
         this.rotationCorrection = 0;
         this.topRotation = params.rotationTop;
 

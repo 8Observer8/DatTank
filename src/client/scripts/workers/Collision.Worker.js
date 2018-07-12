@@ -7,6 +7,8 @@ var world;
 var objects = [];
 var inited = false;
 var lastUpdate = 0;
+var coef = 0 / 20;
+var delta = 0;
 
 //
 
@@ -34,7 +36,9 @@ self.onmessage = function ( e ) {
         case 'update':
 
             lastUpdate = lastUpdate || Date.now();
-            update( Date.now() - lastUpdate, data.objects );
+            delta = Date.now() - lastUpdate;
+            coef = delta / 20;
+            update( delta, data.objects );
             lastUpdate = Date.now();
             break;
 
@@ -130,15 +134,15 @@ function update ( delta, objectsInfo ) {
 
             if ( speed < maxSpeed && objectInfo.moveDirection.x ) {
 
-                var forceAmount = 8000 * ( 1 - speed / maxSpeed );
+                var forceAmount = 10000 * ( 1 - speed / maxSpeed );
                 var force = new CANNON.Vec3( 0, 0, forceAmount );
                 if ( objectInfo.moveDirection.x < 0 ) force = force.negate();
-                object.body.applyLocalImpulse( force, new CANNON.Vec3( 0, 0, 0 ), delta );
+                object.body.applyLocalImpulse( force, new CANNON.Vec3( 0, 0, 0 ) );
 
             } else {
 
-                object.body.velocity.x /= 1 + 0.05 * ( delta / 20 );
-                object.body.velocity.z /= 1 + 0.05 * ( delta / 20 );
+                object.body.velocity.x /= 1 + 0.05 * coef;
+                object.body.velocity.z /= 1 + 0.05 * coef;
 
             }
 
@@ -160,8 +164,8 @@ function update ( delta, objectsInfo ) {
 
             if ( speed > 5 && objectInfo.moveDirection.x !== 0 ) {
 
-                object.body.velocity.x += ( vx - object.body.velocity.x ) / 8 * ( delta / 20 );
-                object.body.velocity.z += ( vz - object.body.velocity.z ) / 8 * ( delta / 20 );
+                object.body.velocity.x += ( vx - object.body.velocity.x ) / 8 * coef;
+                object.body.velocity.z += ( vz - object.body.velocity.z ) / 8 * coef;
 
             }
 
@@ -189,7 +193,7 @@ function update ( delta, objectsInfo ) {
 
     }
 
-    world.step( delta / 1000 );
+    world.step( 1 / 60, delta / 1000, 5 );
 
     self.postMessage({ type: 'update', objects: objectsParams });
 

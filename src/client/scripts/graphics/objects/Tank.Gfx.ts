@@ -17,6 +17,7 @@ import { LargeExplosionManager } from '../../managers/LargeExplosion.Manager';
 import { FriendlyFireLabelGfx } from '../effects/FriendlyFireLabel.Gfx';
 import { DamageSmokeGfx } from '../effects/DamageSmoke.Gfx';
 import { BlastSmokeGfx } from '../effects/BlastSmoke.Gfx';
+import { CollisionManager } from '../../managers/Collision.Manager';
 
 //
 
@@ -31,6 +32,8 @@ class TankGfx {
     public friendlyFireLabel: FriendlyFireLabelGfx = new FriendlyFireLabelGfx();
     public damageSmoke: DamageSmokeGfx = new DamageSmokeGfx();
     public blastSmoke: BlastSmokeGfx = new BlastSmokeGfx();
+
+    public interpolationTime: number = 0;
 
     private sounds = {};
 
@@ -169,6 +172,18 @@ class TankGfx {
         
         this.topMesh.update( delta / 1000 );
         this.baseMesh.update( delta / 1000 );
+
+        // interpolate tank movement between cannon physic generated points
+
+        this.interpolationTime += delta;
+        let progress = this.interpolationTime / CollisionManager.updateRate;
+        progress = 1;//Math.min( progress, 1 );
+
+        this.object.rotation.y = progress * this.tank.rotation + ( 1 - progress ) * this.tank.prevRotation;
+
+        this.object.position.x = progress * this.tank.position.x + ( 1 - progress ) * this.tank.prevPosition.x;
+        this.object.position.y = progress * this.tank.position.y + ( 1 - progress ) * this.tank.prevPosition.y;
+        this.object.position.z = progress * this.tank.position.z + ( 1 - progress ) * this.tank.prevPosition.z;
 
     };
 

@@ -9,6 +9,7 @@ import { UI } from "./../ui/Core.UI";
 import { Arena } from "./../core/Arena.Core";
 import { LandscapeGfx } from "./objects/Landscape.Gfx";
 
+import { PlayerManager } from "./../managers/Player.Manager";
 import { SoundManager } from "./../managers/Sound.Manager";
 import { BoxManager } from "./../managers/Box.Manager";
 import { TowerManager } from "./../managers/Tower.Manager";
@@ -246,6 +247,8 @@ class GraphicsCore {
 
         //
 
+        PlayerManager.update( time, delta );
+
         BoxManager.update( time, delta );
         TowerManager.update( time, delta );
         DecorationManager.update( time, delta );
@@ -257,7 +260,7 @@ class GraphicsCore {
 
         //
 
-        this.updateCamera( Arena.me.tank.position, Arena.me.tank.rotation );
+        this.updateCamera( Arena.me.tank.gfx.object.position, Arena.me.tank.gfx.object.rotation.y );
 
     };
 

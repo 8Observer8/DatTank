@@ -10,6 +10,7 @@ class CollisionManagerCore {
     private worker: any;
     private objects = [];
     private lastUpdateTime: number = 0;
+    public updateRate: number = 40;
 
     //
 
@@ -86,6 +87,7 @@ class CollisionManagerCore {
             case 'update':
 
                 let objects = event.data.objects;
+                let delta = Date.now() - this.lastUpdateTime;
 
                 for ( let i = 0, il = objects.length; i < il; i ++ ) {
 
@@ -93,12 +95,13 @@ class CollisionManagerCore {
                     if ( ! objParent ) continue;
 
                     objParent.acceleration = objects[ i ].acceleration;
+                    objParent.updateMovement( delta );
                     objParent.position.set( objects[ i ].position.x, objects[ i ].position.y, objects[ i ].position.z );
-                    objParent.updateMovement( Date.now() - this.lastUpdateTime );
 
                 }
 
                 this.lastUpdateTime = Date.now();
+                this.updateRate = delta || 1;
 
                 break;
 

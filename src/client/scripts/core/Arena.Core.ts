@@ -32,7 +32,6 @@ class ArenaCore {
 
     private prevUpdateTime: number;
     private time: number;
-    private updateTimeRemainder: number = 0;
     private updateInterval: number;
     private updateIntervalDuration: number = 20;
     private viewRange: number = 780;
@@ -248,16 +247,12 @@ class ArenaCore {
     private update ( time: number, delta: number ) {
 
         var time = Date.now();
-        var delta = time - this.prevUpdateTime + this.updateTimeRemainder;
-
-        this.updateTimeRemainder = delta % this.updateIntervalDuration;
-        delta = delta - this.updateTimeRemainder;
+        var delta = time - this.prevUpdateTime;
         this.prevUpdateTime = time;
 
         //
 
         CollisionManager.update( time, delta );
-        PlayerManager.update( time, delta );
         this.removeOutOfRangeObjects();
 
     };

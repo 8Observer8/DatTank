@@ -44,7 +44,7 @@ class ArenaCore {
     private updateInterval: any;
     private prevUpdateTime: number;
     private leaderboardUpdateTimeout: any;
-    private updateRate = 40;
+    private updateRate = 20;
 
     public network: ArenaNetwork;
 
@@ -250,9 +250,7 @@ class ArenaCore {
 
         //
 
-        this.collisionManager.update( delta / 3, time );
-        this.collisionManager.update( delta / 3, time );
-        this.collisionManager.update( delta / 3, time );
+        this.collisionManager.update( delta, time );
 
     };
 

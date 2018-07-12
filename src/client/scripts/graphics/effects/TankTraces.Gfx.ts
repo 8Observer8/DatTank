@@ -33,7 +33,7 @@ class TankTracesGfx {
         let rotation = this.target.rotation.y;
         let position = this.target.position;
 
-        if ( this.prevPosition.distanceTo( position ) > 6 ) {
+        if ( this.prevPosition.distanceTo( position ) > 5 ) {
     
             var plane1, plane2;
     
