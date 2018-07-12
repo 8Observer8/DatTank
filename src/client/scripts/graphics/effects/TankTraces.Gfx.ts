@@ -17,7 +17,7 @@ class TankTracesGfx {
     private prevPosition: OMath.Vec3 = new OMath.Vec3();
     private indexOffset: number = 0;
     private tracePosOffset = { l: 13, r: 13 };
-    private traceVisibleDuration: number = 1500;
+    private traceVisibleDuration: number = 2300;
     private object: THREE.Object3D = new THREE.Object3D();
 
     //
@@ -32,9 +32,8 @@ class TankTracesGfx {
 
         let rotation = this.target.rotation.y;
         let position = this.target.position;
-        let dist = 12;
 
-        if ( this.prevPosition.distanceTo( position ) > 4 ) {
+        if ( this.prevPosition.distanceTo( position ) > 6 ) {
     
             var plane1, plane2;
     
@@ -59,9 +58,7 @@ class TankTracesGfx {
             plane2.position.y = 2.2;
     
             track.position.copy( position );
-    
-            this.prevPosition.x = position.x;
-            this.prevPosition.z = position.z;
+            this.prevPosition.copy( position );
     
             this.indexOffset ++;
             if ( this.indexOffset === 35 ) this.indexOffset = 0;
