@@ -21,6 +21,8 @@ class UIChatModule {
 
     private showChatMessageInput () {
 
+        this.opened = true;
+
         $('.chat .message-block').show();
         $('.chat .message-block-separate').hide();
         $('.chat .message-input').show();
@@ -46,7 +48,9 @@ class UIChatModule {
 
     };
 
-    private hideChatMessageInput () {
+    public hideChatMessageInput () {
+
+        this.opened = false;
 
         $('.chat .message-block').hide();
         $('.chat .message-block-separate').show();
@@ -91,12 +95,10 @@ class UIChatModule {
             if ( ! this.opened ) {
 
                 this.showChatMessageInput();
-                this.opened = true;
 
             } else if ( inputValue === '' ) {
 
                 this.hideChatMessageInput();
-                this.opened = false;
 
             } else if ( inputValue !== '' ) {
 

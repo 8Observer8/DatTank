@@ -49,7 +49,7 @@ class UIInGameModule {
 
         if ( Arena.me.bonusLevels > 0 ) {
 
-            this.showTankStatsUpdate( Arena.me.bonusLevels )
+            this.showTankStatsUpdate( Arena.me.bonusLevels );
 
         }
 
@@ -58,6 +58,7 @@ class UIInGameModule {
     public showLevelIndicator () {
 
         $('.level-indicator-block').show();
+        UI.Chat.hideChatMessageInput();
 
     };
 
@@ -80,6 +81,7 @@ class UIInGameModule {
         this.hideLevelIndicator();
         $('.stats-update-block .title').html( 'You have ' + bonusLevels + ' bonus levels.' );
         $('.stats-update-block .bonus .increase').click( this.updateTankStat.bind( this ) );
+        UI.Chat.hideChatMessageInput();
 
         $( document ).bind( 'keypress', this.statsUpdateByKey.bind( this ) );
 
@@ -87,10 +89,10 @@ class UIInGameModule {
 
     public hideTankStatsUpdate () {
 
-        this.showLevelIndicator();
         $('.stats-update-block').hide();
         $('.chat .message-block-separate').show();
         $('.stats-update-block').attr('opened', 'false');
+        this.showLevelIndicator();
         $( document ).unbind( 'keypress' );
 
     };
