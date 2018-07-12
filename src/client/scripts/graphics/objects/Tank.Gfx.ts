@@ -226,33 +226,6 @@ class TankGfx {
         tankShadow.renderOrder = 10;
         this.object.add( tankShadow );
 
-        // if MY tank add shooting range marker [later can optimize this to one geometry & mesh]
-
-        if ( this.tank.player.id === Arena.meId ) {
-
-            let shootingMarker;
-            let material = new THREE.MeshBasicMaterial({ color: 0x00ff00, opacity: 0.2, fog: false } );
-
-            shootingMarker = new THREE.Mesh( new THREE.PlaneBufferGeometry( 6, 0.2 ), material );
-            shootingMarker.position.set( 0, 0.1, 45 );
-            shootingMarker.rotation.x = - Math.PI / 2;
-            shootingMarker.renderOrder = 20;
-            this.topMesh.add( shootingMarker );
-
-            shootingMarker = new THREE.Mesh( new THREE.PlaneBufferGeometry( 4, 0.2 ), material );
-            shootingMarker.position.set( 0, 0.1, 43 );
-            shootingMarker.rotation.x = - Math.PI / 2;
-            shootingMarker.renderOrder = 20;
-            this.topMesh.add( shootingMarker );
-
-            shootingMarker = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 0.2 ), material );
-            shootingMarker.position.set( 0, 0.1, 41 );
-            shootingMarker.rotation.x = - Math.PI / 2;
-            shootingMarker.renderOrder = 20;
-            this.topMesh.add( shootingMarker );
-
-        }
-
         //
 
         this.friendlyFireLabel.init( this.object );
