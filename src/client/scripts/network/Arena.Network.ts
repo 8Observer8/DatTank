@@ -208,7 +208,6 @@ class ArenaNetwork {
 
     public init () {
 
-
         Network.addMessageListener( 'ArenaKillSerie', this.setKillSerie.bind( this ) );
         Network.addMessageListener( 'ArenaJoinResponse', this.joinArena.bind( this ) );
         Network.addMessageListener( 'ArenaBulletHit', this.newExplosion.bind( this ) );

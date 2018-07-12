@@ -137,7 +137,7 @@ class TankObject {
 
         //
 
-        let position = new OMath.Vec3( this.team.spawnPosition.x, this.team.spawnPosition.y, this.team.spawnPosition.z );
+        let position = new OMath.Vec3( this.team.spawnPosition.x, this.team.spawnPosition.y + 5, this.team.spawnPosition.z );
         let offset = new OMath.Vec3();
 
         while ( offset.length() < 80 || ! this.arena.collisionManager.isPlaceFree( position.sum( offset ), 100 ) ) {

@@ -302,8 +302,6 @@ class TankObject {
 
         this.id = params.id;
 
-        params.position.y += 15;
-
         this.position.set( params.position.x, params.position.y, params.position.z );
         this.gfx.setPosition( this.position );
 

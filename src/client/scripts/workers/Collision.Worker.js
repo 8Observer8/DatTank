@@ -69,8 +69,6 @@ function addObject ( object, type, isDynamic ) {
     collisionBox.body.position.set( object.position.x, object.position.y, object.position.z );
     collisionBox.body.quaternion.setFromEuler( 0, object.rotation, 0, 'XYZ' );
 
-    collisionBox.body['parent'] = object;
-    collisionBox.body['name'] = object.type;
     collisionBox.body.addShape( shape );
     collisionBox.body.type = ( ! isDynamic ) ? CANNON.Body.STATIC : CANNON.Body.DYNAMIC;
 
@@ -144,6 +142,16 @@ function update ( delta, objectsInfo ) {
 
             }
 
+            if ( object.body.velocity.y > 0 ) {
+            
+                object.body.velocity.y = Math.min( object.body.velocity.y, 1 );
+
+            } else {
+
+                object.body.velocity.y = Math.max( object.body.velocity.y, - 1 );
+
+            }
+
             var direction = ( objectInfo.moveDirection.x > 0 ) ? 0 : Math.PI;
             var vx = speed * Math.sin( objectInfo.rotation + direction );
             var vz = speed * Math.cos( objectInfo.rotation + direction );
@@ -205,14 +213,16 @@ function initWorld () {
     groundBody.quaternion.setFromAxisAngle( new CANNON.Vec3( 1, 0, 0 ), - Math.PI / 2 );
     world.addBody( groundBody );
 
+    //
+
+    inited = true;
+
     // add map borders
 
     addObject({ rotation: 0, position: new CANNON.Vec3(   1315, 0,      0 ), size: new CANNON.Vec3( 30, 100, 2630 ) }, 'box', false );
     addObject({ rotation: 0, position: new CANNON.Vec3( - 1315, 0,      0 ), size: new CANNON.Vec3( 30, 100, 2630 ) }, 'box', false );
     addObject({ rotation: 0, position: new CANNON.Vec3(      0, 0,   1315 ), size: new CANNON.Vec3( 2630, 100, 30 ) }, 'box', false );
     addObject({ rotation: 0, position: new CANNON.Vec3(      0, 0, - 1315 ), size: new CANNON.Vec3( 2630, 100, 30 ) }, 'box', false );
-
-    inited = true;
 
 };
 
