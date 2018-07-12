@@ -143,6 +143,13 @@ class BotCore {
         if ( this.player.tank.health <= 0 ) return;
         if ( Date.now() - this.player.spawnTime < this.delayAfterSpawn ) return;
 
+        if ( Math.abs( this.player.tank.position.x ) > 1400 || Math.abs( this.player.tank.position.z ) > 1400 ) {
+
+            this.die();
+            return;
+
+        }
+
         if ( ! this.player.tank.moveDirection.x ) {
 
             let x = ( Math.random() > 0.5 ) ? 1 : -1;
