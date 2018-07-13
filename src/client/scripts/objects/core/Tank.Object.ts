@@ -327,8 +327,8 @@ class TankObject {
         this.health = params.health;
         this.ammo = params.ammo;
 
-        this.rotation = params.rotation;
-        this.prevRotation = this.rotation;
+        this.rotation = params.rotation % ( 2 * Math.PI );
+        this.prevRotation = this.rotation % ( 2 * Math.PI );
         this.rotationCorrection = 0;
         this.topRotation = params.rotationTop;
 

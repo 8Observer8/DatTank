@@ -39,6 +39,7 @@ class BoxGfx {
         this.animTime += delta;
         this.mesh.rotation.y = Math.sin( this.animTime / 600 );
         this.mesh.position.y = Math.sin( this.animTime / 300 ) + 20;
+        this.mesh.updateMatrixWorld( true );
 
     };
 
@@ -54,6 +55,7 @@ class BoxGfx {
         this.mesh.position.x = box.position.x;
         this.mesh.position.y = box.position.y;
         this.mesh.position.z = box.position.z;
+        this.mesh.updateMatrixWorld( true );
 
         //
 
