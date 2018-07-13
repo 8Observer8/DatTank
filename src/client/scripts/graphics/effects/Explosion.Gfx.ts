@@ -55,6 +55,8 @@ class ExplosionGfx {
 
         }
 
+        this.object.updateMatrixWorld( true );
+
     };
 
     public dispose () {

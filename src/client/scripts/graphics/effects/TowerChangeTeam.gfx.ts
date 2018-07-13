@@ -44,6 +44,8 @@ class TowerChangeTeamGfx {
 
         }
 
+        this.object.updateMatrixWorld( true );
+
     };
 
     public show ( color: number ) {

@@ -53,6 +53,8 @@ class BulletGfx {
         this.trace.scale.x = Math.sqrt( dx * dx + dz * dz ) / 3;
         this.trace.material['opacity'] = Math.max( 0.5 - this.trace.scale.x / 280, 0 );  
 
+        this.object.updateMatrixWorld( true );
+
         //
 
         if ( this.time > this.flightDuration ) {

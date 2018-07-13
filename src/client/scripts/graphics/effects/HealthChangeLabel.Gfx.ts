@@ -41,6 +41,8 @@ class HealthChangeLabelGfx {
             this.deactivate();
 
         }
+        
+        this.object.updateMatrixWorld( true );
 
     };
 

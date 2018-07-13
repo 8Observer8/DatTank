@@ -308,6 +308,7 @@ class ControlsManagerCore {
         this.intersectPlane.position.y = 20;
         this.intersectPlane.rotation.x = - Math.PI / 2;
         GfxCore.scene.add( this.intersectPlane );
+        this.intersectPlane.updateMatrixWorld( true );
 
         this.keyInit();
         this.mouseInit();

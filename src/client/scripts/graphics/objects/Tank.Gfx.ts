@@ -185,6 +185,8 @@ class TankGfx {
         this.object.position.y = progress * this.tank.position.y + ( 1 - progress ) * this.tank.prevPosition.y;
         this.object.position.z = progress * this.tank.position.z + ( 1 - progress ) * this.tank.prevPosition.z;
 
+        this.object.updateMatrixWorld( true );
+
     };
 
     public init ( tank ) {

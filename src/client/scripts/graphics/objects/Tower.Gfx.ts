@@ -36,6 +36,7 @@ class TowerGfx {
         this.changeTeamEffect.update( time, delta );
         this.blastSmoke.update( time, delta );
         this.topMesh.update( delta / 1000 );
+        this.object.updateMatrixWorld( true );
 
     };
 

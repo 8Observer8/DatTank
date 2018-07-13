@@ -98,6 +98,8 @@ class DecorationGfx {
         this.object.scale.z = decoration.scale.z;
 
         this.object.add( mesh );
+        this.object.updateMatrixWorld( true );
+        this.object.matrixAutoUpdate = false;
 
         //
 

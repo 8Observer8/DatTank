@@ -43,6 +43,8 @@ class FriendlyFireLabelGfx {
 
         }
 
+        this.object.updateMatrixWorld( true );
+
     };
 
     public show () {

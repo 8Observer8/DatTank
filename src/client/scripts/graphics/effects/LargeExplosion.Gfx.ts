@@ -42,6 +42,8 @@ class LargeExplosionGfx {
 
         }
 
+        this.object.updateMatrixWorld( true );
+
     };
 
     public dispose () {

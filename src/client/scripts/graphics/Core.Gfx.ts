@@ -22,7 +22,7 @@ import { LargeExplosionManager } from '../managers/LargeExplosion.Manager';
 
 //
 
-enum Quality { LOW = 0.6, MEDIUM = 0.85, HIGH = 1 };
+enum Quality { LOW = 0.6, MEDIUM = 0.85, HIGH = 0.9 };
 
 interface GfxSettings {
     quality:    Quality;
@@ -109,6 +109,7 @@ class GraphicsCore {
         this.camera = new THREE.PerspectiveCamera( 60, this.windowWidth / this.windowHeight, 1, 900 );
         this.camera.name = 'MainCamera';
         this.scene.add( this.camera );
+        this.scene.autoUpdate = false;
 
         //
 
@@ -122,6 +123,7 @@ class GraphicsCore {
         this.sun = new THREE.DirectionalLight( this.lights.sun.color, this.lights.sun.intensity );
         this.sun.name = 'GlobalSunLight';
         this.sun.position.copy( this.lights.sun.position );
+        this.sun.updateMatrixWorld( true );
         this.scene.add ( this.sun );
         this.scene.add( ambientLight );
 
@@ -178,7 +180,8 @@ class GraphicsCore {
         $('#renderport').remove();
         $('#viewport').prepend('<canvas id="renderport"></canvas>');
         this.container = $('#renderport')[0];
-        this.renderer = new THREE.WebGLRenderer({ canvas: this.container, antialias: this.gfxSettings.antialias });
+        let params = { powerPreference: 'high-performance', canvas: this.container, antialias: this.gfxSettings.antialias };
+        this.renderer = new THREE.WebGLRenderer( params );
         this.renderer.setSize( this.gfxSettings.quality * this.windowWidth, this.gfxSettings.quality * this.windowHeight );
         this.renderer.setClearColor( this.fog.color );
 
@@ -238,6 +241,8 @@ class GraphicsCore {
         this.lookAtVector = this.lookAtVector || new THREE.Vector3();
         this.lookAtVector.set( position.x, 40, position.z );
         this.camera.lookAt( this.lookAtVector );
+
+        this.camera.updateMatrixWorld( true );
 
     };
 

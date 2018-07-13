@@ -37,6 +37,7 @@ class LandscapeGfx {
         this.terrainMesh.rotation.x = - Math.PI / 2;
         this.terrainMesh.renderOrder = 6;
         this.object.add( this.terrainMesh );
+        this.object.updateMatrixWorld( true );
 
         // add grass
 
@@ -65,19 +66,23 @@ class LandscapeGfx {
         wall1 = new THREE.Mesh( new THREE.BoxGeometry( size + 2 * offset + wallWidth, wallWidth, wallWidth ), material );
         wall1.rotation.y += Math.PI / 2;
         wall1.position.set( size / 2 + offset, 1, 0 );
+        wall1.updateMatrixWorld( true );
         this.object.add( wall1 );
 
         wall2 = new THREE.Mesh( new THREE.BoxGeometry( size + 2 * offset + wallWidth, wallWidth, wallWidth ), material );
         wall2.rotation.y = - Math.PI / 2;
         wall2.position.set( - size / 2 - offset, 1, 0 );
+        wall2.updateMatrixWorld( true );
         this.object.add( wall2 );
 
         wall3 = new THREE.Mesh( new THREE.BoxGeometry( size + 2 * offset - wallWidth, wallWidth, wallWidth ), material );
         wall3.position.set( 0, 1, size / 2 + offset );
+        wall3.updateMatrixWorld( true );
         this.object.add( wall3 );
 
         wall4 = new THREE.Mesh( new THREE.BoxGeometry( size + 2 * offset - wallWidth, wallWidth, wallWidth ), material );
         wall4.position.set( 0, 1, - size / 2 - offset );
+        wall4.updateMatrixWorld( true );
         this.object.add( wall4 );
 
     };
@@ -85,7 +90,7 @@ class LandscapeGfx {
     private addTeamZones () {
 
         let team;
-        let name, color, x, z;
+        let color, x, z;
         let plane;
         let baseTexture = ResourceManager.getTexture( 'Base-ground.png' );
         let teams = TeamManager.getTeams();
@@ -97,7 +102,6 @@ class LandscapeGfx {
             if ( teams[ i ].id >= 1000 ) continue;
             team = teams[ i ];
 
-            name = team.name;
             color = new THREE.Color( OMath.intToHex( team.color ) );
             x = team.spawnPosition.x;
             z = team.spawnPosition.z;
@@ -111,6 +115,7 @@ class LandscapeGfx {
             plane.rotation.x = - Math.PI / 2;
             plane.position.set( x, 0.3, z );
             plane.renderOrder = 9;
+            plane.updateMatrixWorld( true );
             this.object.add( plane );
 
         }
@@ -134,6 +139,7 @@ class LandscapeGfx {
         grassZone.scale.set( scale, scale, scale );
         grassZone.position.set( ( Math.random() - 0.5 ) * size, 0.02 + Math.random() / 20, ( Math.random() - 0.5 ) * size );
         grassZone.renderOrder = 8;
+        grassZone.updateMatrixWorld( true );
         this.object.add( grassZone );
 
     };
