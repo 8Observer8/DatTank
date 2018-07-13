@@ -260,7 +260,7 @@ class TankNetwork {
             bufferView[ i + 2 ] = tank.position.x;
             bufferView[ i + 3 ] = tank.position.y;
             bufferView[ i + 4 ] = tank.position.z;
-            bufferView[ i + 5 ] = tank.rotation * 1000;
+            bufferView[ i + 5 ] = ( tank.rotation % ( 2 * Math.PI ) ) * 1000;
             bufferView[ i + 6 ] = tank.rotationTop * 1000;
             bufferView[ i + 7 ] = tank.health;
             bufferView[ i + 8 ] = tank.moveDirection.x;

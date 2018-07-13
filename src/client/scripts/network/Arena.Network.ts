@@ -86,7 +86,7 @@ class ArenaNetwork {
                         y:  data[ i * playerBinSize + 3 ],
                         z:  data[ i * playerBinSize + 4 ]
                     },
-                    rotation:       data[ i * playerBinSize + 5 ] / 1000,
+                    rotation:       ( data[ i * playerBinSize + 5 ] / 1000 ) % ( 2 * Math.PI ),
                     rotationTop:    data[ i * playerBinSize + 6 ] / 1000,
                     health:         data[ i * playerBinSize + 7 ],
                     moveDirection:  {

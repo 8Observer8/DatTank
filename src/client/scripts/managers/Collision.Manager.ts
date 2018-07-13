@@ -87,6 +87,7 @@ class CollisionManagerCore {
             case 'update':
 
                 let objects = event.data.objects;
+                this.lastUpdateTime = this.lastUpdateTime || Date.now();
                 let delta = Date.now() - this.lastUpdateTime;
 
                 for ( let i = 0, il = objects.length; i < il; i ++ ) {
