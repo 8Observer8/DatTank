@@ -49,6 +49,7 @@ class TankTracesGfx {
             plane1.position.x += this.tracePosOffset.l * Math.cos( - rotation );
             plane1.position.z += this.tracePosOffset.l * Math.sin( - rotation );
             plane1.position.y = 2.2;
+            plane1.updateMatrixWorld( true );
     
             plane2.rotation.x = - Math.PI / 2;
             plane2.position.copy( position );
@@ -56,6 +57,7 @@ class TankTracesGfx {
             plane2.position.x -= this.tracePosOffset.r * Math.cos( - rotation );
             plane2.position.z -= this.tracePosOffset.r * Math.sin( - rotation );
             plane2.position.y = 2.2;
+            plane2.updateMatrixWorld( true );
     
             track.position.copy( position );
             this.prevPosition.copy( position );

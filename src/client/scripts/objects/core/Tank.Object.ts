@@ -241,6 +241,18 @@ class TankObject {
 
         }
 
+        if ( this.rotation > 2 * Math.PI ) {
+
+            this.prevRotation -= 2 * Math.PI;
+            this.rotation -= 2 * Math.PI;
+
+        } else if ( this.rotation < -2 * Math.PI ) {
+
+            this.prevRotation += 2 * Math.PI;
+            this.rotation += 2 * Math.PI;
+
+        }
+
         this.gfx.rotateTankXAxis( this.acceleration );
         this.gfx.interpolationTime = 0;
 
@@ -254,7 +266,6 @@ class TankObject {
 
     public update ( time: number, delta: number ) {
 
-        // this.updateMovement( delta );
         this.gfx.update( time, delta );
 
         if ( this.health <= 0 ) return;

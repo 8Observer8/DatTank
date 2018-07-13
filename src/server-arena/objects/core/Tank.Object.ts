@@ -388,6 +388,8 @@ class TankObject {
 
         }
 
+        this.rotation = this.rotation % ( 2 * Math.PI );
+
     };
 
     public updateObjectsInRange () {
