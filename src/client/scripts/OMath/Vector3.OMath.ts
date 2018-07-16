@@ -37,6 +37,12 @@ export class Vec3 {
 
     };
 
+    public clone () {
+
+        return new Vec3( this.x, this.y, this.z );
+
+    };
+
     //
 
     constructor ( x?: number, y?: number, z?: number ) {

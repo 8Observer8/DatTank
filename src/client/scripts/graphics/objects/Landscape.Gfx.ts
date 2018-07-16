@@ -28,13 +28,27 @@ class LandscapeGfx {
 
     private addTerrain () {
 
-        var groundTexture = ResourceManager.getTexture( 'Ground.jpg' );
-        groundTexture.wrapS = THREE.RepeatWrapping;
-        groundTexture.wrapT = THREE.RepeatWrapping;
-        groundTexture.repeat.set( 40, 40 );
+        let material = new THREE.MeshLambertMaterial({ color: 0x557850 });
+        let geometry = new THREE.PlaneGeometry( this.mapSize + this.mapExtraSize, this.mapSize + this.mapExtraSize, 150, 150 );
+        geometry.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2 ) );
 
-        this.terrainMesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( this.mapSize + this.mapExtraSize, this.mapSize + this.mapExtraSize ), new THREE.MeshBasicMaterial({ depthWrite: false, map: groundTexture, color: 0x777050 }) );
-        this.terrainMesh.rotation.x = - Math.PI / 2;
+        for ( let i = 0, il = 150 * 150; i < il; i ++ ) {
+
+            geometry.vertices[ i ].y = ( Math.random() - 0.5 ) * 30;
+
+        }
+
+        geometry.computeFlatVertexNormals();
+
+        for ( let i = 0, il = 150 * 150; i < il; i ++ ) {
+
+            geometry.vertices[ i ].y /= 5;
+
+        }
+
+        let bGeometry = new THREE.BufferGeometry().fromGeometry( geometry );
+
+        this.terrainMesh = new THREE.Mesh( bGeometry, material );
         this.terrainMesh.renderOrder = 6;
         this.object.add( this.terrainMesh );
         this.object.updateMatrixWorld( true );
@@ -43,7 +57,7 @@ class LandscapeGfx {
 
         for ( let i = 0; i < 150; i ++ ) {
 
-            this.addGrassZone();
+            // this.addGrassZone();
 
         }
 
@@ -106,14 +120,14 @@ class LandscapeGfx {
             x = team.spawnPosition.x;
             z = team.spawnPosition.z;
 
-            plane = new THREE.Mesh( new THREE.PlaneBufferGeometry( 200, 200 ), new THREE.MeshBasicMaterial({ map: baseTexture, color: color, transparent: true, opacity: 0.9, depthWrite: false }) );
+            plane = new THREE.Mesh( new THREE.BoxGeometry( 200, 200, 3 ), new THREE.MeshBasicMaterial({ map: baseTexture, color: color, transparent: true, opacity: 0.9, depthWrite: false }) );
 
             plane.material.color.r = plane.material.color.r / 3 + 0.4;
             plane.material.color.g = plane.material.color.g / 3 + 0.4;
             plane.material.color.b = plane.material.color.b / 3 + 0.4;
 
             plane.rotation.x = - Math.PI / 2;
-            plane.position.set( x, 0.3, z );
+            plane.position.set( x, 2, z );
             plane.renderOrder = 9;
             plane.updateMatrixWorld( true );
             this.object.add( plane );
@@ -152,7 +166,7 @@ class LandscapeGfx {
         if ( ! this.shadowMaterial ) {
 
             let shadowTexture = ResourceManager.getTexture( 'shadows.png' );
-            this.shadowMaterial = new THREE.MeshBasicMaterial({ map: shadowTexture, transparent: true, depthWrite: false, opacity: 0.35 });
+            this.shadowMaterial = new THREE.MeshBasicMaterial({ map: shadowTexture, transparent: true, depthWrite: false, opacity: 0.1 });
 
         }
 
@@ -203,6 +217,8 @@ class LandscapeGfx {
             shadowMesh.position.z += shadowMesh.scale.y - 4;
 
         }
+
+        shadowMesh.updateMatrixWorld( true );
 
     };
 

@@ -97,7 +97,7 @@ class GarageScene {
             let object = new THREE.Object3D();
             let texture = textureLoader.load( '/resources/textures/' + modelName + '.jpg' );
 
-            model = ResourceManager.getModel( 'tanks/' + modelName + '-top' );
+            model = ResourceManager.getModel( 'tanks/' + 'Tank1' );
             for ( let i = 0, il = model.material.length; i < il; i ++ ) {
 
                 model.material[ i ].map = texture;
@@ -110,18 +110,18 @@ class GarageScene {
             mesh.scale.set( 0.8, 0.8, 0.8 );
             object.add( mesh );
 
-            model = ResourceManager.getModel( 'tanks/' + modelName + '-bottom' );
-            for ( let i = 0, il = model.material.length; i < il; i ++ ) {
+            // model = ResourceManager.getModel( 'tanks/' + modelName + '-bottom' );
+            // for ( let i = 0, il = model.material.length; i < il; i ++ ) {
 
-                model.material[ i ].map = texture;
-                model.material[ i ].color = new THREE.Color( 0xbbbbbb );
+            //     model.material[ i ].map = texture;
+            //     model.material[ i ].color = new THREE.Color( 0xbbbbbb );
 
-            }
-            mesh = new THREE.Mesh( model.geometry, model.material );
-            mesh.castShadow = true;
-            mesh.receiveShadow = true;
-            mesh.scale.set( 0.8, 0.8, 0.8 );
-            object.add( mesh );
+            // }
+            // mesh = new THREE.Mesh( model.geometry, model.material );
+            // mesh.castShadow = true;
+            // mesh.receiveShadow = true;
+            // mesh.scale.set( 0.8, 0.8, 0.8 );
+            // object.add( mesh );
 
             this.scene.add( object );
             this.models[ modelName ] = object;

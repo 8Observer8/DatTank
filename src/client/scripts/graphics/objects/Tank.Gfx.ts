@@ -25,7 +25,7 @@ class TankGfx {
 
     public object: THREE.Object3D = new THREE.Object3D();
     private topMesh: MorphBlendMesh;
-    private baseMesh: MorphBlendMesh;
+    private baseMesh: THREE.Mesh;
     private tank: TankObject;
     private traces: TankTracesGfx = new TankTracesGfx();
     public label: TankLabelGfx = new TankLabelGfx();
@@ -33,18 +33,16 @@ class TankGfx {
     public damageSmoke: DamageSmokeGfx = new DamageSmokeGfx();
     public blastSmoke: BlastSmokeGfx = new BlastSmokeGfx();
 
-    public interpolationTime: number = 0;
-
     private sounds = {};
 
     //
 
     public rotateTankXAxis ( delta: number ) {
 
-        this.topMesh.rotation.x += delta;
+        // this.topMesh.rotation.x += delta;
         this.baseMesh.rotation.x += delta;
 
-        this.topMesh.rotation.x *= 0.9;
+        // this.topMesh.rotation.x *= 0.9;
         this.baseMesh.rotation.x *= 0.9;
         
     };
@@ -108,13 +106,13 @@ class TankGfx {
 
     public setTopRotation ( angle: number ) {
 
-        this.topMesh.rotation.y = angle + Math.PI / 2;
+        // this.topMesh.rotation.y = angle + Math.PI / 2;
 
     };
 
     public shoot () {
 
-        this.topMesh.playAnimation('shoot');
+        // this.topMesh.playAnimation('shoot');
         this.blastSmoke.show();
 
     };
@@ -170,20 +168,23 @@ class TankGfx {
         this.damageSmoke.update( time, delta );
         this.blastSmoke.update( time, delta );
         
-        this.topMesh.update( delta / 1000 );
-        this.baseMesh.update( delta / 1000 );
+        // this.topMesh.update( delta / 1000 );
+        // this.baseMesh.update( delta / 1000 );
 
         // interpolate tank movement between cannon physic generated points
 
-        this.interpolationTime += delta;
-        let progress = this.interpolationTime / CollisionManager.updateRate;
-        progress = Math.min( progress, 1 );
+        if ( this.tank.deltaT > 0 ) {
 
-        this.object.rotation.y = progress * this.tank.rotation + ( 1 - progress ) * this.tank.prevRotation;
+            let d = ( delta > this.tank.deltaT ) ? this.tank.deltaT : delta;
 
-        this.object.position.x = progress * this.tank.position.x + ( 1 - progress ) * this.tank.prevPosition.x;
-        this.object.position.y = progress * this.tank.position.y + ( 1 - progress ) * this.tank.prevPosition.y;
-        this.object.position.z = progress * this.tank.position.z + ( 1 - progress ) * this.tank.prevPosition.z;
+            this.object.rotation.y += this.tank.rotChange * d;
+            this.object.position.x += this.tank.posChange.x * d;
+            this.object.position.y += this.tank.posChange.y * d;
+            this.object.position.z += this.tank.posChange.z * d;
+
+            this.tank.deltaT -= d;
+
+        }
 
         this.object.updateMatrixWorld( true );
 
@@ -194,44 +195,50 @@ class TankGfx {
         this.tank = tank;
 
         let materials = [];
-        let tankBaseModel = ResourceManager.getModel( 'tanks/' + tank.title + '-bottom' );
-        let tankTopModel = ResourceManager.getModel( 'tanks/' + tank.title + '-top' );
+        let tankBaseModel = ResourceManager.getModel( 'tanks/Tank1' );
+        // let tankTopModel = ResourceManager.getModel( 'tanks/' + tank.title + '-top' );
 
         // add tank base mesh
 
         for ( let i = 0, il = tankBaseModel.material.length; i < il; i ++ ) {
 
-            let material = tankBaseModel.material[ i ].clone();
-            material.map = ResourceManager.getTexture( tank.title + '.jpg' ).clone();
+            let material = new THREE.MeshLambertMaterial({ color: 0x888888 }); //tankBaseModel.material[ i ].clone();
+            material.map = ResourceManager.getTexture( 'Tank1.png' ).clone();
             material.map.needsUpdate = true;
             material.map.wrapS = material.map.wrapT = THREE.RepeatWrapping;
-            material.morphTargets = true;
+            // material.morphTargets = true;
             materials.push( material );
 
         }
 
-        this.baseMesh = new MorphBlendMesh( tankBaseModel.geometry, materials );
+        // materials[0].map = ResourceManager.getTexture( 'Tank1.png' ).clone();
+        // materials[0].map.needsUpdate = true;
+        // materials[0].map.wrapS = materials[0].map.wrapT = THREE.RepeatWrapping;
+        // materials[0].morphTargets = true;
+
+        // this.baseMesh = new MorphBlendMesh( tankBaseModel.geometry, materials );
+        this.baseMesh = new THREE.Mesh( tankBaseModel.geometry.clone(), materials );
         this.baseMesh.scale.set( 10, 10, 10 );
         this.object.add( this.baseMesh );
         this.object.rotation.y = tank.rotation;
 
         // add tank top mesh
 
-        materials = [];
-        for ( var i = 0, il = tankTopModel.material.length; i < il; i ++ ) {
+        // materials = [];
+        // for ( var i = 0, il = tankTopModel.material.length; i < il; i ++ ) {
 
-            let material = tankTopModel.material[ i ].clone();
-            material.map = ResourceManager.getTexture( tank.title + '.jpg' ).clone();
-            material.map.needsUpdate = true;
-            material.morphTargets = true;
-            materials.push( material );
+        //     let material = tankTopModel.material[ i ].clone();
+        //     material.map = ResourceManager.getTexture( tank.title + '.jpg' ).clone();
+        //     material.map.needsUpdate = true;
+        //     material.morphTargets = true;
+        //     materials.push( material );
 
-        }
+        // }
 
-        this.topMesh = new MorphBlendMesh( tankTopModel.geometry, materials );
-        this.topMesh.scale.set( 10, 10, 10 );
-        this.object.add( this.topMesh );
-        this.topMesh.setAnimationFPS( 'shoot', 6 );
+        // this.topMesh = new MorphBlendMesh( tankTopModel.geometry, materials );
+        // this.topMesh.scale.set( 10, 10, 10 );
+        // this.object.add( this.topMesh );
+        // this.topMesh.setAnimationFPS( 'shoot', 6 );
 
         // add tank shadow
 
@@ -246,8 +253,8 @@ class TankGfx {
         //
 
         this.friendlyFireLabel.init( this.object );
-        this.damageSmoke.init( this.object );
-        this.blastSmoke.init( this.topMesh, new OMath.Vec3( 0, 0, 5.5 ) );
+        // this.damageSmoke.init( this.object );
+        // this.blastSmoke.init( this.topMesh, new OMath.Vec3( 0, 0, 5.5 ) );
         this.traces.init( this.object );
         this.label.init( this.object );
         this.label.update( this.tank.health, this.tank.armour, this.tank.player.team.color, this.tank.overheating, this.tank.player.username );
@@ -269,8 +276,8 @@ class TankGfx {
 
     public destroy () {
 
-        this.topMesh.playAnimation('death');
-        this.baseMesh.playAnimation('death');
+        // this.topMesh.playAnimation('death');
+        // this.baseMesh.playAnimation('death');
 
         LargeExplosionManager.showExplosion( this.tank.position );
 
@@ -280,8 +287,8 @@ class TankGfx {
 
     public makeTankDestroyed () {
 
-        this.topMesh.setFrame( 'death', 2 );
-        this.baseMesh.setFrame( 'death', 2 );
+        // this.topMesh.setFrame( 'death', 2 );
+        // this.baseMesh.setFrame( 'death', 2 );
 
     };
 

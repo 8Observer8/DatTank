@@ -46,8 +46,9 @@ class TankObject {
     public rotation: number = 0;
     public size: OMath.Vec3 = new OMath.Vec3( 30, 25, 70 );
 
-    public prevPosition: OMath.Vec3 = new OMath.Vec3();
-    public prevRotation: number = 0;
+    public posChange: OMath.Vec3 = new OMath.Vec3();
+    public rotChange: number = 0;
+    public deltaT: number = 0;
 
     public prevForwardVelocity: number = 0;
 
@@ -199,10 +200,7 @@ class TankObject {
 
     };
 
-    public updateMovement ( delta: number ) {
-
-        this.prevPosition.copy( this.position );
-        this.prevRotation = this.rotation;
+    public updateMovement ( delta: number, newPosition: OMath.Vec3 ) {
 
         let dx = this.positionCorrection.x * delta / 300;
         let dz = this.positionCorrection.z * delta / 300;
@@ -243,18 +241,24 @@ class TankObject {
 
         if ( this.rotation > 2 * Math.PI ) {
 
-            this.prevRotation -= 2 * Math.PI;
             this.rotation -= 2 * Math.PI;
 
         } else if ( this.rotation < -2 * Math.PI ) {
 
-            this.prevRotation += 2 * Math.PI;
             this.rotation += 2 * Math.PI;
 
         }
 
         this.gfx.rotateTankXAxis( this.acceleration );
-        this.gfx.interpolationTime = 0;
+
+        this.rotChange = ( this.rotation - this.gfx.object.rotation.y ) / CollisionManager.updateRate;
+        this.posChange.set( newPosition.x - this.gfx.object.position.x, newPosition.y - this.gfx.object.position.y, newPosition.z - this.gfx.object.position.z );
+        this.posChange.x /= CollisionManager.updateRate;
+        this.posChange.y /= CollisionManager.updateRate;
+        this.posChange.z /= CollisionManager.updateRate;
+        this.deltaT = CollisionManager.updateRate;
+
+        this.position.copy( newPosition );
 
     };
 
@@ -321,14 +325,12 @@ class TankObject {
         this.id = params.id;
 
         this.position.set( params.position.x, params.position.y, params.position.z );
-        this.prevPosition.copy( this.position );
         this.gfx.setPosition( this.position );
 
         this.health = params.health;
         this.ammo = params.ammo;
 
         this.rotation = params.rotation % ( 2 * Math.PI );
-        this.prevRotation = this.rotation % ( 2 * Math.PI );
         this.rotationCorrection = 0;
         this.topRotation = params.rotationTop;
 

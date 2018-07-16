@@ -96,8 +96,7 @@ class CollisionManagerCore {
                     if ( ! objParent ) continue;
 
                     objParent.acceleration = objects[ i ].acceleration;
-                    objParent.updateMovement( delta );
-                    objParent.position.set( objects[ i ].position.x, objects[ i ].position.y, objects[ i ].position.z );
+                    objParent.updateMovement( delta, objects[ i ].position );
 
                 }
 

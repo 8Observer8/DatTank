@@ -71,7 +71,7 @@ class HealthChangeLabelGfx {
         ctx.shadowBlur = 3;
 
         ctx.fillStyle = color;
-        ctx.font = '35px Tahoma';
+        ctx.font = '35px Roboto, Tahoma';
         ctx.textAlign = 'left';
         ctx.fillText( text, 30, 35 );
 

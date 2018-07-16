@@ -31,9 +31,7 @@ class ResourceManagerCore {
 
     private texturesList = [
         'smoke.png',
-        'Ground.jpg',
         'Grass.png',
-        'Base-ground.png',
         'brick.jpg',
 
         'shadows.png',
@@ -51,6 +49,8 @@ class ResourceManagerCore {
         'T29.jpg',
         'T44.jpg',
         'T54.jpg',
+
+        'Tank1.png'
     ];
 
     private soundsList = [
@@ -69,14 +69,15 @@ class ResourceManagerCore {
             url: '/resources/garage.pack',
             models: [
                 'Garage',
-                'tanks/IS2-bottom',
-                'tanks/IS2-top',
-                'tanks/T29-bottom',
-                'tanks/T29-top',
-                'tanks/T44-bottom',
-                'tanks/T44-top',
-                'tanks/T54-bottom',
-                'tanks/T54-top'
+                'tanks/Tank1'
+                // 'tanks/IS2-bottom',
+                // 'tanks/IS2-top',
+                // 'tanks/T29-bottom',
+                // 'tanks/T29-top',
+                // 'tanks/T44-bottom',
+                // 'tanks/T44-top',
+                // 'tanks/T54-bottom',
+                // 'tanks/T54-top'
             ]
         },
         ingame: {

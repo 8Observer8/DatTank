@@ -70,7 +70,7 @@ class FriendlyFireLabelGfx {
         // draw lebel text
 
         ctx.fillStyle = '#fff';
-        ctx.font = '26px Tahoma';
+        ctx.font = '26px Roboto, Tahoma';
         ctx.textAlign = 'left';
         ctx.shadowColor = '#900';
         ctx.shadowOffsetX = 0;
