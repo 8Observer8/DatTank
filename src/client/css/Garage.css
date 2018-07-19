@@ -56,6 +56,47 @@
     background-color: #c3c3c3;
 }
 
+.garage .bottom-block .items {
+    position: relative;
+    float: left;
+    width: 150px;
+    height: 130px;
+    padding: 11px;
+}
+
+.garage .bottom-block .items img {
+    position: relative;
+    top: 50%;
+    transform: translate( 0%, -50% );
+    border: 1px solid #b6b6b6;
+    padding: 30px 12px;
+    transition: border-color 350ms ease, opacity 350ms ease;
+    opacity: 0.6;
+}
+
+.garage .bottom-block .items img:hover {
+    border-color: #ccc;
+    opacity: 0.9;
+}
+
+.garage .bottom-block .tab {
+    position: absolute;
+    left: 10px;
+    top: 0px;
+    opacity: 0;
+    transition: opacity 400ms ease, left 400ms ease;
+}
+
+.garage .bottom-block .tab.active {
+    left: 0px;
+    opacity: 1;
+}
+
+.garage .bottom-block .items.active .img {
+    border-color: #1FB7FC;
+    opacity: 1;
+}
+
 .garage .menu-items {
     position: absolute;
     left: 0px;

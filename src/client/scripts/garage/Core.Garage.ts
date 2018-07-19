@@ -30,6 +30,7 @@ class Garage {
         $('.garage .arrow-left').click( this.prevTank.bind( this ) );
         $('.garage .arrow-right').click( this.nextTank.bind( this ) );
         $('.garage .tank-list .tank').click( this.selectTank.bind( this ) );
+        $('.garage .menu-items .item').click( this.switchMenu.bind( this ) );
         $( document ).keydown( this.keyDown.bind( this ) );
 
     };
@@ -82,6 +83,31 @@ class Garage {
 
         this.isOpened = false;
         $('.garage').hide();
+
+    };
+
+    public switchMenu ( event ) {
+
+        let oldTab = $('.garage .menu-items .item.active').attr('tab');
+        let newTab = $( event.currentTarget ).attr('tab');
+
+        $('.garage .menu-items .item.active').removeClass('active');
+        $( event.currentTarget ).addClass('active');
+
+        $('.garage .bottom-block .tab').removeClass('active');
+        $( '.garage .bottom-block .' + newTab ).show();
+
+        setTimeout( () => {
+        
+            $( '.garage .bottom-block .' + newTab ).addClass('active');
+
+        }, 10 );
+
+        setTimeout( () => {
+
+            $( '.garage .bottom-block .' + oldTab ).hide();
+
+        }, 400 );
 
     };
 
