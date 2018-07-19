@@ -195,15 +195,15 @@ class TankGfx {
         this.tank = tank;
 
         let materials = [];
-        let tankBaseModel = ResourceManager.getModel( 'tanks/Tank1' );
+        let tankBaseModel = ResourceManager.getModel( 'tanks/IS2' );
         // let tankTopModel = ResourceManager.getModel( 'tanks/' + tank.title + '-top' );
 
         // add tank base mesh
 
         for ( let i = 0, il = tankBaseModel.material.length; i < il; i ++ ) {
 
-            let material = new THREE.MeshLambertMaterial({ color: 0x888888 }); //tankBaseModel.material[ i ].clone();
-            material.map = ResourceManager.getTexture( 'Tank1.png' ).clone();
+            let material = new THREE.MeshLambertMaterial({ color: 0x777777 }); //tankBaseModel.material[ i ].clone();
+            material.map = ResourceManager.getTexture( 'IS2.png' ).clone();
             material.map.needsUpdate = true;
             material.map.wrapS = material.map.wrapT = THREE.RepeatWrapping;
             // material.morphTargets = true;

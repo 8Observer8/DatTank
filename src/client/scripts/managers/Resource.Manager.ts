@@ -50,7 +50,7 @@ class ResourceManagerCore {
         'T44.jpg',
         'T54.jpg',
 
-        'Tank1.png'
+        'IS2.png'
     ];
 
     private soundsList = [
@@ -69,7 +69,7 @@ class ResourceManagerCore {
             url: '/resources/garage.pack',
             models: [
                 'Garage',
-                'tanks/Tank1'
+                'tanks/IS2'
                 // 'tanks/IS2-bottom',
                 // 'tanks/IS2-top',
                 // 'tanks/T29-bottom',

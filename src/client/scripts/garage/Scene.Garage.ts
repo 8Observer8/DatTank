@@ -43,14 +43,12 @@ class GarageScene {
         // construct scene & renderer
 
         this.container = $('#garage-viewport')[0];
-        this.width = $('#garage-viewport').parent().innerWidth();
-        this.height = $('#garage-viewport').parent().innerHeight();
+        this.width = $('#garage-viewport').parent().innerWidth() - 400;
+        this.height = $('#garage-viewport').parent().innerHeight() - 150;
 
         this.scene = new THREE.Scene();
         this.scene.fog = new THREE.FogExp2( this.background, 0.035 );
-
         this.camera = new THREE.PerspectiveCamera( 50, this.width / this.height, 1, 2000 );
-        this.camera.position.set( 2, 4, 5 );
 
         this.renderer = new THREE.WebGLRenderer({ canvas: this.container, antialias: true });
         this.renderer.setSize( this.width, this.height );
@@ -67,8 +65,8 @@ class GarageScene {
         this.spotLight.position.set( 2, 7, 2 );
         this.spotLight.lookAt( this.scene.position );
         this.spotLight.castShadow = true;
-        this.spotLight.shadow.mapSize.width = 512;
-        this.spotLight.shadow.mapSize.height = 512;
+        this.spotLight.shadow.mapSize.width = 1024;
+        this.spotLight.shadow.mapSize.height = 1024;
         this.spotLight.shadow.bias = - 0.001;
         this.scene.add( this.spotLight );
 
@@ -95,33 +93,20 @@ class GarageScene {
 
             let modelName = ['IS2', 'T29', 'T44', 'T54'][ i ];
             let object = new THREE.Object3D();
-            let texture = textureLoader.load( '/resources/textures/' + modelName + '.jpg' );
+            let texture = textureLoader.load( '/resources/textures/' + modelName + '.png' );
 
-            model = ResourceManager.getModel( 'tanks/' + 'Tank1' );
-            for ( let i = 0, il = model.material.length; i < il; i ++ ) {
+            model = ResourceManager.getModel( 'tanks/' + 'IS2' );
+            let material = [
+                new THREE.MeshPhongMaterial({ map: texture, color: 0xbbbbbb }),
+                new THREE.MeshPhongMaterial({ map: texture, color: 0xbbbbbb }),
+                new THREE.MeshPhongMaterial({ map: texture, color: 0xbbbbbb })
+            ];
 
-                model.material[ i ].map = texture;
-                model.material[ i ].color = new THREE.Color( 0xbbbbbb );
-
-            }
-            mesh = new THREE.Mesh( model.geometry, model.material );
+            mesh = new THREE.Mesh( model.geometry, material );
             mesh.castShadow = true;
             mesh.receiveShadow = true;
             mesh.scale.set( 0.8, 0.8, 0.8 );
             object.add( mesh );
-
-            // model = ResourceManager.getModel( 'tanks/' + modelName + '-bottom' );
-            // for ( let i = 0, il = model.material.length; i < il; i ++ ) {
-
-            //     model.material[ i ].map = texture;
-            //     model.material[ i ].color = new THREE.Color( 0xbbbbbb );
-
-            // }
-            // mesh = new THREE.Mesh( model.geometry, model.material );
-            // mesh.castShadow = true;
-            // mesh.receiveShadow = true;
-            // mesh.scale.set( 0.8, 0.8, 0.8 );
-            // object.add( mesh );
 
             this.scene.add( object );
             this.models[ modelName ] = object;
@@ -165,15 +150,15 @@ class GarageScene {
         $('.garage .loading').hide();
 
         this.initModels();
-        this.camera.position.set( Math.cos( this.timer * this.tankRotationSpeed ) * 10, 4, Math.sin( this.timer * this.tankRotationSpeed ) * 10 );
-        this.camera.lookAt( this.scene.position );
+        this.camera.position.set( 2, 4.2, 6 );
+        this.camera.lookAt( new THREE.Vector3( 0, 0.5, 0 ) );
 
     };
 
     public resize ( event? ) {
 
-        this.width = $('#garage-viewport').parent().innerWidth();
-        this.height = $('#garage-viewport').parent().innerHeight();
+        this.width = $('#garage-viewport').parent().innerWidth() - 400;
+        this.height = $('#garage-viewport').parent().innerHeight() - 150;
 
         this.renderer.setSize( this.width, this.height );
         this.camera.aspect = this.width / this.height;

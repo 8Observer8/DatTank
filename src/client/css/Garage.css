@@ -15,11 +15,10 @@
     position: relative;
     min-width: 318px;
     min-height: 311px;
-    margin-left: auto;
-    margin-right: auto;
-    top: 8%;
-    width: 85%;
-    height: 80%;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
 }
 
 .garage .loading {
@@ -35,11 +34,75 @@
     position: absolute;
     top: 0px;
     left: 0px;
-    width: 100%;
-    height: 100%;
     z-index: 0;
-    border: 3px solid #555;
     background: rgba(153, 153, 153, 1);
+}
+
+.garage .right-block {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 400px;
+    height: 100%;
+    background-color: #c3c3c3;
+}
+
+.garage .bottom-block {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: calc( 100% - 400px );
+    height: 150px;
+    background-color: #c3c3c3;
+}
+
+.garage .menu-items {
+    position: absolute;
+    left: 0px;
+    bottom: 150px;
+}
+
+.garage .menu-items .item {
+    position: relative;
+    margin-right: 20px;
+    float: left;
+    padding: 5px 5px 5px 15px;
+    background-color: #C3C3C3;
+    color: #555;
+    font: normal 15px Roboto, arial, tahoma;
+    transition: background-color 400ms ease;
+    border-radius: 3px 0px 0px 0px;
+}
+
+.garage .menu-items .item .decoration {
+    content:'';
+    position:absolute;
+    z-index: 1;
+    top: 0;
+    right: -10px;  
+    bottom: 0;
+    width: 13px;
+    background: #C3C3C3;
+    transform: skew(15deg);
+    border-radius: 0 5px 0 0;  
+    transition: background-color 400ms ease;
+}
+
+.garage .menu-items div:hover {
+    background-color: #D8D8D8;
+}
+
+.garage .menu-items .item:hover .decoration {
+    background-color: #D8D8D8;
+}
+
+.garage .menu-items .item.active {
+    background-color: #32ABE3;
+    color: #fff;
+}
+
+.garage .menu-items .item.active .decoration {
+    background-color: #32ABE3;
 }
 
 .garage .tank-title {
@@ -60,6 +123,7 @@
 }
 
 .garage .tank-list {
+    display: none !important;
     position: absolute;
     bottom: 15px;
     border: none;
@@ -128,7 +192,7 @@
 }
 
 .garage .characteristics {
-    display: none;
+    display: none !important;
     position: absolute;
     width: 280px;
     top: 10%;
