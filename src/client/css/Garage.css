@@ -38,6 +38,18 @@
     background: rgba(153, 153, 153, 1);
 }
 
+.garage .title {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding-right: 50px;
+    font: normal 20px Roboto, arial, tahoma;
+    border-bottom: 1px solid rgba( 255, 255, 255, 0.5 );
+    color: #fff;
+    text-shadow: 0px 0px 2px rgba( 255, 255, 255, 0.5 );
+    z-index: 1;
+}
+
 .garage .right-block {
     position: absolute;
     top: 0px;
@@ -45,6 +57,65 @@
     width: 400px;
     height: 100%;
     background-color: #c3c3c3;
+}
+
+.garage .right-block .tank-title {
+    margin-left: 10px;
+    font: normal 20px Roboto, arial, tahoma;
+    color: #1FB7FC;
+    text-shadow: 0px 0px 2px rgba( 255, 255, 255, 0.5 );
+}
+
+.garage .right-block .tank-description {
+    width: 325px;
+    margin-left: 20px;
+    margin-top: 10px;
+    color: #444;
+    font: normal 14px Roboto, arial, tahoma;
+    letter-spacing: 0.4px;
+}
+
+.garage .right-block .sub-block-title {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: #1FB7FC;
+    text-shadow: 0px 0px 2px rgba( 255, 255, 255, 0.5 );
+}
+
+.garage .right-block .tank-stats {
+    width: 325px;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.garage .right-block .tank-stats .stats-title {
+    font: normal 14px Roboto, arial, tahoma;
+    color: #444;
+}
+
+.garage .right-block .tank-stats .stats-value {
+    float: right;
+    font: normal 12px Roboto, arial, tahoma;
+    color: #444;
+    margin-top: -13px;
+}
+
+.garage .right-block .tank-stats .stats-progress {
+    position: relative;
+    width: 100%;
+    height: 7px;
+    margin-bottom: 5px;
+    border: 1px solid #aaa;
+}
+
+.garage .right-block .tank-stats .stats-progress .green {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 50%;
+    height: 100%;
+    background-color: #6ec974;
 }
 
 .garage .bottom-block {
@@ -150,6 +221,30 @@
     color: #fffdfd;
     padding: 20px 10px 0px;
     margin: 0;
+}
+
+.garage .btn-pick {
+    display: none;
+    position: absolute;
+    color: white;
+    background-color: #00b6ff;
+    border: 1px solid #0493CC;
+    bottom: 35%;
+    width: 10%;
+    text-align: center;
+    opacity: 0.8;
+    padding: 8px;
+    width: 100px;
+    height: 18px;
+    transition: opacity 200ms ease;
+    transform: translate( -50%, 0% );
+    bottom: 170px;
+    right: 365px;
+    z-index: 1;
+}
+
+.garage .btn-pick:hover {
+    opacity: 1;
 }
 
 .garage .close-btn {

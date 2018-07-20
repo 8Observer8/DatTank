@@ -240,10 +240,51 @@
 
         <div class="garage">
             <div class="garage-wrapper">
+                <div class="title">Your garage</div>
                 <div class="loading">Loading...</div>
                 <canvas id="garage-viewport"></canvas>
                 <div class="right-block">
-                    <div class="btn-pick">Bring it on!</div>
+                    <div class="tank-title"></div>
+                    <div class="tank-description">
+                        <b>IS2001 tank</b> - new default tank of Russian army from WorldWar VII (2143 year)
+                        against other sides on first colonized planet (Mars).<br><br>
+                        By default equipped with plasma cannon of first generartion,
+                        turbo diesel engine and tesla induction generator.<br><br>
+                        Easy in movement control, quite fast, powefull cannon, but gets overheated quite fast.<br><br>
+                        <b class="sub-block-title">Current tank parts:</b>
+                        <b>Cannon:</b> Plasma cannon I gen.<br>
+                        <b>Armor:</b> Basic 100mm irridium list.<br>
+                        <b>Engine:</b> Turbo diesel 1.3k HP engine with tesla induction generator.<br>
+                    </div>
+                    <div class="tank-stats">
+                        <b class="sub-block-title">Tank stats:</b>
+                        <div class="stats-title">Cannon</div>
+                        <div class="stats-value">100p</div>
+                        <div class="stats-progress">
+                            <div class="green"></div>
+                        </div>
+                        <div class="stats-title">Armor</div>
+                        <div class="stats-value">200p</div>
+                        <div class="stats-progress">
+                            <div class="green"></div>
+                        </div>
+                        <div class="stats-title">Speed</div>
+                        <div class="stats-value">100km/h</div>
+                        <div class="stats-progress">
+                            <div class="green"></div>
+                        </div>
+                        <div class="stats-title">Reload time</div>
+                        <div class="stats-value">1.1s</div>
+                        <div class="stats-progress">
+                            <div class="green"></div>
+                        </div>
+                        <div class="stats-title">Overheat</div>
+                        <div class="stats-value">100p</div>
+                        <div class="stats-progress">
+                            <div class="green"></div>
+                        </div>
+                    </div>
+                    <div class="btn-pick">PLAY!</div>
                 </div>
                 <div class="menu-items">
                     <div class="item active" tab="tanks">Tanks<div class="decoration"></div></div>
@@ -264,8 +305,24 @@
                         <div class="items">
                             <img class="img" src="/resources/img/garage/tank-3.png">
                         </div>
+                        <div class="items">
+                            <img class="img" src="/resources/img/garage/tank-4.png">
+                        </div>
                     </div>
-                    <div class="tab cannon"></div>
+                    <div class="tab cannon">
+                        <div class="items active">
+                            <img class="img" src="/resources/img/garage/tank-1.png">
+                        </div>
+                        <div class="items">
+                            <img class="img" src="/resources/img/garage/tank-2.png">
+                        </div>
+                        <div class="items">
+                            <img class="img" src="/resources/img/garage/tank-3.png">
+                        </div>
+                        <div class="items">
+                            <img class="img" src="/resources/img/garage/tank-4.png">
+                        </div>
+                    </div>
                     <div class="tab engine"></div>
                     <div class="tab armor"></div>
                     <div class="tab texture"></div>

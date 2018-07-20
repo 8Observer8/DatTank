@@ -23,14 +23,6 @@ class ControlsManagerCore {
     private moveX = 0;
     private moveZ = 0;
 
-    private notMoveX = true;
-    private notMoveZ = true;
-
-    private stopMovingUp = false;
-    private stopMovingDown = false;
-    private stopMovingLeft = false;
-    private stopMovingRight = false;
-
     private intersectPlane: THREE.Mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 10000, 10000 ), new THREE.MeshBasicMaterial({ visible: false }) );
     private raycaster: THREE.Raycaster = new THREE.Raycaster();
 
@@ -48,32 +40,9 @@ class ControlsManagerCore {
 
     };
 
-    private rotateTop ( angle: number ) {
-
-        Arena.me.tank.rotateTop( angle );
-
-    };
-
     private startMoving () {
 
         Arena.me.tank.move( this.moveX, this.moveZ );
-
-    };
-
-    private stopMoving () {
-
-        this.notMoveX = true;
-        this.notMoveZ = true;
-    
-        this.stopMovingUp = true;
-        this.stopMovingDown = true;
-        this.stopMovingLeft = true;
-        this.stopMovingRight = true;
-    
-        this.startMoving();
-    
-        this.notMoveX = false;
-        this.notMoveZ = false;
 
     };
 
@@ -160,9 +129,6 @@ class ControlsManagerCore {
 
                 if ( this.moveX === 1 ) return;
                 this.moveX = 1;
-                this.stopMovingDown = false;
-                this.stopMovingLeft = false;
-                this.stopMovingRight = false;
                 this.startMoving();
 
                 break;
@@ -172,9 +138,6 @@ class ControlsManagerCore {
 
                 if ( this.moveZ === 1 ) return;
                 this.moveZ = 1;
-                this.stopMovingUp = false;
-                this.stopMovingDown = false;
-                this.stopMovingRight = false;
                 this.startMoving();
 
                 break;
@@ -184,9 +147,6 @@ class ControlsManagerCore {
 
                 if ( this.moveX === - 1 ) return;
                 this.moveX = - 1;
-                this.stopMovingUp = false;
-                this.stopMovingLeft = false;
-                this.stopMovingRight = false;
                 this.startMoving();
 
                 break;
@@ -195,10 +155,7 @@ class ControlsManagerCore {
             case 68: // d
 
                 if ( this.moveZ === - 1 ) return;
-                this.moveZ = -1;
-                this.stopMovingUp = false;
-                this.stopMovingLeft = false;
-                this.stopMovingDown = false;
+                this.moveZ = - 1;
                 this.startMoving();
 
                 break;
@@ -277,29 +234,7 @@ class ControlsManagerCore {
 
         let me = Arena.me;
 
-        if ( me.tank.moveDirection.x || me.tank.moveDirection.y || Math.abs( this.mousePos.x - this.prevMousePos.x ) > 0.02 || Math.abs( this.mousePos.y - this.prevMousePos.y ) > 0.02 ) {
-
-            this.raycaster.setFromCamera( this.mousePos, GfxCore.camera );
-            let intersects = this.raycaster.intersectObjects( [ this.intersectPlane ] );
-
-            if ( intersects.length === 1 && this.prevMousePos.distanceTo( this.mousePos ) > 0.01 ) {
-
-                this.prevMousePos.copy( this.mousePos );
-
-                let vector = intersects[0].point;
-                let center = Arena.me.tank.position;
-
-                var angle = Math.atan2( - vector.x + center.x, - vector.z + center.z ) + Math.PI / 2;
-        
-                if ( Math.abs( angle - me.tank.topRotation ) > 0.003 ) {
-        
-                    this.rotateTop( angle );
-        
-                }
-        
-            }        
-
-        }
+        // nothing here
 
     };
 

@@ -256,7 +256,7 @@ class BotCore {
 
             if ( Math.abs( deltaAngle ) > 0.1 && Date.now() - this.lastTopRotate > 40 ) {
 
-                this.player.tank.setTopRotation( this.player.tank.rotationTop + Math.sign( deltaAngle ) / 15 );
+                // this.player.tank.setTopRotation( this.player.tank.rotationTop + Math.sign( deltaAngle ) / 15 );
                 this.lastTopRotate = Date.now();
 
             }

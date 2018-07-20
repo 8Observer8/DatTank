@@ -35,7 +35,6 @@ class TankObject {
     public health: number;
     public ammo: number;
 
-    public topRotation: number = 0;
     public moveDirection = new OMath.Vec2();
     public positionCorrection = new OMath.Vec3();
     public positionCorrectionDelta = new OMath.Vec3();
@@ -102,13 +101,6 @@ class TankObject {
 
     };
 
-    public rotateTop ( angle: number ) {
-
-        angle -= this.rotation;
-        this.network.rotateTop( angle );
-
-    };
-
     public die () {
 
         this.gfx.destroy();
@@ -135,13 +127,6 @@ class TankObject {
         this.positionCorrection.z = positionZ - this.position.z;
 
         this.rotationCorrection = rotation / 1000.0 - this.rotation;
-
-    };
-
-    public setTopRotation ( angle: number ) {
-
-        this.topRotation = angle;
-        this.gfx.setTopRotation( angle );
 
     };
 
@@ -332,7 +317,6 @@ class TankObject {
 
         this.rotation = params.rotation % ( 2 * Math.PI );
         this.rotationCorrection = 0;
-        this.topRotation = params.rotationTop;
 
         this.moveDirection.set( params.moveDirection.x, params.moveDirection.y );
 

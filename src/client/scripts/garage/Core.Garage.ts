@@ -162,7 +162,7 @@ class Garage {
 
         //
 
-        $('.garage .tank-title').html( 'Tank: ' + tankType.title );
+        $('.garage .tank-title').html( 'Tank <b>"' + tankType.title + '"</b>' );
         $('.garage .characteristics .param#speed .value').html( tankType.speed + 'km/h' );
         $('.garage .characteristics .param#rpm .value').html( tankType.rpm + 'rpm' );
         $('.garage .characteristics .param#armour .value').html( tankType.armour + 'mm' );

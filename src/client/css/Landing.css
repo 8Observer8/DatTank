@@ -418,27 +418,6 @@
     height: 50px;
 }
 
-.btn-pick {
-    display: none;
-    position: absolute;
-    left: calc( 50% - 50px );
-    color: white;
-    background-color: #00b6ff;
-    border: 1px solid #0493CC;
-    bottom: 35%;
-    width: 10%;
-    text-align: center;
-    opacity: 0.8;
-    padding: 8px;
-    width: 100px;
-    height: 18px;
-    transition: opacity 200ms ease;
-}
-
-.btn-pick:hover {
-    opacity: 1;
-}
-
 /* footer */
 
 #footer {

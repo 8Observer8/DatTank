@@ -237,15 +237,6 @@ class TankObject {
 
     };
 
-    public setTopRotation ( angle: number ) {
-
-        if ( this.health <= 0 ) return;
-
-        this.rotationTop = angle;
-        this.network.updateRotateTop();
-
-    };
-
     public makeShot () {
 
         if ( this.health <= 0 ) return;

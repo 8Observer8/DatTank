@@ -159,14 +159,6 @@ class TankNetwork {
 
     };
 
-    private setRotateTop ( data ) {
-
-        if ( this.filter( data ) ) return;
-
-        this.tank.setTopRotation( data[1] / 1000 );
-
-    };
-
     private setFriendlyFire ( data ) {
 
         if ( this.filter( data ) ) return;
@@ -213,7 +205,6 @@ class TankNetwork {
         Network.removeMessageListener( 'TankFriendlyFire', this.setFriendlyFire );
         Network.removeMessageListener( 'TankMove', this.setMove );
         Network.removeMessageListener( 'TankMakeShot', this.setShoot );
-        Network.removeMessageListener( 'TankRotateTop', this.setRotateTop );
         Network.removeMessageListener( 'TankSetHealth', this.setHealth );
         Network.removeMessageListener( 'TankSetAmmo', this.setAmmo );
 
@@ -228,7 +219,6 @@ class TankNetwork {
         this.setFriendlyFire = this.setFriendlyFire.bind( this );
         this.setMove = this.setMove.bind( this );
         this.setShoot = this.setShoot.bind( this );
-        this.setRotateTop = this.setRotateTop.bind( this );
         this.setHealth = this.setHealth.bind( this );
         this.setAmmo = this.setAmmo.bind( this );
 
@@ -237,7 +227,6 @@ class TankNetwork {
         Network.addMessageListener( 'TankFriendlyFire', this.setFriendlyFire );
         Network.addMessageListener( 'TankMove', this.setMove );
         Network.addMessageListener( 'TankMakeShot', this.setShoot );
-        Network.addMessageListener( 'TankRotateTop', this.setRotateTop );
         Network.addMessageListener( 'TankSetHealth', this.setHealth );
         Network.addMessageListener( 'TankSetAmmo', this.setAmmo );
 

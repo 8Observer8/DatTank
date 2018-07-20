@@ -33,15 +33,6 @@ class TankNetwork {
 
     // network events handlers
 
-    private setTopRotation ( data: Int16Array, socket: ws ) {
-
-        if ( this.filter( data, socket ) ) return;
-
-        let angle = data[1] / 1000;
-        this.tank.setTopRotation( angle );
-
-    };
-
     private setMovement ( data: Int16Array, socket: ws ) {
 
         if ( this.filter( data, socket ) ) return;
@@ -120,23 +111,6 @@ class TankNetwork {
         bufferView[ 2 ] = this.tank.ammo;
 
         Network.send( 'TankSetAmmo', this.tank.player.socket, buffer, bufferView );
-
-    };
-
-    public updateRotateTop () {
-
-        this.buffers['ChangeTopRotation'] = this.buffers['ChangeTopRotation'] || {};
-        let buffer = this.buffers['ChangeTopRotation'].buffer || new ArrayBuffer( 6 );
-        let bufferView = this.buffers['ChangeTopRotation'].bufferView || new Uint16Array( buffer );
-        this.buffers['ChangeTopRotation'].buffer = buffer;
-        this.buffers['ChangeTopRotation'].bufferView = bufferView;
-
-        //
-
-        bufferView[1] = this.tank.id;
-        bufferView[2] = Math.floor( 1000 * this.tank.rotationTop );
-
-        this.arena.network.sendEventToPlayersInRange( this.tank.position, 'TankRotateTop', buffer, bufferView );
 
     };
 
@@ -291,7 +265,6 @@ class TankNetwork {
 
     public dispose () {
 
-        Network.removeMessageListener( 'TankRotateTop', this.setTopRotation );
         Network.removeMessageListener( 'TankMove', this.setMovement );
         Network.removeMessageListener( 'TankStartShooting', this.setShootStart );
         Network.removeMessageListener( 'TankStopShooting', this.setShootStop );
@@ -305,14 +278,12 @@ class TankNetwork {
 
         //
 
-        this.setTopRotation = this.setTopRotation.bind( this );
         this.setMovement = this.setMovement.bind( this );
         this.setShootStart = this.setShootStart.bind( this );
         this.setShootStop = this.setShootStop.bind( this );
 
         //
 
-        Network.addMessageListener( 'TankRotateTop', this.setTopRotation );
         Network.addMessageListener( 'TankMove', this.setMovement );
         Network.addMessageListener( 'TankStartShooting', this.setShootStart );
         Network.addMessageListener( 'TankStopShooting', this.setShootStop );
