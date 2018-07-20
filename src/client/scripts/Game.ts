@@ -46,7 +46,7 @@ class GameCore {
 
         ResourceManager.init();
 
-        this.garage.init( this );
+        this.garage.init();
 
         UI.init();
         UI.Landing.setVersion( this.version );

@@ -19,7 +19,7 @@ class Garage {
 
     //
 
-    public init ( game ) {
+    public init () {
 
         this.scene.init( this );
 
@@ -27,11 +27,12 @@ class Garage {
 
         $('.garage .btn-pick').click( Game.play.bind( Game ) );
         $('.garage .close-btn').click( this.hide.bind( this ) );
-        $('.garage .arrow-left').click( this.prevTank.bind( this ) );
-        $('.garage .arrow-right').click( this.nextTank.bind( this ) );
-        $('.garage .tank-list .tank').click( this.selectTank.bind( this ) );
         $('.garage .menu-items .item').click( this.switchMenu.bind( this ) );
         $( document ).keydown( this.keyDown.bind( this ) );
+
+        //
+
+        $('.garage .bottom-block .tab:not(.active)').hide();
 
     };
 
