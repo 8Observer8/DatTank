@@ -58,16 +58,16 @@ class GarageScene {
 
         // construct lights
 
-        this.ambientlight = new THREE.AmbientLight( 0xaaaaaa );
+        this.ambientlight = new THREE.AmbientLight( 0xbbbbbb );
         this.scene.add( this.ambientlight );
 
-        this.spotLight = new THREE.SpotLight( 0x888888, 1, 30, Math.PI / 4, 0.8 );
+        this.spotLight = new THREE.SpotLight( 0x888888, 1, 30, Math.PI / 6, 0.8 );
         this.spotLight.position.set( 2, 7, 2 );
         this.spotLight.lookAt( this.scene.position );
         this.spotLight.castShadow = true;
         this.spotLight.shadow.mapSize.width = 1024;
         this.spotLight.shadow.mapSize.height = 1024;
-        this.spotLight.shadow.bias = - 0.001;
+        this.spotLight.shadow.bias = - 0.0005;
         this.scene.add( this.spotLight );
 
         //

@@ -31,6 +31,32 @@ NetworkManager.prototype.init = function () {
 
     // handling requests from clients
 
+    this.app.get( '/api/auth', function ( req, res ) {
+
+        var pid = req.query['pid'];
+        var sid = req.query['sid'];
+
+        if ( ! pid || ! sid ) {
+
+            DT.playerManager.register( ( params ) => {
+
+                return res.send( params );
+
+            });
+            
+        } else {
+
+            DT.playerManager.auth( pid, sid, ( params ) => {
+
+                console.log( params );
+                return res.send( params );
+
+            });
+
+        }
+
+    });
+
     this.app.get( '/api/stats', function ( req, res ) {
 
         var arenas = [];

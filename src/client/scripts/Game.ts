@@ -33,6 +33,9 @@ class GameCore {
     public garage: Garage = new Garage();
     public gameService: GameService = new GameService();
 
+    public pid: string;
+    public sid: string;
+
     private currentServer;
 
     //
@@ -70,6 +73,21 @@ class GameCore {
             UI.changeSound( true, true );
 
         }
+
+        //
+
+        let pid = localStorage.getItem('pid');
+        let sid = localStorage.getItem('sid');
+
+        this.gameService.auth( pid, sid, ( pid, sid ) => {
+
+            this.pid = pid;
+            this.sid = sid;
+
+            localStorage.setItem( 'pid', pid );
+            localStorage.setItem( 'sid', sid );
+
+        });
 
         //
 

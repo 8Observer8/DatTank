@@ -23,6 +23,7 @@ module.exports = {
     mongoose:       mongoose,
     connection:     connection,
     models:         {
-        topPlayers:     require('./TopPlayers')
+        topPlayers:     require('./TopPlayers'),
+        players:        require('./Players')
     }
 };

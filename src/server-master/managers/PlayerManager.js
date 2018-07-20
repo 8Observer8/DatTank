@@ -13,6 +13,51 @@ PlayerManager.prototype = {};
 
 //
 
+PlayerManager.prototype.register = function ( callback ) {
+
+    var pid = generateGuid();
+    var sid = Buffer.from( Date.now() + '-' + pid ).toString('base64').replace( /=/g, '' );
+
+    DB.models.players
+    .create({ pid: pid, sid: sid, coins: 1500 })
+    .then( () => {
+
+        return callback({
+            pid:    pid,
+            sid:    sid,
+            coins:  1500,
+            params: {}
+        });
+
+    });
+
+};
+
+PlayerManager.prototype.auth = function ( pid, sid, callback ) {
+
+    DB.models.players
+    .findOne({ pid: pid })
+    .then( ( result ) => {
+
+        if ( ! result ) {
+        
+            return this.register( callback );
+
+        } else {
+
+            return callback({
+                pid:    result.pid,
+                sid:    result.sid,
+                coins:  result.coins,
+                params: result.params
+            });
+
+        }
+
+    });
+
+};
+
 PlayerManager.prototype.getTopBoard = function ( callback ) {
 
     DB.models.topPlayers
@@ -77,6 +122,30 @@ PlayerManager.prototype.updateTopBoard = function ( login, score, kills ) {
         });
 
     });
+
+};
+
+//
+
+function generateGuid () {
+
+    var result, i, j;
+    result = '';
+
+    for ( j = 0; j < 32; j ++ ) {
+
+        if ( j == 8 || j == 12 || j == 16 || j == 20 ) {
+
+            result = result + '-';
+
+        }
+
+        i = Math.floor( Math.random() * 16 ).toString(16).toUpperCase();
+        result = result + i;
+
+    }
+
+    return result;
 
 };
 
