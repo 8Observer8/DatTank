@@ -48,7 +48,6 @@ NetworkManager.prototype.init = function () {
 
             DT.playerManager.auth( pid, sid, ( params ) => {
 
-                console.log( params );
                 return res.send( params );
 
             });

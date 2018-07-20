@@ -13,13 +13,36 @@ PlayerManager.prototype = {};
 
 //
 
+PlayerManager.prototype.removeOldPlayers = function () {
+
+    var cutoff = new Date();
+    cutoff.setDate( cutoff.getDate() - 30 );
+
+    DB.models.players
+    .find({ lastVisit: { $lt: cutoff } })
+    .then( ( results ) => {
+
+        results.forEach( function ( result ) {
+            
+            result.remove();
+
+        });
+
+    });
+
+};
+
 PlayerManager.prototype.register = function ( callback ) {
+
+    this.removeOldPlayers();
+
+    //
 
     var pid = generateGuid();
     var sid = Buffer.from( Date.now() + '-' + pid ).toString('base64').replace( /=/g, '' );
 
     DB.models.players
-    .create({ pid: pid, sid: sid, coins: 1500 })
+    .create({ pid: pid, sid: sid, coins: 1500, lastVisit: Date.now() })
     .then( () => {
 
         return callback({
