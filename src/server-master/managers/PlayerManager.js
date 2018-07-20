@@ -42,12 +42,14 @@ PlayerManager.prototype.register = function ( callback ) {
     var sid = Buffer.from( Date.now() + '-' + pid ).toString('base64').replace( /=/g, '' );
 
     DB.models.players
-    .create({ pid: pid, sid: sid, coins: 1500, lastVisit: Date.now() })
+    .create({ pid: pid, sid: sid, coins: 1500, level: 0, xp: 0, lastVisit: Date.now() })
     .then( () => {
 
         return callback({
             pid:    pid,
             sid:    sid,
+            level:  0,
+            xp:     0,
             coins:  1500,
             params: {}
         });
@@ -60,19 +62,24 @@ PlayerManager.prototype.auth = function ( pid, sid, callback ) {
 
     DB.models.players
     .findOne({ pid: pid })
-    .then( ( result ) => {
+    .then( ( player ) => {
 
-        if ( ! result ) {
+        if ( ! player ) {
         
             return this.register( callback );
 
         } else {
 
+            player.lastVisit = Date.now();
+            player.save();
+
             return callback({
-                pid:    result.pid,
-                sid:    result.sid,
-                coins:  result.coins,
-                params: result.params
+                pid:    player.pid,
+                sid:    player.sid,
+                xp:     player.xp,
+                level:  player.level,
+                coins:  player.coins,
+                params: player.params
             });
 
         }

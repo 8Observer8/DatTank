@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 
 //
 
-mongoose.connect( 'mongodb://localhost/DatTank' );
+mongoose.connect( 'mongodb://localhost:27017/DatTank', { useNewUrlParser: true } );
 
 var connection = mongoose.connection;
 

@@ -21,6 +21,12 @@ var PlayersSchema = mongoose.Schema({
     params: {
         type: Object
     },
+    xp: {
+        type: Number
+    },
+    level: {
+        type: Number
+    },
     lastVisit: {
         type: Date
     }
