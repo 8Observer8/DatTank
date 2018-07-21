@@ -178,25 +178,13 @@
     outline: none;
 }
 
-#signin-box-wrapper #signin-box #play-change-btn {
-    position: relative;
-    margin-top: 8px;
-    width: 100%;
-    height: 41px;
-}
-
-#signin-box-wrapper #signin-box #play-btn #play-btn-text {
-    position: relative;
-    top: 10px;
-}
-
 #signin-box-wrapper #signin-box #play-btn {
-    float: left;
     background-color: #00b6ff;
-    height: 41px;
+    padding: 10px 0px;
+    margin-top: 10px;
     margin-left: 16px;
     margin-right: auto;
-    width: 90%;
+    width: calc( 90% - 2px );
     text-align: center;
     font: normal 15px 'Roboto';
     color: #fff;
@@ -205,7 +193,42 @@
     transition: opacity 200ms ease;
 }
 
+#signin-box-wrapper #signin-box #play-btn #play-btn-text {
+    position: relative;
+    top: 10px;
+}
+
 #signin-box-wrapper #signin-box #play-btn:hover {
+    opacity: 1;
+}
+
+#signin-box-wrapper #signin-box #signup-btn {
+    display: block;
+    background-color: #c48d18;
+    padding: 10px 0px;
+    margin-top: 10px;
+    margin-left: 16px;
+    margin-right: auto;
+    width: calc( 90% - 2px );
+    text-align: center;
+    font: normal 15px 'Roboto';
+    color: #fff;
+    border: 1px solid #a37614;
+    opacity: 0.8;
+    transition: opacity 200ms ease;
+    text-decoration: none;
+}
+
+#signin-box-wrapper #signin-box #signup-btn .fb-icon {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 70px;
+    background-image: url(/resources/img/fb-icon.png);
+    background-size: 100% 100%;
+}
+
+#signin-box-wrapper #signin-box #signup-btn:hover {
     opacity: 1;
 }
 
@@ -264,6 +287,12 @@
 
 @media only screen and (max-width: 1450px) {
     .new-features-box {
+        display: none;
+    }
+}
+
+@media only screen and (max-height: 670px) {
+    #div-gpt-ad-1484229654832-0 {
         display: none;
     }
 }

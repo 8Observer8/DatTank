@@ -63,6 +63,20 @@
         </script>
 
         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <script src="https://connect.facebook.net/en_US/sdk.js"></script>
+        <script>
+            window.fbAsyncInit = function () {
+                FB.init({
+                    // appId      : '178574662917890',
+                    appId      : '1845382232185797', // test app
+                    cookie     : true,
+                    xfbml      : true,
+                    version    : 'v3.0'
+                });
+                    
+                FB.AppEvents.logPageView();   
+            };
+        </script>
 
     </head>
 
@@ -86,12 +100,9 @@
             <div id="signin-box">
                 <div id="title">DatTank<div id="alpha"></div></div>
                 <input id="username" class="field" type="text" placeholder="Username" maxlength="13" />
-                <div id="play-change-btn">
-                    <div id="play-btn"><span id="play-btn-text">Connecting...</span></div>
-                    <!-- <div id="change-tank">
-                        <img src="/resources/img/gear.png">
-                    </div> -->
-                </div>
+                <div id="play-btn">Connecting...</div>
+                <!-- <a id="signup-btn" href="https://www.facebook.com/v3.0/dialog/oauth?app_id=178574662917890&auth_type=&channel_url=http://dattank.com/authFB&client_id=113869198637480&display=popup&domain=dattank.com&fallback_redirect_uri=http://dattank.com&locale=en_US&logger_id=87822e80-bbba-97dd-91ce-a9b189a5683a&origin=1&redirect_uri=http://dattank.com&ref=LoginButton&response_type=none%2Ctoken%2Csigned_request&scope=&sdk=joey&version=v3.0"><div class="fb-icon"></div>Login to save progress</a> -->
+                <a id="signup-btn" href="/auth/facebook"><div class="fb-icon"></div>Login to save progress</a>
                 <div id="instructions">
                     <b>AWSD</b> or <b>arrows</b> keys to move<br>
                     Mouse <b>click</b> or <b>space</b> key holding to shoot<br><br>
@@ -557,15 +568,6 @@
         </div> -->
 
         <div id="fb-root"></div>
-        <script>
-            (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7&appId=384093235091765";
-            fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-        </script>
 
     </body>
 

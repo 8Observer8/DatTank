@@ -64,7 +64,7 @@ PlayerManager.prototype.auth = function ( pid, sid, callback ) {
     .findOne({ pid: pid })
     .then( ( player ) => {
 
-        if ( ! player ) {
+        if ( ! player || player.sid !== sid ) {
         
             return this.register( callback );
 
@@ -85,6 +85,12 @@ PlayerManager.prototype.auth = function ( pid, sid, callback ) {
         }
 
     });
+
+};
+
+PlayerManager.prototype.linkFB = function ( sid, pid, fbUser ) {
+
+    console.log('linkFb', sid, pid, fbUser );
 
 };
 

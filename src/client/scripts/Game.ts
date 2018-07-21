@@ -89,6 +89,14 @@ class GameCore {
 
         });
 
+        FB.getLoginStatus( function ( response ) {
+
+            console.log( response );
+            
+            // statusChangeCallback(response);
+        
+        });
+
         //
 
         console.log( 'Game [' + this.version + '] inited successfully.' );

@@ -13,7 +13,7 @@ class UILandingModule {
 
     public initPlayBtn () {
 
-        $('#play-btn #play-btn-text').html('PLAY!');
+        $('#play-btn').html('PLAY!');
 
     };
 

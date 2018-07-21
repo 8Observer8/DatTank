@@ -9,6 +9,9 @@ var mongoose = require('mongoose');
 
 var PlayersSchema = mongoose.Schema({
 
+    fid: {
+        type: String
+    },
     pid: {
         type: String,
     },
