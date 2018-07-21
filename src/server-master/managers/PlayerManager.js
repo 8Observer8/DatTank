@@ -88,9 +88,20 @@ PlayerManager.prototype.auth = function ( pid, sid, callback ) {
 
 };
 
-PlayerManager.prototype.linkFB = function ( sid, pid, fbUser ) {
+PlayerManager.prototype.linkFB = function ( pid, sid, fbUser ) {
 
-    console.log('linkFb', sid, pid, fbUser );
+    DB.models.players
+    .findOne({ pid: pid })
+    .then( ( player ) => {
+
+        if ( player ) {
+
+            player.fid = fbUser.id;
+            player.save();
+
+        }
+
+    });
 
 };
 
