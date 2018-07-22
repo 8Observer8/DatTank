@@ -89,9 +89,14 @@ NetworkManager.prototype.init = function () {
         var pid = req.cookies['dt-pid'];
         var sid = req.cookies['dt-sid'];
         var fbUser = req.user;
-        DT.playerManager.linkFB( pid, sid, fbUser );
 
-        res.redirect('/');
+        DT.playerManager.linkFB( pid, sid, fbUser, ( pid, sid ) => {
+
+            res.cookie( 'dt-pid', pid, { maxAge: 900000 });
+            res.cookie( 'dt-sid', sid, { maxAge: 900000 });
+            res.redirect('/');
+
+        });
 
     });
 
@@ -106,9 +111,9 @@ NetworkManager.prototype.init = function () {
 
     this.app.get( '/api/auth', function ( req, res ) {
 
-        var pid = req.query['pid'];
-        var sid = req.query['sid'];
-        if (req.isAuthenticated()) console.log('zz', req.user);
+        var pid = req.cookies['dt-pid'];
+        var sid = req.cookies['dt-sid'];
+
         if ( ! pid || ! sid ) {
 
             DT.playerManager.register( ( params ) => {

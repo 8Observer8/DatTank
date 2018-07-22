@@ -88,16 +88,31 @@ PlayerManager.prototype.auth = function ( pid, sid, callback ) {
 
 };
 
-PlayerManager.prototype.linkFB = function ( pid, sid, fbUser ) {
+PlayerManager.prototype.linkFB = function ( pid, sid, fbUser, callback ) {
 
     DB.models.players
-    .findOne({ pid: pid })
+    .findOne({ fid: fbUser.id })
     .then( ( player ) => {
 
         if ( player ) {
 
-            player.fid = fbUser.id;
-            player.save();
+            return callback( player.pid, player.sid );
+
+        } else {
+
+            DB.models.players
+            .findOne({ pid: pid })
+            .then( ( player ) => {
+
+                if ( player && player.sid === sid ) {
+
+                    player.fid = fbUser.id;
+                    player.save();
+                    return callback( pid, sid );
+
+                }
+
+            });
 
         }
 

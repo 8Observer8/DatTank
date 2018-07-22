@@ -76,10 +76,7 @@ class GameCore {
 
         //
 
-        let pid = localStorage.getItem('pid');
-        let sid = localStorage.getItem('sid');
-
-        this.gameService.auth( pid, sid, ( pid, sid ) => {
+        this.gameService.auth( ( pid, sid ) => {
 
             this.pid = pid;
             this.sid = sid;
@@ -92,8 +89,6 @@ class GameCore {
         FB.getLoginStatus( function ( response ) {
 
             console.log( response );
-            
-            // statusChangeCallback(response);
         
         });
 

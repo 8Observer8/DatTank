@@ -5,9 +5,9 @@
 
 class GameService {
 
-    public auth ( pid, sid, callback ) {
+    public auth ( callback ) {
 
-        $.get('/api/auth', { pid: pid, sid: sid }, function ( response ) {
+        $.get('/api/auth', function ( response ) {
 
             let pid = response.pid;
             let sid = response.sid;
