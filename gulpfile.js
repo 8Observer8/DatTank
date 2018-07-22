@@ -91,7 +91,7 @@ gulp.task( 'css', function () {
 
 gulp.task( 'html', function () {
 
-    return gulp.src('./src/client/*.html')
+    return gulp.src('./src/client/**/*.html')
         .pipe( gulp.dest('./bin/client/') );
 
 });
@@ -146,7 +146,7 @@ gulp.task( 'watch', function () {
 
     gulp.watch( './src/client/css/*', gulp.series( 'css' ) );
     gulp.watch( './src/client/resources/**/*', gulp.series( 'resources' ) );
-    gulp.watch( './src/client/*', gulp.series( 'html' ) );
+    gulp.watch( './src/client/**/*.html', gulp.series( 'html' ) );
     gulp.watch( './src/client/scripts/**/*.js', gulp.series( 'js' ) );
     gulp.watch( './src/client/scripts/**/*.ts', gulp.series( 'brf' ) );
     gulp.watch( './src/client/libs/**/*', gulp.series( 'libs' ) );

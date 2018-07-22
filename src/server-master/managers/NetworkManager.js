@@ -12,6 +12,7 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var MongoStore = require('connect-mongo')( session );
+var nunjucks = require('nunjucks');
 
 //
 
@@ -34,6 +35,13 @@ NetworkManager.prototype.init = function () {
 
     this.app = express();
     this.server = http.createServer( this.app );
+
+    //
+
+    this.app.use( cookieParser() );
+    this.app.use( bodyParser.urlencoded({ extended: false }) );
+    this.app.use( passport.initialize() );
+    this.app.use( passport.session() );
 
     // setuping fb-passport for login sys
 
@@ -66,17 +74,46 @@ NetworkManager.prototype.init = function () {
     }, function ( accessToken, refreshToken, profile, done ) {
             
         process.nextTick( function () {
-            //Check whether the User exists or not using profile.id
-            //Further DB code.
+
             return done( null, profile );
+
         });
 
     }));
 
-    this.app.use( cookieParser() );
-    this.app.use( bodyParser.urlencoded({ extended: false }) );
-    this.app.use( passport.initialize() );
-    this.app.use( passport.session() );
+    nunjucks.configure( __dirname + '/../../client/views', {
+        autoescape: true,
+        express: this.app
+    });
+
+    this.app.get( '/', function ( req, res ) {
+
+        var pid = req.cookies['dt-pid'];
+        var sid = req.cookies['dt-sid'];
+
+        if ( ! pid || ! sid ) {
+
+            DT.playerManager.register( ( params ) => {
+
+                res.cookie( 'dt-pid', params.pid, { maxAge: 900000 });
+                res.cookie( 'dt-sid', params.sid, { maxAge: 900000 });
+                return res.render( 'index.html', params );
+
+            });
+
+        } else {
+
+            DT.playerManager.auth( pid, sid, ( params ) => {
+
+                res.cookie( 'dt-pid', params.pid, { maxAge: 900000 });
+                res.cookie( 'dt-sid', params.sid, { maxAge: 900000 });
+                return res.render( 'index.html', params );
+
+            });
+
+        }
+
+    });
 
     this.app.get( '/auth/facebook', passport.authenticate('facebook', { 
         scope : [ 'public_profile', 'email' ]
@@ -108,35 +145,6 @@ NetworkManager.prototype.init = function () {
     });
 
     // handling requests from clients
-
-    this.app.get( '/api/auth', function ( req, res ) {
-
-        var pid = req.cookies['dt-pid'];
-        var sid = req.cookies['dt-sid'];
-
-        if ( ! pid || ! sid ) {
-
-            DT.playerManager.register( ( params ) => {
-
-                res.cookie( 'dt-pid', params.pid, { maxAge: 900000 });
-                res.cookie( 'dt-sid', params.sid, { maxAge: 900000 });
-                return res.send( params );
-
-            });
-
-        } else {
-
-            DT.playerManager.auth( pid, sid, ( params ) => {
-
-                res.cookie( 'dt-pid', params.pid, { maxAge: 900000 });
-                res.cookie( 'dt-sid', params.sid, { maxAge: 900000 });
-                return res.send( params );
-
-            });
-
-        }
-
-    });
 
     this.app.get( '/api/stats', function ( req, res ) {
 

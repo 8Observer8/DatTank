@@ -76,6 +76,15 @@
                     
                 FB.AppEvents.logPageView();   
             };
+
+            var userData = {
+                pid:    '{{ pid }}',
+                sid:    '{{ sid }}',
+                fid:    '{{ fid }}',
+                coins:  {{ coins }},
+                xp:     {{ xp }},
+                level:  {{ level }}
+            };
         </script>
 
     </head>
@@ -101,8 +110,9 @@
                 <div id="title">DatTank<div id="alpha"></div></div>
                 <input id="username" class="field" type="text" placeholder="Username" maxlength="13" />
                 <div id="play-btn">Connecting...</div>
-                <!-- <a id="signup-btn" href="https://www.facebook.com/v3.0/dialog/oauth?app_id=178574662917890&auth_type=&channel_url=http://dattank.com/authFB&client_id=113869198637480&display=popup&domain=dattank.com&fallback_redirect_uri=http://dattank.com&locale=en_US&logger_id=87822e80-bbba-97dd-91ce-a9b189a5683a&origin=1&redirect_uri=http://dattank.com&ref=LoginButton&response_type=none%2Ctoken%2Csigned_request&scope=&sdk=joey&version=v3.0"><div class="fb-icon"></div>Login to save progress</a> -->
-                <a id="signup-btn" href="/auth/facebook"><div class="fb-icon"></div>Login to save progress</a>
+                {% if not fid %}
+                    <a id="signup-btn" href="/auth/facebook"><div class="fb-icon"></div>Login to save progress</a>
+                {% endif %}
                 <div id="instructions">
                     <b>AWSD</b> or <b>arrows</b> keys to move<br>
                     Mouse <b>click</b> or <b>space</b> key holding to shoot<br><br>
@@ -340,68 +350,6 @@
                     <div class="tab decoration"></div>
                 </div>
                 <div class="close-btn">&#10006;</div>
-                <div class="tank-list">
-                    <div class="arrow-left arrows">
-                        <img src="/resources/img/arrow1_inv.png">
-                    </div>
-                    <div class="tank" id="IS2" >
-                        <img class="tank-img" src="/resources/img/tank-ico-1.png">
-                        <div class="title">IS-2</div>
-                    </div>
-                    <div class="tank" id="T29" >
-                        <img class="tank-img" src="/resources/img/tank-ico-2.png">
-                        <div class="title">T-29</div>
-                    </div>
-                    <div class="tank" id="T44" >
-                        <img class="tank-img" src="/resources/img/tank-ico-3.png">
-                        <div class="title">T-44</div>
-                    </div>
-                    <div class="tank" id="T54" >
-                        <img class="tank-img" src="/resources/img/tank-ico-4.png">
-                        <div class="title">T-54</div>
-                    </div>
-                    <div class="arrow-right arrows">
-                        <img src="/resources/img/arrow2_inv.png">
-                    </div>
-                </div>
-                <div class="characteristics">
-                    <h2 class="tank-title"></h2>
-                    <div class="param" id="speed">
-                        <p class="title">Speed:</p>
-                        <div class="progress-wrapper">
-                            <div class="progress"></div>
-                        </div>
-                        <p class="value"></p>
-                    </div>
-                    <div class="param" id="rpm">
-                        <p class="title">Reload:</p>
-                        <div class="progress-wrapper">
-                            <div class="progress"></div>
-                        </div>
-                        <p class="value"></p>
-                    </div>
-                    <div class="param" id="armour">
-                        <p class="title">Armour:</p>
-                        <div class="progress-wrapper">
-                            <div class="progress"></div>
-                        </div>
-                        <p class="value"></p>
-                    </div>
-                    <div class="param" id="bullet">
-                        <p class="title">Gun:</p>
-                        <div class="progress-wrapper">
-                            <div class="progress"></div>
-                        </div>
-                        <p class="value"></p>
-                    </div>
-                    <div class="param" id="ammoCapacity">
-                        <p class="title">Ammo:</p>
-                        <div class="progress-wrapper">
-                            <div class="progress"></div>
-                        </div>
-                        <p class="value"></p>
-                    </div>
-                </div>
             </div>
         </div>
 

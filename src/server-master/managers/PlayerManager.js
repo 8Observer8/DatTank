@@ -74,6 +74,7 @@ PlayerManager.prototype.auth = function ( pid, sid, callback ) {
             player.save();
 
             return callback({
+                fid:    player.fid,
                 pid:    player.pid,
                 sid:    player.sid,
                 xp:     player.xp,

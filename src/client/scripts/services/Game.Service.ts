@@ -5,19 +5,6 @@
 
 class GameService {
 
-    public auth ( callback ) {
-
-        $.get('/api/auth', function ( response ) {
-
-            let pid = response.pid;
-            let sid = response.sid;
-
-            return callback( pid, sid );
-
-        });
-
-    };
-
     public getFreeArena ( callback ) {
 
         $.get('/api/getFreeArena', function ( response ) {
