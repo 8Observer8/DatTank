@@ -140,6 +140,8 @@ NetworkManager.prototype.init = function () {
     this.app.get( '/logout', function ( req, res ) {
 
         req.logout();
+        res.clearCookie('dt-pid');
+        res.clearCookie('dt-sid');
         res.redirect('/');
 
     });

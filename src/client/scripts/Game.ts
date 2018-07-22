@@ -42,6 +42,12 @@ class GameCore {
 
     public init () {
 
+        if ( location.hash = '#_=_' ) {
+
+            window.history.replaceState( "", document.title, window.location.pathname );
+
+        }
+
         let mobileDetect = new MobileDetect( window.navigator.userAgent );
         this.isMobile = mobileDetect.mobile() !== null || mobileDetect.phone() !== null || mobileDetect.tablet() !== null;
 
