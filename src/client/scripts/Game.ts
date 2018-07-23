@@ -84,8 +84,16 @@ class GameCore {
 
         FB.getLoginStatus( function ( response ) {
 
-            console.log( response );
-        
+            if ( response.status === 'connected' ) {
+
+                FB.api( '/' + FB['getUserID']() + '/picture', 'GET', { "redirect": "false" }, function ( response ) {
+
+                    $('.user .userpic').attr( 'src', response.data.url );
+
+                });
+
+            }
+
         });
 
         //

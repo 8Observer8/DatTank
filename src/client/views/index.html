@@ -32,6 +32,31 @@
         <script src="/libs/Utils.js"></script>
         <!-- endbuild -->
 
+        <script>
+            var fbAppId = '1845382232185797'; // test app
+            // var fbAppId = '178574662917890';
+
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId      : fbAppId, // test app
+                    cookie     : true,
+                    xfbml      : true,
+                    version    : 'v3.0'
+                });
+                    
+                FB.AppEvents.logPageView();   
+            };
+
+            var userData = {
+                pid:    '{{ pid }}',
+                sid:    '{{ sid }}',
+                fid:    '{{ fid }}',
+                coins:  {{ coins }},
+                xp:     {{ xp }},
+                level:  {{ level }}
+            };
+        </script>
+
         <script src="/scripts/bundle.js"></script>
 
         <script>
@@ -64,28 +89,6 @@
 
         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
         <script src="https://connect.facebook.net/en_US/sdk.js"></script>
-        <script>
-            window.fbAsyncInit = function () {
-                FB.init({
-                    // appId      : '178574662917890',
-                    appId      : '1845382232185797', // test app
-                    cookie     : true,
-                    xfbml      : true,
-                    version    : 'v3.0'
-                });
-                    
-                FB.AppEvents.logPageView();   
-            };
-
-            var userData = {
-                pid:    '{{ pid }}',
-                sid:    '{{ sid }}',
-                fid:    '{{ fid }}',
-                coins:  {{ coins }},
-                xp:     {{ xp }},
-                level:  {{ level }}
-            };
-        </script>
 
     </head>
 
@@ -107,8 +110,11 @@
 
         <div id="signin-box-wrapper">
             <div id="signin-box">
-                <div id="title">DatTank<div id="alpha"></div></div>
+                <div id="title">DatTank</div>
                 <input id="username" class="field" type="text" placeholder="Username" maxlength="13" />
+                {% if fid %}
+                    <div class="user"><img class="userpic"/></div>
+                {% endif %}
                 <div id="play-btn">Connecting...</div>
                 {% if not fid %}
                     <a id="signup-btn" href="/auth/facebook"><div class="fb-icon"></div>Login to save progress</a>
