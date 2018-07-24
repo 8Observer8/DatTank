@@ -258,11 +258,11 @@
 
 .new-features-box .new-features {
     position: relative;
+    float: left;
+    width: 300px;
     height: 486px;
     margin-left: auto;
     margin-right: auto;
-    width: 300px;
-    float: left;
     left: calc( 50% + 190px );
     border: 1px solid #333;
     overflow-y: scroll;
@@ -297,44 +297,53 @@
 }
 
 @media only screen and (max-height: 670px) {
+    #signin-box-wrapper {
+        top: calc( 35% - 100px );
+    }
+    .new-features-box {
+        top: calc( 35% - 100px );
+    }
+    .new-features-box .new-features {
+        height: 227px;
+    }
     #div-gpt-ad-1484229654832-0 {
         display: none;
     }
 }
 
 /* scroll - Chrome*/
-.new-features-box .new-features::-webkit-scrollbar {
+*::-webkit-scrollbar {
     width:7px;
     height: 7px;
 }
-.new-features-box .new-features::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
     border-radius:9px;
     background:#55585b;
     height: 7px;
 }
 /* scroll - Firefox 19+ */
-.new-features-box .new-features::-moz-scrollbar {
+*::-moz-scrollbar {
     width:7px;
 }
-.new-features-box .new-features::-moz-scrollbar-thumb {
+*::-moz-scrollbar-thumb {
     border-radius:9px;
     background:#55585b;
 }
 
 /* scroll - Firefox 18- */
-.new-features-box .new-features:-moz-scrollbar {
+*:-moz-scrollbar {
     width:7px;
 }
-.new-features-box .new-features:-moz-scrollbar-thumb {
+*:-moz-scrollbar-thumb {
     border-radius:9px;
     background:#55585b;
 }
 
 /* scroll - IE 10+ */
-.new-features-box .new-featuress:-ms-scrollbar {
+*:-ms-scrollbar {
     width:7px;
 }
-.new-features-box .new-features:-ms-scrollbar-thumb {
+*:-ms-scrollbar-thumb {
     border-radius:9px;
     background:#55585b;
 }

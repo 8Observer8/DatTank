@@ -57,6 +57,7 @@
     width: 400px;
     height: 100%;
     background-color: #c3c3c3;
+    overflow-y: scroll;
 }
 
 .garage .right-block .tank-title {
@@ -87,6 +88,7 @@
     width: 325px;
     margin-left: 20px;
     margin-top: 10px;
+    margin-bottom: 40px;
 }
 
 .garage .right-block .tank-stats .stats-title {
@@ -123,31 +125,73 @@
     bottom: 0px;
     left: 0px;
     width: calc( 100% - 400px );
-    height: 150px;
+    height: 160px;
     background-color: #c3c3c3;
 }
 
-.garage .bottom-block .items {
+.garage .bottom-block .list {
+    position: relative;
+    height: 150px;
+}
+
+.garage .bottom-block .item {
     position: relative;
     float: left;
     width: 150px;
     height: 130px;
-    padding: 11px;
+    margin: 11px;
+    transition: opacity 350ms ease;
+    opacity: 0.6;
 }
 
-.garage .bottom-block .items img {
+.garage .bottom-block .item .obj-title {
+    position: absolute;
+    bottom: 5px;
+    font-size: 14px;
+    width: 100%;
+    text-align: center;
+    color: #fcfcfc;
+}
+
+.garage .bottom-block .item .price {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    text-align: right;
+    color: #46463575;
+}
+
+.garage .bottom-block .item .price .value {
+    color: #464635;
+    font-size: 14px;
+}
+
+.garage .bottom-block .item .price .ico {
+    float: left;
+    width: 13px;
+    height: 13px;
+    margin-top: 4px;
+    margin-right: 1px;
+    filter: brightness(1.1) drop-shadow(0px 0px 2px);
+    background-image: url(/resources/img/coin.png);
+    background-size: 100% 100%;
+}
+
+.garage .bottom-block .item img {
     position: relative;
     top: 50%;
     transform: translate( 0%, -50% );
     border: 1px solid #b6b6b6;
     padding: 30px 12px;
-    transition: border-color 350ms ease, opacity 350ms ease;
-    opacity: 0.6;
+    transition: border-color 150ms ease;
 }
 
-.garage .bottom-block .items:hover img {
-    border-color: #ccc;
+.garage .bottom-block .item:hover {
     opacity: 0.9;
+}
+
+.garage .bottom-block .item:hover img {
+    border-color: #eee;
 }
 
 .garage .bottom-block .tab {
@@ -155,6 +199,10 @@
     left: 10px;
     top: 0px;
     opacity: 0;
+    height: 155px;
+    width: 100%;
+    overflow: scroll;
+    overflow-y: hidden;
     transition: opacity 400ms ease, left 400ms ease;
 }
 
@@ -163,15 +211,21 @@
     opacity: 1;
 }
 
-.garage .bottom-block .items.active .img {
-    border-color: #1FB7FC;
+.garage .bottom-block .item.active {
     opacity: 1;
+}
+
+.garage .bottom-block .item.active .img {
+    border-color: #1FB7FC;
+    border-width: 2px;
+    margin-top: -1px;
+    margin-left: -1px;
 }
 
 .garage .menu-items {
     position: absolute;
     left: 0px;
-    bottom: 150px;
+    bottom: 160px;
 }
 
 .garage .menu-items .item {
@@ -266,124 +320,4 @@
 .garage .close-btn:active {
     opacity: 1;
     top: 7px;
-}
-
-.garage .tank-list {
-    display: none !important;
-    position: absolute;
-    bottom: 15px;
-    border: none;
-    left: calc( 50% - 220px );
-    width: 440px;
-}
-
-.garage .tank-list .arrows {
-    position: relative;
-    display: inline-block;
-    width: 30px;
-    height: 82px;
-    background: rgba( 200, 200, 200, 0 );
-    transition: background 400ms ease;
-}
-
-.garage .tank-list .arrows:hover {
-    background: rgba( 200, 200, 200, 0.1 );
-}
-
-.garage .tank-list .arrows img {
-    position: absolute;
-    width: 12px;
-    height: 16px;
-    top: 30px;
-    left: calc( 50% - 6px );
-}
-
-.garage .tank-list .tank {
-    position: relative;
-    width: 84px;
-    height: 60px;
-    display: inline-block;
-    opacity: 0.7;
-    transition: opacity 200ms ease;
-}
-
-.garage .tank-list .tank:hover {
-    opacity: 0.9;
-}
-
-.garage .tank-list .tank .tank-img {
-    width: 84px;
-    height: 60px;
-}
-
-.garage .tank-list .title {
-    width: 100%;
-    text-align: center;
-    color: #bbb;
-    font-size: 12px;
-    opacity: 0;
-    transition: opacity 200ms ease;
-}
-
-.garage .tank-list .tank:hover .title {
-    opacity: 1;
-}
-
-.garage .tank-list .tank.active {
-    opacity: 1;
-}
-
-.garage .tank-list .tank.active .tank-img {
-    border-bottom: 3px solid #00b6ff;
-}
-
-.garage .characteristics {
-    display: none !important;
-    position: absolute;
-    width: 280px;
-    top: 10%;
-    left: 5%;
-    background: rgba(0, 0, 0, 0.4);
-    padding-bottom: 20px;
-}
-
-.garage .characteristics .param {
-    position: relative;
-    display: inline-flex;
-    width: 100%;
-    color: #a49999;
-    margin: 20px 0;
-}
-
-.garage .characteristics .param .title {
-    position: absolute;
-    left: 10px;
-    margin: 0;
-}
-
-.garage .characteristics .param .value {
-    position: absolute;
-    right: 10px;
-    margin: 0;
-    font-family: sans-serif;
-    font-size: 13px;
-    width: 60px;
-    text-align: center;
-    padding-top: 3px;
-}
-
-.garage .characteristics .param .progress-wrapper {
-    position: absolute;
-    width: 130px;
-    height: 8px;
-    border-radius: 3px;
-    border: 1px solid #695e5e;
-    left: 70px;
-    top: 5px;
-}
-
-.garage .characteristics .param .progress-wrapper .progress {
-    background-color: #34b83c;
-    height: 100%;
-    border-radius: inherit;
 }

@@ -61,6 +61,14 @@ class SoundManagerCore {
         this.sounds['MenuClick'] = new Audio();
         this.sounds['MenuClick'].src = '/resources/sounds/menu_click.wav';
         this.sounds['MenuClick'].volume = 0.3;
+
+        this.sounds['ElementHover'] = new Audio();
+        this.sounds['ElementHover'].src = '/resources/sounds/hover.wav';
+        this.sounds['ElementHover'].volume = 0.1;
+
+        this.sounds['ElementSelect'] = new Audio();
+        this.sounds['ElementSelect'].src = '/resources/sounds/select.wav';
+        this.sounds['ElementSelect'].volume = 0.3;
     
         this.sounds['ObjectPicked'] = new Audio();
         this.sounds['ObjectPicked'].src = '/resources/sounds/object_pick.wav';
