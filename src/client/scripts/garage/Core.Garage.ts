@@ -144,11 +144,23 @@ class Garage {
         let reloadValue = cannon.reload;
         let overheatValue = cannon.overheating;
 
+        let maxDamageValue = 100;
+        let maxArmorValue = 100;
+        let maxSpeedValue = 100;
+        let maxReloadValue = 10;
+        let maxOverheatValue = 10;
+
         $('.garage .right-block .tank-stats .stats-value.cannon').html( damageValue + 'p' );
         $('.garage .right-block .tank-stats .stats-value.armor').html( armorValue + 'p' );
         $('.garage .right-block .tank-stats .stats-value.speed').html( speedValue + 'km/h' );
         $('.garage .right-block .tank-stats .stats-value.reload').html( reloadValue + 's' );
         $('.garage .right-block .tank-stats .stats-value.overheat').html( overheatValue + 'p' );
+
+        $('.garage .right-block .tank-stats .stats-progress.cannon .green').css( 'width', ( 100 * damageValue / maxDamageValue ) + '%' );
+        $('.garage .right-block .tank-stats .stats-progress.armor .green').css( 'width', ( 100 * armorValue / maxArmorValue ) + '%' );
+        $('.garage .right-block .tank-stats .stats-progress.speed .green').css( 'width', ( 100 * speedValue / maxSpeedValue ) + '%' );
+        $('.garage .right-block .tank-stats .stats-progress.reload .green').css( 'width', ( 100 * reloadValue / maxReloadValue ) + '%' );
+        $('.garage .right-block .tank-stats .stats-progress.overheat .green').css( 'width', ( 100 * overheatValue / maxOverheatValue ) + '%' );
 
     };
 

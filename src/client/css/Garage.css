@@ -124,7 +124,10 @@
     width: 400px;
     height: 100%;
     background-color: #c3c3c3;
+    border-left: 2px solid #f1f1f1;
+    box-shadow: 0px 0px 25px rgba( 0, 0, 0, 0.5 );
     overflow-y: scroll;
+    z-index: 1;
 }
 
 .garage .right-block .item-title {
@@ -154,8 +157,8 @@
 .garage .right-block .tank-stats {
     width: 325px;
     margin-left: 20px;
-    margin-top: 10px;
-    margin-bottom: 40px;
+    margin-top: 30px;
+    margin-bottom: 20px;
 }
 
 .garage .right-block .tank-stats .stats-title {
@@ -194,6 +197,7 @@
     width: calc( 100% - 400px );
     height: 160px;
     background-color: #c3c3c3;
+    z-index: 0;
 }
 
 .garage .bottom-block .list {
@@ -366,7 +370,12 @@
 }
 
 .garage .btn-pick:hover {
+    opacity: 0.9;
+}
+
+.garage .btn-pick:active {
     opacity: 1;
+    bottom: 168px;
 }
 
 .garage .close-btn {
@@ -379,6 +388,7 @@
     font-size: 30px;
     opacity: 0.5;
     transition: opacity 200ms ease;
+    filter: drop-shadow( 0px 0px 2px rgb( 0, 0, 0 ) );
 }
 
 .garage .close-btn:hover {

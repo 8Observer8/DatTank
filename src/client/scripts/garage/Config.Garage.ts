@@ -88,7 +88,7 @@ export let GarageConfig = {
             description:    '',
             shortDesc:      'Plasma cannon first Gen.',
             price:          20,
-            damage:         1,
+            damage:         30,
             antiArmor:      1,
             range:          0,
             overheating:    0,
