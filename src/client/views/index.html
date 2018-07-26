@@ -292,43 +292,45 @@
                 <div class="loading">Loading...</div>
                 <canvas id="garage-viewport"></canvas>
                 <div class="right-block">
-                    <div class="tank-title"></div>
-                    <div class="tank-description">
-                        <b>IS2001 tank</b> - new default tank of Russian army from WorldWar VII (2143 year)
-                        against other sides on first colonized planet (Mars).<br><br>
-                        By default equipped with plasma cannon of first generartion,
-                        turbo diesel engine and tesla induction generator.<br><br>
-                        Easy in movement control, quite fast, powefull cannon, but gets overheated quite fast.<br><br>
-                        <b class="sub-block-title">Current tank parts:</b>
-                        <b>Cannon:</b> Plasma cannon I gen.<br>
-                        <b>Armor:</b> Basic 100mm irridium list.<br>
-                        <b>Engine:</b> Turbo diesel 1.3k HP engine with tesla induction generator.<br>
+                    <div class="item-title"></div>
+                    <div class="item-description">
+                        <div class="main-text"></div>
+                        <div class="tank-parts">
+                            <b>Cannon:</b><div class="cannon-short-desc"></div><br>
+                            <b>Armor:</b><div class="armor-short-desc"></div><br>
+                            <b>Engine:</b><div class="engine-short-desc"></div><br>
+                        </div>
                     </div>
                     <div class="tank-stats">
                         <b class="sub-block-title">Tank stats:</b>
-                        <div class="stats-title">Cannon</div>
-                        <div class="stats-value">100p</div>
-                        <div class="stats-progress">
+                        <div class="stats-title">Cannon damage</div>
+                        <div class="cannon stats-value">100p</div>
+                        <div class="cannon stats-progress">
                             <div class="green"></div>
                         </div>
                         <div class="stats-title">Armor</div>
-                        <div class="stats-value">200p</div>
-                        <div class="stats-progress">
+                        <div class="armor stats-value">200p</div>
+                        <div class="armor stats-progress">
                             <div class="green"></div>
                         </div>
                         <div class="stats-title">Speed</div>
-                        <div class="stats-value">100km/h</div>
-                        <div class="stats-progress">
+                        <div class="speed stats-value">100km/h</div>
+                        <div class="speed stats-progress">
                             <div class="green"></div>
                         </div>
                         <div class="stats-title">Reload time</div>
-                        <div class="stats-value">1.1s</div>
-                        <div class="stats-progress">
+                        <div class="reload stats-value">1.1s</div>
+                        <div class="reload stats-progress">
+                            <div class="green"></div>
+                        </div>
+                        <div class="stats-title">Shoot range</div>
+                        <div class="range stats-value">2km</div>
+                        <div class="range stats-progress">
                             <div class="green"></div>
                         </div>
                         <div class="stats-title">Overheat</div>
-                        <div class="stats-value">100p</div>
-                        <div class="stats-progress">
+                        <div class="overheat stats-value">100p</div>
+                        <div class="overheat stats-progress">
                             <div class="green"></div>
                         </div>
                     </div>
@@ -344,12 +346,12 @@
                 </div>
                 <div class="bottom-block">
                     <div class="wrapper">
-                        <div class="tab tanks active"><div class="list"></div></div>
-                        <div class="tab cannons"><div class="list"></div></div>
-                        <div class="tab engines"><div class="list"></div></div>
-                        <div class="tab armors"><div class="list"></div></div>
-                        <div class="tab textures"><div class="list"></div></div>
-                        <div class="tab decorations"><div class="list"></div></div>
+                        <div tab="tanks" class="tab tanks active"><div class="list"></div></div>
+                        <div tab="cannons" class="tab cannons"><div class="list"></div></div>
+                        <div tab="engines" class="tab engines"><div class="list"></div></div>
+                        <div tab="armors" class="tab armors"><div class="list"></div></div>
+                        <div tab="textures" class="tab textures"><div class="list"></div></div>
+                        <div tab="decorations" class="tab decorations"><div class="list"></div></div>
                     </div>
                 </div>
                 <div class="close-btn">&#10006;</div>
