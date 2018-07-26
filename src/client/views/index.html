@@ -53,7 +53,8 @@
                 fid:    '{{ fid }}',
                 coins:  {{ coins }},
                 xp:     {{ xp }},
-                level:  {{ level }}
+                level:  {{ level }},
+                garage: {{ params|safe }}
             };
         </script>
 
@@ -266,8 +267,28 @@
         </div>
 
         <div class="garage">
+            <div class="buy-item-popup-wrapper">
+                <div class="buy-item-popup">
+                    <div class="title">
+                        Buy <div class="image"></div> "Tiger S8" tank
+                    </div>
+                    <div class="price">
+                        for
+                        <div class="coin-ico"></div>
+                        <div class="price-value">280 coins</div>
+                    </div>
+                    <div class="btns">
+                        <div class="buy-btn btn">Buy</div>
+                        <div class="cancel-btn btn">Cancel</div>
+                    </div>
+                </div>
+            </div>
             <div class="garage-wrapper">
-                <div class="title">Your garage</div>
+                <div class="garage-title">Your garage <span class="level-label"></span></div>
+                <div class="xp-coins">
+                    <div class="xp"><div class="label">XP:</div><div class="value">100</div></div>
+                    <div class="coins"><div class="label"></div><div class="value">200</div></div>
+                </div>
                 <div class="loading">Loading...</div>
                 <canvas id="garage-viewport"></canvas>
                 <div class="right-block">

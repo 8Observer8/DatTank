@@ -10,9 +10,9 @@ export let GarageConfig = {
         'IS2001': {
             title:          'IS 2001',
             price:          10,
-            cannons:        [],
-            engines:        [],
-            armours:        [],
+            cannons:        [ 'Plasma-g1', 'Plasma-g2', 'Raiser-v1', 'Raiser-double' ],
+            engines:        [ 'KX-v8', 'ZEL-72', 'KTZ-r1' ],
+            armors:         [ 'X-shield', 'KS-shield', 'Z8-shield' ],
             speedCoef:      1,
             cannonCoef:     1,
             armorCoef:      1,
@@ -24,7 +24,7 @@ export let GarageConfig = {
             price:          10,
             cannons:        [],
             engines:        [],
-            armours:        [],
+            armors:        [],
             speedCoef:      1,
             cannonCoef:     1,
             armorCoef:      1,
@@ -36,7 +36,7 @@ export let GarageConfig = {
             price:          10,
             cannons:        [],
             engines:        [],
-            armours:        [],
+            armors:        [],
             speedCoef:      1,
             cannonCoef:     1,
             armorCoef:      1,
@@ -48,7 +48,31 @@ export let GarageConfig = {
             price:          10,
             cannons:        [],
             engines:        [],
-            armours:        [],
+            armors:        [],
+            speedCoef:      1,
+            cannonCoef:     1,
+            armorCoef:      1,
+            description:    ''
+        },
+
+        'DTEK72': {
+            title:          'DTEK 72',
+            price:          10,
+            cannons:        [],
+            engines:        [],
+            armors:        [],
+            speedCoef:      1,
+            cannonCoef:     1,
+            armorCoef:      1,
+            description:    ''
+        },
+
+        'RiperX3': {
+            title:          'Riper X3',
+            price:          10,
+            cannons:        [],
+            engines:        [],
+            armors:        [],
             speedCoef:      1,
             cannonCoef:     1,
             armorCoef:      1,
@@ -163,10 +187,115 @@ export let GarageConfig = {
 
     engines: {
 
+        'KX-v8': {
+            title:          'KX v8',
+            price:          30,
+            power:          300,
+            maxSpeed:       100,
+            description:    ''
+        },
+
+        'ZEL-72': {
+            title:          'ZEL 72',
+            price:          30,
+            power:          300,
+            maxSpeed:       100,
+            description:    ''
+        },
+
+        'ZEL-72s': {
+            title:          'ZEL 72s',
+            price:          30,
+            power:          300,
+            maxSpeed:       100,
+            description:    ''
+        },
+
+        'KTZ-r1': {
+            title:          'KTZ r1',
+            price:          30,
+            power:          300,
+            maxSpeed:       100,
+            description:    ''
+        },
+
+        'KTZ-r2': {
+            title:          'KTZ r2',
+            price:          30,
+            power:          300,
+            maxSpeed:       100,
+            description:    ''
+        },
+
+        'VAX-32': {
+            title:          'VAX 32',
+            price:          30,
+            power:          300,
+            maxSpeed:       100,
+            description:    ''
+        },
+
+        'VAX-32v2': {
+            title:          'VAX 32v2',
+            price:          30,
+            power:          300,
+            maxSpeed:       100,
+            description:    ''
+        }
+
     },
 
-    armours: {
-        
+    armors: {
+
+        'X-shield': {
+            title:          'X Shield',
+            price:          40,
+            armor:          100,
+            description:    ''
+        },
+
+        'KS-shield': {
+            title:          'KS Shield',
+            price:          40,
+            armor:          100,
+            description:    ''
+        },
+
+        'KS200-shield': {
+            title:          'KS200 Shield',
+            price:          40,
+            armor:          100,
+            description:    ''
+        },
+
+        'Z8-shield': {
+            title:          'Z8 Shield',
+            price:          40,
+            armor:          100,
+            description:    ''
+        },
+
+        'MG-deffence': {
+            title:          'MG Deffence',
+            price:          40,
+            armor:          100,
+            description:    ''
+        },
+
+        'MG-deffence-v2': {
+            title:          'MG Deffence v2',
+            price:          40,
+            armor:          100,
+            description:    ''
+        },
+
+        'MG-deffence-irridium': {
+            title:          'MG Deffence Irridium',
+            price:          40,
+            armor:          100,
+            description:    ''
+        },
+
     }
 
 };

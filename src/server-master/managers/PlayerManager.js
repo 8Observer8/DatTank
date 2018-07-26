@@ -43,15 +43,16 @@ PlayerManager.prototype.register = function ( callback ) {
 
     DB.models.players
     .create({ pid: pid, sid: sid, coins: 1500, level: 0, xp: 0, lastVisit: Date.now() })
-    .then( () => {
+    .then( ( player ) => {
 
         return callback({
-            pid:    pid,
-            sid:    sid,
-            level:  0,
-            xp:     0,
-            coins:  1500,
-            params: {}
+            fid:    player.fid,
+            pid:    player.pid,
+            sid:    player.sid,
+            xp:     player.xp,
+            level:  player.level,
+            coins:  player.coins,
+            params: JSON.stringify( player.params ).replace( /&quot;/g, '' )
         });
 
     });
@@ -80,7 +81,7 @@ PlayerManager.prototype.auth = function ( pid, sid, callback ) {
                 xp:     player.xp,
                 level:  player.level,
                 coins:  player.coins,
-                params: player.params
+                params: JSON.stringify( player.params ).replace( /"/g, "'" )
             });
 
         }

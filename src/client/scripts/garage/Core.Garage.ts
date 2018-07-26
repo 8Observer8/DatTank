@@ -18,39 +18,144 @@ class Garage {
 
     public scene: GarageScene = new GarageScene();
 
+    private params = window['userData'].garage;
+    private level = window['userData'].level;
+    private coins = window['userData'].coins;
+    private xp = window['userData'].xp;
+
     //
 
-    public init () {
+    private updateUserParams () {
 
-        this.scene.init( this );
+        $('.garage .garage-title .level-label').html( '(Level ' + this.level + ')' );
+        $('.garage .xp .value').html( this.xp );
+        $('.garage .coins .value').html( this.coins );
+
+    };
+
+    private openBuyPopup () {
+
+        $('.garage .buy-item-popup-wrapper').show();
+        setTimeout( () => { $('.garage .buy-item-popup-wrapper').css( 'opacity', 1 ); }, 10 );
+        $('.garage .buy-item-popup-wrapper .btn').off();
+
+        //
+
+        $('.garage .buy-item-popup-wrapper .cancel-btn').click( this.closeBuyPopup.bind( this ) );
+
+        $('.garage .buy-item-popup-wrapper .btn').mouseover( () => {
+
+            SoundManager.playSound('ElementHover');
+
+        });
+
+        $('.garage .buy-item-popup-wrapper .btn').click( () => {
+
+            SoundManager.playSound('ElementSelect');
+
+        });
+
+    };
+
+    private closeBuyPopup () {
+
+        $('.garage .buy-item-popup-wrapper').css( 'opacity', 0 );
+        setTimeout( () => { $('.garage .buy-item-popup-wrapper').hide(); }, 400 );
+
+    };
+
+    private setupMenu () {
 
         // set up tank list
 
-        var width = 0;
+        var selectedTank;
+        var width;
+
+        // clear lists
+
+        $('.garage .bottom-block .tanks .list').html('');
+        $('.garage .bottom-block .cannons .list').html('');
+        $('.garage .bottom-block .engines .list').html('');
+        $('.garage .bottom-block .armors .list').html('');
+        $('.garage .bottom-block .textures .list').html('');
+
+        // set up tanks list
+
+        width = 0;
 
         for ( let tankId in GarageConfig.tanks ) {
 
             let tank = GarageConfig.tanks[ tankId ];
-            $('.garage .bottom-block .tanks .list').append('<div class="item"><div class="obj-title">' + tank.title + '</div><div class="price"><div class="ico"></div><span class="value">' + tank.price + '</span></div><img class="img" src="/resources/img/garage/tanks/' + tankId + '.png" /></div>');
+            let isSelected = ( tankId === this.params.selected.tank );
+            let isOwn = ( this.params.tanks.indexOf( tankId ) !== -1 );
+
+            if ( isSelected ) {
+
+                selectedTank = GarageConfig.tanks[ tankId ];
+
+            }
+
+            let item = '<div item-id="' + tankId + '" class="item' + ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) + '"><div class="obj-title">' + tank.title + '</div><div class="price"><div class="ico"></div><span class="value">' + tank.price + '</span></div><img class="img" src="/resources/img/garage/tanks/' + tankId + '.png" /></div>';
+            $('.garage .bottom-block .tanks .list').append( item );
             width += 172;
 
         }
 
-        $('.garage .bottom-block .cannons .list').css( 'width', width + 'px' );
-
-        width = 0;
+        $('.garage .bottom-block .tanks .list').css( 'width', width + 'px' );
 
         // set up cannon list
+
+        width = 0;
 
         for ( let cannonId in GarageConfig.cannons ) {
 
             let cannon = GarageConfig.cannons[ cannonId ];
-            $('.garage .bottom-block .cannons .list').append('<div class="item"><div class="obj-title">' + cannon.title + '</div><div class="price"><div class="ico"></div><span class="value">' + cannon.price + '</span></div><img class="img" src="/resources/img/garage/cannons/' + cannonId + '.png" /></div>');
+            if ( selectedTank.cannons.indexOf( cannonId ) === -1 ) continue;
+
+            let isSelected = ( cannonId === this.params.selected.cannon );
+            let item = '<div item-id="' + cannonId + '" class="item' + ( isSelected ? ' active' : '' ) + '"><div class="obj-title">' + cannon.title + '</div><div class="price"><div class="ico"></div><span class="value">' + cannon.price + '</span></div><img class="img" src="/resources/img/garage/cannons/' + cannonId + '.png" /></div>';
+            $('.garage .bottom-block .cannons .list').append( item );
             width += 172;
 
         }
 
         $('.garage .bottom-block .cannons .list').css( 'width', width + 'px' );
+
+        // set up engines list
+
+        width = 0;
+
+        for ( let engineId in GarageConfig.engines ) {
+
+            let engine = GarageConfig.engines[ engineId ];
+            if ( selectedTank.engines.indexOf( engineId ) === -1 ) continue;
+
+            let isSelected = ( engineId === this.params.selected.engine );
+            let item = '<div item-id="' + engineId + '" class="item' + ( isSelected ? ' active' : '' ) + '"><div class="obj-title">' + engine.title + '</div><div class="price"><div class="ico"></div><span class="value">' + engine.price + '</span></div><img class="img" src="/resources/img/garage/engines/' + engineId + '.png" /></div>';
+            $('.garage .bottom-block .engines .list').append( item );
+            width += 172;
+
+        }
+
+        $('.garage .bottom-block .engines .list').css( 'width', width + 'px' );
+
+        // set up armor list
+
+        width = 0;
+
+        for ( let armorId in GarageConfig.armors ) {
+
+            let armor = GarageConfig.armors[ armorId ];
+            if ( selectedTank.armors.indexOf( armorId ) === -1 ) continue;
+
+            let isSelected = ( armorId === this.params.selected.armor );
+            let item = '<div item-id="' + armorId + '" class="item' + ( isSelected ? ' active' : '' ) + '"><div class="obj-title">' + armor.title + '</div><div class="price"><div class="ico"></div><span class="value">' + armor.price + '</span></div><img class="img" src="/resources/img/garage/armors/' + armorId + '.png" /></div>';
+            $('.garage .bottom-block .armors .list').append( item );
+            width += 172;
+
+        }
+
+        $('.garage .bottom-block .armors .list').css( 'width', width + 'px' );
 
         //
 
@@ -60,17 +165,27 @@ class Garage {
 
         });
 
+        $('.garage .bottom-block .tab.tanks .item').click( this.selectTank.bind( this ) );
+        $('.garage .bottom-block .tab.cannons .item').click( this.selectCannon.bind( this ) );
+        $('.garage .bottom-block .tab.engines .item').click( this.selectEngines.bind( this ) );
+        $('.garage .bottom-block .tab.armors .item').click( this.selectArmor.bind( this ) );
+        $('.garage .bottom-block .tab.textures .item').click( this.selectTexture.bind( this ) );
+        $('.garage .bottom-block .tab.decorations .item').click( this.selectDecoration.bind( this ) );
+
+    };
+
+    public init () {
+
+        this.scene.init( this );
+
         $('.garage .btn-pick').click( Game.play.bind( Game ) );
         $('.garage .close-btn').click( this.hide.bind( this ) );
         $('.garage .menu-items .item').click( this.switchMenu.bind( this ) );
-        $('.garage .bottom-block .tab.tanks .item').click( this.selectTank );
-        $('.garage .bottom-block .tab.cannons .item').click( this.selectCannon );
-        $('.garage .bottom-block .tab.engines .item').click( this.selectEngines );
-        $('.garage .bottom-block .tab.armours .item').click( this.selectArmor );
-        $('.garage .bottom-block .tab.textures .item').click( this.selectTexture );
-        $('.garage .bottom-block .tab.decorations .item').click( this.selectDecoration );
 
         $( document ).keydown( this.keyDown.bind( this ) );
+
+        this.setupMenu();
+        this.updateUserParams();
 
         //
 
@@ -126,6 +241,7 @@ class Garage {
 
         this.isOpened = false;
         $('.garage').hide();
+        SoundManager.playSound('MenuClick');
 
     };
 
@@ -133,6 +249,8 @@ class Garage {
 
         let oldTab = $('.garage .menu-items .item.active').attr('tab');
         let newTab = $( event.currentTarget ).attr('tab');
+
+        if ( oldTab === newTab ) return;
 
         $('.garage .menu-items .item.active').removeClass('active');
         $( event.currentTarget ).addClass('active');
@@ -154,29 +272,9 @@ class Garage {
 
         }, 400 );
 
+        this.setupMenu();
+
     };
-
-    // public nextTank () {
-
-    //     let tankList = Tanks.getList();
-    //     let currentIndex = tankList.indexOf( this.currentTank );
-    //     if ( currentIndex === tankList.length - 1 ) currentIndex = -1;
-
-    //     let newTank = tankList[ currentIndex + 1 ];
-    //     this.selectTank( newTank );
-
-    // };
-
-    // public prevTank () {
-
-    //     let tankList = Tanks.getList();
-    //     let currentIndex = tankList.indexOf( this.currentTank );
-    //     if ( currentIndex === 0 ) currentIndex = tankList.length;
-
-    //     let newTank = tankList[ currentIndex - 1 ];
-    //     this.selectTank( newTank );
-
-    // };
 
     public selectTank ( event? ) {
 
@@ -185,6 +283,12 @@ class Garage {
             $('.garage .bottom-block .tab.tanks .item').removeClass('active');
             $( event.currentTarget ).addClass('active');
             SoundManager.playSound('ElementSelect');
+
+            if ( $( event.currentTarget ).hasClass('notOwn') ) {
+
+                this.openBuyPopup();
+
+            }
 
         }
 
@@ -209,6 +313,8 @@ class Garage {
 
         }
 
+        tankId = 'IS2';
+
         let tankType = Tanks[ tankId ];
         this.currentTank = tankId;
         this.scene.selectModel( tankId );
@@ -216,44 +322,16 @@ class Garage {
         //
 
         $('.garage .right-block .tank-title').html( 'Tank <b>"' + tankType.title + '"</b>' );
-        $('.garage .characteristics .param#speed .value').html( tankType.speed + 'km/h' );
-        $('.garage .characteristics .param#rpm .value').html( tankType.rpm + 'rpm' );
-        $('.garage .characteristics .param#armour .value').html( tankType.armour + 'mm' );
-        $('.garage .characteristics .param#bullet .value').html( tankType.bullet + 'mm' );
-        $('.garage .characteristics .param#ammoCapacity .value').html( tankType.ammoCapacity );
-
-        //
-
-        let maxSpeed = 0;
-        let maxRpm = 0;
-        let maxArmour = 0;
-        let maxBullet = 0;
-        let maxAmmoCapacity = 0;
-        let tanks = TankList.getList();
-
-        for ( let i = 0, il = tanks.length; i < il; i ++ ) {
-
-            let tankName = tanks[ i ];
-
-            maxSpeed = Math.max( maxSpeed, TankList[ tankName ].speed );
-            maxRpm = Math.max( maxRpm, TankList[ tankName ].rpm );
-            maxArmour = Math.max( maxArmour, TankList[ tankName ].armour );
-            maxBullet = Math.max( maxBullet, TankList[ tankName ].bullet );
-            maxAmmoCapacity = Math.max( maxAmmoCapacity, TankList[ tankName ].ammoCapacity );
-
-        }
-
-        //
-
-        $('.garage .characteristics .param#speed .progress').css({ 'width': Math.round( 100 * tankType.speed / maxSpeed ) + '%' });
-        $('.garage .characteristics .param#rpm .progress').css({ 'width': Math.round( 100 * tankType.rpm / maxRpm ) + '%' });
-        $('.garage .characteristics .param#armour .progress').css({ 'width': Math.round( 100 * tankType.armour / maxArmour ) + '%' });
-        $('.garage .characteristics .param#bullet .progress').css({ 'width': Math.round( 100 * tankType.bullet / maxBullet ) + '%' });
-        $('.garage .characteristics .param#ammoCapacity .progress').css({ 'width': Math.round( 100 * tankType.ammoCapacity / maxAmmoCapacity ) + '%' });
 
         //
 
         localStorage.setItem( 'currentTank', this.currentTank );
+
+        if ( event ) {
+        
+            this.params.selected.tank = $( event.currentTarget ).attr('item-id');
+
+        }
 
     };
 

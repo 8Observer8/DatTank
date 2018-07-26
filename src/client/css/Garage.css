@@ -11,6 +11,27 @@
     background: rgba(0,0,0,0.8);
 }
 
+.garage .btn {
+    display: inline-block;
+    background-color: #00b6ff;
+    padding: 10px 20px;
+    text-align: center;
+    font: normal 15px 'Roboto';
+    color: #fff;
+    border: 1px solid #0493CC;
+    opacity: 0.6;
+    transition: opacity 200ms ease;
+}
+
+.garage .btn:hover {
+    opacity: 0.9;
+}
+
+.garage .btn:active {
+    opacity: 1;
+    transform: translate( 0px, 2px );
+}
+
 .garage .garage-wrapper {
     position: relative;
     min-width: 318px;
@@ -38,16 +59,62 @@
     background: rgba(153, 153, 153, 1);
 }
 
-.garage .title {
+.garage .garage-title {
     position: absolute;
     top: 15px;
     left: 15px;
     padding-right: 50px;
-    font: normal 20px Roboto, arial, tahoma;
+    font: normal 23px Roboto, arial, tahoma;
     border-bottom: 1px solid rgba( 255, 255, 255, 0.5 );
     color: #fff;
     text-shadow: 0px 0px 2px rgba( 255, 255, 255, 0.5 );
     z-index: 1;
+}
+
+.garage .garage-title .level-label {
+    font-size: 12px;
+}
+
+.garage .xp-coins {
+    position: absolute;
+    top: 20px;
+    right: 420px;
+    z-index: 1;
+}
+
+.garage .xp-coins .coins {
+    float: left;
+}
+
+.garage .xp-coins .xp {
+    float: left;
+    margin-right: 15px;
+    filter: drop-shadow(0px 0px 2px);
+}
+
+.garage .xp-coins .value {
+    float: left;
+    color: #fff;
+    font: bold 16px Roboto, arial, tahoma;
+    filter: drop-shadow(0px 0px 10px);
+}
+
+.garage .xp-coins .xp .label {
+    float: left;
+    padding-right: 5px;
+    color: rgb(24, 189, 2);
+    font: bold 16px Roboto, arial, tahoma;
+}
+
+.garage .xp-coins .coins .label {
+    float: left;
+    width: 22px;
+    height: 22px;
+    margin-top: -2px;
+    margin-right: 5px;
+    filter: brightness(1.1) drop-shadow(0px 0px 2px);
+    background-image: url(/resources/img/coin.png);
+    background-size: 100% 100%;
 }
 
 .garage .right-block {
@@ -140,8 +207,9 @@
     width: 150px;
     height: 130px;
     margin: 11px;
-    transition: opacity 350ms ease;
     opacity: 0.6;
+    border: 1px solid #b6b6b6;
+    transition: opacity 350ms ease, border-color 150ms ease;;
 }
 
 .garage .bottom-block .item .obj-title {
@@ -151,6 +219,10 @@
     width: 100%;
     text-align: center;
     color: #fcfcfc;
+}
+
+.garage .bottom-block .item:not(.notOwn) .price {
+    display: none;
 }
 
 .garage .bottom-block .item .price {
@@ -181,16 +253,11 @@
     position: relative;
     top: 50%;
     transform: translate( 0%, -50% );
-    border: 1px solid #b6b6b6;
     padding: 30px 12px;
-    transition: border-color 150ms ease;
 }
 
 .garage .bottom-block .item:hover {
     opacity: 0.9;
-}
-
-.garage .bottom-block .item:hover img {
     border-color: #eee;
 }
 
@@ -213,13 +280,14 @@
 
 .garage .bottom-block .item.active {
     opacity: 1;
-}
-
-.garage .bottom-block .item.active .img {
     border-color: #1FB7FC;
     border-width: 2px;
-    margin-top: -1px;
-    margin-left: -1px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.garage .bottom-block .item.notOwn .img {
+    filter: brightness(0.0);
 }
 
 .garage .menu-items {
@@ -306,7 +374,7 @@
     top: 5px;
     right: 10px;
     padding: 10px;
-    z-index: 100;
+    z-index: 1;
     color: #fff;
     font-size: 30px;
     opacity: 0.5;
@@ -320,4 +388,92 @@
 .garage .close-btn:active {
     opacity: 1;
     top: 7px;
+}
+
+.garage .buy-item-popup-wrapper {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba( 0, 0, 0, 0.6 );
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 400ms ease;
+}
+
+.garage .buy-item-popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate( -50%, -50% );
+    width: 400px;
+    height: 170px;
+    background-color: #c3c3c3;
+    border: 2px solid #bcd4df;
+    filter: drop-shadow( 0px 0px 20px #000 );
+}
+
+.garage .buy-item-popup .title {
+    width: 100%;
+    text-align: center;
+    padding-top: 25px;
+    color: #00b6ff;
+    font-size: 23px;
+    filter: drop-shadow(0px 0px 4px #fff);
+}
+
+.garage .buy-item-popup .price {
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+    filter: drop-shadow( 0px 0px 10px rgb(141, 236, 253) );
+}
+
+.garage .buy-item-popup .price .coin-ico {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    margin-right: 1px;
+    filter: brightness(1.1);
+    background-image: url(/resources/img/coin.png);
+    background-size: 100% 96%;
+    background-repeat: no-repeat;
+    background-position: 1px 3px;
+}
+
+.garage .buy-item-popup .price .price-value {
+    display: inline-block;
+}
+
+.garage .buy-item-popup .image {
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+    filter: brightness(0.0) drop-shadow(0px 0px 2px);
+    background-image: url(/resources/img/garage/tanks/TigerS8.png);
+    background-size: 100% 100%;
+    background-position-y: 4px;
+}
+
+.garage .buy-item-popup .btns {
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+
+.garage .buy-item-popup .btns .btn {
+    width: 86px;
+    margin: 10px;
+}
+
+.garage .buy-item-popup .buy-btn {
+
+}
+
+.garage .buy-item-popup .cancel-btn {
+
 }

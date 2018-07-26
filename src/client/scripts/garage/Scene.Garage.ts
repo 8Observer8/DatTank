@@ -130,8 +130,12 @@ class GarageScene {
 
         }
 
-        this.models[ modelName ].visible = true;
-        this.currentTankModel = this.models[ modelName ];
+        if ( this.models[ modelName ] ) {
+
+            this.models[ modelName ].visible = true;
+            this.currentTankModel = this.models[ modelName ];
+
+        }
 
     };
 
