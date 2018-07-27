@@ -68,8 +68,18 @@ class Garage {
 
     private updateRightMenu ( category, itemId ) {
 
+        let cannonId = ( this.params.tanks[ itemId ] || GarageConfig.tanks[ itemId ].default ).cannon;
+        let armorId = ( this.params.tanks[ itemId ] || GarageConfig.tanks[ itemId ].default ).armor;
+        let engineId = ( this.params.tanks[ itemId ] || GarageConfig.tanks[ itemId ].default ).engine;
+
+        let cannon = GarageConfig.cannons[ cannonId ];
+        let armor = GarageConfig.armors[ armorId ];
+        let engine = GarageConfig.engines[ engineId ];
+
         let title = GarageConfig[ category ][ itemId ].title;
         let description = GarageConfig[ category ][ itemId ].description;
+
+        //
 
         switch ( category ) {
 
@@ -103,6 +113,10 @@ class Garage {
         $('.garage .right-block .item-title').html( title );
         $('.garage .right-block .item-description .main-text').html( description );
 
+        $('.garage .right-block .cannon-short-desc').html( cannon.shortDesc );
+        $('.garage .right-block .armor-short-desc').html( armor.shortDesc );
+        $('.garage .right-block .engine-short-desc').html( engine.shortDesc );
+
         if ( category === 'tanks' ) {
 
             $('.garage .right-block .tank-stats').show();
@@ -119,10 +133,10 @@ class Garage {
 
     private showCurrentTankInRightMenu () {
 
-        let tankId = this.params.selected.tank;
-        let cannonId = this.params.selected.cannon;
-        let armorId = this.params.selected.armor;
-        let engineId = this.params.selected.engine;
+        let tankId = this.params.selected;
+        let cannonId = ( this.params.tanks[ tankId ] || GarageConfig.tanks[ tankId ].default ).cannon;
+        let armorId = ( this.params.tanks[ tankId ] || GarageConfig.tanks[ tankId ].default ).armor;
+        let engineId = ( this.params.tanks[ tankId ] || GarageConfig.tanks[ tankId ].default ).engine;
 
         let tank = GarageConfig.tanks[ tankId ];
         let cannon = GarageConfig.cannons[ cannonId ];
@@ -186,8 +200,8 @@ class Garage {
         for ( let tankId in GarageConfig.tanks ) {
 
             let tank = GarageConfig.tanks[ tankId ];
-            let isSelected = ( tankId === this.params.selected.tank );
-            let isOwn = ( this.params.tanks.indexOf( tankId ) !== -1 );
+            let isSelected = ( tankId === this.params.selected );
+            let isOwn = ( this.params.tanks[ tankId ] !== undefined );
 
             if ( isSelected ) {
 
@@ -421,7 +435,7 @@ class Garage {
 
         if ( event ) {
         
-            this.params.selected.tank = $( event.currentTarget ).attr('item-id');
+            this.params.selected = $( event.currentTarget ).attr('item-id');
 
         }
 

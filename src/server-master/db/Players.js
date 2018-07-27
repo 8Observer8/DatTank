@@ -24,12 +24,14 @@ var PlayersSchema = mongoose.Schema({
     params: {
         type: Object,
         default: {
-            tanks:      [ 'IS2001' ],
+            tanks:      {
+                'IS2001': { cannon: 'Plasma-g1', engine: 'KX-v8', armor: 'X-shield' }
+            },
             cannons:    [ 'Plasma-g1' ],
             engines:    [ 'KX-v8' ],
             armors:     [ 'X-shield' ],
             textures:   [],
-            selected:   { tank: 'IS2001', cannon: 'Plasma-g1', engine: 'KX-v8', armor: 'X-shield' }
+            selected:   'IS2001'
         }
     },
     xp: {

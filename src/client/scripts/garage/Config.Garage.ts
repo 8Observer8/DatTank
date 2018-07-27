@@ -13,6 +13,11 @@ export let GarageConfig = {
             cannons:        [ 'Plasma-g1', 'Plasma-g2', 'Raiser-v1', 'Raiser-double' ],
             engines:        [ 'KX-v8', 'ZEL-72', 'KTZ-r1' ],
             armors:         [ 'X-shield', 'KS-shield', 'Z8-shield' ],
+            default:        {
+                cannon:     'Plasma-g1',
+                engine:     'KX-v8',
+                armor:      'X-shield'
+            },
             speedCoef:      1,
             cannonCoef:     1,
             armorCoef:      1,
@@ -25,6 +30,11 @@ export let GarageConfig = {
             cannons:        [ 'Plasma-g1', 'Plasma-g2', 'Plasma-g3', 'Raiser-v2' ],
             engines:        [ 'ZEL-72s', 'KTZ-r2' ],
             armors:         [ 'KS-shield', 'Z8-shield', 'KS200-shield' ],
+            default:        {
+                cannon:     'Plasma-g3',
+                engine:     'ZEL-72s',
+                armor:      'Z8-shield'
+            },
             speedCoef:      1,
             cannonCoef:     1,
             armorCoef:      1,
