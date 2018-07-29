@@ -10,7 +10,7 @@ export let GarageConfig = {
         'IS2001': {
             title:          'IS 2001',
             price:          10,
-            cannons:        [ 'Plasma-g1', 'Plasma-g2', 'Raiser-v1', 'Raiser-double' ],
+            cannons:        [ 'Plasma-g1', 'Plasma-g2', 'Razer-v1', 'Razer-double' ],
             engines:        [ 'KX-v8', 'ZEL-72', 'KTZ-r1' ],
             armors:         [ 'X-shield', 'KS-shield', 'Z8-shield' ],
             default:        {
@@ -27,7 +27,7 @@ export let GarageConfig = {
         'TigerS8': {
             title:          'Tiger S8',
             price:          10,
-            cannons:        [ 'Plasma-g1', 'Plasma-g2', 'Plasma-g3', 'Raiser-v2' ],
+            cannons:        [ 'Plasma-g1', 'Plasma-g2', 'Plasma-g3', 'Razer-v2' ],
             engines:        [ 'ZEL-72s', 'KTZ-r2' ],
             armors:         [ 'KS-shield', 'Z8-shield', 'KS200-shield' ],
             default:        {
@@ -44,9 +44,14 @@ export let GarageConfig = {
         'OrbitT32s': {
             title:          'Orbit T32s',
             price:          10,
-            cannons:        [],
-            engines:        [],
+            cannons:        [ 'Plasma-g3', 'Razer-v2', 'Razer-indigo', 'Razer-irridium' ],
+            engines:        [ 'KTZ-r2', 'VAX-32', 'VAX-32s' ],
             armors:         [],
+            default:        {
+                cannon:     'Razer-indigo',
+                engine:     'VAX-32',
+                armor:      'Z8-shield'
+            },
             speedCoef:      1,
             cannonCoef:     1,
             armorCoef:      1,
@@ -145,10 +150,10 @@ export let GarageConfig = {
             reload:         1
         },
 
-        'Raiser-v1': {
-            title:          'Raiser v1',
+        'Razer-v1': {
+            title:          'Razer v1',
             description:    '',
-            shortDesc:      '',
+            shortDesc:      'Laser cannon first prototype',
             price:          20,
             damage:         1,
             antiArmor:      1,
@@ -158,10 +163,10 @@ export let GarageConfig = {
             reload:         1
         },
 
-        'Raiser-v2': {
-            title:          'Raiser v2',
+        'Razer-v2': {
+            title:          'Razer v2',
             description:    '',
-            shortDesc:      '',
+            shortDesc:      'Second prototype version of laser cannon',
             price:          20,
             damage:         1,
             antiArmor:      1,
@@ -171,10 +176,10 @@ export let GarageConfig = {
             reload:         1
         },
 
-        'Raiser-indigo': {
-            title:          'Raiser indigo',
+        'Razer-indigo': {
+            title:          'Razer indigo',
             description:    '',
-            shortDesc:      '',
+            shortDesc:      'Official Razer version, 30% more power',
             price:          20,
             damage:         1,
             antiArmor:      1,
@@ -184,10 +189,10 @@ export let GarageConfig = {
             reload:         1
         },
 
-        'Raiser-irridium': {
-            title:          'Raiser irridium',
+        'Razer-irridium': {
+            title:          'Razer irridium',
             description:    '',
-            shortDesc:      '',
+            shortDesc:      'Razer with irridium core, 25% less overheating',
             price:          20,
             damage:         1,
             antiArmor:      1,
@@ -197,10 +202,10 @@ export let GarageConfig = {
             reload:         1
         },
 
-        'Raiser-double': {
-            title:          'Raiser double',
+        'Razer-double': {
+            title:          'Razer double',
             description:    '',
-            shortDesc:      '',
+            shortDesc:      'Original Razer cannon with double core',
             price:          20,
             damage:         1,
             antiArmor:      1,
@@ -210,8 +215,8 @@ export let GarageConfig = {
             reload:         1
         },
 
-        'Raiser-quadro': {
-            title:          'Raiser quadro',
+        'Razer-quadro': {
+            title:          'Razer quadro',
             description:    '',
             shortDesc:      '',
             price:          20,
@@ -239,7 +244,7 @@ export let GarageConfig = {
         'ZEL-72': {
             title:          'ZEL 72',
             description:    '',
-            shortDesc:      '',
+            shortDesc:      'Double turbo diesel 1.8k HP engine with tesla induction generator.',
             price:          30,
             power:          300,
             maxSpeed:       100
@@ -248,7 +253,7 @@ export let GarageConfig = {
         'ZEL-72s': {
             title:          'ZEL 72s',
             description:    '',
-            shortDesc:      '',
+            shortDesc:      'Double turbo diesel 2.1k HP engine with tesla induction generator with galium winding.',
             price:          30,
             power:          300,
             maxSpeed:       100
@@ -257,7 +262,7 @@ export let GarageConfig = {
         'KTZ-r1': {
             title:          'KTZ r1',
             description:    '',
-            shortDesc:      '',
+            shortDesc:      'Plutonium 3.2k HP engine with organic-based generator.',
             price:          30,
             power:          300,
             maxSpeed:       100
@@ -266,7 +271,7 @@ export let GarageConfig = {
         'KTZ-r2': {
             title:          'KTZ r2',
             description:    '',
-            shortDesc:      '',
+            shortDesc:      'Improved plutonium 3.4k HP engine with organic-based generator.',
             price:          30,
             power:          300,
             maxSpeed:       100
@@ -274,6 +279,15 @@ export let GarageConfig = {
 
         'VAX-32': {
             title:          'VAX 32',
+            description:    '',
+            shortDesc:      'Polonium ARK 3.7k HP engine with generator and litium batteries.',
+            price:          30,
+            power:          300,
+            maxSpeed:       100
+        },
+
+        'VAX-32s': {
+            title:          'VAX 32s',
             description:    '',
             shortDesc:      '',
             price:          30,
