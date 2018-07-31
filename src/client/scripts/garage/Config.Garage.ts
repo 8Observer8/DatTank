@@ -27,13 +27,13 @@ export let GarageConfig = {
         'TigerS8': {
             title:          'Tiger S8',
             price:          10,
-            cannons:        [ 'Plasma-g1', 'Plasma-g2', 'Plasma-double', 'Razer-v2' ],
+            cannons:        [ 'Plasma-g2', 'Plasma-double', 'Razer-v2', 'Razer-double' ],
             engines:        [ 'ZEL-72s', 'KTZ-r2' ],
             armors:         [ 'KS-shield', 'Z8-shield', 'KS200-shield' ],
             default:        {
-                cannon:     'Plasma-g3',
+                cannon:     'Plasma-double',
                 engine:     'ZEL-72s',
-                armor:      'Z8-shield'
+                armor:      'KS-shield'
             },
             speedCoef:      1,
             cannonCoef:     1,
@@ -48,7 +48,7 @@ export let GarageConfig = {
             engines:        [ 'KTZ-r2', 'VAX-32', 'VAX-32s' ],
             armors:         [ 'KS200-shield', 'Z8-shield', 'MG-deffence' ],
             default:        {
-                cannon:     'Plasma-double',
+                cannon:     'Razer-v2',
                 engine:     'VAX-32',
                 armor:      'Z8-shield'
             },

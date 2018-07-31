@@ -24,7 +24,7 @@
 
 /**/
 
-#fullscreen-on-off {
+#fullscreen {
     position: absolute;
     top: 18px;
     right: 20px;
@@ -36,16 +36,16 @@
     transition: opacity 200ms ease;
 }
 
-#fullscreen-on-off:hover {
+#fullscreen:hover {
     opacity: 0.85;
 }
 
-#fullscreen-on-off:active {
+#fullscreen:active {
     top: 21px;
     opacity: 1;
 }
 
-#fullscreen-on-off[screen="true"] {
+#fullscreen[screen="true"] {
     background-position: 0% 100%;
 }
 
@@ -78,7 +78,7 @@
 
 /* sound-on-off */
 
-#sound-on-off {
+#sound {
     position: absolute;
     top: 10px;
     right: 129px;
@@ -90,18 +90,20 @@
     transition: opacity 200ms ease;
 }
 
-#sound-on-off:hover {
+#sound:hover {
     opacity: 0.85;
 }
 
-#sound-on-off:active {
+#sound:active {
     top: 11px;
     opacity: 1;
 }
 
-#sound-on-off[sound="true"] {
+#sound[sound="true"] {
     background-position: 0% 100%;
 }
+
+/* top left like btns */
 
 .top-left-like-btns {
     position: absolute;
