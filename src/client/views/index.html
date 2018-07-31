@@ -116,7 +116,7 @@
                 {% if fid %}
                     <div class="user"><img class="userpic"/></div>
                 {% endif %}
-                <div id="play-btn">Connecting...</div>
+                <div id="start-btn">Connecting...</div>
                 {% if not fid %}
                     <a id="signup-btn" href="/auth/facebook"><div class="fb-icon"></div>Login to save progress</a>
                 {% endif %}
@@ -352,7 +352,7 @@
                         <div tab="decorations" class="tab decorations"><div class="list"></div></div>
                     </div>
                 </div>
-                <div class="btn-pick">PLAY!</div>
+                <div class="play-btn">PLAY!</div>
                 <div class="close-btn">&#10006;</div>
             </div>
         </div>
@@ -396,10 +396,10 @@
         <div id="viewport">
 
             <div class="navigation-panel">
-                <div id="viewport-fullscreen-on-off" screen="false"></div>
+                <div id="viewport-fullscreen" screen="false"></div>
                 <div id="viewport-help"></div>
-                <a id="viewport-graphics-quality" hq="false"></a>
-                <div id="viewport-sound-on-off" sound="false"></div>
+                <div id="viewport-graphics-quality" hq="false"></div>
+                <div id="viewport-sound" sound="false"></div>
             </div>
 
             <div id="player-params">

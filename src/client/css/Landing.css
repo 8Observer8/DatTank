@@ -183,7 +183,7 @@
     height: 100%;
 }
 
-#signin-box-wrapper #signin-box #play-btn {
+#signin-box-wrapper #signin-box #start-btn {
     background-color: #00b6ff;
     padding: 10px 0px;
     margin-top: 10px;
@@ -198,12 +198,7 @@
     transition: opacity 200ms ease;
 }
 
-#signin-box-wrapper #signin-box #play-btn #play-btn-text {
-    position: relative;
-    top: 10px;
-}
-
-#signin-box-wrapper #signin-box #play-btn:hover {
+#signin-box-wrapper #signin-box #start-btn:hover {
     opacity: 1;
 }
 

@@ -13,7 +13,7 @@ class UILandingModule {
 
     public initPlayBtn () {
 
-        $('#play-btn').html('PLAY!');
+        $('#start-btn').html('PLAY!');
 
     };
 
@@ -43,8 +43,8 @@ class UILandingModule {
         $('#footer').hide();
         $('#signin-box-wrapper').hide();
         $('#graphics-quality').hide();
-        $('#sound-on-off').hide();
-        $('#fullscreen-on-off').hide();
+        $('#sound').hide();
+        $('#fullscreen').hide();
         $('.share-btns').hide();
         $('.top-left-like-btns').hide();
         $('.new-features-box').hide();
@@ -108,11 +108,11 @@ class UILandingModule {
 
         //
 
-        $('#play-btn').click( Game.garage.show.bind( Game.garage ) );
-        $('#fullscreen-on-off').click( UI.toggleFullscreenMode.bind( UI ) );
+        $('#start-btn').click( Game.garage.show.bind( Game.garage ) );
+        $('#fullscreen').click( UI.toggleFullscreenMode.bind( UI ) );
 
         $('#graphics-quality').click( UI.changeQuality.bind( UI ) );
-        $('#sound-on-off').click( UI.changeSound.bind( UI ) );
+        $('#sound').click( UI.changeSound.bind( UI ) );
         $('#help').click( UI.showHelp.bind( UI ) );
         $('.help-popup .close').click( UI.hideHelp.bind( UI ) );
         $('.help-popup .ok-btn').click( UI.hideHelp.bind( UI ) );

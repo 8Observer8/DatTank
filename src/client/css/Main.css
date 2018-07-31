@@ -24,20 +24,12 @@ html, body {
     user-select: none;
 }
 
-object {
-    display: none;
-}
-
 .clearfix {
     clear: both;
 }
 
 #stats {
     display: none;
-}
-
-#preroll object {
-    display: block;
 }
 
 /* other pages */
@@ -80,8 +72,3 @@ object {
     color: gainsboro;
     margin: 30px auto 0;
 }
-
-/**/
-
-
-

@@ -23,8 +23,8 @@ class UIInGameModule {
     public init () {
 
         $('#viewport-graphics-quality').click( UI.changeQuality.bind( UI ) );
-        $('#viewport-sound-on-off').click( UI.changeSound.bind( UI ) );
-        $('#viewport-fullscreen-on-off').click( UI.toggleFullscreenMode.bind( UI ) );
+        $('#viewport-sound').click( UI.changeSound.bind( UI ) );
+        $('#viewport-fullscreen').click( UI.toggleFullscreenMode.bind( UI ) );
         $('#viewport-help').click( UI.showHelp.bind( UI ) );
 
     };

@@ -69,8 +69,8 @@ class UICore {
     public changeSound ( value, withoutSound ) {
 
         value = ( typeof value === 'boolean' ) ? value : $( value.currentTarget ).attr('sound') !== 'true';
-        $('#sound-on-off').attr( 'sound', value );
-        $('#viewport-sound-on-off').attr( 'sound', value );
+        $('#sound').attr( 'sound', value );
+        $('#viewport-sound').attr( 'sound', value );
         localStorage.setItem( 'sound', value );
 
         SoundManager.toggleMute( ! value );
@@ -91,8 +91,8 @@ class UICore {
 
         //
 
-        $('#fullscreen-on-off').attr( 'screen', isFullscreen );
-        $('#viewport-fullscreen-on-off').attr( 'screen', isFullscreen );
+        $('#fullscreen').attr( 'screen', isFullscreen );
+        $('#viewport-fullscreen').attr( 'screen', isFullscreen );
 
     };
 

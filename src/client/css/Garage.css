@@ -349,14 +349,12 @@
     margin: 0;
 }
 
-.garage .btn-pick {
+.garage .play-btn {
     display: none;
     position: absolute;
     color: white;
     background-color: #00b6ff;
     border: 1px solid #0493CC;
-    bottom: 35%;
-    width: 10%;
     text-align: center;
     opacity: 0.8;
     padding: 8px;
@@ -369,13 +367,19 @@
     z-index: 1;
 }
 
-.garage .btn-pick:hover {
+@media only screen and (max-width: 1000px) {
+    .garage .play-btn {
+        bottom: 210px;
+    }
+}
+
+.garage .play-btn:hover {
     opacity: 0.9;
 }
 
-.garage .btn-pick:active {
+.garage .play-btn:active {
     opacity: 1;
-    bottom: 168px;
+    transform: translate( -50%, 2px );
 }
 
 .garage .close-btn {

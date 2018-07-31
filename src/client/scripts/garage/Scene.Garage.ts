@@ -149,8 +149,7 @@ class GarageScene {
 
         }
 
-        $('.garage .btn-pick').show();
-        $('.garage .characteristics').show();
+        $('.garage .play-btn').show();
         $('.garage .loading').hide();
 
         this.initModels();

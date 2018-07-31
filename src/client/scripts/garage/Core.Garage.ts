@@ -304,7 +304,7 @@ class Garage {
 
         this.scene.init( this );
 
-        $('.garage .btn-pick').click( Game.play.bind( Game ) );
+        $('.garage .play-btn').click( Game.play.bind( Game ) );
         $('.garage .close-btn').click( this.hide.bind( this ) );
         $('.garage .menu-items .item').click( this.switchMenu.bind( this ) );
 
