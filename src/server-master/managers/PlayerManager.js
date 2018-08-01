@@ -122,6 +122,12 @@ PlayerManager.prototype.linkFB = function ( pid, sid, fbUser, callback ) {
 
 };
 
+PlayerManager.prototype.buyObject = function ( callback ) {
+
+    // todo
+
+};
+
 PlayerManager.prototype.getTopBoard = function ( callback ) {
 
     DB.models.topPlayers

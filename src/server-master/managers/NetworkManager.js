@@ -14,6 +14,8 @@ var bodyParser = require('body-parser');
 var MongoStore = require('connect-mongo')( session );
 var nunjucks = require('nunjucks');
 
+var ApiManager = require('./ApiManager');
+
 //
 
 var NetworkManager = function () {
@@ -48,11 +50,11 @@ NetworkManager.prototype.init = function () {
     this.app.use( session({
         secret: 'awesome unicorns',
         maxAge: new Date( Date.now() + 3600000 ),
-        store: new MongoStore(
-            { mongooseConnection: DB.mongoose.connection },
-            function ( err ) {
-                console.log( err || 'connect-mongodb setup ok' );
-            })
+        store: new MongoStore( { mongooseConnection: DB.mongoose.connection }, function ( err ) {
+
+            console.log( err || 'connect-mongodb setup ok' );
+
+        })
     }));
 
     passport.serializeUser( function ( user, done ) {
@@ -72,7 +74,7 @@ NetworkManager.prototype.init = function () {
         clientSecret: environment.fbApp.secret,
         callbackURL: environment.fbApp.cbUrl
     }, function ( accessToken, refreshToken, profile, done ) {
-            
+
         process.nextTick( function () {
 
             return done( null, profile );
@@ -115,7 +117,7 @@ NetworkManager.prototype.init = function () {
 
     });
 
-    this.app.get( '/auth/facebook', passport.authenticate('facebook', { 
+    this.app.get( '/auth/facebook', passport.authenticate('facebook', {
         scope : [ 'public_profile', 'email' ]
     }));
 
@@ -148,51 +150,11 @@ NetworkManager.prototype.init = function () {
 
     // handling requests from clients
 
-    this.app.get( '/api/stats', function ( req, res ) {
-
-        var arenas = [];
-
-        for ( var aid in DT.arenaServersManager.arenaServers ) {
-
-            var arena = DT.arenaServersManager.arenaServers[ aid ];
-
-            arenas.push({
-                id:         arena.aid,
-                ip:         arena.ip,
-                players:    arena.players
-            });
-
-        }
-
-        return res.send( arenas );
-
-    });
-
-    this.app.get( '/api/getFreeArena', function ( req, res ) {
-
-        var arena = DT.arenaServersManager.getFreeServer();
-
-        if ( ! arena ) {
-
-            return res.send({ error: 1, 'message': 'No available arenas.' });
-
-        } else {
-
-            return res.send( arena );
-
-        }
-
-    });
-
-    this.app.get( '/api/getTopPlayers', function ( req, res ) {
-
-        DT.playerManager.getTopBoard( function ( playersTop ) {
-
-            return res.send( playersTop );
-
-        });
-
-    });
+    this.app.get( '/api/stats', ApiManager.getStats );
+    this.app.get( '/api/getFreeArena', ApiManager.getFreeArena );
+    this.app.get( '/api/getTopPlayers', ApiManager.getTopPlayers );
+    this.app.get( '/api/garage/getObjects', ApiManager.getGarageObjects );
+    this.app.get( '/api/user/:uid/:oid/buyObject', ApiManager.buyObject );
 
     //
 

@@ -3,7 +3,7 @@
  * DatTank Garage objects
 */
 
-export let GarageConfig = {
+var GarageConfig = {
 
     tanks: {
 
@@ -430,3 +430,7 @@ export let GarageConfig = {
     }
 
 };
+
+//
+
+module.exports = GarageConfig;
