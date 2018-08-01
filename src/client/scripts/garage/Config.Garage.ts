@@ -9,7 +9,7 @@ export let GarageConfig = {
 
         'IS2001': {
             title:          'IS 2001',
-            price:          10,
+            price:          500,
             cannons:        [ 'Plasma-g1', 'Plasma-g2', 'Razer-v1', 'Razer-double' ],
             engines:        [ 'KX-v8', 'ZEL-72', 'KTZ-r1' ],
             armors:         [ 'X-shield', 'KS-shield', 'Z8-shield' ],
@@ -26,7 +26,7 @@ export let GarageConfig = {
 
         'TigerS8': {
             title:          'Tiger S8',
-            price:          10,
+            price:          1500,
             cannons:        [ 'Plasma-g2', 'Plasma-double', 'Razer-v2', 'Razer-double' ],
             engines:        [ 'ZEL-72s', 'KTZ-r2' ],
             armors:         [ 'KS-shield', 'Z8-shield', 'KS200-shield' ],
@@ -43,7 +43,7 @@ export let GarageConfig = {
 
         'OrbitT32s': {
             title:          'Orbit T32s',
-            price:          10,
+            price:          2800,
             cannons:        [ 'Plasma-double', 'Plasma-tripple', 'Razer-v2', 'Razer-double' ],
             engines:        [ 'KTZ-r2', 'VAX-32', 'VAX-32s' ],
             armors:         [ 'KS200-shield', 'Z8-shield', 'MG-deffence' ],
@@ -55,12 +55,12 @@ export let GarageConfig = {
             speedCoef:      1,
             cannonCoef:     1,
             armorCoef:      1,
-            description:    '<b>Orbit T32s tank</b> - 1/3 tanks of China army in Venus Planet War III (2140 year) against Germany and USA.<br><br>By default equipped with double laser cannon, improved ZEL-72 engine and uranium plates armor.<br><br>'
+            description:    '<b>Orbit T32s tank</b> - 1/3 tanks of China army in Venus Planet War III (2140 year) against Germany and USA.<br><br>By default equipped with improved second version laser cannon, improved ZEL-72 engine and uranium plates armor.<br><br>'
         },
 
         'MG813': {
             title:          'MG 813',
-            price:          10,
+            price:          5000,
             cannons:        [ 'Plasma-tripple', 'Razer-double', 'Razer-quadro', 'Mag87' ],
             engines:        [ 'ZEL-72s', 'KTZ-r2', 'VAX-32s' ],
             armors:         [ 'X-shield', 'KS-shield', 'z8-shield' ],
@@ -72,12 +72,12 @@ export let GarageConfig = {
             speedCoef:      1,
             cannonCoef:     1,
             armorCoef:      1,
-            description:    '<b>MG 813 tank</b> - '
+            description:    '<b>MG 813 tank</b> - popular tank from all sides in Earth Asia War II (2141 year).<br><br>By default equipped with double laser cannon, nice engine improved with galuim generator core, but has light less secure X-Shield armor.<br><br>'
         },
 
         'DTEK72': {
             title:          'DTEK 72',
-            price:          10,
+            price:          8700,
             cannons:        [ 'Plasma-tripple', 'Razer-quadro', 'Mag87', 'Mag87s' ],
             engines:        [ 'KTZ-r1', 'KTZ-r2', 'VAX-32', 'VAX-32s' ],
             armors:         [ 'Z8-shield', 'MG-deffence', 'MG-deffence-v2', 'P12-shield' ],
@@ -89,12 +89,12 @@ export let GarageConfig = {
             speedCoef:      1,
             cannonCoef:     1,
             armorCoef:      1,
-            description:    '<b>DTEK 72 tank</b> - '
+            description:    '<b>DTEK 72 tank</b> - rare Ukrainian tank designed in private company to defend oil wells from East Eurasian groups after Russia collapse in 2141 year.<br><br>By default equipped with tripple plasma cannon, plutonium engine with partly organic generator and 80mm uranium plates armor sys.<br><br>'
         },
 
         'RiperX3': {
             title:          'Riper X3',
-            price:          10,
+            price:          12000,
             cannons:        [ 'Plasma-zero', 'Razer-quadro', 'Mag87', 'Mag87s', 'Plasma-zero' ],
             engines:        [ 'KTZ-v2', 'VAX-32s', 'VAX-32v2' ],
             armors:         [ 'MG-deffence', 'MG-deffence-v2', 'T215'],
@@ -106,7 +106,7 @@ export let GarageConfig = {
             speedCoef:      1,
             cannonCoef:     1,
             armorCoef:      1,
-            description:    '<b>Riper X3</b> - '
+            description:    '<b>Riper X3</b> - very powerfull elite tank of United Korean Forces in Second War for Moon "Space Harbor" (2143 year).<br><br>By default equipped with special plasma cannon which solved problem of overheating, but this costs lots of energy consumption and lower movement speed and has new light graphene-type armor.<br><br>'
         }
 
     },
@@ -119,7 +119,7 @@ export let GarageConfig = {
             title:          'Plasma g1',
             description:    '',
             shortDesc:      'Plasma cannon first Gen.',
-            price:          20,
+            price:          400,
             damage:         30,
             antiArmor:      1,
             range:          0,
@@ -132,7 +132,7 @@ export let GarageConfig = {
             title:          'Plasma g2',
             description:    '',
             shortDesc:      'Plasma cannon second Gen.',
-            price:          20,
+            price:          500,
             damage:         1,
             antiArmor:      1,
             range:          0,
@@ -145,7 +145,7 @@ export let GarageConfig = {
             title:          'Plasma double',
             description:    '',
             shortDesc:      'Plasma cannon with double oscillator.',
-            price:          20,
+            price:          800,
             damage:         1,
             antiArmor:      1,
             range:          0,
@@ -158,7 +158,7 @@ export let GarageConfig = {
             title:          'Plasma tripple',
             description:    '',
             shortDesc:      'Plasma cannon with tripple oscillator.',
-            price:          20,
+            price:          1200,
             damage:         1,
             antiArmor:      1,
             range:          0,
@@ -171,7 +171,7 @@ export let GarageConfig = {
             title:          'Plasma zero',
             description:    '',
             shortDesc:      'Plasma cannon with zero heat release.',
-            price:          20,
+            price:          4000,
             damage:         1,
             antiArmor:      1,
             range:          0,
@@ -186,7 +186,7 @@ export let GarageConfig = {
             title:          'Razer v1',
             description:    '',
             shortDesc:      'Laser cannon first prototype',
-            price:          20,
+            price:          900,
             damage:         1,
             antiArmor:      1,
             range:          0,
@@ -199,7 +199,7 @@ export let GarageConfig = {
             title:          'Razer v2',
             description:    '',
             shortDesc:      'Second prototype version of laser cannon',
-            price:          20,
+            price:          1500,
             damage:         1,
             antiArmor:      1,
             range:          0,
@@ -212,7 +212,7 @@ export let GarageConfig = {
             title:          'Razer double',
             description:    '',
             shortDesc:      'Original Razer cannon with double oscillator core.',
-            price:          20,
+            price:          4000,
             damage:         1,
             antiArmor:      1,
             range:          0,
@@ -225,7 +225,7 @@ export let GarageConfig = {
             title:          'Razer quadro',
             description:    '',
             shortDesc:      'Original Razer cannon with quadro oscillator core.',
-            price:          20,
+            price:          5000,
             damage:         1,
             antiArmor:      1,
             range:          0,
@@ -240,7 +240,7 @@ export let GarageConfig = {
             title:          'Mag 87',
             description:    '',
             shortDesc:      'Magnet cannon v87 release.',
-            price:          20,
+            price:          7000,
             damage:         1,
             antiArmor:      1,
             range:          0,
@@ -253,7 +253,7 @@ export let GarageConfig = {
             title:          'Mag 87S',
             description:    '',
             shortDesc:      'Improved magnet cannon v87S.',
-            price:          20,
+            price:          10000,
             damage:         1,
             antiArmor:      1,
             range:          0,
@@ -266,7 +266,7 @@ export let GarageConfig = {
             title:          'Mag 87s turbo version',
             description:    '',
             shortDesc:      'Magnet cannon v87s turbo version.',
-            price:          20,
+            price:          14000,
             damage:         1,
             antiArmor:      1,
             range:          0,
@@ -283,7 +283,7 @@ export let GarageConfig = {
             title:          'KX v8',
             description:    '',
             shortDesc:      'Turbo diesel 1.3k HP engine with tesla induction generator.',
-            price:          30,
+            price:          500,
             power:          300,
             maxSpeed:       100
         },
@@ -292,7 +292,7 @@ export let GarageConfig = {
             title:          'ZEL 72',
             description:    '',
             shortDesc:      'Double turbo diesel 1.8k HP engine with tesla induction generator.',
-            price:          30,
+            price:          800,
             power:          300,
             maxSpeed:       100
         },
@@ -301,7 +301,7 @@ export let GarageConfig = {
             title:          'ZEL 72s',
             description:    '',
             shortDesc:      'Double turbo diesel 2.1k HP engine with tesla induction generator with galium winding.',
-            price:          30,
+            price:          1300,
             power:          300,
             maxSpeed:       100
         },
@@ -310,7 +310,7 @@ export let GarageConfig = {
             title:          'KTZ r1',
             description:    '',
             shortDesc:      'Plutonium 3.2k HP engine with organic-based generator.',
-            price:          30,
+            price:          1700,
             power:          300,
             maxSpeed:       100
         },
@@ -319,7 +319,7 @@ export let GarageConfig = {
             title:          'KTZ r2',
             description:    '',
             shortDesc:      'Improved plutonium 3.4k HP engine with organic-based generator.',
-            price:          30,
+            price:          2000,
             power:          300,
             maxSpeed:       100
         },
@@ -328,7 +328,7 @@ export let GarageConfig = {
             title:          'VAX 32',
             description:    '',
             shortDesc:      'Polonium ARK 3.7k HP engine with generator and litium batteries.',
-            price:          30,
+            price:          3000,
             power:          300,
             maxSpeed:       100
         },
@@ -337,7 +337,7 @@ export let GarageConfig = {
             title:          'VAX 32s',
             description:    '',
             shortDesc:      'Improved polonium ARK 4.2k HP engine.',
-            price:          30,
+            price:          4500,
             power:          300,
             maxSpeed:       100
         },
@@ -346,7 +346,7 @@ export let GarageConfig = {
             title:          'VAX 32v2',
             description:    '',
             shortDesc:      'Modified VAX32s with Cesium core, 4.6k HP.',
-            price:          30,
+            price:          6000,
             power:          300,
             maxSpeed:       100
         }
@@ -359,7 +359,7 @@ export let GarageConfig = {
             title:          'X Shield',
             description:    '',
             shortDesc:      'Basic 100mm titanium list.',
-            price:          40,
+            price:          400,
             armor:          100
         },
 
@@ -367,7 +367,7 @@ export let GarageConfig = {
             title:          'KS Shield',
             description:    '',
             shortDesc:      '20mm irridium armor.',
-            price:          40,
+            price:          800,
             armor:          100
         },
 
@@ -375,7 +375,7 @@ export let GarageConfig = {
             title:          'KS200 Shield',
             description:    '',
             shortDesc:      '35mm irridium armor with active barrier.',
-            price:          40,
+            price:          1400,
             armor:          100
         },
 
@@ -383,7 +383,7 @@ export let GarageConfig = {
             title:          'Z8 Shield',
             description:    '',
             shortDesc:      '80mm uranium plates armor.',
-            price:          40,
+            price:          1800,
             armor:          100
         },
 
@@ -391,7 +391,7 @@ export let GarageConfig = {
             title:          'MG Deffence',
             description:    '',
             shortDesc:      '3mm graphene nanotubes plates armor.',
-            price:          40,
+            price:          2400,
             armor:          100
         },
 
@@ -399,7 +399,7 @@ export let GarageConfig = {
             title:          'MG Deffence v2',
             description:    '',
             shortDesc:      '5mm graphene nanotues plates with adamantium strings.',
-            price:          40,
+            price:          3500,
             armor:          100
         },
 
@@ -407,7 +407,7 @@ export let GarageConfig = {
             title:          'P12 shield',
             description:    '',
             shortDesc:      '5mm graphene nanotues plates with adamantium strings.',
-            price:          40,
+            price:          5000,
             armor:          100
         },
 
@@ -415,7 +415,7 @@ export let GarageConfig = {
             title:          'P12.5 shield',
             description:    '',
             shortDesc:      '5mm graphene nanotues plates with adamantium strings.',
-            price:          40,
+            price:          8000,
             armor:          100
         },
 
@@ -423,7 +423,7 @@ export let GarageConfig = {
             title:          'T215 armor',
             description:    '',
             shortDesc:      '5mm graphene nanotues plates with adamantium strings.',
-            price:          40,
+            price:          15000,
             armor:          100
         }
 

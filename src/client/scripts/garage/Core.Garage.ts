@@ -228,7 +228,9 @@ class Garage {
             if ( selectedTank.cannons.indexOf( cannonId ) === -1 ) continue;
 
             let isSelected = ( cannonId === selectedCannonId );
-            let item = '<div item-id="' + cannonId + '" class="item' + ( isSelected ? ' active' : '' ) + '"><div class="obj-title">' + cannon.title + '</div><div class="price"><div class="ico"></div><span class="value">' + cannon.price + '</span></div><img class="img" src="/resources/img/garage/cannons/' + cannonId + '.png" /></div>';
+            let isOwn = ( this.params.cannons.indexOf( cannonId ) !== - 1 );
+
+            let item = '<div item-id="' + cannonId + '" class="item' + ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) + '"><div class="obj-title">' + cannon.title + '</div><div class="price"><div class="ico"></div><span class="value">' + cannon.price + '</span></div><img class="img" src="/resources/img/garage/cannons/' + cannonId + '.png" /></div>';
             $('.garage .bottom-block .cannons .list').append( item );
             width += 174;
 
@@ -246,7 +248,9 @@ class Garage {
             if ( selectedTank.engines.indexOf( engineId ) === -1 ) continue;
 
             let isSelected = ( engineId === selectedEngineId );
-            let item = '<div item-id="' + engineId + '" class="item' + ( isSelected ? ' active' : '' ) + '"><div class="obj-title">' + engine.title + '</div><div class="price"><div class="ico"></div><span class="value">' + engine.price + '</span></div><img class="img" src="/resources/img/garage/engines/' + engineId + '.png" /></div>';
+            let isOwn = ( this.params.engines.indexOf( engineId ) !== - 1 );
+
+            let item = '<div item-id="' + engineId + '" class="item' + ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) + '"><div class="obj-title">' + engine.title + '</div><div class="price"><div class="ico"></div><span class="value">' + engine.price + '</span></div><img class="img" src="/resources/img/garage/engines/' + engineId + '.png" /></div>';
             $('.garage .bottom-block .engines .list').append( item );
             width += 174;
 
@@ -264,7 +268,9 @@ class Garage {
             if ( selectedTank.armors.indexOf( armorId ) === -1 ) continue;
 
             let isSelected = ( armorId === selectedArmorId );
-            let item = '<div item-id="' + armorId + '" class="item' + ( isSelected ? ' active' : '' ) + '"><div class="obj-title">' + armor.title + '</div><div class="price"><div class="ico"></div><span class="value">' + armor.price + '</span></div><img class="img" src="/resources/img/garage/armors/' + armorId + '.png" /></div>';
+            let isOwn = ( this.params.armors.indexOf( armorId ) !== - 1 );
+
+            let item = '<div item-id="' + armorId + '" class="item' + ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) + '"><div class="obj-title">' + armor.title + '</div><div class="price"><div class="ico"></div><span class="value">' + armor.price + '</span></div><img class="img" src="/resources/img/garage/armors/' + armorId + '.png" /></div>';
             $('.garage .bottom-block .armors .list').append( item );
             width += 174;
 
