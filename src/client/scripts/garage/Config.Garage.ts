@@ -96,11 +96,11 @@ export let GarageConfig = {
             title:          'Riper X3',
             price:          12000,
             cannons:        [ 'Plasma-zero', 'Razer-quadro', 'Mag87', 'Mag87s', 'Plasma-zero' ],
-            engines:        [ 'KTZ-v2', 'VAX-32s', 'VAX-32v2' ],
+            engines:        [ 'KTZ-r2', 'VAX-32s', 'VAX-32v2' ],
             armors:         [ 'MG-deffence', 'MG-deffence-v2', 'T215'],
             default:        {
                 cannon:     'Plasma-zero',
-                engine:     'KTZ-v2',
+                engine:     'KTZ-r2',
                 armor:      'MG-deffence'
             },
             speedCoef:      1,

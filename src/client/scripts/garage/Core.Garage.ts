@@ -35,7 +35,10 @@ class Garage {
 
     };
 
-    private openBuyPopup () {
+    private openBuyPopup ( item: any ) {
+
+        $('.garage .buy-item-popup .item-name').html( '"' + item.title + '" tank' );
+        $('.garage .buy-item-popup .price-value').html( item.price + ' coins' );
 
         $('.garage .buy-item-popup-wrapper').show();
         setTimeout( () => { $('.garage .buy-item-popup-wrapper').css( 'opacity', 1 ); }, 10 );
@@ -394,7 +397,7 @@ class Garage {
         SoundManager.playSound('ElementSelect');
 
         setTimeout( () => {
-        
+
             $( '.garage .bottom-block .' + newTab ).addClass('active');
 
         }, 10 );
@@ -412,14 +415,15 @@ class Garage {
     public selectTank ( event? ) {
 
         if ( event ) {
-        
+
+            let tank = GarageConfig.tanks[ $( event.currentTarget ).attr('item-id') ];
             $('.garage .bottom-block .tab.tanks .item').removeClass('active');
             $( event.currentTarget ).addClass('active');
             SoundManager.playSound('ElementSelect');
 
             if ( $( event.currentTarget ).hasClass('notOwn') ) {
 
-                this.openBuyPopup();
+                this.openBuyPopup( tank );
 
             }
 
@@ -441,7 +445,7 @@ class Garage {
         localStorage.setItem( 'currentTank', this.currentTank );
 
         if ( event ) {
-        
+
             this.params.selected = $( event.currentTarget ).attr('item-id');
 
         }
@@ -463,7 +467,7 @@ class Garage {
         $('.garage .bottom-block .tab.engines .item').removeClass('active');
         $( event.currentTarget ).addClass('active');
         SoundManager.playSound('ElementSelect');
- 
+
         // todo
 
     };
@@ -473,7 +477,7 @@ class Garage {
         $('.garage .bottom-block .tab.armors .item').removeClass('active');
         $( event.currentTarget ).addClass('active');
         SoundManager.playSound('ElementSelect');
- 
+
         // todo
 
     };
@@ -483,7 +487,7 @@ class Garage {
         $('.garage .bottom-block .tab.textures .item').removeClass('active');
         $( event.currentTarget ).addClass('active');
         SoundManager.playSound('ElementSelect');
- 
+
         // todo
 
     };
@@ -493,7 +497,7 @@ class Garage {
         $('.garage .bottom-block .tab.decorations .item').removeClass('active');
         $( event.currentTarget ).addClass('active');
         SoundManager.playSound('ElementSelect');
- 
+
         // todo
 
     };
