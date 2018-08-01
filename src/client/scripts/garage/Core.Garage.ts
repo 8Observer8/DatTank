@@ -36,9 +36,40 @@ class Garage {
 
     };
 
-    private openBuyPopup ( item: any ) {
+    private openBuyPopup ( category: string, item: any ) {
 
-        $('.garage .buy-item-popup .item-name').html( '"' + item.title + '" tank' );
+        let title = item.title;
+
+        switch ( category ) {
+
+            case 'tank':
+
+                title = '"' + title + '" tank';
+                break;
+
+            case 'cannon':
+
+                title = '"' + title + '" cannon';
+                break;
+
+            case 'engine':
+
+                title = '"' + title + '" engine';
+                break;
+
+            case 'armor':
+
+                title = '"' + title + '" armor';
+                break;
+
+            case 'texture':
+
+                title = '"' + title + '" texture';
+                break;
+
+        }
+
+        $('.garage .buy-item-popup .item-name').html( title );
         $('.garage .buy-item-popup .price-value').html( item.price + ' coins' );
 
         $('.garage .buy-item-popup-wrapper').show();
@@ -376,7 +407,7 @@ class Garage {
 
             if ( $( event.currentTarget ).hasClass('notOwn') ) {
 
-                this.openBuyPopup( tank );
+                this.openBuyPopup( 'tank', tank );
                 return;
 
             }
@@ -389,7 +420,6 @@ class Garage {
         //
 
         let tankId = 'IS2';
-        let tankType = Tanks[ tankId ];
         this.currentTank = tankId;
         this.scene.selectModel( tankId );
 
@@ -411,31 +441,53 @@ class Garage {
 
     public selectCannon ( event? ) {
 
-        $('.garage .bottom-block .tab.cannons .item').removeClass('active');
-        $( event.currentTarget ).addClass('active');
+        let cannon = this.GarageConfig.cannons[ $( event.currentTarget ).attr('item-id') ];
         SoundManager.playSound('ElementSelect');
 
-        // todo
+        if ( $( event.currentTarget ).hasClass('notOwn') ) {
+
+            this.openBuyPopup( 'cannon', cannon );
+            return;
+
+        }
+
+        $('.garage .bottom-block .tab.cannons .item').removeClass('active');
+        $( event.currentTarget ).addClass('active');
 
     };
 
     public selectEngines ( event? ) {
 
-        $('.garage .bottom-block .tab.engines .item').removeClass('active');
-        $( event.currentTarget ).addClass('active');
+        let engine = this.GarageConfig.engines[ $( event.currentTarget ).attr('item-id') ];
         SoundManager.playSound('ElementSelect');
 
-        // todo
+        if ( $( event.currentTarget ).hasClass('notOwn') ) {
+
+            this.openBuyPopup( 'engine', engine );
+            return;
+
+        }
+
+        $('.garage .bottom-block .tab.engines .item').removeClass('active');
+        $( event.currentTarget ).addClass('active');
 
     };
 
     public selectArmor ( event? ) {
 
-        $('.garage .bottom-block .tab.armors .item').removeClass('active');
-        $( event.currentTarget ).addClass('active');
+        let armor = this.GarageConfig.armors[ $( event.currentTarget ).attr('item-id') ];
         SoundManager.playSound('ElementSelect');
 
-        // todo
+        if ( $( event.currentTarget ).hasClass('notOwn') ) {
+
+            this.openBuyPopup( 'armor', armor );
+            return;
+
+        }
+
+
+        $('.garage .bottom-block .tab.armors .item').removeClass('active');
+        $( event.currentTarget ).addClass('active');
 
     };
 
