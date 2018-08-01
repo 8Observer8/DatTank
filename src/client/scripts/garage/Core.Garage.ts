@@ -14,6 +14,7 @@ import { GarageConfig } from "./Config.Garage";
 class Garage {
 
     public isOpened: boolean = false;
+    private isBuyPopupOpened: boolean = false;
     private currentTank;
 
     public scene: GarageScene = new GarageScene();
@@ -60,12 +61,15 @@ class Garage {
 
         });
 
+        this.isBuyPopupOpened = true;
+
     };
 
     private closeBuyPopup () {
 
         $('.garage .buy-item-popup-wrapper').css( 'opacity', 0 );
         setTimeout( () => { $('.garage .buy-item-popup-wrapper').hide(); }, 400 );
+        this.isBuyPopupOpened = false;
 
     };
 
@@ -182,8 +186,6 @@ class Garage {
     };
 
     private setupMenu () {
-
-        // set up tank list
 
         let width;
 
@@ -310,74 +312,27 @@ class Garage {
 
     };
 
-    public init () {
-
-        this.scene.init( this );
-
-        $('.garage .play-btn').click( Game.play.bind( Game ) );
-        $('.garage .close-btn').click( this.hide.bind( this ) );
-        $('.garage .menu-items .item').click( this.switchMenu.bind( this ) );
-
-        $( document ).keydown( this.keyDown.bind( this ) );
-
-        this.setupMenu();
-        this.updateUserParams();
-
-        //
-
-        $('.garage .bottom-block .tab:not(.active)').hide();
-
-    };
-
     public keyDown ( event ) {
 
         if ( ! this.isOpened ) return;
 
         switch ( event.keyCode ) {
 
-            case 13: // enter key
-
-                Game.play();
-                break;
-
             case 27: // esc key
 
-                this.hide();
-                break;
+                if ( this.isBuyPopupOpened ) {
 
-            case 39: // right arrow
+                    this.closeBuyPopup();
 
-                // this.nextTank();
-                break;
+                } else {
+                
+                    this.hide();
 
-            case 37: // left arrow
+                }
 
-                // this.prevTank();
                 break;
 
         }
-
-    };
-
-    public show () {
-
-        if ( ! Game.ready ) return;
-
-        this.isOpened = true;
-
-        $('.garage').show();
-        SoundManager.playSound('MenuClick');
-
-        this.scene.reset();
-        this.scene.resize();
-
-    };
-
-    public hide () {
-
-        this.isOpened = false;
-        $('.garage').hide();
-        SoundManager.playSound('MenuClick');
 
     };
 
@@ -417,15 +372,17 @@ class Garage {
         if ( event ) {
 
             let tank = GarageConfig.tanks[ $( event.currentTarget ).attr('item-id') ];
-            $('.garage .bottom-block .tab.tanks .item').removeClass('active');
-            $( event.currentTarget ).addClass('active');
             SoundManager.playSound('ElementSelect');
 
             if ( $( event.currentTarget ).hasClass('notOwn') ) {
 
                 this.openBuyPopup( tank );
+                return;
 
             }
+
+            $('.garage .bottom-block .tab.tanks .item').removeClass('active');
+            $( event.currentTarget ).addClass('active');
 
         }
 
@@ -505,6 +462,51 @@ class Garage {
     public onLoadedResources () {
 
         this.selectTank();
+
+    };
+
+    //
+
+    public show () {
+
+        if ( ! Game.ready ) return;
+
+        this.isOpened = true;
+
+        $('.garage').show();
+        SoundManager.playSound('MenuClick');
+
+        this.scene.reset();
+        this.scene.resize();
+
+    };
+
+    public hide () {
+
+        this.isOpened = false;
+        $('.garage').hide();
+        SoundManager.playSound('MenuClick');
+
+    };
+
+    //
+
+    public init () {
+
+        this.scene.init( this );
+
+        $('.garage .play-btn').click( Game.play.bind( Game ) );
+        $('.garage .close-btn').click( this.hide.bind( this ) );
+        $('.garage .menu-items .item').click( this.switchMenu.bind( this ) );
+
+        $( document ).keydown( this.keyDown.bind( this ) );
+
+        this.setupMenu();
+        this.updateUserParams();
+
+        //
+
+        $('.garage .bottom-block .tab:not(.active)').hide();
 
     };
 
