@@ -99,8 +99,8 @@ NetworkManager.prototype.init = function () {
 
             DT.playerManager.register( ( params ) => {
 
-                res.cookie( 'dt-pid', params.pid, { maxAge: 900000 });
-                res.cookie( 'dt-sid', params.sid, { maxAge: 900000 });
+                res.cookie( 'dt-pid', params.pid, { maxAge: 365 * 24 * 1000 * 3600 });
+                res.cookie( 'dt-sid', params.sid, { maxAge: 365 * 24 * 1000 * 3600 });
                 return res.render( 'index.html', params );
 
             });
@@ -109,8 +109,8 @@ NetworkManager.prototype.init = function () {
 
             DT.playerManager.auth( pid, sid, ( params ) => {
 
-                res.cookie( 'dt-pid', params.pid, { maxAge: 900000 });
-                res.cookie( 'dt-sid', params.sid, { maxAge: 900000 });
+                res.cookie( 'dt-pid', params.pid, { maxAge: 365 * 24 * 1000 * 3600 });
+                res.cookie( 'dt-sid', params.sid, { maxAge: 365 * 24 * 1000 * 3600 });
                 return res.render( 'index.html', params );
 
             });
@@ -156,7 +156,7 @@ NetworkManager.prototype.init = function () {
     this.app.get( '/api/getFreeArena', ApiManager.getFreeArena );
     this.app.get( '/api/getTopPlayers', ApiManager.getTopPlayers );
     this.app.get( '/api/garage/getObjects', ApiManager.getGarageObjects );
-    this.app.get( '/api/user/:uid/:oid/buyObject', ApiManager.buyObject );
+    this.app.get( '/api/me/buyObject/:type/:oid', ApiManager.authCheck, ApiManager.buyObject );
 
     //
 

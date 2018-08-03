@@ -63,17 +63,41 @@ var ApiManager = {
 
     buyObject: function ( req, res ) {
 
-        var userId = req.params.uid;
+        var pid = req.cookies['dt-pid'];
         var objectId = req.params.oid;
+        var objectType = req.params.type;
 
-        DT.playerManager.buyObject( function ( result ) {
+        //
 
-            return res.send({ uid: userId, oid: objectId });
+        DT.playerManager.buyObject( pid, objectType, objectId, function ( result, message ) {
+
+            return res.send({ success: result, message: message });
+
+        });
+
+    },
+
+    authCheck: function ( req, res, next ) {
+
+        var pid = req.cookies['dt-pid'];
+        var sid = req.cookies['dt-sid'];
+
+        //
+
+        DT.playerManager.authCheck( pid, sid, function () {
+
+            return next();
+
+        }, function () {
+
+            return res.send({ error: 'bad auth' });
 
         });
 
     }
 
 };
+
+//
 
 module.exports = ApiManager;

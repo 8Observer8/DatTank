@@ -3,6 +3,10 @@
  * DatTank master-server player data manager
 */
 
+var GarageConfig = require('./../core/GarageConfig.js');
+
+//
+
 var PlayerManager = function () {
 
     // nothing here
@@ -12,6 +16,26 @@ var PlayerManager = function () {
 PlayerManager.prototype = {};
 
 //
+
+PlayerManager.prototype.authCheck = function ( pid, sid, onSuccess, onError ) {
+
+    DB.models.players
+    .findOne({ pid: pid })
+    .then( ( player ) => {
+
+        if ( player && player.sid === sid ) {
+
+            return onSuccess();
+
+        } else {
+
+            return onError();
+
+        }
+
+    });
+
+};
 
 PlayerManager.prototype.removeOldPlayers = function () {
 
@@ -122,9 +146,42 @@ PlayerManager.prototype.linkFB = function ( pid, sid, fbUser, callback ) {
 
 };
 
-PlayerManager.prototype.buyObject = function ( callback ) {
+PlayerManager.prototype.buyObject = function ( pid, objectType, objectId, callback ) {
 
-    // todo
+    DB.models.players
+    .findOne({ pid: pid })
+    .then( ( player ) => {
+
+        if ( ! player ) return callback( false, 'player not found' );
+
+        var object = ( GarageConfig[ objectType ] || {} )[ objectId ] || false;
+        if ( object === false ) return callback( false, 'object not found' );
+
+        if ( player.coins < object.price ) return callback( false, 'not enough coins' );
+        if ( player.params[ objectType ][ objectId ] ) return callback( false, 'you already have this object' );
+
+        //
+
+        if ( objectType === 'tanks' ) {
+
+            // todo
+
+        } else {
+
+            player.params[ objectType ][ objectId ] = true;
+            player.markModified('params');
+
+        }
+
+        //
+
+        player.save( function () {
+
+            return callback( true, '' );
+
+        });
+
+    });
 
 };
 
