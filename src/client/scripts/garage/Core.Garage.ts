@@ -38,39 +38,69 @@ class Garage {
 
     private openBuyPopup ( category: string, item: any ) {
 
+        if ( this.coins < item.price ) {
+
+            $('.garage .buy-item-popup .error').show();
+            $('.garage .buy-item-popup .title').hide();
+            $('.garage .buy-item-popup .price').hide();
+            $('.garage .buy-item-popup .error .price-value').html( ( item.price - this.coins ).toString() );
+            $('.garage .buy-item-popup .buy-btn').hide();
+            $('.garage .buy-item-popup .cancel-btn').hide();
+            $('.garage .buy-item-popup .okay-btn').show();
+
+        } else {
+
+            $('.garage .buy-item-popup .error').hide();
+            $('.garage .buy-item-popup .price').show();
+            $('.garage .buy-item-popup .title').show();
+            $('.garage .buy-item-popup .buy-btn').show();
+            $('.garage .buy-item-popup .cancel-btn').show();
+            $('.garage .buy-item-popup .okay-btn').hide();
+
+        }
+
+        //
+
         let title = item.title;
+        let image = '';
 
         switch ( category ) {
 
             case 'tank':
 
                 title = '"' + title + '" tank';
+                image = 'tanks/' + item.id + '.png';
                 break;
 
             case 'cannon':
 
                 title = '"' + title + '" cannon';
+                image = 'cannons/' + item.id + '.png';
                 break;
 
             case 'engine':
 
                 title = '"' + title + '" engine';
+                image = 'engines/' + item.id + '.png';
                 break;
 
             case 'armor':
 
                 title = '"' + title + '" armor';
+                image = 'armors/' + item.id + '.png';
                 break;
 
             case 'texture':
 
                 title = '"' + title + '" texture';
+                image = 'textures/' + item.id + '.png';
                 break;
 
         }
 
+        $('.garage .buy-item-popup .image').css( 'background-image', 'url(/resources/img/garage/' + image + ')' );
         $('.garage .buy-item-popup .item-name').html( title );
-        $('.garage .buy-item-popup .price-value').html( item.price + ' coins' );
+        $('.garage .buy-item-popup .price .price-value').html( item.price + ' coins' );
 
         $('.garage .buy-item-popup-wrapper').show();
         setTimeout( () => { $('.garage .buy-item-popup-wrapper').css( 'opacity', 1 ); }, 10 );
@@ -79,6 +109,7 @@ class Garage {
         //
 
         $('.garage .buy-item-popup-wrapper .cancel-btn').click( this.closeBuyPopup.bind( this ) );
+        $('.garage .buy-item-popup-wrapper .okay-btn').click( this.closeBuyPopup.bind( this ) );
 
         $('.garage .buy-item-popup-wrapper .btn').mouseover( () => {
 
@@ -356,7 +387,7 @@ class Garage {
                     this.closeBuyPopup();
 
                 } else {
-                
+
                     this.hide();
 
                 }
@@ -484,7 +515,6 @@ class Garage {
             return;
 
         }
-
 
         $('.garage .bottom-block .tab.armors .item').removeClass('active');
         $( event.currentTarget ).addClass('active');

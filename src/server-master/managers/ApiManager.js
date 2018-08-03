@@ -66,9 +66,11 @@ var ApiManager = {
         var userId = req.params.uid;
         var objectId = req.params.oid;
 
-        // DT.playerManager.buyObject( )
+        DT.playerManager.buyObject( function ( result ) {
 
-        return res.send({ uid: userId, oid: objectId });
+            return res.send({ uid: userId, oid: objectId });
+
+        });
 
     }
 

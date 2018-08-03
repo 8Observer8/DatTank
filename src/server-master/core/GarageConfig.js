@@ -8,6 +8,7 @@ var GarageConfig = {
     tanks: {
 
         'IS2001': {
+            id:             'IS2001',
             title:          'IS 2001',
             price:          500,
             cannons:        [ 'Plasma-g1', 'Plasma-g2', 'Razer-v1', 'Razer-double' ],
@@ -25,6 +26,7 @@ var GarageConfig = {
         },
 
         'TigerS8': {
+            id:             'TigerS8',
             title:          'Tiger S8',
             price:          1500,
             cannons:        [ 'Plasma-g2', 'Plasma-double', 'Razer-v2', 'Razer-double' ],
@@ -42,6 +44,7 @@ var GarageConfig = {
         },
 
         'OrbitT32s': {
+            id:             'OrbitT32S',
             title:          'Orbit T32s',
             price:          2800,
             cannons:        [ 'Plasma-double', 'Plasma-tripple', 'Razer-v2', 'Razer-double' ],
@@ -59,6 +62,7 @@ var GarageConfig = {
         },
 
         'MG813': {
+            id:             'MG813',
             title:          'MG 813',
             price:          5000,
             cannons:        [ 'Plasma-tripple', 'Razer-double', 'Razer-quadro', 'Mag87' ],
@@ -76,6 +80,7 @@ var GarageConfig = {
         },
 
         'DTEK72': {
+            id:             'DTEK72',
             title:          'DTEK 72',
             price:          8700,
             cannons:        [ 'Plasma-tripple', 'Razer-quadro', 'Mag87', 'Mag87s' ],
@@ -93,6 +98,7 @@ var GarageConfig = {
         },
 
         'RiperX3': {
+            id:             'RiperX3',
             title:          'Riper X3',
             price:          12000,
             cannons:        [ 'Plasma-zero', 'Razer-quadro', 'Mag87', 'Mag87s', 'Plasma-zero' ],
@@ -116,6 +122,7 @@ var GarageConfig = {
         // Plasma cannons
 
         'Plasma-g1': {
+            id:             'Plasma-g1',
             title:          'Plasma g1',
             description:    '',
             shortDesc:      'Plasma cannon first Gen.',
@@ -129,6 +136,7 @@ var GarageConfig = {
         },
 
         'Plasma-g2': {
+            id:             'Plasma-g2',
             title:          'Plasma g2',
             description:    '',
             shortDesc:      'Plasma cannon second Gen.',
@@ -142,6 +150,7 @@ var GarageConfig = {
         },
 
         'Plasma-double': {
+            id:             'Plasma-double',
             title:          'Plasma double',
             description:    '',
             shortDesc:      'Plasma cannon with double oscillator.',
@@ -155,6 +164,7 @@ var GarageConfig = {
         },
 
         'Plasma-tripple': {
+            id:             'Plasma-tripple',
             title:          'Plasma tripple',
             description:    '',
             shortDesc:      'Plasma cannon with tripple oscillator.',
@@ -168,6 +178,7 @@ var GarageConfig = {
         },
 
         'Plasma-zero': {
+            id:             'Plasma-zero',
             title:          'Plasma zero',
             description:    '',
             shortDesc:      'Plasma cannon with zero heat release.',
@@ -183,6 +194,7 @@ var GarageConfig = {
         // Laser cannons
 
         'Razer-v1': {
+            id:             'Razer-v1',
             title:          'Razer v1',
             description:    '',
             shortDesc:      'Laser cannon first prototype',
@@ -196,6 +208,7 @@ var GarageConfig = {
         },
 
         'Razer-v2': {
+            id:             'Razer-v2',
             title:          'Razer v2',
             description:    '',
             shortDesc:      'Second prototype version of laser cannon',
@@ -209,6 +222,7 @@ var GarageConfig = {
         },
 
         'Razer-double': {
+            id:             'Razer-double',
             title:          'Razer double',
             description:    '',
             shortDesc:      'Original Razer cannon with double oscillator core.',
@@ -222,6 +236,7 @@ var GarageConfig = {
         },
 
         'Razer-quadro': {
+            id:             'Razer-quadro',
             title:          'Razer quadro',
             description:    '',
             shortDesc:      'Original Razer cannon with quadro oscillator core.',
@@ -237,6 +252,7 @@ var GarageConfig = {
         // Magnet cannons
 
         'Mag87': {
+            id:             'Mag87',
             title:          'Mag 87',
             description:    '',
             shortDesc:      'Magnet cannon v87 release.',
@@ -250,6 +266,7 @@ var GarageConfig = {
         },
 
         'Mag87s': {
+            id:             'Mag87s',
             title:          'Mag 87S',
             description:    '',
             shortDesc:      'Improved magnet cannon v87S.',
@@ -263,6 +280,7 @@ var GarageConfig = {
         },
 
         'Mag87s-turbo': {
+            id:             'Mag87s-turbo',
             title:          'Mag 87s turbo version',
             description:    '',
             shortDesc:      'Magnet cannon v87s turbo version.',
@@ -280,6 +298,7 @@ var GarageConfig = {
     engines: {
 
         'KX-v8': {
+            id:             'KX-v8',
             title:          'KX v8',
             description:    '',
             shortDesc:      'Turbo diesel 1.3k HP engine with tesla induction generator.',
@@ -289,6 +308,7 @@ var GarageConfig = {
         },
 
         'ZEL-72': {
+            id:             'ZEL-72',
             title:          'ZEL 72',
             description:    '',
             shortDesc:      'Double turbo diesel 1.8k HP engine with tesla induction generator.',
@@ -298,6 +318,7 @@ var GarageConfig = {
         },
 
         'ZEL-72s': {
+            id:             'ZEL-72s',
             title:          'ZEL 72s',
             description:    '',
             shortDesc:      'Double turbo diesel 2.1k HP engine with tesla induction generator with galium winding.',
@@ -307,6 +328,7 @@ var GarageConfig = {
         },
 
         'KTZ-r1': {
+            id:             'KTZ-r1',
             title:          'KTZ r1',
             description:    '',
             shortDesc:      'Plutonium 3.2k HP engine with organic-based generator.',
@@ -316,6 +338,7 @@ var GarageConfig = {
         },
 
         'KTZ-r2': {
+            id:             'KTZ-r2',
             title:          'KTZ r2',
             description:    '',
             shortDesc:      'Improved plutonium 3.4k HP engine with organic-based generator.',
@@ -325,6 +348,7 @@ var GarageConfig = {
         },
 
         'VAX-32': {
+            id:             'VAX-32',
             title:          'VAX 32',
             description:    '',
             shortDesc:      'Polonium ARK 3.7k HP engine with generator and litium batteries.',
@@ -334,6 +358,7 @@ var GarageConfig = {
         },
 
         'VAX-32s': {
+            id:             'VAX-32s',
             title:          'VAX 32s',
             description:    '',
             shortDesc:      'Improved polonium ARK 4.2k HP engine.',
@@ -343,6 +368,7 @@ var GarageConfig = {
         },
 
         'VAX-32v2': {
+            id:             'VAX-32v2',
             title:          'VAX 32v2',
             description:    '',
             shortDesc:      'Modified VAX32s with Cesium core, 4.6k HP.',
@@ -356,6 +382,7 @@ var GarageConfig = {
     armors: {
 
         'X-shield': {
+            id:             'X-shield',
             title:          'X Shield',
             description:    '',
             shortDesc:      'Basic 100mm titanium list.',
@@ -364,6 +391,7 @@ var GarageConfig = {
         },
 
         'KS-shield': {
+            id:             'KS-shield',
             title:          'KS Shield',
             description:    '',
             shortDesc:      '20mm irridium armor.',
@@ -372,6 +400,7 @@ var GarageConfig = {
         },
 
         'KS200-shield': {
+            id:             'KS200-shield',
             title:          'KS200 Shield',
             description:    '',
             shortDesc:      '35mm irridium armor with active barrier.',
@@ -380,6 +409,7 @@ var GarageConfig = {
         },
 
         'Z8-shield': {
+            id:             'Z8-shield',
             title:          'Z8 Shield',
             description:    '',
             shortDesc:      '80mm uranium plates armor.',
@@ -388,6 +418,7 @@ var GarageConfig = {
         },
 
         'MG-deffence': {
+            id:             'MG-deffence',
             title:          'MG Deffence',
             description:    '',
             shortDesc:      '3mm graphene nanotubes plates armor.',
@@ -396,6 +427,7 @@ var GarageConfig = {
         },
 
         'MG-deffence-v2': {
+            id:             'MG-deffence-v2',
             title:          'MG Deffence v2',
             description:    '',
             shortDesc:      '5mm graphene nanotues plates with adamantium strings.',
@@ -404,6 +436,7 @@ var GarageConfig = {
         },
 
         'P12-shield': {
+            id:             'P12-shield',
             title:          'P12 shield',
             description:    '',
             shortDesc:      '5mm graphene nanotues plates with adamantium strings.',
@@ -412,6 +445,7 @@ var GarageConfig = {
         },
 
         'P12.5-shield': {
+            id:             'P12.5-shield',
             title:          'P12.5 shield',
             description:    '',
             shortDesc:      '5mm graphene nanotues plates with adamantium strings.',
@@ -420,6 +454,7 @@ var GarageConfig = {
         },
 
         'T215-armor': {
+            id:             'T215-armor',
             title:          'T215 armor',
             description:    '',
             shortDesc:      '5mm graphene nanotues plates with adamantium strings.',

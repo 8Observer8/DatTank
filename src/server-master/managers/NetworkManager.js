@@ -48,14 +48,16 @@ NetworkManager.prototype.init = function () {
     // setuping fb-passport for login sys
 
     this.app.use( session({
-        secret: 'awesome unicorns',
-        maxAge: new Date( Date.now() + 3600000 ),
+        secret: 'aloha secret unicorns06',
+        maxAge: new Date( Date.now() + 365 * 24 * 3600000 ), // 1 year
+        resave: true,
+        saveUninitialized: true,
         store: new MongoStore( { mongooseConnection: DB.mongoose.connection }, function ( err ) {
 
             console.log( err || 'connect-mongodb setup ok' );
 
         })
-    }));
+    }) );
 
     passport.serializeUser( function ( user, done ) {
 

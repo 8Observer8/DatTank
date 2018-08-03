@@ -10,7 +10,10 @@ html, body {
     padding: 0px;
     overflow: hidden;
     background-color: #272727;
-    cursor: url('../resources/img/cursor.png'), auto;
+}
+
+* {
+    cursor: url('/resources/img/cursor.png'), auto !important;
 }
 
 *:not(input) {
