@@ -305,7 +305,7 @@ class TankObject {
 
     //
 
-    constructor ( params ) {
+    constructor ( params: any ) {
 
         this.id = params.id;
 
@@ -337,7 +337,7 @@ let TankList = {
     T29:    T29Tank,
     T44:    T44Tank,
     T54:    T54Tank,
-    getById: function ( tankId ) {
+    getById: ( tankId: number ) => {
 
         for ( let item in TankList ) {
 
@@ -356,7 +356,7 @@ let TankList = {
         return null;
 
     },
-    getList: function () {
+    getList: () => {
 
         let list = [];
 

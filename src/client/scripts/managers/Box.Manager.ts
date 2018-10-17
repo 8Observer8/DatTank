@@ -14,9 +14,11 @@ class BoxManagerCore {
 
     //
 
-    public add ( params ) {
+    public add ( params: any ) {
 
-        let boxType = Boxes.getById( params.type || 0 );
+        let boxType = Boxes.getById( params.type || 0 ) || '';
+        if ( ! Boxes[ boxType ] ) return;
+
         let box = new Boxes[ boxType ]( params );
         box.init();
         this.boxes.push( box );

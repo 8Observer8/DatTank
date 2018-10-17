@@ -15,7 +15,7 @@ import { UI } from "./../ui/Core.UI";
 
 class ArenaNetwork {
 
-    private playerDied ( data ) {
+    private playerDied ( data: any ) {
 
         let player = data.player;
         let killer = data.killer;
@@ -24,7 +24,7 @@ class ArenaNetwork {
 
     };
 
-    private newExplosion ( data ) {
+    private newExplosion ( data: number[] ) {
 
         let bulletId = data[0];
         let x = data[1];
@@ -36,7 +36,7 @@ class ArenaNetwork {
 
     };
 
-    private newTowers ( data ) {
+    private newTowers ( data: number[] ) {
 
         let tower;
         let towerBinSize = 7;
@@ -67,7 +67,7 @@ class ArenaNetwork {
 
     };
 
-    private newTanks ( data ) {
+    private newTanks ( data: number[] ) {
 
         let players = [];
         let player;
@@ -101,7 +101,7 @@ class ArenaNetwork {
             for ( var j = 0; j < 13; j ++ ) {
 
                 if ( data[ i * playerBinSize + 13 + j ] !== 0 ) {
-                
+
                     player.login += String.fromCharCode( data[ i * playerBinSize + 13 + j ] );
 
                 }
@@ -116,7 +116,7 @@ class ArenaNetwork {
 
     };
 
-    private newBoxes ( data ) {
+    private newBoxes ( data: number[] ) {
 
         let boxes = [];
         let box;
@@ -144,7 +144,7 @@ class ArenaNetwork {
 
     };
 
-    private boxRemove ( data ) {
+    private boxRemove ( data: number[] ) {
 
         let boxId = data[0];
         let playerId = data[1];
@@ -158,22 +158,26 @@ class ArenaNetwork {
 
     };
 
-    private playerLeft ( data ) {
+    private playerLeft ( data: number[] ) {
 
         let playerId = data[0];
         let player = PlayerManager.getById( playerId );
 
-        Arena.removePlayer( player );
+        if ( player ) {
+
+            Arena.removePlayer( player );
+
+        }
 
     };
 
-    private updateLeaderboard ( data ) {
+    private updateLeaderboard ( data: any ) {
 
         Arena.updateLeaderBoard( data.players, data.teams );
 
     };
 
-    private joinArena ( data ) {
+    private joinArena ( data: any ) {
 
         Arena.init( data );
         UI.Landing.hideLoader();
@@ -187,13 +191,13 @@ class ArenaNetwork {
 
     };
 
-    private newChatMessage ( data ) {
+    private newChatMessage ( data: any ) {
 
         UI.Chat.newMessage( data );
 
     };
 
-    private setKillSerie ( data ) {
+    private setKillSerie ( data: any ) {
 
         let playerId = data.id;
         let playerLogin = data.login;

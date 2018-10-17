@@ -38,14 +38,14 @@ class UICore {
 
     };
 
-    public changeQuality ( value, withoutSound ) {
+    public changeQuality ( value: boolean | MouseEvent, withoutSound: boolean ) {
 
-        value = ( typeof value === 'boolean' ) ? value : $( value.currentTarget ).attr('hq') !== 'true';
-        $('#graphics-quality').attr( 'hq', value );
-        $('#viewport-graphics-quality').attr( 'hq', value );
-        localStorage.setItem( 'hq', value );
+        let isHQ = ( typeof value === 'boolean' ) ? value : $( value.currentTarget! ).attr('hq') !== 'true';
+        $('#graphics-quality').attr( 'hq', isHQ.toString() );
+        $('#viewport-graphics-quality').attr( 'hq', isHQ.toString() );
+        localStorage.setItem( 'hq', isHQ.toString() );
 
-        if ( value ) {
+        if ( isHQ ) {
 
             GfxCore.setQuality('HIGH');
 
@@ -66,12 +66,12 @@ class UICore {
 
     };
 
-    public changeSound ( value, withoutSound ) {
+    public changeSound ( value: boolean | MouseEvent, withoutSound: boolean ) {
 
-        value = ( typeof value === 'boolean' ) ? value : $( value.currentTarget ).attr('sound') !== 'true';
-        $('#sound').attr( 'sound', value );
-        $('#viewport-sound').attr( 'sound', value );
-        localStorage.setItem( 'sound', value );
+        let isSound = ( typeof value === 'boolean' ) ? value : $( value.currentTarget! ).attr('sound') !== 'true';
+        $('#sound').attr( 'sound', isSound.toString() );
+        $('#viewport-sound').attr( 'sound', isSound.toString() );
+        localStorage.setItem( 'sound', isSound.toString() );
 
         SoundManager.toggleMute( ! value );
 
@@ -82,7 +82,7 @@ class UICore {
 
         }
 
-    }; 
+    };
 
     private onFullscreenModeChange () {
 
@@ -96,15 +96,15 @@ class UICore {
 
     };
 
-    public toggleFullscreenMode ( value ) {
+    public toggleFullscreenMode ( value: boolean | MouseEvent ) {
 
-        value = ( typeof value === 'boolean' ) ? value : $( value.currentTarget ).attr('screen') !== 'true';
+        let isFullscreen = ( typeof value === 'boolean' ) ? value : $( value.currentTarget! ).attr('screen') !== 'true';
 
         //
 
         SoundManager.playSound('MenuClick');
 
-        if ( value ) {
+        if ( isFullscreen ) {
 
             let element = document.body;
 

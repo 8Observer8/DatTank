@@ -6,20 +6,21 @@
 import * as THREE from 'three';
 
 import { ResourceManager } from "./../managers/Resource.Manager";
+import { Garage } from "./Core.Garage";
 
 //
 
 class GarageScene {
 
-    private container;
-    private scene;
-    private camera;
-    private renderer;
+    private container: HTMLCanvasElement;
+    private scene: THREE.Scene;
+    private camera: THREE.PerspectiveCamera;
+    private renderer: THREE.WebGLRenderer;
 
-    private garage;
+    private garage: Garage;
 
     private models: Array<any> = [];
-    private currentTankModel;
+    private currentTankModel: THREE.Mesh;
 
     private ambientlight: THREE.AmbientLight;
     private spotLight: THREE.SpotLight;
@@ -36,15 +37,15 @@ class GarageScene {
 
     //
 
-    public init ( garage ) {
+    public init ( garage: Garage ) : void {
 
         this.garage = garage;
 
         // construct scene & renderer
 
-        this.container = $('#garage-viewport')[0];
-        this.width = $('#garage-viewport').parent().innerWidth() - 400;
-        this.height = $('#garage-viewport').parent().innerHeight() - 150;
+        this.container = $('#garage-viewport')[0] as HTMLCanvasElement;
+        this.width = ( $('#garage-viewport').parent().innerWidth() || 0 ) - 400;
+        this.height = ( $('#garage-viewport').parent().innerHeight() || 0 ) - 150;
 
         this.scene = new THREE.Scene();
         this.scene.fog = new THREE.FogExp2( this.background, 0.035 );
@@ -82,11 +83,11 @@ class GarageScene {
 
     };
 
-    public initModels () {
+    public initModels () : void {
 
         if ( Object.keys( this.models ).length !== 0 ) return;
 
-        let model, mesh, texture;
+        let model, mesh;
         let textureLoader = new THREE.TextureLoader();
 
         for ( let i = 0; i < 4; i ++ ) {
@@ -96,6 +97,8 @@ class GarageScene {
             let texture = textureLoader.load( '/resources/textures/' + modelName + '.png' );
 
             model = ResourceManager.getModel( 'tanks/' + 'IS2' );
+            if ( ! model ) continue;
+
             let material = [
                 new THREE.MeshPhongMaterial({ map: texture, color: 0xbbbbbb }),
                 new THREE.MeshPhongMaterial({ map: texture, color: 0xbbbbbb }),
@@ -114,6 +117,8 @@ class GarageScene {
         }
 
         model = ResourceManager.getModel('Garage');
+        if ( ! model ) return;
+
         mesh = new THREE.Mesh( model.geometry, [ new THREE.MeshPhongMaterial({ color: 0xaaaaaa }) ] );
         mesh.receiveShadow = true;
         this.scene.add( mesh );
@@ -122,7 +127,7 @@ class GarageScene {
 
     };
 
-    public selectModel ( modelName: string ) {
+    public selectModel ( modelName: string ) : void {
 
         for ( var model in this.models ) {
 
@@ -139,12 +144,12 @@ class GarageScene {
 
     };
 
-    public reset () {
+    public reset () : void {
 
         if ( ResourceManager.loadedPacks.indexOf('garage') === -1 ) {
 
             clearTimeout( this.initModelsTimeout );
-            this.initModelsTimeout = setTimeout( this.reset.bind( this ), 200 );
+            this.initModelsTimeout = <any>setTimeout( this.reset.bind( this ), 200 );
             return;
 
         }
@@ -158,10 +163,10 @@ class GarageScene {
 
     };
 
-    public resize ( event? ) {
+    public resize () : void {
 
-        this.width = $('#garage-viewport').parent().innerWidth() - 400;
-        this.height = $('#garage-viewport').parent().innerHeight() - 150;
+        this.width = ( $('#garage-viewport').parent().innerWidth() || 0 ) - 400;
+        this.height = ( $('#garage-viewport').parent().innerHeight() || 0 ) - 150;
 
         this.renderer.setSize( this.width, this.height );
         this.camera.aspect = this.width / this.height;
@@ -169,7 +174,7 @@ class GarageScene {
 
     };
 
-    private render () {
+    private render () : void {
 
         requestAnimationFrame( this.render );
         if ( ! this.garage.isOpened ) return;

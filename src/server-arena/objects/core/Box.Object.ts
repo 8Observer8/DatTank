@@ -12,10 +12,6 @@ import { PlayerCore } from "./../../core/Player.Core";
 class BoxObject {
 
     private static numIds = 0;
-    private static Types = {
-        'Ammo':     0,
-        'Health':   1
-    };
 
     //
 

@@ -5,7 +5,6 @@
 
 import * as OMath from "./../../OMath/Core.OMath";
 import { DecorationGfx } from "./../../graphics/objects/Decoration.Gfx";
-import { ResourceManager } from "./../../managers/Resource.Manager";
 
 //
 
@@ -43,7 +42,7 @@ class DecorationObject {
 
     //
 
-    constructor ( params ) {
+    constructor ( params: any ) {
 
         this.rotation = params.rotation;
         this.position.set( params.position.x, params.position.y, params.position.z );
@@ -90,7 +89,7 @@ let DecorationList = {
 
     Ruin1:  Ruin1Decoration,
 
-    getById: function ( decorationId ) {
+    getById: ( decorationId: number ) => {
 
         for ( let item in DecorationList ) {
 

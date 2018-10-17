@@ -40,8 +40,8 @@ class BotCore {
     public removed: boolean = false;
     public login: string;
 
-    private moveDuration: number = null;
-    private rotateBaseDuration: number = null;
+    private moveDuration: number;
+    private rotateBaseDuration: number;
     private maxKills: number;
     private lastTopRotate: number;
     private readonly delayAfterSpawn: number = 1500;
@@ -87,7 +87,7 @@ class BotCore {
 
         while ( login === '' ) {
 
-            login = BotCore.LoginBase[ Math.floor( BotCore.LoginBase.length * Math.random() ) ];
+            login = BotCore.LoginBase[ Math.floor( BotCore.LoginBase.length * Math.random() ) ] || '';
 
             if ( ! login ) {
 
@@ -168,22 +168,22 @@ class BotCore {
 
         //
 
-        if ( this.moveDuration !== null || this.rotateBaseDuration !== null ) {
+        if ( this.moveDuration !== 0 || this.rotateBaseDuration !== 0 ) {
 
-            this.moveDuration = ( this.moveDuration !== null ) ? this.moveDuration - 40 : null;
-            this.rotateBaseDuration = ( this.rotateBaseDuration !== null ) ? this.rotateBaseDuration - 40 : null;
+            this.moveDuration = ( this.moveDuration !== 0 ) ? this.moveDuration - 40 : 0;
+            this.rotateBaseDuration = ( this.rotateBaseDuration !== 0 ) ? this.rotateBaseDuration - 40 : 0;
 
-            if ( this.moveDuration <= 0 && this.moveDuration !== null ) {
+            if ( this.moveDuration <= 0 && this.moveDuration !== 0 ) {
 
                 this.player.tank.setMovement( 0, this.player.tank.moveDirection.y );
-                this.moveDuration = null;
+                this.moveDuration = 0;
 
             }
 
-            if ( this.rotateBaseDuration <= 0 && this.rotateBaseDuration !== null ) {
+            if ( this.rotateBaseDuration <= 0 && this.rotateBaseDuration !== 0 ) {
 
                 this.player.tank.setMovement( this.player.tank.moveDirection.x, 0 );
-                this.rotateBaseDuration = null;
+                this.rotateBaseDuration = 0;
 
             }
 

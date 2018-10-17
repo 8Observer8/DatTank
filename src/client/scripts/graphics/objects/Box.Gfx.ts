@@ -28,7 +28,7 @@ class BoxGfx {
 
         let sound = new THREE.PositionalAudio( GfxCore.audioListener );
         sound.position.copy( this.mesh.position );
-        sound.setBuffer( ResourceManager.getSound('box_pick.wav') );
+        sound.setBuffer( ResourceManager.getSound('box_pick.wav') as THREE.AudioBuffer );
         sound.setRefDistance( 200 );
         sound.play();
 
@@ -45,7 +45,7 @@ class BoxGfx {
 
     public init ( box: BoxObject ) {
 
-        var boxModel = ResourceManager.getModel( 'boxes/' + box.type );
+        var boxModel = ResourceManager.getModel( 'boxes/' + box.type )!;
 
         this.mesh = new THREE.Mesh( boxModel.geometry, boxModel.material );
         this.mesh.material[0].map = ResourceManager.getTexture('Boxes.jpg');

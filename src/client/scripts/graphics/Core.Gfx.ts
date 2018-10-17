@@ -39,9 +39,9 @@ class GraphicsCore {
     public camera: THREE.PerspectiveCamera;
     private lookAtVector: THREE.Vector3 = new THREE.Vector3();
     private cameraOffset = new THREE.Vector3();
-    private cameraShakeInterval;
+    private cameraShakeInterval: number | null;
 
-    public container;
+    public container: HTMLCanvasElement;
     public renderer: THREE.WebGLRenderer;
     private prevRenderTime: number;
 
@@ -76,7 +76,7 @@ class GraphicsCore {
 
     //
 
-    public setQuality ( value ) {
+    public setQuality ( value: string ) {
 
         if ( value === 'HIGH' ) {
 
@@ -179,7 +179,7 @@ class GraphicsCore {
 
         $('#renderport').remove();
         $('#viewport').prepend('<canvas id="renderport"></canvas>');
-        this.container = $('#renderport')[0];
+        this.container = $('#renderport')[0] as HTMLCanvasElement;
         let params = { powerPreference: 'high-performance', canvas: this.container, antialias: this.gfxSettings.antialias };
         this.renderer = new THREE.WebGLRenderer( params );
         this.renderer.setSize( this.gfxSettings.quality * this.windowWidth, this.gfxSettings.quality * this.windowHeight );
@@ -198,7 +198,7 @@ class GraphicsCore {
 
         }
 
-        this.cameraShakeInterval = setInterval( () => {
+        this.cameraShakeInterval = <any>setInterval( () => {
 
             this.cameraOffset.x = intensity * ( Math.random() - 0.5 ) * iter / 2;
             this.cameraOffset.y = intensity * ( Math.random() - 0.5 ) * iter / 2;
@@ -208,9 +208,13 @@ class GraphicsCore {
 
             if ( iter > Math.floor( ( duration - 100 ) / 40 ) ) {
 
-                clearInterval( this.cameraShakeInterval );
-                this.cameraOffset.set( 0, 0, 0 );
-                this.cameraShakeInterval = null;
+                if ( this.cameraShakeInterval ) {
+
+                    clearInterval( this.cameraShakeInterval );
+                    this.cameraOffset.set( 0, 0, 0 );
+                    this.cameraShakeInterval = null;
+
+                }
 
             }
 
@@ -233,7 +237,7 @@ class GraphicsCore {
 
     };
 
-    private updateCamera ( position, rotation: number ) {
+    private updateCamera ( position: THREE.Vector3, rotation: number ) {
 
         this.camera.position.x = position.x - 100 * Math.sin( rotation ) + this.cameraOffset.x;
         this.camera.position.z = position.z - 100 * Math.cos( rotation ) + this.cameraOffset.y;
@@ -248,7 +252,7 @@ class GraphicsCore {
 
     private animate ( time: number, delta: number ) {
 
-        if ( ! Arena.me ) return;
+        if ( ! Arena.me || ! Arena.me.tank ) return;
 
         //
 

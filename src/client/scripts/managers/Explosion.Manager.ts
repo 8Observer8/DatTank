@@ -11,12 +11,12 @@ import * as OMath from "./../OMath/Core.OMath";
 class ExplosionManagerCore {
 
     private static instance: ExplosionManagerCore;
-    private pool: Array<ExplosionGfx> = [];
+    private pool: ExplosionGfx[] = [];
     private poolSize: number = 30;
 
     //
 
-    private getNewExplosion () : ExplosionGfx {
+    private getNewExplosion () : ExplosionGfx | undefined {
 
         for ( let i = 0, il = this.pool.length; i < il; i ++ ) {
 
@@ -28,7 +28,7 @@ class ExplosionManagerCore {
 
         }
 
-        return null;
+        return undefined;
 
     };
 

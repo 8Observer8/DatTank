@@ -10,9 +10,7 @@ import { BulletObject } from "./../objects/core/Bullet.Object";
 
 class BulletManager {
 
-    private bulletCount: number = 30;
-    private bullets: Array<BulletObject> = [];
-
+    private bullets: BulletObject[] = [];
     public arena: ArenaCore;
 
     //

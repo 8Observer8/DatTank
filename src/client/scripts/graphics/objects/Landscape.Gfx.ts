@@ -18,7 +18,6 @@ class LandscapeGfx {
 
     private terrainMesh: THREE.Mesh;
     private shadowMaterial: THREE.MeshBasicMaterial;
-    private grassMaterial: THREE.MeshBasicMaterial;
 
     private mapSize: number = 2430;
     private mapExtraSize = 1800;
@@ -53,14 +52,6 @@ class LandscapeGfx {
         this.object.add( this.terrainMesh );
         this.object.updateMatrixWorld( true );
 
-        // add grass
-
-        for ( let i = 0; i < 150; i ++ ) {
-
-            // this.addGrassZone();
-
-        }
-
     };
 
     private addWalls () {
@@ -71,7 +62,7 @@ class LandscapeGfx {
         let edgeTexture, material;
         let wall1, wall2, wall3, wall4;
 
-        edgeTexture = ResourceManager.getTexture( 'brick.jpg' );
+        edgeTexture = ResourceManager.getTexture( 'brick.jpg' )!;
         edgeTexture.wrapS = THREE.RepeatWrapping;
         edgeTexture.wrapT = THREE.RepeatWrapping;
         edgeTexture.repeat.set( 50, 0.5 );
@@ -120,11 +111,12 @@ class LandscapeGfx {
             x = team.spawnPosition.x;
             z = team.spawnPosition.z;
 
-            plane = new THREE.Mesh( new THREE.BoxGeometry( 200, 200, 3 ), new THREE.MeshBasicMaterial({ map: baseTexture, color: color, transparent: true, opacity: 0.9, depthWrite: false }) );
+            let material = new THREE.MeshBasicMaterial({ map: baseTexture, color: color, transparent: true, opacity: 0.9, depthWrite: false });
+            plane = new THREE.Mesh( new THREE.BoxGeometry( 200, 200, 3 ), material );
 
-            plane.material.color.r = plane.material.color.r / 3 + 0.4;
-            plane.material.color.g = plane.material.color.g / 3 + 0.4;
-            plane.material.color.b = plane.material.color.b / 3 + 0.4;
+            material.color.r = material.color.r / 3 + 0.4;
+            material.color.g = material.color.g / 3 + 0.4;
+            material.color.b = material.color.b / 3 + 0.4;
 
             plane.rotation.x = - Math.PI / 2;
             plane.position.set( x, 2, z );
@@ -133,28 +125,6 @@ class LandscapeGfx {
             this.object.add( plane );
 
         }
-
-    };
-
-    private addGrassZone () {
-
-        let size = this.mapSize;
-        let scale = Math.random() / 2 + 0.3;
-
-        if ( ! this.grassMaterial ) {
-
-            let grassTexture = ResourceManager.getTexture( 'Grass.png' );
-            this.grassMaterial = new THREE.MeshBasicMaterial({ map: grassTexture, color: 0x779977, transparent: true, depthWrite: false });
-
-        }
-
-        let grassZone = new THREE.Mesh( new THREE.PlaneBufferGeometry( 240, 240 ), this.grassMaterial );
-        grassZone.rotation.set( - Math.PI / 2, 0, Math.random() * Math.PI );
-        grassZone.scale.set( scale, scale, scale );
-        grassZone.position.set( ( Math.random() - 0.5 ) * size, 0.02 + Math.random() / 20, ( Math.random() - 0.5 ) * size );
-        grassZone.renderOrder = 8;
-        grassZone.updateMatrixWorld( true );
-        this.object.add( grassZone );
 
     };
 
@@ -170,23 +140,19 @@ class LandscapeGfx {
 
         }
 
-        shadowMesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), this.shadowMaterial );
+        let geometry = new THREE.PlaneBufferGeometry( 2, 2 );
+        shadowMesh = new THREE.Mesh( geometry, this.shadowMaterial );
 
-        for ( let i = 0, il = shadowMesh.geometry.attributes.uv.array.length; i < il; i += 2 ) {
+        for ( let i = 0, il = geometry.attributes.uv.count; i < il; i ++ ) {
 
-            shadowMesh.geometry.attributes.uv.array[ i + 0 ] += uvOffset.x;
-            shadowMesh.geometry.attributes.uv.array[ i + 1 ] += uvOffset.y;
-
-            shadowMesh.geometry.attributes.uv.array[ i + 0 ] /= 4;
-            shadowMesh.geometry.attributes.uv.array[ i + 1 ] /= 4;
-
-            shadowMesh.geometry.attributes.uv.array[ i + 1 ] = 1 - shadowMesh.geometry.attributes.uv.array[ i + 1 ];
+            geometry.attributes.uv.setX( i, ( geometry.attributes.uv.getX( i ) + uvOffset.x ) / 4 );
+            geometry.attributes.uv.setY( i, 1 - ( geometry.attributes.uv.getY( i ) + uvOffset.y ) / 4 );
 
         }
 
         shadowMesh.geometry.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2 ) );
         shadowMesh.geometry.applyMatrix( new THREE.Matrix4().makeRotationY( - Math.PI / 2 ) );
-        shadowMesh.position.copy( position );
+        shadowMesh.position.set( position.x, position.y, position.z );
         shadowMesh.position.y = 0.5;
         shadowMesh.renderOrder = 10;
         this.object.add( shadowMesh );

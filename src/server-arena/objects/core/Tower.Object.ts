@@ -24,7 +24,7 @@ class TowerObject {
     public position: OMath.Vec3 = new OMath.Vec3();
     public rotation: number = 0;
     public newRotation: number = 0;
-    public target: TankObject;
+    public target: TankObject | null;
 
     public range: number = 500;
     public armour: number = 100;
@@ -162,7 +162,7 @@ class TowerObject {
     public getTarget ( players: Array<PlayerCore> ) {
 
         let dist;
-        let target: PlayerCore = null;
+        let target: PlayerCore | null = null;
         let minDistance = this.range;
 
         //
@@ -265,7 +265,7 @@ class TowerObject {
 
             this.target = null;
 
-        } else {
+        } else if ( target.tank ) {
 
             this.target = target.tank;
             this.rotateTop( target.tank, delta );

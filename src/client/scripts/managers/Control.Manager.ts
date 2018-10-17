@@ -18,31 +18,41 @@ class ControlsManagerCore {
 
     private pressedKey = {};
     private mousePos: OMath.Vec2 = new OMath.Vec2( 0.5, 0.5 );
-    private prevMousePos: OMath.Vec2 = new OMath.Vec2( 0.5, 0.5 );
 
     private moveX = 0;
     private moveZ = 0;
 
     private intersectPlane: THREE.Mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 10000, 10000 ), new THREE.MeshBasicMaterial({ visible: false }) );
-    private raycaster: THREE.Raycaster = new THREE.Raycaster();
 
     //
 
     private startShooting () {
 
-        Arena.me.tank.startShooting();
+        if ( Arena.me.tank ) {
+
+            Arena.me.tank.startShooting();
+
+        }
 
     };
 
     private stopShooting () {
 
-        Arena.me.tank.stopShooting();
+        if ( Arena.me.tank ) {
+
+            Arena.me.tank.stopShooting();
+
+        }
 
     };
 
     private startMoving () {
 
-        Arena.me.tank.move( this.moveX, this.moveZ );
+        if ( Arena.me.tank ) {
+
+            Arena.me.tank.move( this.moveX, this.moveZ );
+
+        }
 
     };
 
@@ -54,7 +64,7 @@ class ControlsManagerCore {
 
     };
 
-    private mouseDown ( event ) {
+    private mouseDown ( event: MouseEvent ) {
 
         this.mousePos.x = ( event.clientX / GfxCore.windowWidth ) * 2 - 1;
         this.mousePos.y = - ( event.clientY / GfxCore.windowHeight ) * 2 + 1;
@@ -73,14 +83,14 @@ class ControlsManagerCore {
 
     };
 
-    private mouseMove ( event ) {
+    private mouseMove ( event: MouseEvent ) {
 
         this.mousePos.x = ( event.clientX / GfxCore.windowWidth ) * 2 - 1;
         this.mousePos.y = - ( event.clientY / GfxCore.windowHeight ) * 2 + 1;
 
     };
 
-    private mouseUp ( event ) {
+    private mouseUp ( event: MouseEvent ) {
 
         this.mousePos.x = ( event.clientX / GfxCore.windowWidth ) * 2 - 1;
         this.mousePos.y = - ( event.clientY / GfxCore.windowHeight ) * 2 + 1;
@@ -117,7 +127,7 @@ class ControlsManagerCore {
 
     //
 
-    private keyDown ( event ) {
+    private keyDown ( event: KeyboardEvent ) {
 
         if ( this.pressedKey[ '' + event.keyCode ] === true ) return;
         this.pressedKey[ '' + event.keyCode ] = true;
@@ -169,7 +179,7 @@ class ControlsManagerCore {
 
     };
 
-    private keyUp ( event ) {
+    private keyUp ( event: KeyboardEvent ) {
 
         let newDirection;
         delete this.pressedKey[ '' + event.keyCode ];
@@ -231,8 +241,6 @@ class ControlsManagerCore {
     //
 
     public update ( time: number, delta: number ) {
-
-        let me = Arena.me;
 
         // nothing here
 

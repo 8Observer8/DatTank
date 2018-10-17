@@ -86,7 +86,7 @@ let utf8ToBytes = function ( string: string, units?: number ) {
 
 };
 
-let utf8Slice = function ( buf, start: number, end: number ) {
+let utf8Slice = function ( buf: any, start: number, end: number ) {
 
     var res = '';
     var tmp = '';
@@ -144,7 +144,7 @@ let encode = function ( str: string ) {
 
 };
 
-let decode = function ( bytes ) {
+let decode = function ( bytes: any ) {
 
     return utf8Slice( bytes, 0, bytes.length );
 

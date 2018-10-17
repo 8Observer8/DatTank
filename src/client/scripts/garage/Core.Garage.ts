@@ -5,7 +5,6 @@
 
 import { Game } from "./../Game";
 import { GarageScene } from "./Scene.Garage";
-import { TankList as Tanks, TankList } from "./../objects/core/Tank.Object";
 import { SoundManager } from "./../managers/Sound.Manager";
 
 //
@@ -14,7 +13,7 @@ class Garage {
 
     public isOpened: boolean = false;
     private isBuyPopupOpened: boolean = false;
-    private currentTank;
+    private currentTank: string;
     private GarageConfig: any;
 
     public scene: GarageScene = new GarageScene();
@@ -135,7 +134,7 @@ class Garage {
 
     };
 
-    private updateRightMenu ( category, itemId ) {
+    private updateRightMenu ( category: string, itemId: string ) {
 
         let cannonId = ( this.params.tanks[ itemId ] || this.GarageConfig.tanks[ itemId ].default ).cannon;
         let armorId = ( this.params.tanks[ itemId ] || this.GarageConfig.tanks[ itemId ].default ).armor;
@@ -349,8 +348,8 @@ class Garage {
 
         $('.garage .bottom-block .item').mouseover( ( event ) => {
 
-            let category = $( event.currentTarget ).parent().parent().attr('tab');
-            let itemId = $( event.currentTarget ).attr('item-id');
+            let category = $( event.currentTarget ).parent().parent().attr('tab') || '';
+            let itemId = $( event.currentTarget ).attr('item-id') || '';
             SoundManager.playSound('ElementHover');
             clearTimeout( this.rightBarChangeTimeout );
 
@@ -374,7 +373,7 @@ class Garage {
 
     };
 
-    public keyDown ( event ) {
+    public keyDown ( event: KeyboardEvent ) {
 
         if ( ! this.isOpened ) return;
 
@@ -398,7 +397,13 @@ class Garage {
 
     };
 
-    public switchMenu ( event ) {
+    public switchMenu ( event: MouseEvent ) {
+
+        if ( ! event.currentTarget ) {
+
+            return;
+
+        }
 
         let oldTab = $('.garage .menu-items .item.active').attr('tab');
         let newTab = $( event.currentTarget ).attr('tab');
@@ -429,11 +434,11 @@ class Garage {
 
     };
 
-    public selectTank ( event? ) {
+    public selectTank ( event?: MouseEvent ) {
 
-        if ( event ) {
+        if ( event && event.currentTarget ) {
 
-            let tank = this.GarageConfig.tanks[ $( event.currentTarget ).attr('item-id') ];
+            let tank = this.GarageConfig.tanks[ $( event.currentTarget ).attr('item-id') || '' ];
             SoundManager.playSound('ElementSelect');
 
             if ( $( event.currentTarget ).hasClass('notOwn') ) {
@@ -462,7 +467,7 @@ class Garage {
 
         localStorage.setItem( 'currentTank', this.currentTank );
 
-        if ( event ) {
+        if ( event && event.currentTarget ) {
 
             this.params.selected = $( event.currentTarget ).attr('item-id');
 
@@ -470,9 +475,15 @@ class Garage {
 
     };
 
-    public selectCannon ( event? ) {
+    public selectCannon ( event?: MouseEvent ) {
 
-        let cannon = this.GarageConfig.cannons[ $( event.currentTarget ).attr('item-id') ];
+        if ( ! event || ! event.currentTarget ) {
+
+            return;
+
+        }
+
+        let cannon = this.GarageConfig.cannons[ $( event.currentTarget ).attr('item-id') || '' ];
         SoundManager.playSound('ElementSelect');
 
         if ( $( event.currentTarget ).hasClass('notOwn') ) {
@@ -487,9 +498,15 @@ class Garage {
 
     };
 
-    public selectEngines ( event? ) {
+    public selectEngines ( event?: MouseEvent ) {
 
-        let engine = this.GarageConfig.engines[ $( event.currentTarget ).attr('item-id') ];
+        if ( ! event || ! event.currentTarget ) {
+
+            return;
+
+        }
+
+        let engine = this.GarageConfig.engines[ $( event.currentTarget ).attr('item-id') || '' ];
         SoundManager.playSound('ElementSelect');
 
         if ( $( event.currentTarget ).hasClass('notOwn') ) {
@@ -504,9 +521,15 @@ class Garage {
 
     };
 
-    public selectArmor ( event? ) {
+    public selectArmor ( event?: MouseEvent ) {
 
-        let armor = this.GarageConfig.armors[ $( event.currentTarget ).attr('item-id') ];
+        if ( ! event || ! event.currentTarget ) {
+
+            return;
+
+        }
+
+        let armor = this.GarageConfig.armors[ $( event.currentTarget ).attr('item-id') || '' ];
         SoundManager.playSound('ElementSelect');
 
         if ( $( event.currentTarget ).hasClass('notOwn') ) {
@@ -521,7 +544,13 @@ class Garage {
 
     };
 
-    public selectTexture ( event? ) {
+    public selectTexture ( event?: MouseEvent ) {
+
+        if ( ! event || ! event.currentTarget ) {
+
+            return;
+
+        }
 
         $('.garage .bottom-block .tab.textures .item').removeClass('active');
         $( event.currentTarget ).addClass('active');
@@ -531,7 +560,13 @@ class Garage {
 
     };
 
-    public selectDecoration ( event? ) {
+    public selectDecoration ( event?: MouseEvent ) {
+
+        if ( ! event || ! event.currentTarget ) {
+
+            return;
+
+        }
 
         $('.garage .bottom-block .tab.decorations .item').removeClass('active');
         $( event.currentTarget ).addClass('active');
@@ -575,7 +610,7 @@ class Garage {
 
     public init () {
 
-        Game.gameService.getGarageConfig( ( config ) => {
+        Game.gameService.getGarageConfig( ( config: any ) => {
 
             this.GarageConfig = config;
 

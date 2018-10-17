@@ -16,7 +16,7 @@ class BulletManagerCore {
 
     //
 
-    private getNewBullet () : BulletGfx {
+    private getNewBullet () : BulletGfx | undefined {
 
         for ( let i = 0, il = this.pool.length; i < il; i ++ ) {
 
@@ -28,7 +28,7 @@ class BulletManagerCore {
 
         }
 
-        return null;
+        return undefined;
 
     };
 
@@ -45,7 +45,12 @@ class BulletManagerCore {
     public showBullet ( bulletId: number, position: OMath.Vec3, directionRotstion: number ) {
 
         let bullet = this.getNewBullet();
-        bullet.setActive( bulletId, position, directionRotstion );
+
+        if ( bullet ) {
+
+            bullet.setActive( bulletId, position, directionRotstion );
+
+        }
 
     };
 

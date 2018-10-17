@@ -12,7 +12,6 @@ class TowerChangeTeamGfx {
     private object: THREE.Object3D = new THREE.Object3D();
     private time: number;
     private pipe: THREE.Mesh;
-    private changeTeamAnimationTime = 2000;
 
     public active: boolean = false;
 
@@ -30,7 +29,7 @@ class TowerChangeTeamGfx {
             this.pipe.material['opacity'] = 1 - progress;
 
         } else {
-        
+
             this.pipe.material['opacity'] = progress / 2;
             this.pipe.position.y += 0.6 * delta / 16;
             this.pipe.scale.set( progress, progress, progress );
@@ -61,7 +60,7 @@ class TowerChangeTeamGfx {
     };
 
     public init ( target: THREE.Object3D ) {
-    
+
         this.pipe = new THREE.Mesh( new THREE.CylinderBufferGeometry( 50, 50, 550, 10 ), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.0, depthWrite: false }) );
         this.pipe.renderOrder = 10;
         this.object.visible = false;

@@ -8,13 +8,13 @@ class CollisionManagerCore {
     private static instance: CollisionManagerCore;
 
     private worker: any;
-    private objects = [];
+    private objects: any = [];
     private lastUpdateTime: number = 0;
     public updateRate: number = 40;
 
     //
 
-    public addObject ( object, type, isDynamic ) {
+    public addObject ( object: any, type: string, isDynamic: boolean ) {
 
         this.worker.postMessage({ type: 'addObject', object: {
                 id: object.id,
@@ -44,7 +44,6 @@ class CollisionManagerCore {
         }
 
         this.objects = newObjectList;
-
         this.worker.postMessage({ type: 'removeObject', id: object.type + '-' + object.id });
 
     };
@@ -75,7 +74,7 @@ class CollisionManagerCore {
 
     };
 
-    private workerMessage ( event ) {
+    private workerMessage ( event: any ) {
 
         switch ( event.data.type ) {
 

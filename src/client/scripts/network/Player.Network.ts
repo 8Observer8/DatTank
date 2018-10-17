@@ -15,7 +15,7 @@ class PlayerNetwork {
 
     //
 
-    private filter ( data ) : boolean {
+    private filter ( data: any ) : boolean {
 
         var playerId = ( data.id ) ? data.id : data[0];
         if ( this.player.id !== playerId ) return true;
@@ -26,7 +26,7 @@ class PlayerNetwork {
 
     //
 
-    private setRespawn ( data ) {
+    private setRespawn ( data: any ) {
 
         if ( this.filter( data ) ) return;
 
@@ -34,7 +34,7 @@ class PlayerNetwork {
 
     };
 
-    private setLevel ( data ) {
+    private setLevel ( data: any ) {
 
         if ( this.filter( data ) ) return;
 
@@ -119,8 +119,8 @@ class PlayerNetwork {
 
     public dispose () {
 
-        Network.removeMessageListener( 'PlayerRespawn', this.setRespawn );
-        Network.removeMessageListener( 'PlayerNewLevel', this.setLevel );
+        Network.removeMessageListener( 'PlayerRespawn', this.setRespawn.bind( this ) );
+        Network.removeMessageListener( 'PlayerNewLevel', this.setLevel.bind( this ) );
 
     };
 

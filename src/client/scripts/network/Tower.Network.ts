@@ -15,10 +15,9 @@ class TowerNetwork {
 
     //
 
-    private filter ( data ) : boolean {
+    private filter ( data: any ) : boolean {
 
         var towerId = ( data.id ) ? data.id : data[0];
-
         if ( this.tower.id !== towerId ) return true;
 
         return false;
@@ -27,7 +26,7 @@ class TowerNetwork {
 
     //
 
-    private setTopRotation ( data ) {
+    private setTopRotation ( data: any ) {
 
         if ( this.filter( data ) ) return;
 
@@ -35,7 +34,7 @@ class TowerNetwork {
 
     };
 
-    private setShoot ( data ) {
+    private setShoot ( data: any ) {
 
         if ( this.filter( data ) ) return;
 
@@ -49,7 +48,7 @@ class TowerNetwork {
 
     };
 
-    private setHealth ( data ) {
+    private setHealth ( data: any ) {
 
         if ( this.filter( data ) ) return;
 
@@ -57,7 +56,7 @@ class TowerNetwork {
 
     };
 
-    private changeTeam ( data ) {
+    private changeTeam ( data: any ) {
 
         if ( this.filter( data ) ) return;
 
@@ -79,7 +78,7 @@ class TowerNetwork {
 
     };
 
-    public init ( tower ) {
+    public init ( tower: TowerObject ) {
 
         this.tower = tower;
 

@@ -18,7 +18,7 @@ class T1Tower extends TowerObject {
 
     //
 
-    constructor ( params ) {
+    constructor ( params: any ) {
 
         super( params );
 

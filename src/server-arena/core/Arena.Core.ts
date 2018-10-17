@@ -151,12 +151,12 @@ class ArenaCore {
 
     public updateLeaderboard () {
 
-        function update () {
+        let update = () => {
 
             if ( this.disposed ) return;
 
-            let players: Array<PlayerCore> = this.playerManager.getPlayers();
-            let teams: Array<TeamCore> = this.teamManager.getTeams();
+            let players: PlayerCore[] = this.playerManager.getPlayers();
+            let teams: TeamCore[] = this.teamManager.getTeams();
             let towersCount: number = this.towerManager.getTowers().length;
             let playersJSON = [];
             let teamsJSON = [];
@@ -166,11 +166,11 @@ class ArenaCore {
             for ( let i = 0, il = players.length; i < il; i ++ ) {
 
                 playersJSON.push({
-                    id:         this.playerManager.players[ i ].id,
-                    login:      this.playerManager.players[ i ].login,
-                    team:       this.playerManager.players[ i ].team.id,
-                    kills:      this.playerManager.players[ i ].kills,
-                    score:      this.playerManager.players[ i ].score
+                    id:         players[ i ].id,
+                    login:      players[ i ].login,
+                    team:       players[ i ].team.id,
+                    kills:      players[ i ].kills,
+                    score:      players[ i ].score
                 });
 
             }
@@ -208,14 +208,6 @@ class ArenaCore {
         this.network.dispose();
 
         //
-
-        this.teamManager = null;
-        this.playerManager = null;
-        this.botManager = null;
-        this.towerManager = null;
-        this.decorationManager = null;
-        this.boxManager = null;
-        this.collisionManager = null;
 
         this.disposed = true;
 
@@ -275,7 +267,7 @@ class ArenaCore {
         this.network = new ArenaNetwork( this );
         this.tankManager = new TankManager( this );
         this.bulletManager = new BulletManager( this );
-        this.teamManager = new TeamManager( this );
+        this.teamManager = new TeamManager();
         this.playerManager = new PlayerManager( this );
         this.botManager = new BotManager( this );
         this.towerManager = new TowerManager( this );

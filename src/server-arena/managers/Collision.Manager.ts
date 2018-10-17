@@ -92,7 +92,7 @@ class CollisionManager {
 
         collisionBox.body['parent'] = object;
         collisionBox.body['name'] = object.type;
-        collisionBox.body.addShape( shape );
+        collisionBox.body.addShape( shape as Cannon.Shape );
         collisionBox.body.type = ( ! isDynamic ) ? Cannon.Body.STATIC : Cannon.Body.DYNAMIC;
 
         if ( isDynamic ) {
@@ -143,7 +143,7 @@ class CollisionManager {
 
         }
 
-        this.objects = null;
+        this.objects.length = 0;
 
     };
 

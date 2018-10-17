@@ -22,7 +22,7 @@ class ArenaNetwork {
 
     //
 
-    public sendEventToPlayersInRange ( position: OMath.Vec3, eventName: string, data: ArrayBuffer, dataView?: Int16Array | Object ) {
+    public sendEventToPlayersInRange ( position: OMath.Vec3, eventName: string, data: ArrayBuffer | null, dataView?: Int16Array | Object ) {
 
         let players = this.arena.playerManager.getPlayers();
 
@@ -39,7 +39,7 @@ class ArenaNetwork {
 
     };
 
-    public sendEventToAllPlayers ( eventName: string, data: ArrayBuffer, dataView?: Int16Array | Object ) {
+    public sendEventToAllPlayers ( eventName: string, data: ArrayBuffer | null, dataView?: Int16Array | Object ) {
 
         let players = this.arena.playerManager.getPlayers();
 

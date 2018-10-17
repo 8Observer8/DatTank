@@ -16,7 +16,7 @@ class TankNetwork {
 
     //
 
-    private filter ( data ) : boolean {
+    private filter ( data: any ) : boolean {
 
         var tankId = ( data.id ) ? data.id : data[0];
         if ( this.tank.id !== tankId ) return true;
@@ -118,7 +118,7 @@ class TankNetwork {
 
     };
 
-    public move ( moveX, moveZ ) {
+    public move ( moveX: number, moveZ: number ) {
 
         let buffer, bufferView;
 
@@ -151,7 +151,7 @@ class TankNetwork {
 
     //
 
-    private setMove ( data ) {
+    private setMove ( data: any ) {
 
         if ( this.filter( data ) ) return;
 
@@ -159,7 +159,7 @@ class TankNetwork {
 
     };
 
-    private setFriendlyFire ( data ) {
+    private setFriendlyFire ( data: any ) {
 
         if ( this.filter( data ) ) return;
 
@@ -167,7 +167,7 @@ class TankNetwork {
 
     };
 
-    private setShoot ( data ) {
+    private setShoot ( data: any ) {
 
         if ( this.filter( data ) ) return;
 
@@ -182,7 +182,7 @@ class TankNetwork {
 
     };
 
-    private setHealth ( data ) {
+    private setHealth ( data: any ) {
 
         if ( this.filter( data ) ) return;
 
@@ -190,7 +190,7 @@ class TankNetwork {
 
     };
 
-    private setAmmo ( data ) {
+    private setAmmo ( data: any ) {
 
         if ( this.filter( data ) ) return;
 
@@ -210,7 +210,7 @@ class TankNetwork {
 
     };
 
-    public init ( tank ) {
+    public init ( tank: TankObject ) {
 
         this.tank = tank;
 

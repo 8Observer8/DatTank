@@ -5,10 +5,6 @@
 
 import * as THREE from 'three';
 
-import * as OMath from "./../../OMath/Core.OMath";
-import { GfxCore } from "./../Core.Gfx";
-import { TankGfx } from '../objects/Tank.Gfx';
-
 //
 
 class FriendlyFireLabelGfx {
@@ -66,6 +62,12 @@ class FriendlyFireLabelGfx {
         canvas.height = 32;
 
         ctx = canvas.getContext('2d');
+        if ( ! ctx ) {
+
+            console.error('Context undefined.');
+            return;
+
+        }
 
         // draw lebel text
 
@@ -76,7 +78,7 @@ class FriendlyFireLabelGfx {
         ctx.shadowOffsetX = 0;
         ctx.shadowOffsetY = 0;
         ctx.shadowBlur = 3;
-        ctx.fillText( 'Friendly fire!!!', 55, 20 );    
+        ctx.fillText( 'Friendly fire!!!', 55, 20 );
 
         // make sprite
 

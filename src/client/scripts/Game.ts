@@ -3,20 +3,20 @@
  * Game game core & init
 */
 
-import * as $ from "jquery";
-import * as MobileDetect from "mobile-detect";
+// import * as $ from "jquery";
+// import * as MobileDetect from "mobile-detect";
 
 import { Network } from "./network/Core.Network";
 import { Garage } from "./garage/Core.Garage";
 import { ResourceManager } from "./managers/Resource.Manager";
-import { ControlsManager } from "./managers/Control.Manager";
 import { SoundManager } from "./managers/Sound.Manager";
 import { GameService } from "./services/Game.Service";
 import { Arena } from "./core/Arena.Core";
 import { UI } from "./ui/Core.UI";
 import { Logger } from "./utils/Logger";
-import { GfxCore } from "./graphics/Core.Gfx";
 
+import { ControlsManager } from "./managers/Control.Manager";
+import { GfxCore } from "./graphics/Core.Gfx";
 import { TowerManager } from "./managers/Tower.Manager";
 import { DecorationManager } from "./managers/Decoration.Manager";
 
@@ -36,7 +36,7 @@ class GameCore {
     public pid: string;
     public sid: string;
 
-    private currentServer;
+    private currentServer: any;
 
     //
 
@@ -48,8 +48,8 @@ class GameCore {
 
         }
 
-        let mobileDetect = new MobileDetect( window.navigator.userAgent );
-        this.isMobile = mobileDetect.mobile() !== null || mobileDetect.phone() !== null || mobileDetect.tablet() !== null;
+        // let mobileDetect = new MobileDetect( window.navigator.userAgent );
+        this.isMobile = false; // mobileDetect.mobile() !== null || mobileDetect.phone() !== null || mobileDetect.tablet() !== null;
 
         //
 
@@ -86,7 +86,7 @@ class GameCore {
 
             if ( response.status === 'connected' ) {
 
-                FB.api( '/' + FB['getUserID']() + '/picture', 'GET', { "redirect": "false" }, function ( response ) {
+                FB.api( '/' + FB['getUserID']() + '/picture', 'GET', { "redirect": "false" }, function ( response: any ) {
 
                     $('.user .userpic').attr( 'src', response.data.url );
 
@@ -102,7 +102,7 @@ class GameCore {
 
     };
 
-    public preInitArena ( server ) {
+    public preInitArena ( server: any ) {
 
         Arena.preInit( server.ip, server.id );
         this.currentServer = server;
@@ -133,7 +133,7 @@ class GameCore {
 
         //
 
-        ResourceManager.load( ( progress ) => {
+        ResourceManager.load( ( progress: number ) => {
 
             UI.Landing.setLoaderProgress( progress );
 

@@ -13,7 +13,7 @@ class AmmoBox extends BoxObject {
 
     //
 
-    constructor ( params ) {
+    constructor ( params: any ) {
 
         super( params );
         this.type = 'AmmoBox';

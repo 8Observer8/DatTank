@@ -65,9 +65,15 @@ class TowerObject {
 
         //
 
-        this.team = TeamManager.getById( newOwnerTeamId );
-        this.gfx.changeTeam( this.team.color, killerId === undefined );
-        this.gfx.label.update( this.health, this.armour, this.team.color );
+        let team = TeamManager.getById( newOwnerTeamId );
+
+        if ( team ) {
+
+            this.team = team;
+            this.gfx.changeTeam( this.team.color, killerId === undefined );
+            this.gfx.label.update( this.health, this.armour, this.team.color );
+
+        }
 
     };
 
@@ -106,24 +112,24 @@ class TowerObject {
         let deltaRot = OMath.formatAngle( this.targetTopRotation ) - OMath.formatAngle( this.topRotation );
 
         if ( deltaRot > Math.PI ) {
-    
+
             if ( deltaRot > 0 ) {
-    
+
                 deltaRot = - 2 * Math.PI + deltaRot;
-    
+
             } else {
-    
+
                 deltaRot = 2 * Math.PI + deltaRot;
-    
+
             }
-    
+
         }
-    
+
         if ( Math.abs( deltaRot ) > 0.01 ) {
-    
+
             this.topRotation = OMath.formatAngle( this.topRotation + OMath.sign( deltaRot ) / 30 * ( delta / 50 ) );
             this.gfx.setTopRotation( this.topRotation );
-    
+
         }
 
         this.gfx.update( time, delta );
@@ -152,10 +158,12 @@ class TowerObject {
 
     //
 
-    constructor ( params ) {
+    constructor ( params: any ) {
 
         this.id = params.id;
-        this.team = TeamManager.getById( params.team );
+        let team = TeamManager.getById( params.team );
+        if ( ! team ) return;
+
         this.health = params.health;
         this.rotation = 0; // params.rotation;
         this.topRotation = params.rotation;
@@ -176,7 +184,7 @@ import { T1Tower } from "./../../objects/towers/T1.Tower";
 
 let TowerList = {
     T1:     T1Tower,
-    getById: function ( towerId ) {
+    getById: ( towerId: number ) => {
 
         for ( let item in TowerList ) {
 

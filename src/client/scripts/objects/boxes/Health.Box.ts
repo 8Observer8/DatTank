@@ -13,7 +13,7 @@ class HealthBox extends BoxObject {
 
     //
 
-    constructor ( params ) {
+    constructor ( params: any ) {
 
         super( params );
         this.type = 'HealthBox';

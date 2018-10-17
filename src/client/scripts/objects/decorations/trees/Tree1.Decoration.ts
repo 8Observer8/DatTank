@@ -17,7 +17,7 @@ class Tree1Decoration extends DecorationObject {
 
     //
 
-    constructor ( params ) {
+    constructor ( params: any ) {
 
         super( params );
         this.title = Tree1Decoration.title;

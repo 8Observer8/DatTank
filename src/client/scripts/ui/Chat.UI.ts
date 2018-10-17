@@ -84,7 +84,7 @@ class UIChatModule {
 
     };
 
-    private keypress ( event ) {
+    private keypress ( event: KeyboardEvent ) {
 
         if ( ! UI.InGame.opened ) return;
 
@@ -112,7 +112,7 @@ class UIChatModule {
 
     };
 
-    public newMessage ( params ) {
+    public newMessage ( params: any ) {
 
         let messages = $('.chat .message-block .message');
 
@@ -132,7 +132,7 @@ class UIChatModule {
 
         //
 
-        let teamColor = OMath.intToHex( OMath.darkerColor( TeamManager.getById( params.teamId ).color, 0.85 ) );
+        let teamColor = OMath.intToHex( OMath.darkerColor( TeamManager.getById( params.teamId )!.color, 0.85 ) );
         let messageDom = $('<div class="message"><span class="author" style="color: ' + teamColor + '"></span><span class="message-text"></span></div>');
         messageDom.find('.author').text( ( params.onlyTeam ? '[TEAM] ' : '[ALL] ' ) + params.login + ':' );
         messageDom.find('.message-text').text( params.message );

@@ -34,7 +34,7 @@ class BoxObject {
         BoxManager.remove( [ this.id ] );
 
         if ( Arena.meId === playerId ) {
-        
+
             Logger.newEvent( 'BoxPicked', 'game' );
 
         }
@@ -55,7 +55,7 @@ class BoxObject {
 
     //
 
-    constructor ( params ) {
+    constructor ( params: any ) {
 
         this.id = params.id;
         this.position.copy( params.position );
@@ -72,7 +72,7 @@ import { AmmoBox } from "./../../objects/boxes/Ammo.Box";
 let BoxesList = {
     HealthBox:  HealthBox,
     AmmoBox:    AmmoBox,
-    getById: function ( boxId ) {
+    getById: ( boxId: number ) => {
 
         for ( let item in BoxesList ) {
 

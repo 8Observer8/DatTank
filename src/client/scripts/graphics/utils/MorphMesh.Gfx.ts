@@ -9,10 +9,11 @@ import * as THREE from 'three';
 
 class MorphBlendMesh extends THREE.Mesh {
 
-    private animationsMap;
-    private animationsList;
-    public geometry;
-    public firstAnimation;
+    private animationsMap: any;
+    private animationsList: any[];
+
+	public geometry: THREE.BufferGeometry;
+    public firstAnimation: string;
 
     //
 
@@ -68,6 +69,8 @@ class MorphBlendMesh extends THREE.Mesh {
 			var keyframe = animation.start + THREE.Math.clamp( Math.floor( animation.time / frameTime ), 0, animation.length - 1 );
 			var weight = animation.weight;
 
+			if ( ! this.morphTargetInfluences ) return;
+
 			if ( keyframe !== animation.currentFrame ) {
 
 				this.morphTargetInfluences[ animation.lastFrame ] = 0;
@@ -98,13 +101,14 @@ class MorphBlendMesh extends THREE.Mesh {
 		}
 
 	};
-	
+
 	public setFrame ( name: string, frame: number ) {
 
 		let animation = this.animationsMap[ name ];
+		if ( ! this.morphTargetInfluences ) return;
 
 		for ( let i = 0, il = animation.length; i < il; i ++ ) {
-		
+
 			this.morphTargetInfluences[ i ] = 0;
 
 		}
@@ -255,11 +259,11 @@ class MorphBlendMesh extends THREE.Mesh {
 		let pattern = /([a-z]+)_?(\d+)/i;
 		let firstAnimation, frameRanges = {};
 		let geometry = this.geometry;
-		geometry.morphTargets = geometry.morphTargets || [];
+		geometry['morphTargets'] = geometry['morphTargets'] || [];
 
-		for ( let i = 0, il = geometry.morphTargets.length; i < il; i ++ ) {
+		for ( let i = 0, il = geometry['morphTargets'].length; i < il; i ++ ) {
 
-			let morph = geometry.morphTargets[ i ];
+			let morph = geometry['morphTargets'][ i ];
 			let chunks = morph.name.match( pattern );
 
 			if ( chunks && chunks.length > 1 ) {
@@ -321,9 +325,9 @@ class MorphBlendMesh extends THREE.Mesh {
 
     //
 
-    constructor ( geometry, material ) {
+    constructor ( geometry: THREE.BufferGeometry, materials: THREE.MeshBasicMaterial[] ) {
 
-	    super( geometry, material );
+	    super( geometry, materials );
 
         this.animationsMap = {};
 		this.animationsList = [];

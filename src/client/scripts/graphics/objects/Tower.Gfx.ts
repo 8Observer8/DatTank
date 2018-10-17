@@ -10,9 +10,9 @@ import * as OMath from "./../../OMath/Core.OMath";
 import { GfxCore } from "./../Core.Gfx";
 import { TowerLabelGfx } from "./../effects/TowerLabel.Gfx";
 import { ResourceManager } from "./../../managers/Resource.Manager";
-import { TowerObject } from './../../objects/core/Tower.Object';
 import { TowerChangeTeamGfx } from './../effects/TowerChangeTeam.gfx';
 import { BlastSmokeGfx } from './../effects/BlastSmoke.gfx';
+import { TowerObject } from './../../objects/core/Tower.Object';
 
 //
 
@@ -21,13 +21,10 @@ class TowerGfx {
     private object: THREE.Object3D = new THREE.Object3D();
     private topMesh: MorphBlendMesh;
     private baseMesh: THREE.Mesh;
-    private tower: TowerObject;
 
     public label: TowerLabelGfx = new TowerLabelGfx();
     public changeTeamEffect: TowerChangeTeamGfx = new TowerChangeTeamGfx();
     public blastSmoke: BlastSmokeGfx = new BlastSmokeGfx();
-
-    private sounds = {};
 
     //
 
@@ -76,20 +73,20 @@ class TowerGfx {
 
     };
 
-    public init ( tower ) {
-
-        this.tower = tower;
+    public init ( tower: TowerObject ) {
 
         let materials = [];
-        let towerBaseModel = ResourceManager.getModel( 'towers/' + tower.title + '-bottom' );
-        let towerTopModel = ResourceManager.getModel( 'towers/' + tower.title + '-top' );
+        let towerBaseModel = ResourceManager.getModel( 'towers/' + tower.title + '-bottom' )!;
+        let towerTopModel = ResourceManager.getModel( 'towers/' + tower.title + '-top' )!;
 
         // tower base part
 
-        for ( let i = 0, il = towerBaseModel.material.length; i < il; i ++ ) {
+        let baseMaterials = towerBaseModel.material as THREE.MeshBasicMaterial[];
 
-            let material = towerBaseModel.material[ i ].clone();
-            material.map = ResourceManager.getTexture('tower-texture.png');
+        for ( let i = 0, il = baseMaterials.length; i < il; i ++ ) {
+
+            let material = baseMaterials[ i ].clone();
+            material.map = ResourceManager.getTexture('tower-texture.png')!;
             materials.push( material );
 
         }
@@ -102,18 +99,19 @@ class TowerGfx {
         // tower top part
 
         materials = [];
+        let topMaterials = towerTopModel.material as THREE.MeshBasicMaterial[];
 
-        for ( let i = 0, il = towerTopModel.material.length; i < il; i ++ ) {
+        for ( let i = 0, il = topMaterials.length; i < il; i ++ ) {
 
-            let material = towerTopModel.material[ i ].clone();
+            let material = topMaterials[ i ].clone();
             material.morphTargets = true;
             materials.push( material );
 
         }
 
-        materials[0].map = ResourceManager.getTexture('tower-texture.png');
+        materials[0].map = ResourceManager.getTexture('tower-texture.png')!;
 
-        this.topMesh = new MorphBlendMesh( towerTopModel.geometry, materials );
+        this.topMesh = new MorphBlendMesh( towerTopModel.geometry as THREE.BufferGeometry, materials );
         this.topMesh.rotation.y = tower.rotation;
         this.topMesh.scale.set( 10, 10, 10 );
         this.object.add( this.topMesh );

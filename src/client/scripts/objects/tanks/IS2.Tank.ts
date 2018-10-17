@@ -21,7 +21,7 @@ class IS2Tank extends TankObject {
 
     //
 
-    constructor ( params ) {
+    constructor ( params: any ) {
 
         super( params );
 

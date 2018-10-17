@@ -12,10 +12,10 @@ import { TankLabelGfx } from "./../effects/TankLabel.Gfx";
 import { TankObject } from "./../../objects/core/Tank.Object";
 import { ResourceManager } from "./../../managers/Resource.Manager";
 import { TankTracesGfx } from './../effects/TankTraces.Gfx';
-import { LargeExplosionManager } from '../../managers/LargeExplosion.Manager';
-import { FriendlyFireLabelGfx } from '../effects/FriendlyFireLabel.Gfx';
-import { DamageSmokeGfx } from '../effects/DamageSmoke.Gfx';
-import { BlastSmokeGfx } from '../effects/BlastSmoke.Gfx';
+import { LargeExplosionManager } from './../../managers/LargeExplosion.Manager';
+import { FriendlyFireLabelGfx } from './../effects/FriendlyFireLabel.Gfx';
+import { DamageSmokeGfx } from './../effects/DamageSmoke.Gfx';
+import { BlastSmokeGfx } from './../effects/BlastSmoke.Gfx';
 
 //
 
@@ -38,20 +38,20 @@ class TankGfx {
 
         this.mesh.rotation.x += delta;
         this.mesh.rotation.x *= 0.9;
-        
+
     };
 
     private initSounds () {
 
         let movingSound = new THREE.PositionalAudio( GfxCore.audioListener );
-        movingSound.setBuffer( ResourceManager.getSound('tank_moving.wav') );
+        movingSound.setBuffer( ResourceManager.getSound('tank_moving.wav') as THREE.AudioBuffer );
         movingSound.setRefDistance( 11 );
         movingSound.autoplay = false;
         this.object.add( movingSound );
         this.sounds['moving'] = movingSound;
 
         let explosionSound = new THREE.PositionalAudio( GfxCore.audioListener );
-        explosionSound.setBuffer( ResourceManager.getSound('tank_explosion.wav') );
+        explosionSound.setBuffer( ResourceManager.getSound('tank_explosion.wav') as THREE.AudioBuffer );
         explosionSound.setRefDistance( 15 );
         explosionSound.autoplay = false;
         this.object.add( explosionSound );
@@ -177,27 +177,28 @@ class TankGfx {
 
     };
 
-    public init ( tank ) {
+    public init ( tank: TankObject ) {
 
         this.tank = tank;
 
         let materials = [];
-        let tankModel = ResourceManager.getModel( 'tanks/IS2' );
+        let tankModel = ResourceManager.getModel( 'tanks/IS2' )!;
 
         // add tank mesh
 
-        for ( let i = 0, il = tankModel.material.length; i < il; i ++ ) {
+        let inMaterials = tankModel.material as THREE.MeshBasicMaterial[];
 
-            let material = new THREE.MeshLambertMaterial({ color: 0x777777 });
-            material.map = ResourceManager.getTexture( 'IS2.png' ).clone();
+        for ( let i = 0, il = inMaterials.length; i < il; i ++ ) {
+
+            let material = new THREE.MeshBasicMaterial({ color: 0x777777 });
+            material.map = ResourceManager.getTexture( 'IS2.png' )!.clone();
             material.map.needsUpdate = true;
             material.map.wrapS = material.map.wrapT = THREE.RepeatWrapping;
-            // material.morphTargets = true;
             materials.push( material );
 
         }
 
-        this.mesh = new MorphBlendMesh( tankModel.geometry, materials );
+        this.mesh = new MorphBlendMesh( tankModel.geometry as THREE.BufferGeometry, materials );
         this.mesh.scale.set( 10, 10, 10 );
         this.object.add( this.mesh );
         this.object.rotation.y = tank.rotation;

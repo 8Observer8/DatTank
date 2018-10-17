@@ -134,6 +134,7 @@ class NetworkCore {
         }
 
         socket.send( data, { binary: true } );
+        return true;
 
     };
 

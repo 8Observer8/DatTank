@@ -3,9 +3,7 @@
  * DatTank Arena decoration manager
 */
 
-import { DecorationObject } from "./../objects/core/Decoration.Object";
-import { DecorationList as Decorations } from "./../objects/core/Decoration.Object";
-import { GfxCore } from "./../graphics/Core.Gfx";
+import { DecorationObject, DecorationList as Decorations } from "./../objects/core/Decoration.Object";
 
 //
 
@@ -13,7 +11,7 @@ class DecorationManagerCore {
 
     private static instance: DecorationManagerCore;
 
-    private decorations: Array<any> = [];
+    private decorations: DecorationObject[] = [];
 
     //
 
@@ -27,7 +25,7 @@ class DecorationManagerCore {
 
     };
 
-    public init ( decorations ) {
+    public init ( decorations: any[] ) {
 
         for ( let i = 0, il = decorations.length; i < il; i ++ ) {
 

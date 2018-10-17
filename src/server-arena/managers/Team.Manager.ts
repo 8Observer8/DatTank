@@ -3,14 +3,12 @@
  * DatTank Team manager sys
 */
 
-import { ArenaCore } from "./../core/Arena.Core";
 import { TeamCore } from "./../core/Team.Core";
 
 //
 
 class TeamManager {
 
-    private arena: ArenaCore;
     private teams: Array<TeamCore> = [];
 
     //
@@ -88,14 +86,6 @@ class TeamManager {
         }
 
         return teamsJSON;
-
-    };
-
-    //
-
-    constructor ( arena: ArenaCore ) {
-
-        this.arena = arena;
 
     };
 

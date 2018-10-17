@@ -16,7 +16,7 @@ class LargeExplosionManagerCore {
 
     //
 
-    private getNewExplosion () : LargeExplosionGfx {
+    private getNewExplosion () : LargeExplosionGfx | undefined {
 
         for ( let i = 0, il = this.pool.length; i < il; i ++ ) {
 
@@ -28,7 +28,7 @@ class LargeExplosionManagerCore {
 
         }
 
-        return null;
+        return undefined;
 
     };
 

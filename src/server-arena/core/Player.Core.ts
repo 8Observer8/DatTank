@@ -128,6 +128,8 @@ class PlayerCore {
 
         }
 
+        return true;
+
     };
 
     public die ( killer: TankObject | TowerObject ) {
@@ -252,7 +254,7 @@ class PlayerCore {
 
                 if ( players[ i ].login === login ) {
 
-                    login = null;
+                    login = '';
                     loginAttempt ++;
                     break;
 

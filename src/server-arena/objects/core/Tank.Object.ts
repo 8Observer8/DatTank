@@ -25,14 +25,14 @@ class TankObject {
     public static ammoCapacity: number;
 
     private static numIds = 1;
-    private static statsList = [ 'speed', 'rpm', 'armour', 'gun', 'ammoCapacity' ];
-    private static levelStatsChange = {
-        speed:          [  5,  3,  2,  2,  2,  3,  1,  3,  3,  2,  5,  3,  3,  2,  1,  1,  1,  1,  1,  1,  1,  1,  1 ],
-        rpm:            [ 30, 20, 20, 15, 10, 15, 20, 20, 30, 40, 30, 20, 10, 10, 20, 30, 20, 10, 20, 20, 20, 10, 15 ],
-        armour:         [ 40, 30, 20, 20, 30, 40, 50, 20, 30, 50, 30, 20, 10, 10, 20, 20, 30, 20, 10, 15, 20, 10, 10 ],
-        gun:            [ 20, 15, 15, 20, 15, 10,  5,  5, 10, 15, 20, 30, 35, 40, 20, 10, 15, 15, 20, 10, 10, 10, 30 ],
-        ammoCapacity:   [ 30, 20, 20, 40, 30, 20,  5,  5, 10, 20, 15, 20, 15, 30, 20, 10, 15, 15, 10, 10, 10, 20, 30 ]
-    };
+    // private static statsList = [ 'speed', 'rpm', 'armour', 'gun', 'ammoCapacity' ];
+    // private static levelStatsChange = {
+    //     speed:          [  5,  3,  2,  2,  2,  3,  1,  3,  3,  2,  5,  3,  3,  2,  1,  1,  1,  1,  1,  1,  1,  1,  1 ],
+    //     rpm:            [ 30, 20, 20, 15, 10, 15, 20, 20, 30, 40, 30, 20, 10, 10, 20, 30, 20, 10, 20, 20, 20, 10, 15 ],
+    //     armour:         [ 40, 30, 20, 20, 30, 40, 50, 20, 30, 50, 30, 20, 10, 10, 20, 20, 30, 20, 10, 15, 20, 10, 10 ],
+    //     gun:            [ 20, 15, 15, 20, 15, 10,  5,  5, 10, 15, 20, 30, 35, 40, 20, 10, 15, 15, 20, 10, 10, 10, 30 ],
+    //     ammoCapacity:   [ 30, 20, 20, 40, 30, 20,  5,  5, 10, 20, 15, 20, 15, 30, 20, 10, 15, 15, 10, 10, 10, 20, 30 ]
+    // };
 
     //
 
@@ -83,9 +83,9 @@ class TankObject {
 
     public updateStats ( statId: number ) {
 
-        let statName = TankObject.statsList[ statId ];
-        let levelsStats = TankObject.levelStatsChange;
-        let level = this.player.level;
+        // let statName = TankObject.statsList[ statId ];
+        // let levelsStats = TankObject.levelStatsChange;
+        // let level = this.player.level;
         if ( this.player.bonusLevels <= 0 ) return;
 
         //
@@ -240,7 +240,7 @@ class TankObject {
 
         if ( this.health === 0 ) {
 
-            this.die( killer );
+            this.die( killer! );
 
             if ( killer instanceof PlayerCore ) {
 

@@ -5,7 +5,6 @@
 
 import * as THREE from 'three';
 
-import * as OMath from "./../../OMath/Core.OMath";
 import { GfxCore } from "./../Core.Gfx";
 import { DecorationObject } from "./../../objects/core/Decoration.Object";
 import { ResourceManager } from "./../../managers/Resource.Manager";
@@ -67,18 +66,20 @@ class DecorationGfx {
 
     public init ( decoration: DecorationObject ) {
 
-        let decorationModel = ResourceManager.getModel( 'decorations/' + decoration.title );
+        let decorationModel = ResourceManager.getModel( 'decorations/' + decoration.title )!;
 
         let material = [];
-        for ( let i = 0, il = decorationModel.material.length; i < il; i ++ ) {
+        let materials = decorationModel.material as THREE.MeshBasicMaterial[];
 
-            material.push( decorationModel.material[ i ].clone() );
+        for ( let i = 0, il = materials.length; i < il; i ++ ) {
+
+            material.push( materials[ i ].clone() );
 
         }
 
         //
 
-        material[0].map = ResourceManager.getTexture('Decorations.jpg');
+        material[0].map = ResourceManager.getTexture('Decorations.jpg')!;
         material[0].map.needsUpdate = true;
 
         //

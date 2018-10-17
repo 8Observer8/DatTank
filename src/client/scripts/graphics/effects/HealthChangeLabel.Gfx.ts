@@ -41,7 +41,7 @@ class HealthChangeLabelGfx {
             this.deactivate();
 
         }
-        
+
         this.object.updateMatrixWorld( true );
 
     };
@@ -58,12 +58,18 @@ class HealthChangeLabelGfx {
         let canvas, ctx;
         let text = ( healthChange >= 0 ) ? '+' + Math.round( healthChange ) : Math.round( healthChange );
         let color = ( healthChange >= 0 ) ? '#00ff00' : '#ff0000';
-    
+
         canvas = document.createElement( 'canvas' );
         canvas.width = 128;
         canvas.height = 64;
-    
+
         ctx = canvas.getContext('2d');
+        if ( ! ctx ) {
+
+            console.error('Context undefined.');
+            return;
+
+        }
 
         ctx.shadowColor = '#000';
         ctx.shadowOffsetX = 0;
@@ -73,7 +79,7 @@ class HealthChangeLabelGfx {
         ctx.fillStyle = color;
         ctx.font = '35px Roboto, Tahoma';
         ctx.textAlign = 'left';
-        ctx.fillText( text, 30, 35 );
+        ctx.fillText( text.toString(), 30, 35 );
 
         this.sprite.material.map = new THREE.Texture( canvas );
         this.sprite.material.map.needsUpdate = true;
@@ -94,7 +100,7 @@ class HealthChangeLabelGfx {
         this.sprite.scale.set( 24, 12, 1 );
         this.object.add( this.sprite );
         this.object.visible = false;
-        
+
         //
 
         if ( ! GfxCore.coreObjects['health-change-label'] ) {

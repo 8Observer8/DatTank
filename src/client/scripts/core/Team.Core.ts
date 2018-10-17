@@ -3,7 +3,6 @@
  * DatTank Team core file
 */
 
-import { PlayerCore } from "./Player.Core";
 import * as OMath from "./../OMath/Core.OMath";
 
 //
@@ -35,7 +34,7 @@ class TeamCore {
 
     //
 
-    constructor ( params ) {
+    constructor ( params: any ) {
 
         this.id = params.id;
         this.color = TeamCore.colors[ this.id ];

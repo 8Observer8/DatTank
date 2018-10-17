@@ -45,7 +45,7 @@ class TeamManagerCore {
 
     //
 
-    public init ( params ) {
+    public init ( params: any ) {
 
         for ( var i = 0, il = params.length; i < il; i ++ ) {
 

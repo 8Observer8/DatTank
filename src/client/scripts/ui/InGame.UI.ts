@@ -35,11 +35,11 @@ class UIInGameModule {
 
     };
 
-    public updateTankStat ( event ) {
+    public updateTankStat ( event: MouseEvent | string ) {
 
-        if ( Arena.me.tank.health <= 0 ) return;
+        if ( ! Arena.me.tank || Arena.me.tank.health <= 0 ) return;
 
-        let statName = ( typeof event === 'string' ) ? event : event.target.parentNode.className.replace( 'bonus ', '' );
+        let statName = ( typeof event === 'string' ) ? event : event.currentTarget!['parentNode'].className.replace( 'bonus ', '' );
         Arena.me.updateStats( statName );
         Arena.me.bonusLevels --;
         SoundManager.playSound('MenuClick');
@@ -68,9 +68,9 @@ class UIInGameModule {
 
     };
 
-    public showTankStatsUpdate ( bonusLevels ) {
+    public showTankStatsUpdate ( bonusLevels: number ) {
 
-        if ( Arena.me.tank.health <= 0 ) return;
+        if ( Arena.me.tank && Arena.me.tank.health <= 0 ) return;
 
         $('.stats-update-block .bonus .increase').off();
         $( document ).unbind( 'keypress' );
@@ -97,7 +97,7 @@ class UIInGameModule {
 
     };
 
-    private statsUpdateByKey ( event ) {
+    private statsUpdateByKey ( event: KeyboardEvent ) {
 
         switch ( event.keyCode ) {
 
@@ -149,7 +149,7 @@ class UIInGameModule {
 
     };
 
-    public showContinueBox ( username, color ) {
+    public showContinueBox ( username: string, color: string ) {
 
         this.hideTankStatsUpdate();
         this.hideLevelIndicator();
@@ -244,7 +244,7 @@ class UIInGameModule {
 
     };
 
-    public updateLeaderboard ( players ) {
+    public updateLeaderboard ( players: any[] ) {
 
         let me = Arena.me;
         let names = $('#top-killers .player-name');
@@ -322,7 +322,7 @@ class UIInGameModule {
 
     };
 
-    public updateTeamScore ( teams ) {
+    public updateTeamScore ( teams: any[] ) {
 
         let list = $( '#team-params .team-number' );
 
@@ -347,14 +347,14 @@ class UIInGameModule {
         let serieNames = { 2: 'DOUBLE-KILL', 3: 'TRIPPLE-KILL', 10: 'MONSTER-KILL' };
         let serieName = serieNames[ serieLength ];
 
-        if ( playerId !== Arena.me.id ) {
+        if ( playerId !== Arena.me.id && team ) {
 
             $('#kill-events').append( '<p><span style="font-weight: bold; color:' + OMath.intToHex( team.color ) + '">' + playerLogin +'</span> made a <b>' + serieName + '</b></span>!</p>');
 
             if ( $('#kill-events').children().length > 5 ) {
-    
+
                 $('#kill-events p').first().remove();
-    
+
             }
 
         } else {

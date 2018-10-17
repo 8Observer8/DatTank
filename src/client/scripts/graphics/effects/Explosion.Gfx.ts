@@ -92,7 +92,7 @@ class ExplosionGfx {
 
     public init () {
 
-        let map1 = ResourceManager.getTexture( 'explosion2.png' ).clone();
+        let map1 = ResourceManager.getTexture( 'explosion2.png' )!.clone();
         map1.wrapS = THREE.RepeatWrapping;
         map1.wrapT = THREE.RepeatWrapping;
         map1.repeat.set( 0.25, 0.25 );
@@ -100,7 +100,7 @@ class ExplosionGfx {
         map1.needsUpdate = true;
         this.maps.push( map1 );
 
-        let map2 = ResourceManager.getTexture( 'explosion3.png' ).clone();
+        let map2 = ResourceManager.getTexture( 'explosion3.png' )!.clone();
         map2.wrapS = THREE.RepeatWrapping;
         map2.wrapT = THREE.RepeatWrapping;
         map2.repeat.set( 0.25, 0.25 );

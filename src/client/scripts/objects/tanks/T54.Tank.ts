@@ -21,7 +21,7 @@ class T54Tank extends TankObject {
 
     //
 
-    constructor ( params ) {
+    constructor ( params: any ) {
 
         super( params );
 

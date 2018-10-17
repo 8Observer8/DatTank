@@ -5,9 +5,6 @@
 
 import * as THREE from 'three';
 
-import * as OMath from "./../../OMath/Core.OMath";
-import { GfxCore } from "./../Core.Gfx";
-import { TankGfx } from '../objects/Tank.Gfx';
 import { ResourceManager } from '../../managers/Resource.Manager';
 
 //
@@ -29,7 +26,7 @@ class DamageSmokeGfx {
     public update ( time: number, delta: number ) {
 
         if ( ! this.active && this.inactiveSprites === this.sprites.length ) {
-            
+
             this.object.visible = false;
             return;
 
@@ -54,7 +51,7 @@ class DamageSmokeGfx {
             sprite.position.y = 25 + 30 * progress;
 
             if ( progress < 0.3 ) {
-            
+
                 sprite.material.opacity = progress / 0.6;
 
             } else {

@@ -20,15 +20,13 @@ class GameCore {
     private static instance: GameCore;
 
     public id: string;
-
-    private updateInterval: any;
     private updateIntervalTime: number = 10000;
 
     //
 
     public updateTopList ( login: string, score: number, kills: number ) {
 
-        let req = http.get({
+        http.get({
             hostname:   Environment.master.host,
             port:       Environment.master.port,
             path:       '/api/update-top-list?login=' + encodeURI( login ) + '&kills=' + kills + '&score=' + score
@@ -76,7 +74,7 @@ class GameCore {
 
         //
 
-        let req = http.get({
+        http.get({
             hostname:   Environment.master.host,
             port:       Environment.master.port,
             path:       '/api/status-update?aid=' + this.id + '&players=' + players + '&ip=' + ip.address()
@@ -105,7 +103,7 @@ class GameCore {
 
         Network.init();
 
-        this.updateInterval = setInterval( this.reportToMaster.bind( this ), this.updateIntervalTime );
+        setInterval( this.reportToMaster.bind( this ), this.updateIntervalTime );
         this.reportToMaster();
         this.loadGarageConfig();
 
@@ -113,7 +111,7 @@ class GameCore {
 
     private loadGarageConfig () {
 
-        let req = http.get({
+        http.get({
             hostname:   Environment.master.host,
             port:       Environment.master.port,
             path:       '/api/garage/getObjects'

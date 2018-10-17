@@ -15,16 +15,18 @@ class TowerManagerCore {
 
     //
 
-    public add ( params ) {
+    public add ( params: any ) {
 
-        let towerName = Towers.getById( params.tid || 0 );
+        let towerName = Towers.getById( params.tid || 0 ) || '';
+        if ( ! Towers[ towerName ] ) return;
+
         let tower = new Towers[ towerName ]( params );
         this.towers.push( tower );
         tower.init();
 
     };
 
-    public remove ( towerIds: Array<number> ) {
+    public remove ( towerIds: number[] ) {
 
         var newTowerList = [];
 

@@ -17,9 +17,9 @@ class NetworkCore {
 
     private static instance: NetworkCore;
 
-    private transport;
+    private transport: WebSocket | null;
     private messageListeners: object = {};
-    private initCallback;
+    private initCallback: () => void;
 
     private host: string;
     private port: number;
@@ -31,7 +31,7 @@ class NetworkCore {
 
     //
 
-    public init ( server, callback ) {
+    public init ( server: any, callback: () => void ) {
 
         if ( this.transport ) {
 
@@ -112,7 +112,7 @@ class NetworkCore {
         this.transport.addEventListener( 'error', this.onError.bind( this ) );
         this.transport.addEventListener( 'message', this.onMessage.bind( this ) );
 
-        this.addMessageListener( 'PONG', this.gotPong );
+        this.addMessageListener( 'PONG', this.gotPong.bind( this ) );
         setInterval( this.sendPing.bind( this ), 5000 );
 
         //
@@ -131,7 +131,7 @@ class NetworkCore {
 
     };
 
-    private onMessage ( event ) {
+    private onMessage ( event: any ) {
 
         let eventId = new Int16Array( event.data, 0, 1 )[ 0 ];
         let content = new Int16Array( event.data, 2 );
@@ -142,7 +142,7 @@ class NetworkCore {
 
     private onDisconnected () {
 
-        this.transport = false;
+        this.transport = null;
         UI.InGame.showDisconectMessage();
 
         //
@@ -151,7 +151,7 @@ class NetworkCore {
 
     };
 
-    private onError ( err ) {
+    private onError ( err: any ) {
 
         // todo: handle error
 
@@ -161,7 +161,7 @@ class NetworkCore {
 
     };
 
-    public send ( eventName: string, data: ArrayBuffer | boolean | Int16Array, view?: Int16Array | object | number | string ) {
+    public send ( eventName: string, data: ArrayBuffer | boolean | Int16Array, view?: Int16Array | object | number | string ) : boolean {
 
         if ( ! this.transport ) {
 
@@ -195,24 +195,29 @@ class NetworkCore {
             newData[0] = this.events.out[ eventName ].id;
             data = newData;
 
-        } else {
+        } else if ( view ) {
 
             view[0] = this.events.out[ eventName ].id;
 
+        } else {
+
+            return false;
+
         }
 
-        this.transport.send( data, { binary: true, mask: true } );
+        this.transport.send( data as ArrayBuffer );
+        return true;
 
     };
 
-    public addMessageListener ( eventName: string, callback ) {
+    public addMessageListener ( eventName: string, callback: ( data: any ) => void ) {
 
         this.messageListeners[ eventName ] = this.messageListeners[ eventName ] || [];
         this.messageListeners[ eventName ].push( callback );
 
     };
 
-    public removeMessageListener ( eventName: string, callback ) {
+    public removeMessageListener ( eventName: string, callback: ( data: any ) => void ) {
 
         let newMassageListenersList = [];
 
@@ -227,7 +232,7 @@ class NetworkCore {
 
     };
 
-    private triggerMessageListener ( eventId: number, data ) {
+    private triggerMessageListener ( eventId: number, data: any ) {
 
         if ( ! this.events.in[ eventId ] ) {
 
@@ -299,7 +304,7 @@ class NetworkCore {
 
     };
 
-    private gotPong ( data ) {
+    private gotPong ( data: number[] ) {
 
         let ping = Math.round( ( ( Date.now() % 1000 ) - data[0] ) / 2 );
         ping = ( ping < 0 ) ? ping + 500 : ping;

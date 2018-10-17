@@ -5,7 +5,7 @@
 
 class GameService {
 
-    public getGarageConfig ( callback ) {
+    public getGarageConfig ( callback: ( objects: any[] ) => void ) {
 
         $.get('/api/garage/getObjects', function ( response ) {
 
@@ -16,18 +16,18 @@ class GameService {
 
     };
 
-    public getFreeArena ( callback ) {
+    public getFreeArena ( callback: ( data: any ) => void ) {
 
         $.get('/api/getFreeArena', function ( response ) {
 
             let serverData = response;
             return callback( serverData );
-    
+
         });
 
     };
 
-    public getTopPlayers ( callback ) {
+    public getTopPlayers ( callback: ( players: any[] ) => void ) {
 
         $.get('/api/getTopPlayers', function ( response ) {
 

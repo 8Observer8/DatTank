@@ -10,11 +10,11 @@ import * as JSZip from 'JSZip';
 
 class ResourceManagerCore {
 
-    private static instance: ResourceManagerCore;
+    public static instance: ResourceManagerCore;
 
-    private models = [];
-    private textures = [];
-    private sounds = [];
+    private models: any[] = [];
+    private textures: THREE.Texture[] = [];
+    private sounds: THREE.AudioBuffer[] = [];
 
     private loadedModels: number = 0;
     private loadedTextures: number = 0;
@@ -23,13 +23,13 @@ class ResourceManagerCore {
 
     private modelLoader: THREE.JSONLoader = new THREE.JSONLoader();
     private textureLoader: THREE.TextureLoader = new THREE.TextureLoader();
-    private audioLoader: THREE.AnyLoader = new THREE.AudioLoader();
+    private audioLoader: THREE.AudioLoader = new THREE.AudioLoader();
 
     //
 
-    private modelsList = [];
+    private modelsList: string[] = [];
 
-    private texturesList = [
+    private texturesList: string[] = [
         'smoke.png',
         'Grass.png',
         'brick.jpg',
@@ -48,14 +48,14 @@ class ResourceManagerCore {
         'IS2.png'
     ];
 
-    private soundsList = [
+    private soundsList: string[] = [
         'tank_shooting.wav',
         'tank_moving.wav',
         'tank_explosion.wav',
         'box_pick.wav'
     ];
 
-    private packsList = [
+    private packsList: string[] = [
         'ingame'
     ];
 
@@ -105,7 +105,7 @@ class ResourceManagerCore {
 
     };
 
-    private loadPack ( packName: string, callback ) {
+    private loadPack ( packName: string, callback: () => void ) {
 
         let processedItems = 0;
         let request = new XMLHttpRequest();
@@ -113,6 +113,7 @@ class ResourceManagerCore {
 
         request.addEventListener( 'load', ( event ) => {
 
+            if ( ! event.target ) return;
             let data = event.target['response'];
             let decoder = new JSZip();
             decoder.loadAsync( data ).then( ( zip ) => {
@@ -130,7 +131,7 @@ class ResourceManagerCore {
                             let model = {
                                 name:       modelName + '.json',
                                 geometry:   new THREE.BufferGeometry(),
-                                material:   []
+                                material:   [] as any[]
                             };
 
                             for ( let i = 0, il = config['meta'].materials; i < il; i ++ ) {
@@ -199,7 +200,7 @@ class ResourceManagerCore {
                                 for ( let i = 0, il = config.animations.length; i < il; i ++ ) {
 
                                     for ( let j = 0, jl = config.animations[ i ].end - config.animations[ i ].start; j < jl; j ++ ) {
-                                    
+
                                         model.geometry['morphTargets'].push({ name: config.animations[ i ].name + j });
 
                                     }
@@ -252,27 +253,29 @@ class ResourceManagerCore {
 
     };
 
-    private loadModel ( modelName: string, callback ) {
+    private loadModel ( modelName: string, callback: () => void ) {
 
         this.modelLoader.load( 'resources/models/' + modelName, ( g, m ) => {
 
-            let data = {
-                name:       modelName,
-                geometry:   null,
-                material:   m
-            };
+            let geometry: THREE.BufferGeometry | THREE.Geometry;
 
             g.computeFlatVertexNormals();
 
             if ( modelName.indexOf('Tree') !== -1 || modelName.indexOf('Rock') !== -1 ) {
 
-                data.geometry = new THREE.BufferGeometry().fromGeometry( g );
+                geometry = new THREE.BufferGeometry().fromGeometry( g );
 
             } else {
 
-                data.geometry = g;
+                geometry = g;
 
             }
+
+            let data = {
+                name:       modelName,
+                geometry:   geometry,
+                material:   m
+            };
 
             this.models.push( data );
             this.loadedModels ++;
@@ -283,7 +286,7 @@ class ResourceManagerCore {
 
     };
 
-    private loadTexture ( textureName: string, callback ) {
+    private loadTexture ( textureName: string, callback: () => void ) {
 
         this.textureLoader.load( 'resources/textures/' + textureName, ( texture ) => {
 
@@ -297,28 +300,28 @@ class ResourceManagerCore {
 
     };
 
-    private loadSound ( soundName: string, callback ) {
+    private loadSound ( soundName: string, callback: () => void ) {
 
-        this.audioLoader.load( 'resources/sounds/' + soundName, ( buffer ) => {
+        this.audioLoader.load( 'resources/sounds/' + soundName, ( buffer: THREE.AudioBuffer ) => {
 
-            buffer.name = soundName;
+            buffer['name'] = soundName;
             this.sounds.push( buffer );
             this.loadedSounds ++;
 
             callback();
 
-        });
+        }, () => {}, () => {} );
 
     };
 
-    public load ( onProgress, onFinish ) {
+    public load ( onProgress: ( value: number ) => void, onFinish: () => void ) {
 
         let loadedItems = this.loadedModels + this.loadedTextures + this.loadedSounds;
         let progress = loadedItems / ( loadedItems + this.soundsList.length + this.modelsList.length + this.texturesList.length );
 
         if ( this.packsList.length ) {
 
-            this.loadPack( this.packsList.pop(), this.load.bind( this, onProgress, onFinish ) );
+            this.loadPack( this.packsList.pop() as string, this.load.bind( this, onProgress, onFinish ) );
 
             if ( onProgress ) {
 
@@ -332,7 +335,7 @@ class ResourceManagerCore {
 
         if ( this.modelsList.length ) {
 
-            this.loadModel( this.modelsList.pop(), this.load.bind( this, onProgress, onFinish ) );
+            this.loadModel( this.modelsList.pop() as string, this.load.bind( this, onProgress, onFinish ) );
 
             if ( onProgress ) {
 
@@ -346,7 +349,7 @@ class ResourceManagerCore {
 
         if ( this.texturesList.length ) {
 
-            this.loadTexture( this.texturesList.pop(), this.load.bind( this, onProgress, onFinish ) );
+            this.loadTexture( this.texturesList.pop() as string, this.load.bind( this, onProgress, onFinish ) );
 
             if ( onProgress ) {
 
@@ -360,7 +363,7 @@ class ResourceManagerCore {
 
         if ( this.soundsList.length ) {
 
-            this.loadSound( this.soundsList.pop(), this.load.bind( this, onProgress, onFinish ) );
+            this.loadSound( this.soundsList.pop() as string, this.load.bind( this, onProgress, onFinish ) );
 
             if ( onProgress ) {
 
@@ -381,7 +384,7 @@ class ResourceManagerCore {
 
     };
 
-    public getModel ( name: string ) {
+    public getModel ( name: string ) : THREE.Mesh | undefined {
 
         for ( var i = 0, il = this.models.length; i < il; i ++ ) {
 
@@ -395,11 +398,11 @@ class ResourceManagerCore {
 
         console.warn( 'Model "' + name + '" was not found in Game.ResourceManager.' );
 
-        return false;
+        return undefined;
 
     };
 
-    public getTexture ( name: string ) {
+    public getTexture ( name: string ) : THREE.Texture | undefined {
 
         for ( var i = 0, il = this.textures.length; i < il; i ++ ) {
 
@@ -413,15 +416,15 @@ class ResourceManagerCore {
 
         console.warn( 'Texture "' + name + '" was not found in Game.ResourceManager.' );
 
-        return false;
+        return undefined;
 
     };
 
-    public getSound ( name: string ) {
+    public getSound ( name: string ) : THREE.AudioBuffer | undefined {
 
         for ( var i = 0, il = this.sounds.length; i < il; i ++ ) {
 
-            if ( this.sounds[ i ].name === name ) {
+            if ( this.sounds[ i ]['name'] === name ) {
 
                 return this.sounds[ i ];
 
@@ -431,7 +434,7 @@ class ResourceManagerCore {
 
         console.warn( 'Sound "' + name + '" was not found in Game.ResourceManager.' );
 
-        return false;
+        return undefined;
 
     };
 

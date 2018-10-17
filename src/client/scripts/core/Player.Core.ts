@@ -3,9 +3,7 @@
  * DatTank Player core
 */
 
-import * as OMath from "./../OMath/Core.OMath";
 import { Logger } from "./../utils/Logger";
-import { TowerObject } from "./../objects/core/Tower.Object";
 import { TankObject } from "./../objects/core/Tank.Object";
 import { TankList as Tanks } from "./../objects/core/Tank.Object";
 import { Arena } from "./Arena.Core";
@@ -13,8 +11,6 @@ import { TeamCore } from "./Team.Core";
 import { TeamManager } from "./../managers/Team.Manager";
 import { PlayerNetwork } from "./../network/Player.Network";
 import { UI } from "./../ui/Core.UI";
-import { TowerManager } from "../managers/Tower.Manager";
-import { PlayerManager } from "../managers/Player.Manager";
 
 //
 
@@ -24,7 +20,7 @@ class PlayerCore {
     public username: string;
 
     public team: TeamCore;
-    public tank: TankObject;
+    public tank: TankObject | null;
 
     public kills: number;
     public score: number;
@@ -65,61 +61,68 @@ class PlayerCore {
             'gun':          3,
             'ammoCapacity': 4
         };
-        var levelsStats = {
-            speed:          [ 5, 3, 2, 2, 2, 3, 1, 3, 3, 2, 5, 3, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-            rpm:            [ 30, 20, 20, 15, 10, 15, 20, 20, 30, 40, 30, 20, 10, 10, 20, 30, 20, 10, 20, 20, 20, 10, 15 ],
-            armour:         [ 40, 30, 20, 20, 30, 40, 50, 20, 30, 50, 30, 20, 10, 10, 20, 20, 30, 20, 10, 15, 20, 10, 10 ],
-            gun:            [ 20, 15, 15, 20, 15, 10, 5, 5, 10, 15, 20, 30, 35, 40, 20, 10, 15, 15, 20, 10, 10, 10, 30 ],
-            ammoCapacity:   [ 30, 20, 20, 40, 30, 20, 5, 5, 10, 20, 15, 20, 15, 30, 20, 10, 15, 15, 10, 10, 10, 20, 30 ]
-        };
+        // var levelsStats = {
+        //     speed:          [ 5, 3, 2, 2, 2, 3, 1, 3, 3, 2, 5, 3, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+        //     rpm:            [ 30, 20, 20, 15, 10, 15, 20, 20, 30, 40, 30, 20, 10, 10, 20, 30, 20, 10, 20, 20, 20, 10, 15 ],
+        //     armour:         [ 40, 30, 20, 20, 30, 40, 50, 20, 30, 50, 30, 20, 10, 10, 20, 20, 30, 20, 10, 15, 20, 10, 10 ],
+        //     gun:            [ 20, 15, 15, 20, 15, 10, 5, 5, 10, 15, 20, 30, 35, 40, 20, 10, 15, 15, 20, 10, 10, 10, 30 ],
+        //     ammoCapacity:   [ 30, 20, 20, 40, 30, 20, 5, 5, 10, 20, 15, 20, 15, 30, 20, 10, 15, 15, 10, 10, 10, 20, 30 ]
+        // };
 
-        switch ( name ) {
+        // switch ( name ) {
 
-            case 'speed':
+        //     case 'speed':
 
-                this.tank.speed += levelsStats['speed'][ this.level ];
-                break;
+        //         this.tank.speed += levelsStats['speed'][ this.level ];
+        //         break;
 
-            case 'rpm':
+        //     case 'rpm':
 
-                this.tank.rpm += levelsStats['rpm'][ this.level ];
-                break;
+        //         this.tank.rpm += levelsStats['rpm'][ this.level ];
+        //         break;
 
-            case 'armour':
+        //     case 'armour':
 
-                this.tank.armour += levelsStats['armour'][ this.level ];
-                this.tank.setHealth( this.tank.health );
-                break;
+        //         this.tank.armour += levelsStats['armour'][ this.level ];
+        //         this.tank.setHealth( this.tank.health );
+        //         break;
 
-            case 'gun':
+        //     case 'gun':
 
-                this.tank.bullet += levelsStats['gun'][ this.level ];
-                break;
+        //         this.tank.bullet += levelsStats['gun'][ this.level ];
+        //         break;
 
-            case 'ammoCapacity':
+        //     case 'ammoCapacity':
 
-                this.tank.ammoCapacity += levelsStats['ammoCapacity'][ this.level ];
-                break;
+        //         this.tank.ammoCapacity += levelsStats['ammoCapacity'][ this.level ];
+        //         break;
 
-            default:
+        //     default:
 
-                return false;
+        //         return false;
 
-        }
+        // }
+
+        // todo!
 
         this.network.statsUpdate( stats[ name ] );
         this.level ++;
 
     };
 
-    private setTank ( params ) {
+    private setTank ( params: any ) {
 
         let tankName = Tanks.getById( params.typeId );
 
         if ( tankName ) {
 
             this.tank = new Tanks[ tankName ]( params );
-            this.tank.player = this;
+
+            if ( this.tank ) {
+
+                this.tank.player = this;
+
+            }
 
         }
 
@@ -136,9 +139,9 @@ class PlayerCore {
 
     };
 
-    public respawn ( params ) {
+    public respawn ( params: any ) {
 
-        if ( Arena.me.id === this.id ) {
+        if ( Arena.me.id === this.id && this.tank ) {
 
             this.tank.dispose();
             this.setTank( params.tank );
@@ -173,11 +176,21 @@ class PlayerCore {
 
     public update ( time: number, delta: number ) {
 
-        this.tank.update( time, delta );
+        if ( this.tank ) {
+
+            this.tank.update( time, delta );
+
+        }
 
     };
 
     public init () {
+
+        if ( ! this.tank ) {
+
+            return;
+
+        }
 
         this.tank.init();
         this.network.init( this );
@@ -195,12 +208,18 @@ class PlayerCore {
 
     //
 
-    constructor ( params ) {
+    constructor ( params: any ) {
 
+        const team = TeamManager.getById( params.team );
         this.id = params.id;
         this.username = params.login;
-        this.team = TeamManager.getById( params.team );
-        this.setTank( params.tank );
+
+        if ( team ) {
+
+            this.team = team;
+            this.setTank( params.tank );
+
+        }
 
     };
 

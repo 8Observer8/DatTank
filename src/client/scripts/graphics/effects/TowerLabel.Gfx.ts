@@ -4,21 +4,21 @@
 */
 
 import * as THREE from 'three';
-
 import * as OMath from "./../../OMath/Core.OMath";
 
 //
 
 class TowerLabelGfx {
 
-    private tower;
-    private canvas;
-    private ctx;
+    private canvas: HTMLCanvasElement;
+    private ctx: CanvasRenderingContext2D | null;
     private sprite: THREE.Sprite;
 
     //
 
     public update ( health: number, armour: number, teamColor: number ) {
+
+        if ( ! this.ctx ) return;
 
         let width = this.canvas.width;
         let height = this.canvas.height;
@@ -29,7 +29,7 @@ class TowerLabelGfx {
         this.ctx.shadowOffsetX = 0;
         this.ctx.shadowOffsetY = 0;
         this.ctx.shadowBlur = 4;
-    
+
         // draw health red bg
 
         this.ctx.fillStyle = OMath.intToHex( OMath.darkerColor( teamColor, 0.3 ) );
@@ -50,7 +50,7 @@ class TowerLabelGfx {
             this.ctx.moveTo( i * width / il, 0 );
             this.ctx.lineTo( i * width / il, 10 );
             this.ctx.stroke();
-    
+
         }
 
         // draw team color rect

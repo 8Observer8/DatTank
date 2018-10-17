@@ -3,7 +3,6 @@
  * DatTank Tower Object Network handler
 */
 
-import { Network } from "./../network/Core.Network";
 import { TowerObject } from "./../objects/core/Tower.Object";
 import { ArenaCore } from "./../core/Arena.Core";
 import { BulletObject } from "./../objects/core/Bullet.Object";
@@ -90,12 +89,6 @@ class TowerNetwork {
     };
 
     //
-
-    private dispose () {
-
-        // todo
-
-    };
 
     constructor ( tower: TowerObject ) {
 

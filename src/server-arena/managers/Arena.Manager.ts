@@ -79,8 +79,8 @@ class ArenaManagerCore {
     public findArena () {
 
         let arena: ArenaCore;
-        let minArena: ArenaCore;
-        let avgArena: ArenaCore;
+        let minArena: ArenaCore | undefined = undefined;
+        let avgArena: ArenaCore | undefined = undefined;
 
         this.removeEmptyArenas();
 

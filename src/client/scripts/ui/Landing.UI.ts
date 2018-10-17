@@ -23,7 +23,7 @@ class UILandingModule {
 
     };
 
-    public setTopPlayersBoard ( players ) {
+    public setTopPlayersBoard ( players: any[] ) {
 
         if ( players.length < 10 ) return;
 
@@ -99,7 +99,7 @@ class UILandingModule {
             if ( event.keyCode === 13 && ! Game.garage.isOpened ) {
 
                 event.stopPropagation();
-                document.activeElement['blur']();
+                document.activeElement!['blur']();
                 Game.garage.show();
 
             }

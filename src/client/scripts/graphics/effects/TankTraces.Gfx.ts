@@ -12,7 +12,7 @@ import { GfxCore } from "./../Core.Gfx";
 
 class TankTracesGfx {
 
-    private objects = [];
+    private objects: any[] = [];
     private target: THREE.Object3D;
     private prevPosition: OMath.Vec3 = new OMath.Vec3();
     private indexOffset: number = 0;
@@ -34,15 +34,15 @@ class TankTracesGfx {
         let position = this.target.position;
 
         if ( this.prevPosition.distanceTo( position ) > 5 ) {
-    
+
             var plane1, plane2;
-    
+
             var track = this.objects[ this.indexOffset ];
             plane1 = track.left;
             plane2 = track.right;
-    
+
             track.lastUpdate = Date.now();
-    
+
             plane1.rotation.x = - Math.PI / 2;
             plane1.rotation.z = rotation;
             plane1.position.copy( position );
@@ -50,7 +50,7 @@ class TankTracesGfx {
             plane1.position.z += this.tracePosOffset.l * Math.sin( - rotation );
             plane1.position.y = 2.2;
             plane1.updateMatrixWorld( true );
-    
+
             plane2.rotation.x = - Math.PI / 2;
             plane2.position.copy( position );
             plane2.rotation.z = rotation;
@@ -58,13 +58,13 @@ class TankTracesGfx {
             plane2.position.z -= this.tracePosOffset.r * Math.sin( - rotation );
             plane2.position.y = 2.2;
             plane2.updateMatrixWorld( true );
-    
+
             track.position.copy( position );
             this.prevPosition.copy( position );
-    
+
             this.indexOffset ++;
             if ( this.indexOffset === 35 ) this.indexOffset = 0;
-    
+
         }
 
     };
@@ -76,7 +76,7 @@ class TankTracesGfx {
         for ( let i = 0, il = this.objects.length; i < il; i ++ ) {
 
             this.objects[ i ].material.opacity = 1 - Math.min( Date.now() - this.objects[ i ].lastUpdate, this.traceVisibleDuration ) / this.traceVisibleDuration;
-    
+
         }
 
     };
@@ -90,7 +90,7 @@ class TankTracesGfx {
 
         let material;
         let plane1, plane2;
-    
+
         for ( let i = 0; i < 35; i ++ ) {
 
             material = new THREE.MeshBasicMaterial({ color: 0x140a00, transparent: true, opacity: 0.7, depthWrite: false });
@@ -104,7 +104,7 @@ class TankTracesGfx {
                 position:   new THREE.Vector3(),
                 lastUpdate: 0
             });
-    
+
             plane1.renderOrder = 10;
             plane2.renderOrder = 10;
 

@@ -64,7 +64,7 @@ class LargeExplosionGfx {
 
         let map, material;
 
-        map = ResourceManager.getTexture( 'explosion1.png' ).clone();
+        map = ResourceManager.getTexture( 'explosion1.png' )!.clone();
         map.wrapS = THREE.RepeatWrapping;
         map.wrapT = THREE.RepeatWrapping;
         map.repeat.set( 0.2, 0.25 );
@@ -95,7 +95,7 @@ class LargeExplosionGfx {
         }
 
         GfxCore.coreObjects['largeExplosions'].add( this.object );
-        
+
     };
 
 };

@@ -17,6 +17,7 @@ import { ArenaNetwork } from "../network/Arena.Network";
 import { BulletManager } from "./../managers/Bullet.Manager";
 import { CollisionManager } from "./../managers/Collision.Manager";
 import { UI } from "./../ui/Core.UI";
+import { TeamCore } from "./Team.Core";
 
 //
 
@@ -24,14 +25,10 @@ class ArenaCore {
 
     private static instance: ArenaCore;
 
-    private serverIP: string;
-    private serverID: string;
-
     public me: PlayerCore;
     public meId: number;
 
     private prevUpdateTime: number;
-    private time: number;
     private updateInterval: number;
     private updateIntervalDuration: number = 40;
     private viewRange: number = 780;
@@ -42,16 +39,11 @@ class ArenaCore {
 
     public preInit ( ip: string, id: string ) {
 
-        this.serverIP = ip;
-        this.serverID = id;
-
-        //
-
         this.network.init();
 
     };
 
-    public init ( params ) {
+    public init ( params: any ) {
 
         this.meId = params.me.id;
 
@@ -74,22 +66,27 @@ class ArenaCore {
         //
 
         this.prevUpdateTime = Date.now();
-        this.time = Date.now();
-        this.updateInterval = setInterval( this.update.bind( this ), this.updateIntervalDuration );
+        this.updateInterval = <any>setInterval( this.update.bind( this ), this.updateIntervalDuration );
 
     };
 
-    public updateLeaderBoard ( players, teams ) {
+    public updateLeaderBoard ( players: PlayerCore[], teams: TeamCore[] ) {
 
         UI.InGame.updateLeaderboard( players );
         UI.InGame.updateTeamScore( teams );
 
     };
 
-    public playerKilled ( player, killer ) {
+    public playerKilled ( player: any, killer: any ) {
 
         let playerTeam = TeamManager.getById( player.teamId );
         let killerTeam = TeamManager.getById( killer.teamId );
+
+        if ( ! killer || ! killerTeam || ! playerTeam ) {
+
+            return;
+
+        }
 
         if ( killer.type === 'player' ) {
 
@@ -106,6 +103,12 @@ class ArenaCore {
         if ( player.id === Arena.me.id ) {
 
             setTimeout( () => {
+
+                if ( ! killerTeam ) {
+
+                    return;
+
+                }
 
                 if ( killer.type === 'tower' ) {
 
@@ -127,7 +130,7 @@ class ArenaCore {
 
     };
 
-    public removePlayer ( player ) {
+    public removePlayer ( player: PlayerCore ) {
 
         PlayerManager.remove( [ player.id ] );
 
@@ -192,6 +195,8 @@ class ArenaCore {
             let player = players[ i ];
 
             if ( ! player || player.id === this.me.id ) continue;
+            if ( ! player.tank || ! this.me.tank ) continue;
+
             if ( player.tank.position.distanceTo( this.me.tank.position ) > this.viewRange ) {
 
                 playersToRemove.push( player.id );
@@ -210,7 +215,7 @@ class ArenaCore {
         for ( let i = 0, il = towers.length; i < il; i ++ ) {
 
             let tower = towers[ i ];
-            if ( ! tower ) continue;
+            if ( ! tower || ! this.me.tank ) continue;
 
             if ( tower.position.distanceTo( this.me.tank.position ) > this.viewRange ) {
 
@@ -230,7 +235,7 @@ class ArenaCore {
         for ( var i = 0, il = boxes.length; i < il; i ++ ) {
 
             var box = boxes[ i ];
-            if ( ! box ) continue;
+            if ( ! box || ! this.me.tank ) continue;
 
             if ( box.position.distanceTo( this.me.tank.position ) > this.viewRange ) {
 

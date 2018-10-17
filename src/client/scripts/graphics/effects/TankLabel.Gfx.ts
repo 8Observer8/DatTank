@@ -11,13 +11,15 @@ import * as OMath from "./../../OMath/Core.OMath";
 
 class TankLabelGfx {
 
-    private canvas;
-    private ctx;
+    private canvas: HTMLCanvasElement;
+    private ctx: CanvasRenderingContext2D | null;
     private sprite: THREE.Sprite;
 
     //
 
     public update ( health: number, armour: number, teamColor: number, overheating: number, login: string ) {
+
+        if ( ! this.ctx ) return;
 
         let width = this.canvas.width;
         let height = this.canvas.height;
@@ -116,6 +118,13 @@ class TankLabelGfx {
         this.canvas.height = 64;
 
         this.ctx = this.canvas.getContext('2d');
+        if ( ! this.ctx ) {
+
+            console.error('Context undefined.');
+            return;
+
+        }
+
         let material = new THREE.SpriteMaterial({ map: new THREE.Texture( this.canvas ), color: 0xffffff, fog: true });
         this.sprite = new THREE.Sprite( material );
 

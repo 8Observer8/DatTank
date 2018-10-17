@@ -108,7 +108,7 @@ class BulletGfx {
         this.object.add( this.trace );
 
         this.sound = new THREE.PositionalAudio( GfxCore.audioListener );
-        this.sound.setBuffer( ResourceManager.getSound('tank_shooting.wav') );
+        this.sound.setBuffer( ResourceManager.getSound('tank_shooting.wav') as THREE.AudioBuffer );
         this.sound.setRefDistance( 70 );
         this.sound.autoplay = false;
         this.object.add( this.sound );
