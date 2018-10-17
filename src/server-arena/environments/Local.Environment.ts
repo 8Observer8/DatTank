@@ -8,8 +8,9 @@ export let LocalEnvironment = {
     name:           'Local dev environment',
 
     web: {
-        host:       'http://localhost',
-        socketPort: 80
+        host:           'http://localhost',
+        port:           8092,
+        socketPort:     8093
     },
 
     master: {

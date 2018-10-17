@@ -7,9 +7,9 @@ import * as ws from "ws";
 import * as OMath from "./../OMath/Core.OMath";
 import { ArenaCore } from "./../core/Arena.Core";
 import { PlayerCore } from "./../core/Player.Core";
-import { TowerObject } from "../objects/core/Tower.Object";
-import { TankObject } from "../objects/core/Tank.Object";
-import { BulletObject } from "../objects/core/Bullet.Object";
+import { TowerObject } from "./../objects/core/Tower.Object";
+import { TankObject } from "./../objects/core/Tank.Object";
+import { BulletObject } from "./../objects/core/Bullet.Object";
 import { BoxObject } from "./../objects/core/Box.Object";
 import { Network } from "./Core.Network";
 

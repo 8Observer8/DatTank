@@ -9,6 +9,7 @@ export let StagingEnvironment = {
 
     web: {
         host:       'http://dattank.com',
+        port:       8086,
         socketPort: 8085
     },
 

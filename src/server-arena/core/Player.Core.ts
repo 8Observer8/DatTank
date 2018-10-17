@@ -9,14 +9,11 @@ import { Game } from "./../Game";
 import { ArenaCore } from "./Arena.Core";
 import { BotCore } from "./Bot.Core";
 import { TeamCore } from "./Team.Core";
-import { TankObject } from "./../objects/core/Tank.Object";
+import { TankObject } from "../objects/core/Tank.Object";
 import { TowerObject } from "./../objects/core/Tower.Object";
 import { PlayerNetwork } from "./../network/Player.Network";
 
-import { IS2Tank } from "./../objects/tanks/IS2.Tank";
-import { T29Tank } from "./../objects/tanks/T29.Tank";
-import { T44Tank } from "./../objects/tanks/T44.Tank";
-import { T54Tank } from "./../objects/tanks/T54.Tank";
+import { GarageManager } from "./../managers/Garage.Manager";
 
 //
 
@@ -140,43 +137,26 @@ class PlayerCore {
 
     };
 
-    public selectTank ( tankName: string = 'T29' ) {
+    public prepareTank ( tankConfig: any ) {
 
-        let TanksList = {
-            'IS2':    IS2Tank,
-            'T29':    T29Tank,
-            'T44':    T44Tank,
-            'T54':    T54Tank
-        };
-
-        if ( ! TanksList[ tankName ] ) {
-
-            tankName = 'T29';
-
-        }
+        tankConfig.tank = tankConfig.tank || 'IS2001';
+        const rawTankData = GarageManager.tanksConfig[ tankConfig.tank ];
+        tankConfig.tank = ( rawTankData !== undefined ) ? tankConfig.tank : 'IS2001';
+        tankConfig.cannon = tankConfig.cannon || rawTankData.default.cannon;
+        tankConfig.armor = tankConfig.armor || rawTankData.default.armor;
+        tankConfig.engine = tankConfig.engine || rawTankData.default.engine;
 
         //
 
-        this.tank = new TanksList[ tankName ]( this );
+        this.tank = new GarageManager[ tankConfig.tank ]( this );
         this.tank.ammo = this.tank.ammoCapacity;
         this.arena.tankManager.add( this.tank );
 
-        // cheat for testing
-
-        if ( this.login === 'ohmed-god' ) {
-
-            this.tank.armour = 10000;
-            this.tank.bullet = 1000;
-
-        }
-
     };
 
-    public spawn ( tankName?: string ) {
+    public spawn ( tankConfig?: object ) {
 
-        tankName = tankName || 'T44';
-
-        this.selectTank( tankName );
+        this.prepareTank( tankConfig );
         this.tank.setRespawnPosition();
         this.arena.updateLeaderboard();
 
@@ -184,9 +164,7 @@ class PlayerCore {
 
     };
 
-    public respawn ( tankName: string ) {
-
-        tankName = tankName || ( this.tank ? this.tank.title : 'T44' );
+    public respawn ( tankConfig: object ) {
 
         this.status = PlayerCore.Alive;
         this.bonusLevels = 0;
@@ -194,7 +172,7 @@ class PlayerCore {
 
         this.tank.dispose();
         this.arena.tankManager.remove( this.tank.id );
-        this.selectTank( tankName );
+        this.prepareTank( tankConfig );
         this.tank.setRespawnPosition();
         this.status = PlayerCore.Alive;
 

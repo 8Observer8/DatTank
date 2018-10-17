@@ -10,10 +10,19 @@ import { ArenaCore } from "../../core/Arena.Core";
 import { TowerObject } from "./Tower.Object";
 import { BoxObject } from "./Box.Object";
 import { TankNetwork } from "./../../network/Tank.Network";
+import { CannonGarage } from "../garage/core/Cannon.Garage";
+import { ArmorGarage } from "../garage/core/Armor.Garage";
+import { EngineGarage } from "../garage/core/Engine.Garage";
 
 //
 
 class TankObject {
+
+    public static title: string;
+    public static armorCoef: number;
+    public static cannonCoef: number;
+    public static speedCoef: number;
+    public static ammoCapacity: number;
 
     private static numIds = 1;
     private static statsList = [ 'speed', 'rpm', 'armour', 'gun', 'ammoCapacity' ];
@@ -40,10 +49,9 @@ class TankObject {
     public size: OMath.Vec3 = new OMath.Vec3( 30, 25, 70 );
 
     public range: number = 300;
-    public armour: number;
-    public bullet: number;
-    public speed: number;
-    public rpm: number;
+    public cannonCoef: number;
+    public armourCoef: number;
+    public speedCoef: number;
     public ammoCapacity: number;
 
     public moveDirection: OMath.Vec2 = new OMath.Vec2();
@@ -56,6 +64,10 @@ class TankObject {
     private sinceHitTime: number;
     private sinceRegenerationLimit: number = 2000;
     private sinceRegenerationTime: number;
+
+    public cannon: CannonGarage;
+    public armor: ArmorGarage;
+    public engine: EngineGarage;
 
     public inRangeOf: object = {};
     public collisionBox: object;
@@ -78,38 +90,40 @@ class TankObject {
 
         //
 
-        switch ( statName ) {
+        // switch ( statName ) {
 
-            case 'speed':
+        //     case 'speed':
 
-                this.speed += levelsStats['speed'][ level ];
-                break;
+        //         this.speed += levelsStats['speed'][ level ];
+        //         break;
 
-            case 'rpm':
+        //     case 'rpm':
 
-                this.rpm += levelsStats['rpm'][ level ];
-                break;
+        //         this.rpm += levelsStats['rpm'][ level ];
+        //         break;
 
-            case 'armour':
+        //     case 'armour':
 
-                this.armour += levelsStats['armour'][ level ];
-                break;
+        //         this.armour += levelsStats['armour'][ level ];
+        //         break;
 
-            case 'gun':
+        //     case 'gun':
 
-                this.bullet += levelsStats['gun'][ level ];
-                break;
+        //         this.bullet += levelsStats['gun'][ level ];
+        //         break;
 
-            case 'ammoCapacity':
+        //     case 'ammoCapacity':
 
-                this.ammoCapacity += levelsStats['ammoCapacity'][ level ];
-                break;
+        //         this.ammoCapacity += levelsStats['ammoCapacity'][ level ];
+        //         break;
 
-            default:
+        //     default:
 
-                return;
+        //         return;
 
-        }
+        // }
+
+        // todo!
 
         this.player.bonusLevels --;
         this.player.level ++;
@@ -177,7 +191,8 @@ class TankObject {
 
         if ( killer.team.id !== this.player.team.id ) {
 
-            this.changeHealth( - 20 * ( killer.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ), killer );
+            // todo!
+            // this.changeHealth( - 20 * ( killer.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ), killer );
 
         }
 
@@ -249,7 +264,7 @@ class TankObject {
 
             this.shootTimeout = false;
 
-        }, 1000 * 60 / this.rpm );
+        }, 1000 * 60 / this.cannon.rpm );
 
         // overheating
 

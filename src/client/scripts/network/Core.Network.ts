@@ -22,6 +22,7 @@ class NetworkCore {
     private initCallback;
 
     private host: string;
+    private port: number;
 
     private events = {
         in:     {},
@@ -41,6 +42,7 @@ class NetworkCore {
 
         this.initCallback = callback;
         this.host = server.ip;
+        this.port = ( window.location.hostname === 'localhost' ) ? 8093 : 80;
 
         // register network events
 
@@ -100,7 +102,7 @@ class NetworkCore {
 
         // establish connection
 
-        this.transport = new WebSocket( 'ws://' + this.host + '/ws/game' );
+        this.transport = new WebSocket( 'ws://' + this.host + ':' + this.port + '/ws/game' );
         this.transport.binaryType = 'arraybuffer';
 
         // add event handlers

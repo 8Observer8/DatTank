@@ -5,7 +5,10 @@
 
 import { Environment } from "./environments/Detect.Environment";
 import { ArenaManager } from "./managers/Arena.Manager";
+import { GarageManager } from "./managers/Garage.Manager";
 import { Network } from "./network/Core.Network";
+
+//
 
 let http = require('http');
 let ip = require('ip');
@@ -104,6 +107,35 @@ class GameCore {
 
         this.updateInterval = setInterval( this.reportToMaster.bind( this ), this.updateIntervalTime );
         this.reportToMaster();
+        this.loadGarageConfig();
+
+    };
+
+    private loadGarageConfig () {
+
+        let req = http.get({
+            hostname:   Environment.master.host,
+            port:       Environment.master.port,
+            path:       '/api/garage/getObjects'
+        }, function ( res: any ) {
+
+            let response = '';
+            res.setEncoding('utf8');
+
+            res.on( 'data', function ( chunk: string ) {
+
+                response += chunk;
+
+            });
+
+            res.on( 'end', function () {
+
+                let data = JSON.parse( response );
+                GarageManager.set( data );
+
+            });
+
+        });
 
     };
 

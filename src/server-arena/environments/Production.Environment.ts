@@ -9,6 +9,7 @@ export let ProductionEnvironment = {
 
     web: {
         host:       'http://dattank.com',
+        port:       80,
         socketPort: 80
     },
 

@@ -7,7 +7,7 @@ import * as OMath from "./../../OMath/Core.OMath";
 import { ArenaCore } from "./../../core/Arena.Core";
 import { TeamCore } from "./../../core/Team.Core";
 import { PlayerCore } from "./../../core/Player.Core";
-import { TankObject } from "./../core/Tank.Object";
+import { TankObject } from "./Tank.Object";
 import { TowerNetwork } from "./../../network/Tower.Network";
 
 //
@@ -122,12 +122,11 @@ class TowerObject {
         this.sinceHitTime = 0;
         this.sinceRegenerationTime = 0;
 
-        this.changeHealth( - 20 * ( killer.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ) );
-
         if ( killer instanceof TankObject ) {
-            
+
             killer.player.changeScore( 1 );
             this.arena.updateLeaderboard();
+            this.changeHealth( - 20 * ( killer.cannon.damage / this.armour ) * ( 0.5 * Math.random() + 0.5 ) );
 
             //
 
@@ -138,6 +137,11 @@ class TowerObject {
                 this.arena.updateLeaderboard();
 
             }
+
+        } else {
+
+            // todo!
+            this.changeHealth( - 20 * ( killer.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ) );
 
         }
 

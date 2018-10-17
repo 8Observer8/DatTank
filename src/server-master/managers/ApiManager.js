@@ -8,7 +8,7 @@ var GarageConfig = require('./../core/GarageConfig.js');
 //
 
 var ApiManager = {
-    
+
     getStats: function ( req, res ) {
 
         var arenas = [];

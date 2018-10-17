@@ -36,9 +36,9 @@ class BulletObject {
         this.angle = angle;
         this.flytime = 300;
         this.owner = owner;
-    
+
         //
-    
+
         this.arena.collisionManager.addObject( this, 'box', true, true );
 
     };

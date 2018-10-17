@@ -4,6 +4,7 @@
 */
 
 var express = require('express');
+var GarageConfig = require('./../core/GarageConfig.js');
 
 //
 
@@ -38,6 +39,7 @@ ArenaServersManager.prototype.init = function () {
     this.transport = new express();
     this.transport.get( '/api/status-update', this.arenaServerStatusUpdate.bind( this ) );
     this.transport.get( '/api/update-top-list', this.updateTopList.bind( this ) );
+    this.transport.get( '/api/garage/getObjects', this.getGarageObjects.bind( this ) );
     this.transport.listen( this.transportPort );
 
     // init update interval
@@ -47,6 +49,12 @@ ArenaServersManager.prototype.init = function () {
     //
 
     console.log( '> DatTank MasterServer: Started ArenaServerManager on port ' + this.transportPort );
+
+};
+
+ArenaServersManager.prototype.getGarageObjects = function ( req, res ) {
+
+    return res.send( GarageConfig );
 
 };
 

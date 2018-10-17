@@ -97,7 +97,7 @@ class ArenaCore {
 
         let player = new PlayerCore( this, { login: params.login, socket: params.socket });
         this.playerManager.add( player );
-        player.spawn( params.tank );
+        player.spawn( params.tankConfig );
 
         //
 
