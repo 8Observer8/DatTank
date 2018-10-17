@@ -4,7 +4,7 @@
 */
 
 import * as THREE from 'three';
-import * as OMath from "./../../OMath/Core.OMath";
+import * as OMath from '../../OMath/Core.OMath';
 
 //
 
@@ -16,12 +16,12 @@ class TowerLabelGfx {
 
     //
 
-    public update ( health: number, armour: number, teamColor: number ) {
+    public update ( health: number, armour: number, teamColor: number ) : void {
 
         if ( ! this.ctx ) return;
 
-        let width = this.canvas.width;
-        let height = this.canvas.height;
+        const width = this.canvas.width;
+        const height = this.canvas.height;
 
         this.ctx.clearRect( 0, 0, width, height );
 
@@ -44,7 +44,7 @@ class TowerLabelGfx {
 
         this.ctx.strokeStyle = 'rgba( 0, 0, 0, 0.3 )';
 
-        for ( var i = 0, il = 3 * armour / 50; i < il; i ++ ) {
+        for ( let i = 0, il = 3 * armour / 50; i < il; i ++ ) {
 
             this.ctx.beginPath();
             this.ctx.moveTo( i * width / il, 0 );
@@ -70,7 +70,7 @@ class TowerLabelGfx {
 
     };
 
-    public init ( target: THREE.Object3D ) {
+    public init ( target: THREE.Object3D ) : void {
 
         target.add( this.sprite );
 
@@ -85,7 +85,7 @@ class TowerLabelGfx {
         this.canvas.height = 64;
 
         this.ctx = this.canvas.getContext('2d');
-        let material = new THREE.SpriteMaterial({ map: new THREE.Texture( this.canvas ), color: 0xffffff, fog: true });
+        const material = new THREE.SpriteMaterial({ map: new THREE.Texture( this.canvas ), color: 0xffffff, fog: true });
         this.sprite = new THREE.Sprite( material );
 
         this.sprite.position.set( 0, 35, 0 );

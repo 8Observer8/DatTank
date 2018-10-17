@@ -7,7 +7,7 @@ import * as THREE from 'three';
 
 //
 
-class FriendlyFireLabelGfx {
+export class FriendlyFireLabelGfx {
 
     private sprite: THREE.Sprite;
     private object: THREE.Object3D = new THREE.Object3D();
@@ -17,7 +17,7 @@ class FriendlyFireLabelGfx {
 
     //
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
         if ( ! this.active ) return;
         this.time += delta;
@@ -43,7 +43,7 @@ class FriendlyFireLabelGfx {
 
     };
 
-    public show () {
+    public show () : void {
 
         this.time = 0;
         this.object.visible = true;
@@ -53,9 +53,11 @@ class FriendlyFireLabelGfx {
 
     };
 
-    public init ( target: THREE.Object3D ) {
+    public init ( target: THREE.Object3D ) : void {
 
-        let canvas, ctx, material;
+        let canvas;
+        let ctx;
+        let material;
 
         canvas = document.createElement( 'canvas' );
         canvas.width = 256;
@@ -96,7 +98,3 @@ class FriendlyFireLabelGfx {
     };
 
 };
-
-//
-
-export { FriendlyFireLabelGfx };

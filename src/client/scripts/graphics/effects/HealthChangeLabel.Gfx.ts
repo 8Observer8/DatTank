@@ -5,12 +5,12 @@
 
 import * as THREE from 'three';
 
-import * as OMath from "./../../OMath/Core.OMath";
-import { GfxCore } from "./../Core.Gfx";
+import * as OMath from '../../OMath/Core.OMath';
+import { GfxCore } from '../Core.Gfx';
 
 //
 
-class HealthChangeLabelGfx {
+export class HealthChangeLabelGfx {
 
     private object: THREE.Object3D = new THREE.Object3D();
     private sprite: THREE.Sprite;
@@ -22,11 +22,11 @@ class HealthChangeLabelGfx {
 
     //
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
         if ( ! this.active ) return;
         this.time += delta;
-        let progress = this.time / this.visibleTime;
+        const progress = this.time / this.visibleTime;
 
         this.object.position.y = this.position.y + 10 * progress;
 
@@ -46,18 +46,19 @@ class HealthChangeLabelGfx {
 
     };
 
-    public deactivate () {
+    public deactivate () : void {
 
         this.active = false;
         this.object.visible = false;
 
     };
 
-    public setActive ( position: OMath.Vec3, healthChange: number ) {
+    public setActive ( position: OMath.Vec3, healthChange: number ) : void {
 
-        let canvas, ctx;
-        let text = ( healthChange >= 0 ) ? '+' + Math.round( healthChange ) : Math.round( healthChange );
-        let color = ( healthChange >= 0 ) ? '#00ff00' : '#ff0000';
+        let canvas;
+        let ctx;
+        const text = ( healthChange >= 0 ) ? '+' + Math.round( healthChange ) : Math.round( healthChange );
+        const color = ( healthChange >= 0 ) ? '#00ff00' : '#ff0000';
 
         canvas = document.createElement( 'canvas' );
         canvas.width = 128;
@@ -92,9 +93,9 @@ class HealthChangeLabelGfx {
 
     };
 
-    public init () {
+    public init () : void {
 
-        let material = new THREE.SpriteMaterial({ color: 0xffffff, fog: true });
+        const material = new THREE.SpriteMaterial({ color: 0xffffff, fog: true });
         this.sprite = new THREE.Sprite( material );
         this.sprite.position.set( 0, 35, 0 );
         this.sprite.scale.set( 24, 12, 1 );
@@ -116,7 +117,3 @@ class HealthChangeLabelGfx {
     };
 
 };
-
-//
-
-export { HealthChangeLabelGfx };

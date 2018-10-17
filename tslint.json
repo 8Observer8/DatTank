@@ -1,12 +1,22 @@
 {
-    "extends": ["tslint:recommended", "tslint-config-prettier"],
+    "extends": ["tslint:recommended"],
     "rules": {
+        "typedef": [true, "call-signature", "parameter"],
         "no-console": false,
         "no-string-literal": false,
         "object-literal-sort-keys": false,
         "ordered-imports": false,
         "no-debugger": false,
-        "interface-name" : [true, "never-prefix"]
+        "interface-name" : [true, "never-prefix"],
+        "space-before-function-paren": [true, "always"],
+        "no-trailing-whitespace": true,
+        "typedef-whitespace": [ true, { "call-signature": "onespace" } ],
+        "quotemark": [true, "single"],
+        "semicolon": false,
+        "max-line-length": false,
+        "curly": false,
+        "member-ordering": false,
+        "forin": false
     },
     "linterOptions": {
         "exclude": [

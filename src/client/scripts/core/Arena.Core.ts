@@ -3,32 +3,31 @@
  * DatTank Arena core
 */
 
-import { TeamManager } from "./../managers/Team.Manager";
-import { PlayerManager } from "./../managers/Player.Manager";
-import { TowerManager } from "./../managers/Tower.Manager";
-import { BoxManager } from "./../managers/Box.Manager";
-import { DecorationManager } from "./../managers/Decoration.Manager";
-import { ExplosionManager } from "./../managers/Explosion.Manager";
+import { TeamManager } from '../managers/Team.Manager';
+import { PlayerManager } from '../managers/Player.Manager';
+import { TowerManager } from '../managers/Tower.Manager';
+import { BoxManager } from '../managers/Box.Manager';
+import { DecorationManager } from '../managers/Decoration.Manager';
+import { ExplosionManager } from '../managers/Explosion.Manager';
 
-import * as OMath from "./../OMath/Core.OMath";
-import { GfxCore } from "./../graphics/Core.Gfx";
-import { PlayerCore } from "./Player.Core";
-import { ArenaNetwork } from "../network/Arena.Network";
-import { BulletManager } from "./../managers/Bullet.Manager";
-import { CollisionManager } from "./../managers/Collision.Manager";
-import { UI } from "./../ui/Core.UI";
-import { TeamCore } from "./Team.Core";
+import * as OMath from '../OMath/Core.OMath';
+import { GfxCore } from '../graphics/Core.Gfx';
+import { PlayerCore } from './Player.Core';
+import { ArenaNetwork } from '../network/Arena.Network';
+import { BulletManager } from '../managers/Bullet.Manager';
+import { CollisionManager } from '../managers/Collision.Manager';
+import { UI } from '../ui/Core.UI';
+import { TeamCore } from './Team.Core';
 
 //
 
 class ArenaCore {
 
-    private static instance: ArenaCore;
+    public static instance: ArenaCore;
 
     public me: PlayerCore;
     public meId: number;
 
-    private prevUpdateTime: number;
     private updateInterval: number;
     private updateIntervalDuration: number = 40;
     private viewRange: number = 780;
@@ -37,13 +36,13 @@ class ArenaCore {
 
     //
 
-    public preInit ( ip: string, id: string ) {
+    public preInit ( ip: string, id: string ) : void {
 
         this.network.init();
 
     };
 
-    public init ( params: any ) {
+    public init ( params: any ) : void {
 
         this.meId = params.me.id;
 
@@ -65,22 +64,21 @@ class ArenaCore {
 
         //
 
-        this.prevUpdateTime = Date.now();
-        this.updateInterval = <any>setInterval( this.update.bind( this ), this.updateIntervalDuration );
+        this.updateInterval = setInterval( this.update.bind( this ), this.updateIntervalDuration ) as any;
 
     };
 
-    public updateLeaderBoard ( players: PlayerCore[], teams: TeamCore[] ) {
+    public updateLeaderBoard ( players: PlayerCore[], teams: TeamCore[] ) : void {
 
         UI.InGame.updateLeaderboard( players );
         UI.InGame.updateTeamScore( teams );
 
     };
 
-    public playerKilled ( player: any, killer: any ) {
+    public playerKilled ( player: any, killer: any ) : void {
 
-        let playerTeam = TeamManager.getById( player.teamId );
-        let killerTeam = TeamManager.getById( killer.teamId );
+        const playerTeam = TeamManager.getById( player.teamId );
+        const killerTeam = TeamManager.getById( killer.teamId );
 
         if ( ! killer || ! killerTeam || ! playerTeam ) {
 
@@ -130,20 +128,20 @@ class ArenaCore {
 
     };
 
-    public removePlayer ( player: PlayerCore ) {
+    public removePlayer ( player: PlayerCore ) : void {
 
         PlayerManager.remove( [ player.id ] );
 
     };
 
-    public newExplosion ( position: OMath.Vec3, bulletId: number, explosionType: number ) {
+    public newExplosion ( position: OMath.Vec3, bulletId: number, explosionType: number ) : void {
 
         ExplosionManager.showExplosion( position, explosionType );
         BulletManager.hideBullet( bulletId );
 
     };
 
-    public newTowers ( towers: Array<any> ) {
+    public newTowers ( towers: any[] ) : void {
 
         for ( let i = 0, il = towers.length; i < il; i ++ ) {
 
@@ -154,7 +152,7 @@ class ArenaCore {
 
     };
 
-    public newPlayers ( players: Array<any> ) {
+    public newPlayers ( players: any[] ) : void {
 
         for ( let i = 0, il = players.length; i < il; i ++ ) {
 
@@ -166,7 +164,7 @@ class ArenaCore {
 
     };
 
-    public newBoxes ( boxes: Array<any> ) {
+    public newBoxes ( boxes: any[] ) : void {
 
         for ( let i = 0, il = boxes.length; i < il; i ++ ) {
 
@@ -177,22 +175,22 @@ class ArenaCore {
 
     };
 
-    public dispose () {
+    public dispose () : void {
 
         clearInterval( this.updateInterval );
 
     };
 
-    private removeOutOfRangeObjects () {
+    private removeOutOfRangeObjects () : void {
 
         // remove out of range players
 
-        let playersToRemove = [];
-        let players = PlayerManager.get();
+        const playersToRemove = [];
+        const players = PlayerManager.get();
 
         for ( let i = 0, il = players.length; i < il; i ++ ) {
 
-            let player = players[ i ];
+            const player = players[ i ];
 
             if ( ! player || player.id === this.me.id ) continue;
             if ( ! player.tank || ! this.me.tank ) continue;
@@ -209,12 +207,12 @@ class ArenaCore {
 
         // remove out of range towers
 
-        let towersToRemove = [];
-        let towers = TowerManager.get();
+        const towersToRemove = [];
+        const towers = TowerManager.get();
 
         for ( let i = 0, il = towers.length; i < il; i ++ ) {
 
-            let tower = towers[ i ];
+            const tower = towers[ i ];
             if ( ! tower || ! this.me.tank ) continue;
 
             if ( tower.position.distanceTo( this.me.tank.position ) > this.viewRange ) {
@@ -229,12 +227,12 @@ class ArenaCore {
 
         // remove out of range boxes
 
-        let boxesToRemove = [];
-        let boxes = BoxManager.get();
+        const boxesToRemove = [];
+        const boxes = BoxManager.get();
 
-        for ( var i = 0, il = boxes.length; i < il; i ++ ) {
+        for ( let i = 0, il = boxes.length; i < il; i ++ ) {
 
-            var box = boxes[ i ];
+            const box = boxes[ i ];
             if ( ! box || ! this.me.tank ) continue;
 
             if ( box.position.distanceTo( this.me.tank.position ) > this.viewRange ) {
@@ -249,13 +247,7 @@ class ArenaCore {
 
     };
 
-    private update ( time: number, delta: number ) {
-
-        var time = Date.now();
-        var delta = time - this.prevUpdateTime;
-        this.prevUpdateTime = time;
-
-        //
+    private update ( time: number, delta: number ) : void {
 
         CollisionManager.update( time, delta );
         this.removeOutOfRangeObjects();

@@ -3,13 +3,13 @@
  * DatTank Garage core
 */
 
-import { Game } from "./../Game";
-import { GarageScene } from "./Scene.Garage";
-import { SoundManager } from "./../managers/Sound.Manager";
+import { Game } from '../Game';
+import { GarageScene } from './Scene.Garage';
+import { SoundManager } from '../managers/Sound.Manager';
 
 //
 
-class Garage {
+export class Garage {
 
     public isOpened: boolean = false;
     private isBuyPopupOpened: boolean = false;
@@ -27,7 +27,7 @@ class Garage {
 
     //
 
-    private updateUserParams () {
+    private updateUserParams () : void {
 
         $('.garage .garage-title .level-label').html( '(Level ' + this.level + ')' );
         $('.garage .xp .value').html( this.xp );
@@ -35,7 +35,7 @@ class Garage {
 
     };
 
-    private openBuyPopup ( category: string, item: any ) {
+    private openBuyPopup ( category: string, item: any ) : void {
 
         if ( this.coins < item.price ) {
 
@@ -126,7 +126,7 @@ class Garage {
 
     };
 
-    private closeBuyPopup () {
+    private closeBuyPopup () : void {
 
         $('.garage .buy-item-popup-wrapper').css( 'opacity', 0 );
         setTimeout( () => { $('.garage .buy-item-popup-wrapper').hide(); }, 400 );
@@ -134,18 +134,18 @@ class Garage {
 
     };
 
-    private updateRightMenu ( category: string, itemId: string ) {
+    private updateRightMenu ( category: string, itemId: string ) : void {
 
-        let cannonId = ( this.params.tanks[ itemId ] || this.GarageConfig.tanks[ itemId ].default ).cannon;
-        let armorId = ( this.params.tanks[ itemId ] || this.GarageConfig.tanks[ itemId ].default ).armor;
-        let engineId = ( this.params.tanks[ itemId ] || this.GarageConfig.tanks[ itemId ].default ).engine;
+        const cannonId = ( this.params.tanks[ itemId ] || this.GarageConfig.tanks[ itemId ].default ).cannon;
+        const armorId = ( this.params.tanks[ itemId ] || this.GarageConfig.tanks[ itemId ].default ).armor;
+        const engineId = ( this.params.tanks[ itemId ] || this.GarageConfig.tanks[ itemId ].default ).engine;
 
-        let cannon = this.GarageConfig.cannons[ cannonId ];
-        let armor = this.GarageConfig.armors[ armorId ];
-        let engine = this.GarageConfig.engines[ engineId ];
+        const cannon = this.GarageConfig.cannons[ cannonId ];
+        const armor = this.GarageConfig.armors[ armorId ];
+        const engine = this.GarageConfig.engines[ engineId ];
+        const description = this.GarageConfig[ category ][ itemId ].description;
 
         let title = this.GarageConfig[ category ][ itemId ].title;
-        let description = this.GarageConfig[ category ][ itemId ].description;
 
         //
 
@@ -199,17 +199,17 @@ class Garage {
 
     };
 
-    private showCurrentTankInRightMenu () {
+    private showCurrentTankInRightMenu () : void {
 
-        let tankId = this.params.selected;
-        let cannonId = ( this.params.tanks[ tankId ] || this.GarageConfig.tanks[ tankId ].default ).cannon;
-        let armorId = ( this.params.tanks[ tankId ] || this.GarageConfig.tanks[ tankId ].default ).armor;
-        let engineId = ( this.params.tanks[ tankId ] || this.GarageConfig.tanks[ tankId ].default ).engine;
+        const tankId = this.params.selected;
+        const cannonId = ( this.params.tanks[ tankId ] || this.GarageConfig.tanks[ tankId ].default ).cannon;
+        const armorId = ( this.params.tanks[ tankId ] || this.GarageConfig.tanks[ tankId ].default ).armor;
+        const engineId = ( this.params.tanks[ tankId ] || this.GarageConfig.tanks[ tankId ].default ).engine;
 
-        let tank = this.GarageConfig.tanks[ tankId ];
-        let cannon = this.GarageConfig.cannons[ cannonId ];
-        let armor = this.GarageConfig.armors[ armorId ];
-        let engine = this.GarageConfig.engines[ engineId ];
+        const tank = this.GarageConfig.tanks[ tankId ];
+        const cannon = this.GarageConfig.cannons[ cannonId ];
+        const armor = this.GarageConfig.armors[ armorId ];
+        const engine = this.GarageConfig.engines[ engineId ];
 
         $('.garage .right-block .item-title').html( 'Your tank "' + tank.title + '"' );
         $('.garage .right-block .item-description .main-text').html( tank.description );
@@ -220,17 +220,17 @@ class Garage {
 
         //
 
-        let damageValue = Math.floor( tank.cannonCoef * cannon.damage );
-        let armorValue = Math.floor( tank.armorCoef * armor.armor );
-        let speedValue = engine.maxSpeed;
-        let reloadValue = cannon.reload;
-        let overheatValue = cannon.overheating;
+        const damageValue = Math.floor( tank.cannonCoef * cannon.damage );
+        const armorValue = Math.floor( tank.armorCoef * armor.armor );
+        const speedValue = engine.maxSpeed;
+        const reloadValue = cannon.reload;
+        const overheatValue = cannon.overheating;
 
-        let maxDamageValue = 100;
-        let maxArmorValue = 100;
-        let maxSpeedValue = 100;
-        let maxReloadValue = 10;
-        let maxOverheatValue = 10;
+        const maxDamageValue = 100;
+        const maxArmorValue = 100;
+        const maxSpeedValue = 100;
+        const maxReloadValue = 10;
+        const maxOverheatValue = 10;
 
         $('.garage .right-block .tank-stats .stats-value.cannon').html( damageValue + 'p' );
         $('.garage .right-block .tank-stats .stats-value.armor').html( armorValue + 'p' );
@@ -246,17 +246,17 @@ class Garage {
 
     };
 
-    private setupMenu () {
+    private setupMenu () : void {
 
         let width;
 
         //
 
-        let selectedTankId = this.params.selected;
-        let selectedTank = this.GarageConfig.tanks[ selectedTankId ];
-        let selectedCannonId = ( this.params.tanks[ selectedTankId ] || this.GarageConfig.tanks[ selectedTankId ].default ).cannon;
-        let selectedArmorId = ( this.params.tanks[ selectedTankId ] || this.GarageConfig.tanks[ selectedTankId ].default ).armor;
-        let selectedEngineId = ( this.params.tanks[ selectedTankId ] || this.GarageConfig.tanks[ selectedTankId ].default ).engine;
+        const selectedTankId = this.params.selected;
+        const selectedTank = this.GarageConfig.tanks[ selectedTankId ];
+        const selectedCannonId = ( this.params.tanks[ selectedTankId ] || this.GarageConfig.tanks[ selectedTankId ].default ).cannon;
+        const selectedArmorId = ( this.params.tanks[ selectedTankId ] || this.GarageConfig.tanks[ selectedTankId ].default ).armor;
+        const selectedEngineId = ( this.params.tanks[ selectedTankId ] || this.GarageConfig.tanks[ selectedTankId ].default ).engine;
 
         // clear lists
 
@@ -270,13 +270,13 @@ class Garage {
 
         width = 0;
 
-        for ( let tankId in this.GarageConfig.tanks ) {
+        for ( const tankId in this.GarageConfig.tanks ) {
 
-            let tank = this.GarageConfig.tanks[ tankId ];
-            let isSelected = ( tankId === this.params.selected );
-            let isOwn = ( this.params.tanks[ tankId ] !== undefined );
+            const tank = this.GarageConfig.tanks[ tankId ];
+            const isSelected = ( tankId === this.params.selected );
+            const isOwn = ( this.params.tanks[ tankId ] !== undefined );
 
-            let item = '<div item-id="' + tankId + '" class="item' + ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) + '"><div class="obj-title">' + tank.title + '</div><div class="price"><div class="ico"></div><span class="value">' + tank.price + '</span></div><img class="img" src="/resources/img/garage/tanks/' + tankId + '.png" /></div>';
+            const item = '<div item-id="' + tankId + '" class="item' + ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) + '"><div class="obj-title">' + tank.title + '</div><div class="price"><div class="ico"></div><span class="value">' + tank.price + '</span></div><img class="img" src="/resources/img/garage/tanks/' + tankId + '.png" /></div>';
             $('.garage .bottom-block .tanks .list').append( item );
             width += 174;
 
@@ -288,15 +288,15 @@ class Garage {
 
         width = 0;
 
-        for ( let cannonId in this.GarageConfig.cannons ) {
+        for ( const cannonId in this.GarageConfig.cannons ) {
 
-            let cannon = this.GarageConfig.cannons[ cannonId ];
+            const cannon = this.GarageConfig.cannons[ cannonId ];
             if ( selectedTank.cannons.indexOf( cannonId ) === - 1 ) continue;
 
-            let isSelected = ( cannonId === selectedCannonId );
-            let isOwn = ( this.params.cannons[ cannonId ] !== undefined );
+            const isSelected = ( cannonId === selectedCannonId );
+            const isOwn = ( this.params.cannons[ cannonId ] !== undefined );
 
-            let item = '<div item-id="' + cannonId + '" class="item' + ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) + '"><div class="obj-title">' + cannon.title + '</div><div class="price"><div class="ico"></div><span class="value">' + cannon.price + '</span></div><img class="img" src="/resources/img/garage/cannons/' + cannonId + '.png" /></div>';
+            const item = '<div item-id="' + cannonId + '" class="item' + ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) + '"><div class="obj-title">' + cannon.title + '</div><div class="price"><div class="ico"></div><span class="value">' + cannon.price + '</span></div><img class="img" src="/resources/img/garage/cannons/' + cannonId + '.png" /></div>';
             $('.garage .bottom-block .cannons .list').append( item );
             width += 174;
 
@@ -308,15 +308,15 @@ class Garage {
 
         width = 0;
 
-        for ( let engineId in this.GarageConfig.engines ) {
+        for ( const engineId in this.GarageConfig.engines ) {
 
-            let engine = this.GarageConfig.engines[ engineId ];
+            const engine = this.GarageConfig.engines[ engineId ];
             if ( selectedTank.engines.indexOf( engineId ) === - 1 ) continue;
 
-            let isSelected = ( engineId === selectedEngineId );
-            let isOwn = ( this.params.engines[ engineId ] !== undefined );
+            const isSelected = ( engineId === selectedEngineId );
+            const isOwn = ( this.params.engines[ engineId ] !== undefined );
 
-            let item = '<div item-id="' + engineId + '" class="item' + ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) + '"><div class="obj-title">' + engine.title + '</div><div class="price"><div class="ico"></div><span class="value">' + engine.price + '</span></div><img class="img" src="/resources/img/garage/engines/' + engineId + '.png" /></div>';
+            const item = '<div item-id="' + engineId + '" class="item' + ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) + '"><div class="obj-title">' + engine.title + '</div><div class="price"><div class="ico"></div><span class="value">' + engine.price + '</span></div><img class="img" src="/resources/img/garage/engines/' + engineId + '.png" /></div>';
             $('.garage .bottom-block .engines .list').append( item );
             width += 174;
 
@@ -328,15 +328,15 @@ class Garage {
 
         width = 0;
 
-        for ( let armorId in this.GarageConfig.armors ) {
+        for ( const armorId in this.GarageConfig.armors ) {
 
-            let armor = this.GarageConfig.armors[ armorId ];
+            const armor = this.GarageConfig.armors[ armorId ];
             if ( selectedTank.armors.indexOf( armorId ) === - 1 ) continue;
 
-            let isSelected = ( armorId === selectedArmorId );
-            let isOwn = ( this.params.armors[ armorId ] !== undefined );
+            const isSelected = ( armorId === selectedArmorId );
+            const isOwn = ( this.params.armors[ armorId ] !== undefined );
 
-            let item = '<div item-id="' + armorId + '" class="item' + ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) + '"><div class="obj-title">' + armor.title + '</div><div class="price"><div class="ico"></div><span class="value">' + armor.price + '</span></div><img class="img" src="/resources/img/garage/armors/' + armorId + '.png" /></div>';
+            const item = '<div item-id="' + armorId + '" class="item' + ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) + '"><div class="obj-title">' + armor.title + '</div><div class="price"><div class="ico"></div><span class="value">' + armor.price + '</span></div><img class="img" src="/resources/img/garage/armors/' + armorId + '.png" /></div>';
             $('.garage .bottom-block .armors .list').append( item );
             width += 174;
 
@@ -348,8 +348,8 @@ class Garage {
 
         $('.garage .bottom-block .item').mouseover( ( event ) => {
 
-            let category = $( event.currentTarget ).parent().parent().attr('tab') || '';
-            let itemId = $( event.currentTarget ).attr('item-id') || '';
+            const category = $( event.currentTarget ).parent().parent().attr('tab') || '';
+            const itemId = $( event.currentTarget ).attr('item-id') || '';
             SoundManager.playSound('ElementHover');
             clearTimeout( this.rightBarChangeTimeout );
 
@@ -373,7 +373,7 @@ class Garage {
 
     };
 
-    public keyDown ( event: KeyboardEvent ) {
+    public keyDown ( event: KeyboardEvent ) : void {
 
         if ( ! this.isOpened ) return;
 
@@ -397,7 +397,7 @@ class Garage {
 
     };
 
-    public switchMenu ( event: MouseEvent ) {
+    public switchMenu ( event: MouseEvent ) : void {
 
         if ( ! event.currentTarget ) {
 
@@ -405,8 +405,8 @@ class Garage {
 
         }
 
-        let oldTab = $('.garage .menu-items .item.active').attr('tab');
-        let newTab = $( event.currentTarget ).attr('tab');
+        const oldTab = $('.garage .menu-items .item.active').attr('tab');
+        const newTab = $( event.currentTarget ).attr('tab');
 
         if ( oldTab === newTab ) return;
 
@@ -434,11 +434,11 @@ class Garage {
 
     };
 
-    public selectTank ( event?: MouseEvent ) {
+    public selectTank ( event?: MouseEvent ) : void {
 
         if ( event && event.currentTarget ) {
 
-            let tank = this.GarageConfig.tanks[ $( event.currentTarget ).attr('item-id') || '' ];
+            const tank = this.GarageConfig.tanks[ $( event.currentTarget ).attr('item-id') || '' ];
             SoundManager.playSound('ElementSelect');
 
             if ( $( event.currentTarget ).hasClass('notOwn') ) {
@@ -455,7 +455,7 @@ class Garage {
 
         //
 
-        let tankId = 'IS2';
+        const tankId = 'IS2';
         this.currentTank = tankId;
         this.scene.selectModel( tankId );
 
@@ -475,7 +475,7 @@ class Garage {
 
     };
 
-    public selectCannon ( event?: MouseEvent ) {
+    public selectCannon ( event?: MouseEvent ) : void {
 
         if ( ! event || ! event.currentTarget ) {
 
@@ -483,7 +483,7 @@ class Garage {
 
         }
 
-        let cannon = this.GarageConfig.cannons[ $( event.currentTarget ).attr('item-id') || '' ];
+        const cannon = this.GarageConfig.cannons[ $( event.currentTarget ).attr('item-id') || '' ];
         SoundManager.playSound('ElementSelect');
 
         if ( $( event.currentTarget ).hasClass('notOwn') ) {
@@ -498,7 +498,7 @@ class Garage {
 
     };
 
-    public selectEngines ( event?: MouseEvent ) {
+    public selectEngines ( event?: MouseEvent ) : void {
 
         if ( ! event || ! event.currentTarget ) {
 
@@ -506,7 +506,7 @@ class Garage {
 
         }
 
-        let engine = this.GarageConfig.engines[ $( event.currentTarget ).attr('item-id') || '' ];
+        const engine = this.GarageConfig.engines[ $( event.currentTarget ).attr('item-id') || '' ];
         SoundManager.playSound('ElementSelect');
 
         if ( $( event.currentTarget ).hasClass('notOwn') ) {
@@ -521,7 +521,7 @@ class Garage {
 
     };
 
-    public selectArmor ( event?: MouseEvent ) {
+    public selectArmor ( event?: MouseEvent ) : void {
 
         if ( ! event || ! event.currentTarget ) {
 
@@ -529,7 +529,7 @@ class Garage {
 
         }
 
-        let armor = this.GarageConfig.armors[ $( event.currentTarget ).attr('item-id') || '' ];
+        const armor = this.GarageConfig.armors[ $( event.currentTarget ).attr('item-id') || '' ];
         SoundManager.playSound('ElementSelect');
 
         if ( $( event.currentTarget ).hasClass('notOwn') ) {
@@ -544,7 +544,7 @@ class Garage {
 
     };
 
-    public selectTexture ( event?: MouseEvent ) {
+    public selectTexture ( event?: MouseEvent ) : void {
 
         if ( ! event || ! event.currentTarget ) {
 
@@ -560,7 +560,7 @@ class Garage {
 
     };
 
-    public selectDecoration ( event?: MouseEvent ) {
+    public selectDecoration ( event?: MouseEvent ) : void {
 
         if ( ! event || ! event.currentTarget ) {
 
@@ -576,7 +576,7 @@ class Garage {
 
     };
 
-    public onLoadedResources () {
+    public onLoadedResources () : void {
 
         this.selectTank();
 
@@ -584,7 +584,7 @@ class Garage {
 
     //
 
-    public show () {
+    public show () : void {
 
         if ( ! Game.ready ) return;
 
@@ -598,7 +598,7 @@ class Garage {
 
     };
 
-    public hide () {
+    public hide () : void {
 
         this.isOpened = false;
         $('.garage').hide();
@@ -608,7 +608,7 @@ class Garage {
 
     //
 
-    public init () {
+    public init () : void {
 
         Game.gameService.getGarageConfig( ( config: any ) => {
 
@@ -633,7 +633,3 @@ class Garage {
     };
 
 };
-
-//
-
-export { Garage };

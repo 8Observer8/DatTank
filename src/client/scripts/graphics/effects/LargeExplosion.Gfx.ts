@@ -5,13 +5,13 @@
 
 import * as THREE from 'three';
 
-import * as OMath from "./../../OMath/Core.OMath";
-import { ResourceManager } from "./../../managers/Resource.Manager";
-import { GfxCore } from "./../Core.Gfx";
+import * as OMath from '../../OMath/Core.OMath';
+import { ResourceManager } from '../../managers/Resource.Manager';
+import { GfxCore } from '../Core.Gfx';
 
 //
 
-class LargeExplosionGfx {
+export class LargeExplosionGfx {
 
     private object: THREE.Object3D = new THREE.Object3D();
     private sprite: THREE.Sprite;
@@ -22,13 +22,13 @@ class LargeExplosionGfx {
 
     //
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
         if ( ! this.active ) return;
         this.time += delta;
 
-        let progress = this.time / this.duration;
-        let map = this.sprite.material.map;
+        const progress = this.time / this.duration;
+        const map = this.sprite.material.map;
 
         map.offset.x = Math.floor( 20 * progress ) % 5;
         map.offset.y = Math.floor( Math.floor( 20 * progress ) / 5 );
@@ -46,13 +46,7 @@ class LargeExplosionGfx {
 
     };
 
-    public dispose () {
-
-        // todo
-
-    };
-
-    public setActive ( position: OMath.Vec3 ) {
+    public setActive ( position: OMath.Vec3 ) : void {
 
         this.object.position.set( position.x, position.y, position.z );
         this.object.visible = true;
@@ -60,9 +54,10 @@ class LargeExplosionGfx {
 
     };
 
-    public init () {
+    public init () : void {
 
-        let map, material;
+        let map;
+        let material;
 
         map = ResourceManager.getTexture( 'explosion1.png' )!.clone();
         map.wrapS = THREE.RepeatWrapping;
@@ -71,14 +66,14 @@ class LargeExplosionGfx {
         map.offset.set( 0, 0.75 );
         map.needsUpdate = true;
 
-        material = new THREE.SpriteMaterial({ map: map, color: 0xffffff, fog: true });
+        material = new THREE.SpriteMaterial({ map, color: 0xffffff, fog: true });
         this.sprite = new THREE.Sprite( material );
 
         this.sprite.position.z = -15;
         this.sprite.position.y = 37;
         this.sprite.position.x = Math.random() * 3 - 1.5;
         this.sprite.material.opacity = 0.8 - 0.8 / 5;
-        let scale = 80;
+        const scale = 80;
         this.sprite.scale.set( scale, scale, scale );
         this.object.add( this.sprite );
         this.object.visible = false;
@@ -99,7 +94,3 @@ class LargeExplosionGfx {
     };
 
 };
-
-//
-
-export { LargeExplosionGfx };

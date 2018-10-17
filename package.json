@@ -36,6 +36,7 @@
     "request": "^2.87.0",
     "three": "^0.91.0",
     "tsify": "^4.0.0",
+    "tslint": "^5.11.0",
     "typescript": "^3.1.1",
     "ws": "^1.1.1",
     "yargs": "^10.1.2"
@@ -58,7 +59,8 @@
     "jquery": "global:jQuery"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "tslint src/**/*.ts -t verbose"
   },
   "repository": {
     "type": "git",

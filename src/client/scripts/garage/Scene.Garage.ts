@@ -5,12 +5,12 @@
 
 import * as THREE from 'three';
 
-import { ResourceManager } from "./../managers/Resource.Manager";
-import { Garage } from "./Core.Garage";
+import { ResourceManager } from '../managers/Resource.Manager';
+import { Garage } from './Core.Garage';
 
 //
 
-class GarageScene {
+export class GarageScene {
 
     private container: HTMLCanvasElement;
     private scene: THREE.Scene;
@@ -19,7 +19,7 @@ class GarageScene {
 
     private garage: Garage;
 
-    private models: Array<any> = [];
+    private models: any[] = [];
     private currentTankModel: THREE.Mesh;
 
     private ambientlight: THREE.AmbientLight;
@@ -87,22 +87,23 @@ class GarageScene {
 
         if ( Object.keys( this.models ).length !== 0 ) return;
 
-        let model, mesh;
-        let textureLoader = new THREE.TextureLoader();
+        let model;
+        let mesh;
+        const textureLoader = new THREE.TextureLoader();
 
         for ( let i = 0; i < 4; i ++ ) {
 
-            let modelName = ['IS2', 'T29', 'T44', 'T54'][ i ];
-            let object = new THREE.Object3D();
-            let texture = textureLoader.load( '/resources/textures/' + modelName + '.png' );
+            const modelName = ['IS2', 'T29', 'T44', 'T54'][ i ];
+            const object = new THREE.Object3D();
+            const texture = textureLoader.load( '/resources/textures/' + modelName + '.png' );
 
             model = ResourceManager.getModel( 'tanks/' + 'IS2' );
             if ( ! model ) continue;
 
-            let material = [
+            const material = [
                 new THREE.MeshPhongMaterial({ map: texture, color: 0xbbbbbb }),
                 new THREE.MeshPhongMaterial({ map: texture, color: 0xbbbbbb }),
-                new THREE.MeshPhongMaterial({ map: texture, color: 0xbbbbbb })
+                new THREE.MeshPhongMaterial({ map: texture, color: 0xbbbbbb }),
             ];
 
             mesh = new THREE.Mesh( model.geometry, material );
@@ -129,7 +130,7 @@ class GarageScene {
 
     public selectModel ( modelName: string ) : void {
 
-        for ( var model in this.models ) {
+        for ( const model in this.models ) {
 
             this.models[ model ].visible = false;
 
@@ -149,7 +150,7 @@ class GarageScene {
         if ( ResourceManager.loadedPacks.indexOf('garage') === -1 ) {
 
             clearTimeout( this.initModelsTimeout );
-            this.initModelsTimeout = <any>setTimeout( this.reset.bind( this ), 200 );
+            this.initModelsTimeout = setTimeout( this.reset.bind( this ), 200 ) as any;
             return;
 
         }
@@ -182,7 +183,7 @@ class GarageScene {
         //
 
         this.lastFrameTime = this.lastFrameTime || Date.now();
-        var delta = Date.now() - this.lastFrameTime;
+        const delta = Date.now() - this.lastFrameTime;
         this.lastFrameTime = Date.now();
         this.timer += delta;
 
@@ -202,7 +203,3 @@ class GarageScene {
     };
 
 };
-
-//
-
-export { GarageScene };

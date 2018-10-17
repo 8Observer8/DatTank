@@ -7,7 +7,7 @@ import * as THREE from 'three';
 
 //
 
-class TowerChangeTeamGfx {
+export class TowerChangeTeamGfx {
 
     private object: THREE.Object3D = new THREE.Object3D();
     private time: number;
@@ -17,12 +17,12 @@ class TowerChangeTeamGfx {
 
     //
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
         if ( ! this.active ) return;
 
         this.time += delta;
-        let progress = this.time / 2000;
+        const progress = this.time / 2000;
 
         if ( progress > 0.5 ) {
 
@@ -47,7 +47,7 @@ class TowerChangeTeamGfx {
 
     };
 
-    public show ( color: number ) {
+    public show ( color: number ) : void {
 
         this.time = 0;
         this.pipe.material['color'].setHex( color );
@@ -59,7 +59,7 @@ class TowerChangeTeamGfx {
 
     };
 
-    public init ( target: THREE.Object3D ) {
+    public init ( target: THREE.Object3D ) : void {
 
         this.pipe = new THREE.Mesh( new THREE.CylinderBufferGeometry( 50, 50, 550, 10 ), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.0, depthWrite: false }) );
         this.pipe.renderOrder = 10;
@@ -71,7 +71,3 @@ class TowerChangeTeamGfx {
     };
 
 };
-
-//
-
-export { TowerChangeTeamGfx };

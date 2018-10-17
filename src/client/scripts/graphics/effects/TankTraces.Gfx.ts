@@ -5,12 +5,12 @@
 
 import * as THREE from 'three';
 
-import * as OMath from "./../../OMath/Core.OMath";
-import { GfxCore } from "./../Core.Gfx";
+import * as OMath from '../../OMath/Core.OMath';
+import { GfxCore } from '../Core.Gfx';
 
 //
 
-class TankTracesGfx {
+export class TankTracesGfx {
 
     private objects: any[] = [];
     private target: THREE.Object3D;
@@ -22,22 +22,23 @@ class TankTracesGfx {
 
     //
 
-    public dispose () {
+    public dispose () : void {
 
         GfxCore.coreObjects['tank-tracks'].remove( this.object );
 
     };
 
-    private addTraceIfNeeded () {
+    private addTraceIfNeeded () : void {
 
-        let rotation = this.target.rotation.y;
-        let position = this.target.position;
+        const rotation = this.target.rotation.y;
+        const position = this.target.position;
 
         if ( this.prevPosition.distanceTo( position ) > 5 ) {
 
-            var plane1, plane2;
+            let plane1;
+            let plane2;
 
-            var track = this.objects[ this.indexOffset ];
+            const track = this.objects[ this.indexOffset ];
             plane1 = track.left;
             plane2 = track.right;
 
@@ -69,7 +70,7 @@ class TankTracesGfx {
 
     };
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
         this.addTraceIfNeeded();
 
@@ -81,7 +82,7 @@ class TankTracesGfx {
 
     };
 
-    public init ( target: THREE.Object3D ) {
+    public init ( target: THREE.Object3D ) : void {
 
         this.target = target;
         this.prevPosition.set( this.target.position.x, this.target.position.y, this.target.position.z );
@@ -89,7 +90,8 @@ class TankTracesGfx {
         //
 
         let material;
-        let plane1, plane2;
+        let plane1;
+        let plane2;
 
         for ( let i = 0; i < 35; i ++ ) {
 
@@ -100,9 +102,9 @@ class TankTracesGfx {
             this.objects.push({
                 left:       plane1,
                 right:      plane2,
-                material:   material,
+                material,
                 position:   new THREE.Vector3(),
-                lastUpdate: 0
+                lastUpdate: 0,
             });
 
             plane1.renderOrder = 10;
@@ -128,7 +130,3 @@ class TankTracesGfx {
     };
 
 };
-
-//
-
-export { TankTracesGfx };

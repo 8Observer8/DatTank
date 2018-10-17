@@ -3,18 +3,18 @@
  * DatTank Player core
 */
 
-import { Logger } from "./../utils/Logger";
-import { TankObject } from "./../objects/core/Tank.Object";
-import { TankList as Tanks } from "./../objects/core/Tank.Object";
-import { Arena } from "./Arena.Core";
-import { TeamCore } from "./Team.Core";
-import { TeamManager } from "./../managers/Team.Manager";
-import { PlayerNetwork } from "./../network/Player.Network";
-import { UI } from "./../ui/Core.UI";
+import { Logger } from '../utils/Logger';
+import { TankObject } from '../objects/core/Tank.Object';
+import { TankList as Tanks } from '../objects/core/Tank.Object';
+import { Arena } from './Arena.Core';
+import { TeamCore } from './Team.Core';
+import { TeamManager } from '../managers/Team.Manager';
+import { PlayerNetwork } from '../network/Player.Network';
+import { UI } from '../ui/Core.UI';
 
 //
 
-class PlayerCore {
+export class PlayerCore {
 
     public id: number;
     public username: string;
@@ -32,7 +32,7 @@ class PlayerCore {
 
     //
 
-    public newLevel ( bonusLevels: number ) {
+    public newLevel ( bonusLevels: number ) : void {
 
         setTimeout( () => {
 
@@ -44,7 +44,7 @@ class PlayerCore {
 
     };
 
-    public updateStats ( name: string ) {
+    public updateStats ( name: string ) : void {
 
         if ( Arena.me.id === this.id ) {
 
@@ -54,13 +54,13 @@ class PlayerCore {
 
         //
 
-        let stats = {
-            'speed':        0,
-            'rpm':          1,
-            'armour':       2,
-            'gun':          3,
-            'ammoCapacity': 4
-        };
+        // let stats = {
+        //     'speed':        0,
+        //     'rpm':          1,
+        //     'armour':       2,
+        //     'gun':          3,
+        //     'ammoCapacity': 4
+        // };
         // var levelsStats = {
         //     speed:          [ 5, 3, 2, 2, 2, 3, 1, 3, 3, 2, 5, 3, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
         //     rpm:            [ 30, 20, 20, 15, 10, 15, 20, 20, 30, 40, 30, 20, 10, 10, 20, 30, 20, 10, 20, 20, 20, 10, 15 ],
@@ -105,14 +105,14 @@ class PlayerCore {
 
         // todo!
 
-        this.network.statsUpdate( stats[ name ] );
-        this.level ++;
+        // this.network.statsUpdate( stats[ name ] );
+        // this.level ++;
 
     };
 
-    private setTank ( params: any ) {
+    private setTank ( params: any ) : void {
 
-        let tankName = Tanks.getById( params.typeId );
+        const tankName = Tanks.getById( params.typeId );
 
         if ( tankName ) {
 
@@ -128,9 +128,9 @@ class PlayerCore {
 
     };
 
-    public triggerRespawn () {
+    public triggerRespawn () : void {
 
-        let tankName = localStorage.getItem( 'currentTank' ) || 'IS2';
+        const tankName = localStorage.getItem( 'currentTank' ) || 'IS2';
         this.network.respawn( Tanks[ tankName ].tid );
 
         //
@@ -139,7 +139,7 @@ class PlayerCore {
 
     };
 
-    public respawn ( params: any ) {
+    public respawn ( params: any ) : void {
 
         if ( Arena.me.id === this.id && this.tank ) {
 
@@ -161,7 +161,7 @@ class PlayerCore {
 
     };
 
-    public dispose () {
+    public dispose () : void {
 
         if ( this.tank ) {
 
@@ -174,7 +174,7 @@ class PlayerCore {
 
     };
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
         if ( this.tank ) {
 
@@ -184,7 +184,7 @@ class PlayerCore {
 
     };
 
-    public init () {
+    public init () : void {
 
         if ( ! this.tank ) {
 
@@ -224,7 +224,3 @@ class PlayerCore {
     };
 
 };
-
-//
-
-export { PlayerCore };

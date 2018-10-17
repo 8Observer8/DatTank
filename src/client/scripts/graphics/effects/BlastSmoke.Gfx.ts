@@ -5,14 +5,14 @@
 
 import * as THREE from 'three';
 
-import * as OMath from "./../../OMath/Core.OMath";
-import { ResourceManager } from "./../../managers/Resource.Manager";
+import * as OMath from '../../OMath/Core.OMath';
+import { ResourceManager } from '../../managers/Resource.Manager';
 
 //
 
-class BlastSmokeGfx {
+export class BlastSmokeGfx {
 
-    private sprites: Array<THREE.Sprite> = [];
+    private sprites: THREE.Sprite[] = [];
     private spriteNumber: number = 5;
     private object: THREE.Object3D = new THREE.Object3D();
     private time: number;
@@ -22,24 +22,18 @@ class BlastSmokeGfx {
 
     //
 
-    public dispose () {
-
-        // todo
-
-    };
-
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
         if ( ! this.active ) return;
 
         this.time += delta;
-        let progress = this.time / this.duration;
+        const progress = this.time / this.duration;
         let enabled = false;
 
-        for ( var i = 0, il = this.sprites.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.sprites.length; i < il; i ++ ) {
 
-            let sprite = this.sprites[ i ];
-            let scale = progress + ( 0.2 + progress ) * i;
+            const sprite = this.sprites[ i ];
+            const scale = progress + ( 0.2 + progress ) * i;
             sprite.position.z = ( 0.1 + progress ) * i * OMath.sign( this.object.position.z );
 
             if ( progress < 0.1 ) {
@@ -71,9 +65,9 @@ class BlastSmokeGfx {
 
     };
 
-    public show () {
+    public show () : void {
 
-        for ( var i = 0, il = this.sprites.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.sprites.length; i < il; i ++ ) {
 
             this.sprites[ i ].material.opacity = 0.5;
             this.sprites[ i ].scale.set( 1, 1, 1 );
@@ -86,10 +80,10 @@ class BlastSmokeGfx {
 
     };
 
-    public init ( target: THREE.Object3D, offset: OMath.Vec3 ) {
+    public init ( target: THREE.Object3D, offset: OMath.Vec3 ) : void {
 
-        let map = ResourceManager.getTexture( 'smoke.png' );
-        let material = new THREE.SpriteMaterial({ map: map, color: 0xffffff, fog: true, transparent: true });
+        const map = ResourceManager.getTexture( 'smoke.png' );
+        const material = new THREE.SpriteMaterial({ map, color: 0xffffff, fog: true, transparent: true });
 
         material.depthTest = true;
         material.depthWrite = false;
@@ -98,10 +92,10 @@ class BlastSmokeGfx {
         this.object.position.y += offset.y + 2;
         this.object.position.z += offset.z;
 
-        for ( var i = 0; i < this.spriteNumber; i ++ ) {
+        for ( let i = 0; i < this.spriteNumber; i ++ ) {
 
-            let sprite = new THREE.Sprite( material );
-            let scale = 1 + i / 5;
+            const sprite = new THREE.Sprite( material );
+            const scale = 1 + i / 5;
 
             sprite.position.x = 0;
             sprite.position.y = 0;
@@ -122,7 +116,3 @@ class BlastSmokeGfx {
     };
 
 };
-
-//
-
-export { BlastSmokeGfx };

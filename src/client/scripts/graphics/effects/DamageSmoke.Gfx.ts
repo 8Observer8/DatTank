@@ -9,10 +9,10 @@ import { ResourceManager } from '../../managers/Resource.Manager';
 
 //
 
-class DamageSmokeGfx {
+export class DamageSmokeGfx {
 
     private object: THREE.Object3D = new THREE.Object3D();
-    private sprites: Array<THREE.Sprite> = [];
+    private sprites: THREE.Sprite[] = [];
     private spriteNumber: number = 10;
     private time: number;
     private smokeDuration: number = 3000;
@@ -23,7 +23,7 @@ class DamageSmokeGfx {
 
     //
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
         if ( ! this.active && this.inactiveSprites === this.sprites.length ) {
 
@@ -34,10 +34,10 @@ class DamageSmokeGfx {
 
         this.time += delta;
 
-        for ( var i = 0, il = this.sprites.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.sprites.length; i < il; i ++ ) {
 
-            let sprite = this.sprites[ i ];
-            let progress = ( ( this.time + i * this.spriteTimeOffset ) % this.smokeDuration ) / this.smokeDuration;
+            const sprite = this.sprites[ i ];
+            const progress = ( ( this.time + i * this.spriteTimeOffset ) % this.smokeDuration ) / this.smokeDuration;
 
             if ( sprite['inactive'] !== true && ! this.active && progress > 0.95 ) {
 
@@ -60,21 +60,21 @@ class DamageSmokeGfx {
 
             }
 
-            let scale = 35 + 35 * progress;
+            const scale = 35 + 35 * progress;
             sprite.scale.set( scale, scale, scale );
 
         }
 
     };
 
-    public show () {
+    public show () : void {
 
         this.time = 0;
         this.object.visible = true;
         this.inactiveSprites = 0;
         this.active = true;
 
-        for ( var i = 0, il = this.sprites.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.sprites.length; i < il; i ++ ) {
 
             this.sprites[ i ]['inactive'] = false;
 
@@ -82,16 +82,16 @@ class DamageSmokeGfx {
 
     };
 
-    public hide () {
+    public hide () : void {
 
         this.active = false;
 
     };
 
-    public init ( target: THREE.Object3D ) {
+    public init ( target: THREE.Object3D ) : void {
 
-        let map = ResourceManager.getTexture( 'smoke.png' );
-        let material = new THREE.SpriteMaterial({ map: map, color: 0xffffff, fog: true, transparent: true });
+        const map = ResourceManager.getTexture( 'smoke.png' );
+        const material = new THREE.SpriteMaterial({ map, color: 0xffffff, fog: true, transparent: true });
         let sprite = new THREE.Sprite( material );
         let scale;
 
@@ -102,7 +102,7 @@ class DamageSmokeGfx {
 
         //
 
-        for ( var i = 0; i < this.spriteNumber; i ++ ) {
+        for ( let i = 0; i < this.spriteNumber; i ++ ) {
 
             sprite = sprite.clone();
             sprite.position.z = -15;
@@ -124,7 +124,3 @@ class DamageSmokeGfx {
     };
 
 };
-
-//
-
-export { DamageSmokeGfx };

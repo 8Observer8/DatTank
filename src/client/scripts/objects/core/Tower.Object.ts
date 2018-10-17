@@ -3,17 +3,17 @@
  * DatTank Tower Object class
 */
 
-import { Arena } from "./../../core/Arena.Core";
+import { Arena } from '../../core/Arena.Core';
 
-import * as OMath from "./../../OMath/Core.OMath";
-import { Logger } from "./../../utils/Logger";
-import { TowerNetwork } from "./../../network/Tower.Network";
-import { TowerGfx } from "./../../graphics/objects/Tower.Gfx";
-import { TeamCore } from "./../../core/Team.Core";
-import { TeamManager } from "./../../managers/Team.Manager";
-import { HealthChangeLabelManager } from "./../../managers/HealthChangeLabel.Manager";
-import { BulletManager } from "./../../managers/Bullet.Manager";
-import { CollisionManager } from "./../../managers/Collision.Manager";
+import * as OMath from '../../OMath/Core.OMath';
+import { Logger } from '../../utils/Logger';
+import { TowerNetwork } from '../../network/Tower.Network';
+import { TowerGfx } from '../../graphics/objects/Tower.Gfx';
+import { TeamCore } from '../../core/Team.Core';
+import { TeamManager } from '../../managers/Team.Manager';
+import { HealthChangeLabelManager } from '../../managers/HealthChangeLabel.Manager';
+import { BulletManager } from '../../managers/Bullet.Manager';
+import { CollisionManager } from '../../managers/Collision.Manager';
 
 //
 
@@ -40,7 +40,7 @@ class TowerObject {
 
     //
 
-    public makeShot ( bulletId: number, position: OMath.Vec3, directionRotation: number ) {
+    public makeShot ( bulletId: number, position: OMath.Vec3, directionRotation: number ) : void {
 
         if ( this.health <= 0 ) return;
 
@@ -49,7 +49,7 @@ class TowerObject {
 
     };
 
-    public changeTeam ( newOwnerTeamId: number, killerId?: number ) {
+    public changeTeam ( newOwnerTeamId: number, killerId?: number ) : void {
 
         if ( killerId !== undefined ) {
 
@@ -65,7 +65,7 @@ class TowerObject {
 
         //
 
-        let team = TeamManager.getById( newOwnerTeamId );
+        const team = TeamManager.getById( newOwnerTeamId );
 
         if ( team ) {
 
@@ -77,7 +77,7 @@ class TowerObject {
 
     };
 
-    public setTopRotation ( currentAngle: number, targetAngle?: number ) {
+    public setTopRotation ( currentAngle: number, targetAngle?: number ) : void {
 
         if ( targetAngle === undefined ) {
 
@@ -94,7 +94,7 @@ class TowerObject {
 
     };
 
-    public setHealth ( value: number ) {
+    public setHealth ( value: number ) : void {
 
         if ( this.health - value !== 0 ) {
 
@@ -107,7 +107,7 @@ class TowerObject {
 
     };
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
         let deltaRot = OMath.formatAngle( this.targetTopRotation ) - OMath.formatAngle( this.topRotation );
 
@@ -136,7 +136,7 @@ class TowerObject {
 
     };
 
-    public dispose () {
+    public dispose () : void {
 
         this.gfx.dispose();
         this.network.dispose();
@@ -144,7 +144,7 @@ class TowerObject {
 
     };
 
-    public init () {
+    public init () : void {
 
         this.gfx.init( this );
         this.network.init( this );
@@ -161,9 +161,10 @@ class TowerObject {
     constructor ( params: any ) {
 
         this.id = params.id;
-        let team = TeamManager.getById( params.team );
+        const team = TeamManager.getById( params.team );
         if ( ! team ) return;
 
+        this.team = team;
         this.health = params.health;
         this.rotation = 0; // params.rotation;
         this.topRotation = params.rotation;
@@ -180,15 +181,15 @@ class TowerObject {
 
 // get all towers and put into 'TowersList' object
 
-import { T1Tower } from "./../../objects/towers/T1.Tower";
+import { T1Tower } from '../../objects/towers/T1.Tower';
 
-let TowerList = {
+const TowerList = {
     T1:     T1Tower,
     getById: ( towerId: number ) => {
 
-        for ( let item in TowerList ) {
+        for ( const item in TowerList ) {
 
-            if ( typeof item === "string" ) {
+            if ( typeof item === 'string' ) {
 
                 if ( TowerList[ item ].tid === towerId ) {
 
@@ -202,7 +203,7 @@ let TowerList = {
 
         return null;
 
-    }
+    },
 };
 
 //

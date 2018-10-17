@@ -5,13 +5,13 @@
 
 import * as THREE from 'three';
 
-import * as OMath from "./../../OMath/Core.OMath";
-import { GfxCore } from "./../Core.Gfx";
-import { ResourceManager } from "./../../managers/Resource.Manager";
+import * as OMath from '../../OMath/Core.OMath';
+import { GfxCore } from '../Core.Gfx';
+import { ResourceManager } from '../../managers/Resource.Manager';
 
 //
 
-class BulletGfx {
+export class BulletGfx {
 
     public active: boolean = false;
     public id: number;
@@ -29,19 +29,15 @@ class BulletGfx {
 
     //
 
-    public dispose () {
-
-        // todo
-
-    };
-
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
         if ( ! this.active ) return;
         this.time += delta;
 
-        let x, z;
-        let dx, dz;
+        let x;
+        let z;
+        let dx;
+        let dz;
 
         x = this.bullet.position.x + this.bulletSpeed * Math.cos( this.directionRotation ) * delta;
         z = this.bullet.position.z + this.bulletSpeed * Math.sin( this.directionRotation ) * delta;
@@ -51,7 +47,7 @@ class BulletGfx {
         dx = x - this.position.x;
         dz = z - this.position.z;
         this.trace.scale.x = Math.sqrt( dx * dx + dz * dz ) / 3;
-        this.trace.material['opacity'] = Math.max( 0.5 - this.trace.scale.x / 280, 0 );  
+        this.trace.material['opacity'] = Math.max( 0.5 - this.trace.scale.x / 280, 0 );
 
         this.object.updateMatrixWorld( true );
 
@@ -65,14 +61,14 @@ class BulletGfx {
 
     };
 
-    public deactivate () {
+    public deactivate () : void {
 
         this.object.visible = false;
         this.active = false;
 
     };
 
-    public setActive ( bulletId: number, position: OMath.Vec3, directionRotation: number ) {
+    public setActive ( bulletId: number, position: OMath.Vec3, directionRotation: number ) : void {
 
         this.active = true;
         this.id = bulletId;
@@ -97,7 +93,7 @@ class BulletGfx {
 
     };
 
-    public init () {
+    public init () : void {
 
         this.bullet = new THREE.Mesh( new THREE.BoxGeometry( 2.5, 2.5, 2.5 ), new THREE.MeshBasicMaterial({ color: 0xff3333 }) );
         this.object.add( this.bullet );
@@ -130,7 +126,3 @@ class BulletGfx {
     };
 
 };
-
-//
-
-export { BulletGfx };
