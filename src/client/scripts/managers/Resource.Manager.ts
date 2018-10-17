@@ -45,11 +45,6 @@ class ResourceManagerCore {
         'Decorations.jpg',
         'Boxes.jpg',
 
-        'IS2.jpg',
-        'T29.jpg',
-        'T44.jpg',
-        'T54.jpg',
-
         'IS2.png'
     ];
 
@@ -70,14 +65,6 @@ class ResourceManagerCore {
             models: [
                 'Garage',
                 'tanks/IS2'
-                // 'tanks/IS2-bottom',
-                // 'tanks/IS2-top',
-                // 'tanks/T29-bottom',
-                // 'tanks/T29-top',
-                // 'tanks/T44-bottom',
-                // 'tanks/T44-top',
-                // 'tanks/T54-bottom',
-                // 'tanks/T54-top'
             ]
         },
         ingame: {

@@ -6,10 +6,10 @@
 export class EngineGarage {
 
     public static maxSpeed: number;
-    public static aceleration: number;
+    public static acceleration: number;
 
     public maxSpeed: number;
-    public aceleration: number;
+    public acceleration: number;
 
     // todo
 

@@ -10,7 +10,7 @@ import { EngineGarage } from "./../objects/garage/core/Engine.Garage";
 
 //
 
-import { DTEK72sTank } from "./../objects/garage/tanks/DTEK72.Tank";
+import { DTEK72Tank } from "./../objects/garage/tanks/DTEK72.Tank";
 import { IS2001Tank } from "./../objects/garage/tanks/IS2001.Tank";
 import { MG813Tank } from "./../objects/garage/tanks/MG813.Tank";
 import { OrbitT32sTank } from "./../objects/garage/tanks/OrbitT32s.Tank";
@@ -18,7 +18,7 @@ import { RiperX3Tank } from "./../objects/garage/tanks/RiperX3.Tank";
 import { TigerS8Tank } from "./../objects/garage/tanks/TigerS8.Tank";
 
 const TanksList = {
-    'DTEK72s':      DTEK72sTank,
+    'DTEK72':       DTEK72Tank,
     'IS2001':       IS2001Tank,
     'MG813':        MG813Tank,
     'OrbitT32s':    OrbitT32sTank,
@@ -41,23 +41,62 @@ import { Mag87sCannon } from "./../objects/garage/cannons/Mag87s.Cannon";
 import { Mag87sTurboCannon } from "./../objects/garage/cannons/Mag87sTurbo.Cannon";
 
 const CannonList = {
-    'PlasmaG1':         PlasmaG1Cannon,
-    'PlasmaG2':         PlasmaG2Cannon,
-    'PlasmaDouble':     PlasmaDoubleCannon,
-    'PlasmaTripple':    PlasmaTrippleCannon,
-    'PlasmaZero':       PlasmaZeroCannon,
-    'RazerV1':          RazerV1Cannon,
-    'RazerV2':          RazerV2Cannon,
-    'RazerQuadro':      RazerQuadroCannon,
+    'Plasma-g1':         PlasmaG1Cannon,
+    'Plasma-g2':         PlasmaG2Cannon,
+    'Plasma-double':     PlasmaDoubleCannon,
+    'Plasma-tripple':    PlasmaTrippleCannon,
+    'Plasma-zero':       PlasmaZeroCannon,
+    'Razer-v1':          RazerV1Cannon,
+    'Razer-v2':          RazerV2Cannon,
+    'Razer-quadro':      RazerQuadroCannon,
     'Mag87':            Mag87Cannon,
     'Mag87s':           Mag87sCannon,
-    'Mag87sTurbo':      Mag87sTurboCannon
+    'Mag87s-turbo':      Mag87sTurboCannon
 };
 
 //
 
-const ArmorList = {
+import { KS200ShieldArmor } from "./../objects/garage/armors/KS200Shield.Armor";
+import { KSShieldArmor } from "./../objects/garage/armors/KSShield.Armor";
+import { MGDeffenceArmor } from "./../objects/garage/armors/MGDeffence.Armor";
+import { MGDeffenceV2Armor } from "./../objects/garage/armors/MGDeffenceV2.Armor";
+import { P12ShieldArmor } from "./../objects/garage/armors/P12Shiled.Armor";
+import { P125ShieldArmor } from "./../objects/garage/armors/P125Shield.Armor";
+import { XShieldArmor } from "./../objects/garage/armors/XShield.Armor";
+import { Z8Shield } from "./../objects/garage/armors/Z8Shield.Armor";
+import { PlayerCore } from "../core/Player.Core";
 
+const ArmorList = {
+    'KS200-shield':      KS200ShieldArmor,
+    'KS-shield':         KSShieldArmor,
+    'MG-deffence':       MGDeffenceArmor,
+    'MG-deffence-v2':     MGDeffenceV2Armor,
+    'P12-shield':        P12ShieldArmor,
+    'P12.5-shield':       P125ShieldArmor,
+    'X-shield':          XShieldArmor,
+    'Z8-shield':         Z8Shield
+};
+
+//
+
+import { KTZr1Engine } from "./../objects/garage/engines/KTZr1.Engine";
+import { KTZr2Engine } from "./../objects/garage/engines/KTZr2.Engine";
+import { KXv8Engine } from "./../objects/garage/engines/KXv8.Engine";
+import { VAX32Engine } from "./../objects/garage/engines/VAX32.Engine";
+import { VAX32sEngine } from "./../objects/garage/engines/VAX32s.Engine";
+import { VAX32v2Engine } from "./../objects/garage/engines/VAX32v2.Engine";
+import { ZEL72Engine } from "./../objects/garage/engines/Zel72.Engine";
+import { ZEL72sEngine } from "./../objects/garage/engines/Zel72s.Engine";
+
+const EnginesList = {
+    'KTZ-r1':       KTZr1Engine,
+    'KTZ-r2':       KTZr2Engine,
+    'KX-v8':        KXv8Engine,
+    'VAX32':        VAX32Engine,
+    'VAX32s':       VAX32sEngine,
+    'VAX32v2':      VAX32v2Engine,
+    'ZEL72':        ZEL72Engine,
+    'ZEL72s':       ZEL72sEngine
 };
 
 //
@@ -116,30 +155,35 @@ class GarageManagerCore {
 
         for ( let engineName in data.engines ) {
 
-            const Engine = ArmorList[ engineName ] as EngineGarage;
+            const Engine = EnginesList[ engineName ] as EngineGarage;
             this.engines.set( engineName, Engine );
 
         }
 
     };
 
-    public prepareTank ( params: any ) : TankObject {
+    public prepareTank ( params: any, player: PlayerCore ) : TankObject {
 
         // check params is valid or set default
 
-        params.tank = params.tank || 'IS2001';
+        params = params || {};
+        params.tank = ( this.tanksConfig[ params.tank ] !== undefined ) ? params.tank : 'IS2001';
         const rawTankData = this.tanksConfig[ params.tank ];
-        params.tank = ( rawTankData !== undefined ) ? params.tank : 'IS2001';
         params.cannon = params.cannon || rawTankData.default.cannon;
         params.armor = params.armor || rawTankData.default.armor;
         params.engine = params.engine || rawTankData.default.engine;
 
         //
 
-        const tank = new this.tanks[ params.tank ]();
-        tank.cannon = new this.cannons[ params.cannon ]();
-        tank.armor = new this.armors[ params.armor ]();
-        tank.engine = new this.engines[ params.engine ]();
+        const Tank = this.tanks.get( params.tank ) as any;
+        const Cannon = this.cannons.get( params.cannon ) as any;
+        const Armor = this.armors.get( params.armor ) as any;
+        const Engine = this.engines.get( params.engine ) as any;
+
+        const tank = new Tank( player );
+        tank.cannon = new Cannon();
+        tank.armor = new Armor();
+        tank.engine = new Engine();
 
         //
 

@@ -139,17 +139,7 @@ class PlayerCore {
 
     public prepareTank ( tankConfig: any ) {
 
-        tankConfig.tank = tankConfig.tank || 'IS2001';
-        const rawTankData = GarageManager.tanksConfig[ tankConfig.tank ];
-        tankConfig.tank = ( rawTankData !== undefined ) ? tankConfig.tank : 'IS2001';
-        tankConfig.cannon = tankConfig.cannon || rawTankData.default.cannon;
-        tankConfig.armor = tankConfig.armor || rawTankData.default.armor;
-        tankConfig.engine = tankConfig.engine || rawTankData.default.engine;
-
-        //
-
-        this.tank = new GarageManager[ tankConfig.tank ]( this );
-        this.tank.ammo = this.tank.ammoCapacity;
+        this.tank = GarageManager.prepareTank( tankConfig, this );
         this.arena.tankManager.add( this.tank );
 
     };

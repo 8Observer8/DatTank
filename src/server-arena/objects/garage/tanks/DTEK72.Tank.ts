@@ -8,7 +8,7 @@ import { PlayerCore } from "./../../../core/Player.Core";
 
 //
 
-export class DTEK72sTank extends TankObject {
+export class DTEK72Tank extends TankObject {
 
     public origParams: object = {};
 
@@ -22,11 +22,11 @@ export class DTEK72sTank extends TankObject {
 
         this.typeId = 1;
 
-        this.title = DTEK72sTank.title;
-        this.armourCoef = DTEK72sTank.armorCoef;
-        this.cannonCoef = DTEK72sTank.cannonCoef;
-        this.speedCoef = DTEK72sTank.speedCoef;
-        this.ammoCapacity = DTEK72sTank.ammoCapacity;
+        this.title = DTEK72Tank.title;
+        this.armourCoef = DTEK72Tank.armorCoef;
+        this.cannonCoef = DTEK72Tank.cannonCoef;
+        this.speedCoef = DTEK72Tank.speedCoef;
+        this.ammoCapacity = DTEK72Tank.ammoCapacity;
 
         this.origParams = {
             ammoCapacity:   this.ammoCapacity
