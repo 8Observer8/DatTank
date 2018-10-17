@@ -505,6 +505,18 @@ class TankObject {
 
     };
 
+    public getMaxSpeed () : number {
+
+        return this.engine.maxSpeed * this.speedCoef;
+
+    };
+
+    public getEnginePower () : number {
+
+        return this.engine.power;
+
+    };
+
     public toJSON () {
 
         return {

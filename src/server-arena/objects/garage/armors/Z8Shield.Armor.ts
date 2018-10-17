@@ -7,13 +7,13 @@ import { ArmorGarage } from "./../core/Armor.Garage";
 
 //
 
-export class Z8Shield extends ArmorGarage {
+export class Z8ShieldArmor extends ArmorGarage {
 
     constructor () {
 
         super();
 
-        this.armor = Z8Shield.armor;
+        this.armor = Z8ShieldArmor.armor;
 
     };
 

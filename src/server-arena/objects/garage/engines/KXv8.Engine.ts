@@ -14,7 +14,7 @@ export class KXv8Engine extends EngineGarage {
         super();
 
         this.maxSpeed = KXv8Engine.maxSpeed;
-        this.acceleration = KXv8Engine.acceleration;
+        this.power = KXv8Engine.power;
 
     };
 

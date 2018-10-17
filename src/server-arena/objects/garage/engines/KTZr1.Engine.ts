@@ -14,7 +14,7 @@ export class KTZr1Engine extends EngineGarage {
         super();
 
         this.maxSpeed = KTZr1Engine.maxSpeed;
-        this.acceleration = KTZr1Engine.acceleration;
+        this.power = KTZr1Engine.power;
 
     };
 

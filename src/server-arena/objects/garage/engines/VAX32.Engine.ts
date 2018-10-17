@@ -14,7 +14,7 @@ export class VAX32Engine extends EngineGarage {
         super();
 
         this.maxSpeed = VAX32Engine.maxSpeed;
-        this.acceleration = VAX32Engine.acceleration;
+        this.power = VAX32Engine.power;
 
     };
 

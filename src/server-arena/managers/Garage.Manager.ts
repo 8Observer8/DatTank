@@ -3,6 +3,7 @@
  * DatTank Garage manager sys
 */
 
+import { PlayerCore } from "./../core/Player.Core";
 import { TankObject } from "./../objects/core/Tank.Object";
 import { ArmorGarage } from "./../objects/garage/core/Armor.Garage";
 import { CannonGarage } from "./../objects/garage/core/Cannon.Garage";
@@ -35,6 +36,7 @@ import { PlasmaTrippleCannon } from "./../objects/garage/cannons/PlasmaTripple.C
 import { PlasmaZeroCannon } from "./../objects/garage/cannons/PlasmaZero.Cannon";
 import { RazerV1Cannon } from "./../objects/garage/cannons/RazerV1.Cannon";
 import { RazerV2Cannon } from "./../objects/garage/cannons/RazerV2.Cannon";
+import { RazerDoubleCannon } from "./../objects/garage/cannons/RazerDouble.Cannon";
 import { RazerQuadroCannon } from "./../objects/garage/cannons/RazerQuadro.Cannon";
 import { Mag87Cannon } from "./../objects/garage/cannons/Mag87.Cannon";
 import { Mag87sCannon } from "./../objects/garage/cannons/Mag87s.Cannon";
@@ -48,9 +50,10 @@ const CannonList = {
     'Plasma-zero':       PlasmaZeroCannon,
     'Razer-v1':          RazerV1Cannon,
     'Razer-v2':          RazerV2Cannon,
+    'Razer-double':      RazerDoubleCannon,
     'Razer-quadro':      RazerQuadroCannon,
-    'Mag87':            Mag87Cannon,
-    'Mag87s':           Mag87sCannon,
+    'Mag87':             Mag87Cannon,
+    'Mag87s':            Mag87sCannon,
     'Mag87s-turbo':      Mag87sTurboCannon
 };
 
@@ -63,18 +66,19 @@ import { MGDeffenceV2Armor } from "./../objects/garage/armors/MGDeffenceV2.Armor
 import { P12ShieldArmor } from "./../objects/garage/armors/P12Shiled.Armor";
 import { P125ShieldArmor } from "./../objects/garage/armors/P125Shield.Armor";
 import { XShieldArmor } from "./../objects/garage/armors/XShield.Armor";
-import { Z8Shield } from "./../objects/garage/armors/Z8Shield.Armor";
-import { PlayerCore } from "../core/Player.Core";
+import { Z8ShieldArmor } from "./../objects/garage/armors/Z8Shield.Armor";
+import { T215ArmorArmor } from "./../objects/garage/armors/T215Armor.Armor";
 
 const ArmorList = {
     'KS200-shield':      KS200ShieldArmor,
     'KS-shield':         KSShieldArmor,
     'MG-deffence':       MGDeffenceArmor,
-    'MG-deffence-v2':     MGDeffenceV2Armor,
+    'MG-deffence-v2':    MGDeffenceV2Armor,
     'P12-shield':        P12ShieldArmor,
-    'P12.5-shield':       P125ShieldArmor,
+    'P12.5-shield':      P125ShieldArmor,
     'X-shield':          XShieldArmor,
-    'Z8-shield':         Z8Shield
+    'Z8-shield':         Z8ShieldArmor,
+    'T215-armor':        T215ArmorArmor
 };
 
 //
@@ -92,11 +96,11 @@ const EnginesList = {
     'KTZ-r1':       KTZr1Engine,
     'KTZ-r2':       KTZr2Engine,
     'KX-v8':        KXv8Engine,
-    'VAX32':        VAX32Engine,
-    'VAX32s':       VAX32sEngine,
-    'VAX32v2':      VAX32v2Engine,
-    'ZEL72':        ZEL72Engine,
-    'ZEL72s':       ZEL72sEngine
+    'VAX-32':        VAX32Engine,
+    'VAX-32s':       VAX32sEngine,
+    'VAX-32v2':      VAX32v2Engine,
+    'ZEL-72':        ZEL72Engine,
+    'ZEL-72s':       ZEL72sEngine
 };
 
 //
@@ -137,7 +141,10 @@ class GarageManagerCore {
 
         for ( let cannonName in data.cannons ) {
 
+            const params = data.cannons[ cannonName ];
             const Cannon = CannonList[ cannonName ] as CannonGarage;
+            Cannon.damage = params.damage;
+            Cannon.rpm = params.rpm;
             this.cannons.set( cannonName, Cannon );
 
         }
@@ -146,7 +153,9 @@ class GarageManagerCore {
 
         for ( let armorName in data.armors ) {
 
+            const params = data.armors[ armorName ];
             const Armor = ArmorList[ armorName ] as ArmorGarage;
+            Armor.armor = params.armor;
             this.armors.set( armorName, Armor );
 
         }
@@ -155,7 +164,10 @@ class GarageManagerCore {
 
         for ( let engineName in data.engines ) {
 
+            const params = data.engines[ engineName ];
             const Engine = EnginesList[ engineName ] as EngineGarage;
+            Engine.maxSpeed = params.maxSpeed;
+            Engine.power = params.power;
             this.engines.set( engineName, Engine );
 
         }

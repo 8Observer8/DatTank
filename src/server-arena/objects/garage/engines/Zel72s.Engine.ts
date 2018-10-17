@@ -14,7 +14,7 @@ export class ZEL72sEngine extends EngineGarage {
         super();
 
         this.maxSpeed = ZEL72sEngine.maxSpeed;
-        this.acceleration = ZEL72sEngine.acceleration;
+        this.power = ZEL72sEngine.power;
 
     };
 
