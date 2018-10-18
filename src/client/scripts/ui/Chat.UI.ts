@@ -3,23 +3,23 @@
  * DatTank Chat UI module
 */
 
-import * as OMath from "./../OMath/Core.OMath";
-import { Logger } from "./../utils/Logger";
-import { UI } from "./Core.UI";
-import { Arena } from "./../core/Arena.Core";
-import { TeamManager } from "./../managers/Team.Manager";
-import { Network } from "./../network/Core.Network";
+import * as OMath from '../OMath/Core.OMath';
+import { Logger } from '../utils/Logger';
+import { UI } from './Core.UI';
+import { Arena } from '../core/Arena.Core';
+import { TeamManager } from '../managers/Team.Manager';
+import { Network } from '../network/Core.Network';
 
 //
 
-class UIChatModule {
+export class UIChatModule {
 
     public opened: boolean = false;
     private usedChat: boolean = false;
 
     //
 
-    private showChatMessageInput () {
+    private showChatMessageInput () : void {
 
         this.opened = true;
 
@@ -48,7 +48,7 @@ class UIChatModule {
 
     };
 
-    public hideChatMessageInput () {
+    public hideChatMessageInput () : void {
 
         this.opened = false;
 
@@ -72,25 +72,25 @@ class UIChatModule {
 
     };
 
-    private showHelpInfo () {
+    private showHelpInfo () : void {
 
         $('.chat .chat-info').css( 'bottom', '20px' );
 
     };
 
-    private hideHelpInfo () {
+    private hideHelpInfo () : void {
 
         $('.chat .chat-info').css( 'bottom', '-20px' );
 
     };
 
-    private keypress ( event: KeyboardEvent ) {
+    private keypress ( event: KeyboardEvent ) : void {
 
         if ( ! UI.InGame.opened ) return;
 
         if ( event.keyCode === 13 ) {
 
-            let inputValue = $('.chat .message-input').val();
+            const inputValue = $('.chat .message-input').val();
 
             if ( ! this.opened ) {
 
@@ -112,9 +112,9 @@ class UIChatModule {
 
     };
 
-    public newMessage ( params: any ) {
+    public newMessage ( params: any ) : void {
 
-        let messages = $('.chat .message-block .message');
+        const messages = $('.chat .message-block .message');
 
         for ( let i = messages.length; i > 5; i -- ) {
 
@@ -122,7 +122,7 @@ class UIChatModule {
 
         }
 
-        let messagesSeparate = $('.chat .message-block-separate .message');
+        const messagesSeparate = $('.chat .message-block-separate .message');
 
         for ( let i = messagesSeparate.length; i > 5; i -- ) {
 
@@ -132,7 +132,7 @@ class UIChatModule {
 
         //
 
-        let teamColor = OMath.intToHex( OMath.darkerColor( TeamManager.getById( params.teamId )!.color, 0.85 ) );
+        const teamColor = OMath.intToHex( OMath.darkerColor( TeamManager.getById( params.teamId )!.color, 0.85 ) );
         let messageDom = $('<div class="message"><span class="author" style="color: ' + teamColor + '"></span><span class="message-text"></span></div>');
         messageDom.find('.author').text( ( params.onlyTeam ? '[TEAM] ' : '[ALL] ' ) + params.login + ':' );
         messageDom.find('.message-text').text( params.message );
@@ -144,7 +144,7 @@ class UIChatModule {
         messageDom.find('.message-text').text( params.message );
         $('.chat .message-block-separate').append( messageDom );
 
-        let lastMsgSeparate = $('.chat .message-block-separate .message').last();
+        const lastMsgSeparate = $('.chat .message-block-separate .message').last();
 
         setTimeout( () => {
 
@@ -159,7 +159,7 @@ class UIChatModule {
 
     };
 
-    public init () {
+    public init () : void {
 
         $( window ).bind( 'keypress', this.keypress.bind( this ) );
         $('.chat .message-input').keydown( ( event ) => { event.stopPropagation(); } );
@@ -175,7 +175,3 @@ class UIChatModule {
     };
 
 };
-
-//
-
-export { UIChatModule };

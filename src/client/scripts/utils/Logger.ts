@@ -9,7 +9,7 @@ class LoggerCore {
 
     //
 
-    public newEvent ( eventName: string, category: string ) {
+    public newEvent ( eventName: string, category: string ) : void {
 
         if ( ! eventName ) {
 
@@ -23,7 +23,7 @@ class LoggerCore {
         ga('send', {
             hitType:        'event',
             eventCategory:  category,
-            eventAction:    eventName
+            eventAction:    eventName,
         });
 
     };

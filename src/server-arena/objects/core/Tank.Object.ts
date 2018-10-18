@@ -3,20 +3,20 @@
  * Tank Object class
 */
 
-import * as OMath from "./../../OMath/Core.OMath";
-import { PlayerCore } from "./../../core/Player.Core";
-import { TeamCore } from "../../core/Team.Core";
-import { ArenaCore } from "../../core/Arena.Core";
-import { TowerObject } from "./Tower.Object";
-import { BoxObject } from "./Box.Object";
-import { TankNetwork } from "./../../network/Tank.Network";
-import { CannonGarage } from "../garage/core/Cannon.Garage";
-import { ArmorGarage } from "../garage/core/Armor.Garage";
-import { EngineGarage } from "../garage/core/Engine.Garage";
+import * as OMath from './../../OMath/Core.OMath';
+import { PlayerCore } from './../../core/Player.Core';
+import { TeamCore } from '../../core/Team.Core';
+import { ArenaCore } from '../../core/Arena.Core';
+import { TowerObject } from './Tower.Object';
+import { BoxObject } from './Box.Object';
+import { TankNetwork } from './../../network/Tank.Network';
+import { CannonGarage } from '../garage/core/Cannon.Garage';
+import { ArmorGarage } from '../garage/core/Armor.Garage';
+import { EngineGarage } from '../garage/core/Engine.Garage';
 
 //
 
-class TankObject {
+export class TankObject {
 
     public static title: string;
     public static armorCoef: number;
@@ -60,7 +60,7 @@ class TankObject {
     public overheating: number = 0;
     private shootTimeout: any;
     private shootingInterval: any;
-    private sinceHitRegeneraionLimit: number = 5000;
+    private sinceHitRegenerationLimit: number = 5000;
     private sinceHitTime: number;
     private sinceRegenerationLimit: number = 2000;
     private sinceRegenerationTime: number;
@@ -81,7 +81,7 @@ class TankObject {
 
     //
 
-    public updateStats ( statId: number ) {
+    public updateStats ( statId: number ) : void {
 
         // let statName = TankObject.statsList[ statId ];
         // let levelsStats = TankObject.levelStatsChange;
@@ -130,12 +130,12 @@ class TankObject {
 
     };
 
-    public setRespawnPosition () {
+    public setRespawnPosition () : void {
 
         // clear tank from all inRange arrays
 
-        let tanks = this.arena.tankManager.getTanks();
-        let towers = this.arena.towerManager.getTowers();
+        const tanks = this.arena.tankManager.getTanks();
+        const towers = this.arena.towerManager.getTowers();
 
         for ( let i = 0, il = tanks.length; i < il; i ++ ) {
 
@@ -151,8 +151,8 @@ class TankObject {
 
         //
 
-        let position = new OMath.Vec3( this.team.spawnPosition.x, this.team.spawnPosition.y + 5, this.team.spawnPosition.z );
-        let offset = new OMath.Vec3();
+        const position = new OMath.Vec3( this.team.spawnPosition.x, this.team.spawnPosition.y + 5, this.team.spawnPosition.z );
+        const offset = new OMath.Vec3();
 
         while ( offset.length() < 80 || ! this.arena.collisionManager.isPlaceFree( position.sum( offset ), 100 ) ) {
 
@@ -171,21 +171,21 @@ class TankObject {
 
     };
 
-    public friendlyFire () {
+    public friendlyFire () : void {
 
         if ( ! this.player.socket ) return;
         this.network.friendlyFire();
 
     };
 
-    public hit ( killer: TowerObject | TankObject ) {
+    public hit ( killer: TowerObject | TankObject ) : void {
 
         if ( this.health <= 0 ) return;
         if ( ! killer ) return;
 
         //
 
-        let arena = this.player.arena;
+        const arena = this.player.arena;
         this.sinceHitTime = 0;
         this.sinceRegenerationTime = 0;
 
@@ -212,7 +212,7 @@ class TankObject {
 
     };
 
-    public changeAmmo ( delta: number ) {
+    public changeAmmo ( delta: number ) : void {
 
         if ( this.health <= 0 ) return;
 
@@ -225,7 +225,7 @@ class TankObject {
 
     };
 
-    public changeHealth ( delta: number, killer?: TankObject | TowerObject ) {
+    public changeHealth ( delta: number, killer?: TankObject | TowerObject ) : void {
 
         if ( this.health <= 0 ) return;
 
@@ -252,7 +252,7 @@ class TankObject {
 
     };
 
-    public makeShot () {
+    public makeShot () : void {
 
         if ( this.health <= 0 ) return;
         if ( this.shootTimeout ) return;
@@ -275,13 +275,13 @@ class TankObject {
 
         //
 
-        let bullet = this.arena.bulletManager.getInactiveBullet();
+        const bullet = this.arena.bulletManager.getInactiveBullet();
         if ( ! bullet ) return;
 
         // compute proper position of bullet
 
-        let position = new OMath.Vec3( this.position.x, 20, this.position.z );
-        let offset = 45;
+        const position = new OMath.Vec3( this.position.x, 20, this.position.z );
+        const offset = 45;
         position.x += offset * Math.cos( - this.rotationTop - this.rotation );
         position.z += offset * Math.sin( - this.rotationTop - this.rotation );
 
@@ -292,7 +292,7 @@ class TankObject {
 
     };
 
-    public startShooting () {
+    public startShooting () : void {
 
         clearInterval( this.shootingInterval );
         this.shootingInterval = setInterval( () => {
@@ -303,13 +303,13 @@ class TankObject {
 
     };
 
-    public stopShooting () {
+    public stopShooting () : void {
 
         clearInterval( this.shootingInterval );
 
     };
 
-    public setMovement ( directionX: number, directionY: number ) {
+    public setMovement ( directionX: number, directionY: number ) : void {
 
         if ( this.health <= 0 ) return;
         if ( this.moveDirection.x === directionX && this.moveDirection.y === directionY ) return;
@@ -319,7 +319,7 @@ class TankObject {
 
     };
 
-    public die ( killer: TankObject | TowerObject ) {
+    public die ( killer: TankObject | TowerObject ) : void {
 
         if ( this.player.status !== PlayerCore.Alive ) return;
 
@@ -352,20 +352,20 @@ class TankObject {
 
     };
 
-    public isObjectInRange ( target: TankObject | TowerObject | BoxObject ) {
+    public isObjectInRange ( target: TankObject | TowerObject | BoxObject ) : boolean {
 
-        let distance = this.position.distanceTo( target.position );
+        const distance = this.position.distanceTo( target.position );
         return ( distance < this.viewRange );
 
     };
 
     //
 
-    public regenerationUpdate ( delta: number ) {
+    public regenerationUpdate ( delta: number ) : void {
 
         this.sinceHitTime += delta;
 
-        if ( this.sinceHitTime > this.sinceHitRegeneraionLimit ) {
+        if ( this.sinceHitTime > this.sinceHitRegenerationLimit ) {
 
             if ( this.sinceRegenerationTime > this.sinceRegenerationLimit ) {
 
@@ -382,7 +382,7 @@ class TankObject {
 
     };
 
-    public updatePosition ( delta: number ) {
+    public updatePosition ( delta: number ) : void {
 
         if ( this.moveDirection.y > 0 ) {
 
@@ -398,21 +398,21 @@ class TankObject {
 
     };
 
-    public updateObjectsInRange () {
+    public updateObjectsInRange () : void {
 
-        let newBoxesInRange: Array<BoxObject> = [];
-        let newTowersInRange: Array<TowerObject> = [];
-        let newTanksInRange: Array<TankObject> = [];
+        const newBoxesInRange: BoxObject[] = [];
+        const newTowersInRange: TowerObject[] = [];
+        const newTanksInRange: TankObject[] = [];
 
-        let boxes = this.arena.boxManager.getBoxes();
-        let tanks = this.arena.tankManager.getTanks();
-        let towers = this.arena.towerManager.getTowers();
+        const boxes = this.arena.boxManager.getBoxes();
+        const tanks = this.arena.tankManager.getTanks();
+        const towers = this.arena.towerManager.getTowers();
 
         // check boxes in range
 
         for ( let i = 0, il = boxes.length; i < il; i ++ ) {
 
-            let box = boxes[ i ];
+            const box = boxes[ i ];
 
             if ( this.isObjectInRange( box ) ) {
 
@@ -435,7 +435,7 @@ class TankObject {
 
         for ( let i = 0, il = towers.length; i < il; i ++ ) {
 
-            let tower = towers[ i ];
+            const tower = towers[ i ];
 
             if ( this.isObjectInRange( tower ) ) {
 
@@ -460,7 +460,7 @@ class TankObject {
 
         for ( let i = 0, il = tanks.length; i < il; i ++ ) {
 
-            let tank = tanks[ i ];
+            const tank = tanks[ i ];
 
             if ( this.isObjectInRange( tank ) ) {
 
@@ -481,7 +481,7 @@ class TankObject {
 
     };
 
-    public update ( delta: number, time: number ) {
+    public update ( delta: number, time: number ) : void {
 
         if ( this.health <= 0 ) return;
 
@@ -497,7 +497,7 @@ class TankObject {
 
     };
 
-    public dispose () {
+    public dispose () : void {
 
         this.network.dispose();
         this.arena.removeObjectFromRangeParams( this );
@@ -517,7 +517,7 @@ class TankObject {
 
     };
 
-    public toJSON () {
+    public toJSON () : any {
 
         return {
             id:             this.id,
@@ -527,7 +527,7 @@ class TankObject {
             rotation:       this.rotation,
             rotationTop:    this.rotationTop,
             position:       this.position.toJSON(),
-            moveDirection:  this.moveDirection.toJSON()
+            moveDirection:  this.moveDirection.toJSON(),
         };
 
     };
@@ -549,7 +549,3 @@ class TankObject {
     };
 
 };
-
-//
-
-export { TankObject };

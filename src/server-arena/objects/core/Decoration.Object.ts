@@ -3,12 +3,12 @@
  * Decoration object class
 */
 
-import * as OMath from "./../../OMath/Core.OMath";
-import { ArenaCore } from "./../../core/Arena.Core";
+import * as OMath from '../../OMath/Core.OMath';
+import { ArenaCore } from '../../core/Arena.Core';
 
 //
 
-class DecorationObject {
+export class DecorationObject {
 
     private static numId: number = 1;
 
@@ -25,14 +25,14 @@ class DecorationObject {
 
     //
 
-    public toJSON () {
+    public toJSON () : any {
 
         return {
             id:         this.id,
             type:       this.type,
             position:   this.position.toJSON(),
             rotation:   this.rotation,
-            scale:      this.scale.toJSON()
+            scale:      this.scale.toJSON(),
         };
 
     };
@@ -52,7 +52,3 @@ class DecorationObject {
     };
 
 };
-
-//
-
-export { DecorationObject };

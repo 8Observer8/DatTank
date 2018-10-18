@@ -3,10 +3,10 @@
  * DatTank Network Core sys
 */
 
-import { TextEncoder } from "./../utils/TextEncoder";
-import * as ws from "ws";
+import * as ws from 'ws';
 
-import { Environment } from "./../environments/Detect.Environment";
+import { TextEncoder } from '../utils/TextEncoder';
+import { Environment } from '../environments/Detect.Environment';
 
 //
 
@@ -24,19 +24,19 @@ class NetworkCore {
     private messageListeners = {};
     private events = {
         in:     {},
-        out:    {}
+        out:    {},
     };
 
     //
 
-    private registerEvent ( eventName: string, eventDir: EventDir, dataType: EventType, eventId: number ) {
+    private registerEvent ( eventName: string, eventDir: EventDir, dataType: EventType, eventId: number ) : void {
 
         if ( eventDir === EventDir.OUT ) {
 
             this.events.out[ eventName ] = {
                 id:         eventId,
                 name:       eventName,
-                dataType:   dataType
+                dataType,
             };
 
         } else if ( eventDir === EventDir.IN ) {
@@ -44,7 +44,7 @@ class NetworkCore {
             this.events.in[ eventId ] = {
                 id:         eventId,
                 name:       eventName,
-                dataType:   dataType
+                dataType,
             };
 
         } else {
@@ -55,7 +55,7 @@ class NetworkCore {
 
     };
 
-    private onConnect ( socket: ws ) {
+    private onConnect ( socket: ws ) : void {
 
         socket.on( 'message', this.onMessage.bind( this, socket ) );
         socket.on( 'error', this.onError.bind( this, socket ) );
@@ -63,10 +63,10 @@ class NetworkCore {
 
     };
 
-    private onDisconnect ( socket: ws ) {
+    private onDisconnect ( socket: ws ) : void {
 
-        let arena = socket['arena'];
-        let player = socket['player'];
+        const arena = socket['arena'];
+        const player = socket['player'];
 
         if ( arena && player ) {
 
@@ -82,25 +82,25 @@ class NetworkCore {
 
     };
 
-    private onError ( socket: ws, error: any ) {
+    private onError ( socket: ws, error: any ) : void {
 
         console.warn( 'NetworkCore ws error: ', error );
 
     };
 
-    private onMessage ( socket: ws, data: any ) {
+    private onMessage ( socket: ws, data: any ) : void {
 
-        let arrayBuffer = data.buffer.slice( data.byteOffset, data.byteOffset + data.byteLength );
-        let eventId = new Int16Array( arrayBuffer, 0, 1 )[ 0 ];
-        let content = new Int16Array( arrayBuffer, 2 );
+        const arrayBuffer = data.buffer.slice( data.byteOffset, data.byteOffset + data.byteLength );
+        const eventId = new Int16Array( arrayBuffer, 0, 1 )[ 0 ];
+        const content = new Int16Array( arrayBuffer, 2 );
 
         this.triggerMessageListener( eventId, content, socket );
 
     };
 
-    public send ( eventName: string, socket: ws, data: any, dataView?: any ) {
+    public send ( eventName: string, socket: ws, data: any, dataView?: any ) : boolean {
 
-        if ( ! socket || socket.readyState !== 1 ) return;
+        if ( ! socket || socket.readyState !== 1 ) return false;
 
         if ( ! this.events.out[ eventName ] ) {
 
@@ -116,7 +116,7 @@ class NetworkCore {
             data = JSON.stringify( dataView );
             data = TextEncoder.encode( data );
 
-            let newData = new Int16Array( data.length + 1 );
+            const newData = new Int16Array( data.length + 1 );
 
             for ( let i = 0, il = data.length; i < il; i ++ ) {
 
@@ -138,16 +138,16 @@ class NetworkCore {
 
     };
 
-    public addMessageListener ( eventName: string, callback: Function ) {
+    public addMessageListener ( eventName: string, callback: ( data: any, socket: ws ) => void ) : void {
 
         this.messageListeners[ eventName ] = this.messageListeners[ eventName ] || [];
         this.messageListeners[ eventName ].push( callback );
 
     };
 
-    public removeMessageListener ( eventName: string, callback: Function ) {
+    public removeMessageListener ( eventName: string, callback: ( data: any, socket: ws ) => void ) : void {
 
-        let newMassageListenersList = [];
+        const newMassageListenersList = [];
 
         for ( let i = 0, il = this.messageListeners[ eventName ].length; i < il; i ++ ) {
 
@@ -160,7 +160,7 @@ class NetworkCore {
 
     };
 
-    private triggerMessageListener ( eventId: number, data: any, socket: ws ) {
+    private triggerMessageListener ( eventId: number, data: any, socket: ws ) : void {
 
         if ( ! this.events.in[ eventId ] ) {
 
@@ -171,9 +171,9 @@ class NetworkCore {
 
         //
 
-        let eventName = this.events.in[ eventId ].name;
-        let eventType = this.events.in[ eventId ].dataType;
-        let listeners = this.messageListeners[ eventName ] || [];
+        const eventName = this.events.in[ eventId ].name;
+        const eventType = this.events.in[ eventId ].dataType;
+        const listeners = this.messageListeners[ eventName ] || [];
 
         if ( eventType === EventType.JSON ) {
 
@@ -194,16 +194,16 @@ class NetworkCore {
 
     };
 
-    private gotPing ( data: Int16Array, socket: ws ) {
+    private gotPing ( data: Int16Array, socket: ws ) : void {
 
-        let buffer = new ArrayBuffer( 4 );
-        let bufferView = new Uint16Array( buffer );
+        const buffer = new ArrayBuffer( 4 );
+        const bufferView = new Uint16Array( buffer );
         bufferView[1] = data[0];
         this.send( 'PONG', socket, buffer, bufferView );
 
     };
 
-    public init () {
+    public init () : void {
 
         if ( this.io ) {
 

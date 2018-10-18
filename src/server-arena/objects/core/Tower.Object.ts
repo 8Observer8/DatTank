@@ -3,16 +3,16 @@
  * Tower Object class
 */
 
-import * as OMath from "./../../OMath/Core.OMath";
-import { ArenaCore } from "./../../core/Arena.Core";
-import { TeamCore } from "./../../core/Team.Core";
-import { PlayerCore } from "./../../core/Player.Core";
-import { TankObject } from "./Tank.Object";
-import { TowerNetwork } from "./../../network/Tower.Network";
+import * as OMath from '../../OMath/Core.OMath';
+import { ArenaCore } from '../../core/Arena.Core';
+import { TeamCore } from '../../core/Team.Core';
+import { PlayerCore } from '../../core/Player.Core';
+import { TankObject } from './Tank.Object';
+import { TowerNetwork } from '../../network/Tower.Network';
 
 //
 
-class TowerObject {
+export class TowerObject {
 
     private static numIds = 100;
 
@@ -36,7 +36,7 @@ class TowerObject {
     private cooldown = 2000;
     private shootTime: number;
 
-    private sinceHitRegeneraionLimit: number = 5000;
+    private sinceHitRegenerationLimit: number = 5000;
     private sinceHitTime: number;
     private sinceRegenerationLimit: number = 2000;
     private sinceRegenerationTime: number;
@@ -48,11 +48,12 @@ class TowerObject {
 
     //
 
-    public shoot ( target: TankObject ) {
+    public shoot ( target: TankObject ) : void {
 
-        let dx = target.position.x - this.position.x;
-        let dz = target.position.z - this.position.z;
-        let rotation, delta;
+        const dx = target.position.x - this.position.x;
+        const dz = target.position.z - this.position.z;
+        let rotation;
+        let delta;
 
         if ( dz === 0 && dx !== 0 ) {
 
@@ -80,12 +81,12 @@ class TowerObject {
 
         //
 
-        let position = new OMath.Vec3( this.position.x, 20, this.position.z );
-        let offset = 45;
+        const position = new OMath.Vec3( this.position.x, 20, this.position.z );
+        const offset = 45;
         position.x += offset * Math.cos( - this.rotation - Math.PI / 2 );
         position.z += offset * Math.sin( - this.rotation - Math.PI / 2 );
 
-        let bullet = this.arena.bulletManager.getInactiveBullet();
+        const bullet = this.arena.bulletManager.getInactiveBullet();
         if ( ! bullet ) return;
         bullet.activate( position, this.rotation + Math.PI, this );
 
@@ -93,7 +94,7 @@ class TowerObject {
 
     };
 
-    public changeHealth ( delta: number ) {
+    public changeHealth ( delta: number ) : void {
 
         if ( this.health <= 0 ) return;
 
@@ -106,7 +107,7 @@ class TowerObject {
 
     };
 
-    public hit ( killer: TankObject | TowerObject ) {
+    public hit ( killer: TankObject | TowerObject ) : void {
 
         if ( ! killer ) return;
 
@@ -147,7 +148,7 @@ class TowerObject {
 
     };
 
-    public changeTeam ( team: TeamCore, killerId: number ) {
+    public changeTeam ( team: TeamCore, killerId: number ) : void {
 
         team.towers ++;
         this.team.towers --;
@@ -159,7 +160,7 @@ class TowerObject {
 
     };
 
-    public getTarget ( players: Array<PlayerCore> ) {
+    public getTarget ( players: PlayerCore[] ) : PlayerCore | null {
 
         let dist;
         let target: PlayerCore | null = null;
@@ -196,11 +197,12 @@ class TowerObject {
 
     };
 
-    public rotateTop ( target: TankObject, delta: number ) {
+    public rotateTop ( target: TankObject, delta: number ) : void {
 
-        let dx = target.position.x - this.position.x;
-        let dz = target.position.z - this.position.z;
-        let newRotation, deltaRot;
+        const dx = target.position.x - this.position.x;
+        const dz = target.position.z - this.position.z;
+        let newRotation;
+        let deltaRot;
 
         if ( dz === 0 && dx !== 0 ) {
 
@@ -257,9 +259,9 @@ class TowerObject {
 
     };
 
-    public update ( delta: number, time: number ) {
+    public update ( delta: number, time: number ) : void {
 
-        let target = this.getTarget( this.arena.playerManager.getPlayers() );
+        const target = this.getTarget( this.arena.playerManager.getPlayers() );
 
         if ( ! target ) {
 
@@ -274,7 +276,7 @@ class TowerObject {
 
         this.sinceHitTime += delta;
 
-        if ( this.sinceHitTime > this.sinceHitRegeneraionLimit ) {
+        if ( this.sinceHitTime > this.sinceHitRegenerationLimit ) {
 
             if ( this.sinceRegenerationTime > this.sinceRegenerationLimit ) {
 
@@ -312,7 +314,3 @@ class TowerObject {
     };
 
 };
-
-//
-
-export { TowerObject };

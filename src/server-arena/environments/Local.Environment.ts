@@ -10,12 +10,12 @@ export let LocalEnvironment = {
     web: {
         host:           'http://localhost',
         port:           8092,
-        socketPort:     8093
+        socketPort:     8093,
     },
 
     master: {
         host:       'localhost',
         port:       3100,
-    }
+    },
 
 };

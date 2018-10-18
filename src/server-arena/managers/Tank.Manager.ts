@@ -3,28 +3,27 @@
  * DatTank Tank manager sys
 */
 
-import { ArenaCore } from "./../core/Arena.Core";
-import { TankObject } from "./../objects/core/Tank.Object";
+import { ArenaCore } from '../core/Arena.Core';
+import { TankObject } from '../objects/core/Tank.Object';
 
 //
 
-class TankManager {
+export class TankManager {
 
-    private tanks: Array<TankObject> = [];
-
+    private tanks: TankObject[] = [];
     public arena: ArenaCore;
 
     //
 
-    public add ( tank: TankObject ) {
+    public add ( tank: TankObject ) : void {
 
         this.tanks.push( tank );
 
     };
 
-    public remove ( tankId: number ) {
+    public remove ( tankId: number ) : void {
 
-        let newTanksList = [];
+        const newTanksList = [];
 
         for ( let i = 0, il = this.tanks.length; i < il; i ++ ) {
 
@@ -37,7 +36,7 @@ class TankManager {
 
     };
 
-    public getById ( tankId: number ) {
+    public getById ( tankId: number ) : TankObject | null {
 
         for ( let i = 0, il = this.tanks.length; i < il; i ++ ) {
 
@@ -53,13 +52,13 @@ class TankManager {
 
     };
 
-    public getTanks () {
+    public getTanks () : TankObject[] {
 
         return this.tanks;
 
     };
 
-    public update ( delta: number, time: number ) {
+    public update ( delta: number, time: number ) : void {
 
         for ( let i = 0, il = this.tanks.length; i < il; i ++ ) {
 
@@ -78,7 +77,3 @@ class TankManager {
     };
 
 };
-
-//
-
-export { TankManager };

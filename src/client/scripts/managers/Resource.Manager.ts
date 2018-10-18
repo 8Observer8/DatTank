@@ -202,7 +202,7 @@ class ResourceManagerCore {
 
                                     for ( let k = 0, kl = config.animations[ j ].end - config.animations[ j ].start; k < kl; k ++ ) {
 
-                                        model.geometry['morphTargets'].push({ name: config.animations[ i ].name + k });
+                                        model.geometry['morphTargets'].push({ name: config.animations[ j ].name + k });
 
                                     }
 

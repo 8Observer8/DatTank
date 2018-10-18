@@ -3,26 +3,26 @@
  * DatTank Arena Core
 */
 
-import * as OMath from "./../OMath/Core.OMath";
-import { PlayerCore } from "./Player.Core";
-import { BotCore } from "./Bot.Core";
-import { TeamCore } from "./Team.Core";
+import * as OMath from './../OMath/Core.OMath';
+import { PlayerCore } from './Player.Core';
+import { BotCore } from './Bot.Core';
+import { TeamCore } from './Team.Core';
 
-import { ArenaManager } from "./../managers/Arena.Manager";
-import { TeamManager } from "./../managers/Team.Manager";
-import { PlayerManager } from "./../managers/Player.Manager";
-import { BotManager } from "./../managers/Bot.Manager";
-import { TowerManager } from "./../managers/Tower.Manager";
-import { DecorationManager } from "./../managers/Decoration.Manager";
-import { BoxManager } from "./../managers/Box.Manager";
-import { CollisionManager } from "./../managers/Collision.Manager";
-import { BulletManager } from "./../managers/Bullet.Manager";
-import { TankManager } from "./../managers/Tank.Manager";
-import { ArenaNetwork } from "./../network/Arena.Network";
+import { ArenaManager } from '../managers/Arena.Manager';
+import { TeamManager } from '../managers/Team.Manager';
+import { PlayerManager } from '../managers/Player.Manager';
+import { BotManager } from '../managers/Bot.Manager';
+import { TowerManager } from '../managers/Tower.Manager';
+import { DecorationManager } from '../managers/Decoration.Manager';
+import { BoxManager } from '../managers/Box.Manager';
+import { CollisionManager } from '../managers/Collision.Manager';
+import { BulletManager } from '../managers/Bullet.Manager';
+import { TankManager } from '../managers/Tank.Manager';
+import { ArenaNetwork } from '../network/Arena.Network';
 
 //
 
-class ArenaCore {
+export class ArenaCore {
 
     private static numIds: number = 0;
     public static NeutralTeam = 1000;
@@ -50,10 +50,10 @@ class ArenaCore {
 
     //
 
-    public removeObjectFromRangeParams ( object: any ) {
+    public removeObjectFromRangeParams ( object: any ) : any {
 
-        let tanks = this.tankManager.getTanks();
-        let towers = this.towerManager.getTowers();
+        const tanks = this.tankManager.getTanks();
+        const towers = this.towerManager.getTowers();
 
         for ( let i = 0, il = tanks.length; i < il; i ++ ) {
 
@@ -77,13 +77,13 @@ class ArenaCore {
 
     };
 
-    public addPlayer ( params: any ) {
+    public addPlayer ( params: any ) : PlayerCore {
 
         // dispose extra bots if needed
 
         if ( params.socket && ArenaManager.maxPlayersInArena - this.playerManager.getPlayers().length - 2 < 0 ) {
 
-            let bot = this.botManager.getBots()[0];
+            const bot = this.botManager.getBots()[0];
 
             if ( bot ) {
 
@@ -95,7 +95,7 @@ class ArenaCore {
 
         //
 
-        let player = new PlayerCore( this, { login: params.login, socket: params.socket });
+        const player = new PlayerCore( this, { login: params.login, socket: params.socket });
         this.playerManager.add( player );
         player.spawn( params.tankConfig );
 
@@ -113,7 +113,7 @@ class ArenaCore {
 
     };
 
-    public removePlayer ( player: PlayerCore ) {
+    public removePlayer ( player: PlayerCore ) : void {
 
         if ( this.playerManager.remove( player.id ) ) {
 
@@ -149,17 +149,17 @@ class ArenaCore {
 
     };
 
-    public updateLeaderboard () {
+    public updateLeaderboard () : void {
 
-        let update = () => {
+        const update = () => {
 
             if ( this.disposed ) return;
 
-            let players: PlayerCore[] = this.playerManager.getPlayers();
-            let teams: TeamCore[] = this.teamManager.getTeams();
-            let towersCount: number = this.towerManager.getTowers().length;
-            let playersJSON = [];
-            let teamsJSON = [];
+            const players: PlayerCore[] = this.playerManager.getPlayers();
+            const teams: TeamCore[] = this.teamManager.getTeams();
+            const towersCount: number = this.towerManager.getTowers().length;
+            const playersJSON = [];
+            const teamsJSON = [];
 
             OMath.sortByProperty( players, 'score' );
 
@@ -170,7 +170,7 @@ class ArenaCore {
                     login:      players[ i ].login,
                     team:       players[ i ].team.id,
                     kills:      players[ i ].kills,
-                    score:      players[ i ].score
+                    score:      players[ i ].score,
                 });
 
             }
@@ -183,7 +183,7 @@ class ArenaCore {
 
                 teamsJSON.push({
                     id:         teams[ i ].id,
-                    score:      Math.floor( 100 * teams[ i ].towers / towersCount )
+                    score:      Math.floor( 100 * teams[ i ].towers / towersCount ),
                 });
 
             }
@@ -201,7 +201,7 @@ class ArenaCore {
 
     };
 
-    public clear () {
+    public clear () : void {
 
         clearInterval( this.updateInterval );
         this.collisionManager.clear();
@@ -213,7 +213,7 @@ class ArenaCore {
 
     };
 
-    private init () {
+    private init () : void {
 
         this.teamManager.init( 4 );
         this.towerManager.init();
@@ -227,10 +227,10 @@ class ArenaCore {
 
     };
 
-    private update () {
+    private update () : void {
 
-        let time = Date.now();
-        let delta = time - this.prevUpdateTime;
+        const time = Date.now();
+        const delta = time - this.prevUpdateTime;
         this.prevUpdateTime = time;
 
         // update managers
@@ -246,13 +246,13 @@ class ArenaCore {
 
     };
 
-    public toJSON () {
+    public toJSON () : any {
 
         return {
             id:             this.id,
             decorations:    this.decorationManager.toJSON(),
             teams:          this.teamManager.toJSON(),
-            currentTime:    Date.now()
+            currentTime:    Date.now(),
         };
 
     };
@@ -284,7 +284,3 @@ class ArenaCore {
     };
 
 };
-
-//
-
-export { ArenaCore };

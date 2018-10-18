@@ -3,16 +3,16 @@
  * DatTank ArenaManager Network handler
 */
 
-import * as ws from "ws";
+import * as ws from 'ws';
 
-import { Network } from "./Core.Network";
-import { ArenaManager } from "./../managers/Arena.Manager";
+import { Network } from './Core.Network';
+import { ArenaManager } from '../managers/Arena.Manager';
 
 //
 
-class ArenaManagerNetwork {
+export class ArenaManagerNetwork {
 
-    private arenaJoinRequest ( data: any, socket: ws ) {
+    private arenaJoinRequest ( data: any, socket: ws ) : void {
 
         ArenaManager.playerJoin( data, socket );
 
@@ -29,7 +29,3 @@ class ArenaManagerNetwork {
     };
 
 };
-
-//
-
-export { ArenaManagerNetwork };

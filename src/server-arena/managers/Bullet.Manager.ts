@@ -3,21 +3,21 @@
  * DatTank Bullet manager sys
 */
 
-import { ArenaCore } from "./../core/Arena.Core";
-import { BulletObject } from "./../objects/core/Bullet.Object";
+import { ArenaCore } from '../core/Arena.Core';
+import { BulletObject } from '../objects/core/Bullet.Object';
 
 //
 
-class BulletManager {
+export class BulletManager {
 
     private bullets: BulletObject[] = [];
     public arena: ArenaCore;
 
     //
 
-    public getInactiveBullet () {
+    public getInactiveBullet () : BulletObject | null {
 
-        for ( let i = 0; i < this.bullets.length; i ++ ) {
+        for ( let i = 0, il = this.bullets.length; i < il; i ++ ) {
 
             if ( ! this.bullets[ i ].active ) {
 
@@ -31,7 +31,7 @@ class BulletManager {
 
     };
 
-    public init () {
+    public init () : void {
 
         // todo
 
@@ -52,7 +52,3 @@ class BulletManager {
     };
 
 };
-
-//
-
-export { BulletManager };

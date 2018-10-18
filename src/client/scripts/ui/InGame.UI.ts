@@ -3,24 +3,24 @@
  * DatTank In Game UI module
 */
 
-import * as OMath from "./../OMath/Core.OMath";
-import { Arena } from "./../core/Arena.Core";
-import { UI } from "./../ui/Core.UI";
-import { Game } from "./../Game";
-import { TeamCore } from "./../core/Team.Core";
-import { SoundManager } from "./../managers/Sound.Manager";
-import { TeamManager } from "./../managers/Team.Manager";
+import * as OMath from '../OMath/Core.OMath';
+import { Arena } from '../core/Arena.Core';
+import { UI } from '../ui/Core.UI';
+import { Game } from '../Game';
+import { TeamCore } from '../core/Team.Core';
+import { SoundManager } from '../managers/Sound.Manager';
+import { TeamManager } from '../managers/Team.Manager';
 
 //
 
-class UIInGameModule {
+export class UIInGameModule {
 
     public opened: boolean = false;
     private hideGlobalLabelTimeout: any;
 
     //
 
-    public init () {
+    public init () : void {
 
         $('#viewport-graphics-quality').click( UI.changeQuality.bind( UI ) );
         $('#viewport-sound').click( UI.changeSound.bind( UI ) );
@@ -29,17 +29,17 @@ class UIInGameModule {
 
     };
 
-    public refreshAds () {
+    public refreshAds () : void {
 
         window['googletag'].pubads().refresh();
 
     };
 
-    public updateTankStat ( event: MouseEvent | string ) {
+    public updateTankStat ( event: MouseEvent | string ) : void {
 
         if ( ! Arena.me.tank || Arena.me.tank.health <= 0 ) return;
 
-        let statName = ( typeof event === 'string' ) ? event : event.currentTarget!['parentNode'].className.replace( 'bonus ', '' );
+        const statName = ( typeof event === 'string' ) ? event : event.currentTarget!['parentNode'].className.replace( 'bonus ', '' );
         Arena.me.updateStats( statName );
         Arena.me.bonusLevels --;
         SoundManager.playSound('MenuClick');
@@ -55,20 +55,20 @@ class UIInGameModule {
 
     };
 
-    public showLevelIndicator () {
+    public showLevelIndicator () : void {
 
         $('.level-indicator-block').show();
         UI.Chat.hideChatMessageInput();
 
     };
 
-    public hideLevelIndicator () {
+    public hideLevelIndicator () : void {
 
         $('.level-indicator-block').hide();
 
     };
 
-    public showTankStatsUpdate ( bonusLevels: number ) {
+    public showTankStatsUpdate ( bonusLevels: number ) : void {
 
         if ( Arena.me.tank && Arena.me.tank.health <= 0 ) return;
 
@@ -87,7 +87,7 @@ class UIInGameModule {
 
     };
 
-    public hideTankStatsUpdate () {
+    public hideTankStatsUpdate () : void {
 
         $('.stats-update-block').hide();
         $('.chat .message-block-separate').show();
@@ -97,7 +97,7 @@ class UIInGameModule {
 
     };
 
-    private statsUpdateByKey ( event: KeyboardEvent ) {
+    private statsUpdateByKey ( event: KeyboardEvent ) : void {
 
         switch ( event.keyCode ) {
 
@@ -130,9 +130,9 @@ class UIInGameModule {
 
     };
 
-    public updateLevelProgress () {
+    public updateLevelProgress () : void {
 
-        let levels = [ 0, 10, 30, 60, 100, 150, 250, 340, 500, 650, 1000, 1400, 1900, 2500, 3000, 3800, 4500, 5500, 6700, 7200, 8700, 9800, 12000 ];
+        const levels = [ 0, 10, 30, 60, 100, 150, 250, 340, 500, 650, 1000, 1400, 1900, 2500, 3000, 3800, 4500, 5500, 6700, 7200, 8700, 9800, 12000 ];
         let level = 0;
 
         while ( levels[ level ] <= Arena.me.score ) {
@@ -143,13 +143,13 @@ class UIInGameModule {
 
         level --;
 
-        let levelProgress = 100 * ( Arena.me.score - levels[ level ] ) / ( levels[ level + 1 ] - levels[ level ] );
+        const levelProgress = 100 * ( Arena.me.score - levels[ level ] ) / ( levels[ level + 1 ] - levels[ level ] );
         $('.level-indicator-block .title').html( 'Level ' + ( level + 1 ) + ' <sup style="font-size: 12px">' + Math.floor( levelProgress ) + '%</sup>' );
         $('.level-indicator-block .progress-bar .progress-indicator').css( 'width', levelProgress + '%' );
 
     };
 
-    public showContinueBox ( username: string, color: string ) {
+    public showContinueBox ( username: string, color: string ) : void {
 
         this.hideTankStatsUpdate();
         this.hideLevelIndicator();
@@ -164,7 +164,7 @@ class UIInGameModule {
         });
 
         $('#continue-box-wrapper').show();
-        $('#continue-box-wrapper #continue-box-wrapper-title').html('<p>Killed by <span style="color:'+ color + '">' + username +'</span></p>');
+        $('#continue-box-wrapper #continue-box-wrapper-title').html('<p>Killed by <span style="color:' + color + '">' + username + '</span></p>');
         $('#continue-box-wrapper #change-tank').click( Game.garage.show.bind( Game.garage ) );
 
         setTimeout( () => {
@@ -175,7 +175,7 @@ class UIInGameModule {
 
     };
 
-    public hideContinueBox () {
+    public hideContinueBox () : void {
 
         $('#viewport #renderport').removeClass('dead');
         $('#continue-box-wrapper').css( 'opacity', 0 );
@@ -189,35 +189,35 @@ class UIInGameModule {
 
     };
 
-    public showDisconnectMessage () {
+    public showDisconnectMessage () : void {
 
         $('.disconnect-warning').show();
 
     };
 
-    public updateHealth ( value: number ) {
+    public updateHealth ( value: number ) : void {
 
-        $('#health-number').html( value + "" );
+        $('#health-number').html( value + '' );
         $('#empty-health-image').css( 'height', ( 100 - value ) + '%' );
 
     };
 
-    public updateAmmo ( value: number ) {
+    public updateAmmo ( value: number ) : void {
 
-        $('#ammo-number').html( value + "" );
+        $('#ammo-number').html( value + '' );
 
     };
 
-    public setAmmoReloadAnimation ( duration: number ) {
+    public setAmmoReloadAnimation ( duration: number ) : void {
 
-        var element = $('#empty-ammo-image');
+        const element = $('#empty-ammo-image');
         // -> removing the class
         element.removeClass('ammo-animation');
         element.css( 'height', '100%' );
 
         // -> triggering reflow / The actual magic /
         // without this it wouldn't work. Try uncommenting the line and the transition won't be retriggered.
-        element[0].offsetWidth;
+        // const test = element[0].offsetWidth === 1;
         element.css( 'background-image', 'url(../resources/img/ammo.png)' );
 
         // -> and re-adding the class
@@ -226,9 +226,9 @@ class UIInGameModule {
 
     };
 
-    public showKills ( killerId: number, killer: string, killed: string, killerColor: string, killedColor: string ) {
+    public showKills ( killerId: number, killer: string, killed: string, killerColor: string, killedColor: string ) : void {
 
-        $('#kill-events').append( '<p><span style="font-weight: bold; color:' + killerColor + '">' + killer +'</span> killed <span style="font-weight: bold; color:' + killedColor + '">' + killed + '</span>!</p>');
+        $('#kill-events').append( '<p><span style="font-weight: bold; color:' + killerColor + '">' + killer + '</span> killed <span style="font-weight: bold; color:' + killedColor + '">' + killed + '</span>!</p>');
 
         if ( $('#kill-events').children().length > 5 ) {
 
@@ -244,13 +244,13 @@ class UIInGameModule {
 
     };
 
-    public updateLeaderboard ( players: any[] ) {
+    public updateLeaderboard ( players: any[] ) : void {
 
-        let me = Arena.me;
-        let names = $('#top-killers .player-name');
-        let kills = $('#top-killers .kills');
-        let teams = $('#top-killers .players-team-image');
-        let rows = $('#top-killers .killer-outer');
+        const me = Arena.me;
+        const names = $('#top-killers .player-name');
+        const kills = $('#top-killers .kills');
+        const teams = $('#top-killers .players-team-image');
+        const rows = $('#top-killers .killer-outer');
         let meInTop = false;
 
         rows.removeClass('myplace');
@@ -322,9 +322,9 @@ class UIInGameModule {
 
     };
 
-    public updateTeamScore ( teams: any[] ) {
+    public updateTeamScore ( teams: any[] ) : void {
 
-        let list = $( '#team-params .team-number' );
+        const list = $( '#team-params .team-number' );
 
         for ( let i = 0, il = list.length; i < il; i ++ ) {
 
@@ -334,22 +334,22 @@ class UIInGameModule {
 
     };
 
-    public showViewport () {
+    public showViewport () : void {
 
         $('#viewport').show();
         this.opened = true;
 
     };
 
-    public showKillSerie ( playerId: number, playerLogin: string, playerTeamId: number, serieLength: number ) {
+    public showKillSerie ( playerId: number, playerLogin: string, playerTeamId: number, serieLength: number ) : void {
 
-        let team = TeamManager.getById( playerTeamId );
-        let serieNames = { 2: 'DOUBLE-KILL', 3: 'TRIPPLE-KILL', 10: 'MONSTER-KILL' };
-        let serieName = serieNames[ serieLength ];
+        const team = TeamManager.getById( playerTeamId );
+        const serieNames = { 2: 'DOUBLE-KILL', 3: 'TRIPPLE-KILL', 10: 'MONSTER-KILL' };
+        const serieName = serieNames[ serieLength ];
 
         if ( playerId !== Arena.me.id && team ) {
 
-            $('#kill-events').append( '<p><span style="font-weight: bold; color:' + OMath.intToHex( team.color ) + '">' + playerLogin +'</span> made a <b>' + serieName + '</b></span>!</p>');
+            $('#kill-events').append( '<p><span style="font-weight: bold; color:' + OMath.intToHex( team.color ) + '">' + playerLogin + '</span> made a <b>' + serieName + '</b></span>!</p>');
 
             if ( $('#kill-events').children().length > 5 ) {
 
@@ -365,14 +365,14 @@ class UIInGameModule {
 
     };
 
-    public setGlobalLabel ( text: string ) {
+    public setGlobalLabel ( text: string ) : void {
 
         clearTimeout( this.hideGlobalLabelTimeout );
         $('#viewport .global-top-label').stop();
         $('#viewport .global-top-label').animate({ opacity: 1 }, 200 );
         $('#viewport .global-top-label').html( text );
 
-        this.hideGlobalLabelTimeout = setTimeout( function () {
+        this.hideGlobalLabelTimeout = setTimeout( () => {
 
             $('#viewport .global-top-label').animate({ opacity: 0 }, 500 );
 
@@ -380,20 +380,16 @@ class UIInGameModule {
 
     };
 
-    public updateFPS ( value: number ) {
+    public updateFPS ( value: number ) : void {
 
         $('.fps-value').html( value.toString() );
 
     };
 
-    public updatePing ( value: number ) {
+    public updatePing ( value: number ) : void {
 
         $('.ping-value').html( value.toString() );
 
     };
 
 };
-
-//
-
-export { UIInGameModule };

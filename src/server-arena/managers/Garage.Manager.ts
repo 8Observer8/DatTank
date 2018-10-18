@@ -3,44 +3,44 @@
  * DatTank Garage manager sys
 */
 
-import { PlayerCore } from "./../core/Player.Core";
-import { TankObject } from "./../objects/core/Tank.Object";
-import { ArmorGarage } from "./../objects/garage/core/Armor.Garage";
-import { CannonGarage } from "./../objects/garage/core/Cannon.Garage";
-import { EngineGarage } from "./../objects/garage/core/Engine.Garage";
+import { PlayerCore } from '../core/Player.Core';
+import { TankObject } from '../objects/core/Tank.Object';
+import { ArmorGarage } from '../objects/garage/core/Armor.Garage';
+import { CannonGarage } from '../objects/garage/core/Cannon.Garage';
+import { EngineGarage } from '../objects/garage/core/Engine.Garage';
 
 //
 
-import { DTEK72Tank } from "./../objects/garage/tanks/DTEK72.Tank";
-import { IS2001Tank } from "./../objects/garage/tanks/IS2001.Tank";
-import { MG813Tank } from "./../objects/garage/tanks/MG813.Tank";
-import { OrbitT32sTank } from "./../objects/garage/tanks/OrbitT32s.Tank";
-import { RiperX3Tank } from "./../objects/garage/tanks/RiperX3.Tank";
-import { TigerS8Tank } from "./../objects/garage/tanks/TigerS8.Tank";
+import { DTEK72Tank } from '../objects/garage/tanks/DTEK72.Tank';
+import { IS2001Tank } from '../objects/garage/tanks/IS2001.Tank';
+import { MG813Tank } from '../objects/garage/tanks/MG813.Tank';
+import { OrbitT32sTank } from '../objects/garage/tanks/OrbitT32s.Tank';
+import { RiperX3Tank } from '../objects/garage/tanks/RiperX3.Tank';
+import { TigerS8Tank } from '../objects/garage/tanks/TigerS8.Tank';
 
 const TanksList = {
-    'DTEK72':       DTEK72Tank,
-    'IS2001':       IS2001Tank,
-    'MG813':        MG813Tank,
-    'OrbitT32s':    OrbitT32sTank,
-    'RiperX3':      RiperX3Tank,
-    'TigerS8':      TigerS8Tank
+    DTEK72:       DTEK72Tank,
+    IS2001:       IS2001Tank,
+    MG813:        MG813Tank,
+    OrbitT32s:    OrbitT32sTank,
+    RiperX3:      RiperX3Tank,
+    TigerS8:      TigerS8Tank,
 };
 
 //
 
-import { PlasmaG1Cannon } from "./../objects/garage/cannons/PlasmaG1.Cannon";
-import { PlasmaG2Cannon } from "./../objects/garage/cannons/PlasmaG2.Cannon";
-import { PlasmaDoubleCannon } from "./../objects/garage/cannons/PlasmaDouble.Cannon";
-import { PlasmaTrippleCannon } from "./../objects/garage/cannons/PlasmaTripple.Cannon";
-import { PlasmaZeroCannon } from "./../objects/garage/cannons/PlasmaZero.Cannon";
-import { RazerV1Cannon } from "./../objects/garage/cannons/RazerV1.Cannon";
-import { RazerV2Cannon } from "./../objects/garage/cannons/RazerV2.Cannon";
-import { RazerDoubleCannon } from "./../objects/garage/cannons/RazerDouble.Cannon";
-import { RazerQuadroCannon } from "./../objects/garage/cannons/RazerQuadro.Cannon";
-import { Mag87Cannon } from "./../objects/garage/cannons/Mag87.Cannon";
-import { Mag87sCannon } from "./../objects/garage/cannons/Mag87s.Cannon";
-import { Mag87sTurboCannon } from "./../objects/garage/cannons/Mag87sTurbo.Cannon";
+import { PlasmaG1Cannon } from '../objects/garage/cannons/PlasmaG1.Cannon';
+import { PlasmaG2Cannon } from '../objects/garage/cannons/PlasmaG2.Cannon';
+import { PlasmaDoubleCannon } from '../objects/garage/cannons/PlasmaDouble.Cannon';
+import { PlasmaTrippleCannon } from '../objects/garage/cannons/PlasmaTripple.Cannon';
+import { PlasmaZeroCannon } from '../objects/garage/cannons/PlasmaZero.Cannon';
+import { RazerV1Cannon } from '../objects/garage/cannons/RazerV1.Cannon';
+import { RazerV2Cannon } from '../objects/garage/cannons/RazerV2.Cannon';
+import { RazerDoubleCannon } from '../objects/garage/cannons/RazerDouble.Cannon';
+import { RazerQuadroCannon } from '../objects/garage/cannons/RazerQuadro.Cannon';
+import { Mag87Cannon } from '../objects/garage/cannons/Mag87.Cannon';
+import { Mag87sCannon } from '../objects/garage/cannons/Mag87s.Cannon';
+import { Mag87sTurboCannon } from '../objects/garage/cannons/Mag87sTurbo.Cannon';
 
 const CannonList = {
     'Plasma-g1':         PlasmaG1Cannon,
@@ -54,20 +54,20 @@ const CannonList = {
     'Razer-quadro':      RazerQuadroCannon,
     'Mag87':             Mag87Cannon,
     'Mag87s':            Mag87sCannon,
-    'Mag87s-turbo':      Mag87sTurboCannon
+    'Mag87s-turbo':      Mag87sTurboCannon,
 };
 
 //
 
-import { KS200ShieldArmor } from "./../objects/garage/armors/KS200Shield.Armor";
-import { KSShieldArmor } from "./../objects/garage/armors/KSShield.Armor";
-import { MGDeffenceArmor } from "./../objects/garage/armors/MGDeffence.Armor";
-import { MGDeffenceV2Armor } from "./../objects/garage/armors/MGDeffenceV2.Armor";
-import { P12ShieldArmor } from "./../objects/garage/armors/P12Shiled.Armor";
-import { P125ShieldArmor } from "./../objects/garage/armors/P125Shield.Armor";
-import { XShieldArmor } from "./../objects/garage/armors/XShield.Armor";
-import { Z8ShieldArmor } from "./../objects/garage/armors/Z8Shield.Armor";
-import { T215ArmorArmor } from "./../objects/garage/armors/T215Armor.Armor";
+import { KS200ShieldArmor } from '../objects/garage/armors/KS200Shield.Armor';
+import { KSShieldArmor } from '../objects/garage/armors/KSShield.Armor';
+import { MGDeffenceArmor } from '../objects/garage/armors/MGDeffence.Armor';
+import { MGDeffenceV2Armor } from '../objects/garage/armors/MGDeffenceV2.Armor';
+import { P12ShieldArmor } from '../objects/garage/armors/P12Shiled.Armor';
+import { P125ShieldArmor } from '../objects/garage/armors/P125Shield.Armor';
+import { XShieldArmor } from '../objects/garage/armors/XShield.Armor';
+import { Z8ShieldArmor } from '../objects/garage/armors/Z8Shield.Armor';
+import { T215ArmorArmor } from '../objects/garage/armors/T215Armor.Armor';
 
 const ArmorList = {
     'KS200-shield':      KS200ShieldArmor,
@@ -78,19 +78,19 @@ const ArmorList = {
     'P12.5-shield':      P125ShieldArmor,
     'X-shield':          XShieldArmor,
     'Z8-shield':         Z8ShieldArmor,
-    'T215-armor':        T215ArmorArmor
+    'T215-armor':        T215ArmorArmor,
 };
 
 //
 
-import { KTZr1Engine } from "./../objects/garage/engines/KTZr1.Engine";
-import { KTZr2Engine } from "./../objects/garage/engines/KTZr2.Engine";
-import { KXv8Engine } from "./../objects/garage/engines/KXv8.Engine";
-import { VAX32Engine } from "./../objects/garage/engines/VAX32.Engine";
-import { VAX32sEngine } from "./../objects/garage/engines/VAX32s.Engine";
-import { VAX32v2Engine } from "./../objects/garage/engines/VAX32v2.Engine";
-import { ZEL72Engine } from "./../objects/garage/engines/Zel72.Engine";
-import { ZEL72sEngine } from "./../objects/garage/engines/Zel72s.Engine";
+import { KTZr1Engine } from '../objects/garage/engines/KTZr1.Engine';
+import { KTZr2Engine } from '../objects/garage/engines/KTZr2.Engine';
+import { KXv8Engine } from '../objects/garage/engines/KXv8.Engine';
+import { VAX32Engine } from '../objects/garage/engines/VAX32.Engine';
+import { VAX32sEngine } from '../objects/garage/engines/VAX32s.Engine';
+import { VAX32v2Engine } from '../objects/garage/engines/VAX32v2.Engine';
+import { ZEL72Engine } from '../objects/garage/engines/Zel72.Engine';
+import { ZEL72sEngine } from '../objects/garage/engines/Zel72s.Engine';
 
 const EnginesList = {
     'KTZ-r1':       KTZr1Engine,
@@ -100,7 +100,7 @@ const EnginesList = {
     'VAX-32s':       VAX32sEngine,
     'VAX-32v2':      VAX32v2Engine,
     'ZEL-72':        ZEL72Engine,
-    'ZEL-72s':       ZEL72sEngine
+    'ZEL-72s':       ZEL72sEngine,
 };
 
 //
@@ -122,7 +122,7 @@ class GarageManagerCore {
 
         this.tanksConfig = data.tanks;
 
-        for ( let tankName in data.tanks ) {
+        for ( const tankName in data.tanks ) {
 
             const params = data.tanks[ tankName ];
             const Tank = TanksList[ tankName ] as TankObject;
@@ -139,7 +139,7 @@ class GarageManagerCore {
 
         //
 
-        for ( let cannonName in data.cannons ) {
+        for ( const cannonName in data.cannons ) {
 
             const params = data.cannons[ cannonName ];
             const Cannon = CannonList[ cannonName ] as CannonGarage;
@@ -151,7 +151,7 @@ class GarageManagerCore {
 
         //
 
-        for ( let armorName in data.armors ) {
+        for ( const armorName in data.armors ) {
 
             const params = data.armors[ armorName ];
             const Armor = ArmorList[ armorName ] as ArmorGarage;
@@ -162,7 +162,7 @@ class GarageManagerCore {
 
         //
 
-        for ( let engineName in data.engines ) {
+        for ( const engineName in data.engines ) {
 
             const params = data.engines[ engineName ];
             const Engine = EnginesList[ engineName ] as EngineGarage;

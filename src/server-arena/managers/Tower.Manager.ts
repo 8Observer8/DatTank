@@ -3,27 +3,26 @@
  * DatTank Tower manager sys
 */
 
-import * as OMath from "./../OMath/Core.OMath";
-import { ArenaCore } from "./../core/Arena.Core";
-import { TowerObject } from "./../objects/core/Tower.Object";
+import * as OMath from '../OMath/Core.OMath';
+import { ArenaCore } from '../core/Arena.Core';
+import { TowerObject } from '../objects/core/Tower.Object';
 
 //
 
-class TowerManager {
+export class TowerManager {
 
-    private towers: Array<TowerObject> = [];
-
+    private towers: TowerObject[] = [];
     public arena: ArenaCore;
 
     //
 
-    public add ( tower: TowerObject ) {
+    public add ( tower: TowerObject ) : void {
 
         this.towers.push( tower );
 
     };
 
-    public getById ( towerId: number ) {
+    public getById ( towerId: number ) : TowerObject | null {
 
         for ( let i = 0, il = this.towers.length; i < il; i ++ ) {
 
@@ -39,13 +38,13 @@ class TowerManager {
 
     };
 
-    public getTowers () {
+    public getTowers () : TowerObject[] {
 
         return this.towers;
 
     };
 
-    public update ( delta: number, time: number ) {
+    public update ( delta: number, time: number ) : void {
 
         for ( let i = 0, il = this.towers.length; i < il; i ++ ) {
 
@@ -55,10 +54,10 @@ class TowerManager {
 
     };
 
-    public init () {
+    public init () : void {
 
-        let team = this.arena.teamManager.getById( ArenaCore.NeutralTeam );
-        let pos = new OMath.Vec3();
+        const team = this.arena.teamManager.getById( ArenaCore.NeutralTeam );
+        const pos = new OMath.Vec3();
 
         for ( let i = 0; i < 3; i ++ ) {
 
@@ -67,7 +66,7 @@ class TowerManager {
                 pos.x = ( 0.5 - i / 2 ) * 1900;
                 pos.z = ( 0.5 - j / 2 ) * 1900;
 
-                this.add( new TowerObject( this.arena, { team: team, position: pos } ) );
+                this.add( new TowerObject( this.arena, { team, position: pos } ) );
 
             }
 
@@ -84,7 +83,3 @@ class TowerManager {
     };
 
 };
-
-//
-
-export { TowerManager };

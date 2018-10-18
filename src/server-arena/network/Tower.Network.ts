@@ -3,13 +3,13 @@
  * DatTank Tower Object Network handler
 */
 
-import { TowerObject } from "./../objects/core/Tower.Object";
-import { ArenaCore } from "./../core/Arena.Core";
-import { BulletObject } from "./../objects/core/Bullet.Object";
+import { TowerObject } from '../objects/core/Tower.Object';
+import { ArenaCore } from '../core/Arena.Core';
+import { BulletObject } from '../objects/core/Bullet.Object';
 
 //
 
-class TowerNetwork {
+export class TowerNetwork {
 
     private arena: ArenaCore;
     private buffers: object = {};
@@ -17,11 +17,11 @@ class TowerNetwork {
 
     //
 
-    public makeShot ( bullet: BulletObject ) {
+    public makeShot ( bullet: BulletObject ) : void {
 
         this.buffers['MakeShot'] = this.buffers['MakeShot'] || {};
-        let buffer = this.buffers['MakeShot'].buffer || new ArrayBuffer( 12 );
-        let bufferView = this.buffers['MakeShot'].bufferView || new Int16Array( buffer );
+        const buffer = this.buffers['MakeShot'].buffer || new ArrayBuffer( 12 );
+        const bufferView = this.buffers['MakeShot'].bufferView || new Int16Array( buffer );
         this.buffers['MakeShot'].buffer = buffer;
         this.buffers['MakeShot'].bufferView = bufferView;
 
@@ -35,11 +35,11 @@ class TowerNetwork {
 
     };
 
-    public updateHealth () {
+    public updateHealth () : void {
 
         this.buffers['SetHealth'] = this.buffers['SetHealth'] || {};
-        let buffer = this.buffers['SetHealth'].buffer || new ArrayBuffer( 6 );
-        let bufferView = this.buffers['SetHealth'].bufferView || new Int16Array( buffer );
+        const buffer = this.buffers['SetHealth'].buffer || new ArrayBuffer( 6 );
+        const bufferView = this.buffers['SetHealth'].bufferView || new Int16Array( buffer );
         this.buffers['SetHealth'].buffer = buffer;
         this.buffers['SetHealth'].bufferView = bufferView;
 
@@ -52,11 +52,11 @@ class TowerNetwork {
 
     };
 
-    public changeTeam ( killerId: number ) {
+    public changeTeam ( killerId: number ) : void {
 
         this.buffers['changeTeam'] = this.buffers['changeTeam'] || {};
-        let buffer = this.buffers['changeTeam'].buffer || new ArrayBuffer( 8 );
-        let bufferView = this.buffers['changeTeam'].bufferView || new Int16Array( buffer );
+        const buffer = this.buffers['changeTeam'].buffer || new ArrayBuffer( 8 );
+        const bufferView = this.buffers['changeTeam'].bufferView || new Int16Array( buffer );
         this.buffers['changeTeam'].buffer = buffer;
         this.buffers['changeTeam'].bufferView = bufferView;
 
@@ -70,11 +70,11 @@ class TowerNetwork {
 
     };
 
-    public updateTopRotation () {
+    public updateTopRotation () : void {
 
         this.buffers['SetTopRotation'] = this.buffers['SetTopRotation'] || {};
-        let buffer = this.buffers['SetTopRotation'].buffer || new ArrayBuffer( 8 );
-        let bufferView = this.buffers['SetTopRotation'].bufferView || new Int16Array( buffer );
+        const buffer = this.buffers['SetTopRotation'].buffer || new ArrayBuffer( 8 );
+        const bufferView = this.buffers['SetTopRotation'].bufferView || new Int16Array( buffer );
         this.buffers['SetTopRotation'].buffer = buffer;
         this.buffers['SetTopRotation'].bufferView = bufferView;
 
@@ -98,7 +98,3 @@ class TowerNetwork {
     };
 
 };
-
-//
-
-export { TowerNetwork };

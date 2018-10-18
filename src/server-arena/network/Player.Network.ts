@@ -3,14 +3,15 @@
  * DatTank Player Object Network handler
 */
 
-import * as ws from "ws";
-import { Network } from "./../network/Core.Network";
-import { PlayerCore } from "./../core/Player.Core";
-import { ArenaCore } from "./../core/Arena.Core";
+import * as ws from 'ws';
+
+import { Network } from '../network/Core.Network';
+import { PlayerCore } from '../core/Player.Core';
+import { ArenaCore } from '../core/Arena.Core';
 
 //
 
-class PlayerNetwork {
+export class PlayerNetwork {
 
     private player: PlayerCore;
     private arena: ArenaCore;
@@ -20,7 +21,7 @@ class PlayerNetwork {
 
     private filter ( data: Int16Array, socket: ws ) : boolean {
 
-        let playerId = data[0];
+        const playerId = data[0];
         if ( this.player.id !== playerId ) return true;
         if ( socket['player'].id !== playerId ) return true;
         return false;
@@ -29,39 +30,39 @@ class PlayerNetwork {
 
     // network events handlers
 
-    private setRespawn ( data: Int16Array, socket: ws ) {
+    private setRespawn ( data: Int16Array, socket: ws ) : void {
 
         if ( this.filter( data, socket ) ) return;
 
-        let tankTypeId = data[1];
-        let tankList = { 0: 'IS2', 1: 'T29', 2: 'T44', 3: 'T54' };
-        let tankName = tankList[ tankTypeId ];
+        const tankTypeId = data[1];
+        const tankList = { 0: 'IS2', 1: 'T29', 2: 'T44', 3: 'T54' };
+        const tankName = tankList[ tankTypeId ];
         this.player.respawn( tankName );
 
     };
 
-    private setTankStatsUpdte ( data: Int16Array, socket: ws ) {
+    private setTankStatsUpdte ( data: Int16Array, socket: ws ) : void {
 
         if ( this.filter( data, socket ) ) return;
 
-        let statsId = data[1];
+        const statsId = data[1];
         this.player.tank.updateStats( statsId );
 
     };
 
     // send via network
 
-    public confirmRespawn () {
+    public confirmRespawn () : void {
 
         this.arena.network.sendEventToAllPlayers( 'PlayerRespawn', null, this.player.toJSON() );
 
     };
 
-    public updateLevel () {
+    public updateLevel () : void {
 
         this.buffers['NewLevel'] = this.buffers['NewLevel'] || {};
-        let buffer = this.buffers['NewLevel'].buffer || new ArrayBuffer( 6 );
-        let bufferView = this.buffers['NewLevel'].bufferView || new Int16Array( buffer );
+        const buffer = this.buffers['NewLevel'].buffer || new ArrayBuffer( 6 );
+        const bufferView = this.buffers['NewLevel'].bufferView || new Int16Array( buffer );
         this.buffers['NewLevel'].buffer = buffer;
         this.buffers['NewLevel'].bufferView = bufferView;
 
@@ -74,20 +75,20 @@ class PlayerNetwork {
 
     };
 
-    public killSerie ( serie: number ) {
+    public killSerie ( serie: number ) : void {
 
         this.arena.network.sendEventToPlayersInRange( this.player.tank.position, 'ArenaKillSerie', null, {
             id:     this.player.id,
             login:  this.player.login,
             team:   this.player.team.id,
-            serie:  serie
+            serie,
         });
 
     };
 
     //
 
-    public dispose () {
+    public dispose () : void {
 
         Network.removeMessageListener( 'PlayerRespawn', this.setRespawn );
         Network.removeMessageListener( 'PlayerTankUpdateStats', this.setTankStatsUpdte );
@@ -112,7 +113,3 @@ class PlayerNetwork {
     };
 
 };
-
-//
-
-export { PlayerNetwork };

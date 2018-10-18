@@ -3,14 +3,14 @@
  * Bullet object
 */
 
-import * as OMath from "./../../OMath/Core.OMath";
-import { ArenaCore } from "./../../core/Arena.Core";
-import { TankObject } from "./Tank.Object";
-import { TowerObject } from "./Tower.Object";
+import * as OMath from '../../OMath/Core.OMath';
+import { ArenaCore } from '../../core/Arena.Core';
+import { TankObject } from './Tank.Object';
+import { TowerObject } from './Tower.Object';
 
 //
 
-class BulletObject {
+export class BulletObject {
 
     private static numIds: number = 1;
 
@@ -28,7 +28,7 @@ class BulletObject {
 
     //
 
-    public activate ( position: OMath.Vec3, angle: number, owner: TankObject | TowerObject ) {
+    public activate ( position: OMath.Vec3, angle: number, owner: TankObject | TowerObject ) : void {
 
         this.active = true;
         this.position.set( position.x, 8, position.z );
@@ -43,11 +43,11 @@ class BulletObject {
 
     };
 
-    public detonate ( target?: TankObject | TowerObject ) {
+    public detonate ( target?: TankObject | TowerObject ) : void {
 
         if ( target && target.id === this.owner.id ) return;
 
-        this.active = false;     
+        this.active = false;
         this.arena.network.explosion( this, ( target && target.hit ) ? 1 : 0 );
 
         //
@@ -71,7 +71,3 @@ class BulletObject {
     };
 
 };
-
-//
-
-export { BulletObject };

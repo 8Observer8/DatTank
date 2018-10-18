@@ -3,21 +3,21 @@
  * DatTank Player Core
 */
 
-import * as ws from "ws";
+import * as ws from 'ws';
 
-import { Game } from "./../Game";
-import { ArenaCore } from "./Arena.Core";
-import { BotCore } from "./Bot.Core";
-import { TeamCore } from "./Team.Core";
-import { TankObject } from "../objects/core/Tank.Object";
-import { TowerObject } from "./../objects/core/Tower.Object";
-import { PlayerNetwork } from "./../network/Player.Network";
+import { Game } from '../Game';
+import { ArenaCore } from './Arena.Core';
+import { BotCore } from './Bot.Core';
+import { TeamCore } from './Team.Core';
+import { TankObject } from '../objects/core/Tank.Object';
+import { TowerObject } from '../objects/core/Tower.Object';
+import { PlayerNetwork } from '../network/Player.Network';
 
-import { GarageManager } from "./../managers/Garage.Manager";
+import { GarageManager } from '../managers/Garage.Manager';
 
 //
 
-class PlayerCore {
+export class PlayerCore {
 
     public static Dead: number = 0;
     public static Alive: number = 1;
@@ -45,7 +45,7 @@ class PlayerCore {
         19:     7200,
         20:     8700,
         21:     9800,
-        22:     12000
+        22:     12000,
     };
 
     private static numIds = 1;
@@ -71,7 +71,7 @@ class PlayerCore {
     public tank: TankObject;
     public network: PlayerNetwork;
 
-    private lastKills: Array<any> = [];
+    private lastKills: any[] = [];
     private killTimeDist: number = 30000;
     private lastKillSerie: any = { value: null, time: null };
 
@@ -79,15 +79,15 @@ class PlayerCore {
 
     //
 
-    public checkKillSerie () {
+    public checkKillSerie () : boolean {
 
         let killSerieLength = 0;
-        let newKillSerieList = [];
+        const newKillSerieList = [];
         this.lastKills.push({ time: Date.now(), serie: false });
 
         for ( let i = this.lastKills.length - 1; i >= 0; i -- ) {
 
-            let index = this.lastKills.length - i - 1;
+            const index = this.lastKills.length - i - 1;
             if ( Date.now() - this.lastKills[ i ].time <= index * this.killTimeDist ) {
 
                 killSerieLength ++;
@@ -132,21 +132,21 @@ class PlayerCore {
 
     };
 
-    public die ( killer: TankObject | TowerObject ) {
+    public die ( killer: TankObject | TowerObject ) : void {
 
         this.lastKills = [];
         this.arena.network.playerDied( this, killer );
 
     };
 
-    public prepareTank ( tankConfig: any ) {
+    public prepareTank ( tankConfig: any ) : void {
 
         this.tank = GarageManager.prepareTank( tankConfig, this );
         this.arena.tankManager.add( this.tank );
 
     };
 
-    public spawn ( tankConfig?: object ) {
+    public spawn ( tankConfig?: object ) : void {
 
         this.prepareTank( tankConfig );
         this.tank.setRespawnPosition();
@@ -156,7 +156,7 @@ class PlayerCore {
 
     };
 
-    public respawn ( tankConfig: object ) {
+    public respawn ( tankConfig: object ) : void {
 
         this.status = PlayerCore.Alive;
         this.bonusLevels = 0;
@@ -185,7 +185,7 @@ class PlayerCore {
 
     };
 
-    public changeScore ( delta: number ) {
+    public changeScore ( delta: number ) : void {
 
         let level = 0;
         this.score += delta;
@@ -226,13 +226,13 @@ class PlayerCore {
 
     };
 
-    public update ( delta: number, time: number ) {
+    public update ( delta: number, time: number ) : void {
 
         // todo
 
     };
 
-    public dispose () {
+    public dispose () : void {
 
         this.network.dispose();
         this.tank.dispose();
@@ -240,11 +240,11 @@ class PlayerCore {
 
     };
 
-    private getGuestLogin () {
+    private getGuestLogin () : string {
 
         let login = '';
         let loginAttempt = 1;
-        let players = this.arena.playerManager.getPlayers();
+        const players = this.arena.playerManager.getPlayers();
 
         while ( ! login ) {
 
@@ -268,13 +268,13 @@ class PlayerCore {
 
     };
 
-    public toJSON () {
+    public toJSON () : any {
 
         return {
             id:             this.id,
             login:          this.login,
             team:           this.team.id,
-            tank:           this.tank.toJSON()
+            tank:           this.tank.toJSON(),
         };
 
     };
@@ -305,7 +305,3 @@ class PlayerCore {
     };
 
 };
-
-//
-
-export { PlayerCore };

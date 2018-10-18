@@ -3,18 +3,19 @@
  * DatTank Tank Object Network handler
 */
 
-import * as ws from "ws";
-import * as OMath from "./../OMath/Core.OMath";
-import { Network } from "./../network/Core.Network";
-import { TankObject } from "./../objects/core/Tank.Object";
-import { TowerObject } from "./../objects/core/Tower.Object";
-import { BoxObject } from "./../objects/core/Box.Object";
-import { BulletObject } from "./../objects/core/Bullet.Object";
-import { ArenaCore } from "./../core/Arena.Core";
+import * as ws from 'ws';
+
+import * as OMath from '../OMath/Core.OMath';
+import { Network } from '../network/Core.Network';
+import { TankObject } from '../objects/core/Tank.Object';
+import { TowerObject } from '../objects/core/Tower.Object';
+import { BoxObject } from '../objects/core/Box.Object';
+import { BulletObject } from '../objects/core/Bullet.Object';
+import { ArenaCore } from '../core/Arena.Core';
 
 //
 
-class TankNetwork {
+export class TankNetwork {
 
     private arena: ArenaCore;
     private tank: TankObject;
@@ -24,7 +25,7 @@ class TankNetwork {
 
     private filter ( data: Int16Array, socket: ws ) : boolean {
 
-        let tankId = data[0];
+        const tankId = data[0];
         if ( this.tank.id !== tankId ) return true;
         if ( socket['player'].tank.id !== tankId ) return true;
         return false;
@@ -33,17 +34,17 @@ class TankNetwork {
 
     // network events handlers
 
-    private setMovement ( data: Int16Array, socket: ws ) {
+    private setMovement ( data: Int16Array, socket: ws ) : void {
 
         if ( this.filter( data, socket ) ) return;
 
-        let x = data[1];
-        let y = data[2];
+        const x = data[1];
+        const y = data[2];
         this.tank.setMovement( x, y );
 
     };
 
-    private setShootStart ( data: Int16Array, socket: ws ) {
+    private setShootStart ( data: Int16Array, socket: ws ) : void {
 
         if ( this.filter( data, socket ) ) return;
 
@@ -51,7 +52,7 @@ class TankNetwork {
 
     };
 
-    private setShootStop ( data: Int16Array, socket: ws ) {
+    private setShootStop ( data: Int16Array, socket: ws ) : void {
 
         if ( this.filter( data, socket ) ) return;
 
@@ -61,11 +62,11 @@ class TankNetwork {
 
     // send via network
 
-    public friendlyFire () {
+    public friendlyFire () : void {
 
         this.buffers['FriendlyFire'] = this.buffers['FriendlyFire'] || {};
-        let buffer = this.buffers['FriendlyFire'].buffer || new ArrayBuffer( 4 );
-        let bufferView = this.buffers['FriendlyFire'].bufferView || new Uint16Array( buffer );
+        const buffer = this.buffers['FriendlyFire'].buffer || new ArrayBuffer( 4 );
+        const bufferView = this.buffers['FriendlyFire'].bufferView || new Uint16Array( buffer );
         this.buffers['FriendlyFire'].buffer = buffer;
         this.buffers['FriendlyFire'].bufferView = bufferView;
 
@@ -77,11 +78,11 @@ class TankNetwork {
 
     };
 
-    public updateHealth ( killer?: TankObject | TowerObject ) {
+    public updateHealth ( killer?: TankObject | TowerObject ) : void {
 
         this.buffers['ChangeHealth'] = this.buffers['ChangeHealth'] || {};
-        let buffer = this.buffers['ChangeHealth'].buffer || new ArrayBuffer( 8 );
-        let bufferView = this.buffers['ChangeHealth'].bufferView || new Int16Array( buffer );
+        const buffer = this.buffers['ChangeHealth'].buffer || new ArrayBuffer( 8 );
+        const bufferView = this.buffers['ChangeHealth'].bufferView || new Int16Array( buffer );
         this.buffers['ChangeHealth'].buffer = buffer;
         this.buffers['ChangeHealth'].bufferView = bufferView;
 
@@ -95,13 +96,13 @@ class TankNetwork {
 
     };
 
-    public updateAmmo () {
+    public updateAmmo () : void {
 
         if ( ! this.tank.player.socket ) return;
 
         this.buffers['ChangeAmmo'] = this.buffers['ChangeAmmo'] || {};
-        let buffer = this.buffers['ChangeAmmo'].buffer || new ArrayBuffer( 6 );
-        let bufferView = this.buffers['ChangeAmmo'].bufferView || new Int16Array( buffer );
+        const buffer = this.buffers['ChangeAmmo'].buffer || new ArrayBuffer( 6 );
+        const bufferView = this.buffers['ChangeAmmo'].bufferView || new Int16Array( buffer );
         this.buffers['ChangeAmmo'].buffer = buffer;
         this.buffers['ChangeAmmo'].bufferView = bufferView;
 
@@ -114,11 +115,11 @@ class TankNetwork {
 
     };
 
-    public makeShoot ( bullet: BulletObject ) {
+    public makeShoot ( bullet: BulletObject ) : void {
 
         this.buffers['MakeShot'] = this.buffers['MakeShot'] || {};
-        let buffer = this.buffers['MakeShot'].buffer || new ArrayBuffer( 14 );
-        let bufferView = this.buffers['MakeShot'].bufferView || new Int16Array( buffer );
+        const buffer = this.buffers['MakeShot'].buffer || new ArrayBuffer( 14 );
+        const bufferView = this.buffers['MakeShot'].bufferView || new Int16Array( buffer );
         this.buffers['MakeShot'].buffer = buffer;
         this.buffers['MakeShot'].bufferView = bufferView;
 
@@ -135,11 +136,11 @@ class TankNetwork {
 
     };
 
-    public updateMovement ( direction: OMath.Vec2 ) {
+    public updateMovement ( direction: OMath.Vec2 ) : void {
 
         this.buffers['SetMovement'] = this.buffers['SetMovement'] || {};
-        let buffer = this.buffers['SetMovement'].buffer || new ArrayBuffer( 14 );
-        let bufferView = this.buffers['SetMovement'].bufferView || new Int16Array( buffer );
+        const buffer = this.buffers['SetMovement'].buffer || new ArrayBuffer( 14 );
+        const bufferView = this.buffers['SetMovement'].bufferView || new Int16Array( buffer );
         this.buffers['SetMovement'].buffer = buffer;
         this.buffers['SetMovement'].bufferView = bufferView;
 
@@ -156,20 +157,20 @@ class TankNetwork {
 
     };
 
-    public updateBoxesInRange ( boxes: Array<BoxObject> ) {
+    public updateBoxesInRange ( boxes: BoxObject[] ) : void {
 
         if ( ! this.tank.player.socket ) return;
         if ( boxes.length === 0 ) return;
 
         //
 
-        let boxDataSize = 8;
-        let buffer = new ArrayBuffer( 2 + boxDataSize * boxes.length );
-        let bufferView = new Int16Array( buffer );
+        const boxDataSize = 8;
+        const buffer = new ArrayBuffer( 2 + boxDataSize * boxes.length );
+        const bufferView = new Int16Array( buffer );
 
         for ( let i = 1, il = boxDataSize * boxes.length + 1; i < il; i += boxDataSize ) {
 
-            let box = boxes[ ( i - 1 ) / boxDataSize ];
+            const box = boxes[ ( i - 1 ) / boxDataSize ];
 
             bufferView[ i + 0 ] = box.id;
             bufferView[ i + 1 ] = box.typeId;
@@ -182,21 +183,21 @@ class TankNetwork {
 
     };
 
-    public updateTowersInRange ( towers: Array<TowerObject> ) {
+    public updateTowersInRange ( towers: TowerObject[] ) : void {
 
         if ( ! this.tank.player.socket ) return;
         if ( towers.length === 0 ) return;
 
         //
 
-        let towerDataSize = 14;
-        let buffer = new ArrayBuffer( 2 + towerDataSize * towers.length );
-        let bufferView = new Int16Array( buffer );
+        const towerDataSize = 14;
+        const buffer = new ArrayBuffer( 2 + towerDataSize * towers.length );
+        const bufferView = new Int16Array( buffer );
         let offset;
 
         for ( let i = 0, il = towers.length; i < il; i ++ ) {
 
-            let tower = towers[ i ];
+            const tower = towers[ i ];
             offset = 1 + ( towerDataSize / 2 ) * i;
 
             bufferView[ offset + 0 ] = tower.id;
@@ -213,21 +214,21 @@ class TankNetwork {
 
     };
 
-    public updateTanksInRange ( tanks: Array<TankObject> ) {
+    public updateTanksInRange ( tanks: TankObject[] ) : void {
 
         if ( ! this.tank.player.socket ) return;
         if ( tanks.length === 0 ) return;
 
         //
 
-        let tankDataSize = 13 * 2 + 13 * 2;
-        let buffer = new ArrayBuffer( 2 + tankDataSize * tanks.length );
-        let bufferView = new Int16Array( buffer );
+        const tankDataSize = 13 * 2 + 13 * 2;
+        const buffer = new ArrayBuffer( 2 + tankDataSize * tanks.length );
+        const bufferView = new Int16Array( buffer );
         let item = 0;
 
         for ( let i = 1, il = ( tankDataSize / 2 ) * tanks.length + 1; i < il; i += tankDataSize / 2 ) {
 
-            let tank = tanks[ item ];
+            const tank = tanks[ item ];
 
             bufferView[ i + 0 ] = tank.id;
             bufferView[ i + 1 ] = tank.team.id;
@@ -263,7 +264,7 @@ class TankNetwork {
 
     //
 
-    public dispose () {
+    public dispose () : void {
 
         Network.removeMessageListener( 'TankMove', this.setMovement );
         Network.removeMessageListener( 'TankStartShooting', this.setShootStart );
@@ -291,7 +292,3 @@ class TankNetwork {
     };
 
 };
-
-//
-
-export { TankNetwork };

@@ -3,29 +3,29 @@
  * DatTank Bot manager sys
 */
 
-import { ArenaCore } from "./../core/Arena.Core";
-import { BotCore } from "./../core/Bot.Core";
+import { ArenaCore } from '../core/Arena.Core';
+import { BotCore } from '../core/Bot.Core';
 
 //
 
-class BotManager {
+export class BotManager {
 
-    public botNum: number = 0;//15 + Math.floor( Math.random() * 8 );
+    public botNum: number = 0; // 15 + Math.floor( Math.random() * 8 );
 
     private arena: ArenaCore;
-    private bots: Array<BotCore> = [];
+    private bots: BotCore[] = [];
 
     //
 
-    public add ( bot: BotCore ) {
+    public add ( bot: BotCore ) : void {
 
         this.bots.push( bot );
 
     };
 
-    public remove ( bot: BotCore ) {
+    public remove ( bot: BotCore ) : void {
 
-        let newBotList = [];
+        const newBotList = [];
 
         for ( let i = 0, il = this.bots.length; i < il; i ++ ) {
 
@@ -43,13 +43,13 @@ class BotManager {
 
     };
 
-    public getBots () {
+    public getBots () : BotCore[] {
 
         return this.bots;
 
     };
 
-    public getById ( botId: number ) {
+    public getById ( botId: number ) : BotCore | null {
 
         for ( let i = 0, il = this.bots.length; i < il; i ++ ) {
 
@@ -61,11 +61,11 @@ class BotManager {
 
         }
 
-        return false;
+        return null;
 
     };
 
-    public update ( delta: number, time: number ) {
+    public update ( delta: number, time: number ) : void {
 
         for ( let i = 0, il = this.bots.length; i < il; i ++ ) {
 
@@ -75,7 +75,7 @@ class BotManager {
 
     };
 
-    public init () {
+    public init () : void {
 
         for ( let i = 0; i < this.botNum; i ++ ) {
 
@@ -94,7 +94,3 @@ class BotManager {
     };
 
 };
-
-//
-
-export { BotManager };

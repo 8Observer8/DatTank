@@ -3,13 +3,13 @@
  * Box object class
 */
 
-import * as OMath from "./../../OMath/Core.OMath";
-import { ArenaCore } from "./../../core/Arena.Core";
-import { PlayerCore } from "./../../core/Player.Core";
+import * as OMath from '../../OMath/Core.OMath';
+import { ArenaCore } from '../../core/Arena.Core';
+import { PlayerCore } from '../../core/Player.Core';
 
 //
 
-class BoxObject {
+export class BoxObject {
 
     private static numIds = 0;
 
@@ -28,7 +28,7 @@ class BoxObject {
 
     //
 
-    public dispose ( player: PlayerCore ) {
+    public dispose ( player: PlayerCore ) : void {
 
         this.arena.removeObjectFromRangeParams( this );
         this.arena.network.boxPicked( this, player );
@@ -49,7 +49,3 @@ class BoxObject {
     };
 
 };
-
-//
-
-export { BoxObject };

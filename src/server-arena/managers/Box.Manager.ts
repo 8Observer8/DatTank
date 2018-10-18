@@ -3,25 +3,25 @@
  * DatTank Box manager sys
 */
 
-import * as OMath from "./../OMath/Core.OMath";
-import { ArenaCore } from "./../core/Arena.Core";
-import { BoxObject } from "./../objects/core/Box.Object";
-import { PlayerCore } from "./../core/Player.Core";
+import * as OMath from '../OMath/Core.OMath';
+import { ArenaCore } from '../core/Arena.Core';
+import { BoxObject } from '../objects/core/Box.Object';
+import { PlayerCore } from '../core/Player.Core';
 
-import { AmmoBoxObject } from "./../objects/boxes/Ammo.Box";
-import { HealthBoxObject } from "./../objects/boxes/Health.Box";
+import { AmmoBoxObject } from '../objects/boxes/Ammo.Box';
+import { HealthBoxObject } from '../objects/boxes/Health.Box';
 
 //
 
-class BoxManager {
+export class BoxManager {
 
     private boxNum: number = 20;
-    private boxes: Array<BoxObject> = [];
+    private boxes: BoxObject[] = [];
     private arena: ArenaCore;
 
     //
 
-    public add ( params: any ) {
+    public add ( params: any ) : void {
 
         let box = null;
         let position = null;
@@ -37,8 +37,8 @@ class BoxManager {
         //
 
         const BoxesTypes = {
-            'Ammo':     AmmoBoxObject,
-            'Health':   HealthBoxObject
+            Ammo:     AmmoBoxObject,
+            Health:   HealthBoxObject,
         };
 
         if ( ! BoxesTypes[ params.type ] ) {
@@ -47,7 +47,7 @@ class BoxManager {
 
         } else {
 
-            box = new BoxesTypes[ params.type ]( this.arena, { position: position });
+            box = new BoxesTypes[ params.type ]( this.arena, { position });
 
         }
 
@@ -55,11 +55,11 @@ class BoxManager {
 
     };
 
-    public remove ( box: BoxObject ) {
+    public remove ( box: BoxObject ) : void {
 
         if ( box.removed ) return;
 
-        let newBoxList = [];
+        const newBoxList = [];
         box.removed = true;
         this.arena.collisionManager.removeObject( box );
 
@@ -78,11 +78,12 @@ class BoxManager {
 
     };
 
-    public getInRange ( player: PlayerCore ) {
+    public getInRange ( player: PlayerCore ) : BoxObject[] {
 
-        let dx, dz;
-        let range = 40;
-        let result = [];
+        let dx;
+        let dz;
+        const range = 40;
+        const result = [];
 
         for ( let i = 0, il = this.boxes.length; i < il; i ++ ) {
 
@@ -101,13 +102,13 @@ class BoxManager {
 
     };
 
-    public getBoxes () {
+    public getBoxes () : BoxObject[] {
 
         return this.boxes;
 
     };
 
-    public init () {
+    public init () : void {
 
         for ( let i = 0; i < this.boxNum; i ++ ) {
 
@@ -124,7 +125,3 @@ class BoxManager {
     };
 
 };
-
-//
-
-export { BoxManager };

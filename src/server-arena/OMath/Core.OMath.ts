@@ -3,15 +3,15 @@
  * DatTank Math core
 */
 
-import { Vec2 } from "./Vector2.OMath";
-import { Vec3 } from "./Vector3.OMath";
+import { Vec2 } from './Vector2.OMath';
+import { Vec3 } from './Vector3.OMath';
 
 export { Vec2 };
 export { Vec3 };
 
 //
 
-export function sortByProperty ( array: Array<object>, property: string ) {
+export function sortByProperty ( array: object[], property: string ) : object[] {
 
     for ( let i = 0; i < array.length; i ++ ) {
 
@@ -19,7 +19,7 @@ export function sortByProperty ( array: Array<object>, property: string ) {
 
             if ( array[ i ][ property ] < array[ j ][ property ] ) {
 
-                let tmp = array[ i ];
+                const tmp = array[ i ];
                 array[ i ] = array[ j ];
                 array[ j ] = tmp;
 
@@ -33,7 +33,7 @@ export function sortByProperty ( array: Array<object>, property: string ) {
 
 };
 
-export function sign ( value: number ) {
+export function sign ( value: number ) : number {
 
     if ( value >= 0 ) {
 
@@ -47,7 +47,7 @@ export function sign ( value: number ) {
 
 };
 
-export function formatAngle ( angle: number ) {
+export function formatAngle ( angle: number ) : number {
 
     angle = angle % ( 2 * Math.PI );
 

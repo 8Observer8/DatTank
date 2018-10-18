@@ -3,32 +3,33 @@
  * DatTank Collision manager sys
 */
 
-import * as Cannon from "cannon";
+import * as Cannon from 'cannon';
 
-import * as OMath from "./../OMath/Core.OMath";
-import { ArenaCore } from "./../core/Arena.Core";
+import * as OMath from '../OMath/Core.OMath';
+import { ArenaCore } from '../core/Arena.Core';
 
 //
 
-class CollisionManager {
+export class CollisionManager {
 
     public arena: ArenaCore;
 
     private world: Cannon.World;
-    private objects: Array<any> = [];
+    private objects: any[] = [];
 
     //
 
-    public isPlaceFree ( position: OMath.Vec3, radius: number ) {
+    public isPlaceFree ( position: OMath.Vec3, radius: number ) : boolean {
 
-        let body, shape;
-        let n = this.world['narrowphase'];
-        let dummyBody = new Cannon.Body({ mass: 0 });
+        let body;
+        let shape;
+        const n = this.world['narrowphase'];
+        const dummyBody = new Cannon.Body({ mass: 0 });
         dummyBody.position.set( position.x, position.y, position.z );
         dummyBody.type = Cannon.Body.STATIC;
         dummyBody.collisionResponse = false;
 
-        let dummyShape = new Cannon.Box( new Cannon.Vec3( radius / 2, 100, radius / 2 ) );
+        const dummyShape = new Cannon.Box( new Cannon.Vec3( radius / 2, 100, radius / 2 ) );
         dummyBody.addShape( dummyShape );
 
         // Check bodies
@@ -40,13 +41,13 @@ class CollisionManager {
 
             if ( shape instanceof Cannon.Box ) {
 
-                let tmpResult = n.result;
+                const tmpResult = n.result;
                 n.result = [];
                 n.currentContactMaterial = this.world.defaultContactMaterial;
 
                 n['boxBox']( shape, dummyShape, body.position, dummyBody.position, body.quaternion, dummyBody.quaternion, body, dummyBody );
 
-                let result = n.result.length;
+                const result = n.result.length;
                 n.result = tmpResult;
                 n.currentContactMaterial = false;
 
@@ -64,15 +65,15 @@ class CollisionManager {
 
     };
 
-    public addObject ( object: any, type: string = 'circle', isDynamic: boolean, onlyIntersect?: boolean ) {
+    public addObject ( object: any, type: string = 'circle', isDynamic: boolean, onlyIntersect?: boolean ) : void {
 
         let shape;
-        let collisionBox = {
+        const collisionBox = {
             parent:     object,
-            type:       type,
+            type,
             body:       new Cannon.Body({ mass: ( isDynamic ) ? 1000 : 0 }),
             sensor:     false,
-            collision:  false
+            collision:  false,
         };
 
         if ( type === 'box' ) {
@@ -109,9 +110,9 @@ class CollisionManager {
 
     };
 
-    public removeObject ( object: any ) {
+    public removeObject ( object: any ) : void {
 
-        let newObjectList = [];
+        const newObjectList = [];
 
         for ( let i = 0, il = this.objects.length; i < il; i ++ ) {
 
@@ -130,11 +131,11 @@ class CollisionManager {
 
     };
 
-    public clear () {
+    public clear () : void {
 
         this.world.solver.removeAllEquations();
 
-        let bodies = this.world.bodies;
+        const bodies = this.world.bodies;
         let i = bodies.length;
 
         while ( i -- ) {
@@ -147,11 +148,11 @@ class CollisionManager {
 
     };
 
-    public update ( delta: number, time: number ) {
+    public update ( delta: number, time: number ) : void {
 
         for ( let i = 0, il = this.objects.length; i < il; i ++ ) {
 
-            let object = this.objects[ i ];
+            const object = this.objects[ i ];
             if ( ! object ) continue;
 
             if ( object.parent.type === 'Tank' ) {
@@ -162,12 +163,12 @@ class CollisionManager {
 
                 } else {
 
-                    let speed = object.body.velocity.distanceTo( new Cannon.Vec3( 0, object.body.velocity.y, 0 ) );
-                    let maxSpeed = object.parent.getMaxSpeed() * 3;
+                    const speed = object.body.velocity.distanceTo( new Cannon.Vec3( 0, object.body.velocity.y, 0 ) );
+                    const maxSpeed = object.parent.getMaxSpeed() * 3;
 
                     if ( speed < maxSpeed && object.parent.moveDirection.x ) {
 
-                        let forceAmount = object.parent.getEnginePower() * ( 1 - speed / maxSpeed );
+                        const forceAmount = object.parent.getEnginePower() * ( 1 - speed / maxSpeed );
                         let force = new Cannon.Vec3( 0, 0, forceAmount );
                         if ( object.parent.moveDirection.x < 0 ) force = force.negate();
                         object.body.applyLocalImpulse( force, new Cannon.Vec3( 0, 0, 0 ) );
@@ -189,9 +190,9 @@ class CollisionManager {
 
                     }
 
-                    let direction = ( object.parent.moveDirection.x > 0 ) ? 0 : Math.PI;
-                    let vx = speed * Math.sin( object.parent.rotation + direction );
-                    let vz = speed * Math.cos( object.parent.rotation + direction );
+                    const direction = ( object.parent.moveDirection.x > 0 ) ? 0 : Math.PI;
+                    const vx = speed * Math.sin( object.parent.rotation + direction );
+                    const vz = speed * Math.cos( object.parent.rotation + direction );
 
                     if ( speed > 5 && object.parent.moveDirection.x !== 0 ) {
 
@@ -227,7 +228,7 @@ class CollisionManager {
 
                 if ( object.body.velocity.distanceTo( new Cannon.Vec3( 0, object.body.velocity.y, 0 ) ) === 0 ) {
 
-                    let bulletSpeed = 1200;
+                    const bulletSpeed = 1200;
                     object.body.velocity.set( bulletSpeed * Math.sin( object.parent.angle ), 0, bulletSpeed * Math.cos( object.parent.angle ) );
 
                 }
@@ -247,7 +248,7 @@ class CollisionManager {
 
     //
 
-    private collisionEvent ( object: any, event: any ) {
+    private collisionEvent ( object: any, event: any ) : void {
 
         if ( event.body['name'] === 'ground' ) return;
 
@@ -288,8 +289,8 @@ class CollisionManager {
 
         // add ground
 
-        let groundShape = new Cannon.Plane();
-        let groundBody = new Cannon.Body({ mass: 0 });
+        const groundShape = new Cannon.Plane();
+        const groundBody = new Cannon.Body({ mass: 0 });
         groundBody['name'] = 'ground';
         groundBody.addShape( groundShape );
         groundBody.quaternion.setFromAxisAngle( new Cannon.Vec3( 1, 0, 0 ), - Math.PI / 2 );
@@ -305,7 +306,3 @@ class CollisionManager {
     };
 
 };
-
-//
-
-export { CollisionManager };

@@ -3,31 +3,31 @@
  * DatTank Landing UI module
 */
 
-import { UI } from "./Core.UI";
-import { Game } from "./../Game";
-import { Logger } from "../utils/Logger";
+import { UI } from './Core.UI';
+import { Game } from './../Game';
+import { Logger } from '../utils/Logger';
 
 //
 
-class UILandingModule {
+export class UILandingModule {
 
-    public initPlayBtn () {
+    public initPlayBtn () : void {
 
         $('#start-btn').html('PLAY!');
 
     };
 
-    public setVersion ( version: string ) {
+    public setVersion ( version: string ) : void {
 
         $('#dt-version').html( version );
 
     };
 
-    public setTopPlayersBoard ( players: any[] ) {
+    public setTopPlayersBoard ( players: any[] ) : void {
 
         if ( players.length < 10 ) return;
 
-        for ( var i = 0, il = players.length; i < il; i ++ ) {
+        for ( let i = 0, il = players.length; i < il; i ++ ) {
 
             $( $('.top-players-score tr')[ i + 1 ] ).find('td')[0].innerHTML = '<span class="nmb">' + ( i + 1 ) + '</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>' + players[ i ].login + '</span>';
             $( $('.top-players-score tr')[ i + 1 ] ).find('td')[1].innerHTML = players[ i ].score + ' / ' + players[ i ].kills;
@@ -38,7 +38,7 @@ class UILandingModule {
 
     };
 
-    public hide () {
+    public hide () : void {
 
         $('#footer').hide();
         $('#signin-box-wrapper').hide();
@@ -53,40 +53,40 @@ class UILandingModule {
 
     };
 
-    public showLoader () {
+    public showLoader () : void {
 
         $('#loader-wrapper').show();
         $('#loader-wrapper').css( 'opacity', 1 );
 
     };
 
-    public setLoaderLabelToInit () {
+    public setLoaderLabelToInit () : void {
 
         $('#loader-wrapper #progress-wrapper').hide();
         $('#loader-wrapper #loader-wrapper-title').html('Initializing arena...');
 
     };
 
-    public hideLoader () {
+    public hideLoader () : void {
 
         $('#loader-wrapper').hide();
         $('#loader-wrapper').css( 'opacity', 0 );
 
     };
 
-    public setLoaderProgress ( value: number ) {
+    public setLoaderProgress ( value: number ) : void {
 
-        let label = Math.round( 100 * value ) + '%';
+        const label = Math.round( 100 * value ) + '%';
         $('#loader-wrapper #progress-wrapper #progress-bar').css( 'width', label );
         $('#loader-wrapper #loader-wrapper-title span').html( label );
 
     };
 
-    public init () {
+    public init () : void {
 
         // init sign in block
 
-        var login = $('#username').val() || localStorage.getItem('login') || '';
+        const login = $('#username').val() || localStorage.getItem('login') || '';
         $('#username').val( login );
 
         // add handlers
@@ -121,13 +121,9 @@ class UILandingModule {
         $('.share-btns .btn-share-fb').mousedown( Logger.newEvent.bind( Logger, 'ShareFB', 'game' ) );
         $('.share-btns .btn-share-tw').mousedown( Logger.newEvent.bind( Logger, 'ShareTW', 'game' ) );
 
-        setTimeout( function () { $('.fb-like').animate( { opacity: 1 }, 500 ); }, 1000 );
-        setTimeout( function () { $('.folow-btn').animate( { opacity: 1 }, 500 ); }, 1600 );
+        setTimeout( () => { $('.fb-like').animate( { opacity: 1 }, 500 ); }, 1000 );
+        setTimeout( () => { $('.folow-btn').animate( { opacity: 1 }, 500 ); }, 1600 );
 
     };
 
 };
-
-//
-
-export { UILandingModule };

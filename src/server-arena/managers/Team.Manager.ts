@@ -3,23 +3,23 @@
  * DatTank Team manager sys
 */
 
-import { TeamCore } from "./../core/Team.Core";
+import { TeamCore } from '../core/Team.Core';
 
 //
 
-class TeamManager {
+export class TeamManager {
 
-    private teams: Array<TeamCore> = [];
+    private teams: TeamCore[] = [];
 
     //
 
-    public add ( team: TeamCore ) {
+    public add ( team: TeamCore ) : void {
 
         this.teams.push( team );
 
     };
 
-    public getWeakest () {
+    public getWeakest () : TeamCore {
 
         let weakestTeam = this.teams[0];
 
@@ -39,7 +39,7 @@ class TeamManager {
 
     };
 
-    public getById ( teamId: number ) {
+    public getById ( teamId: number ) : TeamCore | null {
 
         for ( let i = 0, il = this.teams.length; i < il; i ++ ) {
 
@@ -51,17 +51,17 @@ class TeamManager {
 
         }
 
-        return false;
+        return null;
 
     };
 
-    public getTeams () {
+    public getTeams () : TeamCore[] {
 
         return this.teams;
 
     };
 
-    public init ( teamNum: number ) {
+    public init ( teamNum: number ) : void {
 
         teamNum = teamNum || 4;
 
@@ -75,9 +75,9 @@ class TeamManager {
 
     };
 
-    public toJSON () {
+    public toJSON () : any[] {
 
-        let teamsJSON = [];
+        const teamsJSON = [];
 
         for ( let i = 0, il = this.teams.length; i < il; i ++ ) {
 
@@ -90,7 +90,3 @@ class TeamManager {
     };
 
 };
-
-//
-
-export { TeamManager };

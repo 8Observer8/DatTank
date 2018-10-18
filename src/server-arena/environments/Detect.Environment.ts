@@ -3,9 +3,9 @@
  * DatTank environment manager
 */
 
-import { LocalEnvironment } from "./Local.Environment";
-import { StagingEnvironment } from "./Staging.Environment";
-import { ProductionEnvironment } from "./Production.Environment";
+import { LocalEnvironment } from './Local.Environment';
+import { StagingEnvironment } from './Staging.Environment';
+import { ProductionEnvironment } from './Production.Environment';
 
 //
 

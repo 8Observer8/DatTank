@@ -3,32 +3,32 @@
  * DatTank Arena Network handler
 */
 
-import * as ws from "ws";
-import * as OMath from "./../OMath/Core.OMath";
-import { ArenaCore } from "./../core/Arena.Core";
-import { PlayerCore } from "./../core/Player.Core";
-import { TowerObject } from "./../objects/core/Tower.Object";
-import { TankObject } from "./../objects/core/Tank.Object";
-import { BulletObject } from "./../objects/core/Bullet.Object";
-import { BoxObject } from "./../objects/core/Box.Object";
-import { Network } from "./Core.Network";
+import * as ws from 'ws';
+import * as OMath from '../OMath/Core.OMath';
+import { ArenaCore } from '../core/Arena.Core';
+import { PlayerCore } from '../core/Player.Core';
+import { TowerObject } from '../objects/core/Tower.Object';
+import { TankObject } from '../objects/core/Tank.Object';
+import { BulletObject } from '../objects/core/Bullet.Object';
+import { BoxObject } from '../objects/core/Box.Object';
+import { Network } from './Core.Network';
 
 //
 
-class ArenaNetwork {
+export class ArenaNetwork {
 
     private arena: ArenaCore;
     private buffers: object = {};
 
     //
 
-    public sendEventToPlayersInRange ( position: OMath.Vec3, eventName: string, data: ArrayBuffer | null, dataView?: Int16Array | Object ) {
+    public sendEventToPlayersInRange ( position: OMath.Vec3, eventName: string, data: ArrayBuffer | null, dataView?: Int16Array | object ) : void {
 
-        let players = this.arena.playerManager.getPlayers();
+        const players = this.arena.playerManager.getPlayers();
 
         for ( let i = 0, il = players.length; i < il; i ++ ) {
 
-            let player = players[ i ];
+            const player = players[ i ];
 
             if ( position.distanceTo( player.tank.position ) > player.tank.viewRange ) continue;
             if ( ! player.socket ) continue;
@@ -39,9 +39,9 @@ class ArenaNetwork {
 
     };
 
-    public sendEventToAllPlayers ( eventName: string, data: ArrayBuffer | null, dataView?: Int16Array | Object ) {
+    public sendEventToAllPlayers ( eventName: string, data: ArrayBuffer | null, dataView?: Int16Array | object ) : void {
 
-        let players = this.arena.playerManager.getPlayers();
+        const players = this.arena.playerManager.getPlayers();
 
         for ( let i = 0, il = players.length; i < il; i ++ ) {
 
@@ -52,31 +52,31 @@ class ArenaNetwork {
 
     };
 
-    public joinArena ( player: PlayerCore ) {
+    public joinArena ( player: PlayerCore ) : void {
 
-        let response = this.arena.toJSON();
+        const response = this.arena.toJSON();
         response['me'] = player.toJSON();
 
         Network.send( 'ArenaJoinResponse', player.socket, false, response );
 
     };
 
-    public playerDied ( player: PlayerCore, killer: TankObject | TowerObject ) {
+    public playerDied ( player: PlayerCore, killer: TankObject | TowerObject ) : void {
 
         let data;
 
         if ( killer instanceof TankObject ) {
-            
+
             data = {
                 player: { id: player.id, login: player.login, teamId: player.team.id },
-                killer: { type: 'player', id: killer.player.id, login: killer.player.login, teamId: killer.team.id }
+                killer: { type: 'player', id: killer.player.id, login: killer.player.login, teamId: killer.team.id },
             };
 
         } else if ( killer instanceof TowerObject ) {
 
             data = {
                 player: { id: player.id, login: player.login, teamId: player.team.id },
-                killer: { type: 'tower', id: killer.id, teamId: killer.team.id }
+                killer: { type: 'tower', id: killer.id, teamId: killer.team.id },
             };
 
         }
@@ -87,11 +87,11 @@ class ArenaNetwork {
 
     };
 
-    public playerLeft ( player: PlayerCore ) {
+    public playerLeft ( player: PlayerCore ) : void {
 
         this.buffers['PlayerLeft'] = this.buffers['PlayerLeft'] || {};
-        let buffer = this.buffers['PlayerLeft'].buffer || new ArrayBuffer( 4 );
-        let bufferView = this.buffers['PlayerLeft'].bufferView || new Uint16Array( buffer );
+        const buffer = this.buffers['PlayerLeft'].buffer || new ArrayBuffer( 4 );
+        const bufferView = this.buffers['PlayerLeft'].bufferView || new Uint16Array( buffer );
         this.buffers['PlayerLeft'].buffer = buffer;
         this.buffers['PlayerLeft'].bufferView = bufferView;
 
@@ -103,11 +103,11 @@ class ArenaNetwork {
 
     };
 
-    public boxPicked ( box: BoxObject, player: PlayerCore ) {
+    public boxPicked ( box: BoxObject, player: PlayerCore ) : void {
 
         this.buffers['RemoveBox'] = this.buffers['RemoveBox'] || {};
-        let buffer = this.buffers['RemoveBox'].buffer || new ArrayBuffer( 6 );
-        let bufferView = this.buffers['RemoveBox'].bufferView || new Uint16Array( buffer );
+        const buffer = this.buffers['RemoveBox'].buffer || new ArrayBuffer( 6 );
+        const bufferView = this.buffers['RemoveBox'].bufferView || new Uint16Array( buffer );
         this.buffers['RemoveBox'].buffer = buffer;
         this.buffers['RemoveBox'].bufferView = bufferView;
 
@@ -120,11 +120,11 @@ class ArenaNetwork {
 
     };
 
-    public explosion ( bullet: BulletObject, explosionType: number ) {
+    public explosion ( bullet: BulletObject, explosionType: number ) : void {
 
         this.buffers['BulletExplosion'] = this.buffers['BulletExplosion'] || {};
-        let buffer = this.buffers['BulletExplosion'].buffer || new ArrayBuffer( 10 );
-        let bufferView = this.buffers['BulletExplosion'].bufferView || new Int16Array( buffer );
+        const buffer = this.buffers['BulletExplosion'].buffer || new ArrayBuffer( 10 );
+        const bufferView = this.buffers['BulletExplosion'].bufferView || new Int16Array( buffer );
         this.buffers['BulletExplosion'].buffer = buffer;
         this.buffers['BulletExplosion'].bufferView = bufferView;
 
@@ -141,24 +141,24 @@ class ArenaNetwork {
 
     //
 
-    private newChatMessage ( data: any, socket: ws ) {
+    private newChatMessage ( data: any, socket: ws ) : void {
 
         if ( data.playerId !== socket['player'].id ) return;
 
-        let player = socket['player'];
+        const player = socket['player'];
         let message = data.message.substr( 0, 30 );
 
         if ( message[0] !== '/' ) {
 
-            let players = player.team.players;
+            const players = player.team.players;
 
             for ( let i = 0, il = players.length; i < il; i ++ ) {
 
                 Network.send( 'ArenaChatMessage', players[ i ].socket, null, {
                     login:      player.login,
                     teamId:     player.team.id,
-                    message:    message,
-                    onlyTeam:   true
+                    message,
+                    onlyTeam:   true,
                 });
 
             }
@@ -170,8 +170,8 @@ class ArenaNetwork {
             this.sendEventToAllPlayers( 'ArenaChatMessage', null, {
                 login:      player.login,
                 teamId:     player.team.id,
-                message:    message,
-                onlyTeam:   false
+                message,
+                onlyTeam:   false,
             });
 
         }
@@ -180,7 +180,7 @@ class ArenaNetwork {
 
     //
 
-    public dispose () {
+    public dispose () : void {
 
         // todo
 
@@ -197,7 +197,3 @@ class ArenaNetwork {
     };
 
 };
-
-//
-
-export { ArenaNetwork };

@@ -3,13 +3,13 @@
  * DatTank Bot Core
 */
 
-import * as OMath from "./../OMath/Core.OMath";
-import { ArenaCore } from "./Arena.Core";
-import { PlayerCore } from "./Player.Core";
+import * as OMath from '../OMath/Core.OMath';
+import { ArenaCore } from './Arena.Core';
+import { PlayerCore } from './Player.Core';
 
 //
 
-class BotCore {
+export class BotCore {
 
     private static LoginBase = [
         null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
@@ -50,18 +50,18 @@ class BotCore {
 
     //
 
-    public levelUp () {
+    public levelUp () : void {
 
-        let statId = Math.floor( Math.random() * 4 );
+        const statId = Math.floor( Math.random() * 4 );
         this.player.tank.updateStats( statId );
 
     };
 
-    public die () {
+    public die () : void {
 
-        let players = this.arena.playerManager.getPlayers();
-        let bots = this.arena.botManager.getBots();
-        let botNum = this.arena.botManager.botNum;
+        const players = this.arena.playerManager.getPlayers();
+        const bots = this.arena.botManager.getBots();
+        const botNum = this.arena.botManager.botNum;
 
         if ( players.length - bots.length < botNum && this.player.kills < this.maxKills ) {
 
@@ -80,10 +80,10 @@ class BotCore {
 
     };
 
-    private pickLogin () {
+    private pickLogin () : string {
 
         let login = '';
-        let bots = this.arena.botManager.getBots();
+        const bots = this.arena.botManager.getBots();
 
         while ( login === '' ) {
 
@@ -91,7 +91,7 @@ class BotCore {
 
             if ( ! login ) {
 
-                for ( let i = 0; i < bots.length; i ++ ) {
+                for ( let i = 0, il = bots.length; i < il; i ++ ) {
 
                     if ( login === bots[ i ].login ) {
 
@@ -109,10 +109,10 @@ class BotCore {
 
     };
 
-    private init () {
+    private init () : void {
 
         let tank;
-        let rnd = Math.random();
+        const rnd = Math.random();
 
         if ( rnd <= 0.25 ) {
 
@@ -132,13 +132,13 @@ class BotCore {
 
         }
 
-        this.player = this.arena.addPlayer({ login: this.login, tank: tank, socket: false });
+        this.player = this.arena.addPlayer({ login: this.login, tank, socket: false });
         this.player.tank.ammo = 10000000;
         this.player.bot = this;
 
     };
 
-    public update ( delta: number, time: number ) {
+    public update ( delta: number, time: number ) : void {
 
         if ( this.player.tank.health <= 0 ) return;
         if ( Date.now() - this.player.spawnTime < this.delayAfterSpawn ) return;
@@ -152,7 +152,7 @@ class BotCore {
 
         if ( ! this.player.tank.moveDirection.x ) {
 
-            let x = ( Math.random() > 0.5 ) ? 1 : -1;
+            const x = ( Math.random() > 0.5 ) ? 1 : -1;
             this.player.tank.setMovement( x, this.player.tank.moveDirection.y );
             this.moveDuration = Math.floor( 8000 * Math.random() ) + 1000;
 
@@ -160,7 +160,7 @@ class BotCore {
 
         if ( this.rotateBaseDuration === null ) {
 
-            let y = Math.floor( 3 * Math.random() ) - 1;
+            const y = Math.floor( 3 * Math.random() ) - 1;
             this.player.tank.setMovement( this.player.tank.moveDirection.x, y );
             this.rotateBaseDuration = Math.floor( 500 * Math.random() ) + 500;
 
@@ -193,15 +193,15 @@ class BotCore {
 
         let target = null;
         let minDist = 1000;
-        let tanks = this.arena.tankManager.getTanks();
-        let towers = this.arena.towerManager.getTowers();
+        const tanks = this.arena.tankManager.getTanks();
+        const towers = this.arena.towerManager.getTowers();
         let distance;
 
         // search for Player target
 
         for ( let i = 0, il = tanks.length; i < il; i ++ ) {
 
-            let tank = tanks[ i ];
+            const tank = tanks[ i ];
 
             if ( tank.team === this.player.team || tank.health <= 0 ) continue;
 
@@ -224,7 +224,7 @@ class BotCore {
 
             for ( let i = 0, il = towers.length; i < il; i ++ ) {
 
-                let tower = towers[ i ];
+                const tower = towers[ i ];
 
                 if ( tower.team === this.player.team ) continue;
 
@@ -245,9 +245,10 @@ class BotCore {
 
         if ( target && minDist < 280 ) {
 
-            let dx = this.player.tank.position.x - target.position.x;
-            let dz = this.player.tank.position.z - target.position.z;
-            let rotation, deltaAngle;
+            const dx = this.player.tank.position.x - target.position.x;
+            const dz = this.player.tank.position.z - target.position.z;
+            let rotation;
+            let deltaAngle;
 
             rotation = Math.atan2( dx, dz ) + Math.PI / 2 - this.player.tank.rotation;
             deltaAngle = OMath.formatAngle( rotation ) - OMath.formatAngle( this.player.tank.rotationTop );
@@ -285,7 +286,3 @@ class BotCore {
     };
 
 };
-
-//
-
-export { BotCore };

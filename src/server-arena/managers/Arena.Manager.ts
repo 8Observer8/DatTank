@@ -3,10 +3,10 @@
  * DatTank Arena Manager system
 */
 
-import * as ws from "ws";
+import * as ws from 'ws';
 
-import { ArenaCore } from "./../core/Arena.Core";
-import { ArenaManagerNetwork } from "./../network/ArenaManager.Network";
+import { ArenaCore } from '../core/Arena.Core';
+import { ArenaManagerNetwork } from '../network/ArenaManager.Network';
 
 //
 
@@ -21,20 +21,20 @@ class ArenaManagerCore {
 
     //
 
-    public addArena () {
+    public addArena () : ArenaCore {
 
-        let arena = new ArenaCore();
+        const arena = new ArenaCore();
         this.arenas.push( arena );
 
         return arena;
 
     };
 
-    public removeArena ( arenaId: number ) {
+    public removeArena ( arenaId: number ) : void {
 
         if ( this.arenas.length === 1 ) return;
 
-        let newArenaList = [];
+        const newArenaList = [];
 
         for ( let i = 0, il = this.arenas.length; i < il; i ++ ) {
 
@@ -47,17 +47,17 @@ class ArenaManagerCore {
 
     };
 
-    public removeEmptyArenas () {
+    public removeEmptyArenas () : void {
 
-        let newArenaList = [];
+        const newArenaList = [];
 
         if ( this.arenas.length === 1 ) return;
 
         for ( let i = 0, il = this.arenas.length; i < il; i ++ ) {
 
-            let arena = this.arenas[ i ];
-            let players = arena.playerManager.getPlayers();
-            let bots = arena.botManager.getBots();
+            const arena = this.arenas[ i ];
+            const players = arena.playerManager.getPlayers();
+            const bots = arena.botManager.getBots();
 
             if ( ! arena || ! players ) continue;
 
@@ -76,11 +76,11 @@ class ArenaManagerCore {
 
     };
 
-    public findArena () {
+    public findArena () : ArenaCore {
 
         let arena: ArenaCore;
-        let minArena: ArenaCore | undefined = undefined;
-        let avgArena: ArenaCore | undefined = undefined;
+        let minArena: ArenaCore | undefined;
+        let avgArena: ArenaCore | undefined;
 
         this.removeEmptyArenas();
 
@@ -90,9 +90,9 @@ class ArenaManagerCore {
 
             arena = this.arenas[ i ];
 
-            let players = arena.playerManager.getPlayers();
-            let bots = arena.botManager.getBots();
-            let livePlayers = players.length - bots.length;
+            const players = arena.playerManager.getPlayers();
+            const bots = arena.botManager.getBots();
+            const livePlayers = players.length - bots.length;
 
             if ( livePlayers < this.maxPlayersInArena && players.length > 5 ) {
 
@@ -130,7 +130,7 @@ class ArenaManagerCore {
 
     };
 
-    public getArenaById ( arenaId: number ) {
+    public getArenaById ( arenaId: number ) : ArenaCore | null {
 
         for ( let i = 0, il = this.arenas.length; i < il; i ++ ) {
 
@@ -142,20 +142,20 @@ class ArenaManagerCore {
 
         }
 
-        return false;
+        return null;
 
     };
 
-    public getArenas () {
+    public getArenas () : ArenaCore[] {
 
         return this.arenas;
 
     };
 
-    public playerJoin ( data: any, socket: ws ) {
+    public playerJoin ( data: any, socket: ws ) : void {
 
-        let arena: ArenaCore = this.findArena();
-        let player = arena.addPlayer({ login: data.login, tank: data.tank, socket: socket });
+        const arena: ArenaCore = this.findArena();
+        const player = arena.addPlayer({ login: data.login, tank: data.tank, socket });
 
         arena.network.joinArena( player );
 

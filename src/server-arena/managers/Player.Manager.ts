@@ -3,29 +3,29 @@
  * DatTank Player manager sys
 */
 
-import { ArenaCore } from "./../core/Arena.Core";
-import { PlayerCore } from "./../core/Player.Core";
+import { ArenaCore } from '../core/Arena.Core';
+import { PlayerCore } from '../core/Player.Core';
 
 //
 
-class PlayerManager {
+export class PlayerManager {
 
     private arena: ArenaCore;
-    private players: Array<PlayerCore> = [];
+    private players: PlayerCore[] = [];
 
     //
 
-    public add ( player: PlayerCore ) {
+    public add ( player: PlayerCore ) : void {
 
-        let team = this.arena.teamManager.getWeakest();
+        const team = this.arena.teamManager.getWeakest();
         team.addPlayer( player );
         this.players.push( player );
 
     };
 
-    public remove ( playerId: number ) {
+    public remove ( playerId: number ) : boolean {
 
-        let newPlayerList = [];
+        const newPlayerList = [];
         let removed = false;
 
         //
@@ -49,7 +49,7 @@ class PlayerManager {
 
     };
 
-    public getById ( playerId: number ) {
+    public getById ( playerId: number ) : PlayerCore | null {
 
         for ( let i = 0, il = this.players.length; i < il; i ++ ) {
 
@@ -65,13 +65,13 @@ class PlayerManager {
 
     };
 
-    public getPlayers () {
+    public getPlayers () : PlayerCore[] {
 
         return this.players;
 
     };
 
-    public update ( delta: number, time: number ) {
+    public update ( delta: number, time: number ) : void {
 
         for ( let i = 0, il = this.players.length; i < il; i ++ ) {
 
@@ -81,7 +81,7 @@ class PlayerManager {
 
     };
 
-    public init () {
+    public init () : void {
 
         // todo
 
@@ -94,7 +94,3 @@ class PlayerManager {
     };
 
 };
-
-//
-
-export { PlayerManager };

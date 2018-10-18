@@ -16,7 +16,8 @@
         "max-line-length": false,
         "curly": false,
         "member-ordering": false,
-        "forin": false
+        "forin": false,
+        "no-bitwise": false
     },
     "linterOptions": {
         "exclude": [

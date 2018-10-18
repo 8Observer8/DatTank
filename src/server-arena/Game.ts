@@ -3,15 +3,13 @@
  * Core DatTank file
 */
 
-import { Environment } from "./environments/Detect.Environment";
-import { ArenaManager } from "./managers/Arena.Manager";
-import { GarageManager } from "./managers/Garage.Manager";
-import { Network } from "./network/Core.Network";
+import * as http from 'http';
+import * as ip from 'ip';
 
-//
-
-let http = require('http');
-let ip = require('ip');
+import { Environment } from './environments/Detect.Environment';
+import { ArenaManager } from './managers/Arena.Manager';
+import { GarageManager } from './managers/Garage.Manager';
+import { Network } from './network/Core.Network';
 
 //
 
@@ -24,24 +22,24 @@ class GameCore {
 
     //
 
-    public updateTopList ( login: string, score: number, kills: number ) {
+    public updateTopList ( login: string, score: number, kills: number ) : void {
 
         http.get({
             hostname:   Environment.master.host,
             port:       Environment.master.port,
-            path:       '/api/update-top-list?login=' + encodeURI( login ) + '&kills=' + kills + '&score=' + score
-        }, function ( res: any ) {
+            path:       '/api/update-top-list?login=' + encodeURI( login ) + '&kills=' + kills + '&score=' + score,
+        }, ( res: any ) => {
 
             let response = '';
             res.setEncoding('utf8');
 
-            res.on( 'data', function ( chunk: string ) {
+            res.on( 'data', ( chunk: string ) => {
 
                 response += chunk;
 
             });
 
-            res.on( 'end', function () {
+            res.on( 'end', () => {
 
                 response = JSON.parse( response );
 
@@ -51,18 +49,19 @@ class GameCore {
 
     };
 
-    public reportToMaster () {
+    public reportToMaster () : void {
 
-        let arenas = ArenaManager.getArenas();
+        const arenas = ArenaManager.getArenas();
         let players = 0;
 
         for ( let i = 0, il = arenas.length; i < il; i ++ ) {
 
-            let arena = arenas[ i ];
+            const arena = arenas[ i ];
+            const playersList = arena.playerManager.getPlayers();
 
-            for ( let j = 0, jl = arena.playerManager.players.length; j < jl; j ++ ) {
+            for ( let j = 0, jl = playersList.length; j < jl; j ++ ) {
 
-                if ( arena.playerManager.players[ j ].socket ) {
+                if ( playersList[ j ].socket ) {
 
                     players ++;
 
@@ -77,19 +76,19 @@ class GameCore {
         http.get({
             hostname:   Environment.master.host,
             port:       Environment.master.port,
-            path:       '/api/status-update?aid=' + this.id + '&players=' + players + '&ip=' + ip.address()
-        }, function ( res: any ) {
+            path:       '/api/status-update?aid=' + this.id + '&players=' + players + '&ip=' + ip.address(),
+        }, ( res: any ) => {
 
             let response = '';
             res.setEncoding('utf8');
 
-            res.on( 'data', function ( chunk: string ) {
+            res.on( 'data', ( chunk: string ) => {
 
                 response += chunk;
 
             });
 
-            res.on( 'end', function () {
+            res.on( 'end', () => {
 
                 response = JSON.parse( response );
 
@@ -99,7 +98,7 @@ class GameCore {
 
     };
 
-    public init () {
+    public init () : void {
 
         Network.init();
 
@@ -109,26 +108,26 @@ class GameCore {
 
     };
 
-    private loadGarageConfig () {
+    private loadGarageConfig () : void {
 
         http.get({
             hostname:   Environment.master.host,
             port:       Environment.master.port,
-            path:       '/api/garage/getObjects'
-        }, function ( res: any ) {
+            path:       '/api/garage/getObjects',
+        }, ( res: any ) => {
 
             let response = '';
             res.setEncoding('utf8');
 
-            res.on( 'data', function ( chunk: string ) {
+            res.on( 'data', ( chunk: string ) => {
 
                 response += chunk;
 
             });
 
-            res.on( 'end', function () {
+            res.on( 'end', () => {
 
-                let data = JSON.parse( response );
+                const data = JSON.parse( response );
                 GarageManager.set( data );
 
             });

@@ -3,15 +3,15 @@
  * HealthBox Object class
 */
 
-import { ArenaCore } from "./../../core/Arena.Core";
-import { TankObject } from "./../core/Tank.Object";
-import { BoxObject } from "./../core/Box.Object";
+import { ArenaCore } from '../../core/Arena.Core';
+import { TankObject } from '../core/Tank.Object';
+import { BoxObject } from '../core/Box.Object';
 
 //
 
-class HealthBoxObject extends BoxObject {
+export class HealthBoxObject extends BoxObject {
 
-    public pickUp ( tank: TankObject ) {
+    public pickUp ( tank: TankObject ) : void {
 
         this.dispose( tank.player );
         tank.changeHealth( this.amount );
@@ -29,7 +29,3 @@ class HealthBoxObject extends BoxObject {
     };
 
 };
-
-//
-
-export { HealthBoxObject };

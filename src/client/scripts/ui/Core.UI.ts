@@ -3,13 +3,13 @@
  * DatTank global UI core
 */
 
-import { Logger } from "./../utils/Logger";
-import { UILandingModule } from "./Landing.UI";
-import { UIInGameModule } from "./InGame.UI";
-import { UIChatModule } from "./Chat.UI";
-import { GfxCore } from "./../graphics/Core.Gfx";
-import { SoundManager } from "./../managers/Sound.Manager";
-import { ControlsManager } from "./../managers/Control.Manager";
+import { Logger } from '../utils/Logger';
+import { UILandingModule } from './Landing.UI';
+import { UIInGameModule } from './InGame.UI';
+import { UIChatModule } from './Chat.UI';
+import { GfxCore } from '../graphics/Core.Gfx';
+import { SoundManager } from '../managers/Sound.Manager';
+import { ControlsManager } from '../managers/Control.Manager';
 
 //
 
@@ -23,7 +23,7 @@ class UICore {
 
     //
 
-    public showHelp () {
+    public showHelp () : void {
 
         Logger.newEvent( 'OpenHelp', 'game' );
         SoundManager.playSound('MenuClick');
@@ -31,16 +31,16 @@ class UICore {
 
     };
 
-    public hideHelp () {
+    public hideHelp () : void {
 
         SoundManager.playSound('MenuClick');
         $('.help-popup').hide();
 
     };
 
-    public changeQuality ( value: boolean | MouseEvent, withoutSound: boolean ) {
+    public changeQuality ( value: boolean | MouseEvent, withoutSound: boolean ) : void {
 
-        let isHQ = ( typeof value === 'boolean' ) ? value : $( value.currentTarget! ).attr('hq') !== 'true';
+        const isHQ = ( typeof value === 'boolean' ) ? value : $( value.currentTarget! ).attr('hq') !== 'true';
         $('#graphics-quality').attr( 'hq', isHQ.toString() );
         $('#viewport-graphics-quality').attr( 'hq', isHQ.toString() );
         localStorage.setItem( 'hq', isHQ.toString() );
@@ -66,9 +66,9 @@ class UICore {
 
     };
 
-    public changeSound ( value: boolean | MouseEvent, withoutSound: boolean ) {
+    public changeSound ( value: boolean | MouseEvent, withoutSound: boolean ) : void {
 
-        let isSound = ( typeof value === 'boolean' ) ? value : $( value.currentTarget! ).attr('sound') !== 'true';
+        const isSound = ( typeof value === 'boolean' ) ? value : $( value.currentTarget! ).attr('sound') !== 'true';
         $('#sound').attr( 'sound', isSound.toString() );
         $('#viewport-sound').attr( 'sound', isSound.toString() );
         localStorage.setItem( 'sound', isSound.toString() );
@@ -84,7 +84,7 @@ class UICore {
 
     };
 
-    private onFullscreenModeChange () {
+    private onFullscreenModeChange () : void {
 
         let isFullscreen = document['fullscreenElement'] || document['mozFullScreenElement'] || document['webkitFullscreenElement'] || document['msFullscreenElement'];
         isFullscreen = ( isFullscreen !== undefined );
@@ -96,9 +96,9 @@ class UICore {
 
     };
 
-    public toggleFullscreenMode ( value: boolean | MouseEvent ) {
+    public toggleFullscreenMode ( value: boolean | MouseEvent ) : void {
 
-        let isFullscreen = ( typeof value === 'boolean' ) ? value : $( value.currentTarget! ).attr('screen') !== 'true';
+        const isFullscreen = ( typeof value === 'boolean' ) ? value : $( value.currentTarget! ).attr('screen') !== 'true';
 
         //
 
@@ -106,7 +106,7 @@ class UICore {
 
         if ( isFullscreen ) {
 
-            let element = document.body;
+            const element = document.body;
 
             if ( element['requestFullscreen'] ) {
 
@@ -146,7 +146,7 @@ class UICore {
 
     };
 
-    public init () {
+    public init () : void {
 
         this.Landing.init();
         this.InGame.init();

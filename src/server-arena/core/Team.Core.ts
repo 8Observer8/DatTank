@@ -3,23 +3,23 @@
  * DatTank Team Core
 */
 
-import * as OMath from "./../OMath/Core.OMath";
-import { PlayerCore } from "./Player.Core";
+import * as OMath from '../OMath/Core.OMath';
+import { PlayerCore } from './Player.Core';
 
 //
 
-class TeamCore {
+export class TeamCore {
 
     private static StartPositions = {
-        '0':        new OMath.Vec3(   950, 10,   950 ),
-        '1':        new OMath.Vec3( - 950, 10,   950 ),
-        '2':        new OMath.Vec3(   950, 10, - 950 ),
-        '3':        new OMath.Vec3( - 950, 10, - 950 ),
-        '1000':     new OMath.Vec3(     0, 10,     0 ),
+        0:        new OMath.Vec3(   950, 10,   950 ),
+        1:        new OMath.Vec3( - 950, 10,   950 ),
+        2:        new OMath.Vec3(   950, 10, - 950 ),
+        3:        new OMath.Vec3( - 950, 10, - 950 ),
+        1000:     new OMath.Vec3(     0, 10,     0 ),
     };
 
     public id: number;
-    public players: Array<PlayerCore> = [];
+    public players: PlayerCore[] = [];
     public kills: number = 0;
     public death: number = 0;
     public towers: number = 0;
@@ -27,7 +27,7 @@ class TeamCore {
 
     //
 
-    public reset () {
+    public reset () : void {
 
         this.players = [];
         this.kills = 0;
@@ -36,16 +36,16 @@ class TeamCore {
 
     };
 
-    public addPlayer ( player: PlayerCore ) {
+    public addPlayer ( player: PlayerCore ) : void {
 
         this.players.push( player );
         player.team = this;
 
     };
 
-    public removePlayer ( playerId: number ) {
+    public removePlayer ( playerId: number ) : void {
 
-        let newPlayersList = [];
+        const newPlayersList = [];
 
         for ( let i = 0, il = this.players.length; i < il; i ++ ) {
 
@@ -58,13 +58,13 @@ class TeamCore {
 
     };
 
-    public toJSON () {
+    public toJSON () : any {
 
         return {
             id:             this.id,
             kills:          this.kills,
             death:          this.death,
-            spawnPosition:  this.spawnPosition.toJSON()
+            spawnPosition:  this.spawnPosition.toJSON(),
         };
 
     };
@@ -79,7 +79,3 @@ class TeamCore {
     };
 
 };
-
-//
-
-export { TeamCore };
