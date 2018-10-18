@@ -38,4 +38,14 @@ export class GameService {
 
     };
 
+    public buyObject ( type: string, objectId: string, callback: ( result: boolean ) => void ) : void {
+
+        $.post( '/api/garage/buyObject/' + type + '/' + objectId, ( response ) => {
+
+            console.log( response );
+
+        });
+
+    };
+
 };

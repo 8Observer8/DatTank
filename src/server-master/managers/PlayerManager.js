@@ -47,7 +47,7 @@ PlayerManager.prototype.removeOldPlayers = function () {
     .then( ( results ) => {
 
         results.forEach( function ( result ) {
-            
+
             result.remove();
 
         });
@@ -90,7 +90,7 @@ PlayerManager.prototype.auth = function ( pid, sid, callback ) {
     .then( ( player ) => {
 
         if ( ! player || player.sid !== sid ) {
-        
+
             return this.register( callback );
 
         } else {
@@ -164,7 +164,11 @@ PlayerManager.prototype.buyObject = function ( pid, objectType, objectId, callba
 
         if ( objectType === 'tanks' ) {
 
-            // todo
+            player.params['tanks'][ objectId ] = GarageConfig[ objectType ][ objectId ].default;
+            player.params['cannons'][ player.params['tanks'][ objectId ].cannon ] = true;
+            player.params['armors'][ player.params['tanks'][ objectId ].armor ] = true;
+            player.params['engines'][ player.params['tanks'][ objectId ].engine ] = true;
+            player.markModified('params');
 
         } else {
 
@@ -180,6 +184,11 @@ PlayerManager.prototype.buyObject = function ( pid, objectType, objectId, callba
             return callback( true, '' );
 
         });
+
+    })
+    .catch( ( err ) => {
+
+        console.log( err );
 
     });
 

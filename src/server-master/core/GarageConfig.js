@@ -44,7 +44,7 @@ var GarageConfig = {
         },
 
         'OrbitT32s': {
-            id:             'OrbitT32S',
+            id:             'OrbitT32s',
             title:          'Orbit T32s',
             price:          2800,
             cannons:        [ 'Plasma-double', 'Plasma-tripple', 'Razer-v2', 'Razer-double' ],

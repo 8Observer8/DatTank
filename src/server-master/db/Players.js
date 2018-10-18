@@ -1,6 +1,6 @@
 /*
  * @author ohmed
- * DatTank players mongoDB schema 
+ * DatTank players mongoDB schema
 */
 
 var mongoose = require('mongoose');

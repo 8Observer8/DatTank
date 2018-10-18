@@ -65,31 +65,31 @@ export class Garage {
 
         switch ( category ) {
 
-            case 'tank':
+            case 'tanks':
 
                 title = '"' + title + '" tank';
                 image = 'tanks/' + item.id + '.png';
                 break;
 
-            case 'cannon':
+            case 'cannons':
 
                 title = '"' + title + '" cannon';
                 image = 'cannons/' + item.id + '.png';
                 break;
 
-            case 'engine':
+            case 'engines':
 
                 title = '"' + title + '" engine';
                 image = 'engines/' + item.id + '.png';
                 break;
 
-            case 'armor':
+            case 'armors':
 
                 title = '"' + title + '" armor';
                 image = 'armors/' + item.id + '.png';
                 break;
 
-            case 'texture':
+            case 'textures':
 
                 title = '"' + title + '" texture';
                 image = 'textures/' + item.id + '.png';
@@ -119,6 +119,11 @@ export class Garage {
         $('.garage .buy-item-popup-wrapper .btn').click( () => {
 
             SoundManager.playSound('ElementSelect');
+            Game.gameService.buyObject( category, item.id, () => {
+
+                // todo
+
+            });
 
         });
 
@@ -201,12 +206,13 @@ export class Garage {
 
     private showCurrentTankInRightMenu () : void {
 
-        const tankId = this.params.selected;
-        const cannonId = ( this.params.tanks[ tankId ] || this.GarageConfig.tanks[ tankId ].default ).cannon;
-        const armorId = ( this.params.tanks[ tankId ] || this.GarageConfig.tanks[ tankId ].default ).armor;
-        const engineId = ( this.params.tanks[ tankId ] || this.GarageConfig.tanks[ tankId ].default ).engine;
+        const selected = this.params.selected;
+        if ( ! this.GarageConfig.tanks[ selected.tank ] ) return;
+        const cannonId = selected.cannon || this.GarageConfig.tanks[ selected.tank ].default.cannon;
+        const armorId = selected.armor || this.GarageConfig.tanks[ selected.tank ].default.armor;
+        const engineId = selected.engine || this.GarageConfig.tanks[ selected.tank ].default.engine;
 
-        const tank = this.GarageConfig.tanks[ tankId ];
+        const tank = this.GarageConfig.tanks[ selected.tank ];
         const cannon = this.GarageConfig.cannons[ cannonId ];
         const armor = this.GarageConfig.armors[ armorId ];
         const engine = this.GarageConfig.engines[ engineId ];
@@ -253,10 +259,11 @@ export class Garage {
         //
 
         const selectedTankId = this.params.selected;
-        const selectedTank = this.GarageConfig.tanks[ selectedTankId ];
-        const selectedCannonId = ( this.params.tanks[ selectedTankId ] || this.GarageConfig.tanks[ selectedTankId ].default ).cannon;
-        const selectedArmorId = ( this.params.tanks[ selectedTankId ] || this.GarageConfig.tanks[ selectedTankId ].default ).armor;
-        const selectedEngineId = ( this.params.tanks[ selectedTankId ] || this.GarageConfig.tanks[ selectedTankId ].default ).engine;
+        const selectedTank = this.params.tanks[ selectedTankId ];
+        const selectedCannonId = selectedTank.cannon;
+        const selectedArmorId = selectedTank.armor;
+        const selectedEngineId = selectedTank.engine;
+        const tankParams = this.GarageConfig.tanks[ selectedTankId ];
 
         // clear lists
 
@@ -291,7 +298,7 @@ export class Garage {
         for ( const cannonId in this.GarageConfig.cannons ) {
 
             const cannon = this.GarageConfig.cannons[ cannonId ];
-            if ( selectedTank.cannons.indexOf( cannonId ) === - 1 ) continue;
+            if ( tankParams.cannons.indexOf( cannonId ) === - 1 ) continue;
 
             const isSelected = ( cannonId === selectedCannonId );
             const isOwn = ( this.params.cannons[ cannonId ] !== undefined );
@@ -311,7 +318,7 @@ export class Garage {
         for ( const engineId in this.GarageConfig.engines ) {
 
             const engine = this.GarageConfig.engines[ engineId ];
-            if ( selectedTank.engines.indexOf( engineId ) === - 1 ) continue;
+            if ( tankParams.engines.indexOf( engineId ) === - 1 ) continue;
 
             const isSelected = ( engineId === selectedEngineId );
             const isOwn = ( this.params.engines[ engineId ] !== undefined );
@@ -331,7 +338,7 @@ export class Garage {
         for ( const armorId in this.GarageConfig.armors ) {
 
             const armor = this.GarageConfig.armors[ armorId ];
-            if ( selectedTank.armors.indexOf( armorId ) === - 1 ) continue;
+            if ( tankParams.armors.indexOf( armorId ) === - 1 ) continue;
 
             const isSelected = ( armorId === selectedArmorId );
             const isOwn = ( this.params.armors[ armorId ] !== undefined );
@@ -443,7 +450,7 @@ export class Garage {
 
             if ( $( event.currentTarget ).hasClass('notOwn') ) {
 
-                this.openBuyPopup( 'tank', tank );
+                this.openBuyPopup( 'tanks', tank );
                 return;
 
             }
@@ -455,7 +462,7 @@ export class Garage {
 
         //
 
-        const tankId = 'IS2';
+        const tankId = 'IS2001';
         this.currentTank = tankId;
         this.scene.selectModel( tankId );
 
@@ -488,7 +495,7 @@ export class Garage {
 
         if ( $( event.currentTarget ).hasClass('notOwn') ) {
 
-            this.openBuyPopup( 'cannon', cannon );
+            this.openBuyPopup( 'cannons', cannon );
             return;
 
         }
@@ -511,7 +518,7 @@ export class Garage {
 
         if ( $( event.currentTarget ).hasClass('notOwn') ) {
 
-            this.openBuyPopup( 'engine', engine );
+            this.openBuyPopup( 'engines', engine );
             return;
 
         }
@@ -534,7 +541,7 @@ export class Garage {
 
         if ( $( event.currentTarget ).hasClass('notOwn') ) {
 
-            this.openBuyPopup( 'armor', armor );
+            this.openBuyPopup( 'armors', armor );
             return;
 
         }

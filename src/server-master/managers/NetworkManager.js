@@ -156,7 +156,7 @@ NetworkManager.prototype.init = function () {
     this.app.get( '/api/getFreeArena', ApiManager.getFreeArena );
     this.app.get( '/api/getTopPlayers', ApiManager.getTopPlayers );
     this.app.get( '/api/garage/getObjects', ApiManager.getGarageObjects );
-    this.app.get( '/api/me/buyObject/:type/:oid', ApiManager.authCheck, ApiManager.buyObject );
+    this.app.post( '/api/garage/buyObject/:type/:oid', ApiManager.authCheck, ApiManager.buyObject );
 
     //
 
