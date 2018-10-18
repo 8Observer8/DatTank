@@ -3,22 +3,22 @@
  * DatTank Tank Object class
 */
 
-import * as OMath from "./../../OMath/Core.OMath";
+import * as OMath from '../../OMath/Core.OMath';
 
-import { Logger } from "./../../utils/Logger";
-import { Arena } from "./../../core/Arena.Core";
-import { UI } from "./../../ui/Core.UI";
-import { PlayerCore } from "./../../core/Player.Core";
+import { Logger } from '../../utils/Logger';
+import { Arena } from '../../core/Arena.Core';
+import { UI } from '../../ui/Core.UI';
+import { PlayerCore } from '../../core/Player.Core';
 
-import { TankNetwork } from "./../../network/Tank.Network";
-import { TankGfx } from "./../../graphics/objects/Tank.Gfx";
-import { HealthChangeLabelManager } from "./../../managers/HealthChangeLabel.Manager";
-import { BulletManager } from "./../../managers/Bullet.Manager";
-import { CollisionManager } from "./../../managers/Collision.Manager";
+import { TankNetwork } from '../../network/Tank.Network';
+import { TankGfx } from '../../graphics/objects/Tank.Gfx';
+import { HealthChangeLabelManager } from '../../managers/HealthChangeLabel.Manager';
+import { BulletManager } from '../../managers/Bullet.Manager';
+import { CollisionManager } from '../../managers/Collision.Manager';
 
 //
 
-class TankObject {
+export class TankObject {
 
     public id: number;
     public player: PlayerCore;
@@ -59,19 +59,19 @@ class TankObject {
 
     //
 
-    public startShooting () {
+    public startShooting () : void {
 
         this.network.startShooting();
 
     };
 
-    public stopShooting () {
+    public stopShooting () : void {
 
         this.network.stopShooting();
 
     };
 
-    public makeShot ( bulletId: number, position: OMath.Vec3, directionRotation: number, overheating: number ) {
+    public makeShot ( bulletId: number, position: OMath.Vec3, directionRotation: number, overheating: number ) : void {
 
         if ( this.health <= 0 ) return;
 
@@ -95,13 +95,13 @@ class TankObject {
 
     };
 
-    public move ( directionX: number, directionZ: number ) {
+    public move ( directionX: number, directionZ: number ) : void {
 
         this.network.move( directionX, directionZ );
 
     };
 
-    public die () {
+    public die () : void {
 
         this.gfx.destroy();
 
@@ -117,7 +117,7 @@ class TankObject {
 
     //
 
-    public setMovement ( directionX: number, directionZ: number, positionX: number, positionZ: number, rotation: number ) {
+    public setMovement ( directionX: number, directionZ: number, positionX: number, positionZ: number, rotation: number ) : void {
 
         this.moveDirection.x = directionX;
         this.moveDirection.y = directionZ;
@@ -130,7 +130,7 @@ class TankObject {
 
     };
 
-    public setAmmo ( value: number ) {
+    public setAmmo ( value: number ) : void {
 
         if ( this.health <= 0 ) return;
 
@@ -144,7 +144,7 @@ class TankObject {
 
     };
 
-    public setHealth ( value: number ) {
+    public setHealth ( value: number ) : void {
 
         if ( this.health <= 0 ) return;
 
@@ -185,11 +185,11 @@ class TankObject {
 
     };
 
-    public updateMovement ( delta: number, newPosition: OMath.Vec3 ) {
+    public updateMovement ( delta: number, newPosition: OMath.Vec3 ) : void {
 
-        let dx = this.positionCorrection.x * delta / 300;
-        let dz = this.positionCorrection.z * delta / 300;
-        let dr = this.rotationCorrection * delta / 100;
+        const dx = this.positionCorrection.x * delta / 300;
+        const dz = this.positionCorrection.z * delta / 300;
+        const dr = this.rotationCorrection * delta / 100;
 
         if ( Math.abs( dr ) > 0.001 ) {
 
@@ -247,13 +247,13 @@ class TankObject {
 
     };
 
-    public friendlyFire () {
+    public friendlyFire () : void {
 
         this.gfx.friendlyFireLabel.show();
 
     };
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
         this.gfx.update( time, delta );
 
@@ -268,7 +268,7 @@ class TankObject {
 
     };
 
-    public dispose () {
+    public dispose () : void {
 
         this.gfx.dispose();
         this.network.dispose();
@@ -276,7 +276,7 @@ class TankObject {
 
     };
 
-    public init () {
+    public init () : void {
 
         if ( Arena.meId === this.player.id ) {
 
@@ -326,20 +326,20 @@ class TankObject {
 
 // get all tanks and put into 'TanksList' object
 
-import { IS2Tank } from "./../../objects/tanks/IS2.Tank";
-import { T29Tank } from "./../../objects/tanks/T29.Tank";
-import { T44Tank } from "./../../objects/tanks/T44.Tank";
-import { T54Tank } from "./../../objects/tanks/T54.Tank";
-import { GfxCore } from "./../../graphics/Core.Gfx";
+import { IS2Tank } from '../../objects/tanks/IS2.Tank';
+import { T29Tank } from '../../objects/tanks/T29.Tank';
+import { T44Tank } from '../../objects/tanks/T44.Tank';
+import { T54Tank } from '../../objects/tanks/T54.Tank';
+import { GfxCore } from '../../graphics/Core.Gfx';
 
-let TankList = {
+export const TankList = {
     IS2:    IS2Tank,
     T29:    T29Tank,
     T44:    T44Tank,
     T54:    T54Tank,
     getById: ( tankId: number ) => {
 
-        for ( let item in TankList ) {
+        for ( const item in TankList ) {
 
             if ( TankList[ item ].tid !== undefined ) {
 
@@ -358,9 +358,9 @@ let TankList = {
     },
     getList: () => {
 
-        let list = [];
+        const list = [];
 
-        for ( let item in TankList ) {
+        for ( const item in TankList ) {
 
             if ( TankList[ item ].tid !== undefined ) {
 
@@ -372,10 +372,5 @@ let TankList = {
 
         return list;
 
-    }
+    },
 };
-
-//
-
-export { TankObject };
-export { TankList };

@@ -3,8 +3,8 @@
  * DatTank Network
 */
 
-import { TextEncoder } from "./../utils/TextEncoder";
-import { UI } from "./../ui/Core.UI";
+import { TextEncoder } from '../utils/TextEncoder';
+import { UI } from '../ui/Core.UI';
 
 //
 
@@ -26,12 +26,12 @@ class NetworkCore {
 
     private events = {
         in:     {},
-        out:    {}
+        out:    {},
     };
 
     //
 
-    public init ( server: any, callback: () => void ) {
+    public init ( server: any, callback: () => void ) : void {
 
         if ( this.transport ) {
 
@@ -121,7 +121,7 @@ class NetworkCore {
 
     };
 
-    private onConnect () {
+    private onConnect () : void {
 
         this.initCallback();
 
@@ -131,19 +131,19 @@ class NetworkCore {
 
     };
 
-    private onMessage ( event: any ) {
+    private onMessage ( event: any ) : void {
 
-        let eventId = new Int16Array( event.data, 0, 1 )[ 0 ];
-        let content = new Int16Array( event.data, 2 );
+        const eventId = new Int16Array( event.data, 0, 1 )[ 0 ];
+        const content = new Int16Array( event.data, 2 );
 
         this.triggerMessageListener( eventId, content );
 
     };
 
-    private onDisconnected () {
+    private onDisconnected () : void {
 
         this.transport = null;
-        UI.InGame.showDisconectMessage();
+        UI.InGame.showDisconnectMessage();
 
         //
 
@@ -151,7 +151,7 @@ class NetworkCore {
 
     };
 
-    private onError ( err: any ) {
+    private onError ( err: any ) : void {
 
         // todo: handle error
 
@@ -181,12 +181,11 @@ class NetworkCore {
 
         if ( ! data ) {
 
-            let stringData = JSON.stringify( view );
-            let binData = TextEncoder.encode( stringData );
+            const stringData = JSON.stringify( view );
+            const binData = TextEncoder.encode( stringData );
+            const newData = new Int16Array( binData.length + 1 );
 
-            var newData = new Int16Array( binData.length + 1 );
-
-            for ( var i = 0, il = binData.length; i < il; i ++ ) {
+            for ( let i = 0, il = binData.length; i < il; i ++ ) {
 
                 newData[ i + 1 ] = binData[ i ];
 
@@ -210,16 +209,16 @@ class NetworkCore {
 
     };
 
-    public addMessageListener ( eventName: string, callback: ( data: any ) => void ) {
+    public addMessageListener ( eventName: string, callback: ( data: any ) => void ) : void {
 
         this.messageListeners[ eventName ] = this.messageListeners[ eventName ] || [];
         this.messageListeners[ eventName ].push( callback );
 
     };
 
-    public removeMessageListener ( eventName: string, callback: ( data: any ) => void ) {
+    public removeMessageListener ( eventName: string, callback: ( data: any ) => void ) : void {
 
-        let newMassageListenersList = [];
+        const newMassageListenersList = [];
 
         for ( let i = 0, il = this.messageListeners[ eventName ].length; i < il; i ++ ) {
 
@@ -232,7 +231,7 @@ class NetworkCore {
 
     };
 
-    private triggerMessageListener ( eventId: number, data: any ) {
+    private triggerMessageListener ( eventId: number, data: any ) : void {
 
         if ( ! this.events.in[ eventId ] ) {
 
@@ -243,9 +242,9 @@ class NetworkCore {
 
         //
 
-        let eventName = this.events.in[ eventId ].name;
-        let eventType = this.events.in[ eventId ].dataType;
-        let listeners = this.messageListeners[ eventName ] || [];
+        const eventName = this.events.in[ eventId ].name;
+        const eventType = this.events.in[ eventId ].dataType;
+        const listeners = this.messageListeners[ eventName ] || [];
 
         if ( eventType === EventType.JSON ) {
 
@@ -259,7 +258,7 @@ class NetworkCore {
 
         }
 
-        for ( var i = 0, il = listeners.length; i < il; i ++ ) {
+        for ( let i = 0, il = listeners.length; i < il; i ++ ) {
 
             if ( listeners[ i ] ) {
 
@@ -271,14 +270,14 @@ class NetworkCore {
 
     };
 
-    private registerEvent ( eventName: string, eventDir: EventDir, dataType: EventType, eventId: number ) {
+    private registerEvent ( eventName: string, eventDir: EventDir, dataType: EventType, eventId: number ) : void {
 
         if ( eventDir === EventDir.OUT ) {
 
             this.events.out[ eventName ] = {
                 id:         eventId,
                 name:       eventName,
-                dataType:   dataType
+                dataType,
             };
 
         } else if ( eventDir === EventDir.IN ) {
@@ -286,17 +285,17 @@ class NetworkCore {
             this.events.in[ eventId ] = {
                 id:         eventId,
                 name:       eventName,
-                dataType:   dataType
+                dataType,
             };
 
         }
 
     };
 
-    private sendPing () {
+    private sendPing () : void {
 
-        let buffer = new ArrayBuffer( 4 );
-        let bufferView = new Int16Array( buffer );
+        const buffer = new ArrayBuffer( 4 );
+        const bufferView = new Int16Array( buffer );
 
         bufferView[1] = Date.now() % 1000;
 
@@ -304,7 +303,7 @@ class NetworkCore {
 
     };
 
-    private gotPong ( data: number[] ) {
+    private gotPong ( data: number[] ) : void {
 
         let ping = Math.round( ( ( Date.now() % 1000 ) - data[0] ) / 2 );
         ping = ( ping < 0 ) ? ping + 500 : ping;

@@ -6,19 +6,19 @@
 // import * as $ from "jquery";
 // import * as MobileDetect from "mobile-detect";
 
-import { Network } from "./network/Core.Network";
-import { Garage } from "./garage/Core.Garage";
-import { ResourceManager } from "./managers/Resource.Manager";
-import { SoundManager } from "./managers/Sound.Manager";
-import { GameService } from "./services/Game.Service";
-import { Arena } from "./core/Arena.Core";
-import { UI } from "./ui/Core.UI";
-import { Logger } from "./utils/Logger";
+import { Network } from './network/Core.Network';
+import { Garage } from './garage/Core.Garage';
+import { ResourceManager } from './managers/Resource.Manager';
+import { SoundManager } from './managers/Sound.Manager';
+import { GameService } from './services/Game.Service';
+import { Arena } from './core/Arena.Core';
+import { UI } from './ui/Core.UI';
+import { Logger } from './utils/Logger';
 
-import { ControlsManager } from "./managers/Control.Manager";
-import { GfxCore } from "./graphics/Core.Gfx";
-import { TowerManager } from "./managers/Tower.Manager";
-import { DecorationManager } from "./managers/Decoration.Manager";
+import { ControlsManager } from './managers/Control.Manager';
+import { GfxCore } from './graphics/Core.Gfx';
+import { TowerManager } from './managers/Tower.Manager';
+import { DecorationManager } from './managers/Decoration.Manager';
 
 //
 
@@ -40,11 +40,11 @@ class GameCore {
 
     //
 
-    public init () {
+    public init () : void {
 
-        if ( location.hash = '#_=_' ) {
+        if ( location.hash === '#_=_' ) {
 
-            window.history.replaceState( "", document.title, window.location.pathname );
+            window.history.replaceState( '', document.title, window.location.pathname );
 
         }
 
@@ -82,13 +82,13 @@ class GameCore {
 
         //
 
-        FB.getLoginStatus( function ( response ) {
+        FB.getLoginStatus( ( response ) => {
 
             if ( response.status === 'connected' ) {
 
-                FB.api( '/' + FB['getUserID']() + '/picture', 'GET', { "redirect": "false" }, function ( response: any ) {
+                FB.api( '/' + FB['getUserID']() + '/picture', 'GET', { redirect: 'false' }, ( userData: any ) => {
 
-                    $('.user .userpic').attr( 'src', response.data.url );
+                    $('.user .userpic').attr( 'src', userData.data.url );
 
                 });
 
@@ -102,7 +102,7 @@ class GameCore {
 
     };
 
-    public preInitArena ( server: any ) {
+    public preInitArena ( server: any ) : void {
 
         Arena.preInit( server.ip, server.id );
         this.currentServer = server;
@@ -111,7 +111,7 @@ class GameCore {
 
     };
 
-    public play () {
+    public play () : void {
 
         this.garage.hide();
         Logger.newEvent( 'Play', 'game' );
@@ -146,17 +146,17 @@ class GameCore {
 
     };
 
-    public requestJoinArena () {
+    public requestJoinArena () : void {
 
         Network.init( this.currentServer, () => {
 
-            let login = $('#username').val() || localStorage.getItem('login') || '';
+            const login = $('#username').val() || localStorage.getItem('login') || '';
             localStorage.setItem( 'login', login + '' );
-            let tank = localStorage.getItem( 'currentTank' ) || 0;
+            const tank = localStorage.getItem( 'currentTank' ) || 0;
 
             setTimeout( () => {
 
-                Network.send( 'ArenaJoinRequest', false, { login: login, tank: tank } );
+                Network.send( 'ArenaJoinRequest', false, { login, tank } );
 
             }, 1000 );
 

@@ -5,16 +5,16 @@
 
 import * as THREE from 'three';
 
-import * as OMath from "./../../OMath/Core.OMath";
-import { GfxCore } from "./../Core.Gfx";
-import { ResourceManager } from "./../../managers/Resource.Manager";
+import * as OMath from '../../OMath/Core.OMath';
+import { GfxCore } from '../Core.Gfx';
+import { ResourceManager } from '../../managers/Resource.Manager';
 import { TeamManager } from '../../managers/Team.Manager';
 
 //
 
-class LandscapeGfx {
+export class LandscapeGfx {
 
-    private object:THREE.Object3D = new THREE.Object3D();
+    private object: THREE.Object3D = new THREE.Object3D();
 
     private terrainMesh: THREE.Mesh;
     private shadowMaterial: THREE.MeshBasicMaterial;
@@ -25,10 +25,10 @@ class LandscapeGfx {
 
     //
 
-    private addTerrain () {
+    private addTerrain () : void {
 
-        let material = new THREE.MeshLambertMaterial({ color: 0x557850 });
-        let geometry = new THREE.PlaneGeometry( this.mapSize + this.mapExtraSize, this.mapSize + this.mapExtraSize, 150, 150 );
+        const material = new THREE.MeshLambertMaterial({ color: 0x557850 });
+        const geometry = new THREE.PlaneGeometry( this.mapSize + this.mapExtraSize, this.mapSize + this.mapExtraSize, 150, 150 );
         geometry.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2 ) );
 
         for ( let i = 0, il = 150 * 150; i < il; i ++ ) {
@@ -45,7 +45,7 @@ class LandscapeGfx {
 
         }
 
-        let bGeometry = new THREE.BufferGeometry().fromGeometry( geometry );
+        const bGeometry = new THREE.BufferGeometry().fromGeometry( geometry );
 
         this.terrainMesh = new THREE.Mesh( bGeometry, material );
         this.terrainMesh.renderOrder = 6;
@@ -54,13 +54,17 @@ class LandscapeGfx {
 
     };
 
-    private addWalls () {
+    private addWalls () : void {
 
-        let wallWidth = this.wallWidth;
-        let offset = 100;
-        let size = this.mapSize;
-        let edgeTexture, material;
-        let wall1, wall2, wall3, wall4;
+        const wallWidth = this.wallWidth;
+        const offset = 100;
+        const size = this.mapSize;
+        let edgeTexture;
+        let material;
+        let wall1;
+        let wall2;
+        let wall3;
+        let wall4;
 
         edgeTexture = ResourceManager.getTexture( 'brick.jpg' )!;
         edgeTexture.wrapS = THREE.RepeatWrapping;
@@ -92,17 +96,20 @@ class LandscapeGfx {
 
     };
 
-    private addTeamZones () {
+    private addTeamZones () : void {
+
+        const baseTexture = ResourceManager.getTexture( 'Base-ground.png' );
+        const teams = TeamManager.getTeams();
 
         let team;
-        let color, x, z;
+        let color;
+        let x;
+        let z;
         let plane;
-        let baseTexture = ResourceManager.getTexture( 'Base-ground.png' );
-        let teams = TeamManager.getTeams();
 
         //
 
-        for ( var i = 0, il = teams.length; i < il; i ++ ) {
+        for ( let i = 0, il = teams.length; i < il; i ++ ) {
 
             if ( teams[ i ].id >= 1000 ) continue;
             team = teams[ i ];
@@ -111,7 +118,7 @@ class LandscapeGfx {
             x = team.spawnPosition.x;
             z = team.spawnPosition.z;
 
-            let material = new THREE.MeshBasicMaterial({ map: baseTexture, color: color, transparent: true, opacity: 0.9, depthWrite: false });
+            const material = new THREE.MeshBasicMaterial({ map: baseTexture, color, transparent: true, opacity: 0.9, depthWrite: false });
             plane = new THREE.Mesh( new THREE.BoxGeometry( 200, 200, 3 ), material );
 
             material.color.r = material.color.r / 3 + 0.4;
@@ -128,19 +135,19 @@ class LandscapeGfx {
 
     };
 
-    public addShadow ( objectType: string, position: OMath.Vec3, scale: OMath.Vec3, rotation: number, uvOffset: OMath.Vec2 ) {
+    public addShadow ( objectType: string, position: OMath.Vec3, scale: OMath.Vec3, rotation: number, uvOffset: OMath.Vec2 ) : void {
 
         let shadowMesh;
         let shadowScale;
 
         if ( ! this.shadowMaterial ) {
 
-            let shadowTexture = ResourceManager.getTexture( 'shadows.png' );
+            const shadowTexture = ResourceManager.getTexture( 'shadows.png' );
             this.shadowMaterial = new THREE.MeshBasicMaterial({ map: shadowTexture, transparent: true, depthWrite: false, opacity: 0.1 });
 
         }
 
-        let geometry = new THREE.PlaneBufferGeometry( 2, 2 );
+        const geometry = new THREE.PlaneBufferGeometry( 2, 2 );
         shadowMesh = new THREE.Mesh( geometry, this.shadowMaterial );
 
         for ( let i = 0, il = geometry.attributes.uv.count; i < il; i ++ ) {
@@ -190,7 +197,7 @@ class LandscapeGfx {
 
     //
 
-    public init () {
+    public init () : void {
 
         this.addTerrain();
         this.addWalls();
@@ -202,7 +209,3 @@ class LandscapeGfx {
     };
 
 };
-
-//
-
-export { LandscapeGfx };

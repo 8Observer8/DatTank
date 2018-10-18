@@ -3,8 +3,8 @@
  * DatTank Arena explosion manager
 */
 
-import { ExplosionGfx } from "./../graphics/effects/Explosion.Gfx";
-import * as OMath from "./../OMath/Core.OMath";
+import { ExplosionGfx } from '../graphics/effects/Explosion.Gfx';
+import * as OMath from '../OMath/Core.OMath';
 
 //
 
@@ -32,7 +32,7 @@ class ExplosionManagerCore {
 
     };
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
         for ( let i = 0, il = this.pool.length; i < il; i ++ ) {
 
@@ -42,19 +42,19 @@ class ExplosionManagerCore {
 
     };
 
-    public showExplosion ( position: OMath.Vec3, type: number ) {
+    public showExplosion ( position: OMath.Vec3, type: number ) : void {
 
-        let explosion = this.getNewExplosion();
+        const explosion = this.getNewExplosion();
         if ( ! explosion ) return;
         explosion.setActive( position, type );
 
     };
 
-    public init () {
+    public init () : void {
 
         for ( let i = 0; i < this.poolSize; i ++ ) {
 
-            let explosion = new ExplosionGfx();
+            const explosion = new ExplosionGfx();
             explosion.init();
             this.pool.push( explosion );
 

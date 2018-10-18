@@ -3,13 +3,13 @@
  * DatTank Rock decoration
 */
 
-import { DecorationObject } from "./../../../objects/core/Decoration.Object";
+import { DecorationObject } from '../../../objects/core/Decoration.Object';
 
 //
 
-class Rock3Decoration extends DecorationObject {
+export class Rock3Decoration extends DecorationObject {
 
-    static title: string = 'Rock3';
+    public static title: string = 'Rock3';
 
     //
 
@@ -22,7 +22,3 @@ class Rock3Decoration extends DecorationObject {
     };
 
 };
-
-//
-
-export { Rock3Decoration };

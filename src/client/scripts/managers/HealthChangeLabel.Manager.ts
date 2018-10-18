@@ -3,8 +3,8 @@
  * DatTank Arena health change label manager
 */
 
-import { HealthChangeLabelGfx } from "./../graphics/effects/HealthChangeLabel.Gfx";
-import * as OMath from "./../OMath/Core.OMath";
+import { HealthChangeLabelGfx } from '../graphics/effects/HealthChangeLabel.Gfx';
+import * as OMath from '../OMath/Core.OMath';
 
 //
 
@@ -12,12 +12,12 @@ class HealthChangeLabelManagerCore {
 
     private static instance: HealthChangeLabelManagerCore;
 
-    private pool: Array<HealthChangeLabelGfx> = [];
+    private pool: HealthChangeLabelGfx[] = [];
     private poolSize: number = 30;
 
     //
 
-    public getNewHealthChangeLabel () {
+    public getNewHealthChangeLabel () : HealthChangeLabelGfx | null {
 
         for ( let i = 0, il = this.pool.length; i < il; i ++ ) {
 
@@ -33,7 +33,7 @@ class HealthChangeLabelManagerCore {
 
     };
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
         for ( let i = 0, il = this.pool.length; i < il; i ++ ) {
 
@@ -43,19 +43,19 @@ class HealthChangeLabelManagerCore {
 
     };
 
-    public showHealthChangeLabel ( position: OMath.Vec3, healthChange: number ) {
+    public showHealthChangeLabel ( position: OMath.Vec3, healthChange: number ) : void {
 
-        let healthChangeLabel = this.getNewHealthChangeLabel();
+        const healthChangeLabel = this.getNewHealthChangeLabel();
         if ( ! healthChangeLabel ) return;
         healthChangeLabel.setActive( position, healthChange );
 
     };
 
-    public init () {
+    public init () : void {
 
         for ( let i = 0; i < this.poolSize; i ++ ) {
 
-            let healthChangeLabel = new HealthChangeLabelGfx();
+            const healthChangeLabel = new HealthChangeLabelGfx();
             healthChangeLabel.init();
             this.pool.push( healthChangeLabel );
 

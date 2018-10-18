@@ -3,20 +3,20 @@
  * DatTank Arena large explosion manager
 */
 
-import { LargeExplosionGfx } from "./../graphics/effects/LargeExplosion.Gfx";
-import * as OMath from "./../OMath/Core.OMath";
+import { LargeExplosionGfx } from '../graphics/effects/LargeExplosion.Gfx';
+import * as OMath from '../OMath/Core.OMath';
 
 //
 
 class LargeExplosionManagerCore {
 
     private static instance: LargeExplosionManagerCore;
-    private pool: Array<LargeExplosionGfx> = [];
+    private pool: LargeExplosionGfx[] = [];
     private poolSize: number = 10;
 
     //
 
-    private getNewExplosion () : LargeExplosionGfx | undefined {
+    private getNewExplosion () : LargeExplosionGfx | null {
 
         for ( let i = 0, il = this.pool.length; i < il; i ++ ) {
 
@@ -28,11 +28,11 @@ class LargeExplosionManagerCore {
 
         }
 
-        return undefined;
+        return null;
 
     };
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
         for ( let i = 0, il = this.pool.length; i < il; i ++ ) {
 
@@ -42,19 +42,19 @@ class LargeExplosionManagerCore {
 
     };
 
-    public showExplosion ( position: OMath.Vec3 ) {
+    public showExplosion ( position: OMath.Vec3 ) : void {
 
-        let largeExplosion = this.getNewExplosion();
+        const largeExplosion = this.getNewExplosion();
         if ( ! largeExplosion ) return;
         largeExplosion.setActive( position );
 
     };
 
-    public init () {
+    public init () : void {
 
         for ( let i = 0; i < this.poolSize; i ++ ) {
 
-            let explosion = new LargeExplosionGfx();
+            const explosion = new LargeExplosionGfx();
             explosion.init();
             this.pool.push( explosion );
 

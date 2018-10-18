@@ -17,7 +17,7 @@ import { CollisionManager } from '../../managers/Collision.Manager';
 
 //
 
-class TowerObject {
+export class TowerObject {
 
     public id: number;
     public team: TeamCore;
@@ -183,7 +183,7 @@ class TowerObject {
 
 import { T1Tower } from '../../objects/towers/T1.Tower';
 
-const TowerList = {
+export const TowerList = {
     T1:     T1Tower,
     getById: ( towerId: number ) => {
 
@@ -205,8 +205,3 @@ const TowerList = {
 
     },
 };
-
-//
-
-export { TowerObject };
-export { TowerList };

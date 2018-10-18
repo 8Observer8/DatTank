@@ -5,35 +5,35 @@
 
 import * as THREE from 'three';
 
-import { GfxCore } from "./../Core.Gfx";
-import { DecorationObject } from "./../../objects/core/Decoration.Object";
-import { ResourceManager } from "./../../managers/Resource.Manager";
+import { GfxCore } from '../Core.Gfx';
+import { DecorationObject } from '../../objects/core/Decoration.Object';
+import { ResourceManager } from '../../managers/Resource.Manager';
 
 //
 
-class DecorationGfx {
+export class DecorationGfx {
 
     private object: THREE.Object3D = new THREE.Object3D();
 
     //
 
-    public dispose () {
+    public dispose () : void {
 
         GfxCore.coreObjects['decorations'].remove( this.object );
 
     };
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
-        var dx = this.object.position.x - GfxCore.camera.position.x;
-        var dz = this.object.position.z - GfxCore.camera.position.z;
+        const dx = this.object.position.x - GfxCore.camera.position.x;
+        const dz = this.object.position.z - GfxCore.camera.position.z;
 
         if ( Math.sqrt( dx * dx + dz * dz ) < 100 ) {
 
             for ( let i = 0, il = this.object.children[0]['material'].length; i < il; i ++ ) {
 
-                let object = this.object.children[0];
-                let material = object['material'][i];
+                const object = this.object.children[0];
+                const material = object['material'][ i ];
 
                 material.side = THREE.BackSide;
                 material.transparent = true;
@@ -48,8 +48,8 @@ class DecorationGfx {
 
             for ( let i = 0, il = this.object.children[0]['material'].length; i < il; i ++ ) {
 
-                let object = this.object.children[0];
-                let material = object['material'][i];
+                const object = this.object.children[0];
+                const material = object['material'][ i ];
 
                 material.side = THREE.FrontSide;
                 material.transparent = false;
@@ -64,12 +64,11 @@ class DecorationGfx {
 
     };
 
-    public init ( decoration: DecorationObject ) {
+    public init ( decoration: DecorationObject ) : void {
 
-        let decorationModel = ResourceManager.getModel( 'decorations/' + decoration.title )!;
-
-        let material = [];
-        let materials = decorationModel.material as THREE.MeshBasicMaterial[];
+        const decorationModel = ResourceManager.getModel( 'decorations/' + decoration.title )!;
+        const material = [];
+        const materials = decorationModel.material as THREE.MeshBasicMaterial[];
 
         for ( let i = 0, il = materials.length; i < il; i ++ ) {
 
@@ -84,7 +83,7 @@ class DecorationGfx {
 
         //
 
-        let mesh = new THREE.Mesh( decorationModel.geometry, material );
+        const mesh = new THREE.Mesh( decorationModel.geometry, material );
 
         this.object.name = decoration.title;
 
@@ -117,7 +116,3 @@ class DecorationGfx {
     };
 
 };
-
-//
-
-export { DecorationGfx };

@@ -3,18 +3,18 @@
  * DatTank Tower T1
 */
 
-import { TowerObject } from "./../../objects/core/Tower.Object";
+import { TowerObject } from '../../objects/core/Tower.Object';
 
 //
 
-class T1Tower extends TowerObject {
+export class T1Tower extends TowerObject {
 
-    static title: string = 'T1';
-    static tid = 0;
+    public static title: string = 'T1';
+    public static tid = 0;
 
-    static bullet: number = 76;
-    static rpm: number = 16.7 * 10;
-    static armour: number = 102;
+    public static bullet: number = 76;
+    public static rpm: number = 16.7 * 10;
+    public static armour: number = 102;
 
     //
 
@@ -32,7 +32,3 @@ class T1Tower extends TowerObject {
     };
 
 };
-
-//
-
-export { T1Tower };

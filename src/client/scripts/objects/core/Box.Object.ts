@@ -3,16 +3,16 @@
  * DatTank Box Object class
 */
 
-import * as OMath from "./../../OMath/Core.OMath";
+import * as OMath from '../../OMath/Core.OMath';
 
-import { Arena } from "./../../core/Arena.Core";
-import { BoxGfx } from "./../../graphics/objects/Box.Gfx";
-import { BoxManager } from "./../../managers/Box.Manager";
-import { Logger } from "./../../utils/Logger";
+import { Arena } from '../../core/Arena.Core';
+import { BoxGfx } from '../../graphics/objects/Box.Gfx';
+import { BoxManager } from '../../managers/Box.Manager';
+import { Logger } from '../../utils/Logger';
 
 //
 
-class BoxObject {
+export class BoxObject {
 
     public id: number;
     public position: OMath.Vec3 = new OMath.Vec3();
@@ -22,13 +22,13 @@ class BoxObject {
 
     //
 
-    public remove () {
+    public remove () : void {
 
         this.gfx.dispose();
 
     };
 
-    public pick ( playerId: number ) {
+    public pick ( playerId: number ) : void {
 
         this.gfx.pick();
         BoxManager.remove( [ this.id ] );
@@ -41,13 +41,13 @@ class BoxObject {
 
     };
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
         this.gfx.update( time, delta );
 
     };
 
-    public init () {
+    public init () : void {
 
         this.gfx.init( this );
 
@@ -66,17 +66,17 @@ class BoxObject {
 
 // get all boxes and put into 'BoxesList' object
 
-import { HealthBox } from "./../../objects/boxes/Health.Box";
-import { AmmoBox } from "./../../objects/boxes/Ammo.Box";
+import { HealthBox } from '../../objects/boxes/Health.Box';
+import { AmmoBox } from '../../objects/boxes/Ammo.Box';
 
-let BoxesList = {
-    HealthBox:  HealthBox,
-    AmmoBox:    AmmoBox,
+export const BoxesList = {
+    HealthBox,
+    AmmoBox,
     getById: ( boxId: number ) => {
 
-        for ( let item in BoxesList ) {
+        for ( const item in BoxesList ) {
 
-            if ( typeof item === "string" ) {
+            if ( typeof item === 'string' ) {
 
                 if ( BoxesList[ item ].bid === boxId ) {
 
@@ -90,10 +90,5 @@ let BoxesList = {
 
         return null;
 
-    }
+    },
 };
-
-//
-
-export { BoxObject };
-export { BoxesList };

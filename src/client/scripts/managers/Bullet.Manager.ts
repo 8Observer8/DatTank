@@ -3,15 +3,15 @@
  * DatTank Arena bullet manager
 */
 
-import { BulletGfx } from "./../graphics/effects/Bullet.Gfx";
-import * as OMath from "./../OMath/Core.OMath";
+import { BulletGfx } from '../graphics/effects/Bullet.Gfx';
+import * as OMath from '../OMath/Core.OMath';
 
 //
 
 class BulletManagerCore {
 
     private static instance: BulletManagerCore;
-    private pool: Array<BulletGfx> = [];
+    private pool: BulletGfx[] = [];
     private poolSize: number = 30;
 
     //
@@ -32,7 +32,7 @@ class BulletManagerCore {
 
     };
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
         for ( let i = 0, il = this.pool.length; i < il; i ++ ) {
 
@@ -42,19 +42,19 @@ class BulletManagerCore {
 
     };
 
-    public showBullet ( bulletId: number, position: OMath.Vec3, directionRotstion: number ) {
+    public showBullet ( bulletId: number, position: OMath.Vec3, directionRotation: number ) : void {
 
-        let bullet = this.getNewBullet();
+        const bullet = this.getNewBullet();
 
         if ( bullet ) {
 
-            bullet.setActive( bulletId, position, directionRotstion );
+            bullet.setActive( bulletId, position, directionRotation );
 
         }
 
     };
 
-    public hideBullet ( bulletId: number ) {
+    public hideBullet ( bulletId: number ) : void {
 
         for ( let i = 0, il = this.pool.length; i < il; i ++ ) {
 
@@ -68,11 +68,11 @@ class BulletManagerCore {
 
     };
 
-    public init () {
+    public init () : void {
 
         for ( let i = 0; i < this.poolSize; i ++ ) {
 
-            let bullet = new BulletGfx();
+            const bullet = new BulletGfx();
             bullet.init();
             this.pool.push( bullet );
 

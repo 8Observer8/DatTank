@@ -3,13 +3,13 @@
  * DatTank AmmoBox
 */
 
-import { BoxObject } from "./../../objects/core/Box.Object";
+import { BoxObject } from '../../objects/core/Box.Object';
 
 //
 
-class AmmoBox extends BoxObject {
+export class AmmoBox extends BoxObject {
 
-    static bid = 0;
+    public static bid = 0;
 
     //
 
@@ -21,7 +21,3 @@ class AmmoBox extends BoxObject {
     };
 
 };
-
-//
-
-export { AmmoBox };

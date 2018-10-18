@@ -11,7 +11,7 @@ export class Vec3 {
 
     //
 
-    public set ( x: number, y: number, z: number ) {
+    public set ( x: number, y: number, z: number ) : void {
 
         this.x = x;
         this.y = y;
@@ -19,17 +19,17 @@ export class Vec3 {
 
     };
 
-    public distanceTo ( point: Vec3 | THREE.Vector3 ) {
+    public distanceTo ( point: Vec3 | THREE.Vector3 ) : number {
 
-        let dx = this.x - point.x;
-        let dy = this.y - point.y;
-        let dz = this.z - point.z;
+        const dx = this.x - point.x;
+        const dy = this.y - point.y;
+        const dz = this.z - point.z;
 
         return Math.sqrt( dx * dx + dy * dy + dz * dz );
 
     };
 
-    public copy ( point: Vec3 ) {
+    public copy ( point: Vec3 ) : void {
 
         this.x = point.x;
         this.y = point.y;
@@ -37,7 +37,7 @@ export class Vec3 {
 
     };
 
-    public clone () {
+    public clone () : Vec3 {
 
         return new Vec3( this.x, this.y, this.z );
 

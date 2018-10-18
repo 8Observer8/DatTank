@@ -4,12 +4,12 @@
 */
 
 import * as THREE from 'three';
-import { MorphBlendMesh } from "./../utils/MorphMesh.Gfx";
+import { MorphBlendMesh } from '../utils/MorphMesh.Gfx';
 
-import * as OMath from "./../../OMath/Core.OMath";
-import { GfxCore } from "./../Core.Gfx";
-import { TowerLabelGfx } from "./../effects/TowerLabel.Gfx";
-import { ResourceManager } from "./../../managers/Resource.Manager";
+import * as OMath from '../../OMath/Core.OMath';
+import { GfxCore } from '../Core.Gfx';
+import { TowerLabelGfx } from '../effects/TowerLabel.Gfx';
+import { ResourceManager } from '../../managers/Resource.Manager';
 import { TowerChangeTeamGfx } from './../effects/TowerChangeTeam.gfx';
 import { BlastSmokeGfx } from './../effects/BlastSmoke.gfx';
 import { TowerObject } from './../../objects/core/Tower.Object';
@@ -28,7 +28,7 @@ class TowerGfx {
 
     //
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
         this.changeTeamEffect.update( time, delta );
         this.blastSmoke.update( time, delta );
@@ -37,7 +37,7 @@ class TowerGfx {
 
     };
 
-    public changeTeam ( color: number, skipAnimation: boolean ) {
+    public changeTeam ( color: number, skipAnimation: boolean ) : void {
 
         this.topMesh.material[1].color.setHex( color );
         this.baseMesh.material[1].color.setHex( color );
@@ -52,13 +52,13 @@ class TowerGfx {
 
     };
 
-    public setTopRotation ( angle: number ) {
+    public setTopRotation ( angle: number ) : void {
 
         this.topMesh.rotation.y = angle;
 
     };
 
-    public setPosition ( position: OMath.Vec3 ) {
+    public setPosition ( position: OMath.Vec3 ) : void {
 
         this.object.position.x = position.x;
         this.object.position.y = position.y;
@@ -66,26 +66,26 @@ class TowerGfx {
 
     };
 
-    public shoot () {
+    public shoot () : void {
 
         this.topMesh.playAnimation('shoot');
         this.blastSmoke.show();
 
     };
 
-    public init ( tower: TowerObject ) {
+    public init ( tower: TowerObject ) : void {
 
         let materials = [];
-        let towerBaseModel = ResourceManager.getModel( 'towers/' + tower.title + '-bottom' )!;
-        let towerTopModel = ResourceManager.getModel( 'towers/' + tower.title + '-top' )!;
+        const towerBaseModel = ResourceManager.getModel( 'towers/' + tower.title + '-bottom' )!;
+        const towerTopModel = ResourceManager.getModel( 'towers/' + tower.title + '-top' )!;
 
         // tower base part
 
-        let baseMaterials = towerBaseModel.material as THREE.MeshBasicMaterial[];
+        const baseMaterials = towerBaseModel.material as THREE.MeshBasicMaterial[];
 
         for ( let i = 0, il = baseMaterials.length; i < il; i ++ ) {
 
-            let material = baseMaterials[ i ].clone();
+            const material = baseMaterials[ i ].clone();
             material.map = ResourceManager.getTexture('tower-texture.png')!;
             materials.push( material );
 
@@ -99,11 +99,11 @@ class TowerGfx {
         // tower top part
 
         materials = [];
-        let topMaterials = towerTopModel.material as THREE.MeshBasicMaterial[];
+        const topMaterials = towerTopModel.material as THREE.MeshBasicMaterial[];
 
         for ( let i = 0, il = topMaterials.length; i < il; i ++ ) {
 
-            let material = topMaterials[ i ].clone();
+            const material = topMaterials[ i ].clone();
             material.morphTargets = true;
             materials.push( material );
 
@@ -137,7 +137,7 @@ class TowerGfx {
 
     };
 
-    public dispose () {
+    public dispose () : void {
 
         GfxCore.coreObjects['towers'].remove( this.object );
 

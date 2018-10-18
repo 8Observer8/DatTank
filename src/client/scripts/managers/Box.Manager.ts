@@ -3,33 +3,33 @@
  * DatTank Arena box manager
 */
 
-import { BoxObject, BoxesList as Boxes } from "./../objects/core/Box.Object";
+import { BoxObject, BoxesList as Boxes } from '../objects/core/Box.Object';
 
 //
 
 class BoxManagerCore {
 
     private static instance: BoxManagerCore;
-    private boxes: Array<BoxObject> = [];
+    private boxes: BoxObject[] = [];
 
     //
 
-    public add ( params: any ) {
+    public add ( params: any ) : void {
 
-        let boxType = Boxes.getById( params.type || 0 ) || '';
+        const boxType = Boxes.getById( params.type || 0 ) || '';
         if ( ! Boxes[ boxType ] ) return;
 
-        let box = new Boxes[ boxType ]( params );
+        const box = new Boxes[ boxType ]( params );
         box.init();
         this.boxes.push( box );
 
     };
 
-    public remove ( boxIds: Array<number> ) {
+    public remove ( boxIds: number[] ) : void {
 
-        let newBoxList = [];
+        const newBoxList = [];
 
-        for ( var i = 0, il = this.boxes.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.boxes.length; i < il; i ++ ) {
 
             if ( boxIds.indexOf( this.boxes[ i ].id ) !== -1 ) {
 
@@ -46,9 +46,9 @@ class BoxManagerCore {
 
     };
 
-    public getBoxById ( boxId: number ) {
+    public getBoxById ( boxId: number ) : BoxObject | null {
 
-        for ( var i = 0, il = this.boxes.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.boxes.length; i < il; i ++ ) {
 
             if ( this.boxes[ i ].id === boxId ) {
 
@@ -62,15 +62,15 @@ class BoxManagerCore {
 
     };
 
-    public get () {
+    public get () : BoxObject[] {
 
         return this.boxes;
 
     };
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
-        for ( var i = 0, il = this.boxes.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.boxes.length; i < il; i ++ ) {
 
             this.boxes[ i ].update( time, delta );
 
@@ -78,13 +78,13 @@ class BoxManagerCore {
 
     };
 
-    public reset () {
+    public reset () : void {
 
         this.boxes.length = 0;
 
     };
 
-    public init () {
+    public init () : void {
 
         // todo
 

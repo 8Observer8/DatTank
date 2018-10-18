@@ -3,21 +3,21 @@
  * DatTank Tank T54
 */
 
-import { TankObject } from "./../../objects/core/Tank.Object";
+import { TankObject } from '../../objects/core/Tank.Object';
 
 //
 
-class T54Tank extends TankObject {
+export class T54Tank extends TankObject {
 
-    static title: string = 'T54';
-    static year: number = 1946;
-    static speed: number = 48;
-    static ammoCapacity: number = 50;
-    static bullet: number = 100;
-    static rpm: number = 7.06 * 10;
-    static armour: number = 120;
+    public static title: string = 'T54';
+    public static year: number = 1946;
+    public static speed: number = 48;
+    public static ammoCapacity: number = 50;
+    public static bullet: number = 100;
+    public static rpm: number = 7.06 * 10;
+    public static armour: number = 120;
 
-    static tid = 3;
+    public static tid = 3;
 
     //
 
@@ -38,7 +38,3 @@ class T54Tank extends TankObject {
     };
 
 };
-
-//
-
-export { T54Tank };

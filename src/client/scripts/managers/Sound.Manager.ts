@@ -3,7 +3,7 @@
  * DatTank Sound manager
 */
 
-import { GfxCore } from "./../graphics/Core.Gfx";
+import { GfxCore } from '../graphics/Core.Gfx';
 
 //
 
@@ -15,7 +15,7 @@ class SoundManagerCore {
 
     //
 
-    public toggleMute ( value: boolean ) {
+    public toggleMute ( value: boolean ) : void {
 
         this.muted = ( value !== undefined ) ? value : ! this.muted;
 
@@ -37,7 +37,7 @@ class SoundManagerCore {
 
     };
 
-    public playSound ( soundName: string ) {
+    public playSound ( soundName: string ) : void {
 
         if ( ! this.sounds[ soundName ] ) {
 
@@ -54,9 +54,9 @@ class SoundManagerCore {
 
     };
 
-    public init () {
+    public init () : void {
 
-        this.muted = ( localStorage.getItem( 'sound' ) != 'true' );
+        this.muted = ( localStorage.getItem( 'sound' ) !== 'true' );
 
         this.sounds['MenuClick'] = new Audio();
         this.sounds['MenuClick'].src = '/resources/sounds/menu_click.wav';
@@ -69,7 +69,7 @@ class SoundManagerCore {
         this.sounds['ElementSelect'] = new Audio();
         this.sounds['ElementSelect'].src = '/resources/sounds/select.wav';
         this.sounds['ElementSelect'].volume = 0.3;
-    
+
         this.sounds['ObjectPicked'] = new Audio();
         this.sounds['ObjectPicked'].src = '/resources/sounds/object_pick.wav';
 

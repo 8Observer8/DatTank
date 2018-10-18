@@ -3,12 +3,12 @@
  * DatTank Decoration Object class
 */
 
-import * as OMath from "./../../OMath/Core.OMath";
-import { DecorationGfx } from "./../../graphics/objects/Decoration.Gfx";
+import * as OMath from '../../OMath/Core.OMath';
+import { DecorationGfx } from '../../graphics/objects/Decoration.Gfx';
 
 //
 
-class DecorationObject {
+export class DecorationObject {
 
     public id: number;
     public title: string;
@@ -21,20 +21,20 @@ class DecorationObject {
 
     //
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
         this.gfx.update( time, delta );
 
     };
 
-    public init () {
+    public init () : void {
 
         this.gfx.init( this );
         GfxCore.landscape.addShadow( this.title, this.position, this.scale, this.rotation, this.uvOffset );
 
     };
 
-    public destroy () {
+    public destroy () : void {
 
         // todo
 
@@ -54,24 +54,24 @@ class DecorationObject {
 
 // get all towers and put into 'TowersList' object
 
-import { Tree1Decoration } from "./../../objects/decorations/trees/Tree1.Decoration";
-import { Tree2Decoration } from "./../../objects/decorations/trees/Tree2.Decoration";
-import { Tree3Decoration } from "./../../objects/decorations/trees/Tree3.Decoration";
-import { Tree4Decoration } from "./../../objects/decorations/trees/Tree4.Decoration";
-import { Tree5Decoration } from "./../../objects/decorations/trees/Tree5.Decoration";
-import { Tree6Decoration } from "./../../objects/decorations/trees/Tree6.Decoration";
-import { Tree7Decoration } from "./../../objects/decorations/trees/Tree7.Decoration";
-import { Tree8Decoration } from "./../../objects/decorations/trees/Tree8.Decoration";
+import { Tree1Decoration } from '../../objects/decorations/trees/Tree1.Decoration';
+import { Tree2Decoration } from '../../objects/decorations/trees/Tree2.Decoration';
+import { Tree3Decoration } from '../../objects/decorations/trees/Tree3.Decoration';
+import { Tree4Decoration } from '../../objects/decorations/trees/Tree4.Decoration';
+import { Tree5Decoration } from '../../objects/decorations/trees/Tree5.Decoration';
+import { Tree6Decoration } from '../../objects/decorations/trees/Tree6.Decoration';
+import { Tree7Decoration } from '../../objects/decorations/trees/Tree7.Decoration';
+import { Tree8Decoration } from '../../objects/decorations/trees/Tree8.Decoration';
 
-import { Rock1Decoration } from "./../../objects/decorations/rocks/Rock1.Decoration";
-import { Rock2Decoration } from "./../../objects/decorations/rocks/Rock2.Decoration";
-import { Rock3Decoration } from "./../../objects/decorations/rocks/Rock3.Decoration";
-import { Rock4Decoration } from "./../../objects/decorations/rocks/Rock4.Decoration";
+import { Rock1Decoration } from '../../objects/decorations/rocks/Rock1.Decoration';
+import { Rock2Decoration } from '../../objects/decorations/rocks/Rock2.Decoration';
+import { Rock3Decoration } from '../../objects/decorations/rocks/Rock3.Decoration';
+import { Rock4Decoration } from '../../objects/decorations/rocks/Rock4.Decoration';
 
-import { Ruin1Decoration } from "./../../objects/decorations/ruins/Ruin1.Decoration";
-import { GfxCore } from "../../graphics/Core.Gfx";
+import { Ruin1Decoration } from '../../objects/decorations/ruins/Ruin1.Decoration';
+import { GfxCore } from '../../graphics/Core.Gfx';
 
-let DecorationList = {
+export const DecorationList = {
 
     Tree1:  Tree1Decoration,
     Tree2:  Tree2Decoration,
@@ -91,9 +91,9 @@ let DecorationList = {
 
     getById: ( decorationId: number ) => {
 
-        for ( let item in DecorationList ) {
+        for ( const item in DecorationList ) {
 
-            if ( typeof item === "string" ) {
+            if ( typeof item === 'string' ) {
 
                 if ( DecorationList[ item ].tid === decorationId ) {
 
@@ -107,11 +107,6 @@ let DecorationList = {
 
         return null;
 
-    }
+    },
 
 };
-
-//
-
-export { DecorationObject };
-export { DecorationList };

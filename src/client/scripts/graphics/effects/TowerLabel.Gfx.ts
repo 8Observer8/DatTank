@@ -8,7 +8,7 @@ import * as OMath from '../../OMath/Core.OMath';
 
 //
 
-class TowerLabelGfx {
+export class TowerLabelGfx {
 
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D | null;
@@ -94,7 +94,3 @@ class TowerLabelGfx {
     };
 
 };
-
-//
-
-export { TowerLabelGfx };

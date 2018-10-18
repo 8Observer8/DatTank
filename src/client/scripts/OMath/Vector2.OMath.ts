@@ -10,30 +10,30 @@ export class Vec2 {
 
     //
 
-    public set ( x: number, y: number ) {
+    public set ( x: number, y: number ) : void {
 
         this.x = x;
         this.y = y;
 
     };
 
-    public distanceTo ( point: Vec2 ) {
+    public distanceTo ( point: Vec2 ) : number {
 
-        let dx = this.x - point.x;
-        let dy = this.y - point.y;
+        const dx = this.x - point.x;
+        const dy = this.y - point.y;
 
         return Math.sqrt( dx * dx + dy * dy );
 
     };
 
-    public copy ( point: Vec2 ) {
+    public copy ( point: Vec2 ) : void {
 
         this.x = point.x;
         this.y = point.y;
 
     };
 
-    public clone () {
+    public clone () : Vec2 {
 
         return new Vec2( this.x, this.y );
 

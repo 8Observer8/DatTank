@@ -3,44 +3,44 @@
  * DatTank Arena network handler
 */
 
-import * as OMath from "./../OMath/Core.OMath";
-import { Network } from "./../network/Core.Network";
-import { Arena } from "./../core/Arena.Core";
-import { BoxManager } from "./../managers/Box.Manager";
-import { ControlsManager } from "./../managers/Control.Manager";
-import { PlayerManager } from "./../managers/Player.Manager";
-import { UI } from "./../ui/Core.UI";
+import * as OMath from '../OMath/Core.OMath';
+import { Network } from '../network/Core.Network';
+import { Arena } from '../core/Arena.Core';
+import { BoxManager } from '../managers/Box.Manager';
+import { ControlsManager } from '../managers/Control.Manager';
+import { PlayerManager } from '../managers/Player.Manager';
+import { UI } from '../ui/Core.UI';
 
 //
 
-class ArenaNetwork {
+export class ArenaNetwork {
 
-    private playerDied ( data: any ) {
+    private playerDied ( data: any ) : void {
 
-        let player = data.player;
-        let killer = data.killer;
+        const player = data.player;
+        const killer = data.killer;
 
         Arena.playerKilled( player, killer );
 
     };
 
-    private newExplosion ( data: number[] ) {
+    private newExplosion ( data: number[] ) : void {
 
-        let bulletId = data[0];
-        let x = data[1];
-        let y = 26;
-        let z = data[2];
-        let type = data[3];
+        const bulletId = data[0];
+        const x = data[1];
+        const y = 26;
+        const z = data[2];
+        const type = data[3];
 
         Arena.newExplosion( new OMath.Vec3( x, y, z ), bulletId, type );
 
     };
 
-    private newTowers ( data: number[] ) {
+    private newTowers ( data: number[] ) : void {
 
         let tower;
-        let towerBinSize = 7;
-        let towers = [];
+        const towerBinSize = 7;
+        const towers = [];
 
         //
 
@@ -52,11 +52,11 @@ class ArenaNetwork {
                 position:   {
                     x:      data[ i * towerBinSize + 2 ],
                     y:      0,
-                    z:      data[ i * towerBinSize + 3 ]
+                    z:      data[ i * towerBinSize + 3 ],
                 },
                 rotation:       data[ i * towerBinSize + 4 ] / 1000,
                 health:         data[ i * towerBinSize + 5 ],
-                newRotation:    data[ i * towerBinSize + 6 ] / 1000
+                newRotation:    data[ i * towerBinSize + 6 ] / 1000,
             };
 
             towers.push( tower );
@@ -67,11 +67,11 @@ class ArenaNetwork {
 
     };
 
-    private newTanks ( data: number[] ) {
+    private newTanks ( data: number[] ) : void {
 
-        let players = [];
+        const players = [];
         let player;
-        let playerBinSize = 26;
+        const playerBinSize = 26;
 
         for ( let i = 0, il = data.length / playerBinSize; i < il; i ++ ) {
 
@@ -84,21 +84,21 @@ class ArenaNetwork {
                     position:   {
                         x:  data[ i * playerBinSize + 2 ],
                         y:  data[ i * playerBinSize + 3 ],
-                        z:  data[ i * playerBinSize + 4 ]
+                        z:  data[ i * playerBinSize + 4 ],
                     },
                     rotation:       ( data[ i * playerBinSize + 5 ] / 1000 ) % ( 2 * Math.PI ),
                     rotationTop:    data[ i * playerBinSize + 6 ] / 1000,
                     health:         data[ i * playerBinSize + 7 ],
                     moveDirection:  {
                         x:  data[ i * playerBinSize + 8 ],
-                        y:  data[ i * playerBinSize + 9 ]
+                        y:  data[ i * playerBinSize + 9 ],
                     },
                     typeId: data[ i * playerBinSize + 10 ],
-                    ammo:   data[ i * playerBinSize + 11 ]
-                }
+                    ammo:   data[ i * playerBinSize + 11 ],
+                },
             };
 
-            for ( var j = 0; j < 13; j ++ ) {
+            for ( let j = 0; j < 13; j ++ ) {
 
                 if ( data[ i * playerBinSize + 13 + j ] !== 0 ) {
 
@@ -116,11 +116,11 @@ class ArenaNetwork {
 
     };
 
-    private newBoxes ( data: number[] ) {
+    private newBoxes ( data: number[] ) : void {
 
-        let boxes = [];
+        const boxes = [];
         let box;
-        let boxBinSize = 4;
+        const boxBinSize = 4;
 
         //
 
@@ -132,8 +132,8 @@ class ArenaNetwork {
                 position:   {
                     x:  data[ i * boxBinSize + 2 ],
                     y:  20,
-                    z:  data[ i * boxBinSize + 3 ]
-                }
+                    z:  data[ i * boxBinSize + 3 ],
+                },
             };
 
             boxes.push( box );
@@ -144,11 +144,11 @@ class ArenaNetwork {
 
     };
 
-    private boxRemove ( data: number[] ) {
+    private boxRemove ( data: number[] ) : void {
 
-        let boxId = data[0];
-        let playerId = data[1];
-        let box = BoxManager.getBoxById( boxId );
+        const boxId = data[0];
+        const playerId = data[1];
+        const box = BoxManager.getBoxById( boxId );
 
         if ( box ) {
 
@@ -158,10 +158,10 @@ class ArenaNetwork {
 
     };
 
-    private playerLeft ( data: number[] ) {
+    private playerLeft ( data: number[] ) : void {
 
-        let playerId = data[0];
-        let player = PlayerManager.getById( playerId );
+        const playerId = data[0];
+        const player = PlayerManager.getById( playerId );
 
         if ( player ) {
 
@@ -171,13 +171,13 @@ class ArenaNetwork {
 
     };
 
-    private updateLeaderboard ( data: any ) {
+    private updateLeaderboard ( data: any ) : void {
 
         Arena.updateLeaderBoard( data.players, data.teams );
 
     };
 
-    private joinArena ( data: any ) {
+    private joinArena ( data: any ) : void {
 
         Arena.init( data );
         UI.Landing.hideLoader();
@@ -191,18 +191,18 @@ class ArenaNetwork {
 
     };
 
-    private newChatMessage ( data: any ) {
+    private newChatMessage ( data: any ) : void {
 
         UI.Chat.newMessage( data );
 
     };
 
-    private setKillSerie ( data: any ) {
+    private setKillSerie ( data: any ) : void {
 
-        let playerId = data.id;
-        let playerLogin = data.login;
-        let teamId = data.team;
-        let serieLength = data.serie;
+        const playerId = data.id;
+        const playerLogin = data.login;
+        const teamId = data.team;
+        const serieLength = data.serie;
 
         UI.InGame.showKillSerie( playerId, playerLogin, teamId, serieLength );
 
@@ -210,7 +210,7 @@ class ArenaNetwork {
 
     //
 
-    public init () {
+    public init () : void {
 
         Network.addMessageListener( 'ArenaKillSerie', this.setKillSerie.bind( this ) );
         Network.addMessageListener( 'ArenaJoinResponse', this.joinArena.bind( this ) );
@@ -227,7 +227,3 @@ class ArenaNetwork {
     };
 
 };
-
-//
-
-export { ArenaNetwork };

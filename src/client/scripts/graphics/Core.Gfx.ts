@@ -5,18 +5,18 @@
 
 import * as THREE from 'three';
 
-import { UI } from "./../ui/Core.UI";
-import { Arena } from "./../core/Arena.Core";
-import { LandscapeGfx } from "./objects/Landscape.Gfx";
+import { UI } from '../ui/Core.UI';
+import { Arena } from '../core/Arena.Core';
+import { LandscapeGfx } from './objects/Landscape.Gfx';
 
-import { PlayerManager } from "./../managers/Player.Manager";
-import { SoundManager } from "./../managers/Sound.Manager";
-import { BoxManager } from "./../managers/Box.Manager";
-import { TowerManager } from "./../managers/Tower.Manager";
-import { DecorationManager } from "./../managers/Decoration.Manager";
-import { ControlsManager } from "./../managers/Control.Manager";
-import { ExplosionManager } from "./../managers/Explosion.Manager";
-import { HealthChangeLabelManager } from "./../managers/HealthChangeLabel.Manager";
+import { PlayerManager } from '../managers/Player.Manager';
+import { SoundManager } from '../managers/Sound.Manager';
+import { BoxManager } from '../managers/Box.Manager';
+import { TowerManager } from '../managers/Tower.Manager';
+import { DecorationManager } from '../managers/Decoration.Manager';
+import { ControlsManager } from '../managers/Control.Manager';
+import { ExplosionManager } from '../managers/Explosion.Manager';
+import { HealthChangeLabelManager } from '../managers/HealthChangeLabel.Manager';
 import { BulletManager } from '../managers/Bullet.Manager';
 import { LargeExplosionManager } from '../managers/LargeExplosion.Manager';
 
@@ -47,14 +47,14 @@ class GraphicsCore {
 
     private gfxSettings: GfxSettings = {
         quality:    Quality.MEDIUM,
-        antialias:  false
+        antialias:  false,
     };
 
     public windowWidth: number = 0;
     public windowHeight: number = 0;
 
     public audioListener: THREE.AudioListener;
-    public decorations: Array<object> = [];
+    public decorations: object[] = [];
     public sun: THREE.DirectionalLight;
     public landscape: LandscapeGfx = new LandscapeGfx();
     public coreObjects = {};
@@ -68,15 +68,15 @@ class GraphicsCore {
             color:      0xfff3bc,
             intensity:  0.6,
             position:   new THREE.Vector3( 0, 100, 0 ),
-            target:     new THREE.Vector3( 50, 0, 50 )
-        }
+            target:     new THREE.Vector3( 50, 0, 50 ),
+        },
     };
 
     public fog = { color: 0xc4c4c2, density: 0.0025 };
 
     //
 
-    public setQuality ( value: string ) {
+    public setQuality ( value: string ) : void {
 
         if ( value === 'HIGH' ) {
 
@@ -94,7 +94,7 @@ class GraphicsCore {
 
     };
 
-    public init () {
+    public init () : void {
 
         if ( this.scene ) {
 
@@ -118,7 +118,7 @@ class GraphicsCore {
 
         // setup lights
 
-        let ambientLight = new THREE.AmbientLight( this.lights.ambient );
+        const ambientLight = new THREE.AmbientLight( this.lights.ambient );
         ambientLight.name = 'GlobalAmbientLight';
         this.sun = new THREE.DirectionalLight( this.lights.sun.color, this.lights.sun.intensity );
         this.sun.name = 'GlobalSunLight';
@@ -161,7 +161,7 @@ class GraphicsCore {
 
     //
 
-    public resize () {
+    public resize () : void {
 
         this.windowWidth = window.innerWidth;
         this.windowHeight = window.innerHeight;
@@ -175,21 +175,21 @@ class GraphicsCore {
 
     };
 
-    private updateRenderer () {
+    private updateRenderer () : void {
 
         $('#renderport').remove();
         $('#viewport').prepend('<canvas id="renderport"></canvas>');
         this.container = $('#renderport')[0] as HTMLCanvasElement;
-        let params = { powerPreference: 'high-performance', canvas: this.container, antialias: this.gfxSettings.antialias };
+        const params = { powerPreference: 'high-performance', canvas: this.container, antialias: this.gfxSettings.antialias };
         this.renderer = new THREE.WebGLRenderer( params );
         this.renderer.setSize( this.gfxSettings.quality * this.windowWidth, this.gfxSettings.quality * this.windowHeight );
         this.renderer.setClearColor( this.fog.color );
 
     };
 
-    public addCameraShake ( duration: number, intensity: number ) {
+    public addCameraShake ( duration: number, intensity: number ) : void {
 
-        var iter = 0;
+        let iter = 0;
 
         if ( this.cameraShakeInterval !== null ) {
 
@@ -198,7 +198,7 @@ class GraphicsCore {
 
         }
 
-        this.cameraShakeInterval = <any>setInterval( () => {
+        this.cameraShakeInterval = setInterval( () => {
 
             this.cameraOffset.x = intensity * ( Math.random() - 0.5 ) * iter / 2;
             this.cameraOffset.y = intensity * ( Math.random() - 0.5 ) * iter / 2;
@@ -218,11 +218,11 @@ class GraphicsCore {
 
             }
 
-        }, 40 );
+        }, 40 ) as any;
 
     };
 
-    public removeCameraShake () {
+    public removeCameraShake () : void {
 
         this.camera.position.y = 400;
 
@@ -237,7 +237,7 @@ class GraphicsCore {
 
     };
 
-    private updateCamera ( position: THREE.Vector3, rotation: number ) {
+    private updateCamera ( position: THREE.Vector3, rotation: number ) : void {
 
         this.camera.position.x = position.x - 100 * Math.sin( rotation ) + this.cameraOffset.x;
         this.camera.position.z = position.z - 100 * Math.cos( rotation ) + this.cameraOffset.y;
@@ -250,7 +250,7 @@ class GraphicsCore {
 
     };
 
-    private animate ( time: number, delta: number ) {
+    private animate ( time: number, delta: number ) : void {
 
         if ( ! Arena.me || ! Arena.me.tank ) return;
 
@@ -273,11 +273,11 @@ class GraphicsCore {
 
     };
 
-    private render () {
+    private render () : void {
 
-        let time = performance.now();
+        const time = performance.now();
         this.prevRenderTime = this.prevRenderTime || time;
-        let delta = time - this.prevRenderTime;
+        const delta = time - this.prevRenderTime;
         this.prevRenderTime = time;
 
         this.animate( time, delta );
@@ -301,14 +301,14 @@ class GraphicsCore {
 
     };
 
-    public clear () {
+    public clear () : void {
 
         if ( ! this.scene ) return;
         this.removeCameraShake();
 
         //
 
-        for ( var i = 0, il = this.scene.children.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.scene.children.length; i < il; i ++ ) {
 
             this.scene.remove( this.scene.children[ i ] );
 

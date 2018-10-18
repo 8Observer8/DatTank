@@ -3,16 +3,16 @@
  * DatTank Tree decoration
 */
 
-import * as OMath from "./../../../OMath/Core.OMath";
+import * as OMath from '../../../OMath/Core.OMath';
 
-import { DecorationObject } from "./../../../objects/core/Decoration.Object";
-import { CollisionManager } from "./../../../managers/Collision.Manager";
+import { DecorationObject } from '../../../objects/core/Decoration.Object';
+import { CollisionManager } from '../../../managers/Collision.Manager';
 
 //
 
-class Tree7Decoration extends DecorationObject {
+export class Tree7Decoration extends DecorationObject {
 
-    static title: string = 'Tree7';
+    public static title: string = 'Tree7';
     public size: OMath.Vec3 = new OMath.Vec3( 10, 70, 10 );
 
     //
@@ -28,7 +28,3 @@ class Tree7Decoration extends DecorationObject {
     };
 
 };
-
-//
-
-export { Tree7Decoration };

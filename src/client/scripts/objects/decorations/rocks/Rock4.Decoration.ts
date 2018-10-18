@@ -3,16 +3,16 @@
  * DatTank Rock decoration
 */
 
-import * as OMath from "./../../../OMath/Core.OMath";
+import * as OMath from '../../../OMath/Core.OMath';
 
-import { DecorationObject } from "./../../../objects/core/Decoration.Object";
-import { CollisionManager } from "./../../../managers/Collision.Manager";
+import { DecorationObject } from '../../../objects/core/Decoration.Object';
+import { CollisionManager } from '../../../managers/Collision.Manager';
 
 //
 
-class Rock4Decoration extends DecorationObject {
+export class Rock4Decoration extends DecorationObject {
 
-    static title: string = 'Rock4';
+    public static title: string = 'Rock4';
     public size: OMath.Vec3 = new OMath.Vec3();
 
     //
@@ -29,7 +29,3 @@ class Rock4Decoration extends DecorationObject {
     };
 
 };
-
-//
-
-export { Rock4Decoration };

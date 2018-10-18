@@ -3,7 +3,7 @@
  * DatTank Arena decoration manager
 */
 
-import { DecorationObject, DecorationList as Decorations } from "./../objects/core/Decoration.Object";
+import { DecorationObject, DecorationList as Decorations } from '../objects/core/Decoration.Object';
 
 //
 
@@ -15,9 +15,9 @@ class DecorationManagerCore {
 
     //
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
-        for ( var i = 0, il = this.decorations.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.decorations.length; i < il; i ++ ) {
 
             this.decorations[ i ].update( time, delta );
 
@@ -25,11 +25,11 @@ class DecorationManagerCore {
 
     };
 
-    public init ( decorations: any[] ) {
+    public init ( decorations: any[] ) : void {
 
         for ( let i = 0, il = decorations.length; i < il; i ++ ) {
 
-            let decoration = new Decorations[ decorations[ i ].type ]( decorations[ i ] );
+            const decoration = new Decorations[ decorations[ i ].type ]( decorations[ i ] );
             this.decorations.push( decoration );
             decoration.init();
 

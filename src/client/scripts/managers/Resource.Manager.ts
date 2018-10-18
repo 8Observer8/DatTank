@@ -19,7 +19,7 @@ class ResourceManagerCore {
     private loadedModels: number = 0;
     private loadedTextures: number = 0;
     private loadedSounds: number = 0;
-    public loadedPacks: Array<string> = [];
+    public loadedPacks: string[] = [];
 
     private modelLoader: THREE.JSONLoader = new THREE.JSONLoader();
     private textureLoader: THREE.TextureLoader = new THREE.TextureLoader();
@@ -45,18 +45,18 @@ class ResourceManagerCore {
         'Decorations.jpg',
         'Boxes.jpg',
 
-        'IS2.png'
+        'IS2.png',
     ];
 
     private soundsList: string[] = [
         'tank_shooting.wav',
         'tank_moving.wav',
         'tank_explosion.wav',
-        'box_pick.wav'
+        'box_pick.wav',
     ];
 
     private packsList: string[] = [
-        'ingame'
+        'ingame',
     ];
 
     private packs = {
@@ -64,8 +64,8 @@ class ResourceManagerCore {
             url: '/resources/garage.pack',
             models: [
                 'Garage',
-                'tanks/IS2'
-            ]
+                'tanks/IS2',
+            ],
         },
         ingame: {
             url: '/resources/ingame.pack',
@@ -86,18 +86,18 @@ class ResourceManagerCore {
                 'boxes/AmmoBox',
                 'boxes/HealthBox',
                 'towers/T1-bottom',
-                'towers/T1-top'
-            ]
-        }
+                'towers/T1-top',
+            ],
+        },
     };
 
     //
 
-    public init () {
+    public init () : void {
 
         console.log( 'ResourceManager inited.' );
 
-        this.loadPack('garage', function () {
+        this.loadPack('garage', () => {
 
             // nothing here
 
@@ -105,36 +105,37 @@ class ResourceManagerCore {
 
     };
 
-    private loadPack ( packName: string, callback: () => void ) {
+    private loadPack ( packName: string, callback: () => void ) : void {
 
         let processedItems = 0;
-        let request = new XMLHttpRequest();
-        let pack = this.packs[ packName ];
+        const request = new XMLHttpRequest();
+        const pack = this.packs[ packName ];
 
         request.addEventListener( 'load', ( event ) => {
 
             if ( ! event.target ) return;
-            let data = event.target['response'];
-            let decoder = new JSZip();
+            const data = event.target['response'];
+            const decoder = new JSZip();
+
             decoder.loadAsync( data ).then( ( zip ) => {
 
                 for ( let i = 0, il = pack.models.length; i < il; i ++ ) {
 
-                    let modelName = pack.models[ i ];
+                    const modelName = pack.models[ i ];
 
                     zip.file( modelName + '.conf' ).async('text').then( ( configData ) => {
 
-                        let config = JSON.parse( configData );
+                        const config = JSON.parse( configData );
 
                         zip.file( modelName + '.bin' ).async('arraybuffer').then( ( buffer ) => {
 
-                            let model = {
+                            const model = {
                                 name:       modelName + '.json',
                                 geometry:   new THREE.BufferGeometry(),
-                                material:   [] as any[]
+                                material:   [] as any[],
                             };
 
-                            for ( let i = 0, il = config['meta'].materials; i < il; i ++ ) {
+                            for ( let j = 0, jl = config['meta'].materials; j < jl; j ++ ) {
 
                                 model.material.push( new THREE.MeshLambertMaterial({ color: 0xaaaaaa }) );
 
@@ -142,16 +143,16 @@ class ResourceManagerCore {
 
                             //
 
-                            let facesCount = config['meta']['faces'];
-                            let verticesCount = facesCount * 3;
+                            const facesCount = config['meta']['faces'];
+                            const verticesCount = facesCount * 3;
 
                             // set model attributes
 
-                            let position = new Int16Array( buffer, 0, 3 * verticesCount );
-                            let newPos = new Float32Array( position.length );
-                            let positionAttr = new THREE.BufferAttribute( newPos, 3 );
+                            const position = new Int16Array( buffer, 0, 3 * verticesCount );
+                            const newPos = new Float32Array( position.length );
+                            const positionAttr = new THREE.BufferAttribute( newPos, 3 );
 
-                            for ( var j = 0, jl = position.length; j < jl; j ++ ) {
+                            for ( let j = 0, jl = position.length; j < jl; j ++ ) {
 
                                 newPos[ j ] = position[ j ] / 1000;
 
@@ -162,11 +163,11 @@ class ResourceManagerCore {
 
                             if ( config.meta.uvs !== false ) {
 
-                                let uvs = new Int16Array( buffer, 2 * 3 * verticesCount, 2 * verticesCount );
-                                let newUvs = new Float32Array( uvs.length );
-                                let uvsAttr = new THREE.BufferAttribute( newUvs, 2 );
+                                const uvs = new Int16Array( buffer, 2 * 3 * verticesCount, 2 * verticesCount );
+                                const newUvs = new Float32Array( uvs.length );
+                                const uvsAttr = new THREE.BufferAttribute( newUvs, 2 );
 
-                                for ( var j = 0, jl = uvs.length; j < jl; j ++ ) {
+                                for ( let j = 0, jl = uvs.length; j < jl; j ++ ) {
 
                                     newUvs[ j ] = uvs[ j ] / 10000;
 
@@ -178,47 +179,47 @@ class ResourceManagerCore {
 
                             // set model groups
 
-                            for ( let i = 0, il = config.groups.length; i < il; i ++ ) {
+                            for ( let j = 0, jl = config.groups.length; j < jl; j ++ ) {
 
                                 model.geometry.groups.push({
-                                    start:          config.groups[ i ][0],
-                                    materialIndex:  config.groups[ i ][1],
-                                    count:          config.groups[ i ][2]
+                                    start:          config.groups[ j ][0],
+                                    materialIndex:  config.groups[ j ][1],
+                                    count:          config.groups[ j ][2],
                                 });
 
                             }
 
                             // set model morph buffers if needed
 
-                            var morphTargetsCount = config['meta']['morphTargets'];
+                            const morphTargetsCount = config['meta']['morphTargets'];
 
                             if ( morphTargetsCount ) {
 
                                 model.geometry.morphAttributes.position = [];
                                 model.geometry['morphTargets'] = [];
 
-                                for ( let i = 0, il = config.animations.length; i < il; i ++ ) {
+                                for ( let j = 0, jl = config.animations.length; j < jl; j ++ ) {
 
-                                    for ( let j = 0, jl = config.animations[ i ].end - config.animations[ i ].start; j < jl; j ++ ) {
+                                    for ( let k = 0, kl = config.animations[ j ].end - config.animations[ j ].start; k < kl; k ++ ) {
 
-                                        model.geometry['morphTargets'].push({ name: config.animations[ i ].name + j });
+                                        model.geometry['morphTargets'].push({ name: config.animations[ i ].name + k });
 
                                     }
 
                                 }
 
-                                for ( var j = 0; j < morphTargetsCount; j ++ ) {
+                                for ( let j = 0; j < morphTargetsCount; j ++ ) {
 
-                                    let morphInput = new Int16Array( buffer, 2 * ( 5 + 3 * j ) * verticesCount, 3 * verticesCount );
-                                    let morph = new Float32Array( morphInput.length );
+                                    const morphInput = new Int16Array( buffer, 2 * ( 5 + 3 * j ) * verticesCount, 3 * verticesCount );
+                                    const morph = new Float32Array( morphInput.length );
 
-                                    for ( var k = 0, kl = morphInput.length; k < kl; k ++ ) {
+                                    for ( let k = 0, kl = morphInput.length; k < kl; k ++ ) {
 
                                         morph[ k ] = morphInput[ k ] / 1000;
 
                                     }
 
-                                    let morphAttr = new THREE.Float32BufferAttribute( morph, 3 );
+                                    const morphAttr = new THREE.Float32BufferAttribute( morph, 3 );
                                     model.geometry.morphAttributes.position.push( morphAttr );
 
                                 }
@@ -253,7 +254,7 @@ class ResourceManagerCore {
 
     };
 
-    private loadModel ( modelName: string, callback: () => void ) {
+    private loadModel ( modelName: string, callback: () => void ) : void {
 
         this.modelLoader.load( 'resources/models/' + modelName, ( g, m ) => {
 
@@ -271,10 +272,10 @@ class ResourceManagerCore {
 
             }
 
-            let data = {
+            const data = {
                 name:       modelName,
-                geometry:   geometry,
-                material:   m
+                geometry,
+                material:   m,
             };
 
             this.models.push( data );
@@ -286,7 +287,7 @@ class ResourceManagerCore {
 
     };
 
-    private loadTexture ( textureName: string, callback: () => void ) {
+    private loadTexture ( textureName: string, callback: () => void ) : void {
 
         this.textureLoader.load( 'resources/textures/' + textureName, ( texture ) => {
 
@@ -300,7 +301,7 @@ class ResourceManagerCore {
 
     };
 
-    private loadSound ( soundName: string, callback: () => void ) {
+    private loadSound ( soundName: string, callback: () => void ) : void {
 
         this.audioLoader.load( 'resources/sounds/' + soundName, ( buffer: THREE.AudioBuffer ) => {
 
@@ -310,14 +311,18 @@ class ResourceManagerCore {
 
             callback();
 
-        }, () => {}, () => {} );
+        }, () => {
+            // nothing here
+        }, () => {
+            // nothing here
+        } );
 
     };
 
-    public load ( onProgress: ( value: number ) => void, onFinish: () => void ) {
+    public load ( onProgress: ( value: number ) => void, onFinish: () => void ) : void {
 
-        let loadedItems = this.loadedModels + this.loadedTextures + this.loadedSounds;
-        let progress = loadedItems / ( loadedItems + this.soundsList.length + this.modelsList.length + this.texturesList.length );
+        const loadedItems = this.loadedModels + this.loadedTextures + this.loadedSounds;
+        const progress = loadedItems / ( loadedItems + this.soundsList.length + this.modelsList.length + this.texturesList.length );
 
         if ( this.packsList.length ) {
 
@@ -386,7 +391,7 @@ class ResourceManagerCore {
 
     public getModel ( name: string ) : THREE.Mesh | undefined {
 
-        for ( var i = 0, il = this.models.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.models.length; i < il; i ++ ) {
 
             if ( this.models[ i ].name === name + '.json' ) {
 
@@ -404,7 +409,7 @@ class ResourceManagerCore {
 
     public getTexture ( name: string ) : THREE.Texture | undefined {
 
-        for ( var i = 0, il = this.textures.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.textures.length; i < il; i ++ ) {
 
             if ( this.textures[ i ].name === name ) {
 
@@ -422,7 +427,7 @@ class ResourceManagerCore {
 
     public getSound ( name: string ) : THREE.AudioBuffer | undefined {
 
-        for ( var i = 0, il = this.sounds.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.sounds.length; i < il; i ++ ) {
 
             if ( this.sounds[ i ]['name'] === name ) {
 

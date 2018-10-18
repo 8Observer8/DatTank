@@ -3,21 +3,21 @@
  * DatTank Tank IS2
 */
 
-import { TankObject } from "./../../objects/core/Tank.Object";
+import { TankObject } from '../../objects/core/Tank.Object';
 
 //
 
-class IS2Tank extends TankObject {
+export class IS2Tank extends TankObject {
 
-    static title: string = 'IS2';
-    static year: number = 1950;
-    static speed: number = 37;
-    static ammoCapacity: number = 36;
-    static bullet: number = 122;
-    static rpm: number = 4.88 * 10;
-    static armour: number = 90;
+    public static title: string = 'IS2';
+    public static year: number = 1950;
+    public static speed: number = 37;
+    public static ammoCapacity: number = 36;
+    public static bullet: number = 122;
+    public static rpm: number = 4.88 * 10;
+    public static armour: number = 90;
 
-    static tid = 0;
+    public static tid = 0;
 
     //
 
@@ -38,7 +38,3 @@ class IS2Tank extends TankObject {
     };
 
 };
-
-//
-
-export { IS2Tank };

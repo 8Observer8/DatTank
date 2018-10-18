@@ -3,34 +3,34 @@
  * DatTank Arena tower manager
 */
 
-import { TowerObject } from "./../objects/core/Tower.Object";
-import { TowerList as Towers } from "./../objects/core/Tower.Object";
+import { TowerObject } from '../objects/core/Tower.Object';
+import { TowerList as Towers } from '../objects/core/Tower.Object';
 
 //
 
 class TowerManagerCore {
 
     private static instance: TowerManagerCore;
-    private towers: Array<TowerObject> = [];
+    private towers: TowerObject[] = [];
 
     //
 
-    public add ( params: any ) {
+    public add ( params: any ) : void {
 
-        let towerName = Towers.getById( params.tid || 0 ) || '';
+        const towerName = Towers.getById( params.tid || 0 ) || '';
         if ( ! Towers[ towerName ] ) return;
 
-        let tower = new Towers[ towerName ]( params );
+        const tower = new Towers[ towerName ]( params );
         this.towers.push( tower );
         tower.init();
 
     };
 
-    public remove ( towerIds: number[] ) {
+    public remove ( towerIds: number[] ) : void {
 
-        var newTowerList = [];
+        const newTowerList = [];
 
-        for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.towers.length; i < il; i ++ ) {
 
             if ( towerIds.indexOf( this.towers[ i ].id ) !== -1 ) {
 
@@ -47,9 +47,9 @@ class TowerManagerCore {
 
     };
 
-    public getById ( towerId: number ) {
+    public getById ( towerId: number ) : TowerObject | null {
 
-        for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.towers.length; i < il; i ++ ) {
 
             if ( this.towers[ i ].id === towerId ) {
 
@@ -63,15 +63,15 @@ class TowerManagerCore {
 
     };
 
-    public get () {
+    public get () : TowerObject[] {
 
         return this.towers;
 
     };
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
-        for ( var i = 0, il = this.towers.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.towers.length; i < il; i ++ ) {
 
             this.towers[ i ].update( time, delta );
 
@@ -79,7 +79,7 @@ class TowerManagerCore {
 
     };
 
-    public init () {
+    public init () : void {
 
         // todo
 

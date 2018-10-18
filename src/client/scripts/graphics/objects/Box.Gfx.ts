@@ -5,28 +5,28 @@
 
 import * as THREE from 'three';
 
-import { GfxCore } from "./../Core.Gfx";
-import { BoxObject } from "./../../objects/core/Box.Object";
-import { ResourceManager } from "./../../managers/Resource.Manager";
+import { GfxCore } from '../Core.Gfx';
+import { BoxObject } from '../../objects/core/Box.Object';
+import { ResourceManager } from '../../managers/Resource.Manager';
 
 //
 
-class BoxGfx {
+export class BoxGfx {
 
     private animTime: number = 600 * Math.random() * Math.PI * 2;
     private mesh: THREE.Mesh;
 
     //
 
-    public dispose () {
+    public dispose () : void {
 
         GfxCore.coreObjects['boxes'].remove( this.mesh );
 
     };
 
-    public pick () {
+    public pick () : void {
 
-        let sound = new THREE.PositionalAudio( GfxCore.audioListener );
+        const sound = new THREE.PositionalAudio( GfxCore.audioListener );
         sound.position.copy( this.mesh.position );
         sound.setBuffer( ResourceManager.getSound('box_pick.wav') as THREE.AudioBuffer );
         sound.setRefDistance( 200 );
@@ -34,7 +34,7 @@ class BoxGfx {
 
     };
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
         this.animTime += delta;
         this.mesh.rotation.y = Math.sin( this.animTime / 600 );
@@ -43,9 +43,9 @@ class BoxGfx {
 
     };
 
-    public init ( box: BoxObject ) {
+    public init ( box: BoxObject ) : void {
 
-        var boxModel = ResourceManager.getModel( 'boxes/' + box.type )!;
+        const boxModel = ResourceManager.getModel( 'boxes/' + box.type )!;
 
         this.mesh = new THREE.Mesh( boxModel.geometry, boxModel.material );
         this.mesh.material[0].map = ResourceManager.getTexture('Boxes.jpg');
@@ -72,7 +72,3 @@ class BoxGfx {
     };
 
 };
-
-//
-
-export { BoxGfx };

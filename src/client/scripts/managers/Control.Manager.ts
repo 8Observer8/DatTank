@@ -5,10 +5,10 @@
 
 import * as THREE from 'three';
 
-import { GfxCore } from "./../graphics/Core.Gfx";
-import * as OMath from "./../OMath/Core.OMath";
+import { GfxCore } from '../graphics/Core.Gfx';
+import * as OMath from '../OMath/Core.OMath';
 
-import { Arena } from "./../core/Arena.Core";
+import { Arena } from '../core/Arena.Core';
 
 //
 
@@ -26,7 +26,7 @@ class ControlsManagerCore {
 
     //
 
-    private startShooting () {
+    private startShooting () : void {
 
         if ( Arena.me.tank ) {
 
@@ -36,7 +36,7 @@ class ControlsManagerCore {
 
     };
 
-    private stopShooting () {
+    private stopShooting () : void {
 
         if ( Arena.me.tank ) {
 
@@ -46,7 +46,7 @@ class ControlsManagerCore {
 
     };
 
-    private startMoving () {
+    private startMoving () : void {
 
         if ( Arena.me.tank ) {
 
@@ -58,17 +58,17 @@ class ControlsManagerCore {
 
     //
 
-    private oncontextmenu () {
+    private oncontextmenu () : boolean {
 
         return false;
 
     };
 
-    private mouseDown ( event: MouseEvent ) {
+    private mouseDown ( event: MouseEvent ) : void {
 
         this.mousePos.x = ( event.clientX / GfxCore.windowWidth ) * 2 - 1;
         this.mousePos.y = - ( event.clientY / GfxCore.windowHeight ) * 2 + 1;
-        let mouseKeyPressed = event.which;
+        const mouseKeyPressed = event.which;
 
         switch ( mouseKeyPressed ) {
 
@@ -83,18 +83,18 @@ class ControlsManagerCore {
 
     };
 
-    private mouseMove ( event: MouseEvent ) {
+    private mouseMove ( event: MouseEvent ) : void {
 
         this.mousePos.x = ( event.clientX / GfxCore.windowWidth ) * 2 - 1;
         this.mousePos.y = - ( event.clientY / GfxCore.windowHeight ) * 2 + 1;
 
     };
 
-    private mouseUp ( event: MouseEvent ) {
+    private mouseUp ( event: MouseEvent ) : void {
 
         this.mousePos.x = ( event.clientX / GfxCore.windowWidth ) * 2 - 1;
         this.mousePos.y = - ( event.clientY / GfxCore.windowHeight ) * 2 + 1;
-        let mouseKeyPressed = event.which;
+        const mouseKeyPressed = event.which;
 
         switch ( mouseKeyPressed ) {
 
@@ -109,9 +109,9 @@ class ControlsManagerCore {
 
     };
 
-    public mouseInit () {
+    public mouseInit () : void {
 
-        let viewport = $('#viewport #renderport, #kill-events');
+        const viewport = $('#viewport #renderport, #kill-events');
 
         viewport.off('mousedown');
         viewport.off('mousemove');
@@ -127,7 +127,7 @@ class ControlsManagerCore {
 
     //
 
-    private keyDown ( event: KeyboardEvent ) {
+    private keyDown ( event: KeyboardEvent ) : void {
 
         if ( this.pressedKey[ '' + event.keyCode ] === true ) return;
         this.pressedKey[ '' + event.keyCode ] = true;
@@ -179,7 +179,7 @@ class ControlsManagerCore {
 
     };
 
-    private keyUp ( event: KeyboardEvent ) {
+    private keyUp ( event: KeyboardEvent ) : void {
 
         let newDirection;
         delete this.pressedKey[ '' + event.keyCode ];
@@ -231,7 +231,7 @@ class ControlsManagerCore {
 
     };
 
-    private keyInit () {
+    private keyInit () : void {
 
         $( document ).bind( 'keydown', this.keyDown.bind( this ) );
         $( document ).bind( 'keyup', this.keyUp.bind( this ) );
@@ -240,13 +240,13 @@ class ControlsManagerCore {
 
     //
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
         // nothing here
 
     };
 
-    public init () {
+    public init () : void {
 
         this.intersectPlane.position.y = 20;
         this.intersectPlane.rotation.x = - Math.PI / 2;

@@ -3,7 +3,7 @@
  * DatTank Arena teams manager
 */
 
-import { TeamCore } from "./../core/Team.Core";
+import { TeamCore } from '../core/Team.Core';
 
 //
 
@@ -11,19 +11,19 @@ class TeamManagerCore {
 
     private static instance: TeamManagerCore;
 
-    private teams: Array<TeamCore> = [];
+    private teams: TeamCore[] = [];
 
     //
 
-    public add ( team: TeamCore ) {
+    public add ( team: TeamCore ) : void {
 
         this.teams.push( team );
 
     };
 
-    public getById ( teamId: number ) {
+    public getById ( teamId: number ) : TeamCore | null {
 
-        for ( var i = 0, il = this.teams.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.teams.length; i < il; i ++ ) {
 
             if ( this.teams[ i ].id === teamId ) {
 
@@ -37,7 +37,7 @@ class TeamManagerCore {
 
     };
 
-    public getTeams () {
+    public getTeams () : TeamCore[] {
 
         return this.teams;
 
@@ -45,9 +45,9 @@ class TeamManagerCore {
 
     //
 
-    public init ( params: any ) {
+    public init ( params: any ) : void {
 
-        for ( var i = 0, il = params.length; i < il; i ++ ) {
+        for ( let i = 0, il = params.length; i < il; i ++ ) {
 
             this.add( new TeamCore( params[ i ] ) );
 

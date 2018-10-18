@@ -189,7 +189,7 @@ class UIInGameModule {
 
     };
 
-    public showDisconectMessage () {
+    public showDisconnectMessage () {
 
         $('.disconnect-warning').show();
 

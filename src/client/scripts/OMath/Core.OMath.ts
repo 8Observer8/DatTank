@@ -3,15 +3,15 @@
  * DatTank Math core
 */
 
-import { Vec2 } from "./Vector2.OMath";
-import { Vec3 } from "./Vector3.OMath";
+import { Vec2 } from './Vector2.OMath';
+import { Vec3 } from './Vector3.OMath';
 
 export { Vec2 };
 export { Vec3 };
 
 //
 
-export function darkerColor ( value: number, coef: number ) {
+export function darkerColor ( value: number, coef: number ) : number {
 
     let r = Math.floor( value / 65536 );
     let g = Math.floor( value / 256 ) % 256;
@@ -25,7 +25,7 @@ export function darkerColor ( value: number, coef: number ) {
 
 };
 
-export function intToHex ( value: number ) {
+export function intToHex ( value: number ) : string {
 
     let result = value.toString(16);
     while ( result.length < 6 ) {
@@ -38,7 +38,7 @@ export function intToHex ( value: number ) {
 
 };
 
-export function sign ( value: number ) {
+export function sign ( value: number ) : number {
 
     if ( value >= 0 ) {
 
@@ -52,7 +52,7 @@ export function sign ( value: number ) {
 
 };
 
-export function formatAngle ( angle: number ) {
+export function formatAngle ( angle: number ) : number {
 
     angle = angle % ( 2 * Math.PI );
 

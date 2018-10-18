@@ -4,13 +4,13 @@
 */
 
 import * as THREE from 'three';
-import { MorphBlendMesh } from "./../utils/MorphMesh.Gfx";
+import { MorphBlendMesh } from '../utils/MorphMesh.Gfx';
 
-import * as OMath from "./../../OMath/Core.OMath";
-import { GfxCore } from "./../Core.Gfx";
-import { TankLabelGfx } from "./../effects/TankLabel.Gfx";
-import { TankObject } from "./../../objects/core/Tank.Object";
-import { ResourceManager } from "./../../managers/Resource.Manager";
+import * as OMath from '../../OMath/Core.OMath';
+import { GfxCore } from '../Core.Gfx';
+import { TankLabelGfx } from '../effects/TankLabel.Gfx';
+import { TankObject } from '../../objects/core/Tank.Object';
+import { ResourceManager } from '../../managers/Resource.Manager';
 import { TankTracesGfx } from './../effects/TankTraces.Gfx';
 import { LargeExplosionManager } from './../../managers/LargeExplosion.Manager';
 import { FriendlyFireLabelGfx } from './../effects/FriendlyFireLabel.Gfx';
@@ -34,23 +34,23 @@ class TankGfx {
 
     //
 
-    public rotateTankXAxis ( delta: number ) {
+    public rotateTankXAxis ( delta: number ) : void {
 
         this.mesh.rotation.x += delta;
         this.mesh.rotation.x *= 0.9;
 
     };
 
-    private initSounds () {
+    private initSounds () : void {
 
-        let movingSound = new THREE.PositionalAudio( GfxCore.audioListener );
+        const movingSound = new THREE.PositionalAudio( GfxCore.audioListener );
         movingSound.setBuffer( ResourceManager.getSound('tank_moving.wav') as THREE.AudioBuffer );
         movingSound.setRefDistance( 11 );
         movingSound.autoplay = false;
         this.object.add( movingSound );
         this.sounds['moving'] = movingSound;
 
-        let explosionSound = new THREE.PositionalAudio( GfxCore.audioListener );
+        const explosionSound = new THREE.PositionalAudio( GfxCore.audioListener );
         explosionSound.setBuffer( ResourceManager.getSound('tank_explosion.wav') as THREE.AudioBuffer );
         explosionSound.setRefDistance( 15 );
         explosionSound.autoplay = false;
@@ -59,9 +59,9 @@ class TankGfx {
 
     };
 
-    public toggleMovementSound ( enable: boolean ) {
+    public toggleMovementSound ( enable: boolean ) : void {
 
-        let sound = this.sounds['moving'];
+        const sound = this.sounds['moving'];
 
         if ( sound.buffer ) {
 
@@ -84,7 +84,7 @@ class TankGfx {
 
     };
 
-    public setPosition ( position: OMath.Vec3 ) {
+    public setPosition ( position: OMath.Vec3 ) : void {
 
         this.object.position.x = position.x;
         this.object.position.y = position.y;
@@ -92,22 +92,22 @@ class TankGfx {
 
     };
 
-    public setRotation ( angle: number ) {
+    public setRotation ( angle: number ) : void {
 
         this.object.rotation.y = angle;
 
     };
 
-    public shoot () {
+    public shoot () : void {
 
         // this.mesh.playAnimation('shoot');
         this.blastSmoke.show();
 
     };
 
-    private updateTracks () {
+    private updateTracks () : void {
 
-        let tank = this.tank;
+        const tank = this.tank;
 
         if ( tank.health <= 0 ) {
 
@@ -117,8 +117,8 @@ class TankGfx {
 
         // if tank moves update tracks
 
-        let track1Map = this.mesh.material[1].map;
-        let track2Map = this.mesh.material[2].map;
+        const track1Map = this.mesh.material[1].map;
+        const track2Map = this.mesh.material[2].map;
 
         if ( tank.moveDirection.x ) {
 
@@ -148,7 +148,7 @@ class TankGfx {
 
     };
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
         this.updateTracks();
         this.traces.update( time, delta );
@@ -162,7 +162,7 @@ class TankGfx {
 
         if ( this.tank.deltaT > 0 ) {
 
-            let d = ( delta > this.tank.deltaT ) ? this.tank.deltaT : delta;
+            const d = ( delta > this.tank.deltaT ) ? this.tank.deltaT : delta;
 
             this.object.rotation.y += this.tank.rotChange * d;
             this.object.position.x += this.tank.posChange.x * d;
@@ -177,20 +177,20 @@ class TankGfx {
 
     };
 
-    public init ( tank: TankObject ) {
+    public init ( tank: TankObject ) : void {
 
         this.tank = tank;
 
-        let materials = [];
-        let tankModel = ResourceManager.getModel( 'tanks/IS2' )!;
+        const materials = [];
+        const tankModel = ResourceManager.getModel( 'tanks/IS2' )!;
 
         // add tank mesh
 
-        let inMaterials = tankModel.material as THREE.MeshBasicMaterial[];
+        const inMaterials = tankModel.material as THREE.MeshBasicMaterial[];
 
         for ( let i = 0, il = inMaterials.length; i < il; i ++ ) {
 
-            let material = new THREE.MeshBasicMaterial({ color: 0x777777 });
+            const material = new THREE.MeshBasicMaterial({ color: 0x777777 });
             material.map = ResourceManager.getTexture( 'IS2.png' )!.clone();
             material.map.needsUpdate = true;
             material.map.wrapS = material.map.wrapT = THREE.RepeatWrapping;
@@ -205,8 +205,8 @@ class TankGfx {
 
         // add tank shadow
 
-        var tankShadowTexture = ResourceManager.getTexture( 'Tank-shadow.png' );
-        var tankShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: tankShadowTexture, transparent: true, depthWrite: false, opacity: 0.7 }) );
+        const tankShadowTexture = ResourceManager.getTexture( 'Tank-shadow.png' );
+        const tankShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: tankShadowTexture, transparent: true, depthWrite: false, opacity: 0.7 }) );
         tankShadow.scale.set( 13, 20, 1 );
         tankShadow.rotation.x = - Math.PI / 2;
         tankShadow.position.y += 0.5;
@@ -237,7 +237,7 @@ class TankGfx {
 
     };
 
-    public destroy () {
+    public destroy () : void {
 
         this.mesh.playAnimation('death');
         LargeExplosionManager.showExplosion( this.tank.position );
@@ -245,13 +245,13 @@ class TankGfx {
 
     };
 
-    public makeTankDestroyed () {
+    public makeTankDestroyed () : void {
 
         this.mesh.setFrame( 'death', 2 );
 
     };
 
-    public dispose () {
+    public dispose () : void {
 
         // dispose tank traces
 
@@ -259,7 +259,7 @@ class TankGfx {
 
         // stop all audio
 
-        for ( var s in this.sounds ) {
+        for ( const s in this.sounds ) {
 
             if ( this.sounds[ s ] ) this.sounds[ s ].pause();
 

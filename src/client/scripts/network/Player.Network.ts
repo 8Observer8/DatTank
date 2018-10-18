@@ -3,12 +3,12 @@
  * DatTank Player network handler
 */
 
-import { Network } from "./../network/Core.Network";
-import { PlayerCore } from "./../core/Player.Core";
+import { Network } from '../network/Core.Network';
+import { PlayerCore } from '../core/Player.Core';
 
 //
 
-class PlayerNetwork {
+export class PlayerNetwork {
 
     private player: PlayerCore;
     private buffers = {};
@@ -17,7 +17,7 @@ class PlayerNetwork {
 
     private filter ( data: any ) : boolean {
 
-        var playerId = ( data.id ) ? data.id : data[0];
+        const playerId = ( data.id ) ? data.id : data[0];
         if ( this.player.id !== playerId ) return true;
 
         return false;
@@ -26,7 +26,7 @@ class PlayerNetwork {
 
     //
 
-    private setRespawn ( data: any ) {
+    private setRespawn ( data: any ) : void {
 
         if ( this.filter( data ) ) return;
 
@@ -34,21 +34,21 @@ class PlayerNetwork {
 
     };
 
-    private setLevel ( data: any ) {
+    private setLevel ( data: any ) : void {
 
         if ( this.filter( data ) ) return;
 
-        let bulletLevel = data[1];
-
+        const bulletLevel = data[1];
         this.player.newLevel( bulletLevel );
 
     };
 
     //
 
-    public statsUpdate ( statsId: number ) {
+    public statsUpdate ( statsId: number ) : void {
 
-        let buffer, bufferView;
+        let buffer;
+        let bufferView;
 
         if ( ! this.buffers['StatsUpdate'] ) {
 
@@ -56,8 +56,8 @@ class PlayerNetwork {
             bufferView = new Int16Array( buffer );
 
             this.buffers['StatsUpdate'] = {
-                buffer:     buffer,
-                view:       bufferView
+                buffer,
+                view:       bufferView,
             };
 
         } else {
@@ -76,9 +76,10 @@ class PlayerNetwork {
 
     };
 
-    public respawn ( tankId: number ) {
+    public respawn ( tankId: number ) : void {
 
-        let buffer, bufferView;
+        let buffer;
+        let bufferView;
 
         if ( ! this.buffers['Respawn'] ) {
 
@@ -86,8 +87,8 @@ class PlayerNetwork {
             bufferView = new Int16Array( buffer );
 
             this.buffers['Respawn'] = {
-                buffer:     buffer,
-                view:       bufferView
+                buffer,
+                view:       bufferView,
             };
 
         } else {
@@ -106,25 +107,25 @@ class PlayerNetwork {
 
     };
 
-    public sendChatMessage ( message: string ) {
+    public sendChatMessage ( message: string ) : void {
 
         Network.send( 'PlayerChatMessage', false, {
             playerId: this.player.id,
-            message: message
+            message,
         });
 
     };
 
     //
 
-    public dispose () {
+    public dispose () : void {
 
         Network.removeMessageListener( 'PlayerRespawn', this.setRespawn.bind( this ) );
         Network.removeMessageListener( 'PlayerNewLevel', this.setLevel.bind( this ) );
 
     };
 
-    public init ( player: PlayerCore ) {
+    public init ( player: PlayerCore ) : void {
 
         this.player = player;
 
@@ -141,7 +142,3 @@ class PlayerNetwork {
     };
 
 };
-
-//
-
-export { PlayerNetwork };

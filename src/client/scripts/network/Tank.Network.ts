@@ -3,13 +3,13 @@
  * DatTank Tank network handler
 */
 
-import * as OMath from "./../OMath/Core.OMath";
-import { Network } from "./../network/Core.Network";
-import { TankObject } from "./../objects/core/Tank.Object";
+import * as OMath from '../OMath/Core.OMath';
+import { Network } from '../network/Core.Network';
+import { TankObject } from '../objects/core/Tank.Object';
 
 //
 
-class TankNetwork {
+export class TankNetwork {
 
     private tank: TankObject;
     private buffers = {};
@@ -18,7 +18,7 @@ class TankNetwork {
 
     private filter ( data: any ) : boolean {
 
-        var tankId = ( data.id ) ? data.id : data[0];
+        const tankId = ( data.id ) ? data.id : data[0];
         if ( this.tank.id !== tankId ) return true;
         return false;
 
@@ -26,9 +26,10 @@ class TankNetwork {
 
     //
 
-    public startShooting () {
+    public startShooting () : void {
 
-        let buffer, bufferView;
+        let buffer;
+        let bufferView;
 
         if ( ! this.buffers['StartShooting'] ) {
 
@@ -36,8 +37,8 @@ class TankNetwork {
             bufferView = new Int16Array( buffer );
 
             this.buffers['StartShooting'] = {
-                buffer:     buffer,
-                view:       bufferView
+                buffer,
+                view:       bufferView,
             };
 
         } else {
@@ -57,9 +58,10 @@ class TankNetwork {
 
     };
 
-    public stopShooting () {
+    public stopShooting () : void {
 
-        let buffer, bufferView;
+        let buffer;
+        let bufferView;
 
         if ( ! this.buffers['stopShooting'] ) {
 
@@ -67,8 +69,8 @@ class TankNetwork {
             bufferView = new Int16Array( buffer );
 
             this.buffers['stopShooting'] = {
-                buffer:     buffer,
-                view:       bufferView
+                buffer,
+                view:       bufferView,
             };
 
         } else {
@@ -88,9 +90,10 @@ class TankNetwork {
 
     };
 
-    public rotateTop ( angle: number ) {
+    public rotateTop ( angle: number ) : void {
 
-        let buffer, bufferView;
+        let buffer;
+        let bufferView;
 
         if ( ! this.buffers['RotateTop'] ) {
 
@@ -98,8 +101,8 @@ class TankNetwork {
             bufferView = new Int16Array( buffer );
 
             this.buffers['RotateTop'] = {
-                buffer:     buffer,
-                view:       bufferView
+                buffer,
+                view:       bufferView,
             };
 
         } else {
@@ -118,9 +121,10 @@ class TankNetwork {
 
     };
 
-    public move ( moveX: number, moveZ: number ) {
+    public move ( moveX: number, moveZ: number ) : void {
 
-        let buffer, bufferView;
+        let buffer;
+        let bufferView;
 
         if ( ! this.buffers['Move'] ) {
 
@@ -128,8 +132,8 @@ class TankNetwork {
             bufferView = new Int16Array( buffer );
 
             this.buffers['Move'] = {
-                buffer:     buffer,
-                view:       bufferView
+                buffer,
+                view:       bufferView,
             };
 
         } else {
@@ -151,7 +155,7 @@ class TankNetwork {
 
     //
 
-    private setMove ( data: any ) {
+    private setMove ( data: any ) : void {
 
         if ( this.filter( data ) ) return;
 
@@ -159,7 +163,7 @@ class TankNetwork {
 
     };
 
-    private setFriendlyFire ( data: any ) {
+    private setFriendlyFire ( data: any ) : void {
 
         if ( this.filter( data ) ) return;
 
@@ -167,22 +171,22 @@ class TankNetwork {
 
     };
 
-    private setShoot ( data: any ) {
+    private setShoot ( data: any ) : void {
 
         if ( this.filter( data ) ) return;
 
-        let bulletId = data[1];
-        let x = data[2];
-        let y = 20;
-        let z = data[3];
-        let directionRotation = data[4] / 1000;
-        let overheating = data[5];
+        const bulletId = data[1];
+        const x = data[2];
+        const y = 20;
+        const z = data[3];
+        const directionRotation = data[4] / 1000;
+        const overheating = data[5];
 
         this.tank.makeShot( bulletId, new OMath.Vec3( x, y, z ), directionRotation, overheating );
 
     };
 
-    private setHealth ( data: any ) {
+    private setHealth ( data: any ) : void {
 
         if ( this.filter( data ) ) return;
 
@@ -190,7 +194,7 @@ class TankNetwork {
 
     };
 
-    private setAmmo ( data: any ) {
+    private setAmmo ( data: any ) : void {
 
         if ( this.filter( data ) ) return;
 
@@ -200,7 +204,7 @@ class TankNetwork {
 
     //
 
-    public dispose () {
+    public dispose () : void {
 
         Network.removeMessageListener( 'TankFriendlyFire', this.setFriendlyFire );
         Network.removeMessageListener( 'TankMove', this.setMove );
@@ -210,7 +214,7 @@ class TankNetwork {
 
     };
 
-    public init ( tank: TankObject ) {
+    public init ( tank: TankObject ) : void {
 
         this.tank = tank;
 
@@ -233,7 +237,3 @@ class TankNetwork {
     };
 
 };
-
-//
-
-export { TankNetwork };

@@ -3,75 +3,75 @@
  * DatTank Arena players manager
 */
 
-import { PlayerCore } from "./../core/Player.Core";
-import { Arena } from "./../core/Arena.Core";
+import { PlayerCore } from '../core/Player.Core';
+import { Arena } from '../core/Arena.Core';
 
 //
 
 class PlayerManagerCore {
 
     private static instance: PlayerManagerCore;
-    private players: Array<PlayerCore> = [];
+    private players: PlayerCore[] = [];
 
     //
 
-    public add ( player: PlayerCore ) {
+    public add ( player: PlayerCore ) : void {
 
         if ( player.id === Arena.meId ) {
 
             Arena.me = player;
-    
+
         }
-    
+
         player.init();
         this.players.push( player );
 
     };
 
-    public remove ( playerIds: Array<number> ) {
+    public remove ( playerIds: number[] ) : void {
 
-        var newPlayersList = [];
-    
-        for ( var i = 0, il = this.players.length; i < il; i ++ ) {
-    
+        const newPlayersList = [];
+
+        for ( let i = 0, il = this.players.length; i < il; i ++ ) {
+
             if ( playerIds.indexOf( this.players[ i ].id ) !== -1 ) {
-    
+
                 this.players[ i ].dispose();
                 continue;
-    
+
             }
-    
+
             newPlayersList.push( this.players[ i ] );
-    
+
         }
-    
+
         this.players = newPlayersList;
 
     };
 
-    public getById ( playerId: number ) {
+    public getById ( playerId: number ) : PlayerCore | null {
 
-        for ( var i = 0, il = this.players.length; i < il; i ++ ) {
+        for ( let i = 0, il = this.players.length; i < il; i ++ ) {
 
             if ( this.players[ i ].id === playerId ) {
-    
+
                 return this.players[ i ];
-    
+
             }
-    
+
         }
-    
+
         return null;
 
     };
 
-    public get () {
+    public get () : PlayerCore[] {
 
         return this.players;
 
     };
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
         for ( let i = 0, il = this.players.length; i < il; i ++ ) {
 
@@ -81,7 +81,7 @@ class PlayerManagerCore {
 
     };
 
-    public init () {
+    public init () : void {
 
         // todo
 

@@ -3,13 +3,13 @@
  * DatTank Tower network handler
 */
 
-import { Network } from "./../network/Core.Network";
-import { TowerObject } from "./../objects/core/Tower.Object";
-import * as OMath from "./../OMath/Core.OMath";
+import { Network } from '../network/Core.Network';
+import { TowerObject } from '../objects/core/Tower.Object';
+import * as OMath from '../OMath/Core.OMath';
 
 //
 
-class TowerNetwork {
+export class TowerNetwork {
 
     private tower: TowerObject;
 
@@ -17,7 +17,7 @@ class TowerNetwork {
 
     private filter ( data: any ) : boolean {
 
-        var towerId = ( data.id ) ? data.id : data[0];
+        const towerId = ( data.id ) ? data.id : data[0];
         if ( this.tower.id !== towerId ) return true;
 
         return false;
@@ -26,7 +26,7 @@ class TowerNetwork {
 
     //
 
-    private setTopRotation ( data: any ) {
+    private setTopRotation ( data: any ) : void {
 
         if ( this.filter( data ) ) return;
 
@@ -34,21 +34,21 @@ class TowerNetwork {
 
     };
 
-    private setShoot ( data: any ) {
+    private setShoot ( data: any ) : void {
 
         if ( this.filter( data ) ) return;
 
-        let bulletId = data[1];
-        let x = data[2];
-        let y = 20;
-        let z = data[3];
-        let directionRotation = data[4] / 1000;
+        const bulletId = data[1];
+        const x = data[2];
+        const y = 20;
+        const z = data[3];
+        const directionRotation = data[4] / 1000;
 
         this.tower.makeShot( bulletId, new OMath.Vec3( x, y, z ), directionRotation );
 
     };
 
-    private setHealth ( data: any ) {
+    private setHealth ( data: any ) : void {
 
         if ( this.filter( data ) ) return;
 
@@ -56,12 +56,12 @@ class TowerNetwork {
 
     };
 
-    private changeTeam ( data: any ) {
+    private changeTeam ( data: any ) : void {
 
         if ( this.filter( data ) ) return;
 
-        let newTeamId = data[1];
-        let killerId = data[2];
+        const newTeamId = data[1];
+        const killerId = data[2];
 
         this.tower.changeTeam( newTeamId, killerId );
 
@@ -69,7 +69,7 @@ class TowerNetwork {
 
     //
 
-    public dispose () {
+    public dispose () : void {
 
         Network.removeMessageListener( 'TowerRotateTop', this.setTopRotation );
         Network.removeMessageListener( 'TowerMakeShot', this.setShoot );
@@ -78,7 +78,7 @@ class TowerNetwork {
 
     };
 
-    public init ( tower: TowerObject ) {
+    public init ( tower: TowerObject ) : void {
 
         this.tower = tower;
 
@@ -99,7 +99,3 @@ class TowerNetwork {
     };
 
 };
-
-//
-
-export { TowerNetwork };

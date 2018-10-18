@@ -3,35 +3,35 @@
  * DatTank global Game service [api requests]
 */
 
-class GameService {
+export class GameService {
 
-    public getGarageConfig ( callback: ( objects: any[] ) => void ) {
+    public getGarageConfig ( callback: ( objects: any[] ) => void ) : void {
 
-        $.get('/api/garage/getObjects', function ( response ) {
+        $.get('/api/garage/getObjects', ( response ) => {
 
-            let objects = response;
+            const objects = response;
             return callback( objects );
 
         });
 
     };
 
-    public getFreeArena ( callback: ( data: any ) => void ) {
+    public getFreeArena ( callback: ( data: any ) => void ) : void {
 
-        $.get('/api/getFreeArena', function ( response ) {
+        $.get('/api/getFreeArena', ( response ) => {
 
-            let serverData = response;
+            const serverData = response;
             return callback( serverData );
 
         });
 
     };
 
-    public getTopPlayers ( callback: ( players: any[] ) => void ) {
+    public getTopPlayers ( callback: ( players: any[] ) => void ) : void {
 
-        $.get('/api/getTopPlayers', function ( response ) {
+        $.get('/api/getTopPlayers', ( response ) => {
 
-            let players = response;
+            const players = response;
             return callback( players );
 
         });
@@ -39,7 +39,3 @@ class GameService {
     };
 
 };
-
-//
-
-export { GameService };

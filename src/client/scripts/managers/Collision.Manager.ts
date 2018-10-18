@@ -14,7 +14,7 @@ class CollisionManagerCore {
 
     //
 
-    public addObject ( object: any, type: string, isDynamic: boolean ) {
+    public addObject ( object: any, type: string, isDynamic: boolean ) : void {
 
         this.worker.postMessage({ type: 'addObject', object: {
                 id: object.id,
@@ -22,19 +22,19 @@ class CollisionManagerCore {
                 radius: object.radius,
                 size: { x: object.size.x, y: object.size.y, z: object.size.z },
                 position: { x: object.position.x, y: object.position.y, z: object.position.z },
-                rotation: object.rotation
+                rotation: object.rotation,
             },
             shapeType: type,
-            isDynamic: isDynamic
+            isDynamic,
         });
 
         this.objects.push( object );
 
     };
 
-    public removeObject ( object: any ) {
+    public removeObject ( object: any ) : void {
 
-        let newObjectList = [];
+        const newObjectList = [];
 
         for ( let i = 0, il = this.objects.length; i < il; i ++ ) {
 
@@ -48,12 +48,12 @@ class CollisionManagerCore {
 
     };
 
-    public update ( time: number, delta: number ) {
+    public update ( time: number, delta: number ) : void {
 
-        let objects = {};
+        const objects = {};
         for ( let i = 0, il = this.objects.length; i < il; i ++ ) {
 
-            let object = this.objects[ i ];
+            const object = this.objects[ i ];
             if ( object.type !== 'Tank' ) continue;
 
             objects[ object.type + '-' + object.id ] = {
@@ -61,7 +61,7 @@ class CollisionManagerCore {
                 health: object.health,
                 rotation: object.rotation,
                 moveDirection: { x: object.moveDirection.x, y: object.moveDirection.y },
-                posCorrection: { x: object.positionCorrectionDelta.x, y: object.positionCorrectionDelta.y, z: object.positionCorrectionDelta.z }
+                posCorrection: { x: object.positionCorrectionDelta.x, y: object.positionCorrectionDelta.y, z: object.positionCorrectionDelta.z },
             };
 
             object.positionCorrection.x -= object.positionCorrectionDelta.x;
@@ -70,11 +70,11 @@ class CollisionManagerCore {
 
         }
 
-        this.worker.postMessage({ type: 'update', objects: objects });
+        this.worker.postMessage({ type: 'update', objects });
 
     };
 
-    private workerMessage ( event: any ) {
+    private workerMessage ( event: any ) : void {
 
         switch ( event.data.type ) {
 
@@ -85,13 +85,13 @@ class CollisionManagerCore {
 
             case 'update':
 
-                let objects = event.data.objects;
+                const objects = event.data.objects;
                 this.lastUpdateTime = this.lastUpdateTime || Date.now();
-                let delta = Date.now() - this.lastUpdateTime;
+                const delta = Date.now() - this.lastUpdateTime;
 
                 for ( let i = 0, il = objects.length; i < il; i ++ ) {
 
-                    let objParent = this.getObject( objects[ i ].id, objects[ i ].type );
+                    const objParent = this.getObject( objects[ i ].id, objects[ i ].type );
                     if ( ! objParent ) continue;
 
                     objParent.acceleration = objects[ i ].acceleration;
@@ -108,7 +108,7 @@ class CollisionManagerCore {
 
     };
 
-    private getObject ( id: number, type: string ) {
+    private getObject ( id: number, type: string ) : any {
 
         for ( let i = 0, il = this.objects.length; i < il; i ++ ) {
 
@@ -124,7 +124,7 @@ class CollisionManagerCore {
 
     };
 
-    public init () {
+    public init () : void {
 
         this.worker = new Worker('/scripts/workers/Collision.Worker.js');
         this.worker.onmessage = this.workerMessage.bind( this );
