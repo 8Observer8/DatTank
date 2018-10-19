@@ -206,13 +206,14 @@ export class Garage {
 
     private showCurrentTankInRightMenu () : void {
 
-        const selected = this.params.selected;
-        if ( ! this.GarageConfig.tanks[ selected.tank ] ) return;
-        const cannonId = selected.cannon || this.GarageConfig.tanks[ selected.tank ].default.cannon;
-        const armorId = selected.armor || this.GarageConfig.tanks[ selected.tank ].default.armor;
-        const engineId = selected.engine || this.GarageConfig.tanks[ selected.tank ].default.engine;
+        const selectedTankId = this.params.selected;
 
-        const tank = this.GarageConfig.tanks[ selected.tank ];
+        if ( ! this.GarageConfig.tanks[ selectedTankId ] ) return;
+        const cannonId = this.params.tanks[ selectedTankId ].cannon;
+        const armorId = this.params.tanks[ selectedTankId ].armor;
+        const engineId = this.params.tanks[ selectedTankId ].engine;
+
+        const tank = this.GarageConfig.tanks[ selectedTankId ];
         const cannon = this.GarageConfig.cannons[ cannonId ];
         const armor = this.GarageConfig.armors[ armorId ];
         const engine = this.GarageConfig.engines[ engineId ];
