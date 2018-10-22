@@ -13,7 +13,6 @@ export class Garage {
 
     public isOpened: boolean = false;
     private isBuyPopupOpened: boolean = false;
-    private currentTank: string;
     private GarageConfig: any;
 
     public scene: GarageScene = new GarageScene();
@@ -118,8 +117,11 @@ export class Garage {
 
         $('.garage .buy-item-popup-wrapper .buy-btn').click( () => {
 
-            Game.gameService.buyObject( category, item.id, () => {
+            Game.gameService.buyObject( category, item.id, ( params ) => {
 
+                this.params = params;
+                localStorage.setItem( 'Selected' + item.type, item.id );
+                this.setupMenu();
                 SoundManager.playSound('MenuBuy');
                 this.closeBuyPopup();
 
@@ -269,11 +271,12 @@ export class Garage {
 
         //
 
-        const selectedTankId = this.params.selected;
+        const selectedTankId = localStorage.getItem('SelectedTank') || this.params.selected;
         const selectedTank = this.params.tanks[ selectedTankId ];
-        const selectedCannonId = selectedTank.cannon;
-        const selectedArmorId = selectedTank.armor;
-        const selectedEngineId = selectedTank.engine;
+
+        const selectedCannonId = localStorage.getItem('SelectedCannon') || selectedTank.cannon;
+        const selectedArmorId = localStorage.getItem('SelectedArmor') || selectedTank.armor;
+        const selectedEngineId = localStorage.getItem('SelectedEngine') || selectedTank.engine;
         const tankParams = this.GarageConfig.tanks[ selectedTankId ];
 
         // clear lists
@@ -291,7 +294,7 @@ export class Garage {
         for ( const tankId in this.GarageConfig.tanks ) {
 
             const tank = this.GarageConfig.tanks[ tankId ];
-            const isSelected = ( tankId === this.params.selected );
+            const isSelected = ( tankId === selectedTankId );
             const isOwn = ( this.params.tanks[ tankId ] !== undefined );
 
             const item = '<div item-id="' + tankId + '" class="item' + ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) + '"><div class="obj-title">' + tank.title + '</div><div class="price"><div class="ico"></div><span class="value">' + tank.price + '</span></div><img class="img" src="/resources/img/garage/tanks/' + tankId + '.png" /></div>';
@@ -473,23 +476,19 @@ export class Garage {
 
         //
 
-        const tankId = 'IS2001';
-        this.currentTank = tankId;
-        this.scene.selectModel( tankId );
+        // const tankId = 'IS2';
+        // this.scene.selectModel( tankId );
 
         //
-
-        this.showCurrentTankInRightMenu();
-
-        //
-
-        localStorage.setItem( 'currentTank', this.currentTank );
 
         if ( event && event.currentTarget ) {
 
             this.params.selected = $( event.currentTarget ).attr('item-id');
+            localStorage.setItem( 'SelectedTank', this.params.selected );
 
         }
+
+        this.showCurrentTankInRightMenu();
 
     };
 
@@ -507,12 +506,14 @@ export class Garage {
         if ( $( event.currentTarget ).hasClass('notOwn') ) {
 
             this.openBuyPopup( 'cannons', cannon );
-            return;
+
+        } else {
+
+            $('.garage .bottom-block .tab.cannons .item').removeClass('active');
+            $( event.currentTarget ).addClass('active');
+            localStorage.setItem( 'SelectedCannon', cannon.id );
 
         }
-
-        $('.garage .bottom-block .tab.cannons .item').removeClass('active');
-        $( event.currentTarget ).addClass('active');
 
     };
 
@@ -530,12 +531,14 @@ export class Garage {
         if ( $( event.currentTarget ).hasClass('notOwn') ) {
 
             this.openBuyPopup( 'engines', engine );
-            return;
+
+        } else {
+
+            $('.garage .bottom-block .tab.engines .item').removeClass('active');
+            $( event.currentTarget ).addClass('active');
+            localStorage.setItem( 'SelectedEngine', engine.id );
 
         }
-
-        $('.garage .bottom-block .tab.engines .item').removeClass('active');
-        $( event.currentTarget ).addClass('active');
 
     };
 
@@ -553,12 +556,14 @@ export class Garage {
         if ( $( event.currentTarget ).hasClass('notOwn') ) {
 
             this.openBuyPopup( 'armors', armor );
-            return;
+
+        } else {
+
+            $('.garage .bottom-block .tab.armors .item').removeClass('active');
+            $( event.currentTarget ).addClass('active');
+            localStorage.setItem( 'SelectedArmor', armor.id );
 
         }
-
-        $('.garage .bottom-block .tab.armors .item').removeClass('active');
-        $( event.currentTarget ).addClass('active');
 
     };
 

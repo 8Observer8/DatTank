@@ -8,6 +8,7 @@ var GarageConfig = {
     tanks: {
 
         'IS2001': {
+            type:           'Tank',
             id:             'IS2001',
             title:          'IS 2001',
             price:          500,
@@ -26,6 +27,7 @@ var GarageConfig = {
         },
 
         'TigerS8': {
+            type:           'Tank',
             id:             'TigerS8',
             title:          'Tiger S8',
             price:          1500,
@@ -44,6 +46,7 @@ var GarageConfig = {
         },
 
         'OrbitT32s': {
+            type:           'Tank',
             id:             'OrbitT32s',
             title:          'Orbit T32s',
             price:          2800,
@@ -62,6 +65,7 @@ var GarageConfig = {
         },
 
         'MG813': {
+            type:           'Tank',
             id:             'MG813',
             title:          'MG 813',
             price:          5000,
@@ -80,6 +84,7 @@ var GarageConfig = {
         },
 
         'DTEK72': {
+            type:           'Tank',
             id:             'DTEK72',
             title:          'DTEK 72',
             price:          8700,
@@ -98,6 +103,7 @@ var GarageConfig = {
         },
 
         'RiperX3': {
+            type:           'Tank',
             id:             'RiperX3',
             title:          'Riper X3',
             price:          12000,
@@ -122,6 +128,7 @@ var GarageConfig = {
         // Plasma cannons
 
         'Plasma-g1': {
+            type:           'Cannon',
             id:             'Plasma-g1',
             title:          'Plasma g1',
             description:    '',
@@ -136,6 +143,7 @@ var GarageConfig = {
         },
 
         'Plasma-g2': {
+            type:           'Cannon',
             id:             'Plasma-g2',
             title:          'Plasma g2',
             description:    '',
@@ -150,6 +158,7 @@ var GarageConfig = {
         },
 
         'Plasma-double': {
+            type:           'Cannon',
             id:             'Plasma-double',
             title:          'Plasma double',
             description:    '',
@@ -164,6 +173,7 @@ var GarageConfig = {
         },
 
         'Plasma-triple': {
+            type:           'Cannon',
             id:             'Plasma-triple',
             title:          'Plasma triple',
             description:    '',
@@ -178,6 +188,7 @@ var GarageConfig = {
         },
 
         'Plasma-zero': {
+            type:           'Cannon',
             id:             'Plasma-zero',
             title:          'Plasma zero',
             description:    '',
@@ -194,6 +205,7 @@ var GarageConfig = {
         // Laser cannons
 
         'Razer-v1': {
+            type:           'Cannon',
             id:             'Razer-v1',
             title:          'Razer v1',
             description:    '',
@@ -208,6 +220,7 @@ var GarageConfig = {
         },
 
         'Razer-v2': {
+            type:           'Cannon',
             id:             'Razer-v2',
             title:          'Razer v2',
             description:    '',
@@ -222,6 +235,7 @@ var GarageConfig = {
         },
 
         'Razer-double': {
+            type:           'Cannon',
             id:             'Razer-double',
             title:          'Razer double',
             description:    '',
@@ -236,6 +250,7 @@ var GarageConfig = {
         },
 
         'Razer-quadro': {
+            type:           'Cannon',
             id:             'Razer-quadro',
             title:          'Razer quadro',
             description:    '',
@@ -252,6 +267,7 @@ var GarageConfig = {
         // Magnet cannons
 
         'Mag87': {
+            type:           'Cannon',
             id:             'Mag87',
             title:          'Mag 87',
             description:    '',
@@ -266,6 +282,7 @@ var GarageConfig = {
         },
 
         'Mag87s': {
+            type:           'Cannon',
             id:             'Mag87s',
             title:          'Mag 87S',
             description:    '',
@@ -280,6 +297,7 @@ var GarageConfig = {
         },
 
         'Mag87s-turbo': {
+            type:           'Cannon',
             id:             'Mag87s-turbo',
             title:          'Mag 87s turbo version',
             description:    '',
@@ -298,6 +316,7 @@ var GarageConfig = {
     engines: {
 
         'KX-v8': {
+            type:           'Engine',
             id:             'KX-v8',
             title:          'KX v8',
             description:    '',
@@ -308,6 +327,7 @@ var GarageConfig = {
         },
 
         'ZEL-72': {
+            type:           'Engine',
             id:             'ZEL-72',
             title:          'ZEL 72',
             description:    '',
@@ -318,6 +338,7 @@ var GarageConfig = {
         },
 
         'ZEL-72s': {
+            type:           'Engine',
             id:             'ZEL-72s',
             title:          'ZEL 72s',
             description:    '',
@@ -328,6 +349,7 @@ var GarageConfig = {
         },
 
         'KTZ-r1': {
+            type:           'Engine',
             id:             'KTZ-r1',
             title:          'KTZ r1',
             description:    '',
@@ -338,6 +360,7 @@ var GarageConfig = {
         },
 
         'KTZ-r2': {
+            type:           'Engine',
             id:             'KTZ-r2',
             title:          'KTZ r2',
             description:    '',
@@ -348,6 +371,7 @@ var GarageConfig = {
         },
 
         'VAX-32': {
+            type:           'Engine',
             id:             'VAX-32',
             title:          'VAX 32',
             description:    '',
@@ -358,6 +382,7 @@ var GarageConfig = {
         },
 
         'VAX-32s': {
+            type:           'Engine',
             id:             'VAX-32s',
             title:          'VAX 32s',
             description:    '',
@@ -368,6 +393,7 @@ var GarageConfig = {
         },
 
         'VAX-32v2': {
+            type:           'Engine',
             id:             'VAX-32v2',
             title:          'VAX 32v2',
             description:    '',
@@ -382,6 +408,7 @@ var GarageConfig = {
     armors: {
 
         'X-shield': {
+            type:           'Armor',
             id:             'X-shield',
             title:          'X Shield',
             description:    '',
@@ -391,6 +418,7 @@ var GarageConfig = {
         },
 
         'KS-shield': {
+            type:           'Armor',
             id:             'KS-shield',
             title:          'KS Shield',
             description:    '',
@@ -400,6 +428,7 @@ var GarageConfig = {
         },
 
         'KS200-shield': {
+            type:           'Armor',
             id:             'KS200-shield',
             title:          'KS200 Shield',
             description:    '',
@@ -409,6 +438,7 @@ var GarageConfig = {
         },
 
         'Z8-shield': {
+            type:           'Armor',
             id:             'Z8-shield',
             title:          'Z8 Shield',
             description:    '',
@@ -418,6 +448,7 @@ var GarageConfig = {
         },
 
         'MG-defence': {
+            type:           'Armor',
             id:             'MG-defence',
             title:          'MG Defence',
             description:    '',
@@ -427,6 +458,7 @@ var GarageConfig = {
         },
 
         'MG-defence-v2': {
+            type:           'Armor',
             id:             'MG-defence-v2',
             title:          'MG Defence v2',
             description:    '',
@@ -436,6 +468,7 @@ var GarageConfig = {
         },
 
         'P12-shield': {
+            type:           'Armor',
             id:             'P12-shield',
             title:          'P12 shield',
             description:    '',
@@ -445,6 +478,7 @@ var GarageConfig = {
         },
 
         'P12.5-shield': {
+            type:           'Armor',
             id:             'P12.5-shield',
             title:          'P12.5 shield',
             description:    '',
@@ -454,6 +488,7 @@ var GarageConfig = {
         },
 
         'T215-armor': {
+            type:           'Armor',
             id:             'T215-armor',
             title:          'T215 armor',
             description:    '',
