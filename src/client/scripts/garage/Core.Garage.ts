@@ -116,12 +116,12 @@ export class Garage {
 
         });
 
-        $('.garage .buy-item-popup-wrapper .btn').click( () => {
+        $('.garage .buy-item-popup-wrapper .buy-btn').click( () => {
 
-            SoundManager.playSound('ElementSelect');
             Game.gameService.buyObject( category, item.id, () => {
 
-                // todo
+                SoundManager.playSound('MenuBuy');
+                this.closeBuyPopup();
 
             });
 
@@ -141,39 +141,53 @@ export class Garage {
 
     private updateRightMenu ( category: string, itemId: string ) : void {
 
-        const cannonId = ( this.params.tanks[ itemId ] || this.GarageConfig.tanks[ itemId ].default ).cannon;
-        const armorId = ( this.params.tanks[ itemId ] || this.GarageConfig.tanks[ itemId ].default ).armor;
-        const engineId = ( this.params.tanks[ itemId ] || this.GarageConfig.tanks[ itemId ].default ).engine;
-
-        const cannon = this.GarageConfig.cannons[ cannonId ];
-        const armor = this.GarageConfig.armors[ armorId ];
-        const engine = this.GarageConfig.engines[ engineId ];
+        let title = this.GarageConfig[ category ][ itemId ].title;
         const description = this.GarageConfig[ category ][ itemId ].description;
 
-        let title = this.GarageConfig[ category ][ itemId ].title;
-
         //
+
+        let cannon;
+        let engine;
+        let armor;
 
         switch ( category ) {
 
             case 'tanks':
 
+                const cannonId = ( this.params.tanks[ itemId ] || this.GarageConfig.tanks[ itemId ].default ).cannon;
+                cannon = this.GarageConfig.cannons[ cannonId ];
+
+                const armorId = ( this.params.tanks[ itemId ] || this.GarageConfig.tanks[ itemId ].default ).armor;
+                armor = this.GarageConfig.armors[ armorId ];
+
+                const engineId = ( this.params.tanks[ itemId ] || this.GarageConfig.tanks[ itemId ].default ).engine;
+                engine = this.GarageConfig.engines[ engineId ];
+
                 title = 'Tank "' + title + '"';
+                $('.garage .right-block .cannon-short-desc').html( cannon.shortDesc );
+                $('.garage .right-block .armor-short-desc').html( armor.shortDesc );
+                $('.garage .right-block .engine-short-desc').html( engine.shortDesc );
                 break;
 
             case 'cannons':
 
                 title = 'Cannon "' + title + '"';
+                cannon = this.GarageConfig.cannons[ itemId ];
+                $('.garage .right-block .cannon-short-desc').html( cannon.shortDesc );
                 break;
 
             case 'engines':
 
                 title = 'Engine "' + title + '"';
+                engine = this.GarageConfig.engines[ itemId ];
+                $('.garage .right-block .engine-short-desc').html( engine.shortDesc );
                 break;
 
             case 'armors':
 
                 title = 'Armor "' + title + '"';
+                armor = this.GarageConfig.armors[ itemId ];
+                $('.garage .right-block .armor-short-desc').html( armor.shortDesc );
                 break;
 
             case 'textures':
@@ -185,10 +199,6 @@ export class Garage {
 
         $('.garage .right-block .item-title').html( title );
         $('.garage .right-block .item-description .main-text').html( description );
-
-        $('.garage .right-block .cannon-short-desc').html( cannon.shortDesc );
-        $('.garage .right-block .armor-short-desc').html( armor.shortDesc );
-        $('.garage .right-block .engine-short-desc').html( engine.shortDesc );
 
         if ( category === 'tanks' ) {
 

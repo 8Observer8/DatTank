@@ -76,7 +76,7 @@ export class PlayerNetwork {
 
     };
 
-    public respawn ( tankId: number ) : void {
+    public respawn ( tankId?: number ) : void {
 
         let buffer;
         let bufferView;
@@ -101,7 +101,7 @@ export class PlayerNetwork {
         //
 
         bufferView[1] = this.player.id;
-        bufferView[2] = tankId;
+        bufferView[2] = tankId || 0;
 
         Network.send( 'PlayerRespawn', buffer, bufferView );
 

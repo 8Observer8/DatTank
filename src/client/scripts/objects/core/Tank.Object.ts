@@ -15,6 +15,7 @@ import { TankGfx } from '../../graphics/objects/Tank.Gfx';
 import { HealthChangeLabelManager } from '../../managers/HealthChangeLabel.Manager';
 import { BulletManager } from '../../managers/Bullet.Manager';
 import { CollisionManager } from '../../managers/Collision.Manager';
+import { GfxCore } from '../../graphics/Core.Gfx';
 
 //
 
@@ -322,55 +323,4 @@ export class TankObject {
 
     };
 
-};
-
-// get all tanks and put into 'TanksList' object
-
-import { IS2Tank } from '../../objects/tanks/IS2.Tank';
-import { T29Tank } from '../../objects/tanks/T29.Tank';
-import { T44Tank } from '../../objects/tanks/T44.Tank';
-import { T54Tank } from '../../objects/tanks/T54.Tank';
-import { GfxCore } from '../../graphics/Core.Gfx';
-
-export const TankList = {
-    IS2:    IS2Tank,
-    T29:    T29Tank,
-    T44:    T44Tank,
-    T54:    T54Tank,
-    getById: ( tankId: number ) => {
-
-        for ( const item in TankList ) {
-
-            if ( TankList[ item ].tid !== undefined ) {
-
-                if ( TankList[ item ].tid === tankId ) {
-
-                    return item;
-
-                }
-
-            }
-
-        }
-
-        return null;
-
-    },
-    getList: () => {
-
-        const list = [];
-
-        for ( const item in TankList ) {
-
-            if ( TankList[ item ].tid !== undefined ) {
-
-                list.push( item );
-
-            }
-
-        }
-
-        return list;
-
-    },
 };

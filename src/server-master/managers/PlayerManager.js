@@ -160,6 +160,8 @@ PlayerManager.prototype.buyObject = function ( pid, objectType, objectId, callba
         if ( player.coins < object.price ) return callback( false, 'not enough coins' );
         if ( player.params[ objectType ][ objectId ] ) return callback( false, 'you already have this object' );
 
+        player.coins -= object.price;
+
         //
 
         if ( objectType === 'tanks' ) {
@@ -181,7 +183,9 @@ PlayerManager.prototype.buyObject = function ( pid, objectType, objectId, callba
 
         player.save( function () {
 
-            return callback( true, '' );
+            return callback( true, {
+                params:     player.params
+            });
 
         });
 

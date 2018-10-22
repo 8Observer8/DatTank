@@ -188,3 +188,4 @@ window['game']['towermanager'] = TowerManager;
 window['game']['decorationmanager'] = DecorationManager;
 window['game']['resourcemanager'] = ResourceManager;
 window['game']['controlsmanager'] = ControlsManager;
+window['game']['soundmanager'] = SoundManager;

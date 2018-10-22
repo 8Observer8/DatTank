@@ -22,7 +22,7 @@ var GarageConfig = {
             speedCoef:      1,
             cannonCoef:     1,
             armorCoef:      1,
-            description:    '<b>IS2001 tank</b> - default tank of Russian army in WW VII (2139 year) against other sides on first colonized planet (Mars).<br><br>By default equipped with plasma cannon of first generartion, turbo diesel engine and tesla induction generator.<br><br>Easy in movement control, quite fast, powefull cannon, but gets overheated quite fast.<br><br>'
+            description:    '<b>IS2001 tank</b> - default tank of Russian army in WW VII (2139 year) against other sides on first colonized planet (Mars).<br><br>By default equipped with plasma cannon of first generation, turbo diesel engine and tesla induction generator.<br><br>Easy in movement control, quite fast, powerful cannon, but gets overheated quite fast.<br><br>'
         },
 
         'TigerS8': {
@@ -40,16 +40,16 @@ var GarageConfig = {
             speedCoef:      1,
             cannonCoef:     1,
             armorCoef:      1,
-            description:    '<b>Tiger S8 tank</b> - default tank of Germany army in Venus Planet War III (2140 year) against China.<br><br>By default equipped with plasma cannon of third generation, double turbo diesel engine with generator.<br><br>Is faster and has more powerfull cannon than IS2001, but has problem with overheating.<br><br>'
+            description:    '<b>Tiger S8 tank</b> - default tank of Germany army in Venus Planet War III (2140 year) against China.<br><br>By default equipped with plasma cannon of third generation, double turbo diesel engine with generator.<br><br>Is faster and has more powerful cannon than IS2001, but has problem with overheating.<br><br>'
         },
 
         'OrbitT32s': {
             id:             'OrbitT32s',
             title:          'Orbit T32s',
             price:          2800,
-            cannons:        [ 'Plasma-double', 'Plasma-tripple', 'Razer-v2', 'Razer-double' ],
+            cannons:        [ 'Plasma-double', 'Plasma-triple', 'Razer-v2', 'Razer-double' ],
             engines:        [ 'KTZ-r2', 'VAX-32', 'VAX-32s' ],
-            armors:         [ 'KS200-shield', 'Z8-shield', 'MG-deffence' ],
+            armors:         [ 'KS200-shield', 'Z8-shield', 'MG-defence' ],
             default:        {
                 cannon:     'Razer-v2',
                 engine:     'VAX-32',
@@ -65,7 +65,7 @@ var GarageConfig = {
             id:             'MG813',
             title:          'MG 813',
             price:          5000,
-            cannons:        [ 'Plasma-tripple', 'Razer-double', 'Razer-quadro', 'Mag87' ],
+            cannons:        [ 'Plasma-triple', 'Razer-double', 'Razer-quadro', 'Mag87' ],
             engines:        [ 'ZEL-72s', 'KTZ-r2', 'VAX-32s' ],
             armors:         [ 'X-shield', 'KS-shield', 'z8-shield' ],
             default:        {
@@ -76,25 +76,25 @@ var GarageConfig = {
             speedCoef:      1,
             cannonCoef:     1,
             armorCoef:      1,
-            description:    '<b>MG 813 tank</b> - popular tank from all sides in Earth Asia War II (2141 year).<br><br>By default equipped with double laser cannon, nice engine improved with galuim generator core, but has light less secure X-Shield armor.<br><br>'
+            description:    '<b>MG 813 tank</b> - popular tank from all sides in Earth Asia War II (2141 year).<br><br>By default equipped with double laser cannon, nice engine improved with Gallium generator core, but has light less secure X-Shield armor.<br><br>'
         },
 
         'DTEK72': {
             id:             'DTEK72',
             title:          'DTEK 72',
             price:          8700,
-            cannons:        [ 'Plasma-tripple', 'Razer-quadro', 'Mag87', 'Mag87s' ],
+            cannons:        [ 'Plasma-triple', 'Razer-quadro', 'Mag87', 'Mag87s' ],
             engines:        [ 'KTZ-r1', 'KTZ-r2', 'VAX-32', 'VAX-32s' ],
-            armors:         [ 'Z8-shield', 'MG-deffence', 'MG-deffence-v2', 'P12-shield' ],
+            armors:         [ 'Z8-shield', 'MG-defence', 'MG-defence-v2', 'P12-shield' ],
             default:        {
-                cannon:     'Plasma-tripple',
+                cannon:     'Plasma-triple',
                 engine:     'KTZ-r1',
                 armor:      'Z8-shield'
             },
             speedCoef:      1,
             cannonCoef:     1,
             armorCoef:      1,
-            description:    '<b>DTEK 72 tank</b> - rare Ukrainian tank designed in private company to defend oil wells from East Eurasian groups after Russia collapse in 2141 year.<br><br>By default equipped with tripple plasma cannon, plutonium engine with partly organic generator and 80mm uranium plates armor sys.<br><br>'
+            description:    '<b>DTEK 72 tank</b> - rare Ukrainian tank designed in private company to defend oil wells from East Eurasian groups after Russia collapse in 2141 year.<br><br>By default equipped with triple plasma cannon, plutonium engine with partly organic generator and 80mm uranium plates armor sys.<br><br>'
         },
 
         'RiperX3': {
@@ -103,16 +103,16 @@ var GarageConfig = {
             price:          12000,
             cannons:        [ 'Plasma-zero', 'Razer-quadro', 'Mag87', 'Mag87s', 'Plasma-zero' ],
             engines:        [ 'KTZ-r2', 'VAX-32s', 'VAX-32v2' ],
-            armors:         [ 'MG-deffence', 'MG-deffence-v2', 'T215'],
+            armors:         [ 'MG-defence', 'MG-defence-v2', 'T215'],
             default:        {
                 cannon:     'Plasma-zero',
                 engine:     'KTZ-r2',
-                armor:      'MG-deffence'
+                armor:      'MG-defence'
             },
             speedCoef:      1,
             cannonCoef:     1,
             armorCoef:      1,
-            description:    '<b>Riper X3</b> - very powerfull elite tank of United Korean Forces in Second War for Moon "Space Harbor" (2143 year).<br><br>By default equipped with special plasma cannon which solved problem of overheating, but this costs lots of energy consumption and lower movement speed and has new light graphene-type armor.<br><br>'
+            description:    '<b>Riper X3</b> - very powerful elite tank of United Korean Forces in Second War for Moon "Space Harbor" (2143 year).<br><br>By default equipped with special plasma cannon which solved problem of overheating, but this costs lots of energy consumption and lower movement speed and has new light graphene-type armor.<br><br>'
         }
 
     },
@@ -163,11 +163,11 @@ var GarageConfig = {
             reload:         1
         },
 
-        'Plasma-tripple': {
-            id:             'Plasma-tripple',
-            title:          'Plasma tripple',
+        'Plasma-triple': {
+            id:             'Plasma-triple',
+            title:          'Plasma triple',
             description:    '',
-            shortDesc:      'Plasma cannon with tripple oscillator.',
+            shortDesc:      'Plasma cannon with triple oscillator.',
             price:          1200,
             damage:         1,
             antiArmor:      1,
@@ -321,7 +321,7 @@ var GarageConfig = {
             id:             'ZEL-72s',
             title:          'ZEL 72s',
             description:    '',
-            shortDesc:      'Double turbo diesel 2.1k HP engine with tesla induction generator with galium winding.',
+            shortDesc:      'Double turbo diesel 2.1k HP engine with tesla induction generator with Gallium winding.',
             price:          1300,
             power:          10000,
             maxSpeed:       100
@@ -351,7 +351,7 @@ var GarageConfig = {
             id:             'VAX-32',
             title:          'VAX 32',
             description:    '',
-            shortDesc:      'Polonium ARK 3.7k HP engine with generator and litium batteries.',
+            shortDesc:      'Polonium ARK 3.7k HP engine with generator and Lithium batteries.',
             price:          3000,
             power:          10000,
             maxSpeed:       100
@@ -394,7 +394,7 @@ var GarageConfig = {
             id:             'KS-shield',
             title:          'KS Shield',
             description:    '',
-            shortDesc:      '20mm irridium armor.',
+            shortDesc:      '20mm Iridium armor.',
             price:          800,
             armor:          100
         },
@@ -403,7 +403,7 @@ var GarageConfig = {
             id:             'KS200-shield',
             title:          'KS200 Shield',
             description:    '',
-            shortDesc:      '35mm irridium armor with active barrier.',
+            shortDesc:      '35mm Iridium armor with active barrier.',
             price:          1400,
             armor:          100
         },
@@ -417,20 +417,20 @@ var GarageConfig = {
             armor:          100
         },
 
-        'MG-deffence': {
-            id:             'MG-deffence',
-            title:          'MG Deffence',
+        'MG-defence': {
+            id:             'MG-defence',
+            title:          'MG Defence',
             description:    '',
             shortDesc:      '3mm graphene nanotubes plates armor.',
             price:          2400,
             armor:          100
         },
 
-        'MG-deffence-v2': {
-            id:             'MG-deffence-v2',
-            title:          'MG Deffence v2',
+        'MG-defence-v2': {
+            id:             'MG-defence-v2',
+            title:          'MG Defence v2',
             description:    '',
-            shortDesc:      '5mm graphene nanotues plates with adamantium strings.',
+            shortDesc:      '5mm graphene nanotubes plates with Adamantium strings.',
             price:          3500,
             armor:          100
         },
@@ -439,7 +439,7 @@ var GarageConfig = {
             id:             'P12-shield',
             title:          'P12 shield',
             description:    '',
-            shortDesc:      '5mm graphene nanotues plates with adamantium strings.',
+            shortDesc:      '5mm graphene nanotubes plates with Adamantium strings.',
             price:          5000,
             armor:          100
         },
@@ -448,7 +448,7 @@ var GarageConfig = {
             id:             'P12.5-shield',
             title:          'P12.5 shield',
             description:    '',
-            shortDesc:      '5mm graphene nanotues plates with adamantium strings.',
+            shortDesc:      '5mm graphene nanotubes plates with Adamantium strings.',
             price:          8000,
             armor:          100
         },
@@ -457,7 +457,7 @@ var GarageConfig = {
             id:             'T215-armor',
             title:          'T215 armor',
             description:    '',
-            shortDesc:      '5mm graphene nanotues plates with adamantium strings.',
+            shortDesc:      '5mm graphene nanotubes plates with adamantium strings.',
             price:          15000,
             armor:          100
         }

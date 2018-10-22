@@ -344,7 +344,7 @@ export class UIInGameModule {
     public showKillSerie ( playerId: number, playerLogin: string, playerTeamId: number, serieLength: number ) : void {
 
         const team = TeamManager.getById( playerTeamId );
-        const serieNames = { 2: 'DOUBLE-KILL', 3: 'TRIPPLE-KILL', 10: 'MONSTER-KILL' };
+        const serieNames = { 2: 'DOUBLE-KILL', 3: 'TRIPLE-KILL', 10: 'MONSTER-KILL' };
         const serieName = serieNames[ serieLength ];
 
         if ( playerId !== Arena.me.id && team ) {

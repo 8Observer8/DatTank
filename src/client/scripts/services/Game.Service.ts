@@ -42,7 +42,11 @@ export class GameService {
 
         $.post( '/api/garage/buyObject/' + type + '/' + objectId, ( response ) => {
 
-            console.log( response );
+            if ( response.success && response.message.params ) {
+
+                return callback( response.message.params );
+
+            }
 
         });
 

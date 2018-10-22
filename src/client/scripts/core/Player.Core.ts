@@ -5,7 +5,6 @@
 
 import { Logger } from '../utils/Logger';
 import { TankObject } from '../objects/core/Tank.Object';
-import { TankList as Tanks } from '../objects/core/Tank.Object';
 import { Arena } from './Arena.Core';
 import { TeamCore } from './Team.Core';
 import { TeamManager } from '../managers/Team.Manager';
@@ -112,29 +111,14 @@ export class PlayerCore {
 
     private setTank ( params: any ) : void {
 
-        const tankName = Tanks.getById( params.typeId );
-
-        if ( tankName ) {
-
-            this.tank = new Tanks[ tankName ]( params );
-
-            if ( this.tank ) {
-
-                this.tank.player = this;
-
-            }
-
-        }
+        this.tank = new TankObject( params );
+        this.tank.player = this;
 
     };
 
     public triggerRespawn () : void {
 
-        const tankName = localStorage.getItem( 'currentTank' ) || 'IS2';
-        this.network.respawn( Tanks[ tankName ].tid );
-
-        //
-
+        this.network.respawn();
         Logger.newEvent( 'Respawn', 'game' );
 
     };
