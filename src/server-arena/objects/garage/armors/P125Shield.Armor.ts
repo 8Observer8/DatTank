@@ -1,9 +1,9 @@
 /*
  * @author ohmed
- * Tank Armor "P12.5 Shiled" class
+ * Tank Armor "P12.5 Shield" class
 */
 
-import { ArmorGarage } from "./../core/Armor.Garage";
+import { ArmorGarage } from '../core/Armor.Garage';
 
 //
 

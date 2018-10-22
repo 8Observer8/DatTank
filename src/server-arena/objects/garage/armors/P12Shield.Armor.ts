@@ -3,7 +3,7 @@
  * Tank Armor "P12 Shield" class
 */
 
-import { ArmorGarage } from "./../core/Armor.Garage";
+import { ArmorGarage } from '../core/Armor.Garage';
 
 //
 

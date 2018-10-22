@@ -3,7 +3,7 @@
  * Tank Armor "T215 Armor" class
 */
 
-import { ArmorGarage } from "./../core/Armor.Garage";
+import { ArmorGarage } from '../core/Armor.Garage';
 
 //
 

@@ -3,7 +3,7 @@
  * Tank Cannon "Razer double" class
 */
 
-import { CannonGarage } from "./../core/Cannon.Garage";
+import { CannonGarage } from './../core/Cannon.Garage';
 
 //
 
@@ -15,6 +15,7 @@ export class RazerDoubleCannon extends CannonGarage {
 
         this.rpm = RazerDoubleCannon.rmp;
         this.damage = RazerDoubleCannon.damage;
+        this.overheating = RazerDoubleCannon.overheating;
 
     };
 

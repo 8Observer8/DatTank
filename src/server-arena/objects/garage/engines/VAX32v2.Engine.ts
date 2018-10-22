@@ -3,7 +3,7 @@
  * Tank Cannon "VAX 32 v2" class
 */
 
-import { EngineGarage } from "./../core/Engine.Garage";
+import { EngineGarage } from '../core/Engine.Garage';
 
 //
 

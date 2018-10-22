@@ -32,7 +32,7 @@ const TanksList = {
 import { PlasmaG1Cannon } from '../objects/garage/cannons/PlasmaG1.Cannon';
 import { PlasmaG2Cannon } from '../objects/garage/cannons/PlasmaG2.Cannon';
 import { PlasmaDoubleCannon } from '../objects/garage/cannons/PlasmaDouble.Cannon';
-import { PlasmaTrippleCannon } from '../objects/garage/cannons/PlasmaTripple.Cannon';
+import { PlasmaTripleCannon } from '../objects/garage/cannons/PlasmaTriple.Cannon';
 import { PlasmaZeroCannon } from '../objects/garage/cannons/PlasmaZero.Cannon';
 import { RazerV1Cannon } from '../objects/garage/cannons/RazerV1.Cannon';
 import { RazerV2Cannon } from '../objects/garage/cannons/RazerV2.Cannon';
@@ -46,7 +46,7 @@ const CannonList = {
     'Plasma-g1':         PlasmaG1Cannon,
     'Plasma-g2':         PlasmaG2Cannon,
     'Plasma-double':     PlasmaDoubleCannon,
-    'Plasma-tripple':    PlasmaTrippleCannon,
+    'Plasma-triple':     PlasmaTripleCannon,
     'Plasma-zero':       PlasmaZeroCannon,
     'Razer-v1':          RazerV1Cannon,
     'Razer-v2':          RazerV2Cannon,
@@ -61,9 +61,9 @@ const CannonList = {
 
 import { KS200ShieldArmor } from '../objects/garage/armors/KS200Shield.Armor';
 import { KSShieldArmor } from '../objects/garage/armors/KSShield.Armor';
-import { MGDeffenceArmor } from '../objects/garage/armors/MGDeffence.Armor';
-import { MGDeffenceV2Armor } from '../objects/garage/armors/MGDeffenceV2.Armor';
-import { P12ShieldArmor } from '../objects/garage/armors/P12Shiled.Armor';
+import { MGDefenceArmor } from '../objects/garage/armors/MGDefence.Armor';
+import { MGDefenceV2Armor } from '../objects/garage/armors/MGDefenceV2.Armor';
+import { P12ShieldArmor } from '../objects/garage/armors/P12Shield.Armor';
 import { P125ShieldArmor } from '../objects/garage/armors/P125Shield.Armor';
 import { XShieldArmor } from '../objects/garage/armors/XShield.Armor';
 import { Z8ShieldArmor } from '../objects/garage/armors/Z8Shield.Armor';
@@ -72,8 +72,8 @@ import { T215ArmorArmor } from '../objects/garage/armors/T215Armor.Armor';
 const ArmorList = {
     'KS200-shield':      KS200ShieldArmor,
     'KS-shield':         KSShieldArmor,
-    'MG-deffence':       MGDeffenceArmor,
-    'MG-deffence-v2':    MGDeffenceV2Armor,
+    'MG-defence':       MGDefenceArmor,
+    'MG-defence-v2':    MGDefenceV2Armor,
     'P12-shield':        P12ShieldArmor,
     'P12.5-shield':      P125ShieldArmor,
     'X-shield':          XShieldArmor,

@@ -1,19 +1,19 @@
 /*
  * @author ohmed
- * Tank Armor "KS200 shield" class
+ * Tank Armor "MG Defence V2" class
 */
 
 import { ArmorGarage } from '../core/Armor.Garage';
 
 //
 
-export class KS200ShieldArmor extends ArmorGarage {
+export class MGDefenceV2Armor extends ArmorGarage {
 
     constructor () {
 
         super();
 
-        this.armor = KS200ShieldArmor.armor;
+        this.armor = MGDefenceV2Armor.armor;
 
     };
 

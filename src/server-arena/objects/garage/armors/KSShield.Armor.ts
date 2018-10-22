@@ -3,7 +3,7 @@
  * Tank Armor "KS shield" class
 */
 
-import { ArmorGarage } from "./../core/Armor.Garage";
+import { ArmorGarage } from '../core/Armor.Garage';
 
 //
 

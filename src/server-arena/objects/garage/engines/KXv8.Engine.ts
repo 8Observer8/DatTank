@@ -3,7 +3,7 @@
  * Tank Cannon "KX v8" class
 */
 
-import { EngineGarage } from "./../core/Engine.Garage";
+import { EngineGarage } from '../core/Engine.Garage';
 
 //
 

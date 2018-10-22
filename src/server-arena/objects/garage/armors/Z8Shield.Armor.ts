@@ -1,9 +1,9 @@
 /*
  * @author ohmed
- * Tank Armor "Z8 Shiled" class
+ * Tank Armor "Z8 Shield" class
 */
 
-import { ArmorGarage } from "./../core/Armor.Garage";
+import { ArmorGarage } from '../core/Armor.Garage';
 
 //
 

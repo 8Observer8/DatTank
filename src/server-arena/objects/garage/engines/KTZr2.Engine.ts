@@ -3,7 +3,7 @@
  * Tank Cannon "KTZ r2" class
 */
 
-import { EngineGarage } from "./../core/Engine.Garage";
+import { EngineGarage } from '../core/Engine.Garage';
 
 //
 

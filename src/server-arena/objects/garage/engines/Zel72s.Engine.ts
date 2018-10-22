@@ -3,7 +3,7 @@
  * Tank Cannon "ZEL 72s" class
 */
 
-import { EngineGarage } from "./../core/Engine.Garage";
+import { EngineGarage } from '../core/Engine.Garage';
 
 //
 

@@ -3,7 +3,7 @@
  * Tank Cannon "Plasma zero" class
 */
 
-import { CannonGarage } from "./../core/Cannon.Garage";
+import { CannonGarage } from './../core/Cannon.Garage';
 
 //
 
@@ -15,6 +15,7 @@ export class PlasmaZeroCannon extends CannonGarage {
 
         this.rpm = PlasmaZeroCannon.rmp;
         this.damage = PlasmaZeroCannon.damage;
+        this.overheating = PlasmaZeroCannon.overheating;
 
     };
 
