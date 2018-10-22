@@ -44,7 +44,7 @@ export class GameService {
 
             if ( response.success && response.message.params ) {
 
-                return callback( response.message.params );
+                return callback( response.message );
 
             }
 

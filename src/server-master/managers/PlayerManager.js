@@ -184,7 +184,8 @@ PlayerManager.prototype.buyObject = function ( pid, objectType, objectId, callba
         player.save( function () {
 
             return callback( true, {
-                params:     player.params
+                params:     player.params,
+                coins:      player.coins
             });
 
         });

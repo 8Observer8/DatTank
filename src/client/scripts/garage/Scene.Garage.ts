@@ -114,6 +114,7 @@ export class GarageScene {
 
             this.scene.add( object );
             this.models[ modelName ] = object;
+            object.visible = false;
 
         }
 
