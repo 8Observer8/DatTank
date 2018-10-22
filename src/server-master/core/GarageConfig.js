@@ -149,7 +149,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Plasma cannon second Gen.',
             price:          500,
-            damage:         1,
+            damage:         40,
             antiArmor:      1,
             range:          0,
             overheating:    0,
@@ -164,7 +164,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Plasma cannon with double oscillator.',
             price:          800,
-            damage:         1,
+            damage:         50,
             antiArmor:      1,
             range:          0,
             overheating:    0,
@@ -179,7 +179,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Plasma cannon with triple oscillator.',
             price:          1200,
-            damage:         1,
+            damage:         80,
             antiArmor:      1,
             range:          0,
             overheating:    0,
@@ -194,7 +194,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Plasma cannon with zero heat release.',
             price:          4000,
-            damage:         1,
+            damage:         45,
             antiArmor:      1,
             range:          0,
             overheating:    0,
@@ -211,7 +211,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Laser cannon first prototype',
             price:          900,
-            damage:         1,
+            damage:         95,
             antiArmor:      1,
             range:          0,
             overheating:    0,
@@ -226,7 +226,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Second prototype version of laser cannon',
             price:          1500,
-            damage:         1,
+            damage:         115,
             antiArmor:      1,
             range:          0,
             overheating:    0,
@@ -241,7 +241,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Original Razer cannon with double oscillator core.',
             price:          4000,
-            damage:         1,
+            damage:         140,
             antiArmor:      1,
             range:          0,
             overheating:    0,
@@ -256,7 +256,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Original Razer cannon with quadro oscillator core.',
             price:          5000,
-            damage:         1,
+            damage:         180,
             antiArmor:      1,
             range:          0,
             overheating:    0,
@@ -273,7 +273,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Magnet cannon v87 release.',
             price:          7000,
-            damage:         1,
+            damage:         190,
             antiArmor:      1,
             range:          0,
             overheating:    0,
@@ -288,7 +288,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Improved magnet cannon v87S.',
             price:          10000,
-            damage:         1,
+            damage:         220,
             antiArmor:      1,
             range:          0,
             overheating:    0,
@@ -303,7 +303,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Magnet cannon v87s turbo version.',
             price:          14000,
-            damage:         1,
+            damage:         235,
             antiArmor:      1,
             range:          0,
             overheating:    0,
@@ -424,7 +424,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      '20mm Iridium armor.',
             price:          800,
-            armor:          100
+            armor:          140
         },
 
         'KS200-shield': {
@@ -434,7 +434,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      '35mm Iridium armor with active barrier.',
             price:          1400,
-            armor:          100
+            armor:          160
         },
 
         'Z8-shield': {
@@ -444,7 +444,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      '80mm uranium plates armor.',
             price:          1800,
-            armor:          100
+            armor:          200
         },
 
         'MG-defence': {
@@ -454,7 +454,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      '3mm graphene nanotubes plates armor.',
             price:          2400,
-            armor:          100
+            armor:          250
         },
 
         'MG-defence-v2': {
@@ -464,7 +464,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      '5mm graphene nanotubes plates with Adamantium strings.',
             price:          3500,
-            armor:          100
+            armor:          270
         },
 
         'P12-shield': {
@@ -474,7 +474,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      '5mm graphene nanotubes plates with Adamantium strings.',
             price:          5000,
-            armor:          100
+            armor:          310
         },
 
         'P12.5-shield': {
@@ -484,7 +484,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      '5mm graphene nanotubes plates with Adamantium strings.',
             price:          8000,
-            armor:          100
+            armor:          350
         },
 
         'T215-armor': {
@@ -494,7 +494,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      '5mm graphene nanotubes plates with adamantium strings.',
             price:          15000,
-            armor:          100
+            armor:          380
         }
 
     }

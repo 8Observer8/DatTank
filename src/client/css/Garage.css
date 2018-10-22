@@ -179,6 +179,7 @@
     height: 7px;
     margin-bottom: 5px;
     border: 1px solid #aaa;
+    overflow: hidden;
 }
 
 .garage .right-block .tank-stats .stats-progress .green {
@@ -187,7 +188,17 @@
     left: 0px;
     width: 50%;
     height: 100%;
-    background-color: #6ec974;
+    background-color: #4c9451;
+    z-index: 1;
+}
+
+.garage .right-block .tank-stats .stats-progress .delta {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 0%;
+    height: 100%;
+    z-index: 2;
 }
 
 .garage .bottom-block {

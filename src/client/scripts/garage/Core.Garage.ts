@@ -23,6 +23,7 @@ export class Garage {
     private xp = window['userData'].xp;
 
     private rightBarChangeTimeout: any;
+    private maxConfigValues: any = {};
 
     //
 
@@ -146,20 +147,51 @@ export class Garage {
     private updateRightMenu ( category: string, itemId: string ) : void {
 
         const tankName = ( category === 'tanks' ) ? itemId : this.params.selected;
+        const tank = this.GarageConfig.tanks[ tankName ];
+        const currentTank = this.GarageConfig.tanks[ localStorage.getItem('SelectedTank') || '' ];
         let title = this.GarageConfig[ category ][ itemId ].title;
         const description = this.GarageConfig[ category ][ itemId ].description;
 
-        const cannonId = ( category === 'cannons' ) ? itemId : localStorage.getItem('SelectedCannon') || '';
+        let cannonId = ( category === 'cannons' ) ? itemId : localStorage.getItem('SelectedCannon') || '';
+        if ( category === 'tanks' ) cannonId = this.GarageConfig.tanks[ itemId ].default.cannon;
         const cannon = this.GarageConfig.cannons[ cannonId ];
+        const currentCannon = this.GarageConfig.cannons[ localStorage.getItem('SelectedCannon') || '' ];
 
-        const armorId = ( category === 'armors' ) ? itemId : localStorage.getItem('SelectedArmor') || '';
+        let armorId = ( category === 'armors' ) ? itemId : localStorage.getItem('SelectedArmor') || '';
+        if ( category === 'tanks' ) armorId = this.GarageConfig.tanks[ itemId ].default.armor;
         const armor = this.GarageConfig.armors[ armorId ];
+        const currentArmor = this.GarageConfig.armors[ localStorage.getItem('SelectedArmor') || '' ];
 
-        const engineId = ( category === 'engines' ) ? itemId : localStorage.getItem('SelectedEngine') || '';
+        let engineId = ( category === 'engines' ) ? itemId : localStorage.getItem('SelectedEngine') || '';
+        if ( category === 'tanks' ) engineId = this.GarageConfig.tanks[ itemId ].default.engine;
         const engine = this.GarageConfig.engines[ engineId ];
 
+        //
+
+        const deltaDamage = 100 * ( tank.cannonCoef * cannon.damage - currentTank.cannonCoef * currentCannon.damage ) / this.maxConfigValues.damage;
+
         $('.garage .right-block .cannon-short-desc').html( cannon.shortDesc );
+        $('.garage .tank-stats .cannon.stats-value').html( cannon.damage + 'p' );
+        $('.garage .tank-stats .cannon.stats-progress .green').css( 'width', ( 100 * currentTank.cannonCoef * currentCannon.damage / this.maxConfigValues.damage ) + '%' );
+        $('.garage .tank-stats .cannon.stats-progress .delta').css({
+            'width': Math.abs( deltaDamage ) + '%',
+            'left': 100 * Math.min( currentTank.cannonCoef * currentCannon.damage, tank.cannonCoef * cannon.damage ) / this.maxConfigValues.damage + '%',
+            'background-color': ( deltaDamage > 0 ) ? 'rgba( 74, 239, 74, 1 )' : 'rgba( 220, 239, 74, 1 )',
+        });
+
+        //
+
+        const deltaArmor = 100 * ( tank.armorCoef * armor.armor - currentTank.armorCoef * currentArmor.armor ) / this.maxConfigValues.armor;
+
         $('.garage .right-block .armor-short-desc').html( armor.shortDesc );
+        $('.garage .tank-stats .armor.stats-value').html( armor.armor + 'p' );
+        $('.garage .tank-stats .armor.stats-progress .green').css( 'width', ( 100 * currentTank.armorCoef * currentArmor.armor / this.maxConfigValues.armor ) + '%' );
+        $('.garage .tank-stats .armor.stats-progress .delta').css({
+            'width': Math.abs( deltaArmor ) + '%',
+            'left': 100 * Math.min( currentTank.cannonCoef * currentArmor.armor, tank.armorCoef * armor.armor ) / this.maxConfigValues.armor + '%',
+            'background-color': ( deltaArmor > 0 ) ? 'rgba( 74, 239, 74, 1 )' : 'rgba( 220, 239, 74, 1 )',
+        });
+
         $('.garage .right-block .engine-short-desc').html( engine.shortDesc );
 
         //
@@ -200,17 +232,10 @@ export class Garage {
 
     private showCurrentTankInRightMenu () : void {
 
-        const selectedTankId = this.params.selected;
-
-        if ( ! this.GarageConfig.tanks[ selectedTankId ] ) return;
-        const cannonId = this.params.tanks[ selectedTankId ].cannon;
-        const armorId = this.params.tanks[ selectedTankId ].armor;
-        const engineId = this.params.tanks[ selectedTankId ].engine;
-
-        const tank = this.GarageConfig.tanks[ selectedTankId ];
-        const cannon = this.GarageConfig.cannons[ cannonId ];
-        const armor = this.GarageConfig.armors[ armorId ];
-        const engine = this.GarageConfig.engines[ engineId ];
+        const tank = this.GarageConfig.tanks[ localStorage.getItem('SelectedTank') || '' ];
+        const cannon = this.GarageConfig.cannons[ localStorage.getItem('SelectedCannon') || '' ];
+        const armor = this.GarageConfig.armors[ localStorage.getItem('SelectedArmor') || '' ];
+        const engine = this.GarageConfig.engines[ localStorage.getItem('SelectedEngine') || '' ];
 
         $('.garage .right-block .item-title').html( 'Your tank "' + tank.title + '"' );
         $('.garage .right-block .item-description .main-text').html( tank.description );
@@ -227,8 +252,6 @@ export class Garage {
         const reloadValue = cannon.reload;
         const overheatValue = cannon.overheating;
 
-        const maxDamageValue = 100;
-        const maxArmorValue = 100;
         const maxSpeedValue = 100;
         const maxReloadValue = 10;
         const maxOverheatValue = 10;
@@ -239,8 +262,8 @@ export class Garage {
         $('.garage .right-block .tank-stats .stats-value.reload').html( reloadValue + 's' );
         $('.garage .right-block .tank-stats .stats-value.overheat').html( overheatValue + 'p' );
 
-        $('.garage .right-block .tank-stats .stats-progress.cannon .green').css( 'width', ( 100 * damageValue / maxDamageValue ) + '%' );
-        $('.garage .right-block .tank-stats .stats-progress.armor .green').css( 'width', ( 100 * armorValue / maxArmorValue ) + '%' );
+        $('.garage .right-block .tank-stats .stats-progress.cannon .green').css( 'width', ( 100 * damageValue / this.maxConfigValues.damage ) + '%' );
+        $('.garage .right-block .tank-stats .stats-progress.armor .green').css( 'width', ( 100 * armorValue / this.maxConfigValues.armor ) + '%' );
         $('.garage .right-block .tank-stats .stats-progress.speed .green').css( 'width', ( 100 * speedValue / maxSpeedValue ) + '%' );
         $('.garage .right-block .tank-stats .stats-progress.reload .green').css( 'width', ( 100 * reloadValue / maxReloadValue ) + '%' );
         $('.garage .right-block .tank-stats .stats-progress.overheat .green').css( 'width', ( 100 * overheatValue / maxOverheatValue ) + '%' );
@@ -373,6 +396,38 @@ export class Garage {
         $('.garage .bottom-block .tab.armors .item').click( this.selectArmor.bind( this ) );
         $('.garage .bottom-block .tab.textures .item').click( this.selectTexture.bind( this ) );
         $('.garage .bottom-block .tab.decorations .item').click( this.selectDecoration.bind( this ) );
+
+        $('.garage .bottom-block .item').click( ( event ) => {
+
+            const category = $( event.currentTarget ).parent().parent().attr('tab') || '';
+            const itemId = $( event.currentTarget ).attr('item-id') || '';
+            this.updateRightMenu( category, itemId );
+
+        });
+
+    };
+
+    private getMaxConfigValues () : void {
+
+        this.maxConfigValues.damage = 0;
+
+        for ( const name in this.GarageConfig.cannons ) {
+
+            const cannon = this.GarageConfig.cannons[ name ];
+            this.maxConfigValues.damage = ( 1.8 * cannon.damage > this.maxConfigValues.damage ) ? 1.8 * cannon.damage : this.maxConfigValues.damage;
+
+        }
+
+        //
+
+        this.maxConfigValues.armor = 0;
+
+        for ( const name in this.GarageConfig.armors ) {
+
+            const armor = this.GarageConfig.armors[ name ];
+            this.maxConfigValues.armor = ( 1.8 * armor.armor > this.maxConfigValues.armor ) ? 1.8 * armor.armor : this.maxConfigValues.armor;
+
+        }
 
     };
 
@@ -625,6 +680,8 @@ export class Garage {
             this.scene.init( this );
             this.setupMenu();
             this.updateUserParams();
+
+            this.getMaxConfigValues();
 
         });
 
