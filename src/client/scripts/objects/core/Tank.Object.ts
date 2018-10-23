@@ -61,6 +61,8 @@ export class TankObject {
     public collisionBox: any;
     public readonly type: string = 'Tank';
 
+    public isMe: boolean = false;
+
     //
 
     public startShooting () : void {
@@ -82,7 +84,7 @@ export class TankObject {
         if ( Arena.meId === this.player.id ) {
 
             this.cannon.overheat = overheating;
-            this.gfx.label.update( this.health, this.armor.armor, this.player.team.color, this.cannon.overheat, this.player.username );
+            this.gfx.label.update( this.health, this.armor.armor, this.player.team.color, this.cannon.overheat, this.player.username, this.isMe );
 
         }
 
@@ -171,7 +173,7 @@ export class TankObject {
         }
 
         this.health = value;
-        this.gfx.label.update( this.health, this.armor.armor, this.player.team.color, this.cannon.overheat, this.player.username );
+        this.gfx.label.update( this.health, this.armor.armor, this.player.team.color, this.cannon.overheat, this.player.username, this.isMe );
 
         if ( this.health <= 0 ) {
 
@@ -266,7 +268,7 @@ export class TankObject {
         if ( this.cannon.overheat > 0 ) {
 
             this.cannon.overheat -= 0.2 * delta / 16;
-            this.gfx.label.update( this.health, this.armor.armor, this.player.team.color, this.cannon.overheat, this.player.username );
+            this.gfx.label.update( this.health, this.armor.armor, this.player.team.color, this.cannon.overheat, this.player.username, this.isMe );
 
         }
 
@@ -285,6 +287,7 @@ export class TankObject {
         if ( Arena.meId === this.player.id ) {
 
             this.cannon.overheat = 0;
+            this.isMe = true;
 
         }
 
