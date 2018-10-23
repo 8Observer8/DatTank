@@ -64,8 +64,8 @@ export class PlayerCore {
     public score: number = 0;
     public level: number = 0;
     public bonusLevels = 0;
-    public tankName: string;
     public spawnTime: number;
+    public tankConfig: object;
 
     public team: TeamCore;
     public tank: TankObject;
@@ -146,7 +146,7 @@ export class PlayerCore {
 
     };
 
-    public spawn ( tankConfig?: object ) : void {
+    public spawn ( tankConfig: object ) : void {
 
         this.prepareTank( tankConfig );
         this.tank.setRespawnPosition();
@@ -299,8 +299,6 @@ export class PlayerCore {
             this.socket['arena'] = arena;
 
         }
-
-        this.tankName = params.tank;
 
     };
 

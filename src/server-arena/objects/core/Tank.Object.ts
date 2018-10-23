@@ -10,19 +10,15 @@ import { ArenaCore } from '../../core/Arena.Core';
 import { TowerObject } from './Tower.Object';
 import { BoxObject } from './Box.Object';
 import { TankNetwork } from './../../network/Tank.Network';
-import { CannonGarage } from '../garage/core/Cannon.Garage';
-import { ArmorGarage } from '../garage/core/Armor.Garage';
-import { EngineGarage } from '../garage/core/Engine.Garage';
+
+import { BaseTankPart } from '../tanks/Base.TankPart';
+import { CannonTankPart } from '../tanks/Cannon.TankPart';
+import { ArmorTankPart } from '../tanks/Armor.TankPart';
+import { EngineTankPart } from '../tanks/Engine.TankPart';
 
 //
 
 export class TankObject {
-
-    public static title: string;
-    public static armorCoef: number;
-    public static cannonCoef: number;
-    public static speedCoef: number;
-    public static ammoCapacity: number;
 
     private static numIds = 1;
     // private static statsList = [ 'speed', 'rpm', 'armour', 'gun', 'ammoCapacity' ];
@@ -36,6 +32,7 @@ export class TankObject {
 
     //
 
+    public nid: number;
     public id: number;
     public title: string;
     public team: TeamCore;
@@ -49,10 +46,6 @@ export class TankObject {
     public size: OMath.Vec3 = new OMath.Vec3( 30, 25, 70 );
 
     public range: number = 300;
-    public cannonCoef: number;
-    public armourCoef: number;
-    public speedCoef: number;
-    public ammoCapacity: number;
 
     public moveDirection: OMath.Vec2 = new OMath.Vec2();
     public deltaPosition: OMath.Vec3 = new OMath.Vec3();
@@ -65,9 +58,10 @@ export class TankObject {
     private sinceRegenerationLimit: number = 2000;
     private sinceRegenerationTime: number;
 
-    public cannon: CannonGarage;
-    public armor: ArmorGarage;
-    public engine: EngineGarage;
+    public base: BaseTankPart;
+    public cannon: CannonTankPart;
+    public armor: ArmorTankPart;
+    public engine: EngineTankPart;
 
     public inRangeOf: object = {};
     public collisionBox: object;
@@ -217,7 +211,7 @@ export class TankObject {
         if ( this.health <= 0 ) return;
 
         this.ammo += delta;
-        this.ammo = Math.max( Math.min( this.ammoCapacity, this.ammo ), 0 );
+        this.ammo = Math.max( Math.min( this.base.ammoCapacity, this.ammo ), 0 );
 
         //
 
@@ -507,7 +501,7 @@ export class TankObject {
 
     public getMaxSpeed () : number {
 
-        return this.engine.maxSpeed * this.speedCoef;
+        return this.engine.maxSpeed * this.base.speedCoef;
 
     };
 

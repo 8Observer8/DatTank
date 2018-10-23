@@ -8,6 +8,7 @@ var GarageConfig = {
     tanks: {
 
         'IS2001': {
+            nid:            1,
             type:           'Tank',
             id:             'IS2001',
             title:          'IS 2001',
@@ -27,6 +28,7 @@ var GarageConfig = {
         },
 
         'TigerS8': {
+            nid:            2,
             type:           'Tank',
             id:             'TigerS8',
             title:          'Tiger S8',
@@ -46,6 +48,7 @@ var GarageConfig = {
         },
 
         'OrbitT32s': {
+            nid:            3,
             type:           'Tank',
             id:             'OrbitT32s',
             title:          'Orbit T32s',
@@ -65,6 +68,7 @@ var GarageConfig = {
         },
 
         'MG813': {
+            nid:            4,
             type:           'Tank',
             id:             'MG813',
             title:          'MG 813',
@@ -84,6 +88,7 @@ var GarageConfig = {
         },
 
         'DTEK72': {
+            nid:            5,
             type:           'Tank',
             id:             'DTEK72',
             title:          'DTEK 72',
@@ -103,6 +108,7 @@ var GarageConfig = {
         },
 
         'RiperX3': {
+            nid:            6,
             type:           'Tank',
             id:             'RiperX3',
             title:          'Riper X3',
@@ -128,6 +134,7 @@ var GarageConfig = {
         // Plasma cannons
 
         'Plasma-g1': {
+            nid:            101,
             type:           'Cannon',
             id:             'Plasma-g1',
             title:          'Plasma g1',
@@ -137,12 +144,12 @@ var GarageConfig = {
             damage:         30,
             antiArmor:      1,
             range:          20,
-            overheating:    0,
             overheat:       110,
             rpm:            10
         },
 
         'Plasma-g2': {
+            nid:            102,
             type:           'Cannon',
             id:             'Plasma-g2',
             title:          'Plasma g2',
@@ -158,6 +165,7 @@ var GarageConfig = {
         },
 
         'Plasma-double': {
+            nid:            103,
             type:           'Cannon',
             id:             'Plasma-double',
             title:          'Plasma double',
@@ -173,6 +181,7 @@ var GarageConfig = {
         },
 
         'Plasma-triple': {
+            nid:            104,
             type:           'Cannon',
             id:             'Plasma-triple',
             title:          'Plasma triple',
@@ -188,6 +197,7 @@ var GarageConfig = {
         },
 
         'Plasma-zero': {
+            nid:            105,
             type:           'Cannon',
             id:             'Plasma-zero',
             title:          'Plasma zero',
@@ -205,6 +215,7 @@ var GarageConfig = {
         // Laser cannons
 
         'Razer-v1': {
+            nid:            106,
             type:           'Cannon',
             id:             'Razer-v1',
             title:          'Razer v1',
@@ -220,6 +231,7 @@ var GarageConfig = {
         },
 
         'Razer-v2': {
+            nid:            107,
             type:           'Cannon',
             id:             'Razer-v2',
             title:          'Razer v2',
@@ -235,6 +247,7 @@ var GarageConfig = {
         },
 
         'Razer-double': {
+            nid:            108,
             type:           'Cannon',
             id:             'Razer-double',
             title:          'Razer double',
@@ -250,6 +263,7 @@ var GarageConfig = {
         },
 
         'Razer-quadro': {
+            nid:            109,
             type:           'Cannon',
             id:             'Razer-quadro',
             title:          'Razer quadro',
@@ -267,6 +281,7 @@ var GarageConfig = {
         // Magnet cannons
 
         'Mag87': {
+            nid:            110,
             type:           'Cannon',
             id:             'Mag87',
             title:          'Mag 87',
@@ -282,6 +297,7 @@ var GarageConfig = {
         },
 
         'Mag87s': {
+            nid:            111,
             type:           'Cannon',
             id:             'Mag87s',
             title:          'Mag 87S',
@@ -297,6 +313,7 @@ var GarageConfig = {
         },
 
         'Mag87s-turbo': {
+            nid:            112,
             type:           'Cannon',
             id:             'Mag87s-turbo',
             title:          'Mag 87s turbo version',
@@ -316,6 +333,7 @@ var GarageConfig = {
     engines: {
 
         'KX-v8': {
+            nid:            201,
             type:           'Engine',
             id:             'KX-v8',
             title:          'KX v8',
@@ -327,6 +345,7 @@ var GarageConfig = {
         },
 
         'ZEL-72': {
+            nid:            202,
             type:           'Engine',
             id:             'ZEL-72',
             title:          'ZEL 72',
@@ -338,6 +357,7 @@ var GarageConfig = {
         },
 
         'ZEL-72s': {
+            nid:            203,
             type:           'Engine',
             id:             'ZEL-72s',
             title:          'ZEL 72s',
@@ -349,6 +369,7 @@ var GarageConfig = {
         },
 
         'KTZ-r1': {
+            nid:            204,
             type:           'Engine',
             id:             'KTZ-r1',
             title:          'KTZ r1',
@@ -360,6 +381,7 @@ var GarageConfig = {
         },
 
         'KTZ-r2': {
+            nid:            205,
             type:           'Engine',
             id:             'KTZ-r2',
             title:          'KTZ r2',
@@ -371,6 +393,7 @@ var GarageConfig = {
         },
 
         'VAX-32': {
+            nid:            206,
             type:           'Engine',
             id:             'VAX-32',
             title:          'VAX 32',
@@ -382,6 +405,7 @@ var GarageConfig = {
         },
 
         'VAX-32s': {
+            nid:            207,
             type:           'Engine',
             id:             'VAX-32s',
             title:          'VAX 32s',
@@ -393,6 +417,7 @@ var GarageConfig = {
         },
 
         'VAX-32v2': {
+            nid:            208,
             type:           'Engine',
             id:             'VAX-32v2',
             title:          'VAX 32v2',
@@ -408,6 +433,7 @@ var GarageConfig = {
     armors: {
 
         'X-shield': {
+            nid:            301,
             type:           'Armor',
             id:             'X-shield',
             title:          'X Shield',
@@ -418,6 +444,7 @@ var GarageConfig = {
         },
 
         'KS-shield': {
+            nid:            302,
             type:           'Armor',
             id:             'KS-shield',
             title:          'KS Shield',
@@ -428,6 +455,7 @@ var GarageConfig = {
         },
 
         'KS200-shield': {
+            nid:            303,
             type:           'Armor',
             id:             'KS200-shield',
             title:          'KS200 Shield',
@@ -438,6 +466,7 @@ var GarageConfig = {
         },
 
         'Z8-shield': {
+            nid:            304,
             type:           'Armor',
             id:             'Z8-shield',
             title:          'Z8 Shield',
@@ -448,6 +477,7 @@ var GarageConfig = {
         },
 
         'MG-defence': {
+            nid:            305,
             type:           'Armor',
             id:             'MG-defence',
             title:          'MG Defence',
@@ -458,6 +488,7 @@ var GarageConfig = {
         },
 
         'MG-defence-v2': {
+            nid:            306,
             type:           'Armor',
             id:             'MG-defence-v2',
             title:          'MG Defence v2',
@@ -468,6 +499,7 @@ var GarageConfig = {
         },
 
         'P12-shield': {
+            nid:            307,
             type:           'Armor',
             id:             'P12-shield',
             title:          'P12 shield',
@@ -478,6 +510,7 @@ var GarageConfig = {
         },
 
         'P12.5-shield': {
+            nid:            308,
             type:           'Armor',
             id:             'P12.5-shield',
             title:          'P12.5 shield',
@@ -488,6 +521,7 @@ var GarageConfig = {
         },
 
         'T215-armor': {
+            nid:            309,
             type:           'Armor',
             id:             'T215-armor',
             title:          'T215 armor',

@@ -10,6 +10,11 @@ import { Arena } from '../../core/Arena.Core';
 import { UI } from '../../ui/Core.UI';
 import { PlayerCore } from '../../core/Player.Core';
 
+import { BaseTankPart } from '../tanks/Base.TankPart';
+import { CannonTankPart } from '../tanks/Cannon.TankPart';
+import { ArmorTankPart } from '../tanks/Armor.TankPart';
+import { EngineTankPart } from '../tanks/Engine.TankPart';
+
 import { TankNetwork } from '../../network/Tank.Network';
 import { TankGfx } from '../../graphics/objects/Tank.Gfx';
 import { HealthChangeLabelManager } from '../../managers/HealthChangeLabel.Manager';
@@ -25,16 +30,14 @@ export class TankObject {
     public player: PlayerCore;
 
     public title: string;
-    public year: number;
-    public speed: number;
-    public ammoCapacity: number;
-    public bullet: number;
-    public rpm: number;
-    public armour: number;
 
-    public overheating: number = -1;
     public health: number;
     public ammo: number;
+
+    public base: BaseTankPart;
+    public cannon: CannonTankPart;
+    public armor: ArmorTankPart;
+    public engine: EngineTankPart;
 
     public moveDirection = new OMath.Vec2();
     public positionCorrection = new OMath.Vec3();
@@ -78,8 +81,8 @@ export class TankObject {
 
         if ( Arena.meId === this.player.id ) {
 
-            this.overheating = overheating;
-            this.gfx.label.update( this.health, this.armour, this.player.team.color, this.overheating, this.player.username );
+            this.cannon.overheat = overheating;
+            this.gfx.label.update( this.health, this.armor.armor, this.player.team.color, this.cannon.overheat, this.player.username );
 
         }
 
@@ -90,7 +93,7 @@ export class TankObject {
 
             Logger.newEvent( 'Shot', 'game' );
             this.setAmmo( this.ammo - 1 );
-            UI.InGame.setAmmoReloadAnimation( 60 * 1000 / this.rpm );
+            UI.InGame.setAmmoReloadAnimation( 60 * 1000 / this.cannon.rpm );
 
         }
 
@@ -168,7 +171,7 @@ export class TankObject {
         }
 
         this.health = value;
-        this.gfx.label.update( this.health, this.armour, this.player.team.color, this.overheating, this.player.username );
+        this.gfx.label.update( this.health, this.armor.armor, this.player.team.color, this.cannon.overheat, this.player.username );
 
         if ( this.health <= 0 ) {
 
@@ -260,10 +263,10 @@ export class TankObject {
 
         if ( this.health <= 0 ) return;
 
-        if ( this.overheating > 0 ) {
+        if ( this.cannon.overheat > 0 ) {
 
-            this.overheating -= 0.2 * delta / 16;
-            this.gfx.label.update( this.health, this.armour, this.player.team.color, this.overheating, this.player.username );
+            this.cannon.overheat -= 0.2 * delta / 16;
+            this.gfx.label.update( this.health, this.armor.armor, this.player.team.color, this.cannon.overheat, this.player.username );
 
         }
 
@@ -281,7 +284,7 @@ export class TankObject {
 
         if ( Arena.meId === this.player.id ) {
 
-            this.overheating = 0;
+            this.cannon.overheat = 0;
 
         }
 
@@ -315,6 +318,11 @@ export class TankObject {
 
         this.health = params.health;
         this.ammo = params.ammo;
+
+        this.base = new BaseTankPart( params.base );
+        this.cannon = new CannonTankPart( params.cannon );
+        this.armor = new ArmorTankPart( params.armor );
+        this.engine = new EngineTankPart( params.engine );
 
         this.rotation = params.rotation % ( 2 * Math.PI );
         this.rotationCorrection = 0;

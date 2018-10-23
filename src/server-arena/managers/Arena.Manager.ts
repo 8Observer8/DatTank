@@ -155,7 +155,7 @@ class ArenaManagerCore {
     public playerJoin ( data: any, socket: ws ) : void {
 
         const arena: ArenaCore = this.findArena();
-        const player = arena.addPlayer({ login: data.login, tank: data.tank, socket });
+        const player = arena.addPlayer({ login: data.login, tankConfig: data.tankConfig, socket });
 
         arena.network.joinArena( player );
 

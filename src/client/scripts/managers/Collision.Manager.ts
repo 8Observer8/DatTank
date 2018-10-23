@@ -17,12 +17,12 @@ class CollisionManagerCore {
     public addObject ( object: any, type: string, isDynamic: boolean ) : void {
 
         this.worker.postMessage({ type: 'addObject', object: {
-                id: object.id,
-                type: object.type,
-                radius: object.radius,
-                size: { x: object.size.x, y: object.size.y, z: object.size.z },
-                position: { x: object.position.x, y: object.position.y, z: object.position.z },
-                rotation: object.rotation,
+                id:         object.id,
+                type:       object.type,
+                radius:     object.radius,
+                size:       { x: object.size.x, y: object.size.y, z: object.size.z },
+                position:   { x: object.position.x, y: object.position.y, z: object.position.z },
+                rotation:   object.rotation,
             },
             shapeType: type,
             isDynamic,
@@ -57,11 +57,13 @@ class CollisionManagerCore {
             if ( object.type !== 'Tank' ) continue;
 
             objects[ object.type + '-' + object.id ] = {
-                speed: object.speed,
-                health: object.health,
-                rotation: object.rotation,
-                moveDirection: { x: object.moveDirection.x, y: object.moveDirection.y },
-                posCorrection: { x: object.positionCorrectionDelta.x, y: object.positionCorrectionDelta.y, z: object.positionCorrectionDelta.z },
+                speed:          object.speed,
+                health:         object.health,
+                rotation:       object.rotation,
+                moveDirection:  { x: object.moveDirection.x, y: object.moveDirection.y },
+                posCorrection:  { x: object.positionCorrectionDelta.x, y: object.positionCorrectionDelta.y, z: object.positionCorrectionDelta.z },
+                maxSpeed:       3 * object.base.speedCoef * object.engine.maxSpeed,
+                power:          object.engine.power,
             };
 
             object.positionCorrection.x -= object.positionCorrectionDelta.x;

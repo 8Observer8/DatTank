@@ -71,12 +71,12 @@ export class ArenaNetwork {
 
         const players = [];
         let player;
-        const playerBinSize = 26;
+        const playerBinSize = 38;
 
         for ( let i = 0, il = data.length / playerBinSize; i < il; i ++ ) {
 
             player = {
-                id:             data[ i * playerBinSize + 12 ],
+                id:             data[ i * playerBinSize + 11 ],
                 login:          '',
                 team:           data[ i * playerBinSize + 1 ],
                 tank:           {
@@ -93,21 +93,42 @@ export class ArenaNetwork {
                         x:  data[ i * playerBinSize + 8 ],
                         y:  data[ i * playerBinSize + 9 ],
                     },
-                    typeId: data[ i * playerBinSize + 10 ],
-                    ammo:   data[ i * playerBinSize + 11 ],
+                    ammo:   data[ i * playerBinSize + 10 ],
+                    base:   {
+                        nid:            data[ i * playerBinSize + 12 ],
+                        speedCoef:      data[ i * playerBinSize + 13 ],
+                        ammoCapacity:   data[ i * playerBinSize + 14 ],
+                        armourCoef:     data[ i * playerBinSize + 15 ],
+                    },
+                    cannon: {
+                        nid:        data[ i * playerBinSize + 16 ],
+                        range:      data[ i * playerBinSize + 17 ],
+                        rpm:        data[ i * playerBinSize + 18 ],
+                        overheat:   data[ i * playerBinSize + 19 ],
+                    },
+                    armor: {
+                        nid:    data[ i * playerBinSize + 20 ],
+                        armor:  data[ i * playerBinSize + 21 ],
+                    },
+                    engine: {
+                        nid:        data[ i * playerBinSize + 22 ],
+                        maxSpeed:   data[ i * playerBinSize + 23 ],
+                        power:      data[ i * playerBinSize + 24 ],
+                    },
                 },
             };
 
             for ( let j = 0; j < 13; j ++ ) {
 
-                if ( data[ i * playerBinSize + 13 + j ] !== 0 ) {
+                if ( data[ i * playerBinSize + 25 + j ] !== 0 ) {
 
-                    player.login += String.fromCharCode( data[ i * playerBinSize + 13 + j ] );
+                    player.login += String.fromCharCode( data[ i * playerBinSize + 25 + j ] );
 
                 }
 
             }
 
+            console.log( player );
             players.push( player );
 
         }

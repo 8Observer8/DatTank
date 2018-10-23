@@ -152,11 +152,17 @@ class GameCore {
 
             const login = $('#username').val() || localStorage.getItem('login') || '';
             localStorage.setItem( 'login', login + '' );
-            const tank = localStorage.getItem( 'currentTank' ) || 0;
+
+            const tankConfig = {
+                tank:       localStorage.getItem( 'SelectedTank' ) || '',
+                cannon:     localStorage.getItem( 'SelectedCannon' ) || '',
+                armor:      localStorage.getItem( 'SelectedArmor' ) || '',
+                engine:     localStorage.getItem( 'SelectedEngine' ) || '',
+            };
 
             setTimeout( () => {
 
-                Network.send( 'ArenaJoinRequest', false, { login, tank } );
+                Network.send( 'ArenaJoinRequest', false, { login, tankConfig } );
 
             }, 1000 );
 
@@ -178,7 +184,7 @@ class GameCore {
 
 export let Game = new GameCore();
 
-// for debuging
+// for debugging
 
 window['game'] = Game;
 window['game']['gfx'] = GfxCore;

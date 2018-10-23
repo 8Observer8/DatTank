@@ -127,14 +127,13 @@ function update ( delta, objectsInfo ) {
         } else {
 
             var speed = object.body.velocity.distanceTo( new CANNON.Vec3( 0, object.body.velocity.y, 0 ) );
-            var maxSpeed = objectInfo.speed * 3;
 
             object.body.position.x += objectInfo.posCorrection.x;
             object.body.position.z += objectInfo.posCorrection.z;
 
-            if ( speed < maxSpeed && objectInfo.moveDirection.x ) {
+            if ( speed < objectInfo.maxSpeed && objectInfo.moveDirection.x ) {
 
-                var forceAmount = 10000 * ( 1 - speed / maxSpeed );
+                var forceAmount = objectInfo.power * ( 1 - speed / objectInfo.maxSpeed );
                 var force = new CANNON.Vec3( 0, 0, forceAmount );
                 if ( objectInfo.moveDirection.x < 0 ) force = force.negate();
                 object.body.applyLocalImpulse( force, new CANNON.Vec3( 0, 0, 0 ) );
@@ -160,7 +159,7 @@ function update ( delta, objectsInfo ) {
             var vx = speed * Math.sin( objectInfo.rotation + direction );
             var vz = speed * Math.cos( objectInfo.rotation + direction );
             var forwardVelocity = new CANNON.Vec3( vx, 0, vz ).distanceTo( new CANNON.Vec3() );
-            var movementDirecton = Math.sign( object.body.velocity.x * Math.sin( objectInfo.rotation ) );
+            var movementDirection = Math.sign( object.body.velocity.x * Math.sin( objectInfo.rotation ) );
 
             if ( speed > 5 && objectInfo.moveDirection.x !== 0 ) {
 
@@ -173,7 +172,7 @@ function update ( delta, objectsInfo ) {
 
             object['prevForwardVelocity'] = object['prevForwardVelocity'] || forwardVelocity;
             var dfv = forwardVelocity - object['prevForwardVelocity'];
-            dfv = movementDirecton * dfv;
+            dfv = movementDirection * dfv;
             object['prevForwardVelocity'] = forwardVelocity;
 
             //
