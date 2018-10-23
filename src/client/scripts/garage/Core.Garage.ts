@@ -148,24 +148,25 @@ export class Garage {
 
         // getting old / selected tank parts
 
-        const tankName = ( category === 'tanks' ) ? itemId : this.params.selected;
+        const selectedTank = localStorage.getItem('SelectedTank') || '';
+        const tankName = ( category === 'tanks' ) ? itemId : selectedTank;
         const tank = this.GarageConfig.tanks[ tankName ];
-        const currentTank = this.GarageConfig.tanks[ localStorage.getItem('SelectedTank') || '' ];
+        const currentTank = this.GarageConfig.tanks[ selectedTank ];
         let title = this.GarageConfig[ category ][ itemId ].title;
         const description = this.GarageConfig[ category ][ itemId ].description;
 
         let cannonId = ( category === 'cannons' ) ? itemId : localStorage.getItem('SelectedCannon') || '';
-        if ( category === 'tanks' && itemId !== this.params.selected ) cannonId = this.GarageConfig.tanks[ itemId ].default.cannon;
+        if ( category === 'tanks' && itemId !== selectedTank ) cannonId = this.GarageConfig.tanks[ itemId ].default.cannon;
         const cannon = this.GarageConfig.cannons[ cannonId ];
         const currentCannon = this.GarageConfig.cannons[ localStorage.getItem('SelectedCannon') || '' ];
 
         let armorId = ( category === 'armors' ) ? itemId : localStorage.getItem('SelectedArmor') || '';
-        if ( category === 'tanks' && itemId !== this.params.selected ) armorId = this.GarageConfig.tanks[ itemId ].default.armor;
+        if ( category === 'tanks' && itemId !== selectedTank ) armorId = this.GarageConfig.tanks[ itemId ].default.armor;
         const armor = this.GarageConfig.armors[ armorId ];
         const currentArmor = this.GarageConfig.armors[ localStorage.getItem('SelectedArmor') || '' ];
 
         let engineId = ( category === 'engines' ) ? itemId : localStorage.getItem('SelectedEngine') || '';
-        if ( category === 'tanks' && itemId !== this.params.selected ) engineId = this.GarageConfig.tanks[ itemId ].default.engine;
+        if ( category === 'tanks' && itemId !== selectedTank ) engineId = this.GarageConfig.tanks[ itemId ].default.engine;
         const engine = this.GarageConfig.engines[ engineId ];
         const currentEngine = this.GarageConfig.engines[ localStorage.getItem('SelectedEngine') || '' ];
 
