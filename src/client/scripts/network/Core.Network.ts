@@ -117,7 +117,7 @@ class NetworkCore {
 
         //
 
-        console.log( 'Network inited.' );
+        console.log( '[NETWORK] Inited.' );
 
     };
 

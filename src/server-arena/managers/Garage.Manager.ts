@@ -52,6 +52,7 @@ class GarageManagerCore {
         tankObject.cannon = new CannonTankPart( this.cannons[ params.cannon ]);
         tankObject.armor = new ArmorTankPart( this.armors[ params.armor ] );
         tankObject.engine = new EngineTankPart( this.engines[ params.engine ] );
+        tankObject.ammo = tankObject.base.ammoCapacity;
 
         //
 

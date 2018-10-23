@@ -128,7 +128,6 @@ export class ArenaNetwork {
 
             }
 
-            console.log( player );
             players.push( player );
 
         }

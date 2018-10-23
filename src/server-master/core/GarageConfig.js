@@ -24,6 +24,7 @@ var GarageConfig = {
             speedCoef:      1,
             cannonCoef:     1,
             armorCoef:      1,
+            ammoCapacity:   100,
             description:    '<b>IS2001 tank</b> - default tank of Russian army in WW VII (2139 year) against other sides on first colonized planet (Mars).<br><br>By default equipped with plasma cannon of first generation, turbo diesel engine and tesla induction generator.<br><br>Easy in movement control, quite fast, powerful cannon, but gets overheated quite fast.<br><br>'
         },
 
@@ -44,6 +45,7 @@ var GarageConfig = {
             speedCoef:      1,
             cannonCoef:     1,
             armorCoef:      1,
+            ammoCapacity:   100,
             description:    '<b>Tiger S8 tank</b> - default tank of Germany army in Venus Planet War III (2140 year) against China.<br><br>By default equipped with plasma cannon of third generation, double turbo diesel engine with generator.<br><br>Is faster and has more powerful cannon than IS2001, but has problem with overheating.<br><br>'
         },
 
@@ -64,6 +66,7 @@ var GarageConfig = {
             speedCoef:      1,
             cannonCoef:     1,
             armorCoef:      1,
+            ammoCapacity:   100,
             description:    '<b>Orbit T32s tank</b> - 1/3 tanks of China army in Venus Planet War III (2140 year) against Germany and USA.<br><br>By default equipped with improved second version laser cannon, improved ZEL-72 engine and uranium plates armor.<br><br>'
         },
 
@@ -84,6 +87,7 @@ var GarageConfig = {
             speedCoef:      1,
             cannonCoef:     1,
             armorCoef:      1,
+            ammoCapacity:   100,
             description:    '<b>MG 813 tank</b> - popular tank from all sides in Earth Asia War II (2141 year).<br><br>By default equipped with double laser cannon, nice engine improved with Gallium generator core, but has light less secure X-Shield armor.<br><br>'
         },
 
@@ -104,6 +108,7 @@ var GarageConfig = {
             speedCoef:      1,
             cannonCoef:     1,
             armorCoef:      1,
+            ammoCapacity:   100,
             description:    '<b>DTEK 72 tank</b> - rare Ukrainian tank designed in private company to defend oil wells from East Eurasian groups after Russia collapse in 2141 year.<br><br>By default equipped with triple plasma cannon, plutonium engine with partly organic generator and 80mm uranium plates armor sys.<br><br>'
         },
 
@@ -124,6 +129,7 @@ var GarageConfig = {
             speedCoef:      1,
             cannonCoef:     1,
             armorCoef:      1,
+            ammoCapacity:   100,
             description:    '<b>Riper X3</b> - very powerful elite tank of United Korean Forces in Second War for Moon "Space Harbor" (2143 year).<br><br>By default equipped with special plasma cannon which solved problem of overheating, but this costs lots of energy consumption and lower movement speed and has new light graphene-type armor.<br><br>'
         }
 
