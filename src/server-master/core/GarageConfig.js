@@ -136,10 +136,10 @@ var GarageConfig = {
             price:          400,
             damage:         30,
             antiArmor:      1,
-            range:          0,
+            range:          20,
             overheating:    0,
-            energy:         0,
-            reload:         1
+            overheat:       110,
+            rpm:            10
         },
 
         'Plasma-g2': {
@@ -151,10 +151,10 @@ var GarageConfig = {
             price:          500,
             damage:         40,
             antiArmor:      1,
-            range:          0,
-            overheating:    0,
+            range:          22,
+            overheat:       110,
             energy:         0,
-            reload:         1
+            rpm:            13
         },
 
         'Plasma-double': {
@@ -166,10 +166,10 @@ var GarageConfig = {
             price:          800,
             damage:         50,
             antiArmor:      1,
-            range:          0,
-            overheating:    0,
+            range:          18,
+            overheat:       90,
             energy:         0,
-            reload:         1
+            rpm:            9
         },
 
         'Plasma-triple': {
@@ -181,10 +181,10 @@ var GarageConfig = {
             price:          1200,
             damage:         80,
             antiArmor:      1,
-            range:          0,
-            overheating:    0,
+            range:          17,
+            overheat:       70,
             energy:         0,
-            reload:         1
+            rpm:            9
         },
 
         'Plasma-zero': {
@@ -196,10 +196,10 @@ var GarageConfig = {
             price:          4000,
             damage:         45,
             antiArmor:      1,
-            range:          0,
-            overheating:    0,
+            range:          21,
+            overheat:       300,
             energy:         0,
-            reload:         1
+            rpm:            25
         },
 
         // Laser cannons
@@ -213,10 +213,10 @@ var GarageConfig = {
             price:          900,
             damage:         95,
             antiArmor:      1,
-            range:          0,
-            overheating:    0,
+            range:          25,
+            overheat:       65,
             energy:         0,
-            reload:         1
+            rpm:            11
         },
 
         'Razer-v2': {
@@ -228,10 +228,10 @@ var GarageConfig = {
             price:          1500,
             damage:         115,
             antiArmor:      1,
-            range:          0,
-            overheating:    0,
+            range:          27,
+            overheat:       70,
             energy:         0,
-            reload:         1
+            rpm:            14
         },
 
         'Razer-double': {
@@ -243,10 +243,10 @@ var GarageConfig = {
             price:          4000,
             damage:         140,
             antiArmor:      1,
-            range:          0,
-            overheating:    0,
+            range:          25,
+            overheat:       60,
             energy:         0,
-            reload:         1
+            rpm:            12
         },
 
         'Razer-quadro': {
@@ -258,10 +258,10 @@ var GarageConfig = {
             price:          5000,
             damage:         180,
             antiArmor:      1,
-            range:          0,
-            overheating:    0,
+            range:          20,
+            overheat:       30,
             energy:         0,
-            reload:         1
+            rpm:            10
         },
 
         // Magnet cannons
@@ -275,10 +275,10 @@ var GarageConfig = {
             price:          7000,
             damage:         190,
             antiArmor:      1,
-            range:          0,
-            overheating:    0,
+            range:          25,
+            overheat:       45,
             energy:         0,
-            reload:         1
+            rpm:            15
         },
 
         'Mag87s': {
@@ -290,10 +290,10 @@ var GarageConfig = {
             price:          10000,
             damage:         220,
             antiArmor:      1,
-            range:          0,
-            overheating:    0,
+            range:          17,
+            overheat:       65,
             energy:         0,
-            reload:         1
+            rpm:            16
         },
 
         'Mag87s-turbo': {
@@ -305,10 +305,10 @@ var GarageConfig = {
             price:          14000,
             damage:         235,
             antiArmor:      1,
-            range:          0,
-            overheating:    0,
+            range:          16,
+            overheat:       50,
             energy:         0,
-            reload:         1
+            rpm:            13
         }
 
     },
@@ -323,7 +323,7 @@ var GarageConfig = {
             shortDesc:      'Turbo diesel 1.3k HP engine with tesla induction generator.',
             price:          500,
             power:          10000,
-            maxSpeed:       100
+            maxSpeed:       50
         },
 
         'ZEL-72': {
@@ -334,7 +334,7 @@ var GarageConfig = {
             shortDesc:      'Double turbo diesel 1.8k HP engine with tesla induction generator.',
             price:          800,
             power:          10000,
-            maxSpeed:       100
+            maxSpeed:       58
         },
 
         'ZEL-72s': {
@@ -345,7 +345,7 @@ var GarageConfig = {
             shortDesc:      'Double turbo diesel 2.1k HP engine with tesla induction generator with Gallium winding.',
             price:          1300,
             power:          10000,
-            maxSpeed:       100
+            maxSpeed:       62
         },
 
         'KTZ-r1': {
@@ -356,7 +356,7 @@ var GarageConfig = {
             shortDesc:      'Plutonium 3.2k HP engine with organic-based generator.',
             price:          1700,
             power:          10000,
-            maxSpeed:       100
+            maxSpeed:       75
         },
 
         'KTZ-r2': {
@@ -367,7 +367,7 @@ var GarageConfig = {
             shortDesc:      'Improved plutonium 3.4k HP engine with organic-based generator.',
             price:          2000,
             power:          10000,
-            maxSpeed:       100
+            maxSpeed:       78
         },
 
         'VAX-32': {
@@ -378,7 +378,7 @@ var GarageConfig = {
             shortDesc:      'Polonium ARK 3.7k HP engine with generator and Lithium batteries.',
             price:          3000,
             power:          10000,
-            maxSpeed:       100
+            maxSpeed:       85
         },
 
         'VAX-32s': {
@@ -389,7 +389,7 @@ var GarageConfig = {
             shortDesc:      'Improved polonium ARK 4.2k HP engine.',
             price:          4500,
             power:          10000,
-            maxSpeed:       100
+            maxSpeed:       89
         },
 
         'VAX-32v2': {
@@ -400,7 +400,7 @@ var GarageConfig = {
             shortDesc:      'Modified VAX32s with Cesium core, 4.6k HP.',
             price:          6000,
             power:          10000,
-            maxSpeed:       100
+            maxSpeed:       93
         }
 
     },

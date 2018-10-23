@@ -146,6 +146,8 @@ export class Garage {
 
     private updateRightMenu ( category: string, itemId: string ) : void {
 
+        // getting old / selected tank parts
+
         const tankName = ( category === 'tanks' ) ? itemId : this.params.selected;
         const tank = this.GarageConfig.tanks[ tankName ];
         const currentTank = this.GarageConfig.tanks[ localStorage.getItem('SelectedTank') || '' ];
@@ -153,46 +155,97 @@ export class Garage {
         const description = this.GarageConfig[ category ][ itemId ].description;
 
         let cannonId = ( category === 'cannons' ) ? itemId : localStorage.getItem('SelectedCannon') || '';
-        if ( category === 'tanks' ) cannonId = this.GarageConfig.tanks[ itemId ].default.cannon;
+        if ( category === 'tanks' && itemId !== this.params.selected ) cannonId = this.GarageConfig.tanks[ itemId ].default.cannon;
         const cannon = this.GarageConfig.cannons[ cannonId ];
         const currentCannon = this.GarageConfig.cannons[ localStorage.getItem('SelectedCannon') || '' ];
 
         let armorId = ( category === 'armors' ) ? itemId : localStorage.getItem('SelectedArmor') || '';
-        if ( category === 'tanks' ) armorId = this.GarageConfig.tanks[ itemId ].default.armor;
+        if ( category === 'tanks' && itemId !== this.params.selected ) armorId = this.GarageConfig.tanks[ itemId ].default.armor;
         const armor = this.GarageConfig.armors[ armorId ];
         const currentArmor = this.GarageConfig.armors[ localStorage.getItem('SelectedArmor') || '' ];
 
         let engineId = ( category === 'engines' ) ? itemId : localStorage.getItem('SelectedEngine') || '';
-        if ( category === 'tanks' ) engineId = this.GarageConfig.tanks[ itemId ].default.engine;
+        if ( category === 'tanks' && itemId !== this.params.selected ) engineId = this.GarageConfig.tanks[ itemId ].default.engine;
         const engine = this.GarageConfig.engines[ engineId ];
+        const currentEngine = this.GarageConfig.engines[ localStorage.getItem('SelectedEngine') || '' ];
 
-        //
+        // update descriptions
+
+        $('.garage .right-block .cannon-short-desc').html( cannon.shortDesc );
+        $('.garage .right-block .armor-short-desc').html( armor.shortDesc );
+        $('.garage .right-block .engine-short-desc').html( engine.shortDesc );
+
+        // updating cannon 'damage' UI
 
         const deltaDamage = 100 * ( tank.cannonCoef * cannon.damage - currentTank.cannonCoef * currentCannon.damage ) / this.maxConfigValues.damage;
 
-        $('.garage .right-block .cannon-short-desc').html( cannon.shortDesc );
         $('.garage .tank-stats .cannon.stats-value').html( cannon.damage + 'p' );
         $('.garage .tank-stats .cannon.stats-progress .green').css( 'width', ( 100 * currentTank.cannonCoef * currentCannon.damage / this.maxConfigValues.damage ) + '%' );
         $('.garage .tank-stats .cannon.stats-progress .delta').css({
             'width': Math.abs( deltaDamage ) + '%',
             'left': 100 * Math.min( currentTank.cannonCoef * currentCannon.damage, tank.cannonCoef * cannon.damage ) / this.maxConfigValues.damage + '%',
-            'background-color': ( deltaDamage > 0 ) ? 'rgba( 74, 239, 74, 1 )' : 'rgba( 220, 239, 74, 1 )',
+            'background-color': ( deltaDamage > 0 ) ? 'rgba( 74, 239, 74, 1 )' : 'rgba( 234, 63, 63, 1 )',
         });
 
-        //
+        // updating cannon 'reload/rpm' UI
+
+        const deltaRPM = 100 * ( cannon.rpm - currentCannon.rpm ) / this.maxConfigValues.rpm;
+
+        $('.garage .tank-stats .reload.stats-value').html( cannon.rpm + 'rpm' );
+        $('.garage .tank-stats .reload.stats-progress .green').css( 'width', ( 100 * currentCannon.rpm / this.maxConfigValues.rpm ) + '%' );
+        $('.garage .tank-stats .reload.stats-progress .delta').css({
+            'width': Math.abs( deltaRPM ) + '%',
+            'left': 100 * Math.min( currentCannon.rpm, cannon.rpm ) / this.maxConfigValues.rpm + '%',
+            'background-color': ( deltaRPM > 0 ) ? 'rgba( 74, 239, 74, 1 )' : 'rgba( 234, 63, 63, 1 )',
+        });
+
+        // updating cannon 'range' UI
+
+        const deltaRange = 100 * ( cannon.range - currentCannon.range ) / this.maxConfigValues.range;
+
+        $('.garage .tank-stats .range.stats-value').html( cannon.range + 'km' );
+        $('.garage .tank-stats .range.stats-progress .green').css( 'width', ( 100 * currentCannon.range / this.maxConfigValues.range ) + '%' );
+        $('.garage .tank-stats .range.stats-progress .delta').css({
+            'width': Math.abs( deltaRange ) + '%',
+            'left': 100 * Math.min( currentCannon.range, cannon.range ) / this.maxConfigValues.range + '%',
+            'background-color': ( deltaRange > 0 ) ? 'rgba( 74, 239, 74, 1 )' : 'rgba( 234, 63, 63, 1 )',
+        });
+
+        // updating cannon 'range' UI
+
+        const deltaOverheat = 100 * ( cannon.overheat - currentCannon.overheat ) / this.maxConfigValues.overheat;
+
+        $('.garage .tank-stats .overheat.stats-value').html( cannon.overheat + 'p' );
+        $('.garage .tank-stats .overheat.stats-progress .green').css( 'width', ( 100 * currentCannon.overheat / this.maxConfigValues.overheat ) + '%' );
+        $('.garage .tank-stats .overheat.stats-progress .delta').css({
+            'width': Math.abs( deltaOverheat ) + '%',
+            'left': 100 * Math.min( currentCannon.overheat, cannon.overheat ) / this.maxConfigValues.overheat + '%',
+            'background-color': ( deltaOverheat > 0 ) ? 'rgba( 74, 239, 74, 1 )' : 'rgba( 234, 63, 63, 1 )',
+        });
+
+        // updating armor 'armor' UI
 
         const deltaArmor = 100 * ( tank.armorCoef * armor.armor - currentTank.armorCoef * currentArmor.armor ) / this.maxConfigValues.armor;
 
-        $('.garage .right-block .armor-short-desc').html( armor.shortDesc );
         $('.garage .tank-stats .armor.stats-value').html( armor.armor + 'p' );
         $('.garage .tank-stats .armor.stats-progress .green').css( 'width', ( 100 * currentTank.armorCoef * currentArmor.armor / this.maxConfigValues.armor ) + '%' );
         $('.garage .tank-stats .armor.stats-progress .delta').css({
             'width': Math.abs( deltaArmor ) + '%',
             'left': 100 * Math.min( currentTank.cannonCoef * currentArmor.armor, tank.armorCoef * armor.armor ) / this.maxConfigValues.armor + '%',
-            'background-color': ( deltaArmor > 0 ) ? 'rgba( 74, 239, 74, 1 )' : 'rgba( 220, 239, 74, 1 )',
+            'background-color': ( deltaArmor > 0 ) ? 'rgba( 74, 239, 74, 1 )' : 'rgba( 234, 63, 63, 1 )',
         });
 
-        $('.garage .right-block .engine-short-desc').html( engine.shortDesc );
+        // updating engine 'maxSpeed' UI
+
+        const deltaSpeed = 100 * ( tank.speedCoef * engine.maxSpeed - currentTank.speedCoef * currentEngine.maxSpeed ) / this.maxConfigValues.maxSpeed;
+
+        $('.garage .tank-stats .speed.stats-value').html( tank.speedCoef * engine.maxSpeed + 'km/h' );
+        $('.garage .tank-stats .speed.stats-progress .green').css( 'width', ( 100 * currentTank.speedCoef * currentEngine.maxSpeed / this.maxConfigValues.maxSpeed ) + '%' );
+        $('.garage .tank-stats .speed.stats-progress .delta').css({
+            'width': Math.abs( deltaSpeed ) + '%',
+            'left': 100 * Math.min( currentTank.speedCoef * currentEngine.maxSpeed, tank.speedCoef * engine.maxSpeed ) / this.maxConfigValues.maxSpeed + '%',
+            'background-color': ( deltaSpeed > 0 ) ? 'rgba( 74, 239, 74, 1 )' : 'rgba( 234, 63, 63, 1 )',
+        });
 
         //
 
@@ -232,41 +285,7 @@ export class Garage {
 
     private showCurrentTankInRightMenu () : void {
 
-        const tank = this.GarageConfig.tanks[ localStorage.getItem('SelectedTank') || '' ];
-        const cannon = this.GarageConfig.cannons[ localStorage.getItem('SelectedCannon') || '' ];
-        const armor = this.GarageConfig.armors[ localStorage.getItem('SelectedArmor') || '' ];
-        const engine = this.GarageConfig.engines[ localStorage.getItem('SelectedEngine') || '' ];
-
-        $('.garage .right-block .item-title').html( 'Your tank "' + tank.title + '"' );
-        $('.garage .right-block .item-description .main-text').html( tank.description );
-        $('.garage .right-block .cannon-short-desc').html( cannon.shortDesc );
-        $('.garage .right-block .armor-short-desc').html( armor.shortDesc );
-        $('.garage .right-block .engine-short-desc').html( engine.shortDesc );
-        $('.garage .right-block .tank-stats').show();
-
-        //
-
-        const damageValue = Math.floor( tank.cannonCoef * cannon.damage );
-        const armorValue = Math.floor( tank.armorCoef * armor.armor );
-        const speedValue = engine.maxSpeed;
-        const reloadValue = cannon.reload;
-        const overheatValue = cannon.overheating;
-
-        const maxSpeedValue = 100;
-        const maxReloadValue = 10;
-        const maxOverheatValue = 10;
-
-        $('.garage .right-block .tank-stats .stats-value.cannon').html( damageValue + 'p' );
-        $('.garage .right-block .tank-stats .stats-value.armor').html( armorValue + 'p' );
-        $('.garage .right-block .tank-stats .stats-value.speed').html( speedValue + 'km/h' );
-        $('.garage .right-block .tank-stats .stats-value.reload').html( reloadValue + 's' );
-        $('.garage .right-block .tank-stats .stats-value.overheat').html( overheatValue + 'p' );
-
-        $('.garage .right-block .tank-stats .stats-progress.cannon .green').css( 'width', ( 100 * damageValue / this.maxConfigValues.damage ) + '%' );
-        $('.garage .right-block .tank-stats .stats-progress.armor .green').css( 'width', ( 100 * armorValue / this.maxConfigValues.armor ) + '%' );
-        $('.garage .right-block .tank-stats .stats-progress.speed .green').css( 'width', ( 100 * speedValue / maxSpeedValue ) + '%' );
-        $('.garage .right-block .tank-stats .stats-progress.reload .green').css( 'width', ( 100 * reloadValue / maxReloadValue ) + '%' );
-        $('.garage .right-block .tank-stats .stats-progress.overheat .green').css( 'width', ( 100 * overheatValue / maxOverheatValue ) + '%' );
+        this.updateRightMenu( 'tanks', localStorage.getItem('SelectedTank') || 'IS2001' );
 
     };
 
@@ -410,11 +429,19 @@ export class Garage {
     private getMaxConfigValues () : void {
 
         this.maxConfigValues.damage = 0;
+        this.maxConfigValues.rpm = 0;
+        this.maxConfigValues.range = 0;
+        this.maxConfigValues.overheat = 0;
+
+        //
 
         for ( const name in this.GarageConfig.cannons ) {
 
             const cannon = this.GarageConfig.cannons[ name ];
-            this.maxConfigValues.damage = ( 1.8 * cannon.damage > this.maxConfigValues.damage ) ? 1.8 * cannon.damage : this.maxConfigValues.damage;
+            this.maxConfigValues.damage = ( 1.2 * cannon.damage > this.maxConfigValues.damage ) ? 1.2 * cannon.damage : this.maxConfigValues.damage;
+            this.maxConfigValues.rpm = ( 1.2 * cannon.rpm > this.maxConfigValues.rpm ) ? 1.2 * cannon.rpm : this.maxConfigValues.rpm;
+            this.maxConfigValues.range = ( 1.2 * cannon.range > this.maxConfigValues.range ) ? 1.2 * cannon.range : this.maxConfigValues.range;
+            this.maxConfigValues.overheat = ( 1.2 * cannon.overheat > this.maxConfigValues.overheat ) ? 1.2 * cannon.overheat : this.maxConfigValues.overheat;
 
         }
 
@@ -426,6 +453,17 @@ export class Garage {
 
             const armor = this.GarageConfig.armors[ name ];
             this.maxConfigValues.armor = ( 1.8 * armor.armor > this.maxConfigValues.armor ) ? 1.8 * armor.armor : this.maxConfigValues.armor;
+
+        }
+
+        //
+
+        this.maxConfigValues.maxSpeed = 0;
+
+        for ( const name in this.GarageConfig.engines ) {
+
+            const engine = this.GarageConfig.engines[ name ];
+            this.maxConfigValues.maxSpeed = ( 1.8 * engine.maxSpeed > this.maxConfigValues.maxSpeed ) ? 1.8 * engine.maxSpeed : this.maxConfigValues.maxSpeed;
 
         }
 
