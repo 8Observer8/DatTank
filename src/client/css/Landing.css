@@ -430,6 +430,12 @@
     height: 60px;
 }
 
+@media only screen and (max-width: 880px) {
+    .share-btns {
+        display: none;
+    }
+}
+
 .share-btns a {
     position: relative;
     float: left;
