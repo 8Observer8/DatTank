@@ -32,7 +32,6 @@ export class TankObject {
 
     //
 
-    public nid: number;
     public id: number;
     public title: string;
     public team: TeamCore;
@@ -45,12 +44,9 @@ export class TankObject {
     public viewRange: number = 750;
     public size: OMath.Vec3 = new OMath.Vec3( 30, 25, 70 );
 
-    public range: number = 300;
-
     public moveDirection: OMath.Vec2 = new OMath.Vec2();
     public deltaPosition: OMath.Vec3 = new OMath.Vec3();
 
-    public overheating: number = 0;
     private shootTimeout: any;
     private shootingInterval: any;
     private sinceHitRegenerationLimit: number = 5000;
@@ -67,7 +63,6 @@ export class TankObject {
     public collisionBox: object;
 
     public readonly type = 'Tank';
-    public typeId: number;
     public player: PlayerCore;
     public arena: ArenaCore;
 
@@ -265,14 +260,14 @@ export class TankObject {
 
             this.shootTimeout = false;
 
-        }, 1000 * 60 / this.cannon.rpm );
+        }, 1000 * 60 / ( this.cannon.rpm * 5 ) );
 
         // overheating
 
-        if ( this.overheating >= 80 ) return;
-        this.overheating *= 1.2;
-        this.overheating += 12;
-        this.overheating = Math.min( this.overheating, 100 );
+        if ( this.cannon.temperature >= 80 ) return;
+        this.cannon.temperature *= 1.2;
+        this.cannon.temperature += 12;
+        this.cannon.temperature = Math.min( this.cannon.temperature, 100 );
 
         //
 
@@ -341,6 +336,8 @@ export class TankObject {
         this.stopShooting();
         this.setMovement( 0, 0 );
 
+        //
+
         if ( this.player.bot ) {
 
             this.player.bot.die();
@@ -350,6 +347,10 @@ export class TankObject {
             this.arena.removePlayer( this.player );
 
         }
+
+        //
+
+        setTimeout( ( tank: TankObject ) => { tank.dispose(); }, 100, this );
 
     };
 
@@ -486,9 +487,9 @@ export class TankObject {
 
         if ( this.health <= 0 ) return;
 
-        if ( this.overheating > 0 ) {
+        if ( this.cannon.temperature > 0 ) {
 
-            this.overheating -= 0.2 * delta / 20;
+            this.cannon.temperature -= 0.2 * delta / 20;
 
         }
 
@@ -503,6 +504,7 @@ export class TankObject {
         this.network.dispose();
         this.arena.removeObjectFromRangeParams( this );
         this.arena.collisionManager.removeObject( this );
+        this.arena.tankManager.remove( this.id );
 
     };
 

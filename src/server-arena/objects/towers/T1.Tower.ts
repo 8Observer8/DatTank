@@ -3,8 +3,8 @@
  * Tower "T1" unit class
 */
 
-import { TowerObject } from "./../core/Tower.Object";
-import { ArenaCore } from "./../../core/Arena.Core";
+import { TowerObject } from '../core/Tower.Object';
+import { ArenaCore } from '../../core/Arena.Core';
 
 //
 

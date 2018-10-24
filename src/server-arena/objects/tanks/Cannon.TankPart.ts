@@ -13,6 +13,8 @@ export class CannonTankPart {
     public overheat: number;
     public range: number;
 
+    public temperature: number;
+
     //
 
     constructor ( params: any ) {
@@ -24,6 +26,8 @@ export class CannonTankPart {
         this.damage = params.damage;
         this.overheat = params.overheat;
         this.range = params.range;
+
+        this.temperature = 0;
 
     };
 

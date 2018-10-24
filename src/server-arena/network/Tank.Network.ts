@@ -130,7 +130,7 @@ export class TankNetwork {
         bufferView[3] = bullet.position.x;
         bufferView[4] = bullet.position.z;
         bufferView[5] = ( - this.tank.rotationTop - this.tank.rotation ) * 1000;
-        bufferView[6] = this.tank.overheating;
+        bufferView[6] = this.tank.cannon.temperature;
 
         this.arena.network.sendEventToPlayersInRange( this.tank.position, 'TankMakeShot', buffer, bufferView );
 

@@ -30,6 +30,7 @@ class TankGfx {
     public damageSmoke: DamageSmokeGfx = new DamageSmokeGfx();
     public blastSmoke: BlastSmokeGfx = new BlastSmokeGfx();
 
+    private hide: boolean = false;
     private sounds = {};
 
     //
@@ -173,6 +174,14 @@ class TankGfx {
 
         }
 
+        //
+
+        if ( this.hide ) {
+
+            this.object.position.y -= 0.3;
+
+        }
+
         this.object.updateMatrixWorld( true );
 
     };
@@ -237,11 +246,25 @@ class TankGfx {
 
     };
 
-    public destroy () : void {
+    public destroy ( callback: () => void ) : void {
 
         this.mesh.playAnimation('death');
         LargeExplosionManager.showExplosion( this.tank.position );
         this.sounds['explosion'].play();
+
+        //
+
+        setTimeout( () => {
+
+            this.hide = true;
+
+        }, 1500 );
+
+        setTimeout( () => {
+
+            callback();
+
+        }, 3500 );
 
     };
 

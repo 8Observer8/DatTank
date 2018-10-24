@@ -77,7 +77,6 @@ export class PlayerCore {
 
         if ( Arena.me.id === this.id && this.tank ) {
 
-            this.tank.dispose();
             this.prepareTank( params.tank );
             this.tank.init();
             this.level = 0;

@@ -158,12 +158,9 @@ export class PlayerCore {
 
     public respawn ( tankConfig: object ) : void {
 
-        this.status = PlayerCore.Alive;
         this.bonusLevels = 0;
         this.level = 0;
 
-        this.tank.dispose();
-        this.arena.tankManager.remove( this.tank.id );
         this.prepareTank( tankConfig );
         this.tank.setRespawnPosition();
         this.status = PlayerCore.Alive;

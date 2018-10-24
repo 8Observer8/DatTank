@@ -109,7 +109,11 @@ export class TankObject {
 
     public die () : void {
 
-        this.gfx.destroy();
+        this.gfx.destroy( () => {
+
+            this.dispose();
+
+        });
 
         if ( this.player.id === Arena.me.id ) {
 
