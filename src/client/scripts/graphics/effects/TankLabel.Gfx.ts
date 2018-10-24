@@ -17,7 +17,7 @@ export class TankLabelGfx {
 
     //
 
-    public update ( health: number, armour: number, teamColor: number, overheating: number, login: string, isMe: boolean ) : void {
+    public update ( health: number, armor: number, teamColor: number, overheating: number, login: string, isMe: boolean ) : void {
 
         if ( ! this.ctx ) return;
 
@@ -71,11 +71,11 @@ export class TankLabelGfx {
         this.ctx.fillStyle = OMath.intToHex( teamColor );
         this.ctx.fillRect( 0, offset, width * ( health / 100 ), 10 );
 
-        // draw health 'amount' lines based on armour
+        // draw health 'amount' lines based on armor
 
         this.ctx.strokeStyle = 'rgba( 0, 0, 0, 0.3 )';
 
-        for ( let i = 0, il = 3 * armour / 50; i < il; i ++ ) {
+        for ( let i = 0, il = 3 * armor / 50; i < il; i ++ ) {
 
             this.ctx.beginPath();
             this.ctx.moveTo( i * width / il, offset );

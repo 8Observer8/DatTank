@@ -16,7 +16,7 @@ export class TowerLabelGfx {
 
     //
 
-    public update ( health: number, armour: number, teamColor: number ) : void {
+    public update ( health: number, armor: number, teamColor: number ) : void {
 
         if ( ! this.ctx ) return;
 
@@ -40,11 +40,11 @@ export class TowerLabelGfx {
         this.ctx.fillStyle = OMath.intToHex( teamColor );
         this.ctx.fillRect( 0, 0, width * ( health / 100 ), 10 );
 
-        // draw health 'amout' lines based on armour
+        // draw health 'amount' lines based on armor
 
         this.ctx.strokeStyle = 'rgba( 0, 0, 0, 0.3 )';
 
-        for ( let i = 0, il = 3 * armour / 50; i < il; i ++ ) {
+        for ( let i = 0, il = 3 * armor / 50; i < il; i ++ ) {
 
             this.ctx.beginPath();
             this.ctx.moveTo( i * width / il, 0 );

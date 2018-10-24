@@ -17,7 +17,7 @@ class GarageManagerCore {
 
     private static instance: GarageManagerCore;
 
-    public tanks: any[];
+    public bases: any[];
     public cannons: any[];
     public armors: any[];
     public engines: any[];
@@ -26,10 +26,74 @@ class GarageManagerCore {
 
     public set ( config: any ) : void {
 
-        this.tanks = config.tanks;
+        this.bases = config.tanks;
         this.cannons = config.cannons;
         this.armors = config.armors;
         this.engines = config.engines;
+
+    };
+
+    public getBaseById ( id: number ) : any {
+
+        for ( const i in this.bases ) {
+
+            if ( this.bases[ i ].nid === id ) {
+
+                return this.bases[ i ];
+
+            }
+
+        }
+
+        return null;
+
+    };
+
+    public getCannonById ( id: number ) : any {
+
+        for ( const i in this.cannons ) {
+
+            if ( this.cannons[ i ].nid === id ) {
+
+                return this.cannons[ i ];
+
+            }
+
+        }
+
+        return null;
+
+    };
+
+    public getArmorById ( id: number ) : any {
+
+        for ( const i in this.armors ) {
+
+            if ( this.armors[ i ].nid === id ) {
+
+                return this.armors[ i ];
+
+            }
+
+        }
+
+        return null;
+
+    };
+
+    public getEngineById ( id: number ) : any {
+
+        for ( const i in this.engines ) {
+
+            if ( this.engines[ i ].nid === id ) {
+
+                return this.engines[ i ];
+
+            }
+
+        }
+
+        return null;
 
     };
 
@@ -39,8 +103,8 @@ class GarageManagerCore {
 
         params = params || {};
 
-        params.tank = ( this.tanks[ params.tank ] !== undefined ) ? params.tank : 'IS2001';
-        const rawTankData = this.tanks[ params.tank ];
+        params.tank = ( this.bases[ params.tank ] !== undefined ) ? params.tank : 'IS2001';
+        const rawTankData = this.bases[ params.tank ];
         params.cannon = params.cannon || rawTankData.default.cannon;
         params.armor = params.armor || rawTankData.default.armor;
         params.engine = params.engine || rawTankData.default.engine;
@@ -48,7 +112,7 @@ class GarageManagerCore {
         //
 
         const tankObject = new TankObject( player );
-        tankObject.base = new BaseTankPart( this.tanks[ params.tank ] );
+        tankObject.base = new BaseTankPart( this.bases[ params.tank ] );
         tankObject.cannon = new CannonTankPart( this.cannons[ params.cannon ]);
         tankObject.armor = new ArmorTankPart( this.armors[ params.armor ] );
         tankObject.engine = new EngineTankPart( this.engines[ params.engine ] );

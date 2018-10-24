@@ -58,7 +58,17 @@ export class PlayerCore {
 
     public triggerRespawn () : void {
 
-        this.network.respawn();
+        if ( ! this.tank ) return;
+
+        this.network.respawn({
+            base:       this.tank.base.nid,
+            cannon:     this.tank.cannon.nid,
+            armor:      this.tank.armor.nid,
+            engine:     this.tank.engine.nid,
+        });
+
+        //
+
         Logger.newEvent( 'Respawn', 'game' );
 
     };

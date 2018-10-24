@@ -5,6 +5,7 @@
 
 import * as ws from 'ws';
 
+import { GarageManager } from '../managers/Garage.Manager';
 import { Network } from '../network/Core.Network';
 import { PlayerCore } from '../core/Player.Core';
 import { ArenaCore } from '../core/Arena.Core';
@@ -34,14 +35,25 @@ export class PlayerNetwork {
 
         if ( this.filter( data, socket ) ) return;
 
-        const tankTypeId = data[1];
-        const tankList = { 0: 'IS2', 1: 'T29', 2: 'T44', 3: 'T54' };
-        const tankName = tankList[ tankTypeId ];
-        this.player.respawn( tankName );
+        const baseId = data[1];
+        const cannonId = data[2];
+        const armorId = data[3];
+        const engineId = data[4];
+
+        const base = GarageManager.getBaseById( baseId );
+        const cannon = GarageManager.getCannonById( cannonId );
+        const armor = GarageManager.getArmorById( armorId );
+        const engine = GarageManager.getEngineById( engineId );
+
+        if ( ! base || ! cannon || ! armor || ! engine ) return;
+
+        //
+
+        this.player.respawn({ base: base.id, cannon: cannon.id, armor: armor.id, engine: engine.id });
 
     };
 
-    private setTankStatsUpdte ( data: Int16Array, socket: ws ) : void {
+    private setTankStatsUpdate ( data: Int16Array, socket: ws ) : void {
 
         if ( this.filter( data, socket ) ) return;
 
@@ -91,7 +103,7 @@ export class PlayerNetwork {
     public dispose () : void {
 
         Network.removeMessageListener( 'PlayerRespawn', this.setRespawn );
-        Network.removeMessageListener( 'PlayerTankUpdateStats', this.setTankStatsUpdte );
+        Network.removeMessageListener( 'PlayerTankUpdateStats', this.setTankStatsUpdate );
 
     };
 
@@ -103,12 +115,12 @@ export class PlayerNetwork {
         //
 
         this.setRespawn = this.setRespawn.bind( this );
-        this.setTankStatsUpdte = this.setTankStatsUpdte.bind( this );
+        this.setTankStatsUpdate = this.setTankStatsUpdate.bind( this );
 
         //
 
         Network.addMessageListener( 'PlayerRespawn', this.setRespawn );
-        Network.addMessageListener( 'PlayerTankUpdateStats', this.setTankStatsUpdte );
+        Network.addMessageListener( 'PlayerTankUpdateStats', this.setTankStatsUpdate );
 
     };
 

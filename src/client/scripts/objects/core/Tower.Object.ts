@@ -22,9 +22,9 @@ export class TowerObject {
     public id: number;
     public team: TeamCore;
 
-    public bullet: number;
+    public damage: number;
     public rpm: number;
-    public armour: number;
+    public armor: number;
 
     public health: number;
     public rotation: number;
@@ -71,7 +71,7 @@ export class TowerObject {
 
             this.team = team;
             this.gfx.changeTeam( this.team.color, killerId === undefined );
-            this.gfx.label.update( this.health, this.armour, this.team.color );
+            this.gfx.label.update( this.health, this.armor, this.team.color );
 
         }
 
@@ -103,7 +103,7 @@ export class TowerObject {
         }
 
         this.health = value;
-        this.gfx.label.update( this.health, this.armour, this.team.color );
+        this.gfx.label.update( this.health, this.armor, this.team.color );
 
     };
 

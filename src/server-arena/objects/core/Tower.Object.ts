@@ -27,8 +27,8 @@ export class TowerObject {
     public target: TankObject | null;
 
     public range: number = 500;
-    public armour: number = 100;
-    public bullet: number = 50;
+    public armor: number = 100;
+    public damage: number = 50;
     public collisionBox: any;
 
     public arena: ArenaCore;
@@ -127,7 +127,7 @@ export class TowerObject {
 
             killer.player.changeScore( 1 );
             this.arena.updateLeaderboard();
-            this.changeHealth( - 20 * ( killer.cannon.damage / this.armour ) * ( 0.5 * Math.random() + 0.5 ) );
+            this.changeHealth( - 20 * ( 0.3 * Math.random() + 0.7 ) * ( killer.base.cannonCoef * killer.cannon.damage ) / this.armor );
 
             //
 
@@ -138,11 +138,6 @@ export class TowerObject {
                 this.arena.updateLeaderboard();
 
             }
-
-        } else {
-
-            // todo!
-            this.changeHealth( - 20 * ( killer.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ) );
 
         }
 

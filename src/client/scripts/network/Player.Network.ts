@@ -76,14 +76,14 @@ export class PlayerNetwork {
 
     };
 
-    public respawn ( tankId?: number ) : void {
+    public respawn ( params: any ) : void {
 
         let buffer;
         let bufferView;
 
         if ( ! this.buffers['Respawn'] ) {
 
-            buffer = new ArrayBuffer( 6 );
+            buffer = new ArrayBuffer( 12 );
             bufferView = new Int16Array( buffer );
 
             this.buffers['Respawn'] = {
@@ -101,7 +101,12 @@ export class PlayerNetwork {
         //
 
         bufferView[1] = this.player.id;
-        bufferView[2] = tankId || 0;
+        bufferView[2] = params.base;
+        bufferView[3] = params.cannon;
+        bufferView[4] = params.armor;
+        bufferView[5] = params.engine;
+
+        //
 
         Network.send( 'PlayerRespawn', buffer, bufferView );
 

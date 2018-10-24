@@ -8,7 +8,7 @@ export class BaseTankPart {
     public nid: number;
     public title: string;
 
-    public armourCoef: number;
+    public armorCoef: number;
     public speedCoef: number;
     public ammoCapacity: number;
 
@@ -17,7 +17,7 @@ export class BaseTankPart {
     constructor ( params: any ) {
 
         this.nid = params.nid;
-        this.armourCoef = params.armourCoef;
+        this.armorCoef = params.armorCoef;
         this.speedCoef = params.speedCoef;
         this.ammoCapacity = params.ammoCapacity;
 

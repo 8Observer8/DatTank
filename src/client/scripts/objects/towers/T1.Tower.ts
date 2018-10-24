@@ -12,9 +12,9 @@ export class T1Tower extends TowerObject {
     public static title: string = 'T1';
     public static tid = 0;
 
-    public static bullet: number = 76;
+    public static damage: number = 76;
     public static rpm: number = 16.7 * 10;
-    public static armour: number = 102;
+    public static armor: number = 102;
 
     //
 
@@ -24,9 +24,9 @@ export class T1Tower extends TowerObject {
 
         //
 
-        this.bullet = T1Tower.bullet;
+        this.damage = T1Tower.damage;
         this.rpm = T1Tower.rpm;
-        this.armour = T1Tower.armour;
+        this.armor = T1Tower.armor;
         this.title = T1Tower.title;
 
     };

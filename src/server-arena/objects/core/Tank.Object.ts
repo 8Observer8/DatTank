@@ -21,11 +21,11 @@ import { EngineTankPart } from '../tanks/Engine.TankPart';
 export class TankObject {
 
     private static numIds = 1;
-    // private static statsList = [ 'speed', 'rpm', 'armour', 'gun', 'ammoCapacity' ];
+    // private static statsList = [ 'speed', 'rpm', 'armor', 'gun', 'ammoCapacity' ];
     // private static levelStatsChange = {
     //     speed:          [  5,  3,  2,  2,  2,  3,  1,  3,  3,  2,  5,  3,  3,  2,  1,  1,  1,  1,  1,  1,  1,  1,  1 ],
     //     rpm:            [ 30, 20, 20, 15, 10, 15, 20, 20, 30, 40, 30, 20, 10, 10, 20, 30, 20, 10, 20, 20, 20, 10, 15 ],
-    //     armour:         [ 40, 30, 20, 20, 30, 40, 50, 20, 30, 50, 30, 20, 10, 10, 20, 20, 30, 20, 10, 15, 20, 10, 10 ],
+    //     armor:         [ 40, 30, 20, 20, 30, 40, 50, 20, 30, 50, 30, 20, 10, 10, 20, 20, 30, 20, 10, 15, 20, 10, 10 ],
     //     gun:            [ 20, 15, 15, 20, 15, 10,  5,  5, 10, 15, 20, 30, 35, 40, 20, 10, 15, 15, 20, 10, 10, 10, 30 ],
     //     ammoCapacity:   [ 30, 20, 20, 40, 30, 20,  5,  5, 10, 20, 15, 20, 15, 30, 20, 10, 15, 15, 10, 10, 10, 20, 30 ]
     // };
@@ -96,9 +96,9 @@ export class TankObject {
         //         this.rpm += levelsStats['rpm'][ level ];
         //         break;
 
-        //     case 'armour':
+        //     case 'armor':
 
-        //         this.armour += levelsStats['armour'][ level ];
+        //         this.armor += levelsStats['armor'][ level ];
         //         break;
 
         //     case 'gun':
@@ -185,8 +185,15 @@ export class TankObject {
 
         if ( killer.team.id !== this.player.team.id ) {
 
-            // todo!
-            // this.changeHealth( - 20 * ( killer.bullet / this.armour ) * ( 0.5 * Math.random() + 0.5 ), killer );
+            if ( killer instanceof TankObject ) {
+
+                this.changeHealth( - 20 * ( 0.3 * Math.random() + 0.7 ) * ( killer.base.cannonCoef * killer.cannon.damage ) / ( this.base.armorCoef * this.armor.armor ), killer );
+
+            } else if ( killer instanceof TowerObject ) {
+
+                this.changeHealth( - 20 * ( 0.3 * Math.random() + 0.7 ) * ( killer.damage ) / ( this.base.armorCoef * this.armor.armor ), killer );
+
+            }
 
         }
 
@@ -515,13 +522,34 @@ export class TankObject {
 
         return {
             id:             this.id,
-            typeId:         this.typeId,
             health:         this.health,
             ammo:           this.ammo,
             rotation:       this.rotation,
             rotationTop:    this.rotationTop,
             position:       this.position.toJSON(),
             moveDirection:  this.moveDirection.toJSON(),
+            base:           {
+                nid:            this.base.nid,
+                speedCoef:      this.base.speedCoef,
+                cannonCoef:     this.base.speedCoef,
+                armorCoef:      this.base.armorCoef,
+                ammoCapacity:   this.base.ammoCapacity,
+            },
+            cannon:         {
+                nid:            this.cannon.nid,
+                damage:         this.cannon.damage,
+                overheating:    this.cannon.overheat,
+                range:          this.cannon.range,
+            },
+            armor:          {
+                nid:            this.armor.nid,
+                armor:          this.armor.armor,
+            },
+            engine:         {
+                nid:            this.engine.nid,
+                maxSpeed:       this.engine.maxSpeed,
+                power:          this.engine.power,
+            },
         };
 
     };

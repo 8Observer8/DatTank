@@ -113,7 +113,7 @@ export class UIInGameModule {
 
             case 51:
 
-                this.updateTankStat('armour');
+                this.updateTankStat('armor');
                 break;
 
             case 52:

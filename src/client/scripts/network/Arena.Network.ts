@@ -98,7 +98,7 @@ export class ArenaNetwork {
                         nid:            data[ i * playerBinSize + 12 ],
                         speedCoef:      data[ i * playerBinSize + 13 ],
                         ammoCapacity:   data[ i * playerBinSize + 14 ],
-                        armourCoef:     data[ i * playerBinSize + 15 ],
+                        armorCoef:      data[ i * playerBinSize + 15 ],
                     },
                     cannon: {
                         nid:        data[ i * playerBinSize + 16 ],
