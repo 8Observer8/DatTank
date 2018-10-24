@@ -266,6 +266,35 @@ PlayerManager.prototype.updateTopBoard = function ( login, score, kills ) {
 
 };
 
+PlayerManager.prototype.getPlayerInfo = function ( pid, callback ) {
+
+    DB.models.players
+    .findOne({ pid: pid })
+    .then( ( player ) => {
+
+        if ( ! player ) {
+
+            return callback( 'Player not found.' );
+
+        }
+
+        return callback( null, {
+            parts:      player.params,
+            xp:         player.xp,
+            coins:      player.coins,
+            level:      player.level
+        });
+
+    });
+
+};
+
+PlayerManager.prototype.savePlayerInfo = function ( pid, coins, xp, callback ) {
+
+    // todo
+
+};
+
 //
 
 function generateGuid () {

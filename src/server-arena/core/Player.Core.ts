@@ -5,7 +5,7 @@
 
 import * as ws from 'ws';
 
-import { Game } from '../Game';
+import { Master } from './Master.Core';
 import { ArenaCore } from './Arena.Core';
 import { BotCore } from './Bot.Core';
 import { TeamCore } from './Team.Core';
@@ -59,6 +59,11 @@ export class PlayerCore {
     public socket: ws;
     public login: string;
     public status: number;
+    public pid: string;
+    public sid: string;
+
+    public coins: number;
+    public xp: number;
     public kills: number = 0;
     public death: number = 0;
     public score: number = 0;
@@ -199,7 +204,7 @@ export class PlayerCore {
 
             if ( delta > 0 ) {
 
-                Game.updateTopList( this.login, this.score, this.kills );
+                Master.updateTopList( this.login, this.score, this.kills );
 
             }
 
@@ -278,7 +283,7 @@ export class PlayerCore {
 
     //
 
-    constructor ( arena: ArenaCore, params: any ) {
+    constructor ( arena: ArenaCore, params: any, callback: ( player: PlayerCore ) => void ) {
 
         if ( PlayerCore.numIds > 1000 ) PlayerCore.numIds = 1;
         this.id = PlayerCore.numIds ++;
@@ -290,10 +295,23 @@ export class PlayerCore {
         this.status = PlayerCore.Alive;
         this.socket = params.socket || null;
 
+        //
+
         if ( this.socket ) {
 
             this.socket['player'] = this;
             this.socket['arena'] = arena;
+
+            Master.getPlayerInfo( params.pid, params.sid, ( data: any ) => {
+
+                console.log( data );
+                callback( this );
+
+            });
+
+        } else {
+
+            callback( this );
 
         }
 

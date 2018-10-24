@@ -7,6 +7,7 @@ import * as ws from 'ws';
 
 import { ArenaCore } from '../core/Arena.Core';
 import { ArenaManagerNetwork } from '../network/ArenaManager.Network';
+import { PlayerCore } from '../core/Player.Core';
 
 //
 
@@ -155,9 +156,18 @@ class ArenaManagerCore {
     public playerJoin ( data: any, socket: ws ) : void {
 
         const arena: ArenaCore = this.findArena();
-        const player = arena.addPlayer({ login: data.login, tankConfig: data.tankConfig, socket });
 
-        arena.network.joinArena( player );
+        arena.addPlayer({
+            pid: data.pid,
+            sid: data.sid,
+            login: data.login,
+            tankConfig: data.tankConfig,
+            socket,
+        }, ( player: PlayerCore ) => {
+
+            arena.network.joinArena( player );
+
+        });
 
     };
 

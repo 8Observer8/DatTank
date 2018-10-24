@@ -132,9 +132,13 @@ export class BotCore {
 
         }
 
-        this.player = this.arena.addPlayer({ login: this.login, tank, socket: false });
-        this.player.tank.ammo = 10000000;
-        this.player.bot = this;
+        this.arena.addPlayer({ login: this.login, tank, socket: false }, ( player: PlayerCore ) => {
+
+            this.player = player;
+            player.tank.ammo = 10000000;
+            player.bot = this;
+
+        });
 
     };
 

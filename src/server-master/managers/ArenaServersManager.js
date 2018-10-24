@@ -40,6 +40,8 @@ ArenaServersManager.prototype.init = function () {
     this.transport.get( '/api/status-update', this.arenaServerStatusUpdate.bind( this ) );
     this.transport.get( '/api/update-top-list', this.updateTopList.bind( this ) );
     this.transport.get( '/api/garage/getObjects', this.getGarageObjects.bind( this ) );
+    this.transport.get( '/api/player/get', this.getPlayerInfo.bind( this ) );
+    this.transport.post( '/api/player/save', this.savePlayerInfo.bind( this ) );
     this.transport.listen( this.transportPort );
 
     // init update interval
@@ -49,6 +51,44 @@ ArenaServersManager.prototype.init = function () {
     //
 
     console.log( '> DatTank MasterServer: Started ArenaServerManager on port ' + this.transportPort );
+
+};
+
+ArenaServersManager.prototype.getPlayerInfo = function ( req, res ) {
+
+    var pid = req.query.pid;
+
+    //
+
+    DT.playerManager.getPlayerInfo( pid, function ( err, data ) {
+
+        if ( err ) {
+
+            return res.send({ err: err });
+
+        }
+
+        //
+
+        return res.send( data );
+
+    });
+
+};
+
+ArenaServersManager.prototype.savePlayerInfo = function ( req, res ) {
+
+    var pid = req.query.pid;
+    var coins = req.query.coins;
+    var xp = req.query.xp;
+
+    //
+
+    DT.playerManager.savePlayerInfo( pid, coins, xp, function () {
+
+        return res.send({ success: true });
+
+    });
 
 };
 

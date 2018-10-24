@@ -77,7 +77,7 @@ export class ArenaCore {
 
     };
 
-    public addPlayer ( params: any ) : PlayerCore {
+    public addPlayer ( params: any, callback: ( player: PlayerCore ) => void ) : void {
 
         // dispose extra bots if needed
 
@@ -95,21 +95,29 @@ export class ArenaCore {
 
         //
 
-        const player = new PlayerCore( this, { login: params.login, socket: params.socket });
-        this.playerManager.add( player );
-        player.spawn( params.tankConfig );
+        const player = new PlayerCore( this, {
+            pid: params.pid,
+            sid: params.sid,
+            login: params.login,
+            socket: params.socket,
+        }, ( createdPlayer: PlayerCore ) => {
 
-        //
+            this.playerManager.add( createdPlayer );
+            createdPlayer.spawn( params.tankConfig );
 
-        if ( ! this.disposed ) {
+            //
 
-            this.updateLeaderboard();
+            if ( ! this.disposed ) {
 
-        }
+                this.updateLeaderboard();
 
-        //
+            }
 
-        return player;
+            //
+
+            callback( createdPlayer );
+
+        });
 
     };
 

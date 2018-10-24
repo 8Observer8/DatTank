@@ -3,9 +3,6 @@
  * Game game core & init
 */
 
-// import * as $ from "jquery";
-// import * as MobileDetect from "mobile-detect";
-
 import { Network } from './network/Core.Network';
 import { Garage } from './garage/Core.Garage';
 import { ResourceManager } from './managers/Resource.Manager';
@@ -33,8 +30,8 @@ class GameCore {
     public garage: Garage = new Garage();
     public gameService: GameService = new GameService();
 
-    public pid: string;
-    public sid: string;
+    public pid: string = window['userData'].pid;
+    public sid: string = window['userData'].sid;
 
     private currentServer: any;
 
@@ -162,7 +159,7 @@ class GameCore {
 
             setTimeout( () => {
 
-                Network.send( 'ArenaJoinRequest', false, { login, tankConfig } );
+                Network.send( 'ArenaJoinRequest', false, { pid: this.pid, sid: this.sid, login, tankConfig } );
 
             }, 1000 );
 
