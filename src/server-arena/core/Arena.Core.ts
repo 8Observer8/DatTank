@@ -77,7 +77,7 @@ export class ArenaCore {
 
     };
 
-    public addPlayer ( params: any, callback: ( player: PlayerCore ) => void ) : void {
+    public addPlayer ( params: any, callback: ( player: PlayerCore ) => void ) : PlayerCore {
 
         // dispose extra bots if needed
 
@@ -118,6 +118,8 @@ export class ArenaCore {
             callback( createdPlayer );
 
         });
+
+        return player;
 
     };
 
