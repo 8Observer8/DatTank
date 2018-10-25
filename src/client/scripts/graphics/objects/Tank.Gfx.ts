@@ -196,11 +196,13 @@ class TankGfx {
         // add tank mesh
 
         const inMaterials = tankModel.material as THREE.MeshBasicMaterial[];
+        const texture = ResourceManager.getTexture( 'IS2.png' )!;
 
         for ( let i = 0, il = inMaterials.length; i < il; i ++ ) {
 
             const material = new THREE.MeshBasicMaterial({ color: 0x777777 });
-            material.map = ResourceManager.getTexture( 'IS2.png' )!.clone();
+            material.map = texture.clone();
+            material.map.uuid = texture.uuid;
             material.map.needsUpdate = true;
             material.map.wrapS = material.map.wrapT = THREE.RepeatWrapping;
             materials.push( material );

@@ -237,10 +237,12 @@ export class TankObject {
         if ( this.rotation > 2 * Math.PI ) {
 
             this.rotation -= 2 * Math.PI;
+            this.gfx.object.rotation.y -= 2 * Math.PI;
 
         } else if ( this.rotation < -2 * Math.PI ) {
 
             this.rotation += 2 * Math.PI;
+            this.gfx.object.rotation.y += 2 * Math.PI;
 
         }
 

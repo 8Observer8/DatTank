@@ -28,7 +28,7 @@ export class LargeExplosionGfx {
         this.time += delta;
 
         const progress = this.time / this.duration;
-        const map = this.sprite.material.map;
+        const map = ( this.sprite.material as THREE.SpriteMaterial ).map!;
 
         map.offset.x = Math.floor( 20 * progress ) % 5;
         map.offset.y = Math.floor( Math.floor( 20 * progress ) / 5 );
@@ -60,6 +60,7 @@ export class LargeExplosionGfx {
         let material;
 
         map = ResourceManager.getTexture( 'explosion1.png' )!.clone();
+        map.uuid = ResourceManager.getTexture( 'explosion1.png' )!.uuid;
         map.wrapS = THREE.RepeatWrapping;
         map.wrapT = THREE.RepeatWrapping;
         map.repeat.set( 0.2, 0.25 );

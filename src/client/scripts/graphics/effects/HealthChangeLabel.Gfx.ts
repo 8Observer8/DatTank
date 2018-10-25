@@ -82,9 +82,10 @@ export class HealthChangeLabelGfx {
         ctx.textAlign = 'left';
         ctx.fillText( text.toString(), 30, 35 );
 
-        this.sprite.material.map = new THREE.Texture( canvas );
-        this.sprite.material.map.needsUpdate = true;
-        this.sprite.material.opacity = 0.5;
+        const material = ( this.sprite.material as THREE.SpriteMaterial );
+        material.map = new THREE.Texture( canvas );
+        material.map.needsUpdate = true;
+        material.opacity = 0.5;
         this.object.position.set( position.x, position.y, position.z );
         this.object.visible = true;
         this.active = true;

@@ -99,7 +99,7 @@ export class TankLabelGfx {
         this.ctx.textAlign = 'left';
         this.ctx.fillText( login, 30, 35 + offset );
 
-        this.sprite.material.map.needsUpdate = true;
+        ( this.sprite.material as THREE.SpriteMaterial ).map!.needsUpdate = true;
         if ( isMe ) this.sprite.scale.set( 0.7 * 47, 0.7 * 12, 1 );
 
     };

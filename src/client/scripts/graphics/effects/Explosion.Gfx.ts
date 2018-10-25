@@ -30,7 +30,7 @@ export class ExplosionGfx {
 
         if ( this.time > 50 ) {
 
-            const map = this.sprite.material.map;
+            const map = ( this.sprite.material as THREE.SpriteMaterial ).map!;
 
             if ( map.offset.y >= 0 ) {
 
@@ -65,12 +65,12 @@ export class ExplosionGfx {
 
             case 0:
 
-                this.sprite.material.map = this.maps[0];
+                ( this.sprite.material as THREE.SpriteMaterial ).map = this.maps[0];
                 break;
 
             case 1:
 
-                this.sprite.material.map = this.maps[1];
+                ( this.sprite.material as THREE.SpriteMaterial ).map = this.maps[1];
                 break;
 
         }
@@ -87,6 +87,7 @@ export class ExplosionGfx {
     public init () : void {
 
         const map1 = ResourceManager.getTexture( 'explosion2.png' )!.clone();
+        map1.uuid = ResourceManager.getTexture( 'explosion2.png' )!.uuid;
         map1.wrapS = THREE.RepeatWrapping;
         map1.wrapT = THREE.RepeatWrapping;
         map1.repeat.set( 0.25, 0.25 );
@@ -95,6 +96,7 @@ export class ExplosionGfx {
         this.maps.push( map1 );
 
         const map2 = ResourceManager.getTexture( 'explosion3.png' )!.clone();
+        map2.uuid = ResourceManager.getTexture( 'explosion3.png' )!.uuid;
         map2.wrapS = THREE.RepeatWrapping;
         map2.wrapT = THREE.RepeatWrapping;
         map2.repeat.set( 0.25, 0.25 );

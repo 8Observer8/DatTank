@@ -66,7 +66,7 @@ export class TowerLabelGfx {
 
         // this.ctx.fillText( login, 30, 35 );
 
-        this.sprite.material.map.needsUpdate = true;
+        ( this.sprite.material as THREE.SpriteMaterial ).map!.needsUpdate = true;
 
     };
 

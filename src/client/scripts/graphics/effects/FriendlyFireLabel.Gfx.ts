@@ -84,7 +84,8 @@ export class FriendlyFireLabelGfx {
 
         // make sprite
 
-        material = new THREE.SpriteMaterial({ map: new THREE.Texture( canvas ), color: 0xffffff, fog: true });
+        material = new THREE.SpriteMaterial({ color: 0xffffff, fog: true });
+        material.map = new THREE.Texture( canvas );
         material.map.needsUpdate = true;
 
         this.sprite = new THREE.Sprite( material );
