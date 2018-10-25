@@ -136,7 +136,7 @@ export class TankObject {
         this.positionCorrection.y = 0;
         this.positionCorrection.z = positionZ - this.position.z;
 
-        this.rotationCorrection = rotation / 1000.0 - this.rotation;
+        this.rotationCorrection = ( rotation / 1000.0 - this.rotation ) % ( 2 * Math.PI );
 
     };
 
@@ -199,7 +199,7 @@ export class TankObject {
 
         const dx = this.positionCorrection.x * delta / 300;
         const dz = this.positionCorrection.z * delta / 300;
-        const dr = this.rotationCorrection * delta / 100;
+        const dr = this.rotationCorrection * delta / 300;
 
         if ( Math.abs( dr ) > 0.001 ) {
 

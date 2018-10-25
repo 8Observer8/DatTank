@@ -495,6 +495,11 @@ export class Garage {
 
                 break;
 
+            case 13: // enter key
+
+                Game.play();
+                break;
+
         }
 
     };
