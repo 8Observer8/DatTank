@@ -279,6 +279,8 @@ PlayerManager.prototype.getPlayerInfo = function ( pid, callback ) {
         }
 
         return callback( null, {
+            pid:        player.pid,
+            sid:        player.sid,
             parts:      player.params,
             xp:         player.xp,
             coins:      player.coins,

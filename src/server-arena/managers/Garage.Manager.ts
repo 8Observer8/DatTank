@@ -97,17 +97,28 @@ class GarageManagerCore {
 
     };
 
-    public prepareTank ( params: any, player: PlayerCore ) : TankObject {
+    public prepareTank ( availableParts: any, params: any, player: PlayerCore ) : TankObject {
 
-        // check params is valid or set default
+        // check params is valid and set default if not [cheater detected]
 
         params = params || {};
 
-        params.tank = ( this.bases[ params.tank ] !== undefined ) ? params.tank : 'IS2001';
-        const rawTankData = this.bases[ params.tank ];
-        params.cannon = params.cannon || rawTankData.default.cannon;
-        params.armor = params.armor || rawTankData.default.armor;
-        params.engine = params.engine || rawTankData.default.engine;
+        if ( player.socket ) {
+
+            if ( ! availableParts.tanks[ params.tank ] || ! availableParts.cannons[ params.cannon ] || ! availableParts.armors[ params.armor ] || ! availableParts.engines[ params.engine ] ) {
+
+                params.tank = 'IS2001';
+                const rawTankData = this.bases[ params.tank ];
+
+                params.cannon = rawTankData.default.cannon;
+                params.armor = rawTankData.default.armor;
+                params.engine = rawTankData.default.engine;
+
+                player.network.warnCheater();
+
+            }
+
+        }
 
         //
 

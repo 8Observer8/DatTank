@@ -64,6 +64,8 @@ export class PlayerCore {
 
     public coins: number;
     public xp: number;
+    public parts: any;
+
     public kills: number = 0;
     public death: number = 0;
     public score: number = 0;
@@ -146,7 +148,7 @@ export class PlayerCore {
 
     public prepareTank ( tankConfig: any ) : void {
 
-        this.tank = GarageManager.prepareTank( tankConfig, this );
+        this.tank = GarageManager.prepareTank( this.parts, tankConfig, this );
         this.arena.tankManager.add( this.tank );
 
     };
@@ -163,27 +165,37 @@ export class PlayerCore {
 
     public respawn ( tankConfig: object ) : void {
 
-        this.bonusLevels = 0;
-        this.level = 0;
+        Master.getPlayerInfo( this.pid, this.sid, ( data: any ) => {
 
-        this.prepareTank( tankConfig );
-        this.tank.setRespawnPosition();
-        this.status = PlayerCore.Alive;
+            this.xp = data.xp;
+            this.coins = data.coins;
+            this.pid = data.pid;
+            this.sid = data.sid;
+            this.parts = data.parts;
 
-        if ( this.socket ) {
+            this.bonusLevels = 0;
+            this.level = 0;
 
-            this.changeScore( - Math.floor( 1 * this.score / 3 ) );
+            this.prepareTank( tankConfig );
+            this.tank.setRespawnPosition();
+            this.status = PlayerCore.Alive;
 
-        } else {
+            if ( this.socket ) {
 
-            if ( Math.random() < 0.35 ) this.changeScore( - Math.floor( 1 * this.score / 6 ) );
+                this.changeScore( - Math.floor( 1 * this.score / 3 ) );
 
-        }
+            } else {
 
-        this.arena.updateLeaderboard();
-        this.network.confirmRespawn();
+                if ( Math.random() < 0.35 ) this.changeScore( - Math.floor( 1 * this.score / 6 ) );
 
-        this.spawnTime = Date.now();
+            }
+
+            this.arena.updateLeaderboard();
+            this.network.confirmRespawn();
+
+            this.spawnTime = Date.now();
+
+        });
 
     };
 
@@ -277,6 +289,8 @@ export class PlayerCore {
             login:          this.login,
             team:           this.team.id,
             tank:           this.tank.toJSON(),
+            xp:             this.xp,
+            coins:          this.coins,
         };
 
     };
@@ -304,7 +318,12 @@ export class PlayerCore {
 
             Master.getPlayerInfo( params.pid, params.sid, ( data: any ) => {
 
-                console.log( data );
+                this.xp = data.xp;
+                this.coins = data.coins;
+                this.pid = data.pid;
+                this.sid = data.sid;
+                this.parts = data.parts;
+
                 callback( this );
 
             });

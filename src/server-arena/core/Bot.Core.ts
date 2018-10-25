@@ -30,7 +30,7 @@ export class BotCore {
         'wtf', 'dat kurwa', 'dfbgnhg', 'andy', 'фффф', 'опачик', 'pavel', 'T52', 'NZT', 'D3', 'Bimba', 'makaka', 'мразь', '...', 'kibaba',
         'kebab', 'nazzi', 'nippy', 'romb', 'opa', 'zip', 'rarka', 'limbo', '21k', 'kilo', 'jesus', 'kepasa', 'kantor', '456453425', 'upyr',
         'kinchasa', 'lover', 'marta', 'ochkar', 'poseidon', 'zeus', 'stalker', 'vova', 'vovchik', 'poop', 'yamaha', 'сука', 'упячка',
-        'танк', 'кузя', 'kolyan', 'zadrot', 'lamp', 'kozavka', 'dikar', 'artist', 'kopa', 'chicken', 'orbea', 'z358', 'hjgdfd', 'sdfdgdg'
+        'танк', 'кузя', 'kolyan', 'zadrot', 'lamp', 'kozavka', 'dikar', 'artist', 'kopa', 'chicken', 'orbea', 'z358', 'hjgdfd', 'sdfdgdg',
     ];
 
     //
@@ -39,6 +39,13 @@ export class BotCore {
     public player: PlayerCore;
     public removed: boolean = false;
     public login: string;
+
+    public tankConfig = {
+        tank:       'IS2001',
+        cannon:     'Plasma-g1',
+        armor:      'X-shield',
+        engine:     'KX-v8',
+    };
 
     private moveDuration: number;
     private rotateBaseDuration: number;
@@ -65,7 +72,7 @@ export class BotCore {
 
         if ( players.length - bots.length < botNum && this.player.kills < this.maxKills ) {
 
-            setTimeout( this.player.respawn.bind( this.player ), 3000 );
+            setTimeout( this.player.respawn.bind( this.player, this.tankConfig ), 3000 );
 
         } else {
 
@@ -111,28 +118,7 @@ export class BotCore {
 
     private init () : void {
 
-        let tank;
-        const rnd = Math.random();
-
-        if ( rnd <= 0.25 ) {
-
-            tank = 'IS2';
-
-        } else if ( rnd > 0.25 && rnd <= 0.5 ) {
-
-            tank = 'T29';
-
-        } else if ( rnd > 0.5 && rnd <= 0.75 ) {
-
-            tank = 'T44';
-
-        } else {
-
-            tank = 'T54';
-
-        }
-
-        this.arena.addPlayer({ login: this.login, tank, socket: false }, ( player: PlayerCore ) => {
+        this.arena.addPlayer({ login: this.login, tankConfig: this.tankConfig, socket: false }, ( player: PlayerCore ) => {
 
             this.player = player;
             player.tank.ammo = 10000000;

@@ -64,6 +64,13 @@ export class PlayerNetwork {
 
     // send via network
 
+    public warnCheater () : void {
+
+        // nothing here yet
+        console.log('Cheater detected.');
+
+    };
+
     public confirmRespawn () : void {
 
         this.arena.network.sendEventToAllPlayers( 'PlayerRespawn', null, this.player.toJSON() );
