@@ -21,6 +21,8 @@ export class PlayerCore {
     public team: TeamCore;
     public tank: TankObject | null;
 
+    public coins: number;
+    public xp: number;
     public kills: number;
     public score: number;
     public bonusLevels: number;
@@ -143,9 +145,12 @@ export class PlayerCore {
 
     constructor ( params: any ) {
 
-        const team = TeamManager.getById( params.team );
         this.id = params.id;
         this.username = params.login;
+
+        //
+
+        const team = TeamManager.getById( params.team );
 
         if ( team ) {
 
