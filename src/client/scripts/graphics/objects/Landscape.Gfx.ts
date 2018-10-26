@@ -98,7 +98,6 @@ export class LandscapeGfx {
 
     private addTeamZones () : void {
 
-        const baseTexture = ResourceManager.getTexture( 'Base-ground.png' );
         const teams = TeamManager.getTeams();
 
         let team;
@@ -118,7 +117,7 @@ export class LandscapeGfx {
             x = team.spawnPosition.x;
             z = team.spawnPosition.z;
 
-            const material = new THREE.MeshBasicMaterial({ map: baseTexture, color, transparent: true, opacity: 0.9, depthWrite: false });
+            const material = new THREE.MeshBasicMaterial({ color });
             plane = new THREE.Mesh( new THREE.BoxGeometry( 200, 200, 3 ), material );
 
             material.color.r = material.color.r / 3 + 0.4;

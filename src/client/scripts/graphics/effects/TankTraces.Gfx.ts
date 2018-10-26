@@ -7,78 +7,132 @@ import * as THREE from 'three';
 
 import * as OMath from '../../OMath/Core.OMath';
 import { GfxCore } from '../Core.Gfx';
+import { ResourceManager } from '../../managers/Resource.Manager';
 
 //
 
 export class TankTracesGfx {
 
-    private objects: any[] = [];
+    private material = {
+        uniforms: {
+            map: { value: new THREE.Texture() },
+        },
+        vertexShader: `
+        varying float vAlpha;
+        varying vec2 vUv;
+        attribute float alpha;
+        void main( void ) {
+            vAlpha = alpha;
+            vUv = uv;
+            vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+            gl_Position = projectionMatrix * mvPosition;
+        }
+        `,
+        fragmentShader: `
+        uniform sampler2D map;
+        varying float vAlpha;
+        varying vec2 vUv;
+        void main( void ) {
+            vec4 m = texture2D( map, vec2( vUv[1], 50.0 * vUv[0] ) );
+            gl_FragColor = vec4( m.rgb, vAlpha * m.a );
+        }
+        `,
+    };
+
     private target: THREE.Object3D;
     private prevPosition: OMath.Vec3 = new OMath.Vec3();
-    private indexOffset: number = 0;
-    private tracePosOffset = { l: 13, r: 13 };
-    private traceVisibleDuration: number = 2300;
+    private traceLength: number = 140;
+    private trackWidth: number = 3;
+    private tankWidth: number = 13.5;
     private object: THREE.Object3D = new THREE.Object3D();
+
+    private leftTrace: THREE.Mesh;
+    private rightTrace: THREE.Mesh;
+
+    private route: THREE.Vector4[] = [];
 
     //
 
     public dispose () : void {
 
-        GfxCore.coreObjects['tank-tracks'].remove( this.object );
-
-    };
-
-    private addTraceIfNeeded () : void {
-
-        const rotation = this.target.rotation.y;
-        const position = this.target.position;
-
-        if ( this.prevPosition.distanceTo( position ) > 5 ) {
-
-            let plane1;
-            let plane2;
-
-            const track = this.objects[ this.indexOffset ];
-            plane1 = track.left;
-            plane2 = track.right;
-
-            track.lastUpdate = Date.now();
-
-            plane1.rotation.x = - Math.PI / 2;
-            plane1.rotation.z = rotation;
-            plane1.position.copy( position );
-            plane1.position.x += this.tracePosOffset.l * Math.cos( - rotation );
-            plane1.position.z += this.tracePosOffset.l * Math.sin( - rotation );
-            plane1.position.y = 2.2;
-            plane1.updateMatrixWorld( true );
-
-            plane2.rotation.x = - Math.PI / 2;
-            plane2.position.copy( position );
-            plane2.rotation.z = rotation;
-            plane2.position.x -= this.tracePosOffset.r * Math.cos( - rotation );
-            plane2.position.z -= this.tracePosOffset.r * Math.sin( - rotation );
-            plane2.position.y = 2.2;
-            plane2.updateMatrixWorld( true );
-
-            track.position.copy( position );
-            this.prevPosition.copy( position );
-
-            this.indexOffset ++;
-            if ( this.indexOffset === 35 ) this.indexOffset = 0;
-
-        }
+        GfxCore.coreObjects['tank-traces'].remove( this.object );
 
     };
 
     public update ( time: number, delta: number ) : void {
 
-        this.addTraceIfNeeded();
+        const pos = this.target.position.clone();
+        const rot = this.target.rotation.y;
+        this.object.position.set( pos.x, pos.y, pos.z );
+        this.object.updateMatrixWorld( true );
 
-        for ( let i = 0, il = this.objects.length; i < il; i ++ ) {
+        //
 
-            this.objects[ i ].material.opacity = 1 - Math.min( Date.now() - this.objects[ i ].lastUpdate, this.traceVisibleDuration ) / this.traceVisibleDuration;
+        const lTraceGeo = this.leftTrace.geometry as THREE.BufferGeometry;
+        const ltPositions = lTraceGeo.attributes['position'];
+        const ltAlpha = lTraceGeo.attributes['alpha'];
+        const ltUVs = lTraceGeo.attributes['uv'];
+
+        const rTraceGeo = this.rightTrace.geometry as THREE.BufferGeometry;
+        const rtPositions = rTraceGeo.attributes['position'];
+        const rtAlpha = rTraceGeo.attributes['alpha'];
+        const rtUVs = rTraceGeo.attributes['uv'];
+
+        let offset = 0;
+        const width = this.trackWidth;
+
+        const a: number[][] = [];
+
+        for ( let i = 0, il = this.traceLength * 2; i < il; i += 2 ) {
+
+            const routPoint = this.route[ offset ] || pos;
+            const angle = ( this.route[ offset ] ) ? this.route[ offset ].w : 0;
+            const wx = width * Math.sin( Math.PI / 2 - angle );
+            const wz = - width * Math.cos( Math.PI / 2 - angle );
+
+            a[0] = [ routPoint.x - pos.x - wx, 1, routPoint.z - pos.z - wz ];
+            a[1] = [ routPoint.x - pos.x + wx, 1, routPoint.z - pos.z + wz ];
+
+            //
+
+            const xOffset = this.tankWidth * Math.sin( Math.PI / 2 - angle );
+            const zOffset = - this.tankWidth * Math.cos( Math.PI / 2 - angle );
+            const alpha = offset / this.traceLength / 2;
+
+            ltPositions.setXYZ( i + 0, a[0][0] + xOffset, a[0][1], a[0][2] + zOffset );
+            ltPositions.setXYZ( i + 1, a[1][0] + xOffset, a[1][1], a[1][2] + zOffset );
+
+            rtPositions.setXYZ( i + 0, a[0][0] - xOffset, a[0][1], a[0][2] - zOffset );
+            rtPositions.setXYZ( i + 1, a[1][0] - xOffset, a[1][1], a[1][2] - zOffset );
+
+            ltAlpha.setX( i + 0, alpha );
+            ltAlpha.setX( i + 1, alpha );
+
+            rtAlpha.setX( i + 0, alpha );
+            rtAlpha.setX( i + 1, alpha );
+
+            ltUVs.setXY( i + 0, offset / this.traceLength, 0 );
+            ltUVs.setXY( i + 1, offset / this.traceLength, 1 );
+
+            rtUVs.setXY( i + 0, offset / this.traceLength, 0 );
+            rtUVs.setXY( i + 1, offset / this.traceLength, 1 );
+
+            //
+
+            offset ++;
 
         }
+
+        lTraceGeo.attributes['position']['needsUpdate'] = true;
+        rTraceGeo.attributes['position']['needsUpdate'] = true;
+
+        //
+
+        if ( this.prevPosition.distanceTo( pos ) < 5 ) return;
+
+        this.route.push( new THREE.Vector4( pos.x, pos.y, pos.z, rot ) );
+        if ( this.route.length > this.traceLength ) this.route.shift();
+        this.prevPosition.copy( pos );
 
     };
 
@@ -87,45 +141,51 @@ export class TankTracesGfx {
         this.target = target;
         this.prevPosition.set( this.target.position.x, this.target.position.y, this.target.position.z );
 
+        const vertices = new Float32Array( this.traceLength * 2 * 3 );
+        const alphas = new Float32Array( this.traceLength * 2 * 1 );
+        const uvs = new Float32Array( this.traceLength * 2 * 2 );
+        const geometry = new THREE.BufferGeometry();
+        geometry.addAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
+        geometry.addAttribute( 'alpha', new THREE.BufferAttribute( alphas, 1 ) );
+        geometry.addAttribute( 'uv', new THREE.BufferAttribute( uvs, 2 ) );
+
+        const material = new THREE.ShaderMaterial( {
+            uniforms: this.material.uniforms,
+            vertexShader: this.material.vertexShader,
+            fragmentShader: this.material.fragmentShader,
+            transparent: true,
+            side: THREE.DoubleSide,
+            depthWrite: false,
+        });
+
+        this.leftTrace = new THREE.Mesh( geometry, material );
+        this.rightTrace = new THREE.Mesh( geometry.clone(), material.clone() );
+
+        this.leftTrace.drawMode = THREE.TriangleStripDrawMode;
+        this.rightTrace.drawMode = THREE.TriangleStripDrawMode;
+
+        ( this.leftTrace.material as THREE.ShaderMaterial ).uniforms.map.value = ResourceManager.getTexture('traces.png')!;
+        ( this.leftTrace.material as THREE.ShaderMaterial ).uniforms.map.value.wrapS = ( this.leftTrace.material as THREE.ShaderMaterial ).uniforms.map.value.wrapT = THREE.RepeatWrapping;
+        ( this.leftTrace.material as THREE.ShaderMaterial ).uniforms.map.value.needsUpdate = true;
+
+        ( this.rightTrace.material as THREE.ShaderMaterial ).uniforms.map.value = ResourceManager.getTexture('traces.png')!;
+        ( this.rightTrace.material as THREE.ShaderMaterial ).uniforms.map.value.wrapS = ( this.rightTrace.material as THREE.ShaderMaterial ).uniforms.map.value.wrapT = THREE.RepeatWrapping;
+        ( this.rightTrace.material as THREE.ShaderMaterial ).uniforms.map.value.needsUpdate = true;
+
+        this.object.add( this.leftTrace );
+        this.object.add( this.rightTrace );
+
         //
 
-        let material;
-        let plane1;
-        let plane2;
+        if ( ! GfxCore.coreObjects['tank-traces'] ) {
 
-        for ( let i = 0; i < 35; i ++ ) {
-
-            material = new THREE.MeshBasicMaterial({ color: 0x140a00, transparent: true, opacity: 0.7, depthWrite: false });
-            plane1 = new THREE.Mesh( new THREE.PlaneBufferGeometry( 6, 2 ), material );
-            plane2 = new THREE.Mesh( new THREE.PlaneBufferGeometry( 6, 2 ), material );
-
-            this.objects.push({
-                left:       plane1,
-                right:      plane2,
-                material,
-                position:   new THREE.Vector3(),
-                lastUpdate: 0,
-            });
-
-            plane1.renderOrder = 10;
-            plane2.renderOrder = 10;
-
-            this.object.add( plane1 );
-            this.object.add( plane2 );
+            GfxCore.coreObjects['tank-traces'] = new THREE.Object3D();
+            GfxCore.coreObjects['tank-traces'].name = 'TankTraces';
+            GfxCore.scene.add( GfxCore.coreObjects['tank-traces'] );
 
         }
 
-        //
-
-        if ( ! GfxCore.coreObjects['tank-tracks'] ) {
-
-            GfxCore.coreObjects['tank-tracks'] = new THREE.Object3D();
-            GfxCore.coreObjects['tank-tracks'].name = 'TankTracks';
-            GfxCore.scene.add( GfxCore.coreObjects['tank-tracks'] );
-
-        }
-
-        GfxCore.coreObjects['tank-tracks'].add( this.object );
+        GfxCore.coreObjects['tank-traces'].add( this.object );
 
     };
 

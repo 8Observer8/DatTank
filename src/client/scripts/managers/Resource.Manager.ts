@@ -44,7 +44,7 @@ class ResourceManagerCore {
         'tower-texture.png',
         'Decorations.jpg',
         'Boxes.jpg',
-
+        'traces.png',
         'IS2.png',
     ];
 
