@@ -149,7 +149,7 @@ var GarageConfig = {
             price:          400,
             damage:         30,
             antiArmor:      1,
-            range:          20,
+            range:          200,
             overheat:       110,
             rpm:            10
         },
@@ -164,7 +164,7 @@ var GarageConfig = {
             price:          500,
             damage:         40,
             antiArmor:      1,
-            range:          22,
+            range:          220,
             overheat:       110,
             energy:         0,
             rpm:            13
@@ -180,7 +180,7 @@ var GarageConfig = {
             price:          800,
             damage:         50,
             antiArmor:      1,
-            range:          18,
+            range:          180,
             overheat:       90,
             energy:         0,
             rpm:            9
@@ -196,7 +196,7 @@ var GarageConfig = {
             price:          1200,
             damage:         80,
             antiArmor:      1,
-            range:          17,
+            range:          170,
             overheat:       70,
             energy:         0,
             rpm:            9
@@ -212,7 +212,7 @@ var GarageConfig = {
             price:          4000,
             damage:         45,
             antiArmor:      1,
-            range:          21,
+            range:          210,
             overheat:       300,
             energy:         0,
             rpm:            25
@@ -230,7 +230,7 @@ var GarageConfig = {
             price:          900,
             damage:         95,
             antiArmor:      1,
-            range:          25,
+            range:          250,
             overheat:       65,
             energy:         0,
             rpm:            11
@@ -246,7 +246,7 @@ var GarageConfig = {
             price:          1500,
             damage:         115,
             antiArmor:      1,
-            range:          27,
+            range:          270,
             overheat:       70,
             energy:         0,
             rpm:            14
@@ -262,7 +262,7 @@ var GarageConfig = {
             price:          4000,
             damage:         140,
             antiArmor:      1,
-            range:          25,
+            range:          250,
             overheat:       60,
             energy:         0,
             rpm:            12
@@ -278,7 +278,7 @@ var GarageConfig = {
             price:          5000,
             damage:         180,
             antiArmor:      1,
-            range:          20,
+            range:          200,
             overheat:       30,
             energy:         0,
             rpm:            10
@@ -296,7 +296,7 @@ var GarageConfig = {
             price:          7000,
             damage:         190,
             antiArmor:      1,
-            range:          25,
+            range:          250,
             overheat:       45,
             energy:         0,
             rpm:            15
@@ -312,7 +312,7 @@ var GarageConfig = {
             price:          10000,
             damage:         220,
             antiArmor:      1,
-            range:          17,
+            range:          170,
             overheat:       65,
             energy:         0,
             rpm:            16
@@ -328,7 +328,7 @@ var GarageConfig = {
             price:          14000,
             damage:         235,
             antiArmor:      1,
-            range:          16,
+            range:          160,
             overheat:       50,
             energy:         0,
             rpm:            13

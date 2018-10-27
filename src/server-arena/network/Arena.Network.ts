@@ -120,7 +120,7 @@ export class ArenaNetwork {
 
     };
 
-    public explosion ( bullet: BulletObject, explosionType: number ) : void {
+    public explosion ( bullet: BulletObject, position: any, explosionType: number ) : void {
 
         this.buffers['BulletExplosion'] = this.buffers['BulletExplosion'] || {};
         const buffer = this.buffers['BulletExplosion'].buffer || new ArrayBuffer( 10 );
@@ -131,8 +131,8 @@ export class ArenaNetwork {
         //
 
         bufferView[1] = bullet.id;
-        bufferView[2] = bullet.position.x;
-        bufferView[3] = bullet.position.z;
+        bufferView[2] = position.x;
+        bufferView[3] = position.z;
         bufferView[4] = explosionType;
 
         this.sendEventToPlayersInRange( bullet.position, 'ArenaBulletHit', buffer, bufferView );

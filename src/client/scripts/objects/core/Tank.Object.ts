@@ -88,7 +88,7 @@ export class TankObject {
 
         }
 
-        BulletManager.showBullet( bulletId, position, directionRotation );
+        BulletManager.showBullet( bulletId, position, this.cannon.range, directionRotation );
         this.gfx.shoot();
 
         if ( this.player.id === Arena.me.id ) {

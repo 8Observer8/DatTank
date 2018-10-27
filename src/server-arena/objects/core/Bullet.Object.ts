@@ -18,37 +18,40 @@ export class BulletObject {
     public id: number;
     public active: boolean = false;
     public owner: TankObject | TowerObject;
-    public size: OMath.Vec3 = new OMath.Vec3( 20, 20, 20 );
+    public radius: number = 10;
+    public startPosition: OMath.Vec3 = new OMath.Vec3();
     public position: OMath.Vec3 = new OMath.Vec3();
     public rotation: number = 0;
     public angle: number = 0;
-    public flytime: number = 0;
     public speed: number = 1.8;
+    public range: number = 200;
     public readonly type: string = 'Bullet';
 
     //
 
-    public activate ( position: OMath.Vec3, angle: number, owner: TankObject | TowerObject ) : void {
+    public activate ( position: OMath.Vec3, angle: number, range: number, owner: TankObject | TowerObject ) : void {
 
         this.active = true;
         this.position.set( position.x, 8, position.z );
+        this.startPosition.set( position.x, 8, position.z );
 
+        this.range = range;
         this.angle = angle;
-        this.flytime = 300;
         this.owner = owner;
 
         //
 
-        this.arena.collisionManager.addObject( this, 'box', true, true );
+        this.arena.collisionManager.addObject( this, 'circle', true, true );
 
     };
 
-    public detonate ( target?: TankObject | TowerObject ) : void {
+    public detonate ( target: TankObject | TowerObject | null, position: any ) : void {
 
         if ( target && target.id === this.owner.id ) return;
 
+        position = position || this.position;
         this.active = false;
-        this.arena.network.explosion( this, ( target && target.hit ) ? 1 : 0 );
+        this.arena.network.explosion( this, position, ( target && target.hit ) ? 1 : 0 );
 
         //
 

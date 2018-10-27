@@ -281,7 +281,7 @@ export class TankObject {
         position.x += offset * Math.cos( - this.rotationTop - this.rotation );
         position.z += offset * Math.sin( - this.rotationTop - this.rotation );
 
-        bullet.activate( position, this.rotationTop + this.rotation + Math.PI / 2, this );
+        bullet.activate( position, this.rotationTop + this.rotation + Math.PI / 2, this.cannon.range, this );
         this.ammo --;
 
         this.network.makeShoot( bullet );

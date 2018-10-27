@@ -18,10 +18,9 @@ export class BulletGfx {
 
     private object: THREE.Object3D = new THREE.Object3D();
     private trace: THREE.Mesh;
-    private bullet: THREE.Mesh;
+    private point: THREE.Mesh;
     private sound: THREE.PositionalAudio;
-    private time: number = 0;
-    private flightDuration: number = 220;
+    private range: number = 0;
 
     private directionRotation: number;
     private position: OMath.Vec3 = new OMath.Vec3();
@@ -32,16 +31,15 @@ export class BulletGfx {
     public update ( time: number, delta: number ) : void {
 
         if ( ! this.active ) return;
-        this.time += delta;
 
         let x;
         let z;
         let dx;
         let dz;
 
-        x = this.bullet.position.x + this.bulletSpeed * Math.cos( this.directionRotation ) * delta;
-        z = this.bullet.position.z + this.bulletSpeed * Math.sin( this.directionRotation ) * delta;
-        this.bullet.position.set( x, this.bullet.position.y, z );
+        x = this.point.position.x + this.bulletSpeed * Math.cos( this.directionRotation ) * delta;
+        z = this.point.position.z + this.bulletSpeed * Math.sin( this.directionRotation ) * delta;
+        this.point.position.set( x, this.point.position.y, z );
 
         this.trace.position.set( ( x + this.position.x ) / 2, this.position.y, ( z + this.position.z ) / 2 );
         dx = x - this.position.x;
@@ -53,7 +51,7 @@ export class BulletGfx {
 
         //
 
-        if ( this.time > this.flightDuration ) {
+        if ( OMath.Vec3.dist( this.position, this.point.position ) > this.range ) {
 
             this.deactivate();
 
@@ -68,14 +66,14 @@ export class BulletGfx {
 
     };
 
-    public setActive ( bulletId: number, position: OMath.Vec3, directionRotation: number ) : void {
+    public setActive ( bulletId: number, position: OMath.Vec3, range: number, directionRotation: number ) : void {
 
         this.active = true;
         this.id = bulletId;
-        this.time = 0;
+        this.range = range;
         this.object.visible = true;
         this.position.copy( position );
-        this.bullet.position.set( this.position.x, this.position.y, this.position.z );
+        this.point.position.set( this.position.x, this.position.y, this.position.z );
         this.directionRotation = directionRotation;
         this.trace.rotation.z = - directionRotation;
 
@@ -95,8 +93,8 @@ export class BulletGfx {
 
     public init () : void {
 
-        this.bullet = new THREE.Mesh( new THREE.BoxGeometry( 2.5, 2.5, 2.5 ), new THREE.MeshBasicMaterial({ color: 0xff3333 }) );
-        this.object.add( this.bullet );
+        this.point = new THREE.Mesh( new THREE.BoxGeometry( 2.5, 2.5, 2.5 ), new THREE.MeshBasicMaterial({ color: 0xff3333 }) );
+        this.object.add( this.point );
 
         this.trace = new THREE.Mesh( new THREE.PlaneGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 0.5, transparent: true }) );
         this.trace.rotation.x = - Math.PI / 2;

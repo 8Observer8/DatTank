@@ -7,7 +7,7 @@ var world;
 var objects = [];
 var inited = false;
 var lastUpdate = 0;
-var coef = 0 / 20;
+var coef = 0;
 var delta = 0;
 
 //

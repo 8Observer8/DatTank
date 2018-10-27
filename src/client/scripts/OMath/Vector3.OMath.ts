@@ -11,6 +11,14 @@ export class Vec3 {
 
     //
 
+    public static dist ( v1: Vec3 | THREE.Vector3, v2: Vec3 | THREE.Vector3 ) : number {
+
+        return Math.sqrt( Math.pow( v1.x - v2.x, 2 ) + Math.pow( v1.z - v2.z, 2 ) );
+
+    };
+
+    //
+
     public set ( x: number, y: number, z: number ) : void {
 
         this.x = x;

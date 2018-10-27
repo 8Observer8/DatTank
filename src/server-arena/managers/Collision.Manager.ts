@@ -217,11 +217,9 @@ export class CollisionManager {
 
                 }
 
-                object.parent.flytime -= delta;
+                if ( OMath.Vec3.dist( object.parent.position, object.parent.startPosition ) > object.parent.range ) {
 
-                if ( object.parent.flytime < 0 ) {
-
-                    object.parent.detonate();
+                    object.parent.detonate( null, null );
                     return;
 
                 }
@@ -264,9 +262,9 @@ export class CollisionManager {
 
             if ( ! object.active ) return;
 
-            if ( ( event.body.parent.type === 'Tank' && object.owner.id !== event.body.parent.id ) || event.body.parent.type !== 'Tank' ) {
+            if ( object.owner.id !== event.body.parent.id ) {
 
-                object.detonate( event.body.parent );
+                object.detonate( event.body.parent, event.target.position );
 
             }
 

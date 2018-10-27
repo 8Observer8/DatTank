@@ -26,6 +26,7 @@ export class TowerObject {
     public rpm: number;
     public armor: number;
 
+    public range: number = 500;
     public health: number;
     public rotation: number;
     public topRotation: number;
@@ -44,7 +45,7 @@ export class TowerObject {
 
         if ( this.health <= 0 ) return;
 
-        BulletManager.showBullet( bulletId, position, directionRotation );
+        BulletManager.showBullet( bulletId, position, this.range, directionRotation );
         this.gfx.shoot();
 
     };

@@ -42,13 +42,13 @@ class BulletManagerCore {
 
     };
 
-    public showBullet ( bulletId: number, position: OMath.Vec3, directionRotation: number ) : void {
+    public showBullet ( bulletId: number, position: OMath.Vec3, range: number, directionRotation: number ) : void {
 
         const bullet = this.getNewBullet();
 
         if ( bullet ) {
 
-            bullet.setActive( bulletId, position, directionRotation );
+            bullet.setActive( bulletId, position, range, directionRotation );
 
         }
 
