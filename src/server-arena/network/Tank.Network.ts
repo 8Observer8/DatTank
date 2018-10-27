@@ -129,7 +129,7 @@ export class TankNetwork {
         bufferView[2] = bullet.id;
         bufferView[3] = bullet.position.x;
         bufferView[4] = bullet.position.z;
-        bufferView[5] = ( - this.tank.rotationTop - this.tank.rotation ) * 1000;
+        bufferView[5] = ( - this.tank.rotation ) * 1000;
         bufferView[6] = this.tank.cannon.temperature;
 
         this.arena.network.sendEventToPlayersInRange( this.tank.position, 'TankMakeShot', buffer, bufferView );
@@ -221,7 +221,7 @@ export class TankNetwork {
 
         //
 
-        const tankDataSize = 25 * 2 + 13 * 2;
+        const tankDataSize = 24 * 2 + 13 * 2;
         const buffer = new ArrayBuffer( 2 + tankDataSize * tanks.length );
         const bufferView = new Int16Array( buffer );
         let item = 0;
@@ -230,38 +230,37 @@ export class TankNetwork {
 
             const tank = tanks[ item ];
 
-            bufferView[ i + 0 ] = tank.id;
-            bufferView[ i + 1 ] = tank.team.id;
-            bufferView[ i + 2 ] = tank.position.x;
-            bufferView[ i + 3 ] = tank.position.y;
-            bufferView[ i + 4 ] = tank.position.z;
-            bufferView[ i + 5 ] = ( tank.rotation % ( 2 * Math.PI ) ) * 1000;
-            bufferView[ i + 6 ] = tank.rotationTop * 1000;
-            bufferView[ i + 7 ] = tank.health;
-            bufferView[ i + 8 ] = tank.moveDirection.x;
-            bufferView[ i + 9 ] = tank.moveDirection.y;
-            bufferView[ i + 10 ] = tank.ammo;
-            bufferView[ i + 11 ] = tank.player.id;
+            bufferView[ i +  0 ] = tank.id;
+            bufferView[ i +  1 ] = tank.team.id;
+            bufferView[ i +  2 ] = tank.position.x;
+            bufferView[ i +  3 ] = tank.position.y;
+            bufferView[ i +  4 ] = tank.position.z;
+            bufferView[ i +  5 ] = ( tank.rotation % ( 2 * Math.PI ) ) * 1000;
+            bufferView[ i +  6 ] = tank.health;
+            bufferView[ i +  7 ] = tank.moveDirection.x;
+            bufferView[ i +  8 ] = tank.moveDirection.y;
+            bufferView[ i +  9 ] = tank.ammo;
+            bufferView[ i + 10 ] = tank.player.id;
 
-            bufferView[ i + 12 ] = tank.base.nid;
-            bufferView[ i + 13 ] = tank.base.speedCoef;
-            bufferView[ i + 14 ] = tank.base.ammoCapacity;
-            bufferView[ i + 15 ] = tank.base.armorCoef;
-            bufferView[ i + 16 ] = tank.cannon.nid;
-            bufferView[ i + 17 ] = tank.cannon.range;
-            bufferView[ i + 18 ] = tank.cannon.rpm;
-            bufferView[ i + 19 ] = tank.cannon.overheat;
-            bufferView[ i + 20 ] = tank.armor.nid;
-            bufferView[ i + 21 ] = tank.armor.armor;
-            bufferView[ i + 22 ] = tank.engine.nid;
-            bufferView[ i + 23 ] = tank.engine.maxSpeed;
-            bufferView[ i + 24 ] = tank.engine.power;
+            bufferView[ i + 11 ] = tank.base.nid;
+            bufferView[ i + 12 ] = tank.base.speedCoef;
+            bufferView[ i + 13 ] = tank.base.ammoCapacity;
+            bufferView[ i + 14 ] = tank.base.armorCoef;
+            bufferView[ i + 15 ] = tank.cannon.nid;
+            bufferView[ i + 16 ] = tank.cannon.range;
+            bufferView[ i + 17 ] = tank.cannon.rpm;
+            bufferView[ i + 18 ] = tank.cannon.overheat;
+            bufferView[ i + 19 ] = tank.armor.nid;
+            bufferView[ i + 20 ] = tank.armor.armor;
+            bufferView[ i + 21 ] = tank.engine.nid;
+            bufferView[ i + 22 ] = tank.engine.maxSpeed;
+            bufferView[ i + 23 ] = tank.engine.power;
 
             for ( let j = 0, jl = tank.player.login.length; j < jl; j ++ ) {
 
                 if ( tank.player.login[ j ] ) {
 
-                    bufferView[ i + 25 + j ] = + tank.player.login[ j ].charCodeAt( 0 ).toString( 10 );
+                    bufferView[ i + 24 + j ] = + tank.player.login[ j ].charCodeAt( 0 ).toString( 10 );
 
                 }
 
@@ -270,6 +269,8 @@ export class TankNetwork {
             item ++;
 
         }
+
+        //
 
         Network.send( 'ArenaTanksInRange', this.tank.player.socket, buffer, bufferView );
 

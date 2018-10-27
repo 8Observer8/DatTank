@@ -71,12 +71,12 @@ export class ArenaNetwork {
 
         const players = [];
         let player;
-        const playerBinSize = 38;
+        const playerBinSize = 36;
 
         for ( let i = 0, il = data.length / playerBinSize; i < il; i ++ ) {
 
             player = {
-                id:             data[ i * playerBinSize + 11 ],
+                id:             data[ i * playerBinSize + 10 ],
                 login:          '',
                 team:           data[ i * playerBinSize + 1 ],
                 tank:           {
@@ -87,42 +87,41 @@ export class ArenaNetwork {
                         z:  data[ i * playerBinSize + 4 ],
                     },
                     rotation:       ( data[ i * playerBinSize + 5 ] / 1000 ) % ( 2 * Math.PI ),
-                    rotationTop:    data[ i * playerBinSize + 6 ] / 1000,
-                    health:         data[ i * playerBinSize + 7 ],
+                    health:         data[ i * playerBinSize + 6 ],
                     moveDirection:  {
-                        x:  data[ i * playerBinSize + 8 ],
-                        y:  data[ i * playerBinSize + 9 ],
+                        x:  data[ i * playerBinSize + 7 ],
+                        y:  data[ i * playerBinSize + 8 ],
                     },
-                    ammo:   data[ i * playerBinSize + 10 ],
+                    ammo:   data[ i * playerBinSize + 9 ],
                     base:   {
-                        nid:            data[ i * playerBinSize + 12 ],
-                        speedCoef:      data[ i * playerBinSize + 13 ],
-                        ammoCapacity:   data[ i * playerBinSize + 14 ],
-                        armorCoef:      data[ i * playerBinSize + 15 ],
+                        nid:            data[ i * playerBinSize + 11 ],
+                        speedCoef:      data[ i * playerBinSize + 12 ],
+                        ammoCapacity:   data[ i * playerBinSize + 13 ],
+                        armorCoef:      data[ i * playerBinSize + 14 ],
                     },
                     cannon: {
-                        nid:        data[ i * playerBinSize + 16 ],
-                        range:      data[ i * playerBinSize + 17 ],
-                        rpm:        data[ i * playerBinSize + 18 ],
-                        overheat:   data[ i * playerBinSize + 19 ],
+                        nid:        data[ i * playerBinSize + 15 ],
+                        range:      data[ i * playerBinSize + 16 ],
+                        rpm:        data[ i * playerBinSize + 17 ],
+                        overheat:   data[ i * playerBinSize + 18 ],
                     },
                     armor: {
-                        nid:    data[ i * playerBinSize + 20 ],
-                        armor:  data[ i * playerBinSize + 21 ],
+                        nid:    data[ i * playerBinSize + 19 ],
+                        armor:  data[ i * playerBinSize + 20 ],
                     },
                     engine: {
-                        nid:        data[ i * playerBinSize + 22 ],
-                        maxSpeed:   data[ i * playerBinSize + 23 ],
-                        power:      data[ i * playerBinSize + 24 ],
+                        nid:        data[ i * playerBinSize + 21 ],
+                        maxSpeed:   data[ i * playerBinSize + 22 ],
+                        power:      data[ i * playerBinSize + 23 ],
                     },
                 },
             };
 
             for ( let j = 0; j < 13; j ++ ) {
 
-                if ( data[ i * playerBinSize + 25 + j ] !== 0 ) {
+                if ( data[ i * playerBinSize + 24 + j ] !== 0 ) {
 
-                    player.login += String.fromCharCode( data[ i * playerBinSize + 25 + j ] );
+                    player.login += String.fromCharCode( data[ i * playerBinSize + 24 + j ] );
 
                 }
 
@@ -131,6 +130,8 @@ export class ArenaNetwork {
             players.push( player );
 
         }
+
+        //
 
         Arena.newPlayers( players );
 

@@ -241,13 +241,12 @@ export class BotCore {
             let deltaAngle;
 
             rotation = Math.atan2( dx, dz ) + Math.PI / 2 - this.player.tank.rotation;
-            deltaAngle = OMath.formatAngle( rotation ) - OMath.formatAngle( this.player.tank.rotationTop );
+            deltaAngle = OMath.formatAngle( rotation );
             deltaAngle = ( deltaAngle > Math.PI ) ? deltaAngle - 2 * Math.PI : deltaAngle;
             deltaAngle = ( deltaAngle < - Math.PI ) ? - deltaAngle + 2 * Math.PI : deltaAngle;
 
             if ( Math.abs( deltaAngle ) > 0.1 && Date.now() - this.lastTopRotate > 40 ) {
 
-                // this.player.tank.setTopRotation( this.player.tank.rotationTop + Math.sign( deltaAngle ) / 15 );
                 this.lastTopRotate = Date.now();
 
             }

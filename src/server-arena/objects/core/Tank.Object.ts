@@ -37,7 +37,6 @@ export class TankObject {
     public team: TeamCore;
     public position: OMath.Vec3 = new OMath.Vec3();
     public rotation: number = Math.random() * Math.PI * 2;
-    public rotationTop: number = - Math.PI / 2;
     public radius: number = 25;
     public health: number = 100;
     public ammo: number;
@@ -154,7 +153,6 @@ export class TankObject {
 
         this.position = position.sum( offset );
         this.rotation = Math.random() * Math.PI * 2;
-        this.rotationTop = - Math.PI / 2;
 
         this.collisionBox['body'].position.set( this.position.x, this.position.y, this.position.z );
 
@@ -278,10 +276,10 @@ export class TankObject {
 
         const position = new OMath.Vec3( this.position.x, 20, this.position.z );
         const offset = 45;
-        position.x += offset * Math.cos( - this.rotationTop - this.rotation );
-        position.z += offset * Math.sin( - this.rotationTop - this.rotation );
+        position.x += offset * Math.cos( Math.PI / 2 - this.rotation );
+        position.z += offset * Math.sin( Math.PI / 2 - this.rotation );
 
-        bullet.activate( position, this.rotationTop + this.rotation + Math.PI / 2, this.cannon.range, this );
+        bullet.activate( position, this.rotation, this.cannon.range, this );
         this.ammo --;
 
         this.network.makeShoot( bullet );
@@ -527,7 +525,6 @@ export class TankObject {
             health:         this.health,
             ammo:           this.ammo,
             rotation:       this.rotation,
-            rotationTop:    this.rotationTop,
             position:       this.position.toJSON(),
             moveDirection:  this.moveDirection.toJSON(),
             base:           {
