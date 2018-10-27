@@ -49,6 +49,7 @@ export class ExplosionGfx {
 
     private object: THREE.Points;
     private time: number;
+    private duration: number = 800;
     private particleCount: number = 200;
     private particlesVelocityVectors: THREE.Vector3[] = [];
 
@@ -67,7 +68,7 @@ export class ExplosionGfx {
         const pos = ( this.object.geometry as THREE.BufferGeometry ).attributes['position'] as THREE.BufferAttribute;
         const sizes = ( this.object.geometry as THREE.BufferGeometry ).attributes['size'] as THREE.BufferAttribute;
         const colors = ( this.object.geometry as THREE.BufferGeometry ).attributes['color'] as THREE.BufferAttribute;
-        const progress = this.time / 800;
+        const progress = this.time / this.duration;
 
         for ( let i = 0, il = this.particleCount; i < il; i ++ ) {
 
@@ -121,11 +122,22 @@ export class ExplosionGfx {
 
         for ( let i = 0, il = this.particleCount; i < il; i ++ ) {
 
-            this.particlesVelocityVectors.push( new THREE.Vector3( 1.5 * ( Math.random() - 0.5 ), 1.5 *  ( Math.random() - 0.5 ), 1.5 * ( Math.random() - 0.5 ) ) );
-
             pos.setXYZ( i, 15 * ( Math.random() - 0.5 ), 15 * ( Math.random() - 0.5 ), 15 * ( Math.random() - 0.5 ) );
             sizes.setX( i, ( Math.random() + 1 ) );
-            colors.setXYZW( i, 1, 0.5 * Math.random() + 0.5, Math.random() / 3, Math.random() / 3 + 0.66 );
+
+            if ( type === 0 ) {
+
+                colors.setXYZW( i, 1, 0.5 * Math.random() + 0.5, Math.random() / 3, Math.random() / 3 + 0.66 );
+                this.particlesVelocityVectors.push( new THREE.Vector3( 1.5 * ( Math.random() - 0.5 ), 1.5 *  ( Math.random() - 0.5 ), 1.5 * ( Math.random() - 0.5 ) ) );
+                this.duration = 600;
+
+            } else {
+
+                colors.setXYZW( i, 0.9, 0.4 * Math.random() + 0.2, Math.random() / 4, Math.random() / 3 + 0.66 );
+                this.particlesVelocityVectors.push( new THREE.Vector3( 1 * ( Math.random() - 0.5 ), 1 *  ( Math.random() - 0.5 ), 1 * ( Math.random() - 0.5 ) ) );
+                this.duration = 1000;
+
+            }
 
         }
 
