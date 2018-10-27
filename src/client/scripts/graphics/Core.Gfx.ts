@@ -239,8 +239,8 @@ class GraphicsCore {
 
     private updateCamera ( position: THREE.Vector3, rotation: number ) : void {
 
-        this.camera.position.x = position.x - 150 * Math.sin( rotation ) + this.cameraOffset.x;
-        this.camera.position.z = position.z - 150 * Math.cos( rotation ) + this.cameraOffset.y;
+        this.camera.position.x = position.x - 100 * Math.sin( rotation ) + this.cameraOffset.x;
+        this.camera.position.z = position.z - 100 * Math.cos( rotation ) + this.cameraOffset.y;
         this.camera.position.y = 70 + this.cameraOffset.z;
         this.lookAtVector = this.lookAtVector || new THREE.Vector3();
         this.lookAtVector.set( position.x, 40, position.z );

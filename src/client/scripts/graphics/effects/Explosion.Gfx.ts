@@ -6,18 +6,51 @@
 import * as THREE from 'three';
 
 import * as OMath from '../../OMath/Core.OMath';
-import { ResourceManager } from '../../managers/Resource.Manager';
 import { GfxCore } from '../Core.Gfx';
 
 //
 
 export class ExplosionGfx {
 
-    private object: THREE.Object3D = new THREE.Object3D();
-    private sprite: THREE.Sprite;
-    private time: number;
+    private material = {
+        uniforms: {
+            opacity: { value: 1 },
+            fogColor: { value: new THREE.Vector3() },
+            fogDensity: { value: 0 },
+        },
+        vertexShader: `
+            attribute float size;
+            attribute vec4 color;
+            varying vec4 vColor;
+            varying float fogDepth;
+            void main() {
+                vColor = color;
+                vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+                fogDepth = -mvPosition.z;
+                gl_PointSize = size;
+                gl_Position = projectionMatrix * mvPosition;
+            }
+        `,
+        fragmentShader: `
+            #define whiteCompliment(a) ( 1.0 - saturate( a ) )
+            const float LOG2 = 1.442695;
+            uniform vec3 fogColor;
+            varying float fogDepth;
+            uniform float fogDensity;
+            varying vec4 vColor;
+            uniform float opacity;
+            void main() {
+                gl_FragColor = vec4( vColor.rgb, vColor.a * opacity );
+                float fogFactor = whiteCompliment( exp2( - fogDensity * fogDensity * fogDepth * fogDepth * LOG2 ) );
+                gl_FragColor.rgb = mix( gl_FragColor.rgb, fogColor, fogFactor );
+            }
+        `,
+    };
 
-    private maps: THREE.Texture[] = [];
+    private object: THREE.Points;
+    private time: number;
+    private particleCount: number = 200;
+    private particlesVelocityVectors: THREE.Vector3[] = [];
 
     public active: boolean = false;
 
@@ -28,57 +61,81 @@ export class ExplosionGfx {
         if ( ! this.active ) return;
         this.time += delta;
 
-        if ( this.time > 50 ) {
+        //
 
-            const map = ( this.sprite.material as THREE.SpriteMaterial ).map!;
+        const material = this.object.material as THREE.ShaderMaterial;
+        const pos = ( this.object.geometry as THREE.BufferGeometry ).attributes['position'] as THREE.BufferAttribute;
+        const sizes = ( this.object.geometry as THREE.BufferGeometry ).attributes['size'] as THREE.BufferAttribute;
+        const colors = ( this.object.geometry as THREE.BufferGeometry ).attributes['color'] as THREE.BufferAttribute;
+        const progress = this.time / 800;
 
-            if ( map.offset.y >= 0 ) {
+        for ( let i = 0, il = this.particleCount; i < il; i ++ ) {
 
-                map.offset.x += 0.25;
-                this.time = 0;
+            const vel = this.particlesVelocityVectors[ i ];
+            sizes.setX( i, sizes.getX( i ) * 1.06 );
 
-                if ( map.offset.x === 1 && map.offset.y !== 0 ) {
+            if ( progress < 0.7 ) {
 
-                    map.offset.x = 0;
-                    map.offset.y -= 0.25;
+                pos.setXYZ( i, pos.getX( i ) + vel.x * progress, pos.getY( i ) + vel.y * progress, pos.getZ( i ) + vel.z * progress );
+                colors.setXYZ( i, colors.getX( i ) - 0.002, colors.getY( i ) - 0.002, colors.getZ( i ) - 0.002 );
 
-                } else if ( map.offset.y === 0 && map.offset.x === 1 ) {
+            } else {
 
-                    this.sprite.scale.set( 80, 80, 80 );
-                    this.object.visible = false;
-                    this.active = false;
-                    map.offset.set( 0, 1 );
-
-                }
+                pos.setXYZ( i, pos.getX( i ) - vel.x * ( progress - 0.7 ) * 0.8, pos.getY( i ) - vel.y * ( progress - 0.7 ) * 0.8, pos.getZ( i ) - vel.z * ( progress - 0.7 ) * 0.8 );
+                colors.setXYZ( i, colors.getX( i ) / 1.1, colors.getY( i ) / 1.1, colors.getZ( i ) / 1.1 );
 
             }
 
         }
 
-        this.object.updateMatrixWorld( true );
+        pos.needsUpdate = true;
+        sizes.needsUpdate = true;
+        colors.needsUpdate = true;
+
+        if ( progress < 0.3 ) {
+
+            material.uniforms['opacity'].value = progress / 0.3;
+
+        } else {
+
+            material.uniforms['opacity'].value = 1 - ( progress - 0.3 ) / 0.7;
+
+        }
+
+        material.uniforms['opacity'].value /= 2;
+
+        if ( progress >= 1 ) {
+
+            this.object.visible = false;
+            this.active = false;
+
+        }
 
     };
 
     public setActive ( position: OMath.Vec3, type: number ) : void {
 
-        switch ( type ) {
+        const pos = ( this.object.geometry as THREE.BufferGeometry ).attributes['position'] as THREE.BufferAttribute;
+        const sizes = ( this.object.geometry as THREE.BufferGeometry ).attributes['size'] as THREE.BufferAttribute;
+        const colors = ( this.object.geometry as THREE.BufferGeometry ).attributes['color'] as THREE.BufferAttribute;
 
-            case 0:
+        for ( let i = 0, il = this.particleCount; i < il; i ++ ) {
 
-                ( this.sprite.material as THREE.SpriteMaterial ).map = this.maps[0];
-                break;
+            this.particlesVelocityVectors.push( new THREE.Vector3( 1.5 * ( Math.random() - 0.5 ), 1.5 *  ( Math.random() - 0.5 ), 1.5 * ( Math.random() - 0.5 ) ) );
 
-            case 1:
-
-                ( this.sprite.material as THREE.SpriteMaterial ).map = this.maps[1];
-                break;
+            pos.setXYZ( i, 15 * ( Math.random() - 0.5 ), 15 * ( Math.random() - 0.5 ), 15 * ( Math.random() - 0.5 ) );
+            sizes.setX( i, ( Math.random() + 1 ) );
+            colors.setXYZW( i, 1, 0.5 * Math.random() + 0.5, Math.random() / 3, Math.random() / 3 + 0.66 );
 
         }
 
-        //
+        pos.needsUpdate = true;
+        sizes.needsUpdate = true;
+        colors.needsUpdate = true;
 
         this.time = 0;
         this.object.position.set( position.x, position.y, position.z );
+        this.object.updateMatrixWorld( true );
         this.object.visible = true;
         this.active = true;
 
@@ -86,33 +143,27 @@ export class ExplosionGfx {
 
     public init () : void {
 
-        const map1 = ResourceManager.getTexture( 'explosion2.png' )!.clone();
-        map1.uuid = ResourceManager.getTexture( 'explosion2.png' )!.uuid;
-        map1.wrapS = THREE.RepeatWrapping;
-        map1.wrapT = THREE.RepeatWrapping;
-        map1.repeat.set( 0.25, 0.25 );
-        map1.offset.set( 0, 0.75 );
-        map1.needsUpdate = true;
-        this.maps.push( map1 );
+        const material = new THREE.ShaderMaterial( {
+            uniforms: this.material.uniforms,
+            vertexShader: this.material.vertexShader,
+            fragmentShader: this.material.fragmentShader,
+            transparent: true,
+            depthWrite: false,
+            fog: true,
+        });
 
-        const map2 = ResourceManager.getTexture( 'explosion3.png' )!.clone();
-        map2.uuid = ResourceManager.getTexture( 'explosion3.png' )!.uuid;
-        map2.wrapS = THREE.RepeatWrapping;
-        map2.wrapT = THREE.RepeatWrapping;
-        map2.repeat.set( 0.25, 0.25 );
-        map2.offset.set( 0, 0.75 );
-        map2.needsUpdate = true;
-        this.maps.push( map2 );
+        const geometry = new THREE.BufferGeometry();
+        const points = new Float32Array( this.particleCount * 3 );
+        const colors = new Float32Array( this.particleCount * 4 );
+        const sizes = new Float32Array( this.particleCount * 1 );
 
-        //
+        geometry.addAttribute( 'position', new THREE.BufferAttribute( points, 3 ) );
+        geometry.addAttribute( 'color', new THREE.BufferAttribute( colors, 4 ) );
+        geometry.addAttribute( 'size', new THREE.BufferAttribute( sizes, 1 ) );
 
-        const material = new THREE.SpriteMaterial({ color: 0xffffff, opacity: 0.7, fog: true });
-        this.sprite = new THREE.Sprite( material );
-
-        this.sprite.scale.set( 80, 80, 80 );
-        this.object.visible = false;
-        this.object.add( this.sprite );
+        this.object = new THREE.Points( geometry, material );
         this.object.name = 'Explosion';
+        this.object.visible = false;
 
         //
 

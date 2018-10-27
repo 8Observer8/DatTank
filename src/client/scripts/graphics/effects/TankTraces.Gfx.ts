@@ -17,38 +17,36 @@ export class TankTracesGfx {
         uniforms: {
             map: { value: new THREE.Texture() },
             fogColor: { value: new THREE.Vector3() },
-            fogNear: { value: 0 },
-            fogFar: { value: 0 },
             fogDensity: { value: 0 },
         },
         vertexShader: `
-        varying float vAlpha;
-        varying vec2 vUv;
-        varying float fogDepth;
-        attribute float alpha;
-        void main( void ) {
-            vAlpha = alpha;
-            vUv = uv;
-            vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
-            fogDepth = -mvPosition.z;
-            gl_Position = projectionMatrix * mvPosition;
-        }
+            varying float vAlpha;
+            varying vec2 vUv;
+            varying float fogDepth;
+            attribute float alpha;
+            void main( void ) {
+                vAlpha = alpha;
+                vUv = uv;
+                vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+                fogDepth = -mvPosition.z;
+                gl_Position = projectionMatrix * mvPosition;
+            }
         `,
         fragmentShader: `
-        #define whiteCompliment(a) ( 1.0 - saturate( a ) )
-        const float LOG2 = 1.442695;
-        uniform sampler2D map;
-        varying float vAlpha;
-        varying vec2 vUv;
-        uniform vec3 fogColor;
-        varying float fogDepth;
-        uniform float fogDensity;
-        void main( void ) {
-            vec4 m = texture2D( map, vec2( vUv[1], 5.0 * vUv[0] ) );
-            gl_FragColor = vec4( m.rgb, vAlpha * m.a );
-            float fogFactor = whiteCompliment( exp2( - fogDensity * fogDensity * fogDepth * fogDepth * LOG2 ) );
-            gl_FragColor.rgb = mix( gl_FragColor.rgb, fogColor, fogFactor );
-        }
+            #define whiteCompliment(a) ( 1.0 - saturate( a ) )
+            const float LOG2 = 1.442695;
+            uniform sampler2D map;
+            varying float vAlpha;
+            varying vec2 vUv;
+            uniform vec3 fogColor;
+            varying float fogDepth;
+            uniform float fogDensity;
+            void main( void ) {
+                vec4 m = texture2D( map, vec2( vUv[1], 5.0 * vUv[0] ) );
+                gl_FragColor = vec4( m.rgb, vAlpha * m.a );
+                float fogFactor = whiteCompliment( exp2( - fogDensity * fogDensity * fogDepth * fogDepth * LOG2 ) );
+                gl_FragColor.rgb = mix( gl_FragColor.rgb, fogColor, fogFactor );
+            }
         `,
     };
 

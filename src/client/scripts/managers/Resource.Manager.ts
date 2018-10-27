@@ -31,7 +31,6 @@ class ResourceManagerCore {
 
     private texturesList: string[] = [
         'smoke.png',
-        'Grass.png',
         'brick.jpg',
 
         'shadows.png',
@@ -39,8 +38,6 @@ class ResourceManagerCore {
         'Tank-shadow.png',
 
         'explosion1.png',
-        'explosion2.png',
-        'explosion3.png',
         'tower-texture.png',
         'Decorations.jpg',
         'Boxes.jpg',
