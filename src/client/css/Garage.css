@@ -45,10 +45,16 @@
 .garage .loading {
     position: absolute;
     top: 40%;
-    left: calc( 50% - 35px );
+    left: calc( 50% - 235px );
     font: normal 18px arial;
     color: #fff;
     z-index: 10;
+}
+
+@media only screen and (max-width: 880px) {
+    .garage .loading {
+        left: calc( 50% - 35px );
+    }
 }
 
 .garage canvas {

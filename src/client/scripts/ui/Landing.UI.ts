@@ -17,6 +17,12 @@ export class UILandingModule {
 
     };
 
+    public noArenaAvailable () : void {
+
+        $('#start-btn').html('No free arenas :(');
+
+    };
+
     public setVersion ( version: string ) : void {
 
         $('#dt-version').html( version );

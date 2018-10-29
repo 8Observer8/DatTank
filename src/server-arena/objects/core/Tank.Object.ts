@@ -295,6 +295,8 @@ export class TankObject {
 
         }, 100 );
 
+        this.makeShot();
+
     };
 
     public stopShooting () : void {

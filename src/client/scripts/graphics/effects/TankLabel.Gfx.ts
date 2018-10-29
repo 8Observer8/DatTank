@@ -126,7 +126,7 @@ export class TankLabelGfx {
 
         }
 
-        const material = new THREE.SpriteMaterial({ map: new THREE.Texture( this.canvas ), color: 0xffffff, fog: true });
+        const material = new THREE.SpriteMaterial({ alphaTest: 0.1, map: new THREE.Texture( this.canvas ), color: 0xffffff, fog: true });
         this.sprite = new THREE.Sprite( material );
 
         this.sprite.position.set( 0, 40, 0 );

@@ -101,14 +101,24 @@ class GameCore {
 
     public preInitArena ( server: any ) : void {
 
-        Arena.preInit( server.ip, server.id );
-        this.currentServer = server;
-        UI.Landing.initPlayBtn();
-        this.ready = true;
+        if ( server.error === 1 ) {
+
+            UI.Landing.noArenaAvailable();
+
+        } else {
+
+            Arena.preInit( server.ip, server.id );
+            this.currentServer = server;
+            UI.Landing.initPlayBtn();
+            this.ready = true;
+
+        }
 
     };
 
     public play () : void {
+
+        if ( ! this.currentServer ) return;
 
         this.garage.hide();
         Logger.newEvent( 'Play', 'game' );

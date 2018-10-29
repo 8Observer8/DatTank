@@ -85,7 +85,7 @@ export class TowerLabelGfx {
         this.canvas.height = 64;
 
         this.ctx = this.canvas.getContext('2d');
-        const material = new THREE.SpriteMaterial({ map: new THREE.Texture( this.canvas ), color: 0xffffff, fog: true });
+        const material = new THREE.SpriteMaterial({ alphaTest: 0.1, map: new THREE.Texture( this.canvas ), color: 0xffffff, fog: true });
         this.sprite = new THREE.Sprite( material );
 
         this.sprite.position.set( 0, 35, 0 );
