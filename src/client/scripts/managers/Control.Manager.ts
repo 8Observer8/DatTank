@@ -147,7 +147,7 @@ class ControlsManagerCore {
             case 65: // a
 
                 if ( this.moveZ === 1 ) return;
-                this.moveZ = 1;
+                this.moveZ = ( this.moveX === 0 ) ? 1 : this.moveX;
                 this.startMoving();
 
                 break;
@@ -165,7 +165,7 @@ class ControlsManagerCore {
             case 68: // d
 
                 if ( this.moveZ === - 1 ) return;
-                this.moveZ = - 1;
+                this.moveZ = ( this.moveX === 0 ) ? - 1 : - this.moveX;
                 this.startMoving();
 
                 break;
