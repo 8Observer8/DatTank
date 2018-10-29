@@ -50,12 +50,8 @@ export function sign ( value: number ) : number {
 export function formatAngle ( angle: number ) : number {
 
     angle = angle % ( 2 * Math.PI );
-
-    if ( angle < 0 ) {
-
-        angle += 2 * Math.PI;
-
-    }
+    if ( Math.abs( angle + 2 * Math.PI ) < Math.abs( angle ) ) angle += 2 * Math.PI;
+    if ( Math.abs( angle - 2 * Math.PI ) < Math.abs( angle ) ) angle -= 2 * Math.PI;
 
     return angle;
 

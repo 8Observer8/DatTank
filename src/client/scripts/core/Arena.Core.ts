@@ -198,8 +198,8 @@ class ArenaCore {
 
             const player = players[ i ];
 
-            if ( ! player || player.id === this.me.id ) continue;
-            if ( ! player.tank || ! this.me.tank ) continue;
+            if ( ! player || player.id === this.meId ) continue;
+            if ( ! player.tank || ! this.me || ! this.me.tank ) continue;
 
             if ( player.tank.position.distanceTo( this.me.tank.position ) > this.viewRange ) {
 

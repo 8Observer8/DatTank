@@ -6,6 +6,12 @@
 import * as OMath from '../OMath/Core.OMath';
 import { ArenaCore } from './Arena.Core';
 import { PlayerCore } from './Player.Core';
+import { TankObject } from '../objects/core/Tank.Object';
+import { TowerObject } from '../objects/core/Tower.Object';
+
+//
+
+enum ACTION { NOTHING = -1, ESCAPE = 0, CHAISE = 1 };
 
 //
 
@@ -47,11 +53,10 @@ export class BotCore {
         engine:     'KX-v8',
     };
 
-    private moveDuration: number;
-    private rotateBaseDuration: number;
+    private target: TankObject | TowerObject | null;
+    private action: ACTION;
     private maxKills: number;
-    private lastTopRotate: number;
-    private readonly delayAfterSpawn: number = 1500;
+    private readonly delayAfterSpawn: number = 2200;
 
     private arena: ArenaCore;
 
@@ -128,10 +133,24 @@ export class BotCore {
 
     };
 
-    public update ( delta: number, time: number ) : void {
+    private calcTankStrength ( target: TankObject | TowerObject ) : number {
 
-        if ( this.player.tank.health <= 0 ) return;
-        if ( Date.now() - this.player.spawnTime < this.delayAfterSpawn ) return;
+        if ( target.health < 20 ) return 0;
+
+        if ( target instanceof TankObject ) {
+
+            if ( target.ammo < 8 ) return 0;
+            return ( target.health * target.cannon.rpm * target.base.cannonCoef * target.cannon.damage * target.armor.armor );
+
+        } else {
+
+            return target.health * target.rpm * target.damage * target.armor;
+
+        }
+
+    };
+
+    private updateMovement () : void {
 
         if ( Math.abs( this.player.tank.position.x ) > 1400 || Math.abs( this.player.tank.position.z ) > 1400 ) {
 
@@ -140,51 +159,52 @@ export class BotCore {
 
         }
 
-        if ( ! this.player.tank.moveDirection.x ) {
+        if ( this.action === ACTION.NOTHING ) {
 
-            const x = ( Math.random() > 0.5 ) ? 1 : -1;
-            this.player.tank.setMovement( x, this.player.tank.moveDirection.y );
-            this.moveDuration = Math.floor( 8000 * Math.random() ) + 1000;
+            this.player.tank.setMovement( 0, 0 );
 
-        }
+        } else if ( ( this.action === ACTION.ESCAPE || this.action === ACTION.CHAISE ) && this.target ) {
 
-        if ( this.rotateBaseDuration === null ) {
+            let dx = this.target.position.x - this.player.tank.position.x;
+            let dz = this.target.position.z - this.player.tank.position.z;
 
-            const y = Math.floor( 3 * Math.random() ) - 1;
-            this.player.tank.setMovement( this.player.tank.moveDirection.x, y );
-            this.rotateBaseDuration = Math.floor( 500 * Math.random() ) + 500;
+            if ( this.action === ACTION.ESCAPE ) {
 
-        }
-
-        //
-
-        if ( this.moveDuration !== 0 || this.rotateBaseDuration !== 0 ) {
-
-            this.moveDuration = ( this.moveDuration !== 0 ) ? this.moveDuration - 40 : 0;
-            this.rotateBaseDuration = ( this.rotateBaseDuration !== 0 ) ? this.rotateBaseDuration - 40 : 0;
-
-            if ( this.moveDuration <= 0 && this.moveDuration !== 0 ) {
-
-                this.player.tank.setMovement( 0, this.player.tank.moveDirection.y );
-                this.moveDuration = 0;
+                dx *= -1;
+                dz *= -1;
 
             }
 
-            if ( this.rotateBaseDuration <= 0 && this.rotateBaseDuration !== 0 ) {
+            const dist = Math.sqrt( dx * dx + dz * dz );
+            const angle = OMath.formatAngle( Math.atan2( dx, dz ) );
 
-                this.player.tank.setMovement( this.player.tank.moveDirection.x, 0 );
-                this.rotateBaseDuration = 0;
+            const viewRange = 20;
+            const newPos1 = this.player.tank.position.clone();
+            newPos1.x += viewRange * dx / dist;
+            newPos1.z += viewRange * dz / dist;
+            const newPos2 = this.player.tank.position.clone();
+            newPos1.x += 1.2 * viewRange * dx / dist;
+            newPos1.z += 1.2 * viewRange * dz / dist;
 
-            }
+            const freeDirection = this.player.arena.collisionManager.isPlaceFree( newPos1, 15, [ this.player.tank.id ] ) && this.player.arena.collisionManager.isPlaceFree( newPos2, 5, [ this.player.tank.id ] );
+            const x = ( this.action === ACTION.CHAISE && dist < this.player.tank.cannon.range ) ? 0 : 1;
+            let y = ( Math.abs( angle - this.player.tank.rotation ) > 0.1 ) ? OMath.sign( angle - this.player.tank.rotation ) : 0;
+
+            if ( ! freeDirection ) y = 1;
+
+            this.player.tank.setMovement( x, y );
 
         }
 
-        //
+    };
 
-        let target = null;
-        let minDist = 1000;
+    private findTask () : void {
+
         const tanks = this.arena.tankManager.getTanks();
         const towers = this.arena.towerManager.getTowers();
+
+        let target = null;
+        let minDist = 2000;
         let distance;
 
         // search for Player target
@@ -193,11 +213,21 @@ export class BotCore {
 
             const tank = tanks[ i ];
 
-            if ( tank.team === this.player.team || tank.health <= 0 ) continue;
+            if ( tank.team.id === this.player.team.id || tank.health <= 0 ) continue;
 
             distance = tank.position.distanceTo( this.player.tank.position );
 
             if ( distance <= minDist ) {
+
+                if ( this.calcTankStrength( this.player.tank ) > this.calcTankStrength( tank ) ) {
+
+                    this.action = ACTION.CHAISE;
+
+                } else if ( 1.2 * this.calcTankStrength( this.player.tank ) < this.calcTankStrength( tank ) ) {
+
+                    this.action = ACTION.ESCAPE;
+
+                }
 
                 minDist = distance;
                 target = tank;
@@ -225,6 +255,16 @@ export class BotCore {
                     minDist = distance;
                     target = tower;
 
+                    if ( this.calcTankStrength( this.player.tank ) > this.calcTankStrength( tower ) ) {
+
+                        this.action = ACTION.CHAISE;
+
+                    } else if ( 1.2 * this.calcTankStrength( this.player.tank ) < this.calcTankStrength( tower ) ) {
+
+                        this.action = ACTION.ESCAPE;
+
+                    }
+
                 }
 
             }
@@ -233,7 +273,17 @@ export class BotCore {
 
         //
 
-        if ( target && minDist < 280 ) {
+        if ( ! target ) {
+
+            this.action = ACTION.NOTHING;
+
+        }
+
+        this.target = target;
+
+        //
+
+        if ( target && minDist < this.player.tank.cannon.range ) {
 
             const dx = this.player.tank.position.x - target.position.x;
             const dz = this.player.tank.position.z - target.position.z;
@@ -245,19 +295,25 @@ export class BotCore {
             deltaAngle = ( deltaAngle > Math.PI ) ? deltaAngle - 2 * Math.PI : deltaAngle;
             deltaAngle = ( deltaAngle < - Math.PI ) ? - deltaAngle + 2 * Math.PI : deltaAngle;
 
-            if ( Math.abs( deltaAngle ) > 0.1 && Date.now() - this.lastTopRotate > 40 ) {
-
-                this.lastTopRotate = Date.now();
-
-            }
-
-            if ( deltaAngle < 0.2 && minDist < 280 ) {
+            if ( deltaAngle < 0.2 ) {
 
                 this.player.tank.makeShot();
 
             }
 
         }
+
+    };
+
+    public update ( delta: number, time: number ) : void {
+
+        if ( this.player.tank.health <= 0 ) return;
+        if ( Date.now() - this.player.spawnTime < this.delayAfterSpawn ) return;
+
+        //
+
+        this.updateMovement();
+        this.findTask();
 
     };
 
@@ -268,7 +324,6 @@ export class BotCore {
         this.arena = arena;
         this.maxKills = Math.floor( Math.random() * 60 ) + 8;
         this.login = this.pickLogin();
-        this.lastTopRotate = Date.now();
 
         this.init();
 

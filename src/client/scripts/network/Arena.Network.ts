@@ -71,7 +71,7 @@ export class ArenaNetwork {
 
         const players = [];
         let player;
-        const playerBinSize = 36;
+        const playerBinSize = 37;
 
         for ( let i = 0, il = data.length / playerBinSize; i < il; i ++ ) {
 

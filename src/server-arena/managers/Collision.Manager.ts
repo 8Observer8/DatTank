@@ -19,7 +19,7 @@ export class CollisionManager {
 
     //
 
-    public isPlaceFree ( position: OMath.Vec3, radius: number ) : boolean {
+    public isPlaceFree ( position: OMath.Vec3, radius: number, skip: number[] = [] ) : boolean {
 
         let body;
         let shape;
@@ -39,7 +39,7 @@ export class CollisionManager {
             body = this.objects[ i ].body;
             shape = body.shapes[0];
 
-            if ( shape instanceof Cannon.Box ) {
+            if ( shape instanceof Cannon.Box && skip.indexOf( body.parent.id ) === -1 ) {
 
                 const tmpResult = n.result;
                 n.result = [];

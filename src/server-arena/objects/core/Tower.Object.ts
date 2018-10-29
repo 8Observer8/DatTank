@@ -33,7 +33,8 @@ export class TowerObject {
 
     public arena: ArenaCore;
 
-    private cooldown = 2000;
+    public cooldown: number = 2000;
+    public rpm: number = 1000 / this.cooldown;
     private shootTime: number;
 
     private sinceHitRegenerationLimit: number = 5000;
