@@ -42,7 +42,7 @@ export class TankTracesGfx {
             varying float fogDepth;
             uniform float fogDensity;
             void main( void ) {
-                vec4 m = texture2D( map, vec2( vUv[1], 5.0 * vUv[0] ) );
+                vec4 m = texture2D( map, vUv );
                 gl_FragColor = vec4( m.rgb, vAlpha * m.a );
                 float fogFactor = whiteCompliment( exp2( - fogDensity * fogDensity * fogDepth * fogDepth * LOG2 ) );
                 gl_FragColor.rgb = mix( gl_FragColor.rgb, fogColor, fogFactor );
@@ -60,7 +60,8 @@ export class TankTracesGfx {
     private leftTrace: THREE.Mesh;
     private rightTrace: THREE.Mesh;
 
-    private route: THREE.Vector4[] = [];
+    private route: number[][] = [];
+    private offset: number = 0;
 
     //
 
@@ -80,35 +81,37 @@ export class TankTracesGfx {
         //
 
         const lTraceGeo = this.leftTrace.geometry as THREE.BufferGeometry;
-        const ltPositions = lTraceGeo.attributes['position'];
-        const ltAlpha = lTraceGeo.attributes['alpha'];
-        const ltUVs = lTraceGeo.attributes['uv'];
+        const ltPositions = lTraceGeo.attributes['position'] as THREE.BufferAttribute;
+        const ltAlpha = lTraceGeo.attributes['alpha'] as THREE.BufferAttribute;
+        const ltUVs = lTraceGeo.attributes['uv'] as THREE.BufferAttribute;
 
         const rTraceGeo = this.rightTrace.geometry as THREE.BufferGeometry;
-        const rtPositions = rTraceGeo.attributes['position'];
-        const rtAlpha = rTraceGeo.attributes['alpha'];
-        const rtUVs = rTraceGeo.attributes['uv'];
-
-        let offset = 0;
+        const rtPositions = rTraceGeo.attributes['position'] as THREE.BufferAttribute;
+        const rtAlpha = rTraceGeo.attributes['alpha'] as THREE.BufferAttribute;
+        const rtUVs = rTraceGeo.attributes['uv'] as THREE.BufferAttribute;
         const width = this.trackWidth;
 
         const a: number[][] = [];
+        let textureDir = 1;
+
+        console.log('zz');
 
         for ( let i = 0, il = this.traceLength * 2; i < il; i += 2 ) {
 
-            const routPoint = this.route[ offset ] || pos;
-            const angle = ( this.route[ offset ] ) ? this.route[ offset ].w : 0;
+            const segmentId = i / 2;
+            const routPoint = this.route[ segmentId ] || [ pos.x, pos.y, pos.z, 0 ];
+            const angle = routPoint[3];
             const wx = width * Math.sin( Math.PI / 2 - angle );
             const wz = - width * Math.cos( Math.PI / 2 - angle );
 
-            a[0] = [ routPoint.x - pos.x - wx, 1, routPoint.z - pos.z - wz ];
-            a[1] = [ routPoint.x - pos.x + wx, 1, routPoint.z - pos.z + wz ];
+            a[0] = [ routPoint[0] - pos.x - wx, 1, routPoint[2] - pos.z - wz ];
+            a[1] = [ routPoint[0] - pos.x + wx, 1, routPoint[2] - pos.z + wz ];
 
             //
 
             const xOffset = this.tankWidth * Math.sin( Math.PI / 2 - angle );
             const zOffset = - this.tankWidth * Math.cos( Math.PI / 2 - angle );
-            const alpha = offset / this.traceLength / 2;
+            const alpha = segmentId / this.traceLength / 2;
 
             ltPositions.setXYZ( i + 0, a[0][0] + xOffset, a[0][1], a[0][2] + zOffset );
             ltPositions.setXYZ( i + 1, a[1][0] + xOffset, a[1][1], a[1][2] + zOffset );
@@ -122,27 +125,37 @@ export class TankTracesGfx {
             rtAlpha.setX( i + 0, alpha );
             rtAlpha.setX( i + 1, alpha );
 
-            ltUVs.setXY( i + 0, offset / this.traceLength, 0 );
-            ltUVs.setXY( i + 1, offset / this.traceLength, 1 );
+            const v = 5 * ( textureDir === 1 ? routPoint[4] / this.traceLength : 1 - routPoint[4] / this.traceLength );
 
-            rtUVs.setXY( i + 0, offset / this.traceLength, 0 );
-            rtUVs.setXY( i + 1, offset / this.traceLength, 1 );
+            ltUVs.setXY( i + 0, 0, v );
+            ltUVs.setXY( i + 1, 1, v );
 
-            //
+            rtUVs.setXY( i + 0, 0, v );
+            rtUVs.setXY( i + 1, 1, v );
 
-            offset ++;
+            if ( routPoint[4] === this.traceLength - 1 ) textureDir = -1;
+
+            console.log( v, routPoint[4] );
 
         }
 
-        lTraceGeo.attributes['position']['needsUpdate'] = true;
-        rTraceGeo.attributes['position']['needsUpdate'] = true;
+        ltPositions.needsUpdate = true;
+        rtPositions.needsUpdate = true;
+
+        ltAlpha.needsUpdate = true;
+        rtAlpha.needsUpdate = true;
+
+        ltUVs.needsUpdate = true;
+        rtUVs.needsUpdate = true;
 
         //
 
         if ( this.prevPosition.distanceTo( pos ) < 5 ) return;
 
-        this.route.push( new THREE.Vector4( pos.x, pos.y, pos.z, rot ) );
-        if ( this.route.length > this.traceLength ) this.route.shift();
+        if ( this.route.length >= this.traceLength ) this.route.shift();
+        this.offset = ( this.offset + 1 ) % this.traceLength;
+        this.route.push( [ pos.x, pos.y, pos.z, rot, this.offset ] );
+
         this.prevPosition.copy( pos );
 
     };
@@ -161,13 +174,13 @@ export class TankTracesGfx {
         geometry.addAttribute( 'uv', new THREE.BufferAttribute( uvs, 2 ) );
 
         const material = new THREE.ShaderMaterial( {
-            uniforms: this.material.uniforms,
-            vertexShader: this.material.vertexShader,
+            uniforms:       this.material.uniforms,
+            vertexShader:   this.material.vertexShader,
             fragmentShader: this.material.fragmentShader,
-            transparent: true,
-            side: THREE.DoubleSide,
-            depthWrite: false,
-            fog: true,
+            transparent:    true,
+            side:           THREE.DoubleSide,
+            depthWrite:     false,
+            fog:            true,
         });
 
         this.leftTrace = new THREE.Mesh( geometry, material );
