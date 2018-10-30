@@ -94,8 +94,6 @@ export class TankTracesGfx {
         const a: number[][] = [];
         let textureDir = 1;
 
-        console.log('zz');
-
         for ( let i = 0, il = this.traceLength * 2; i < il; i += 2 ) {
 
             const segmentId = i / 2;
@@ -134,8 +132,6 @@ export class TankTracesGfx {
             rtUVs.setXY( i + 1, 1, v );
 
             if ( routPoint[4] === this.traceLength - 1 ) textureDir = -1;
-
-            console.log( v, routPoint[4] );
 
         }
 

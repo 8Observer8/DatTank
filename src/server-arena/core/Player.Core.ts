@@ -86,6 +86,17 @@ export class PlayerCore {
 
     //
 
+    public updateXPCoins ( deltaXP: number, deltaCoins: number ) : void {
+
+        this.xp += deltaXP;
+        this.coins += deltaCoins;
+
+        //
+
+        Master.setPlayerXPCoins( this.pid, this.sid, this.xp, this.coins );
+
+    };
+
     public checkKillSerie () : boolean {
 
         let killSerieLength = 0;

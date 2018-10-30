@@ -32,7 +32,7 @@ export class TowerObject {
     public topRotation: number;
     public targetTopRotation: number;
     public position: OMath.Vec3 = new OMath.Vec3();
-    public size: OMath.Vec3 = new OMath.Vec3( 50, 40, 50 );
+    public size: OMath.Vec3 = new OMath.Vec3( 50, 80, 50 );
 
     public title: string;
 

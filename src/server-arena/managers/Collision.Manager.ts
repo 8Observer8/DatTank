@@ -71,7 +71,7 @@ export class CollisionManager {
         const collisionBox = {
             parent:     object,
             type,
-            body:       new Cannon.Body({ mass: ( isDynamic ) ? 1000 : 0 }),
+            body:       new Cannon.Body({ mass: ( isDynamic ) ? 5000 : 0 }),
             sensor:     false,
             collision:  false,
         };
@@ -281,9 +281,11 @@ export class CollisionManager {
         // init world
 
         this.world = new Cannon.World();
-        this.world.gravity.set( 0, -20, 0 );
+        this.world.gravity.set( 0, -9.8, 0 );
         this.world.defaultContactMaterial.contactEquationStiffness = 200000;
         this.world.defaultContactMaterial.friction = 0;
+        this.world.defaultContactMaterial.restitution = 0.2;
+        this.world.solver.iterations = 20;
 
         // add ground
 

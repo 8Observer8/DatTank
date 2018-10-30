@@ -10,6 +10,7 @@ import { PlayerCore } from '../core/Player.Core';
 
 import { AmmoBoxObject } from '../objects/boxes/Ammo.Box';
 import { HealthBoxObject } from '../objects/boxes/Health.Box';
+import { CoinBoxObject } from '../objects/boxes/Coin.Box';
 
 //
 
@@ -37,8 +38,9 @@ export class BoxManager {
         //
 
         const BoxesTypes = {
-            Ammo:     AmmoBoxObject,
-            Health:   HealthBoxObject,
+            Ammo:       AmmoBoxObject,
+            Health:     HealthBoxObject,
+            Coin:       CoinBoxObject,
         };
 
         if ( ! BoxesTypes[ params.type ] ) {
@@ -74,7 +76,7 @@ export class BoxManager {
 
         //
 
-        this.add({ type: ( Math.random() > 0.4 ) ? 'Ammo' : 'Health' });
+        this.add({ type: this.getRandomBoxType() });
 
     };
 
@@ -108,11 +110,33 @@ export class BoxManager {
 
     };
 
+    private getRandomBoxType () : string {
+
+        const boxTypeRnd = Math.random();
+
+        if ( boxTypeRnd < 0.4 ) {
+
+            return 'Coin';
+
+        } else if ( boxTypeRnd < 0.7 ) {
+
+            return 'Ammo';
+
+        } else if ( boxTypeRnd < 1 ) {
+
+            return 'Health';
+
+        }
+
+        return 'Ammo';
+
+    };
+
     public init () : void {
 
         for ( let i = 0; i < this.boxNum; i ++ ) {
 
-            this.add({ type: ( Math.random() > 0.4 ) ? 'Ammo' : 'Health' });
+            this.add({ type: this.getRandomBoxType() });
 
         }
 

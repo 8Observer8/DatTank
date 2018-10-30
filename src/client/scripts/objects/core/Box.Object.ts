@@ -68,10 +68,12 @@ export class BoxObject {
 
 import { HealthBox } from '../../objects/boxes/Health.Box';
 import { AmmoBox } from '../../objects/boxes/Ammo.Box';
+import { CoinBox } from '../../objects/boxes/Coin.Box';
 
 export const BoxesList = {
     HealthBox,
     AmmoBox,
+    CoinBox,
     getById: ( boxId: number ) => {
 
         for ( const item in BoxesList ) {

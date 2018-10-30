@@ -346,7 +346,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Turbo diesel 1.3k HP engine with tesla induction generator.',
             price:          500,
-            power:          10000,
+            power:          30000,
             maxSpeed:       50
         },
 
@@ -358,7 +358,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Double turbo diesel 1.8k HP engine with tesla induction generator.',
             price:          800,
-            power:          10000,
+            power:          30000,
             maxSpeed:       58
         },
 
@@ -370,7 +370,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Double turbo diesel 2.1k HP engine with tesla induction generator with Gallium winding.',
             price:          1300,
-            power:          10000,
+            power:          30000,
             maxSpeed:       62
         },
 
@@ -382,7 +382,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Plutonium 3.2k HP engine with organic-based generator.',
             price:          1700,
-            power:          10000,
+            power:          30000,
             maxSpeed:       75
         },
 
@@ -394,7 +394,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Improved plutonium 3.4k HP engine with organic-based generator.',
             price:          2000,
-            power:          10000,
+            power:          30000,
             maxSpeed:       78
         },
 
@@ -406,7 +406,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Polonium ARK 3.7k HP engine with generator and Lithium batteries.',
             price:          3000,
-            power:          10000,
+            power:          30000,
             maxSpeed:       85
         },
 
@@ -418,7 +418,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Improved polonium ARK 4.2k HP engine.',
             price:          4500,
-            power:          10000,
+            power:          30000,
             maxSpeed:       89
         },
 
@@ -430,7 +430,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Modified VAX32s with Cesium core, 4.6k HP.',
             price:          6000,
-            power:          10000,
+            power:          30000,
             maxSpeed:       93
         }
 

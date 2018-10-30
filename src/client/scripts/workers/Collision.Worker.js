@@ -57,7 +57,7 @@ function addObject ( object, type, isDynamic ) {
         id:         object.id,
         objType:    object.type,
         type:       type,
-        body:       new CANNON.Body({ mass: ( isDynamic ) ? 1000 : 0 }),
+        body:       new CANNON.Body({ mass: ( isDynamic ) ? 5000 : 0 }),
     };
 
     if ( type === 'box' ) {
@@ -203,9 +203,11 @@ function initWorld () {
     // init world
 
     world = new CANNON.World();
-    world.gravity.set( 0, -20, 0 );
+    world.gravity.set( 0, -9.8, 0 );
     world.defaultContactMaterial.contactEquationStiffness = 200000;
     world.defaultContactMaterial.friction = 0;
+    world.defaultContactMaterial.restitution = 0.2;
+    world.solver.iterations = 20;
 
     // add ground
 

@@ -150,6 +150,12 @@ class MasterCore {
 
     };
 
+    public setPlayerXPCoins ( pid: string, sid: string, coins: number, xp: number ) : void {
+
+        // todo
+
+    };
+
     //
 
     constructor () {

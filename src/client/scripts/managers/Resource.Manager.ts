@@ -82,6 +82,7 @@ class ResourceManagerCore {
                 // 'decorations/Ruin1',
                 'boxes/AmmoBox',
                 'boxes/HealthBox',
+                'boxes/CoinBox',
                 'towers/T1-bottom',
                 'towers/T1-top',
             ],
