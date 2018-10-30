@@ -311,7 +311,7 @@ export class TankObject {
         if ( this.moveDirection.x === directionX && this.moveDirection.y === directionY ) return;
 
         this.moveDirection.set( directionX, directionY );
-        this.network.updateMovement( this.moveDirection );
+        this.network.updateMovement();
 
     };
 
@@ -384,7 +384,7 @@ export class TankObject {
 
     };
 
-    public updatePosition ( delta: number ) : void {
+    public updateRotation ( delta: number ) : void {
 
         if ( this.moveDirection.y > 0 ) {
 
@@ -397,6 +397,7 @@ export class TankObject {
         }
 
         this.rotation = this.rotation % ( 2 * Math.PI );
+        this.rotation = + this.rotation.toFixed( 3 );
 
     };
 
@@ -494,7 +495,7 @@ export class TankObject {
         }
 
         this.regenerationUpdate( delta );
-        this.updatePosition( delta );
+        this.updateRotation( delta );
         this.updateObjectsInRange();
 
     };

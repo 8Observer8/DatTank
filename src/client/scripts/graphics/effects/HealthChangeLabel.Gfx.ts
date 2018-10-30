@@ -96,7 +96,7 @@ export class HealthChangeLabelGfx {
 
     public init () : void {
 
-        const material = new THREE.SpriteMaterial({ color: 0xffffff, fog: true });
+        const material = new THREE.SpriteMaterial({ alphaTest: 0.2, color: 0xffffff, fog: true });
         this.sprite = new THREE.Sprite( material );
         this.sprite.position.set( 0, 35, 0 );
         this.sprite.scale.set( 24, 12, 1 );

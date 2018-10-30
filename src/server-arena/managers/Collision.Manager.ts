@@ -79,17 +79,18 @@ export class CollisionManager {
         if ( type === 'box' ) {
 
             shape = new Cannon.Box( new Cannon.Vec3( object.size.x / 2, object.size.y / 2, object.size.z / 2 ) );
+            collisionBox.body.quaternion.setFromEuler( 0, object.rotation, 0, 'XYZ' );
 
         } else if ( type === 'circle' ) {
 
-            shape = new Cannon.Cylinder( object.radius, object.radius, 20, 8 );
+            shape = new Cannon.Cylinder( object.radius, object.radius, 100, 8 );
+            collisionBox.body.quaternion.setFromEuler( - Math.PI / 2, 0, 0, 'XYZ' );
 
         }
 
         if ( onlyIntersect ) collisionBox.body.collisionResponse = false;
 
         collisionBox.body.position.set( object.position.x, object.position.y, object.position.z );
-        collisionBox.body.quaternion.setFromEuler( 0, object.rotation, 0, 'XYZ' );
 
         collisionBox.body['parent'] = object;
         collisionBox.body['name'] = object.type;
@@ -175,18 +176,18 @@ export class CollisionManager {
 
                     } else {
 
-                        object.body.velocity.x /= 1 + 0.05 * ( delta / 20 );
-                        object.body.velocity.z /= 1 + 0.05 * ( delta / 20 );
+                        object.body.velocity.x /= 1 + 0.07;
+                        object.body.velocity.z /= 1 + 0.07;
 
                     }
 
                     if ( object.body.velocity.y > 0 ) {
 
-                        object.body.velocity.y = Math.min( object.body.velocity.y, 4 );
+                        object.body.velocity.y = Math.min( object.body.velocity.y, 8 );
 
                     } else {
 
-                        object.body.velocity.y = Math.max( object.body.velocity.y, - 4 );
+                        object.body.velocity.y = Math.max( object.body.velocity.y, - 50 );
 
                     }
 
@@ -196,8 +197,8 @@ export class CollisionManager {
 
                     if ( speed > 5 && object.parent.moveDirection.x !== 0 ) {
 
-                        object.body.velocity.x += ( vx - object.body.velocity.x ) / 8 * ( delta / 20 );
-                        object.body.velocity.z += ( vz - object.body.velocity.z ) / 8 * ( delta / 20 );
+                        object.body.velocity.x += ( vx - object.body.velocity.x ) / 9;
+                        object.body.velocity.z += ( vz - object.body.velocity.z ) / 9;
 
                     }
 
@@ -250,6 +251,12 @@ export class CollisionManager {
 
         if ( event.body['name'] === 'ground' ) return;
 
+        if ( object.type === 'Tank' ) {
+
+            object.network.updateMovement();
+
+        }
+
         if ( event.body['name'] === 'Box' && object.type === 'Tank' ) {
 
             if ( event.body.parent.removed ) return;
@@ -281,7 +288,7 @@ export class CollisionManager {
         // init world
 
         this.world = new Cannon.World();
-        this.world.gravity.set( 0, -9.8, 0 );
+        this.world.gravity.set( 0, -30, 0 );
         this.world.defaultContactMaterial.contactEquationStiffness = 200000;
         this.world.defaultContactMaterial.friction = 0;
         this.world.defaultContactMaterial.restitution = 0.2;

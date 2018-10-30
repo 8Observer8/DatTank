@@ -240,6 +240,7 @@ export class ArenaCore {
     private update () : void {
 
         const time = Date.now();
+        this.prevUpdateTime = this.prevUpdateTime || time;
         const delta = time - this.prevUpdateTime;
         this.prevUpdateTime = time;
 

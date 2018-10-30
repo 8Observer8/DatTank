@@ -20,7 +20,7 @@ class CollisionManagerCore {
                 id:         object.id,
                 type:       object.type,
                 radius:     object.radius,
-                size:       { x: object.size.x, y: object.size.y, z: object.size.z },
+                size:       ( type === 'box' ) ? { x: object.size.x, y: object.size.y, z: object.size.z } : { x: 0, y: 0, z: 0 },
                 position:   { x: object.position.x, y: object.position.y, z: object.position.z },
                 rotation:   object.rotation,
             },
@@ -62,7 +62,7 @@ class CollisionManagerCore {
                 rotation:       object.rotation,
                 moveDirection:  { x: object.moveDirection.x, y: object.moveDirection.y },
                 posCorrection:  { x: object.positionCorrectionDelta.x, y: object.positionCorrectionDelta.y, z: object.positionCorrectionDelta.z },
-                maxSpeed:       3 * object.base.speedCoef * object.engine.maxSpeed,
+                maxSpeed:       object.base.speedCoef * object.engine.maxSpeed,
                 power:          object.engine.power,
             };
 

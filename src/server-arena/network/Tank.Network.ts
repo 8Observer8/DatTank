@@ -5,7 +5,6 @@
 
 import * as ws from 'ws';
 
-import * as OMath from '../OMath/Core.OMath';
 import { Network } from '../network/Core.Network';
 import { TankObject } from '../objects/core/Tank.Object';
 import { TowerObject } from '../objects/core/Tower.Object';
@@ -136,7 +135,7 @@ export class TankNetwork {
 
     };
 
-    public updateMovement ( direction: OMath.Vec2 ) : void {
+    public updateMovement () : void {
 
         this.buffers['SetMovement'] = this.buffers['SetMovement'] || {};
         const buffer = this.buffers['SetMovement'].buffer || new ArrayBuffer( 14 );
@@ -147,8 +146,8 @@ export class TankNetwork {
         //
 
         bufferView[ 1 ] = this.tank.id;
-        bufferView[ 2 ] = direction.x;
-        bufferView[ 3 ] = direction.y;
+        bufferView[ 2 ] = this.tank.moveDirection.x;
+        bufferView[ 3 ] = this.tank.moveDirection.y;
         bufferView[ 4 ] = this.tank.position.x;
         bufferView[ 5 ] = this.tank.position.z;
         bufferView[ 6 ] = this.tank.rotation * 1000;

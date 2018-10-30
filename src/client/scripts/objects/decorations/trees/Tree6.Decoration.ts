@@ -3,8 +3,6 @@
  * DatTank Tree decoration
 */
 
-import * as OMath from '../../../OMath/Core.OMath';
-
 import { DecorationObject } from '../../../objects/core/Decoration.Object';
 import { CollisionManager } from '../../../managers/Collision.Manager';
 
@@ -13,7 +11,7 @@ import { CollisionManager } from '../../../managers/Collision.Manager';
 export class Tree6Decoration extends DecorationObject {
 
     public static title: string = 'Tree6';
-    public size: OMath.Vec3 = new OMath.Vec3( 20, 70, 20 );
+    public radius: number = 20;
 
     //
 
@@ -23,7 +21,7 @@ export class Tree6Decoration extends DecorationObject {
         this.title = Tree6Decoration.title;
         this.uvOffset.set( 3, 0 );
 
-        CollisionManager.addObject( this, 'box', false );
+        CollisionManager.addObject( this, 'circle', false );
 
     };
 

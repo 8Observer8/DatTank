@@ -7,7 +7,6 @@ var world;
 var objects = [];
 var inited = false;
 var lastUpdate = 0;
-var coef = 0;
 var delta = 0;
 
 //
@@ -37,7 +36,6 @@ self.onmessage = function ( e ) {
 
             lastUpdate = lastUpdate || Date.now();
             delta = Date.now() - lastUpdate;
-            coef = delta / 20;
             update( delta, data.objects );
             lastUpdate = Date.now();
             break;
@@ -63,15 +61,16 @@ function addObject ( object, type, isDynamic ) {
     if ( type === 'box' ) {
 
         shape = new CANNON.Box( new CANNON.Vec3( object.size.x / 2, object.size.y / 2, object.size.z / 2 ) );
+        collisionBox.body.quaternion.setFromEuler( 0, object.rotation, 0, 'XYZ' );
 
     } else if ( type === 'circle' ) {
 
-        shape = new CANNON.Cylinder( object.radius, object.radius, 40, 6 );
+        shape = new CANNON.Cylinder( object.radius, object.radius, 100, 8 );
+        collisionBox.body.quaternion.setFromEuler( - Math.PI / 2, 0, 0, 'XYZ' );
 
     }
 
     collisionBox.body.position.set( object.position.x, object.position.y, object.position.z );
-    collisionBox.body.quaternion.setFromEuler( 0, object.rotation, 0, 'XYZ' );
 
     collisionBox.body.addShape( shape );
     collisionBox.body.type = ( ! isDynamic ) ? CANNON.Body.STATIC : CANNON.Body.DYNAMIC;
@@ -127,44 +126,45 @@ function update ( delta, objectsInfo ) {
         } else {
 
             var speed = object.body.velocity.distanceTo( new CANNON.Vec3( 0, object.body.velocity.y, 0 ) );
-
+            var maxSpeed = 3 * objectInfo.maxSpeed;
             object.body.position.x += objectInfo.posCorrection.x;
             object.body.position.z += objectInfo.posCorrection.z;
 
-            if ( speed < objectInfo.maxSpeed && objectInfo.moveDirection.x ) {
+            if ( speed < maxSpeed && objectInfo.moveDirection.x ) {
 
-                var forceAmount = objectInfo.power * ( 1 - speed / objectInfo.maxSpeed );
+                var forceAmount = objectInfo.power * ( 1 - speed / maxSpeed );
                 var force = new CANNON.Vec3( 0, 0, forceAmount );
                 if ( objectInfo.moveDirection.x < 0 ) force = force.negate();
                 object.body.applyLocalImpulse( force, new CANNON.Vec3( 0, 0, 0 ) );
 
             } else {
 
-                object.body.velocity.x /= 1 + 0.05 * coef;
-                object.body.velocity.z /= 1 + 0.05 * coef;
+                object.body.velocity.x /= 1 + 0.07;
+                object.body.velocity.z /= 1 + 0.07;
 
             }
 
             if ( object.body.velocity.y > 0 ) {
 
-                object.body.velocity.y = Math.min( object.body.velocity.y, 4 );
+                object.body.velocity.y = Math.min( object.body.velocity.y, 8 );
 
             } else {
 
-                object.body.velocity.y = Math.max( object.body.velocity.y, - 4 );
+                object.body.velocity.y = Math.max( object.body.velocity.y, - 50 );
 
             }
 
             var direction = ( objectInfo.moveDirection.x > 0 ) ? 0 : Math.PI;
             var vx = speed * Math.sin( objectInfo.rotation + direction );
             var vz = speed * Math.cos( objectInfo.rotation + direction );
+
             var forwardVelocity = new CANNON.Vec3( vx, 0, vz ).distanceTo( new CANNON.Vec3() );
             var movementDirection = Math.sign( object.body.velocity.x * Math.sin( objectInfo.rotation ) );
 
             if ( speed > 5 && objectInfo.moveDirection.x !== 0 ) {
 
-                object.body.velocity.x += ( vx - object.body.velocity.x ) / 8 * coef;
-                object.body.velocity.z += ( vz - object.body.velocity.z ) / 8 * coef;
+                object.body.velocity.x += ( vx - object.body.velocity.x ) / 9;
+                object.body.velocity.z += ( vz - object.body.velocity.z ) / 9;
 
             }
 
@@ -203,7 +203,7 @@ function initWorld () {
     // init world
 
     world = new CANNON.World();
-    world.gravity.set( 0, -9.8, 0 );
+    world.gravity.set( 0, -30, 0 );
     world.defaultContactMaterial.contactEquationStiffness = 200000;
     world.defaultContactMaterial.friction = 0;
     world.defaultContactMaterial.restitution = 0.2;

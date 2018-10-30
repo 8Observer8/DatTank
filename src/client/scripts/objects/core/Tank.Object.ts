@@ -234,6 +234,8 @@ export class TankObject {
 
         }
 
+        this.rotation = + this.rotation.toFixed( 3 );
+
         if ( this.rotation > 2 * Math.PI ) {
 
             this.rotation -= 2 * Math.PI;
