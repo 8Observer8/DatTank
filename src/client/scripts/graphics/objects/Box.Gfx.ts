@@ -15,6 +15,7 @@ export class BoxGfx {
 
     private animTime: number = 600 * Math.random() * Math.PI * 2;
     private mesh: THREE.Mesh;
+    private box: BoxObject;
 
     //
 
@@ -28,7 +29,8 @@ export class BoxGfx {
 
         const sound = new THREE.PositionalAudio( GfxCore.audioListener );
         sound.position.copy( this.mesh.position );
-        sound.setBuffer( ResourceManager.getSound('box_pick.wav') as THREE.AudioBuffer );
+        sound.setBuffer( ResourceManager.getSound( this.box.pickSound ) as THREE.AudioBuffer );
+
         sound.setRefDistance( 200 );
         sound.play();
 
@@ -47,6 +49,7 @@ export class BoxGfx {
 
         const boxModel = ResourceManager.getModel( 'boxes/' + box.type )!;
 
+        this.box = box;
         this.mesh = new THREE.Mesh( boxModel.geometry, boxModel.material );
         this.mesh.material[0].map = ResourceManager.getTexture('Boxes.jpg');
         this.mesh.name = box.type;

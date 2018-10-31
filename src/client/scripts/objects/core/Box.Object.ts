@@ -17,6 +17,7 @@ export class BoxObject {
     public id: number;
     public position: OMath.Vec3 = new OMath.Vec3();
     public type: string;
+    public pickSound: string;
 
     protected gfx: BoxGfx = new BoxGfx();
 

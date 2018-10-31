@@ -380,7 +380,7 @@ export class UIInGameModule {
 
     };
 
-    public updateCoinsXP ( coins: number, xp: number ) : void {
+    public updateXPCoins ( xp: number, coins: number ) : void {
 
         $('#viewport .xp-coins .coins .value').html( coins.toString() );
         $('#viewport .xp-coins .xp .value').html( xp.toString() );

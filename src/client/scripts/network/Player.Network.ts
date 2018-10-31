@@ -43,6 +43,14 @@ export class PlayerNetwork {
 
     };
 
+    private setXPCoins ( data: any ) : void {
+
+        if ( this.filter( data ) ) return;
+
+        this.player.updateXPCoins( data[1], data[2] );
+
+    };
+
     //
 
     public statsUpdate ( statsId: number ) : void {
@@ -138,11 +146,13 @@ export class PlayerNetwork {
 
         this.setRespawn = this.setRespawn.bind( this );
         this.setLevel = this.setLevel.bind( this );
+        this.setXPCoins = this.setXPCoins.bind( this );
 
         //
 
         Network.addMessageListener( 'PlayerRespawn', this.setRespawn );
         Network.addMessageListener( 'PlayerNewLevel', this.setLevel );
+        Network.addMessageListener( 'PlayerXPCoinsUpdate', this.setXPCoins );
 
     };
 

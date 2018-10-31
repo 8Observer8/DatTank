@@ -50,6 +50,7 @@ class ResourceManagerCore {
         'tank_moving.wav',
         'tank_explosion.wav',
         'box_pick.wav',
+        'coin_pick.wav',
     ];
 
     private packsList: string[] = [

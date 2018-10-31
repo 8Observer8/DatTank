@@ -6,7 +6,6 @@
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
-var useref = require('gulp-useref');
 var argv = require('yargs').argv;
 var gulpif = require('gulp-if');
 var spawn = require('child_process').spawn;
@@ -115,7 +114,7 @@ gulp.task( 'start-server-master', function ( done ) {
 // Arena-Server
 
 gulp.task( 'server-arena', function () {
-    
+
     return gulp.src('./src/server-arena/**/*.ts')
         .pipe(ts({
             "noImplicitAny": true,

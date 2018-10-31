@@ -66,6 +66,7 @@ class NetworkCore {
 
         this.registerEvent( 'PlayerNewLevel', EventDir.IN, EventType.BIN, 90 );
         this.registerEvent( 'PlayerTankUpdateStats', EventDir.OUT, EventType.BIN, 91 );
+        this.registerEvent( 'PlayerXPCoinsUpdate', EventDir.IN, EventType.BIN, 92 );
 
         //
 

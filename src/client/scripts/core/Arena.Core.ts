@@ -50,7 +50,7 @@ class ArenaCore {
 
         this.myCoins = params.me.coins;
         this.myXP = params.me.xp;
-        UI.InGame.updateCoinsXP( this.myCoins, this.myXP );
+        UI.InGame.updateXPCoins( this.myXP, this.myCoins );
 
         // setup teams
 

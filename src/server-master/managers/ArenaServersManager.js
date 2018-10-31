@@ -5,6 +5,7 @@
 
 var express = require('express');
 var GarageConfig = require('./../core/GarageConfig.js');
+var bodyParser = require('body-parser');
 
 //
 
@@ -37,6 +38,8 @@ ArenaServersManager.prototype.init = function () {
     // init network
 
     this.transport = new express();
+    this.transport.use( bodyParser.json() );
+
     this.transport.get( '/api/status-update', this.arenaServerStatusUpdate.bind( this ) );
     this.transport.get( '/api/update-top-list', this.updateTopList.bind( this ) );
     this.transport.get( '/api/garage/getObjects', this.getGarageObjects.bind( this ) );
@@ -78,13 +81,14 @@ ArenaServersManager.prototype.getPlayerInfo = function ( req, res ) {
 
 ArenaServersManager.prototype.savePlayerInfo = function ( req, res ) {
 
-    var pid = req.query.pid;
-    var coins = req.query.coins;
-    var xp = req.query.xp;
+    var pid = req.body.pid;
+    var sid = req.body.sid;
+    var coins = req.body.coins;
+    var xp = req.body.xp;
 
     //
 
-    DT.playerManager.savePlayerInfo( pid, coins, xp, function () {
+    DT.playerManager.savePlayerInfo( pid, sid, coins, xp, function () {
 
         return res.send({ success: true });
 

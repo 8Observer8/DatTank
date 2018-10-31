@@ -94,6 +94,7 @@ export class PlayerCore {
         //
 
         Master.setPlayerXPCoins( this.pid, this.sid, this.xp, this.coins );
+        this.network.updateXPCoins();
 
     };
 

@@ -64,6 +64,24 @@ export class PlayerNetwork {
 
     // send via network
 
+    public updateXPCoins () : void {
+
+        this.buffers['XPCoinsUpdate'] = this.buffers['XPCoinsUpdate'] || {};
+        const buffer = this.buffers['XPCoinsUpdate'].buffer || new ArrayBuffer( 8 );
+        const bufferView = this.buffers['XPCoinsUpdate'].bufferView || new Int16Array( buffer );
+        this.buffers['XPCoinsUpdate'].buffer = buffer;
+        this.buffers['XPCoinsUpdate'].bufferView = bufferView;
+
+        //
+
+        bufferView[ 1 ] = this.player.id;
+        bufferView[ 2 ] = this.player.xp;
+        bufferView[ 3 ] = this.player.coins;
+
+        Network.send( 'PlayerXPCoinsUpdate', this.player.socket, buffer, bufferView );
+
+    };
+
     public warnCheater () : void {
 
         // nothing here yet

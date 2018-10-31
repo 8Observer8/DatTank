@@ -291,9 +291,29 @@ PlayerManager.prototype.getPlayerInfo = function ( pid, callback ) {
 
 };
 
-PlayerManager.prototype.savePlayerInfo = function ( pid, coins, xp, callback ) {
+PlayerManager.prototype.savePlayerInfo = function ( pid, sid, xp, coins, callback ) {
 
-    // todo
+    DB.models.players
+    .findOne({ pid: pid })
+    .then( ( player ) => {
+
+        if ( ! player ) {
+
+            return callback( 'Player not found.' );
+
+        }
+
+        if ( player.sid !== sid ) {
+
+            return callback( 'Cheater.' );
+
+        }
+
+        player.coins = coins;
+        player.xp = xp;
+        player.save();
+
+    });
 
 };
 

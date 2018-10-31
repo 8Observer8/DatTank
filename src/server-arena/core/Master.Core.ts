@@ -5,6 +5,7 @@
 
 import * as http from 'http';
 import * as ip from 'ip';
+import * as request from 'request';
 
 import { Environment } from '../environments/Detect.Environment';
 import { ArenaManager } from '../managers/Arena.Manager';
@@ -152,7 +153,19 @@ class MasterCore {
 
     public setPlayerXPCoins ( pid: string, sid: string, coins: number, xp: number ) : void {
 
-        // todo
+        const options = {
+            uri:    'http://' + Environment.master.host + ':' + Environment.master.port + '/api/player/save',
+            method: 'POST',
+            json: {
+                pid, sid, coins, xp,
+            },
+        };
+
+        request( options, () => {
+
+            // nothing here
+
+        });
 
     };
 

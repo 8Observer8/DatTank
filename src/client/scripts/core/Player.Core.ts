@@ -33,6 +33,15 @@ export class PlayerCore {
 
     //
 
+    public updateXPCoins ( xp: number, coins: number ) : void {
+
+        Arena.myCoins = coins;
+        Arena.myXP = xp;
+
+        UI.InGame.updateXPCoins( xp, coins );
+
+    };
+
     public newLevel ( bonusLevels: number ) : void {
 
         setTimeout( () => {
