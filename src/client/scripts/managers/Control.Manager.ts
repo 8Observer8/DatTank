@@ -156,6 +156,7 @@ class ControlsManagerCore {
             case 83: // s
 
                 if ( this.moveX === - 1 ) return;
+                this.moveZ = - this.moveZ;
                 this.moveX = - 1;
                 this.startMoving();
 
@@ -210,6 +211,7 @@ class ControlsManagerCore {
                 newDirection = ( this.pressedKey[ 38 ] || this.pressedKey[ 87 ] ) ? 1 : 0;
                 if ( this.moveX === newDirection ) break;
                 this.moveX = newDirection;
+                this.moveZ = - this.moveZ;
                 this.startMoving();
                 break;
 

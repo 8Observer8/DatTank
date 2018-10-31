@@ -177,19 +177,21 @@ export class BotCore {
 
             const dist = Math.sqrt( dx * dx + dz * dz );
             const angle = OMath.formatAngle( Math.atan2( dx, dz ) );
+            const deltaAngle = angle - this.player.tank.rotation;
 
-            const viewRange = 20;
+            const viewRange = 40;
             const newPos1 = this.player.tank.position.clone();
-            newPos1.x += viewRange * dx / dist;
-            newPos1.z += viewRange * dz / dist;
+            newPos1.x += viewRange * Math.cos( Math.PI / 2 - this.player.tank.rotation );
+            newPos1.z += viewRange * Math.sin( Math.PI / 2 - this.player.tank.rotation );
+
             const newPos2 = this.player.tank.position.clone();
-            newPos1.x += 1.2 * viewRange * dx / dist;
-            newPos1.z += 1.2 * viewRange * dz / dist;
+            newPos2.x += viewRange * Math.cos( angle );
+            newPos2.z += viewRange * Math.sin( angle );
 
-            const freeDirection = this.player.arena.collisionManager.isPlaceFree( newPos1, 15, [ this.player.tank.id ] ) && this.player.arena.collisionManager.isPlaceFree( newPos2, 5, [ this.player.tank.id ] );
             const x = ( this.action === ACTION.CHAISE && dist < this.player.tank.cannon.range ) ? 0 : 1;
-            let y = ( Math.abs( angle - this.player.tank.rotation ) > 0.1 ) ? OMath.sign( angle - this.player.tank.rotation ) : 0;
+            let y = ( Math.abs( deltaAngle ) > 0.2 ) ? OMath.sign( deltaAngle ) : 0;
 
+            const freeDirection = this.player.arena.collisionManager.isPlaceFree( newPos1, 20, [ this.player.tank.id ] ) && this.player.arena.collisionManager.isPlaceFree( newPos2, 20, [ this.player.tank.id ] );
             if ( ! freeDirection ) y = 1;
 
             this.player.tank.setMovement( x, y );
@@ -202,9 +204,11 @@ export class BotCore {
 
         const tanks = this.arena.tankManager.getTanks();
         const towers = this.arena.towerManager.getTowers();
+        this.action = ACTION.NOTHING;
 
         let target = null;
         let minDist = 2000;
+        const maxEscapeDist = 500;
         let distance;
 
         // search for Player target
@@ -223,9 +227,14 @@ export class BotCore {
 
                     this.action = ACTION.CHAISE;
 
-                } else if ( 1.2 * this.calcTankStrength( this.player.tank ) < this.calcTankStrength( tank ) ) {
+                } else if ( 1.4 * this.calcTankStrength( this.player.tank ) < this.calcTankStrength( tank ) ) {
 
+                    if ( distance >= maxEscapeDist ) continue;
                     this.action = ACTION.ESCAPE;
+
+                } else {
+
+                    continue;
 
                 }
 
@@ -238,32 +247,37 @@ export class BotCore {
 
         // if ! target search for Tower target
 
-        if ( ! target || minDist > 280 ) {
+        if ( ! target || minDist > 500 ) {
 
-            minDist = 1000;
+            minDist = 1500;
 
             for ( let i = 0, il = towers.length; i < il; i ++ ) {
 
                 const tower = towers[ i ];
 
-                if ( tower.team === this.player.team ) continue;
+                if ( tower.team.id === this.player.team.id ) continue;
 
                 distance = this.player.tank.position.distanceTo( tower.position );
 
                 if ( distance <= minDist ) {
 
-                    minDist = distance;
-                    target = tower;
-
                     if ( this.calcTankStrength( this.player.tank ) > this.calcTankStrength( tower ) ) {
 
                         this.action = ACTION.CHAISE;
 
-                    } else if ( 1.2 * this.calcTankStrength( this.player.tank ) < this.calcTankStrength( tower ) ) {
+                    } else if ( 1.4 * this.calcTankStrength( this.player.tank ) < this.calcTankStrength( tower ) ) {
 
+                        if ( distance >= maxEscapeDist ) continue;
                         this.action = ACTION.ESCAPE;
 
+                    } else {
+
+                        continue;
+
                     }
+
+                    minDist = distance;
+                    target = tower;
 
                 }
 
@@ -272,12 +286,6 @@ export class BotCore {
         }
 
         //
-
-        if ( ! target ) {
-
-            this.action = ACTION.NOTHING;
-
-        }
 
         this.target = target;
 

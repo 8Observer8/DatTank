@@ -21,6 +21,8 @@ export class CollisionManager {
 
     public isPlaceFree ( position: OMath.Vec3, radius: number, skip: number[] = [] ) : boolean {
 
+        if ( Math.abs( position.x ) > 1250 || Math.abs( position.z ) > 1250 ) return false;
+
         let body;
         let shape;
         const n = this.world['narrowphase'];
@@ -39,13 +41,32 @@ export class CollisionManager {
             body = this.objects[ i ].body;
             shape = body.shapes[0];
 
-            if ( shape instanceof Cannon.Box && skip.indexOf( body.parent.id ) === -1 ) {
+            if ( skip.indexOf( this.objects[ i ].parent.id ) !== -1 ) continue;
+
+            if ( shape instanceof Cannon.Box ) {
 
                 const tmpResult = n.result;
                 n.result = [];
                 n.currentContactMaterial = this.world.defaultContactMaterial;
 
                 n['boxBox']( shape, dummyShape, body.position, dummyBody.position, body.quaternion, dummyBody.quaternion, body, dummyBody );
+                const result = n.result.length;
+                n.result = tmpResult;
+                n.currentContactMaterial = false;
+
+                if ( result ) {
+
+                    return false;
+
+                }
+
+            } else if ( shape instanceof Cannon.Cylinder ) {
+
+                const tmpResult = n.result;
+                n.result = [];
+                n.currentContactMaterial = this.world.defaultContactMaterial;
+
+                n['boxConvex']( dummyShape, shape, dummyBody.position, body.position, dummyBody.quaternion, body.quaternion, dummyBody, body );
 
                 const result = n.result.length;
                 n.result = tmpResult;
@@ -66,6 +87,12 @@ export class CollisionManager {
     };
 
     public addObject ( object: any, type: string = 'circle', isDynamic: boolean, onlyIntersect?: boolean ) : void {
+
+        // if object is already in world and not yet removed remove immediately
+
+        this.removeObject( object );
+
+        //
 
         let shape;
         const collisionBox = {
