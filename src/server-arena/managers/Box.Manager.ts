@@ -25,7 +25,7 @@ export class BoxManager {
     public add ( params: any ) : void {
 
         let box = null;
-        let position = null;
+        let position = params.position || null;
 
         params.type = params.type || 'Ammo';
 

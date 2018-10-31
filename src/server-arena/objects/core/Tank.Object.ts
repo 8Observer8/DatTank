@@ -350,7 +350,12 @@ export class TankObject {
 
         //
 
-        setTimeout( ( tank: TankObject ) => { tank.dispose(); }, 100, this );
+        setTimeout( ( tank: TankObject ) => {
+
+            tank.arena.boxManager.add({ type: 'Coin', position: tank.position.clone() });
+            tank.dispose();
+
+        }, 100, this );
 
     };
 
