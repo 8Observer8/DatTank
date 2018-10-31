@@ -72,6 +72,7 @@ class BoxManagerCore {
 
         for ( let i = 0, il = this.boxes.length; i < il; i ++ ) {
 
+            if ( ! this.boxes[ i ] ) continue;
             this.boxes[ i ].update( time, delta );
 
         }

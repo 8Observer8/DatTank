@@ -7,7 +7,6 @@ import * as OMath from '../../OMath/Core.OMath';
 
 import { Arena } from '../../core/Arena.Core';
 import { BoxGfx } from '../../graphics/objects/Box.Gfx';
-import { BoxManager } from '../../managers/Box.Manager';
 import { Logger } from '../../utils/Logger';
 
 //
@@ -32,7 +31,6 @@ export class BoxObject {
     public pick ( playerId: number ) : void {
 
         this.gfx.pick();
-        BoxManager.remove( [ this.id ] );
 
         if ( Arena.meId === playerId ) {
 

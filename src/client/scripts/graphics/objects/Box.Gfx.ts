@@ -8,6 +8,7 @@ import * as THREE from 'three';
 import { GfxCore } from '../Core.Gfx';
 import { BoxObject } from '../../objects/core/Box.Object';
 import { ResourceManager } from '../../managers/Resource.Manager';
+import { BoxManager } from '../../managers/Box.Manager';
 
 //
 
@@ -16,6 +17,12 @@ export class BoxGfx {
     private animTime: number = 600 * Math.random() * Math.PI * 2;
     private mesh: THREE.Mesh;
     private box: BoxObject;
+
+    private pickedAnimation = {
+        enabled:    false,
+        progress:   0,
+        duration:   600,
+    };
 
     //
 
@@ -33,15 +40,34 @@ export class BoxGfx {
 
         sound.setRefDistance( 200 );
         sound.play();
+        this.pickedAnimation.enabled = true;
 
     };
 
     public update ( time: number, delta: number ) : void {
 
-        this.animTime += delta;
-        this.mesh.rotation.y = Math.sin( this.animTime / 600 );
-        this.mesh.position.y = Math.sin( this.animTime / 300 ) + 20;
-        this.mesh.updateMatrixWorld( true );
+        if ( ! this.pickedAnimation.enabled ) {
+
+            this.animTime += delta;
+            this.mesh.rotation.y = Math.sin( this.animTime / 600 );
+            this.mesh.position.y = Math.sin( this.animTime / 300 ) + 20;
+            this.mesh.updateMatrixWorld( true );
+
+        } else {
+
+            this.mesh.scale.multiplyScalar( 0.93 );
+            this.mesh.position.y += 1;
+            this.mesh.updateMatrixWorld( true );
+            this.pickedAnimation.progress += delta / this.pickedAnimation.duration;
+
+        }
+
+        if ( this.pickedAnimation.progress >= 1 ) {
+
+            BoxManager.remove( [ this.box.id ] );
+            this.pickedAnimation.enabled = false;
+
+        }
 
     };
 
