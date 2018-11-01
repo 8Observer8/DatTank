@@ -109,6 +109,8 @@ export class TankObject {
 
     public die () : void {
 
+        CollisionManager.removeObject( this );
+
         this.gfx.destroy( () => {
 
             this.dispose();

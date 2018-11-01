@@ -140,22 +140,15 @@ export class CollisionManager {
 
     public removeObject ( object: any ) : void {
 
-        const newObjectList = [];
-
         for ( let i = 0, il = this.objects.length; i < il; i ++ ) {
 
             if ( this.objects[ i ].parent.type + this.objects[ i ].parent.id === object.type + object.id ) {
 
-                this.world.remove( this.objects[ i ].body );
-                continue;
+                this.objects[ i ].needsToRemove = true;
 
             }
 
-            newObjectList.push( this.objects[ i ] );
-
         }
-
-        this.objects = newObjectList;
 
     };
 
@@ -177,6 +170,10 @@ export class CollisionManager {
     };
 
     public update ( delta: number, time: number ) : void {
+
+        this.cleanUpObjects();
+
+        //
 
         for ( let i = 0, il = this.objects.length; i < il; i ++ ) {
 
@@ -274,6 +271,27 @@ export class CollisionManager {
 
     //
 
+    private cleanUpObjects () : void {
+
+        const newObjectList = [];
+
+        for ( let i = 0, il = this.objects.length; i < il; i ++ ) {
+
+            if ( this.objects[ i ].needsToRemove ) {
+
+                this.world.remove( this.objects[ i ].body );
+                continue;
+
+            }
+
+            newObjectList.push( this.objects[ i ] );
+
+        }
+
+        this.objects = newObjectList;
+
+    };
+
     private collisionEvent ( object: any, event: any ) : void {
 
         if ( event.body['name'] === 'ground' ) return;
@@ -286,7 +304,7 @@ export class CollisionManager {
 
         if ( event.body['name'] === 'Box' && object.type === 'Tank' ) {
 
-            if ( event.body.parent.removed ) return;
+            if ( event.body.parent.removed || object.health <= 0 ) return;
             event.body.parent.pickUp( object );
             this.arena.boxManager.remove( event.body.parent );
 

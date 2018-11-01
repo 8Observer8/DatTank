@@ -25,13 +25,21 @@ export class BoxManager {
     public add ( params: any ) : void {
 
         let box = null;
-        let position = params.position || null;
+        let position = null;
 
         params.type = params.type || 'Ammo';
 
-        while ( ! position || ! this.arena.collisionManager.isPlaceFree( new OMath.Vec3( position.x, 10, position.z ), 30 ) ) {
+        if ( ! params.position ) {
 
-            position = new OMath.Vec3( Math.floor( 2000 * ( Math.random() - 0.5 ) ), 20, Math.floor( 2000 * ( Math.random() - 0.5 ) ) );
+            while ( ! position || ! this.arena.collisionManager.isPlaceFree( new OMath.Vec3( position.x, 10, position.z ), 30 ) ) {
+
+                position = new OMath.Vec3( Math.floor( 2000 * ( Math.random() - 0.5 ) ), 20, Math.floor( 2000 * ( Math.random() - 0.5 ) ) );
+
+            }
+
+        } else {
+
+            position = params.position;
 
         }
 
@@ -76,7 +84,11 @@ export class BoxManager {
 
         //
 
-        this.add({ type: this.getRandomBoxType() });
+        if ( this.boxes.length < this.boxNum ) {
+
+            this.add({ type: this.getRandomBoxType() });
+
+        }
 
     };
 
