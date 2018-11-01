@@ -15,6 +15,7 @@ import { TeamManager } from '../../managers/Team.Manager';
 export class LandscapeGfx {
 
     private object: THREE.Object3D = new THREE.Object3D();
+    private ground: THREE.Mesh[] = [];
 
     private terrainMesh: THREE.Mesh;
     private shadowMaterial: THREE.MeshBasicMaterial;
@@ -29,9 +30,12 @@ export class LandscapeGfx {
 
     public getPointHeight ( x: number, z: number ) : number {
 
-        this.raycaster.ray.origin.set( x, 100, z );
+        this.raycaster.ray.origin.set( x, 10, z );
         this.raycaster.ray.direction.set( 0, -1, 0 );
-        const intersects = this.raycaster.intersectObjects( this.object.children, true );
+        this.raycaster.near = 1;
+        this.raycaster.far = 15;
+
+        const intersects = this.raycaster.intersectObjects( this.ground );
 
         if ( intersects[0] ) {
 
@@ -69,6 +73,8 @@ export class LandscapeGfx {
         this.terrainMesh.renderOrder = 6;
         this.object.add( this.terrainMesh );
         this.object.updateMatrixWorld( true );
+
+        this.ground.push( this.terrainMesh );
 
     };
 
@@ -147,6 +153,7 @@ export class LandscapeGfx {
             plane.renderOrder = 9;
             plane.updateMatrixWorld( true );
             this.object.add( plane );
+            this.ground.push( plane );
 
         }
 
