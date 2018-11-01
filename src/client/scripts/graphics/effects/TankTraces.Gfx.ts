@@ -4,11 +4,10 @@
 */
 
 import * as THREE from 'three';
-
 import * as OMath from '../../OMath/Core.OMath';
+
 import { GfxCore } from '../Core.Gfx';
 import { ResourceManager } from '../../managers/Resource.Manager';
-
 //
 
 export class TankTracesGfx {
@@ -102,8 +101,8 @@ export class TankTracesGfx {
             const wx = width * Math.sin( Math.PI / 2 - angle );
             const wz = - width * Math.cos( Math.PI / 2 - angle );
 
-            a[0] = [ routPoint[0] - pos.x - wx, 1, routPoint[2] - pos.z - wz ];
-            a[1] = [ routPoint[0] - pos.x + wx, 1, routPoint[2] - pos.z + wz ];
+            a[0] = [ routPoint[0] - pos.x - wx, pos.y, routPoint[2] - pos.z - wz ];
+            a[1] = [ routPoint[0] - pos.x + wx, pos.y, routPoint[2] - pos.z + wz ];
 
             //
 
@@ -150,7 +149,7 @@ export class TankTracesGfx {
 
         if ( this.route.length >= this.traceLength ) this.route.shift();
         this.offset = ( this.offset + 1 ) % this.traceLength;
-        this.route.push( [ pos.x, pos.y, pos.z, rot, this.offset ] );
+        this.route.push( [ pos.x, GfxCore.landscape.getPointHeight( pos.x, pos.z ), pos.z, rot, this.offset ] );
 
         this.prevPosition.copy( pos );
 

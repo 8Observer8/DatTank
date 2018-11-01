@@ -23,7 +23,25 @@ export class LandscapeGfx {
     private mapExtraSize = 1800;
     private wallWidth = 30;
 
+    private raycaster: THREE.Raycaster = new THREE.Raycaster();
+
     //
+
+    public getPointHeight ( x: number, z: number ) : number {
+
+        this.raycaster.ray.origin.set( x, 100, z );
+        this.raycaster.ray.direction.set( 0, -1, 0 );
+        const intersects = this.raycaster.intersectObjects( this.object.children, true );
+
+        if ( intersects[0] ) {
+
+            return intersects[0].point.y;
+
+        }
+
+        return 0;
+
+    };
 
     private addTerrain () : void {
 
