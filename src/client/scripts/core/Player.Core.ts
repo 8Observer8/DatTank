@@ -38,6 +38,9 @@ export class PlayerCore {
         Arena.myCoins = coins;
         Arena.myXP = xp;
 
+        window['userData'].coins = coins;
+        window['userData'].xp = xp;
+
         UI.InGame.updateXPCoins( xp, coins );
 
     };

@@ -29,6 +29,9 @@ export class Garage {
 
     private updateUserParams () : void {
 
+        this.coins = window['userData'].coins;
+        this.xp = window['userData'].xp;
+
         $('.garage .garage-title .level-label').html( '(Level ' + this.level + ')' );
         $('.garage .xp .value').html( this.xp );
         $('.garage .coins .value').html( this.coins );
@@ -701,6 +704,7 @@ export class Garage {
         if ( ! Game.ready ) return;
 
         this.isOpened = true;
+        this.updateUserParams();
 
         $('.garage').show();
         SoundManager.playSound('MenuClick');
@@ -728,8 +732,6 @@ export class Garage {
 
             this.scene.init( this );
             this.setupMenu();
-            this.updateUserParams();
-
             this.getMaxConfigValues();
 
         });
