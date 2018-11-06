@@ -149,25 +149,27 @@ function convert () {
 
     //
 
+    var title = document.getElementById('title').value || 'model';
+
     var a = document.createElement("a");
     document.body.appendChild( a );
     a.style = "display: none";
     var blob = new Blob( [ packBinObject.bin ], { type: "application/octet-stream" } );
     var url = window.URL.createObjectURL( blob );
     a.href = url;
-    a.download = 'model.bin';
+    a.download = title + '.bin';
     a.click();
     window.URL.revokeObjectURL( url );
 
     setTimeout( function () {
-    
+
         var a = document.createElement("a");
         document.body.appendChild( a );
         a.style = "display: none";
         var blob = new Blob( [ JSON.stringify( packBinObject.data ) ], { type: "text/plain" } );
         var url = window.URL.createObjectURL( blob );
         a.href = url;
-        a.download = 'model.conf';
+        a.download = title + '.conf';
         a.click();
         window.URL.revokeObjectURL( url );
 
