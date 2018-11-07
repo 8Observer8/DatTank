@@ -62,7 +62,12 @@ class ResourceManagerCore {
             url: '/resources/garage.pack',
             models: [
                 'Garage',
-                'tanks/IS2',
+                'bases/IS2001',
+                'bases/OrbitT32s',
+                'bases/TigerS8',
+                'cannons/Plasma-g1',
+                'cannons/Plasma-g2',
+                'cannons/Plasma-double',
             ],
         },
         ingame: {

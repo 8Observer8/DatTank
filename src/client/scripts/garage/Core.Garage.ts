@@ -561,17 +561,6 @@ export class Garage {
             $('.garage .bottom-block .tab.tanks .item').removeClass('active');
             $( event.currentTarget ).addClass('active');
 
-        }
-
-        //
-
-        // const tankId = 'IS2';
-        // this.scene.selectModel( tankId );
-
-        //
-
-        if ( event && event.currentTarget ) {
-
             this.params.selected = $( event.currentTarget ).attr('item-id');
             localStorage.setItem( 'SelectedTank', this.params.selected );
             localStorage.setItem( 'SelectedCannon', this.GarageConfig.tanks[ this.params.selected ].default.cannon );
@@ -579,6 +568,11 @@ export class Garage {
             localStorage.setItem( 'SelectedEngine', this.GarageConfig.tanks[ this.params.selected ].default.engine );
 
         }
+
+        //
+
+        this.scene.selectTank( localStorage.getItem('SelectedTank') || '' );
+        this.scene.selectCannon( localStorage.getItem('SelectedCannon') || '' );
 
         this.showCurrentTankInRightMenu();
 
@@ -606,6 +600,8 @@ export class Garage {
             localStorage.setItem( 'SelectedCannon', cannon.id );
 
         }
+
+        this.scene.selectCannon( localStorage.getItem('SelectedCannon') || '' );
 
     };
 

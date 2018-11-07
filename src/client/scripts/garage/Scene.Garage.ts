@@ -18,11 +18,11 @@ export class GarageScene {
     private renderer: THREE.WebGLRenderer;
 
     private garage: Garage;
+    private currentModel: THREE.Object3D = new THREE.Object3D();
+    private baseModel: THREE.Mesh;
+    private cannonModel: THREE.Mesh;
 
-    private models: any[] = [];
-    private currentTankModel: THREE.Mesh;
-
-    private ambientlight: THREE.AmbientLight;
+    private ambientLight: THREE.AmbientLight;
     private spotLight: THREE.SpotLight;
 
     private initModelsTimeout: number;
@@ -59,8 +59,8 @@ export class GarageScene {
 
         // construct lights
 
-        this.ambientlight = new THREE.AmbientLight( 0xbbbbbb );
-        this.scene.add( this.ambientlight );
+        this.ambientLight = new THREE.AmbientLight( 0xbbbbbb );
+        this.scene.add( this.ambientLight );
 
         this.spotLight = new THREE.SpotLight( 0x888888, 1, 30, Math.PI / 6, 0.8 );
         this.spotLight.position.set( 2, 7, 2 );
@@ -70,6 +70,10 @@ export class GarageScene {
         this.spotLight.shadow.mapSize.height = 1024;
         this.spotLight.shadow.bias = - 0.0005;
         this.scene.add( this.spotLight );
+
+        //
+
+        this.scene.add( this.currentModel );
 
         //
 
@@ -83,66 +87,31 @@ export class GarageScene {
 
     };
 
-    public initModels () : void {
+    public selectTank ( modelName: string ) : void {
 
-        if ( Object.keys( this.models ).length !== 0 ) return;
+        this.currentModel.remove( this.baseModel );
 
-        let model;
-        let mesh;
-        const textureLoader = new THREE.TextureLoader();
+        const model = ResourceManager.getModel( 'bases/' + modelName )!;
+        this.baseModel = new THREE.Mesh( model.geometry, new THREE.MeshBasicMaterial({ color: 0xff0000 }) );
+        this.baseModel.castShadow = true;
+        this.baseModel.receiveShadow = true;
+        this.baseModel.scale.set( 0.8, 0.8, 0.8 );
 
-        for ( let i = 0; i < 4; i ++ ) {
-
-            const modelName = ['IS2', 'T29', 'T44', 'T54'][ i ];
-            const object = new THREE.Object3D();
-            const texture = textureLoader.load( '/resources/textures/' + modelName + '.png' );
-
-            model = ResourceManager.getModel( 'tanks/' + 'IS2' );
-            if ( ! model ) continue;
-
-            const material = [
-                new THREE.MeshPhongMaterial({ map: texture, color: 0xbbbbbb }),
-                new THREE.MeshPhongMaterial({ map: texture, color: 0xbbbbbb }),
-                new THREE.MeshPhongMaterial({ map: texture, color: 0xbbbbbb }),
-            ];
-
-            mesh = new THREE.Mesh( model.geometry, material );
-            mesh.castShadow = true;
-            mesh.receiveShadow = true;
-            mesh.scale.set( 0.8, 0.8, 0.8 );
-            object.add( mesh );
-
-            this.scene.add( object );
-            this.models[ modelName ] = object;
-            object.visible = false;
-
-        }
-
-        model = ResourceManager.getModel('Garage');
-        if ( ! model ) return;
-
-        mesh = new THREE.Mesh( model.geometry, [ new THREE.MeshPhongMaterial({ color: 0xaaaaaa }) ] );
-        mesh.receiveShadow = true;
-        this.scene.add( mesh );
-
-        this.garage.onLoadedResources();
+        this.currentModel.add( this.baseModel );
 
     };
 
-    public selectModel ( modelName: string ) : void {
+    public selectCannon ( modelName: string ) : void {
 
-        for ( const model in this.models ) {
+        this.currentModel.remove( this.cannonModel );
 
-            this.models[ model ].visible = false;
+        const model = ResourceManager.getModel( 'cannons/' + modelName )!;
+        this.cannonModel = new THREE.Mesh( model.geometry, new THREE.MeshBasicMaterial({ color: 0xff0000 }) );
+        this.cannonModel.castShadow = true;
+        this.cannonModel.receiveShadow = true;
+        this.cannonModel.scale.set( 0.8, 0.8, 0.8 );
 
-        }
-
-        if ( this.models[ modelName ] ) {
-
-            this.models[ modelName ].visible = true;
-            this.currentTankModel = this.models[ modelName ];
-
-        }
+        this.currentModel.add( this.cannonModel );
 
     };
 
@@ -156,10 +125,19 @@ export class GarageScene {
 
         }
 
+        //
+
+        const model = ResourceManager.getModel('Garage')!;
+        const mesh = new THREE.Mesh( model.geometry, [ new THREE.MeshPhongMaterial({ color: 0xaaaaaa }) ] );
+        mesh.receiveShadow = true;
+        this.scene.add( mesh );
+
+        //
+
         $('.garage .play-btn').show();
         $('.garage .loading').hide();
 
-        this.initModels();
+        this.garage.onLoadedResources();
         this.camera.position.set( 2, 4.2, 6 );
         this.camera.lookAt( new THREE.Vector3( 0, 0.5, 0 ) );
 
@@ -190,9 +168,9 @@ export class GarageScene {
 
         //
 
-        if ( this.currentTankModel ) {
+        if ( this.currentModel ) {
 
-            this.currentTankModel.rotation.y = this.timer * this.tankRotationSpeed;
+            this.currentModel.rotation.y = this.timer * this.tankRotationSpeed;
 
         }
 
