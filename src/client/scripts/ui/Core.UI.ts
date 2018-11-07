@@ -73,7 +73,7 @@ class UICore {
         $('#viewport-sound').attr( 'sound', isSound.toString() );
         localStorage.setItem( 'sound', isSound.toString() );
 
-        SoundManager.toggleMute( ! value );
+        SoundManager.toggleMute( ! isSound );
 
         if ( ! withoutSound ) {
 
