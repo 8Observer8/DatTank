@@ -12,6 +12,9 @@ import { GfxCore } from '../Core.Gfx';
 
 export class HealthChangeLabelGfx {
 
+    private canvas: HTMLCanvasElement;
+    private ctx: CanvasRenderingContext2D;
+
     private object: THREE.Object3D = new THREE.Object3D();
     private sprite: THREE.Sprite;
     private time: number;
@@ -60,11 +63,20 @@ export class HealthChangeLabelGfx {
         const text = ( healthChange >= 0 ) ? '+' + Math.round( healthChange ) : Math.round( healthChange );
         const color = ( healthChange >= 0 ) ? '#00ff00' : '#ff0000';
 
-        canvas = document.createElement( 'canvas' );
-        canvas.width = 128;
-        canvas.height = 64;
+        if ( ! this.canvas || ! this.ctx ) {
 
-        ctx = canvas.getContext('2d');
+            canvas = document.createElement( 'canvas' );
+            canvas.width = 128;
+            canvas.height = 64;
+            ctx = canvas.getContext('2d');
+
+        } else {
+
+            canvas = this.canvas;
+            ctx = this.ctx;
+
+        }
+
         if ( ! ctx ) {
 
             console.error('Context undefined.');

@@ -70,6 +70,13 @@ export class TowerLabelGfx {
 
     };
 
+    public dispose () : void {
+
+        const material = this.sprite.material as THREE.SpriteMaterial;
+        material.map!.dispose();
+
+    };
+
     public init ( target: THREE.Object3D ) : void {
 
         target.add( this.sprite );

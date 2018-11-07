@@ -178,7 +178,7 @@ class TankGfx {
 
         if ( this.hide ) {
 
-            this.object.position.y -= 0.3;
+            this.object.position.y -= 0.7;
 
         }
 
@@ -281,6 +281,7 @@ class TankGfx {
         // dispose tank traces
 
         this.traces.dispose();
+        this.label.dispose();
 
         // stop all audio
 

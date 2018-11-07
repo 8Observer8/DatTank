@@ -139,6 +139,7 @@ class TowerGfx {
 
     public dispose () : void {
 
+        this.label.dispose();
         GfxCore.coreObjects['towers'].remove( this.object );
 
     };
