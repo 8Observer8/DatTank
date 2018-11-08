@@ -47,7 +47,7 @@ export class PlayerNetwork {
 
         if ( this.filter( data ) ) return;
 
-        this.player.updateXPCoins( data[1], data[2] );
+        this.player.updateXPCoins( data[2] * 10000 + data[1], data[4] * 10000 + data[3] );
 
     };
 

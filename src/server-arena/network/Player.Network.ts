@@ -67,7 +67,7 @@ export class PlayerNetwork {
     public updateXPCoins () : void {
 
         this.buffers['XPCoinsUpdate'] = this.buffers['XPCoinsUpdate'] || {};
-        const buffer = this.buffers['XPCoinsUpdate'].buffer || new ArrayBuffer( 8 );
+        const buffer = this.buffers['XPCoinsUpdate'].buffer || new ArrayBuffer( 12 );
         const bufferView = this.buffers['XPCoinsUpdate'].bufferView || new Int16Array( buffer );
         this.buffers['XPCoinsUpdate'].buffer = buffer;
         this.buffers['XPCoinsUpdate'].bufferView = bufferView;
@@ -75,8 +75,10 @@ export class PlayerNetwork {
         //
 
         bufferView[ 1 ] = this.player.id;
-        bufferView[ 2 ] = this.player.xp;
-        bufferView[ 3 ] = this.player.coins;
+        bufferView[ 2 ] = this.player.xp % 10000;
+        bufferView[ 3 ] = Math.floor( this.player.xp / 10000 );
+        bufferView[ 4 ] = this.player.coins % 10000;
+        bufferView[ 5 ] = Math.floor( this.player.coins / 10000 );
 
         Network.send( 'PlayerXPCoinsUpdate', this.player.socket, buffer, bufferView );
 

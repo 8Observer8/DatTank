@@ -721,6 +721,10 @@ export class Garage {
 
     public init () : void {
 
+        window['garage'] = this;
+
+        //
+
         Game.gameService.getGarageConfig( ( config: any ) => {
 
             Game.GarageConfig = config;
