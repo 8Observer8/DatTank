@@ -30,6 +30,7 @@ export class BoxObject {
 
     public dispose ( player: PlayerCore ) : void {
 
+        this.arena.boxManager.remove( this );
         this.arena.removeObjectFromRangeParams( this );
         this.arena.network.boxPicked( this, player );
 

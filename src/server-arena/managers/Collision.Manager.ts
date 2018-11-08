@@ -306,7 +306,6 @@ export class CollisionManager {
 
             if ( event.body.parent.removed || object.health <= 0 ) return;
             event.body.parent.pickUp( object );
-            this.arena.boxManager.remove( event.body.parent );
 
         }
 

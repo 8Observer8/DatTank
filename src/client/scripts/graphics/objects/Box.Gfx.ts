@@ -55,8 +55,9 @@ export class BoxGfx {
 
         } else {
 
-            this.mesh.scale.multiplyScalar( 0.93 );
-            this.mesh.position.y += 1;
+            this.mesh.scale.setScalar( Math.max( this.mesh.scale.x - 0.5 * delta / 16, 0.2 ) );
+            this.mesh.position.y += 1 * delta / 16;
+            this.mesh.material[0]['opacity'] -= 0.03 * delta / 16;
             this.mesh.updateMatrixWorld( true );
             this.pickedAnimation.progress += delta / this.pickedAnimation.duration;
 
@@ -76,7 +77,8 @@ export class BoxGfx {
         const boxModel = ResourceManager.getModel( 'boxes/' + box.type )!;
 
         this.box = box;
-        this.mesh = new THREE.Mesh( boxModel.geometry, boxModel.material );
+        this.mesh = new THREE.Mesh( boxModel.geometry, [ boxModel.material[0].clone() ] );
+        this.mesh.material[0].transparent = true;
         this.mesh.material[0].map = ResourceManager.getTexture('Boxes.jpg');
         this.mesh.name = box.type;
         this.mesh.scale.set( 20, 20, 20 );
