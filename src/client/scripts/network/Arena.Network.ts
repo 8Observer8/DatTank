@@ -152,7 +152,6 @@ export class ArenaNetwork {
             //
 
             players.push( player );
-            console.log( player );
 
         }
 

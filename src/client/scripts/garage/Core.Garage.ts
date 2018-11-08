@@ -13,7 +13,6 @@ export class Garage {
 
     public isOpened: boolean = false;
     private isBuyPopupOpened: boolean = false;
-    private GarageConfig: any;
 
     public scene: GarageScene = new GarageScene();
 
@@ -155,27 +154,27 @@ export class Garage {
         localStorage.setItem( 'SelectedTank', selectedTank );
 
         const tankName = ( category === 'tanks' ) ? itemId : selectedTank;
-        const tank = this.GarageConfig.tanks[ tankName ];
-        const currentTank = this.GarageConfig.tanks[ selectedTank ];
-        let title = this.GarageConfig[ category ][ itemId ].title;
-        const description = this.GarageConfig[ category ][ itemId ].description;
+        const tank = Game.GarageConfig.tanks[ tankName ];
+        const currentTank = Game.GarageConfig.tanks[ selectedTank ];
+        let title = Game.GarageConfig[ category ][ itemId ].title;
+        const description = Game.GarageConfig[ category ][ itemId ].description;
 
-        let cannonId = ( category === 'cannons' ) ? itemId : localStorage.getItem('SelectedCannon') || this.GarageConfig.tanks[ itemId ].default.cannon;
-        if ( category === 'tanks' && itemId !== selectedTank ) cannonId = this.GarageConfig.tanks[ itemId ].default.cannon;
-        const cannon = this.GarageConfig.cannons[ cannonId ];
-        const currentCannon = this.GarageConfig.cannons[ localStorage.getItem('SelectedCannon') || this.GarageConfig.tanks[ itemId ].default.cannon ];
+        let cannonId = ( category === 'cannons' ) ? itemId : localStorage.getItem('SelectedCannon') || Game.GarageConfig.tanks[ itemId ].default.cannon;
+        if ( category === 'tanks' && itemId !== selectedTank ) cannonId = Game.GarageConfig.tanks[ itemId ].default.cannon;
+        const cannon = Game.GarageConfig.cannons[ cannonId ];
+        const currentCannon = Game.GarageConfig.cannons[ localStorage.getItem('SelectedCannon') || Game.GarageConfig.tanks[ itemId ].default.cannon ];
         localStorage.setItem( 'SelectedCannon', currentCannon.id );
 
-        let armorId = ( category === 'armors' ) ? itemId : localStorage.getItem('SelectedArmor') || this.GarageConfig.tanks[ itemId ].default.armor;
-        if ( category === 'tanks' && itemId !== selectedTank ) armorId = this.GarageConfig.tanks[ itemId ].default.armor;
-        const armor = this.GarageConfig.armors[ armorId ];
-        const currentArmor = this.GarageConfig.armors[ localStorage.getItem('SelectedArmor') || this.GarageConfig.tanks[ itemId ].default.armor ];
+        let armorId = ( category === 'armors' ) ? itemId : localStorage.getItem('SelectedArmor') || Game.GarageConfig.tanks[ itemId ].default.armor;
+        if ( category === 'tanks' && itemId !== selectedTank ) armorId = Game.GarageConfig.tanks[ itemId ].default.armor;
+        const armor = Game.GarageConfig.armors[ armorId ];
+        const currentArmor = Game.GarageConfig.armors[ localStorage.getItem('SelectedArmor') || Game.GarageConfig.tanks[ itemId ].default.armor ];
         localStorage.setItem( 'SelectedArmor', currentArmor.id );
 
-        let engineId = ( category === 'engines' ) ? itemId : localStorage.getItem('SelectedEngine') || this.GarageConfig.tanks[ itemId ].default.engine;
-        if ( category === 'tanks' && itemId !== selectedTank ) engineId = this.GarageConfig.tanks[ itemId ].default.engine;
-        const engine = this.GarageConfig.engines[ engineId ];
-        const currentEngine = this.GarageConfig.engines[ localStorage.getItem('SelectedEngine') || this.GarageConfig.tanks[ itemId ].default.engine ];
+        let engineId = ( category === 'engines' ) ? itemId : localStorage.getItem('SelectedEngine') || Game.GarageConfig.tanks[ itemId ].default.engine;
+        if ( category === 'tanks' && itemId !== selectedTank ) engineId = Game.GarageConfig.tanks[ itemId ].default.engine;
+        const engine = Game.GarageConfig.engines[ engineId ];
+        const currentEngine = Game.GarageConfig.engines[ localStorage.getItem('SelectedEngine') || Game.GarageConfig.tanks[ itemId ].default.engine ];
         localStorage.setItem( 'SelectedEngine', currentEngine.id );
 
         // update descriptions
@@ -310,7 +309,7 @@ export class Garage {
         const selectedCannonId = localStorage.getItem('SelectedCannon') || selectedTank.cannon;
         const selectedArmorId = localStorage.getItem('SelectedArmor') || selectedTank.armor;
         const selectedEngineId = localStorage.getItem('SelectedEngine') || selectedTank.engine;
-        const tankParams = this.GarageConfig.tanks[ selectedTankId ];
+        const tankParams = Game.GarageConfig.tanks[ selectedTankId ];
 
         // clear lists
 
@@ -324,9 +323,9 @@ export class Garage {
 
         width = 0;
 
-        for ( const tankId in this.GarageConfig.tanks ) {
+        for ( const tankId in Game.GarageConfig.tanks ) {
 
-            const tank = this.GarageConfig.tanks[ tankId ];
+            const tank = Game.GarageConfig.tanks[ tankId ];
             const isSelected = ( tankId === selectedTankId );
             const isOwn = ( this.params.tanks[ tankId ] !== undefined );
 
@@ -342,9 +341,9 @@ export class Garage {
 
         width = 0;
 
-        for ( const cannonId in this.GarageConfig.cannons ) {
+        for ( const cannonId in Game.GarageConfig.cannons ) {
 
-            const cannon = this.GarageConfig.cannons[ cannonId ];
+            const cannon = Game.GarageConfig.cannons[ cannonId ];
             if ( tankParams.cannons.indexOf( cannonId ) === - 1 ) continue;
 
             const isSelected = ( cannonId === selectedCannonId );
@@ -362,9 +361,9 @@ export class Garage {
 
         width = 0;
 
-        for ( const engineId in this.GarageConfig.engines ) {
+        for ( const engineId in Game.GarageConfig.engines ) {
 
-            const engine = this.GarageConfig.engines[ engineId ];
+            const engine = Game.GarageConfig.engines[ engineId ];
             if ( tankParams.engines.indexOf( engineId ) === - 1 ) continue;
 
             const isSelected = ( engineId === selectedEngineId );
@@ -382,9 +381,9 @@ export class Garage {
 
         width = 0;
 
-        for ( const armorId in this.GarageConfig.armors ) {
+        for ( const armorId in Game.GarageConfig.armors ) {
 
-            const armor = this.GarageConfig.armors[ armorId ];
+            const armor = Game.GarageConfig.armors[ armorId ];
             if ( tankParams.armors.indexOf( armorId ) === - 1 ) continue;
 
             const isSelected = ( armorId === selectedArmorId );
@@ -444,9 +443,9 @@ export class Garage {
 
         //
 
-        for ( const name in this.GarageConfig.cannons ) {
+        for ( const name in Game.GarageConfig.cannons ) {
 
-            const cannon = this.GarageConfig.cannons[ name ];
+            const cannon = Game.GarageConfig.cannons[ name ];
             this.maxConfigValues.damage = ( 1.2 * cannon.damage > this.maxConfigValues.damage ) ? 1.2 * cannon.damage : this.maxConfigValues.damage;
             this.maxConfigValues.rpm = ( 1.2 * cannon.rpm > this.maxConfigValues.rpm ) ? 1.2 * cannon.rpm : this.maxConfigValues.rpm;
             this.maxConfigValues.range = ( 1.2 * cannon.range > this.maxConfigValues.range ) ? 1.2 * cannon.range : this.maxConfigValues.range;
@@ -458,9 +457,9 @@ export class Garage {
 
         this.maxConfigValues.armor = 0;
 
-        for ( const name in this.GarageConfig.armors ) {
+        for ( const name in Game.GarageConfig.armors ) {
 
-            const armor = this.GarageConfig.armors[ name ];
+            const armor = Game.GarageConfig.armors[ name ];
             this.maxConfigValues.armor = ( 1.8 * armor.armor > this.maxConfigValues.armor ) ? 1.8 * armor.armor : this.maxConfigValues.armor;
 
         }
@@ -469,9 +468,9 @@ export class Garage {
 
         this.maxConfigValues.maxSpeed = 0;
 
-        for ( const name in this.GarageConfig.engines ) {
+        for ( const name in Game.GarageConfig.engines ) {
 
-            const engine = this.GarageConfig.engines[ name ];
+            const engine = Game.GarageConfig.engines[ name ];
             this.maxConfigValues.maxSpeed = ( 1.8 * engine.maxSpeed > this.maxConfigValues.maxSpeed ) ? 1.8 * engine.maxSpeed : this.maxConfigValues.maxSpeed;
 
         }
@@ -548,7 +547,7 @@ export class Garage {
 
         if ( event && event.currentTarget ) {
 
-            const tank = this.GarageConfig.tanks[ $( event.currentTarget ).attr('item-id') || '' ];
+            const tank = Game.GarageConfig.tanks[ $( event.currentTarget ).attr('item-id') || '' ];
             SoundManager.playSound('ElementSelect');
 
             if ( $( event.currentTarget ).hasClass('notOwn') ) {
@@ -563,9 +562,9 @@ export class Garage {
 
             this.params.selected = $( event.currentTarget ).attr('item-id');
             localStorage.setItem( 'SelectedTank', this.params.selected );
-            localStorage.setItem( 'SelectedCannon', this.GarageConfig.tanks[ this.params.selected ].default.cannon );
-            localStorage.setItem( 'SelectedArmor', this.GarageConfig.tanks[ this.params.selected ].default.armor );
-            localStorage.setItem( 'SelectedEngine', this.GarageConfig.tanks[ this.params.selected ].default.engine );
+            localStorage.setItem( 'SelectedCannon', Game.GarageConfig.tanks[ this.params.selected ].default.cannon );
+            localStorage.setItem( 'SelectedArmor', Game.GarageConfig.tanks[ this.params.selected ].default.armor );
+            localStorage.setItem( 'SelectedEngine', Game.GarageConfig.tanks[ this.params.selected ].default.engine );
 
         }
 
@@ -586,7 +585,7 @@ export class Garage {
 
         }
 
-        const cannon = this.GarageConfig.cannons[ $( event.currentTarget ).attr('item-id') || '' ];
+        const cannon = Game.GarageConfig.cannons[ $( event.currentTarget ).attr('item-id') || '' ];
         SoundManager.playSound('ElementSelect');
 
         if ( $( event.currentTarget ).hasClass('notOwn') ) {
@@ -613,7 +612,7 @@ export class Garage {
 
         }
 
-        const engine = this.GarageConfig.engines[ $( event.currentTarget ).attr('item-id') || '' ];
+        const engine = Game.GarageConfig.engines[ $( event.currentTarget ).attr('item-id') || '' ];
         SoundManager.playSound('ElementSelect');
 
         if ( $( event.currentTarget ).hasClass('notOwn') ) {
@@ -638,7 +637,7 @@ export class Garage {
 
         }
 
-        const armor = this.GarageConfig.armors[ $( event.currentTarget ).attr('item-id') || '' ];
+        const armor = Game.GarageConfig.armors[ $( event.currentTarget ).attr('item-id') || '' ];
         SoundManager.playSound('ElementSelect');
 
         if ( $( event.currentTarget ).hasClass('notOwn') ) {
@@ -724,7 +723,7 @@ export class Garage {
 
         Game.gameService.getGarageConfig( ( config: any ) => {
 
-            this.GarageConfig = config;
+            Game.GarageConfig = config;
 
             this.scene.init( this );
             this.setupMenu();

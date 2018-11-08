@@ -30,6 +30,8 @@ class GameCore {
     public garage: Garage = new Garage();
     public gameService: GameService = new GameService();
 
+    public GarageConfig: any;
+
     public pid: string = window['userData'].pid;
     public sid: string = window['userData'].sid;
 
