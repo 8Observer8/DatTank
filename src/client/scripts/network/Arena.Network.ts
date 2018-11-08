@@ -69,65 +69,90 @@ export class ArenaNetwork {
 
     private newTanks ( data: number[] ) : void {
 
-        const players = [];
         let player;
-        const playerBinSize = 37;
+        const players = [];
+        let offset = 0;
 
-        for ( let i = 0, il = data.length / playerBinSize; i < il; i ++ ) {
+        while ( offset < data.length ) {
 
             player = {
-                id:             data[ i * playerBinSize + 10 ],
-                login:          '',
-                team:           data[ i * playerBinSize + 1 ],
+                id:                     data[ offset + 0 ],
+                login:                  '',
+                team:                   data[ offset + 1 ],
                 tank:           {
-                    id:             data[ i * playerBinSize + 0 ],
-                    position:   {
-                        x:  data[ i * playerBinSize + 2 ],
-                        y:  data[ i * playerBinSize + 3 ],
-                        z:  data[ i * playerBinSize + 4 ],
-                    },
-                    rotation:       ( data[ i * playerBinSize + 5 ] / 1000 ) % ( 2 * Math.PI ),
-                    health:         data[ i * playerBinSize + 6 ],
+                    id:                 data[ offset + 2 ],
                     moveDirection:  {
-                        x:  data[ i * playerBinSize + 7 ],
-                        y:  data[ i * playerBinSize + 8 ],
+                        x:              data[ offset + 3 ],
+                        y:              data[ offset + 4 ],
                     },
-                    ammo:   data[ i * playerBinSize + 9 ],
+                    position:   {
+                        x:              data[ offset + 5 ],
+                        y:              data[ offset + 6 ],
+                        z:              data[ offset + 7 ],
+                    },
+                    rotation:           ( data[ offset + 8 ] / 1000 ) % ( 2 * Math.PI ),
+                    health:             data[ offset + 9 ],
+                    ammo:               0,
                     base:   {
-                        nid:            data[ i * playerBinSize + 11 ],
-                        speedCoef:      data[ i * playerBinSize + 12 ],
-                        ammoCapacity:   data[ i * playerBinSize + 13 ],
-                        armorCoef:      data[ i * playerBinSize + 14 ],
+                        nid:            data[ offset + 10 ],
+                        speedCoef:      data[ offset + 11 ],
+                        ammoCapacity:   0,
+                        armorCoef:      0,
                     },
                     cannon: {
-                        nid:        data[ i * playerBinSize + 15 ],
-                        range:      data[ i * playerBinSize + 16 ],
-                        rpm:        data[ i * playerBinSize + 17 ],
-                        overheat:   data[ i * playerBinSize + 18 ],
+                        nid:            data[ offset + 12 ],
+                        range:          0,
+                        rpm:            0,
+                        overheat:       0,
                     },
                     armor: {
-                        nid:    data[ i * playerBinSize + 19 ],
-                        armor:  data[ i * playerBinSize + 20 ],
+                        nid:            data[ offset + 13 ],
+                        armor:          0,
                     },
                     engine: {
-                        nid:        data[ i * playerBinSize + 21 ],
-                        maxSpeed:   data[ i * playerBinSize + 22 ],
-                        power:      data[ i * playerBinSize + 23 ],
+                        nid:            data[ offset + 14 ],
+                        maxSpeed:       data[ offset + 15 ],
+                        power:          data[ offset + 16 ],
                     },
                 },
             };
 
+            //
+
+            offset += 17;
+
             for ( let j = 0; j < 13; j ++ ) {
 
-                if ( data[ i * playerBinSize + 24 + j ] !== 0 ) {
+                if ( data[ offset + j ] !== 0 ) {
 
-                    player.login += String.fromCharCode( data[ i * playerBinSize + 24 + j ] );
+                    player.login += String.fromCharCode( data[ offset + j ] );
 
                 }
 
             }
 
+            offset += 13;
+
+            //
+
+            if ( Arena.meId === player.id ) {
+
+                player.tank.ammo = data[ offset + 0 ];
+                player.tank.base.ammoCapacity = data[ offset + 1 ];
+                player.tank.base.armorCoef = data[ offset + 2 ];
+                player.tank.cannon.range = data[ offset + 3 ];
+                player.tank.cannon.rpm = data[ offset + 4 ];
+                player.tank.cannon.overheat = data[ offset + 5 ];
+                player.tank.armor.armor = data[ offset + 6 ];
+
+                offset += 7;
+
+            }
+
+            //
+
             players.push( player );
+            console.log( player );
 
         }
 

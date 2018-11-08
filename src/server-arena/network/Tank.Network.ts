@@ -220,48 +220,68 @@ export class TankNetwork {
 
         //
 
-        const tankDataSize = 24 * 2 + 13 * 2;
-        const buffer = new ArrayBuffer( 2 + tankDataSize * tanks.length );
+        let size = 0;
+
+        for ( let i = 0, il = tanks.length; i < il; i ++ ) {
+
+            size += 17; // general
+            size += 13; // login
+            size += ( tanks[ i ].id === this.tank.id ) ? 7 : 0; // personal
+
+        }
+
+        const buffer = new ArrayBuffer( ( 1 + size ) * 2 );
         const bufferView = new Int16Array( buffer );
         let item = 0;
+        let offset = 1;
 
-        for ( let i = 1, il = ( tankDataSize / 2 ) * tanks.length + 1; i < il; i += tankDataSize / 2 ) {
+        for ( let i = 0, il = tanks.length; i < il; i ++ ) {
 
             const tank = tanks[ item ];
 
-            bufferView[ i +  0 ] = tank.id;
-            bufferView[ i +  1 ] = tank.team.id;
-            bufferView[ i +  2 ] = tank.position.x;
-            bufferView[ i +  3 ] = tank.position.y;
-            bufferView[ i +  4 ] = tank.position.z;
-            bufferView[ i +  5 ] = ( tank.rotation % ( 2 * Math.PI ) ) * 1000;
-            bufferView[ i +  6 ] = tank.health;
-            bufferView[ i +  7 ] = tank.moveDirection.x;
-            bufferView[ i +  8 ] = tank.moveDirection.y;
-            bufferView[ i +  9 ] = tank.ammo;
-            bufferView[ i + 10 ] = tank.player.id;
+            bufferView[ offset +  0 ] = tank.player.id;
+            bufferView[ offset +  1 ] = tank.team.id;
+            bufferView[ offset +  2 ] = tank.id;
+            bufferView[ offset +  3 ] = tank.moveDirection.x;
+            bufferView[ offset +  4 ] = tank.moveDirection.y;
+            bufferView[ offset +  5 ] = tank.position.x;
+            bufferView[ offset +  6 ] = tank.position.y;
+            bufferView[ offset +  7 ] = tank.position.z;
+            bufferView[ offset +  8 ] = ( tank.rotation % ( 2 * Math.PI ) ) * 1000;
+            bufferView[ offset +  9 ] = tank.health;
 
-            bufferView[ i + 11 ] = tank.base.nid;
-            bufferView[ i + 12 ] = tank.base.speedCoef;
-            bufferView[ i + 13 ] = tank.base.ammoCapacity;
-            bufferView[ i + 14 ] = tank.base.armorCoef;
-            bufferView[ i + 15 ] = tank.cannon.nid;
-            bufferView[ i + 16 ] = tank.cannon.range;
-            bufferView[ i + 17 ] = tank.cannon.rpm;
-            bufferView[ i + 18 ] = tank.cannon.overheat;
-            bufferView[ i + 19 ] = tank.armor.nid;
-            bufferView[ i + 20 ] = tank.armor.armor;
-            bufferView[ i + 21 ] = tank.engine.nid;
-            bufferView[ i + 22 ] = tank.engine.maxSpeed;
-            bufferView[ i + 23 ] = tank.engine.power;
+            bufferView[ offset + 10 ] = tank.base.nid;
+            bufferView[ offset + 11 ] = tank.base.speedCoef;
+            bufferView[ offset + 12 ] = tank.cannon.nid;
+            bufferView[ offset + 13 ] = tank.armor.nid;
+            bufferView[ offset + 14 ] = tank.engine.nid;
+            bufferView[ offset + 15 ] = tank.engine.maxSpeed;
+            bufferView[ offset + 16 ] = tank.engine.power;
 
             for ( let j = 0, jl = tank.player.login.length; j < jl; j ++ ) {
 
                 if ( tank.player.login[ j ] ) {
 
-                    bufferView[ i + 24 + j ] = + tank.player.login[ j ].charCodeAt( 0 ).toString( 10 );
+                    bufferView[ offset + 17 + j ] = + tank.player.login[ j ].charCodeAt( 0 ).toString( 10 );
 
                 }
+
+            }
+
+            //
+
+            offset += 17 + 13;
+
+            if ( tank.id === this.tank.id ) {
+
+                bufferView[ offset + 0 ] = tank.ammo;
+                bufferView[ offset + 1 ] = tank.base.ammoCapacity;
+                bufferView[ offset + 2 ] = tank.base.armorCoef;
+                bufferView[ offset + 3 ] = tank.cannon.range;
+                bufferView[ offset + 4 ] = tank.cannon.rpm;
+                bufferView[ offset + 5 ] = tank.cannon.overheat;
+                bufferView[ offset + 6 ] = tank.armor.armor;
+                offset += 7;
 
             }
 

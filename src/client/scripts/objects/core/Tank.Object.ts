@@ -81,7 +81,7 @@ export class TankObject {
 
         if ( this.health <= 0 ) return;
 
-        if ( Arena.meId === this.player.id ) {
+        if ( this.isMe ) {
 
             this.cannon.overheat = overheating;
             this.gfx.label.update( this.health, this.armor.armor, this.player.team.color, this.cannon.overheat, this.player.username, this.isMe );

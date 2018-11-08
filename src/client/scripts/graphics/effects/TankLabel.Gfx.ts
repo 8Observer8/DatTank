@@ -35,7 +35,7 @@ export class TankLabelGfx {
         this.ctx.shadowOffsetY = 1;
         this.ctx.shadowBlur = 1;
 
-        if ( overheating !== - 1 ) {
+        if ( overheating !== - 1 && isMe ) {
 
             let overheatColor = '#44ce00';
             if ( overheating > 40 ) overheatColor = '#e5c510';
