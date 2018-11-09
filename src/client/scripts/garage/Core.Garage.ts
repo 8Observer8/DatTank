@@ -701,6 +701,7 @@ export class Garage {
         this.isOpened = true;
         this.updateUserParams();
 
+        $('.share-btns').hide();
         $('.garage').show();
         SoundManager.playSound('MenuClick');
 

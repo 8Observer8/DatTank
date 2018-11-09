@@ -13,7 +13,7 @@ export class UILandingModule {
 
     public initPlayBtn () : void {
 
-        $('#start-btn').html('PLAY!');
+        $('#start-btn').html('START');
 
     };
 

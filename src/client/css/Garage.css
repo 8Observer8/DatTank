@@ -81,17 +81,22 @@
     font-size: 12px;
 }
 
-.garage .xp-coins {
+.garage .header {
     position: absolute;
-    top: 23px;
-    right: 60px;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 60px;
+    background-color: rgba( 0, 0, 0, 0.5 );
+    border-bottom: 2px solid rgba( 100, 100, 100, 0.8 );
     z-index: 1;
 }
 
-@media only screen and (max-width: 880px) {
-    .garage .xp-coins {
-        right: 60px;
-    }
+.garage .xp-coins {
+    position: absolute;
+    top: 23px;
+    right: 20px;
+    z-index: 1;
 }
 
 .garage .xp-coins .coins {
@@ -113,9 +118,14 @@
 
 .garage .xp-coins .xp .label {
     float: left;
+    width: 14px;
+    height: 18px;
+    margin-top: -1px;
+    margin-right: 5px;
     padding-right: 5px;
-    color: rgb(24, 189, 2);
-    font: bold 16px Roboto, arial, tahoma;
+    filter: brightness(1.1) drop-shadow(0px 0px 2px);
+    background-image: url(/resources/img/xp.png);
+    background-size: 100% 100%;
 }
 
 .garage .xp-coins .coins .label {
@@ -219,7 +229,7 @@
     left: 0px;
     width: 100%;
     height: 130px;
-    background-color: #111;
+    background-color: rgba( 20, 20, 20, 0.8 );
     border-top: 1px solid #555;
     z-index: 0;
 }
@@ -383,6 +393,9 @@
 .garage .play-btn {
     display: none;
     position: absolute;
+    left: 50%;
+    top: 12px;
+    transform: translateX( -50% );
     color: white;
     background-color: #00b6ff;
     border: 1px solid #0493CC;
@@ -392,8 +405,6 @@
     width: 100px;
     height: 18px;
     transition: opacity 200ms ease;
-    bottom: 170px;
-    right: 58px;
     z-index: 1;
 }
 
@@ -404,19 +415,6 @@
 .garage .play-btn:active {
     opacity: 1;
     transform: translate( -50%, 2px );
-}
-
-.garage .close-btn {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    padding: 10px;
-    z-index: 1;
-    color: #fff;
-    font-size: 30px;
-    opacity: 0.5;
-    transition: opacity 200ms ease;
-    filter: drop-shadow( 0px 0px 2px rgb( 0, 0, 0 ) );
 }
 
 .garage .close-btn:hover {
