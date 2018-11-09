@@ -149,7 +149,7 @@ export class TankTracesGfx {
 
         if ( this.route.length >= this.traceLength ) this.route.shift();
         this.offset = ( this.offset + 1 ) % this.traceLength;
-        this.route.push( [ pos.x, GfxCore.landscape.getPointHeight( pos.x, pos.z ), pos.z, rot, this.offset ] );
+        this.route.push( [ pos.x, /* GfxCore.landscape.getPointHeight( pos.x, pos.z ) */ 2, pos.z, rot, this.offset ] );
 
         this.prevPosition.copy( pos );
 

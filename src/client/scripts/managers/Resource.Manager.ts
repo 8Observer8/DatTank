@@ -43,6 +43,12 @@ class ResourceManagerCore {
         'Boxes.jpg',
         'traces.png',
         'IS2.png',
+
+        'garage-ceiling.jpeg',
+        'garage-ground1.jpg',
+        'garage-ground2.jpg',
+        'garage-wall1.jpg',
+        'garage-wall2.jpg',
     ];
 
     private soundsList: string[] = [

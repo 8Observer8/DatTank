@@ -44,8 +44,8 @@ export class GarageScene {
         // construct scene & renderer
 
         this.container = $('#garage-viewport')[0] as HTMLCanvasElement;
-        this.width = ( $('#garage-viewport').parent().innerWidth() || 0 ) - 400;
-        this.height = ( $('#garage-viewport').parent().innerHeight() || 0 ) - 150;
+        this.width = ( $('#garage-viewport').parent().innerWidth() || 0 );
+        this.height = ( $('#garage-viewport').parent().innerHeight() || 0 ) - 130;
 
         this.scene = new THREE.Scene();
         this.scene.fog = new THREE.FogExp2( this.background, 0.035 );
@@ -128,8 +128,24 @@ export class GarageScene {
         //
 
         const model = ResourceManager.getModel('Garage')!;
-        const mesh = new THREE.Mesh( model.geometry, [ new THREE.MeshPhongMaterial({ color: 0xaaaaaa }) ] );
+        const mesh = new THREE.Mesh( model.geometry, [
+            new THREE.MeshPhongMaterial({ color: 0xaaaaaa, side: THREE.DoubleSide, map: new THREE.TextureLoader().load( '/resources/textures/garage-wall1.jpg' ) }),
+            new THREE.MeshPhongMaterial({ color: 0xaaaaaa, side: THREE.DoubleSide, map: new THREE.TextureLoader().load( '/resources/textures/garage-wall2.jpg' ) }),
+            new THREE.MeshPhongMaterial({ color: 0xaaaaaa, side: THREE.DoubleSide, map: new THREE.TextureLoader().load( '/resources/textures/garage-ground1.jpg' ) }),
+            new THREE.MeshPhongMaterial({ color: 0xaaaaaa, side: THREE.DoubleSide, map: new THREE.TextureLoader().load( '/resources/textures/garage-ceiling.jpeg' ) }),
+            new THREE.MeshPhongMaterial({ color: 0xaaaaaa, side: THREE.DoubleSide, map: new THREE.TextureLoader().load( '/resources/textures/garage-ground2.jpg' ) }),
+        ] );
+
+        mesh.material[0].map.wrapS = mesh.material[0].map.wrapT = THREE.RepeatWrapping;
+        mesh.material[1].map.wrapS = mesh.material[1].map.wrapT = THREE.RepeatWrapping;
+        mesh.material[2].map.wrapS = mesh.material[2].map.wrapT = THREE.RepeatWrapping;
+        mesh.material[3].map.wrapS = mesh.material[3].map.wrapT = THREE.RepeatWrapping;
+        mesh.material[4].map.wrapS = mesh.material[4].map.wrapT = THREE.RepeatWrapping;
+
         mesh.receiveShadow = true;
+        mesh.castShadow = true;
+        mesh.scale.set( 5, 5, 5 );
+        mesh.position.y = 0.69;
         this.scene.add( mesh );
 
         //
@@ -138,15 +154,15 @@ export class GarageScene {
         $('.garage .loading').hide();
 
         this.garage.onLoadedResources();
-        this.camera.position.set( 2, 4.2, 6 );
-        this.camera.lookAt( new THREE.Vector3( 0, 0.5, 0 ) );
+        this.camera.position.set( 6, 3.2, -8 );
+        this.camera.lookAt( new THREE.Vector3( 0, 1.5, 0 ) );
 
     };
 
     public resize () : void {
 
-        this.width = ( $('#garage-viewport').parent().innerWidth() || 0 ) - 400;
-        this.height = ( $('#garage-viewport').parent().innerHeight() || 0 ) - 150;
+        this.width = ( $('#garage-viewport').parent().innerWidth() || 0 );
+        this.height = ( $('#garage-viewport').parent().innerHeight() || 0 ) - 130;
 
         this.renderer.setSize( this.width, this.height );
         this.camera.aspect = this.width / this.height;
