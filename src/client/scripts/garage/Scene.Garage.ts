@@ -62,7 +62,7 @@ export class GarageScene {
         this.ambientLight = new THREE.AmbientLight( 0xbbbbbb );
         this.scene.add( this.ambientLight );
 
-        this.spotLight = new THREE.SpotLight( 0x888888, 1, 30, Math.PI / 6, 0.8 );
+        this.spotLight = new THREE.SpotLight( 0x888888, 1, 300, Math.PI / 3, 0.5 );
         this.spotLight.position.set( 2, 7, 2 );
         this.spotLight.lookAt( this.scene.position );
         this.spotLight.castShadow = true;
