@@ -44,6 +44,7 @@ export class TankObject {
     public positionCorrectionDelta = new OMath.Vec3();
     public rotationCorrection: number = 0;
     public acceleration: number = 0;
+    public velocity: number = 0;
 
     public position: OMath.Vec3 = new OMath.Vec3();
     public rotation: number = 0;
@@ -52,8 +53,6 @@ export class TankObject {
     public posChange: OMath.Vec3 = new OMath.Vec3();
     public rotChange: number = 0;
     public deltaT: number = 0;
-
-    public prevForwardVelocity: number = 0;
 
     protected network: TankNetwork = new TankNetwork();
     public gfx: TankGfx = new TankGfx();

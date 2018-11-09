@@ -131,12 +131,12 @@ class TankGfx {
         const track1Map = this.base.material[1].map;
         const track2Map = this.base.material[2].map;
 
-        if ( tank.moveDirection.x ) {
+        if ( Math.abs( tank.velocity ) > 20 ) {
 
-            track1Map.offset.y = track1Map.offset.y - 0.005 * tank.moveDirection.x;
+            track1Map.offset.y = track1Map.offset.y - 0.0001 * tank.velocity;
             if ( track1Map.offset.y > 1 ) track1Map.offset.y = 0;
 
-            track2Map.offset.y = track2Map.offset.y - 0.005 * tank.moveDirection.x;
+            track2Map.offset.y = track2Map.offset.y - 0.0001 * tank.velocity;
             if ( track2Map.offset.y > 1 ) track2Map.offset.y = 0;
 
         } else if ( tank.moveDirection.y === -1 ) {
