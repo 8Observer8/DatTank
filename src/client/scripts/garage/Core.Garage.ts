@@ -185,73 +185,81 @@ export class Garage {
 
         // updating cannon 'damage' UI
 
+        let progressValue;
+
         const deltaDamage = 100 * ( tank.cannonCoef * cannon.damage - currentTank.cannonCoef * currentCannon.damage ) / this.maxConfigValues.damage;
+        progressValue = 100 * Math.min( currentTank.cannonCoef * currentCannon.damage, tank.cannonCoef * cannon.damage ) / this.maxConfigValues.damage;
 
         $('.garage .tank-stats .cannon.stats-value').html( cannon.damage + 'p' );
-        $('.garage .tank-stats .cannon.stats-progress .green').css( 'width', ( 100 * currentTank.cannonCoef * currentCannon.damage / this.maxConfigValues.damage ) + '%' );
+        $('.garage .tank-stats .cannon.stats-progress .green').css( 'width', progressValue + '%' );
         $('.garage .tank-stats .cannon.stats-progress .delta').css({
             'width': Math.abs( deltaDamage ) + '%',
-            'left': 100 * Math.min( currentTank.cannonCoef * currentCannon.damage, tank.cannonCoef * cannon.damage ) / this.maxConfigValues.damage + '%',
+            'left': progressValue + '%',
             'background-color': ( deltaDamage > 0 ) ? 'rgba( 74, 239, 74, 1 )' : 'rgba( 234, 63, 63, 1 )',
         });
 
         // updating cannon 'reload/rpm' UI
 
         const deltaRPM = 100 * ( cannon.rpm - currentCannon.rpm ) / this.maxConfigValues.rpm;
+        progressValue = 100 * Math.min( currentCannon.rpm, cannon.rpm ) / this.maxConfigValues.rpm;
 
         $('.garage .tank-stats .reload.stats-value').html( cannon.rpm + 'rpm' );
-        $('.garage .tank-stats .reload.stats-progress .green').css( 'width', ( 100 * currentCannon.rpm / this.maxConfigValues.rpm ) + '%' );
+        $('.garage .tank-stats .reload.stats-progress .green').css( 'width', progressValue + '%' );
         $('.garage .tank-stats .reload.stats-progress .delta').css({
             'width': Math.abs( deltaRPM ) + '%',
-            'left': 100 * Math.min( currentCannon.rpm, cannon.rpm ) / this.maxConfigValues.rpm + '%',
+            'left': progressValue + '%',
             'background-color': ( deltaRPM > 0 ) ? 'rgba( 74, 239, 74, 1 )' : 'rgba( 234, 63, 63, 1 )',
         });
 
         // updating cannon 'range' UI
 
         const deltaRange = 100 * ( cannon.range - currentCannon.range ) / this.maxConfigValues.range;
+        progressValue = 100 * Math.min( currentCannon.range, cannon.range ) / this.maxConfigValues.range;
 
         $('.garage .tank-stats .range.stats-value').html( cannon.range + 'km' );
-        $('.garage .tank-stats .range.stats-progress .green').css( 'width', ( 100 * currentCannon.range / this.maxConfigValues.range ) + '%' );
+        $('.garage .tank-stats .range.stats-progress .green').css( 'width', progressValue + '%' );
         $('.garage .tank-stats .range.stats-progress .delta').css({
             'width': Math.abs( deltaRange ) + '%',
-            'left': 100 * Math.min( currentCannon.range, cannon.range ) / this.maxConfigValues.range + '%',
+            'left': progressValue + '%',
             'background-color': ( deltaRange > 0 ) ? 'rgba( 74, 239, 74, 1 )' : 'rgba( 234, 63, 63, 1 )',
         });
 
         // updating cannon 'range' UI
 
         const deltaOverheat = 100 * ( cannon.overheat - currentCannon.overheat ) / this.maxConfigValues.overheat;
+        progressValue = 100 * Math.min( currentCannon.overheat, cannon.overheat ) / this.maxConfigValues.overheat;
 
         $('.garage .tank-stats .overheat.stats-value').html( cannon.overheat + 'p' );
-        $('.garage .tank-stats .overheat.stats-progress .green').css( 'width', ( 100 * currentCannon.overheat / this.maxConfigValues.overheat ) + '%' );
+        $('.garage .tank-stats .overheat.stats-progress .green').css( 'width', progressValue + '%' );
         $('.garage .tank-stats .overheat.stats-progress .delta').css({
             'width': Math.abs( deltaOverheat ) + '%',
-            'left': 100 * Math.min( currentCannon.overheat, cannon.overheat ) / this.maxConfigValues.overheat + '%',
+            'left': progressValue + '%',
             'background-color': ( deltaOverheat > 0 ) ? 'rgba( 74, 239, 74, 1 )' : 'rgba( 234, 63, 63, 1 )',
         });
 
         // updating armor 'armor' UI
 
         const deltaArmor = 100 * ( tank.armorCoef * armor.armor - currentTank.armorCoef * currentArmor.armor ) / this.maxConfigValues.armor;
+        progressValue = 100 * Math.min( currentTank.cannonCoef * currentArmor.armor, tank.armorCoef * armor.armor ) / this.maxConfigValues.armor;
 
         $('.garage .tank-stats .armor.stats-value').html( armor.armor + 'p' );
-        $('.garage .tank-stats .armor.stats-progress .green').css( 'width', ( 100 * currentTank.armorCoef * currentArmor.armor / this.maxConfigValues.armor ) + '%' );
+        $('.garage .tank-stats .armor.stats-progress .green').css( 'width', progressValue + '%' );
         $('.garage .tank-stats .armor.stats-progress .delta').css({
             'width': Math.abs( deltaArmor ) + '%',
-            'left': 100 * Math.min( currentTank.cannonCoef * currentArmor.armor, tank.armorCoef * armor.armor ) / this.maxConfigValues.armor + '%',
+            'left': progressValue + '%',
             'background-color': ( deltaArmor > 0 ) ? 'rgba( 74, 239, 74, 1 )' : 'rgba( 234, 63, 63, 1 )',
         });
 
         // updating engine 'maxSpeed' UI
 
         const deltaSpeed = 100 * ( tank.speedCoef * engine.maxSpeed - currentTank.speedCoef * currentEngine.maxSpeed ) / this.maxConfigValues.maxSpeed;
+        progressValue = 100 * Math.min( currentTank.speedCoef * currentEngine.maxSpeed, tank.speedCoef * engine.maxSpeed ) / this.maxConfigValues.maxSpeed;
 
         $('.garage .tank-stats .speed.stats-value').html( tank.speedCoef * engine.maxSpeed + 'km/h' );
-        $('.garage .tank-stats .speed.stats-progress .green').css( 'width', ( 100 * currentTank.speedCoef * currentEngine.maxSpeed / this.maxConfigValues.maxSpeed ) + '%' );
+        $('.garage .tank-stats .speed.stats-progress .green').css( 'width', progressValue + '%' );
         $('.garage .tank-stats .speed.stats-progress .delta').css({
             'width': Math.abs( deltaSpeed ) + '%',
-            'left': 100 * Math.min( currentTank.speedCoef * currentEngine.maxSpeed, tank.speedCoef * engine.maxSpeed ) / this.maxConfigValues.maxSpeed + '%',
+            'left': progressValue + '%',
             'background-color': ( deltaSpeed > 0 ) ? 'rgba( 74, 239, 74, 1 )' : 'rgba( 234, 63, 63, 1 )',
         });
 

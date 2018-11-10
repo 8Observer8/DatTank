@@ -94,7 +94,7 @@
 
 .garage .xp-coins {
     position: absolute;
-    top: 23px;
+    top: 21px;
     right: 20px;
     z-index: 1;
 }
@@ -145,7 +145,6 @@
     right: 0px;
     width: 400px;
     height: 300px;
-    overflow-y: scroll;
     z-index: 1;
 }
 
@@ -220,7 +219,7 @@
     width: 0%;
     height: 100%;
     z-index: 2;
-    transition: width 400ms ease;
+    transition: width 400ms ease, left 400ms ease;
 }
 
 .garage .bottom-block {
@@ -232,12 +231,6 @@
     background-color: rgba( 20, 20, 20, 0.8 );
     border-top: 1px solid #555;
     z-index: 0;
-}
-
-@media only screen and (max-width: 880px) {
-    .garage .bottom-block {
-        width: 100%;
-    }
 }
 
 .garage .bottom-block .list {
@@ -272,15 +265,15 @@
 
 .garage .bottom-block .item .price {
     position: absolute;
-    top: 5px;
+    top: 2px;
     right: 5px;
     text-align: right;
-    color: #46463575;
+    color: rgb(247, 234, 56);
 }
 
 .garage .bottom-block .item .price .value {
-    color: #464635;
-    font-size: 14px;
+    color: #fff;
+    font-size: 12px;
 }
 
 .garage .bottom-block .item .price .ico {
@@ -523,10 +516,4 @@
     background-color: #fb4627;
     border-color: #ad2f19;
     margin: 20px auto !important;
-}
-
-@media only screen and (max-width: 880px) {
-    .garage #garage-viewport {
-        width: 100% !important;
-    }
 }

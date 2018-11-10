@@ -92,7 +92,11 @@ export class GarageScene {
         this.currentModel.remove( this.baseModel );
 
         const model = ResourceManager.getModel( 'bases/' + modelName )!;
-        this.baseModel = new THREE.Mesh( model.geometry, new THREE.MeshLambertMaterial({ color: 0xff0000 }) );
+        this.baseModel = new THREE.Mesh( model.geometry, [
+            new THREE.MeshLambertMaterial({ color: 0xaaaaaa, map: new THREE.TextureLoader().load('/resources/textures/IS2.png') }),
+            new THREE.MeshLambertMaterial({ color: 0xaaaaaa, map: new THREE.TextureLoader().load('/resources/textures/IS2.png') }),
+            new THREE.MeshLambertMaterial({ color: 0xaaaaaa, map: new THREE.TextureLoader().load('/resources/textures/IS2.png') }),
+        ]);
         this.baseModel.castShadow = true;
         this.baseModel.receiveShadow = true;
         this.baseModel.scale.set( 0.8, 0.8, 0.8 );
@@ -106,7 +110,9 @@ export class GarageScene {
         this.currentModel.remove( this.cannonModel );
 
         const model = ResourceManager.getModel( 'cannons/' + modelName )!;
-        this.cannonModel = new THREE.Mesh( model.geometry, new THREE.MeshLambertMaterial({ color: 0xff0000 }) );
+        this.cannonModel = new THREE.Mesh( model.geometry, [
+            new THREE.MeshLambertMaterial({ color: 0xaaaaaa, map: new THREE.TextureLoader().load('/resources/textures/IS2.png') }),
+        ]);
         this.cannonModel.castShadow = true;
         this.cannonModel.receiveShadow = true;
         this.cannonModel.scale.set( 0.8, 0.8, 0.8 );
