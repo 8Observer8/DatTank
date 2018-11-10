@@ -510,6 +510,7 @@
 }
 
 .team-stat {
+    display: none;
     height: 100%;
     width: 95px;
     float: left;

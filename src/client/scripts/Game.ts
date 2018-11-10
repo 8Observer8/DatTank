@@ -163,7 +163,7 @@ class GameCore {
             localStorage.setItem( 'login', login + '' );
 
             const tankConfig = {
-                tank:       localStorage.getItem( 'SelectedTank' ) || '',
+                base:       localStorage.getItem( 'SelectedTank' ) || '',
                 cannon:     localStorage.getItem( 'SelectedCannon' ) || '',
                 armor:      localStorage.getItem( 'SelectedArmor' ) || '',
                 engine:     localStorage.getItem( 'SelectedEngine' ) || '',

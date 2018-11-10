@@ -47,7 +47,7 @@ export class BotCore {
     public login: string;
 
     public tankConfig = {
-        tank:       'IS2001',
+        base:       'IS2001',
         cannon:     'Plasma-g1',
         armor:      'X-shield',
         engine:     'KX-v8',

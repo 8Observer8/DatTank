@@ -105,10 +105,10 @@ class GarageManagerCore {
 
         if ( player.socket ) {
 
-            if ( ! availableParts.tanks[ params.tank ] || ! availableParts.cannons[ params.cannon ] || ! availableParts.armors[ params.armor ] || ! availableParts.engines[ params.engine ] ) {
+            if ( ! availableParts.tanks[ params.base ] || ! availableParts.cannons[ params.cannon ] || ! availableParts.armors[ params.armor ] || ! availableParts.engines[ params.engine ] ) {
 
-                params.tank = 'IS2001';
-                const rawTankData = this.bases[ params.tank ];
+                params.base = 'IS2001';
+                const rawTankData = this.bases[ params.base ];
 
                 params.cannon = rawTankData.default.cannon;
                 params.armor = rawTankData.default.armor;
@@ -123,7 +123,7 @@ class GarageManagerCore {
         //
 
         const tankObject = new TankObject( player );
-        tankObject.base = new BaseTankPart( this.bases[ params.tank ] );
+        tankObject.base = new BaseTankPart( this.bases[ params.base ] );
         tankObject.cannon = new CannonTankPart( this.cannons[ params.cannon ]);
         tankObject.armor = new ArmorTankPart( this.armors[ params.armor ] );
         tankObject.engine = new EngineTankPart( this.engines[ params.engine ] );

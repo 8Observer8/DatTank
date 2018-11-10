@@ -254,15 +254,18 @@ export class TankNetwork {
             bufferView[ offset + 11 ] = tank.base.speedCoef;
             bufferView[ offset + 12 ] = tank.cannon.nid;
             bufferView[ offset + 13 ] = tank.armor.nid;
-            bufferView[ offset + 14 ] = tank.engine.nid;
-            bufferView[ offset + 15 ] = tank.engine.maxSpeed;
-            bufferView[ offset + 16 ] = tank.engine.power;
+            bufferView[ offset + 14 ] = tank.armor.armor;
+            bufferView[ offset + 15 ] = tank.engine.nid;
+            bufferView[ offset + 16 ] = tank.engine.maxSpeed;
+            bufferView[ offset + 17 ] = tank.engine.power;
+
+            offset += 18;
 
             for ( let j = 0, jl = tank.player.login.length; j < jl; j ++ ) {
 
                 if ( tank.player.login[ j ] ) {
 
-                    bufferView[ offset + 17 + j ] = + tank.player.login[ j ].charCodeAt( 0 ).toString( 10 );
+                    bufferView[ offset + j ] = + tank.player.login[ j ].charCodeAt( 0 ).toString( 10 );
 
                 }
 
@@ -270,7 +273,7 @@ export class TankNetwork {
 
             //
 
-            offset += 17 + 13;
+            offset += 13;
 
             if ( tank.id === this.tank.id ) {
 
@@ -280,8 +283,7 @@ export class TankNetwork {
                 bufferView[ offset + 3 ] = tank.cannon.range;
                 bufferView[ offset + 4 ] = tank.cannon.rpm;
                 bufferView[ offset + 5 ] = tank.cannon.overheat;
-                bufferView[ offset + 6 ] = tank.armor.armor;
-                offset += 7;
+                offset += 6;
 
             }
 

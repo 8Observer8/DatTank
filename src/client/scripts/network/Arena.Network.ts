@@ -107,19 +107,19 @@ export class ArenaNetwork {
                     },
                     armor: {
                         nid:            data[ offset + 13 ],
-                        armor:          0,
+                        armor:          data[ offset + 14 ],
                     },
                     engine: {
-                        nid:            data[ offset + 14 ],
-                        maxSpeed:       data[ offset + 15 ],
-                        power:          data[ offset + 16 ],
+                        nid:            data[ offset + 15 ],
+                        maxSpeed:       data[ offset + 16 ],
+                        power:          data[ offset + 17 ],
                     },
                 },
             };
 
             //
 
-            offset += 17;
+            offset += 18;
 
             for ( let j = 0; j < 13; j ++ ) {
 
@@ -143,9 +143,8 @@ export class ArenaNetwork {
                 player.tank.cannon.range = data[ offset + 3 ];
                 player.tank.cannon.rpm = data[ offset + 4 ];
                 player.tank.cannon.overheat = data[ offset + 5 ];
-                player.tank.armor.armor = data[ offset + 6 ];
 
-                offset += 7;
+                offset += 6;
 
             }
 
