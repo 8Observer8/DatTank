@@ -87,12 +87,13 @@ export class DecorationManager {
                 if ( ! DecorationType.canPlace( this.arena, position ) ) continue;
 
                 let placedOnBase = false;
+                const towers = this.arena.towerManager.getTowers();
 
-                for ( let i = 0, il = teams.length; i < il; i ++ ) {
+                for ( let i = 0, il = towers.length; i < il; i ++ ) {
 
-                    const spawnPosition = teams[ i ].spawnPosition;
-                    const dx = spawnPosition.x - position.x;
-                    const dz = spawnPosition.z - position.z;
+                    const towerPos = towers[ i ].position;
+                    const dx = towerPos.x - position.x;
+                    const dz = towerPos.z - position.z;
 
                     if ( Math.sqrt( dx * dx + dz * dz ) < 150 ) {
 
