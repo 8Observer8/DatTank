@@ -209,9 +209,9 @@ export class TankObject {
 
         this.gfx.rotateTankXAxis( this.acceleration );
 
-        this.rotChange = newRotation - this.gfx.object.rotation.y;
-        if ( this.rotChange < - Math.PI ) { this.rotChange += Math.PI; this.gfx.object.rotation.y -= Math.PI; }
-        if ( this.rotChange > Math.PI ) { this.rotChange -= Math.PI; this.gfx.object.rotation.y += Math.PI; }
+        this.rotChange = OMath.formatAngle( newRotation ) - OMath.formatAngle( this.gfx.object.rotation.y );
+        if ( this.rotChange > Math.PI ) this.rotChange -= 2 * Math.PI;
+        if ( this.rotChange < - Math.PI ) this.rotChange += 2 * Math.PI;
         this.rotChange /= 1 * CollisionManager.updateRate;
         this.rotation = newRotation;
         this.deltaRotChange = 1 * CollisionManager.updateRate;

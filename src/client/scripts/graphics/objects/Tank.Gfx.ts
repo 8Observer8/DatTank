@@ -188,6 +188,8 @@ class TankGfx {
             const d = ( delta > this.tank.deltaRotChange ) ? this.tank.deltaRotChange : delta;
 
             this.object.rotation.y += this.tank.rotChange * d;
+            if ( this.object.rotation.y > Math.PI ) this.object.rotation.y -= 2 * Math.PI;
+            if ( this.object.rotation.y < - Math.PI ) this.object.rotation.y += 2 * Math.PI;
             this.tank.deltaRotChange -= d;
 
         }

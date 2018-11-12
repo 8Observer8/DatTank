@@ -122,107 +122,110 @@ function update ( delta, objectsInfo ) {
 
         if ( objectInfo.health <= 0 ) {
 
-            object.body.velocity.set( 0, 0, 0 );
+            objectInfo.moveDirection.x = 0;
+            objectInfo.moveDirection.y = 0;
+
+        }
+
+        var speed = object.body.velocity.distanceTo( new CANNON.Vec3( 0, object.body.velocity.y, 0 ) );
+        var maxSpeed = 3 * objectInfo.maxSpeed;
+
+        if ( objectInfo.position !== false ) {
+
+            object.body.position.x = objectInfo.position.x;
+            object.body.position.z = objectInfo.position.z;
+
+        }
+
+        if ( objectInfo.rotation !== false ) {
+
+            object.body.quaternion.setFromEuler( 0, objectInfo.rotation, 0, 'XYZ' );
 
         } else {
 
-            var speed = object.body.velocity.distanceTo( new CANNON.Vec3( 0, object.body.velocity.y, 0 ) );
-            var maxSpeed = 3 * objectInfo.maxSpeed;
+            const rot = { x: 0, y: 0, z: 0 };
+            object.body.quaternion.toEuler( rot );
+            objectInfo.rotation = rot.y;
 
-            if ( objectInfo.position !== false ) {
+        }
 
-                object.body.position.x = objectInfo.position.x;
-                object.body.position.z = objectInfo.position.z;
+        //
 
-            }
+        if ( objectInfo.moveDirection.y > 0 ) {
 
-            if ( objectInfo.rotation !== false ) {
+            object.body.angularVelocity.set( 0, 0.9, 0 );
 
-                object.body.quaternion.setFromEuler( 0, objectInfo.rotation, 0, 'XYZ' );
+        } else if ( objectInfo.moveDirection.y < 0 ) {
 
-            } else {
+            object.body.angularVelocity.set( 0, - 0.9, 0 );
 
-                const rot = { x: 0, y: 0, z: 0 };
-                object.body.quaternion.toEuler( rot );
-                objectInfo.rotation = rot.y;
+        } else {
 
-            }
+            object.body.angularVelocity.y = 0; // /= 1 + 0.4 * delta / 60;
 
-            //
+        }
 
-            if ( objectInfo.moveDirection.y > 0 ) {
+        //
 
-                object.body.angularVelocity.set( 0, 0.9, 0 );
+        if ( objectInfo.moveDirection.x !== 0 ) {
 
-            } else if ( objectInfo.moveDirection.y < 0 ) {
-
-                object.body.angularVelocity.set( 0, - 0.9, 0 );
-
-            } else {
-
-                object.body.angularVelocity.y /= 1.2;
-
-            }
-
-            //
-
-            if ( speed < maxSpeed && objectInfo.moveDirection.x ) {
+            if ( speed < maxSpeed ) {
 
                 var forceAmount = objectInfo.power * ( 1 - speed / maxSpeed );
-                var force = new CANNON.Vec3( 0, 0, forceAmount );
+                var force = new CANNON.Vec3( 0, 0, forceAmount * delta / 60 );
                 if ( objectInfo.moveDirection.x < 0 ) force = force.negate();
                 object.body.applyLocalImpulse( force, new CANNON.Vec3( 0, 0, 0 ) );
 
-            } else {
-
-                object.body.velocity.x /= 1 + 0.07;
-                object.body.velocity.z /= 1 + 0.07;
-
             }
 
-            if ( object.body.velocity.y > 0 ) {
+        } else {
 
-                object.body.velocity.y = Math.min( object.body.velocity.y, 8 );
-
-            } else {
-
-                object.body.velocity.y = Math.max( object.body.velocity.y, - 50 );
-
-            }
-
-            var direction = ( objectInfo.moveDirection.x > 0 ) ? 0 : Math.PI;
-            var vx = speed * Math.sin( objectInfo.rotation + direction );
-            var vz = speed * Math.cos( objectInfo.rotation + direction );
-
-            var forwardVelocity = new CANNON.Vec3( vx, 0, vz ).distanceTo( new CANNON.Vec3() );
-            var movementDirection = Math.sign( object.body.velocity.x * Math.sin( objectInfo.rotation ) );
-
-            if ( speed > 5 && objectInfo.moveDirection.x !== 0 ) {
-
-                object.body.velocity.x += ( vx - object.body.velocity.x ) / 9;
-                object.body.velocity.z += ( vz - object.body.velocity.z ) / 9;
-
-            }
-
-            //
-
-            object['prevForwardVelocity'] = object['prevForwardVelocity'] || forwardVelocity;
-            var dfv = forwardVelocity - object['prevForwardVelocity'];
-            dfv = movementDirection * dfv;
-            object['prevForwardVelocity'] = forwardVelocity;
-
-            //
-
-            objectsParams.push({
-                id:             object.id,
-                type:           object.objType,
-                acceleration:   - Math.sign( dfv ) * Math.min( Math.abs( dfv ), 8 ) / 100 / Math.PI,
-                position:       { x: object.body.position.x, y: object.body.position.y - 10, z: object.body.position.z },
-                velocity:       forwardVelocity,
-                rotation:       objectInfo.rotation
-            });
+            object.body.velocity.x = 0; ///= 1 + 0.07 * delta / 60;
+            object.body.velocity.z = 0; ///= 1 + 0.07 * delta / 60;
 
         }
+
+        if ( object.body.velocity.y > 0 ) {
+
+            object.body.velocity.y = Math.min( object.body.velocity.y, 8 );
+
+        } else {
+
+            object.body.velocity.y = Math.max( object.body.velocity.y, - 50 );
+
+        }
+
+        var direction = ( objectInfo.moveDirection.x > 0 ) ? 0 : Math.PI;
+        var vx = speed * Math.sin( objectInfo.rotation + direction );
+        var vz = speed * Math.cos( objectInfo.rotation + direction );
+
+        var forwardVelocity = new CANNON.Vec3( vx, 0, vz ).distanceTo( new CANNON.Vec3() );
+        var movementDirection = Math.sign( object.body.velocity.x * Math.sin( objectInfo.rotation ) );
+
+        if ( speed > 5 && objectInfo.moveDirection.x !== 0 ) {
+
+            object.body.velocity.x += ( vx - object.body.velocity.x ) / ( 1 + 8 * delta / 60 );
+            object.body.velocity.z += ( vz - object.body.velocity.z ) / ( 1 + 8 * delta / 60 );
+
+        }
+
+        //
+
+        object['prevForwardVelocity'] = object['prevForwardVelocity'] || forwardVelocity;
+        var dfv = forwardVelocity - object['prevForwardVelocity'];
+        dfv = movementDirection * dfv;
+        object['prevForwardVelocity'] = forwardVelocity;
+
+        //
+
+        objectsParams.push({
+            id:             object.id,
+            type:           object.objType,
+            acceleration:   - Math.sign( dfv ) * Math.min( Math.abs( dfv ), 8 ) / 100 / Math.PI,
+            position:       { x: object.body.position.x, y: object.body.position.y - 10, z: object.body.position.z },
+            velocity:       forwardVelocity,
+            rotation:       objectInfo.rotation
+        });
 
     }
 
@@ -230,10 +233,10 @@ function update ( delta, objectsInfo ) {
 
     delta += deltaStack;
 
-    while ( delta >= 16 ) {
+    while ( delta >= 32 ) {
 
-        var d = 16;
-        world.step( 1 / 60, d / 1000, 5 );
+        var d = 32;
+        world.step( 1 / 30, d / 1000, 5 );
         delta -= d;
 
     }

@@ -10,7 +10,7 @@ class CollisionManagerCore {
     private worker: any;
     private objects: any = [];
     private lastUpdateTime: number = 0;
-    public updateRate: number = 40;
+    public updateRate: number;
 
     //
 
@@ -55,8 +55,6 @@ class CollisionManagerCore {
 
             const object = this.objects[ i ];
             if ( object.type !== 'Tank' ) continue;
-
-            console.log( object.positionCorrection );
 
             objects[ object.type + '-' + object.id ] = {
                 speed:          object.speed,

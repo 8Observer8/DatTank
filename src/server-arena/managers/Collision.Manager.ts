@@ -185,73 +185,76 @@ export class CollisionManager {
 
                 if ( object.parent.health <= 0 ) {
 
-                    object.body.velocity.set( 0, 0, 0 );
+                    object.parent.moveDirection.x = 0;
+                    object.parent.moveDirection.y = 0;
+
+                }
+
+                if ( object.parent.moveDirection.y > 0 ) {
+
+                    object.body.angularVelocity.set( 0, 0.9, 0 );
+
+                } else if ( object.parent.moveDirection.y < 0 ) {
+
+                    object.body.angularVelocity.set( 0, - 0.9, 0 );
 
                 } else {
 
-                    if ( object.parent.moveDirection.y > 0 ) {
+                    object.body.angularVelocity.y = 0; // /= 1 + 0.4 * delta / 60;
 
-                        object.body.angularVelocity.set( 0, 0.9, 0 );
+                }
 
-                    } else if ( object.parent.moveDirection.y < 0 ) {
+                const rot = { x: 0, y: 0, z: 0 };
+                object.body.quaternion.toEuler( rot );
+                object.parent.rotation = rot.y;
 
-                        object.body.angularVelocity.set( 0, - 0.9, 0 );
+                //
 
-                    } else {
+                const speed = object.body.velocity.distanceTo( new Cannon.Vec3( 0, object.body.velocity.y, 0 ) );
+                const maxSpeed = object.parent.getMaxSpeed() * 3;
 
-                        object.body.angularVelocity.y /= 1.2;
+                if ( object.parent.moveDirection.x !== 0 ) {
 
-                    }
-
-                    const rot = { x: 0, y: 0, z: 0 };
-                    object.body.quaternion.toEuler( rot );
-                    object.parent.rotation = rot.y;
-
-                    //
-
-                    const speed = object.body.velocity.distanceTo( new Cannon.Vec3( 0, object.body.velocity.y, 0 ) );
-                    const maxSpeed = object.parent.getMaxSpeed() * 3;
-
-                    if ( speed < maxSpeed && object.parent.moveDirection.x ) {
+                    if ( speed < maxSpeed ) {
 
                         const forceAmount = object.parent.getEnginePower() * ( 1 - speed / maxSpeed );
-                        let force = new Cannon.Vec3( 0, 0, forceAmount );
+                        let force = new Cannon.Vec3( 0, 0, forceAmount * delta / 60 );
                         if ( object.parent.moveDirection.x < 0 ) force = force.negate();
                         object.body.applyLocalImpulse( force, new Cannon.Vec3( 0, 0, 0 ) );
 
-                    } else {
-
-                        object.body.velocity.x /= 1 + 0.07;
-                        object.body.velocity.z /= 1 + 0.07;
-
                     }
 
-                    if ( object.body.velocity.y > 0 ) {
+                } else {
 
-                        object.body.velocity.y = Math.min( object.body.velocity.y, 8 );
-
-                    } else {
-
-                        object.body.velocity.y = Math.max( object.body.velocity.y, - 50 );
-
-                    }
-
-                    const direction = ( object.parent.moveDirection.x > 0 ) ? 0 : Math.PI;
-                    const vx = speed * Math.sin( object.parent.rotation + direction );
-                    const vz = speed * Math.cos( object.parent.rotation + direction );
-
-                    if ( speed > 5 && object.parent.moveDirection.x !== 0 ) {
-
-                        object.body.velocity.x += ( vx - object.body.velocity.x ) / 9;
-                        object.body.velocity.z += ( vz - object.body.velocity.z ) / 9;
-
-                    }
-
-                    //
-
-                    object.parent.position.set( object.body.position.x, object.body.position.y - 10, object.body.position.z );
+                    object.body.velocity.x = 0; // /= 1 + 0.07 * delta / 60;
+                    object.body.velocity.z = 0; // /= 1 + 0.07 * delta / 60;
 
                 }
+
+                if ( object.body.velocity.y > 0 ) {
+
+                    object.body.velocity.y = Math.min( object.body.velocity.y, 8 );
+
+                } else {
+
+                    object.body.velocity.y = Math.max( object.body.velocity.y, - 50 );
+
+                }
+
+                const direction = ( object.parent.moveDirection.x > 0 ) ? 0 : Math.PI;
+                const vx = speed * Math.sin( object.parent.rotation + direction );
+                const vz = speed * Math.cos( object.parent.rotation + direction );
+
+                if ( speed > 5 && object.parent.moveDirection.x !== 0 ) {
+
+                    object.body.velocity.x += ( vx - object.body.velocity.x ) / ( 1 + 8 * delta / 60 );
+                    object.body.velocity.z += ( vz - object.body.velocity.z ) / ( 1 + 8 * delta / 60 );
+
+                }
+
+                //
+
+                object.parent.position.set( object.body.position.x, object.body.position.y - 10, object.body.position.z );
 
             } else if ( object.parent.type === 'Bullet' ) {
 
@@ -287,10 +290,10 @@ export class CollisionManager {
 
         delta += this.deltaStack;
 
-        while ( delta >= 16 ) {
+        while ( delta >= 32 ) {
 
-            const d = 16;
-            this.world.step( 1 / 60, d / 1000, 5 );
+            const d = 32;
+            this.world.step( 1 / 30, d / 1000, 5 );
             delta -= d;
 
         }
