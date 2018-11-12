@@ -56,17 +56,20 @@ class CollisionManagerCore {
             const object = this.objects[ i ];
             if ( object.type !== 'Tank' ) continue;
 
+            console.log( object.positionCorrection );
+
             objects[ object.type + '-' + object.id ] = {
                 speed:          object.speed,
                 health:         object.health,
-                rotation:       object.rotation,
+                position:       ( object.positionCorrection.x || object.positionCorrection.z ) ? { x: object.positionCorrection.x, z: object.positionCorrection.z } : false,
+                rotation:       ( object.rotationCorrection !== -100 ) ? object.rotationCorrection : false,
                 moveDirection:  { x: object.moveDirection.x, y: object.moveDirection.y },
-                position:       ( object.positionCorrection.x + object.positionCorrection.y + object.positionCorrection.z !== 0 ) ? { x: object.positionCorrection.x, y: object.positionCorrection.y, z: object.positionCorrection.z } : false,
                 maxSpeed:       object.base.speedCoef * object.engine.maxSpeed,
                 power:          object.engine.power,
             };
 
             object.positionCorrection.set( 0, 0, 0 );
+            object.rotationCorrection = -100;
 
         }
 
@@ -96,7 +99,7 @@ class CollisionManagerCore {
 
                     objParent.acceleration = objects[ i ].acceleration;
                     objParent.velocity = objects[ i ].velocity;
-                    objParent.updateMovement( delta, objects[ i ].position );
+                    objParent.updateMovement( delta, objects[ i ].position, objects[ i ].rotation );
 
                 }
 

@@ -389,23 +389,6 @@ export class TankObject {
 
     };
 
-    public updateRotation ( delta: number ) : void {
-
-        if ( this.moveDirection.y > 0 ) {
-
-            this.rotation += 0.001 * delta;
-
-        } else if ( this.moveDirection.y < 0 ) {
-
-            this.rotation -= 0.001 * delta;
-
-        }
-
-        this.rotation = this.rotation % ( 2 * Math.PI );
-        this.rotation = + this.rotation.toFixed( 3 );
-
-    };
-
     public updateObjectsInRange () : void {
 
         const newBoxesInRange: BoxObject[] = [];
@@ -500,7 +483,6 @@ export class TankObject {
         }
 
         this.regenerationUpdate( delta );
-        this.updateRotation( delta );
         this.updateObjectsInRange();
 
     };

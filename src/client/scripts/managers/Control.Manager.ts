@@ -48,11 +48,15 @@ class ControlsManagerCore {
 
     private startMoving () : void {
 
-        if ( Arena.me.tank ) {
+        setTimeout( () => {
 
-            Arena.me.tank.move( this.moveX, this.moveZ );
+            if ( Arena.me.tank ) {
 
-        }
+                Arena.me.tank.move( this.moveX, this.moveZ );
+
+            }
+
+        }, 10 );
 
     };
 

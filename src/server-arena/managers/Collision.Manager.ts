@@ -189,6 +189,26 @@ export class CollisionManager {
 
                 } else {
 
+                    if ( object.parent.moveDirection.y > 0 ) {
+
+                        object.body.angularVelocity.set( 0, 0.9, 0 );
+
+                    } else if ( object.parent.moveDirection.y < 0 ) {
+
+                        object.body.angularVelocity.set( 0, - 0.9, 0 );
+
+                    } else {
+
+                        object.body.angularVelocity.y /= 1.2;
+
+                    }
+
+                    const rot = { x: 0, y: 0, z: 0 };
+                    object.body.quaternion.toEuler( rot );
+                    object.parent.rotation = rot.y;
+
+                    //
+
                     const speed = object.body.velocity.distanceTo( new Cannon.Vec3( 0, object.body.velocity.y, 0 ) );
                     const maxSpeed = object.parent.getMaxSpeed() * 3;
 
@@ -230,7 +250,6 @@ export class CollisionManager {
                     //
 
                     object.parent.position.set( object.body.position.x, object.body.position.y - 10, object.body.position.z );
-                    object.body.quaternion.setFromEuler( 0, object.parent.rotation, 0, 'XYZ' );
 
                 }
 

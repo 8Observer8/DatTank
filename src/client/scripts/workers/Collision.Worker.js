@@ -129,12 +129,42 @@ function update ( delta, objectsInfo ) {
             var speed = object.body.velocity.distanceTo( new CANNON.Vec3( 0, object.body.velocity.y, 0 ) );
             var maxSpeed = 3 * objectInfo.maxSpeed;
 
-            if ( objectInfo.position ) {
+            if ( objectInfo.position !== false ) {
 
                 object.body.position.x = objectInfo.position.x;
                 object.body.position.z = objectInfo.position.z;
 
             }
+
+            if ( objectInfo.rotation !== false ) {
+
+                object.body.quaternion.setFromEuler( 0, objectInfo.rotation, 0, 'XYZ' );
+
+            } else {
+
+                const rot = { x: 0, y: 0, z: 0 };
+                object.body.quaternion.toEuler( rot );
+                objectInfo.rotation = rot.y;
+
+            }
+
+            //
+
+            if ( objectInfo.moveDirection.y > 0 ) {
+
+                object.body.angularVelocity.set( 0, 0.9, 0 );
+
+            } else if ( objectInfo.moveDirection.y < 0 ) {
+
+                object.body.angularVelocity.set( 0, - 0.9, 0 );
+
+            } else {
+
+                object.body.angularVelocity.y /= 1.2;
+
+            }
+
+            //
 
             if ( speed < maxSpeed && objectInfo.moveDirection.x ) {
 
@@ -188,12 +218,9 @@ function update ( delta, objectsInfo ) {
                 type:           object.objType,
                 acceleration:   - Math.sign( dfv ) * Math.min( Math.abs( dfv ), 8 ) / 100 / Math.PI,
                 position:       { x: object.body.position.x, y: object.body.position.y - 10, z: object.body.position.z },
-                velocity:       forwardVelocity
+                velocity:       forwardVelocity,
+                rotation:       objectInfo.rotation
             });
-
-            //
-
-            object.body.quaternion.setFromEuler( 0, objectInfo.rotation, 0, 'XYZ' );
 
         }
 
