@@ -39,9 +39,9 @@ export class TankObject {
     public armor: ArmorTankPart;
     public engine: EngineTankPart;
 
-    public moveDirection = new OMath.Vec2();
-    public positionCorrection = new OMath.Vec3();
-    public positionCorrectionDelta = new OMath.Vec3();
+    public moveDirection: OMath.Vec2 = new OMath.Vec2();
+    public positionCorrection: OMath.Vec3 = new OMath.Vec3();
+    public positionCorrectionDelta: OMath.Vec3 = new OMath.Vec3();
     public rotationCorrection: number = 0;
     public acceleration: number = 0;
     public velocity: number = 0;
@@ -52,7 +52,8 @@ export class TankObject {
 
     public posChange: OMath.Vec3 = new OMath.Vec3();
     public rotChange: number = 0;
-    public deltaT: number = 0;
+    public deltaPosChange: number = 0;
+    public deltaRotChange: number = 0;
 
     protected network: TankNetwork = new TankNetwork();
     public gfx: TankGfx = new TankGfx();
@@ -133,9 +134,9 @@ export class TankObject {
         this.moveDirection.x = directionX;
         this.moveDirection.y = directionZ;
 
-        this.positionCorrection.x = positionX - this.position.x;
+        this.positionCorrection.x = positionX;
         this.positionCorrection.y = 0;
-        this.positionCorrection.z = positionZ - this.position.z;
+        this.positionCorrection.z = positionZ;
 
         this.rotationCorrection = ( rotation / 1000.0 - this.rotation ) % ( 2 * Math.PI );
 
@@ -198,20 +199,12 @@ export class TankObject {
 
     public updateMovement ( delta: number, newPosition: OMath.Vec3 ) : void {
 
-        const dx = this.positionCorrection.x * delta / 300;
-        const dz = this.positionCorrection.z * delta / 300;
         const dr = this.rotationCorrection * delta / 300;
 
         if ( Math.abs( dr ) > 0.001 ) {
 
             this.rotationCorrection -= dr;
             this.rotation += dr;
-
-        }
-
-        if ( Math.abs( dx ) > 0.1 || Math.abs( dz ) > 0.1 ) {
-
-            this.positionCorrectionDelta.set( dx, 0, dz );
 
         }
 
@@ -251,12 +244,15 @@ export class TankObject {
 
         this.gfx.rotateTankXAxis( this.acceleration );
 
-        this.rotChange = ( this.rotation - this.gfx.object.rotation.y ) / CollisionManager.updateRate;
+        this.rotChange = ( this.rotation - this.gfx.object.rotation.y ) / ( 1 * CollisionManager.updateRate );
         this.posChange.set( newPosition.x - this.gfx.object.position.x, newPosition.y - this.gfx.object.position.y, newPosition.z - this.gfx.object.position.z );
-        this.posChange.x /= CollisionManager.updateRate;
-        this.posChange.y /= CollisionManager.updateRate;
-        this.posChange.z /= CollisionManager.updateRate;
-        this.deltaT = CollisionManager.updateRate;
+        this.posChange.x /= 1 * CollisionManager.updateRate;
+        this.posChange.y /= 1 * CollisionManager.updateRate;
+        this.posChange.z /= 1 * CollisionManager.updateRate;
+        this.deltaPosChange = 1 * CollisionManager.updateRate;
+        this.deltaRotChange = 1 * CollisionManager.updateRate;
+
+        // this.gfx.object.position.set( newPosition.x, newPosition.y, newPosition.z );
 
         this.position.copy( newPosition );
 

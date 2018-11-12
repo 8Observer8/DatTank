@@ -8,6 +8,7 @@ var objects = [];
 var inited = false;
 var lastUpdate = 0;
 var delta = 0;
+var deltaStack = 0;
 
 //
 
@@ -127,8 +128,13 @@ function update ( delta, objectsInfo ) {
 
             var speed = object.body.velocity.distanceTo( new CANNON.Vec3( 0, object.body.velocity.y, 0 ) );
             var maxSpeed = 3 * objectInfo.maxSpeed;
-            object.body.position.x += objectInfo.posCorrection.x;
-            object.body.position.z += objectInfo.posCorrection.z;
+
+            if ( objectInfo.position ) {
+
+                object.body.position.x = objectInfo.position.x;
+                object.body.position.z = objectInfo.position.z;
+
+            }
 
             if ( speed < maxSpeed && objectInfo.moveDirection.x ) {
 
@@ -193,7 +199,23 @@ function update ( delta, objectsInfo ) {
 
     }
 
-    world.step( 1 / 60, delta / 1000, 5 );
+    //
+
+    delta += deltaStack;
+
+    while ( delta >= 16 ) {
+
+        var d = 16;
+        world.step( 1 / 60, d / 1000, 5 );
+        delta -= d;
+
+    }
+
+    if ( delta ) {
+
+        deltaStack = delta;
+
+    }
 
     self.postMessage({ type: 'update', objects: objectsParams });
 

@@ -16,6 +16,7 @@ export class CollisionManager {
 
     private world: Cannon.World;
     private objects: any[] = [];
+    private deltaStack: number = 0;
 
     //
 
@@ -265,7 +266,21 @@ export class CollisionManager {
 
         //
 
-        this.world.step( 1 / 60, delta / 1000, 5 );
+        delta += this.deltaStack;
+
+        while ( delta >= 16 ) {
+
+            const d = 16;
+            this.world.step( 1 / 60, d / 1000, 5 );
+            delta -= d;
+
+        }
+
+        if ( delta ) {
+
+            this.deltaStack = delta;
+
+        }
 
     };
 

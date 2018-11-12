@@ -171,16 +171,24 @@ class TankGfx {
 
         // interpolate tank movement between cannon physic generated points
 
-        if ( this.tank.deltaT > 0 ) {
+        if ( this.tank.deltaPosChange > 0 ) {
 
-            const d = ( delta > this.tank.deltaT ) ? this.tank.deltaT : delta;
+            const d = ( delta > this.tank.deltaPosChange ) ? this.tank.deltaPosChange : delta;
 
-            this.object.rotation.y += this.tank.rotChange * d;
             this.object.position.x += this.tank.posChange.x * d;
             this.object.position.y += this.tank.posChange.y * d;
             this.object.position.z += this.tank.posChange.z * d;
 
-            this.tank.deltaT -= d;
+            this.tank.deltaPosChange -= d;
+
+        }
+
+        if ( this.tank.deltaRotChange > 0 ) {
+
+            const d = ( delta > this.tank.deltaRotChange ) ? this.tank.deltaRotChange : delta;
+
+            this.object.rotation.y += this.tank.rotChange * d;
+            this.tank.deltaRotChange -= d;
 
         }
 

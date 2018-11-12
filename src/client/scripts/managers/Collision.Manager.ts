@@ -61,14 +61,12 @@ class CollisionManagerCore {
                 health:         object.health,
                 rotation:       object.rotation,
                 moveDirection:  { x: object.moveDirection.x, y: object.moveDirection.y },
-                posCorrection:  { x: object.positionCorrectionDelta.x, y: object.positionCorrectionDelta.y, z: object.positionCorrectionDelta.z },
+                position:       ( object.positionCorrection.x + object.positionCorrection.y + object.positionCorrection.z !== 0 ) ? { x: object.positionCorrection.x, y: object.positionCorrection.y, z: object.positionCorrection.z } : false,
                 maxSpeed:       object.base.speedCoef * object.engine.maxSpeed,
                 power:          object.engine.power,
             };
 
-            object.positionCorrection.x -= object.positionCorrectionDelta.x;
-            object.positionCorrection.z -= object.positionCorrectionDelta.z;
-            object.positionCorrectionDelta.set( 0, 0, 0 );
+            object.positionCorrection.set( 0, 0, 0 );
 
         }
 

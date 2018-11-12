@@ -56,7 +56,6 @@ export class DecorationManager {
 
     public init () : void {
 
-        const teams = this.arena.teamManager.getTeams();
         const DecorationsList = {
             Tree1:      Tree1Decoration,
             Tree2:      Tree2Decoration,
