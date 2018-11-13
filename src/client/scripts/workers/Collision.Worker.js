@@ -161,7 +161,7 @@ function update ( delta, objectsInfo ) {
 
         } else {
 
-            object.body.angularVelocity.y = 0; // /= 1 + 0.4 * delta / 60;
+            object.body.angularVelocity.y /= 1 + 0.4 * delta / 60;
 
         }
 
@@ -180,8 +180,8 @@ function update ( delta, objectsInfo ) {
 
         } else {
 
-            object.body.velocity.x = 0; ///= 1 + 0.07 * delta / 60;
-            object.body.velocity.z = 0; ///= 1 + 0.07 * delta / 60;
+            object.body.velocity.x /= 1 + 0.07 * delta / 60;
+            object.body.velocity.z /= 1 + 0.07 * delta / 60;
 
         }
 
@@ -195,19 +195,20 @@ function update ( delta, objectsInfo ) {
 
         }
 
+        //
+
+        const velocityAngle = Math.atan2( object.body.velocity.x, object.body.velocity.z );
+        const dv = object.body.velocity.length() * Math.sin( velocityAngle - objectInfo.rotation );
+        object.body.applyLocalImpulse( new CANNON.Vec3( - object.body.mass * dv, 0, 0 ), new CANNON.Vec3( 0, 0, 0 ) );
+
+        //
+
         var direction = ( objectInfo.moveDirection.x > 0 ) ? 0 : Math.PI;
         var vx = speed * Math.sin( objectInfo.rotation + direction );
         var vz = speed * Math.cos( objectInfo.rotation + direction );
 
         var forwardVelocity = new CANNON.Vec3( vx, 0, vz ).distanceTo( new CANNON.Vec3() );
         var movementDirection = Math.sign( object.body.velocity.x * Math.sin( objectInfo.rotation ) );
-
-        if ( speed > 5 && objectInfo.moveDirection.x !== 0 ) {
-
-            object.body.velocity.x += ( vx - object.body.velocity.x ) / 9 * delta / 60;
-            object.body.velocity.z += ( vz - object.body.velocity.z ) / 9 * delta / 60;
-
-        }
 
         //
 

@@ -200,7 +200,7 @@ export class CollisionManager {
 
                 } else {
 
-                    object.body.angularVelocity.y = 0; // /= 1 + 0.4 * delta / 60;
+                    object.body.angularVelocity.y /= 1 + 0.4 * delta / 60;
 
                 }
 
@@ -226,8 +226,8 @@ export class CollisionManager {
 
                 } else {
 
-                    object.body.velocity.x = 0; // /= 1 + 0.07 * delta / 60;
-                    object.body.velocity.z = 0; // /= 1 + 0.07 * delta / 60;
+                    object.body.velocity.x /= 1 + 0.07 * delta / 60;
+                    object.body.velocity.z /= 1 + 0.07 * delta / 60;
 
                 }
 
@@ -241,16 +241,11 @@ export class CollisionManager {
 
                 }
 
-                const direction = ( object.parent.moveDirection.x > 0 ) ? 0 : Math.PI;
-                const vx = speed * Math.sin( object.parent.rotation + direction );
-                const vz = speed * Math.cos( object.parent.rotation + direction );
+                //
 
-                if ( speed > 5 && object.parent.moveDirection.x !== 0 ) {
-
-                    object.body.velocity.x += ( vx - object.body.velocity.x ) / 9 * delta / 60;
-                    object.body.velocity.z += ( vz - object.body.velocity.z ) / 9 * delta / 60;
-
-                }
+                const velocityAngle = Math.atan2( object.body.velocity.x, object.body.velocity.z );
+                const dv = object.body.velocity.length() * Math.sin( velocityAngle - object.parent.rotation );
+                object.body.applyLocalImpulse( new Cannon.Vec3( - object.body.mass * dv, 0, 0 ), new Cannon.Vec3( 0, 0, 0 ) );
 
                 //
 
