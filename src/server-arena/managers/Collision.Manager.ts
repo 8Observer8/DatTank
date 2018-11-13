@@ -247,8 +247,8 @@ export class CollisionManager {
 
                 if ( speed > 5 && object.parent.moveDirection.x !== 0 ) {
 
-                    object.body.velocity.x += ( vx - object.body.velocity.x ) / ( 1 + 8 * delta / 60 );
-                    object.body.velocity.z += ( vz - object.body.velocity.z ) / ( 1 + 8 * delta / 60 );
+                    object.body.velocity.x += ( vx - object.body.velocity.x ) / 9 * delta / 60;
+                    object.body.velocity.z += ( vz - object.body.velocity.z ) / 9 * delta / 60;
 
                 }
 

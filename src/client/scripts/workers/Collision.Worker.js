@@ -204,8 +204,8 @@ function update ( delta, objectsInfo ) {
 
         if ( speed > 5 && objectInfo.moveDirection.x !== 0 ) {
 
-            object.body.velocity.x += ( vx - object.body.velocity.x ) / ( 1 + 8 * delta / 60 );
-            object.body.velocity.z += ( vz - object.body.velocity.z ) / ( 1 + 8 * delta / 60 );
+            object.body.velocity.x += ( vx - object.body.velocity.x ) / 9 * delta / 60;
+            object.body.velocity.z += ( vz - object.body.velocity.z ) / 9 * delta / 60;
 
         }
 
