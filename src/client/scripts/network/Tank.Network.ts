@@ -155,11 +155,19 @@ export class TankNetwork {
 
     //
 
+    private syncState ( data: any ) : void {
+
+        if ( this.filter( data ) ) return;
+
+        this.tank.syncState( data[1] / 10, data[2] / 10, data[3] / 1000 );
+
+    };
+
     private setMove ( data: any ) : void {
 
         if ( this.filter( data ) ) return;
 
-        this.tank.setMovement( data[1], data[2], data[3], data[4], data[5] );
+        this.tank.setMovement( data[1], data[2] );
 
     };
 
@@ -225,6 +233,7 @@ export class TankNetwork {
         this.setShoot = this.setShoot.bind( this );
         this.setHealth = this.setHealth.bind( this );
         this.setAmmo = this.setAmmo.bind( this );
+        this.syncState = this.syncState.bind( this );
 
         //
 
@@ -233,6 +242,7 @@ export class TankNetwork {
         Network.addMessageListener( 'TankMakeShot', this.setShoot );
         Network.addMessageListener( 'TankSetHealth', this.setHealth );
         Network.addMessageListener( 'TankSetAmmo', this.setAmmo );
+        Network.addMessageListener( 'TankSyncState', this.syncState );
 
     };
 

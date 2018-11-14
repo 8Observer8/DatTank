@@ -90,6 +90,7 @@ class NetworkCore {
         this.registerEvent( 'TowerMakeShot', EventDir.IN, EventType.BIN, 201 );
         this.registerEvent( 'TowerChangeTeam', EventDir.IN, EventType.BIN, 202 );
         this.registerEvent( 'TowerSetHealth', EventDir.IN, EventType.BIN, 203 );
+        this.registerEvent( 'TankSyncState', EventDir.IN, EventType.BIN, 204 );
 
         //
 

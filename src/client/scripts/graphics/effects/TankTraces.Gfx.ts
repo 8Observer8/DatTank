@@ -108,7 +108,7 @@ export class TankTracesGfx {
 
             const xOffset = this.tankWidth * Math.sin( Math.PI / 2 - angle );
             const zOffset = - this.tankWidth * Math.cos( Math.PI / 2 - angle );
-            const alpha = segmentId / this.traceLength / 2;
+            const alpha = 0.5 * segmentId / this.traceLength / 2;
 
             ltPositions.setXYZ( i + 0, a[0][0] + xOffset, a[0][1], a[0][2] + zOffset );
             ltPositions.setXYZ( i + 1, a[1][0] + xOffset, a[1][1], a[1][2] + zOffset );

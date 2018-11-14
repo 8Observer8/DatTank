@@ -64,6 +64,11 @@ export class TankObject {
 
     public isMe: boolean = false;
 
+    public possCorrect1: OMath.Vec3 = new OMath.Vec3();
+    public possCorrect2: OMath.Vec3 = new OMath.Vec3();
+    public rotCorrect1: number = 0;
+    public rotCorrect2: number = 0;
+
     //
 
     public startShooting () : void {
@@ -130,19 +135,10 @@ export class TankObject {
 
     //
 
-    public setMovement ( directionX: number, directionZ: number, positionX: number, positionZ: number, rotation: number ) : void {
+    public setMovement ( directionX: number, directionZ: number ) : void {
 
         this.moveDirection.x = directionX;
         this.moveDirection.y = directionZ;
-
-        this.positionCorrection.set( positionX, 0, positionZ );
-        this.position.set( positionX, this.position.y, positionZ );
-
-        let rot = OMath.formatAngle( rotation / 1000 );
-        if ( rot > Math.PI ) rot -= 2 * Math.PI;
-        if ( rot < - Math.PI ) rot += 2 * Math.PI;
-        this.rotationCorrection = rot;
-        this.rotation = rot;
 
     };
 
@@ -201,6 +197,26 @@ export class TankObject {
 
     };
 
+    public syncState ( positionX: number, positionZ: number, rotation: number ) : void {
+
+        if ( Math.abs( this.position.x - positionX ) > 5 || Math.abs( this.position.z - positionZ ) > 5 ) {
+
+            this.positionCorrection.set( positionX, 0, positionZ );
+
+        }
+
+        let rot = OMath.formatAngle( rotation );
+        if ( rot > Math.PI ) rot -= 2 * Math.PI;
+        if ( rot < - Math.PI ) rot += 2 * Math.PI;
+
+        if ( Math.abs( rot - this.rotation ) > 0.05 ) {
+
+            this.rotationCorrection = rot;
+
+        }
+
+    };
+
     public updateMovement ( delta: number, newPosition: OMath.Vec3, newRotation: number ) : void {
 
         if ( this.moveDirection.x !== 0 || this.moveDirection.y !== 0 ) {
@@ -217,24 +233,21 @@ export class TankObject {
 
         this.gfx.rotateTankXAxis( this.acceleration );
 
-        this.gfx.object.rotation.y += ( this.rotChange * this.deltaRotChange || 0 );
-        this.rotChange = OMath.formatAngle( newRotation ) - OMath.formatAngle( this.gfx.object.rotation.y );
-        if ( this.rotChange > Math.PI ) this.rotChange -= 2 * Math.PI;
-        if ( this.rotChange < - Math.PI ) this.rotChange += 2 * Math.PI;
-        this.rotChange /= delta;
+        this.rotCorrect2 = OMath.formatAngle( newRotation ) - OMath.formatAngle( this.gfx.object.rotation.y ) - this.rotCorrect1;
+        if ( this.rotCorrect2 > Math.PI ) this.rotCorrect2 -= 2 * Math.PI;
+        if ( this.rotCorrect2 < - Math.PI ) this.rotCorrect2 += 2 * Math.PI;
+        this.rotCorrect2 /= CollisionManager.updateRate;
         this.rotation = newRotation;
-        this.deltaRotChange = delta;
+        this.deltaRotChange = CollisionManager.updateRate;
 
         //
 
-        this.gfx.object.position.x += this.posChange.x * this.deltaPosChange || 0;
-        this.gfx.object.position.z += this.posChange.z * this.deltaPosChange || 0;
-        this.posChange.set( newPosition.x - this.gfx.object.position.x, newPosition.y - this.gfx.object.position.y, newPosition.z - this.gfx.object.position.z );
+        this.possCorrect2.set( newPosition.x - this.gfx.object.position.x - this.possCorrect1.x, newPosition.y - this.gfx.object.position.y, newPosition.z - this.gfx.object.position.z - this.possCorrect1.z );
 
-        this.posChange.x /= 1 * CollisionManager.updateRate;
-        this.posChange.y /= 1 * CollisionManager.updateRate;
-        this.posChange.z /= 1 * CollisionManager.updateRate;
-        this.deltaPosChange = 1 * CollisionManager.updateRate;
+        this.possCorrect2.x /= CollisionManager.updateRate;
+        this.possCorrect2.y /= CollisionManager.updateRate;
+        this.possCorrect2.z /= CollisionManager.updateRate;
+        this.deltaPosChange = CollisionManager.updateRate;
 
         this.position.copy( newPosition );
 

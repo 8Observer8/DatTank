@@ -54,6 +54,7 @@ export class TankObject {
     private sinceHitTime: number;
     private sinceRegenerationLimit: number = 2000;
     private sinceRegenerationTime: number;
+    // private lastSync: number = 0;
 
     public base: BaseTankPart;
     public cannon: CannonTankPart;
@@ -317,6 +318,7 @@ export class TankObject {
 
         this.moveDirection.set( directionX, directionY );
         this.network.updateMovement();
+        this.network.syncState();
 
     };
 
@@ -459,7 +461,6 @@ export class TankObject {
 
             const tank = tanks[ i ];
             if ( ! tank.active ) continue;
-            console.log( tank.rotation );
 
             if ( this.isObjectInRange( tank ) ) {
 

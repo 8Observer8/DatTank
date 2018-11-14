@@ -16,7 +16,6 @@ export class CollisionManager {
 
     private world: Cannon.World;
     private objects: any[] = [];
-    private deltaStack: number = 0;
 
     //
 
@@ -173,6 +172,7 @@ export class CollisionManager {
     public update ( delta: number, time: number ) : void {
 
         this.cleanUpObjects();
+        const coef = delta / 50;
 
         //
 
@@ -208,18 +208,22 @@ export class CollisionManager {
                 const rot = { x: 0, y: 0, z: 0 };
                 object.body.quaternion.toEuler( rot );
                 object.parent.rotation = rot.y;
+                object.parent.rotation = Math.floor( object.parent.rotation * 1000 ) / 1000;
+                object.body.quaternion.setFromEuler( 0, object.parent.rotation, 0, 'XYZ' );
 
                 //
 
                 const speed = object.body.velocity.distanceTo( new Cannon.Vec3( 0, object.body.velocity.y, 0 ) );
                 const maxSpeed = object.parent.getMaxSpeed() * 3;
+                const velocityAngle = Math.atan2( object.body.velocity.x, object.body.velocity.z );
+                const movementDirection = Math.sign( object.body.velocity.x * Math.sin( object.parent.rotation ) );
 
                 if ( object.parent.moveDirection.x !== 0 ) {
 
                     if ( speed < maxSpeed ) {
 
                         const forceAmount = object.parent.getEnginePower() * ( 1 - speed / maxSpeed );
-                        let force = new Cannon.Vec3( 0, 0, forceAmount * delta / 60 );
+                        let force = new Cannon.Vec3( 0, 0, forceAmount * coef );
                         if ( object.parent.moveDirection.x < 0 ) force = force.negate();
                         object.body.applyLocalImpulse( force, new Cannon.Vec3( 0, 0, 0 ) );
 
@@ -227,8 +231,7 @@ export class CollisionManager {
 
                 } else {
 
-                    object.body.velocity.x /= 1 + 0.07 * delta / 60;
-                    object.body.velocity.z /= 1 + 0.07 * delta / 60;
+                    object.body.applyLocalImpulse( new Cannon.Vec3( 0, 0, - 0.05 * movementDirection * object.body.mass * object.body.velocity.length() * coef ), new Cannon.Vec3( 0, 0, 0 ) );
 
                 }
 
@@ -244,9 +247,8 @@ export class CollisionManager {
 
                 //
 
-                const velocityAngle = Math.atan2( object.body.velocity.x, object.body.velocity.z );
                 const dv = object.body.velocity.length() * Math.sin( velocityAngle - object.parent.rotation );
-                object.body.applyLocalImpulse( new Cannon.Vec3( - object.body.mass * dv, 0, 0 ), new Cannon.Vec3( 0, 0, 0 ) );
+                object.body.applyLocalImpulse( new Cannon.Vec3( - object.body.mass * dv * coef, 0, 0 ), new Cannon.Vec3( 0, 0, 0 ) );
 
                 //
 
@@ -284,21 +286,7 @@ export class CollisionManager {
 
         //
 
-        delta += this.deltaStack;
-
-        while ( delta >= 32 ) {
-
-            const d = 32;
-            this.world.step( 1 / 30, d / 1000, 5 );
-            delta -= d;
-
-        }
-
-        if ( delta ) {
-
-            this.deltaStack = delta;
-
-        }
+        this.world.step( 1 / 60, delta / 1000, 5 );
 
     };
 
@@ -331,7 +319,7 @@ export class CollisionManager {
 
         if ( object.type === 'Tank' ) {
 
-            // object.network.updateMovement();
+            object.network.syncState();
 
         }
 

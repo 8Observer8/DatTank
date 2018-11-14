@@ -135,6 +135,25 @@ export class TankNetwork {
 
     };
 
+    public syncState () : void {
+
+        this.buffers['SyncState'] = this.buffers['SyncState'] || {};
+        const buffer = this.buffers['SyncState'].buffer || new ArrayBuffer( 10 );
+        const bufferView = this.buffers['SyncState'].bufferView || new Int16Array( buffer );
+        this.buffers['SyncState'].buffer = buffer;
+        this.buffers['SyncState'].bufferView = bufferView;
+
+        //
+
+        bufferView[1] = this.tank.id;
+        bufferView[2] = this.tank.position.x * 10;
+        bufferView[3] = this.tank.position.z * 10;
+        bufferView[4] = this.tank.rotation * 1000;
+
+        this.arena.network.sendEventToPlayersInRange( this.tank.position, 'TankSyncState', buffer, bufferView );
+
+    };
+
     public updateMovement () : void {
 
         this.buffers['SetMovement'] = this.buffers['SetMovement'] || {};

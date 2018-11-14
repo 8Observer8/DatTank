@@ -66,8 +66,21 @@ class CollisionManagerCore {
                 power:          object.engine.power,
             };
 
-            object.positionCorrection.set( 0, 0, 0 );
-            object.rotationCorrection = 0;
+            if ( object.rotationCorrection !== 0 ) {
+
+                // object.rotCorrect1 = object.rotationCorrection - object.gfx.object.rotation.y;
+                // if ( object.rotCorrect1 > Math.PI ) object.rotCorrect1 -= 2 * Math.PI;
+                // if ( object.rotCorrect1 < - Math.PI ) object.rotCorrect1 += 2 * Math.PI;
+                object.rotationCorrection = 0;
+
+            }
+
+            if ( Math.abs( object.positionCorrection.x ) || Math.abs( object.positionCorrection.z ) ) {
+
+                // object.possCorrect1.set( object.positionCorrection.x - object.gfx.object.position.x, 0, object.positionCorrection.z - object.gfx.object.position.z );
+                object.positionCorrection.set( 0, 0, 0 );
+
+            }
 
         }
 

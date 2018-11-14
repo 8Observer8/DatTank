@@ -31,7 +31,7 @@ class ArenaCore {
     public myXP: number;
 
     private updateInterval: number;
-    private updateIntervalDuration: number = 60;
+    private updateIntervalDuration: number = 50;
     private viewRange: number = 780;
 
     private network: ArenaNetwork = new ArenaNetwork();

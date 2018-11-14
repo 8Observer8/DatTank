@@ -111,6 +111,7 @@ function update ( delta, objectsInfo ) {
     if ( ! inited ) return;
     if ( delta === 0 ) return;
 
+    var coef = delta / 50;
     var objectsParams = [];
 
     for ( var i = 0, il = objects.length; i < il; i ++ ) {
@@ -140,6 +141,7 @@ function update ( delta, objectsInfo ) {
         const rot = { x: 0, y: 0, z: 0 };
         object.body.quaternion.toEuler( rot );
         objectInfo.rotation = ( objectInfo.rotation !== false ) ? objectInfo.rotation : rot.y;
+        objectInfo.rotation = Math.floor( objectInfo.rotation * 1000 ) / 1000;
         object.body.quaternion.setFromEuler( 0, objectInfo.rotation, 0, 'XYZ' );
 
         //
@@ -160,12 +162,15 @@ function update ( delta, objectsInfo ) {
 
         //
 
+        var velocityAngle = Math.atan2( object.body.velocity.x, object.body.velocity.z );
+        var movementDirection = Math.sign( object.body.velocity.x * Math.sin( objectInfo.rotation ) );
+
         if ( objectInfo.moveDirection.x !== 0 ) {
 
             if ( speed < maxSpeed ) {
 
                 var forceAmount = objectInfo.power * ( 1 - speed / maxSpeed );
-                var force = new CANNON.Vec3( 0, 0, forceAmount * delta / 60 );
+                var force = new CANNON.Vec3( 0, 0, forceAmount * coef );
                 if ( objectInfo.moveDirection.x < 0 ) force = force.negate();
                 object.body.applyLocalImpulse( force, new CANNON.Vec3( 0, 0, 0 ) );
 
@@ -173,8 +178,7 @@ function update ( delta, objectsInfo ) {
 
         } else {
 
-            object.body.velocity.x /= 1 + 0.07 * delta / 60;
-            object.body.velocity.z /= 1 + 0.07 * delta / 60;
+            object.body.applyLocalImpulse( new CANNON.Vec3( 0, 0, - 0.05 * movementDirection * object.body.mass * object.body.velocity.length() * coef ), new CANNON.Vec3( 0, 0, 0 ) );
 
         }
 
@@ -190,9 +194,8 @@ function update ( delta, objectsInfo ) {
 
         //
 
-        const velocityAngle = Math.atan2( object.body.velocity.x, object.body.velocity.z );
         const dv = object.body.velocity.length() * Math.sin( velocityAngle - objectInfo.rotation );
-        object.body.applyLocalImpulse( new CANNON.Vec3( - object.body.mass * dv, 0, 0 ), new CANNON.Vec3( 0, 0, 0 ) );
+        object.body.applyLocalImpulse( new CANNON.Vec3( - object.body.mass * dv * coef, 0, 0 ), new CANNON.Vec3( 0, 0, 0 ) );
 
         //
 
@@ -201,7 +204,6 @@ function update ( delta, objectsInfo ) {
         var vz = speed * Math.cos( objectInfo.rotation + direction );
 
         var forwardVelocity = new CANNON.Vec3( vx, 0, vz ).distanceTo( new CANNON.Vec3() );
-        var movementDirection = Math.sign( object.body.velocity.x * Math.sin( objectInfo.rotation ) );
 
         //
 
@@ -225,21 +227,7 @@ function update ( delta, objectsInfo ) {
 
     //
 
-    delta += deltaStack;
-
-    while ( delta >= 32 ) {
-
-        var d = 32;
-        world.step( 1 / 30, d / 1000, 5 );
-        delta -= d;
-
-    }
-
-    if ( delta ) {
-
-        deltaStack = delta;
-
-    }
+    world.step( 1 / 60, delta / 1000, 5 );
 
     self.postMessage({ type: 'update', objects: objectsParams });
 

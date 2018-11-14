@@ -49,7 +49,7 @@ export class LandscapeGfx {
 
     private addTerrain () : void {
 
-        const material = new THREE.MeshLambertMaterial({ color: 0x557850 });
+        const material = new THREE.MeshLambertMaterial({ color: 0x526b3b });
         const geometry = new THREE.PlaneGeometry( this.mapSize + this.mapExtraSize, this.mapSize + this.mapExtraSize, 150, 150 );
         geometry.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2 ) );
 
