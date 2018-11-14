@@ -32,11 +32,13 @@ export class TankObject {
 
     //
 
+    public active: boolean = false;
+
     public id: number;
     public title: string;
     public team: TeamCore;
     public position: OMath.Vec3 = new OMath.Vec3();
-    public rotation: number = Math.random() * Math.PI * 2;
+    public rotation: number = 0;
     public radius: number = 25;
     public health: number = 100;
     public ammo: number;
@@ -155,6 +157,9 @@ export class TankObject {
         this.rotation = Math.random() * Math.PI * 2;
 
         this.collisionBox['body'].position.set( this.position.x, this.position.y, this.position.z );
+        this.collisionBox['body'].quaternion.setFromEuler( 0, this.rotation, 0, 'XYZ' );
+
+        this.active = true;
 
     };
 
@@ -354,6 +359,7 @@ export class TankObject {
 
             tank.dispose();
             tank.arena.boxManager.add({ type: 'Coin', position: tank.position.clone() });
+            tank.active = false;
 
         }, 100, this );
 
@@ -452,6 +458,8 @@ export class TankObject {
         for ( let i = 0, il = tanks.length; i < il; i ++ ) {
 
             const tank = tanks[ i ];
+            if ( ! tank.active ) continue;
+            console.log( tank.rotation );
 
             if ( this.isObjectInRange( tank ) ) {
 

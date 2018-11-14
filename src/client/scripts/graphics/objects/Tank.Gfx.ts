@@ -98,7 +98,7 @@ class TankGfx {
 
     public setRotation ( angle: number ) : void {
 
-        this.object.rotation.y = angle;
+        // this.object.rotation.y = angle;
 
     };
 
@@ -178,7 +178,6 @@ class TankGfx {
             this.object.position.x += this.tank.posChange.x * d;
             this.object.position.y += this.tank.posChange.y * d;
             this.object.position.z += this.tank.posChange.z * d;
-
             this.tank.deltaPosChange -= d;
 
         }
@@ -193,6 +192,9 @@ class TankGfx {
             this.tank.deltaRotChange -= d;
 
         }
+
+        if ( this.object.rotation.y > Math.PI ) this.object.rotation.y -= 2 * Math.PI;
+        if ( this.object.rotation.y < - Math.PI ) this.object.rotation.y += 2 * Math.PI;
 
         //
 
@@ -293,6 +295,7 @@ class TankGfx {
 
         this.object.add( this.wrapper );
         this.object.rotation.y = tank.rotation;
+        console.log( this.object.rotation.y );
 
         //
 

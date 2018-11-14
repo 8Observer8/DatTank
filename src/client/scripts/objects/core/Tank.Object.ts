@@ -42,6 +42,7 @@ export class TankObject {
     public moveDirection: OMath.Vec2 = new OMath.Vec2();
     public positionCorrection: OMath.Vec3 = new OMath.Vec3();
     public rotationCorrection: number = 0;
+    public rotationCorrectionFixed: number = 0;
     public acceleration: number = 0;
     public velocity: number = 0;
 
@@ -51,6 +52,7 @@ export class TankObject {
 
     public posChange: OMath.Vec3 = new OMath.Vec3();
     public rotChange: number = 0;
+    public rotChangeCorrect: number = 0;
     public deltaPosChange: number = 0;
     public deltaRotChange: number = 0;
 
@@ -134,7 +136,13 @@ export class TankObject {
         this.moveDirection.y = directionZ;
 
         this.positionCorrection.set( positionX, 0, positionZ );
-        this.rotationCorrection = rotation / 1000;
+        this.position.set( positionX, this.position.y, positionZ );
+
+        let rot = OMath.formatAngle( rotation / 1000 );
+        if ( rot > Math.PI ) rot -= 2 * Math.PI;
+        if ( rot < - Math.PI ) rot += 2 * Math.PI;
+        this.rotationCorrection = rot;
+        this.rotation = rot;
 
     };
 
@@ -209,16 +217,20 @@ export class TankObject {
 
         this.gfx.rotateTankXAxis( this.acceleration );
 
+        this.gfx.object.rotation.y += ( this.rotChange * this.deltaRotChange || 0 );
         this.rotChange = OMath.formatAngle( newRotation ) - OMath.formatAngle( this.gfx.object.rotation.y );
         if ( this.rotChange > Math.PI ) this.rotChange -= 2 * Math.PI;
         if ( this.rotChange < - Math.PI ) this.rotChange += 2 * Math.PI;
-        this.rotChange /= 1 * CollisionManager.updateRate;
+        this.rotChange /= delta;
         this.rotation = newRotation;
-        this.deltaRotChange = 1 * CollisionManager.updateRate;
+        this.deltaRotChange = delta;
 
         //
 
+        this.gfx.object.position.x += this.posChange.x * this.deltaPosChange || 0;
+        this.gfx.object.position.z += this.posChange.z * this.deltaPosChange || 0;
         this.posChange.set( newPosition.x - this.gfx.object.position.x, newPosition.y - this.gfx.object.position.y, newPosition.z - this.gfx.object.position.z );
+
         this.posChange.x /= 1 * CollisionManager.updateRate;
         this.posChange.y /= 1 * CollisionManager.updateRate;
         this.posChange.z /= 1 * CollisionManager.updateRate;

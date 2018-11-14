@@ -90,7 +90,7 @@ export class ArenaNetwork {
                         y:              data[ offset + 6 ],
                         z:              data[ offset + 7 ],
                     },
-                    rotation:           ( data[ offset + 8 ] / 1000 ) % ( 2 * Math.PI ),
+                    rotation:           data[ offset + 8 ] / 1000,
                     health:             data[ offset + 9 ],
                     ammo:               0,
                     base:   {

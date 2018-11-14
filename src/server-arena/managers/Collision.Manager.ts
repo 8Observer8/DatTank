@@ -200,7 +200,8 @@ export class CollisionManager {
 
                 } else {
 
-                    object.body.angularVelocity.y /= 1 + 0.4 * delta / 60;
+                    object.body.angularVelocity.y = 0; // /= 1 + 0.4 * delta / 60;
+                    // object.parent.network.updateMovement();
 
                 }
 
@@ -330,7 +331,7 @@ export class CollisionManager {
 
         if ( object.type === 'Tank' ) {
 
-            object.network.updateMovement();
+            // object.network.updateMovement();
 
         }
 

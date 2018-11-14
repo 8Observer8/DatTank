@@ -137,17 +137,10 @@ function update ( delta, objectsInfo ) {
 
         }
 
-        if ( objectInfo.rotation !== false ) {
-
-            object.body.quaternion.setFromEuler( 0, objectInfo.rotation, 0, 'XYZ' );
-
-        } else {
-
-            const rot = { x: 0, y: 0, z: 0 };
-            object.body.quaternion.toEuler( rot );
-            objectInfo.rotation = rot.y;
-
-        }
+        const rot = { x: 0, y: 0, z: 0 };
+        object.body.quaternion.toEuler( rot );
+        objectInfo.rotation = ( objectInfo.rotation !== false ) ? objectInfo.rotation : rot.y;
+        object.body.quaternion.setFromEuler( 0, objectInfo.rotation, 0, 'XYZ' );
 
         //
 
@@ -161,7 +154,7 @@ function update ( delta, objectsInfo ) {
 
         } else {
 
-            object.body.angularVelocity.y /= 1 + 0.4 * delta / 60;
+            object.body.angularVelocity.y = 0; // /= 1 + 0.4 * delta / 60;
 
         }
 
