@@ -50,12 +50,6 @@ export class TankObject {
     public rotation: number = 0;
     public size: OMath.Vec3 = new OMath.Vec3( 30, 25, 70 );
 
-    public posChange: OMath.Vec3 = new OMath.Vec3();
-    public rotChange: number = 0;
-    public rotChangeCorrect: number = 0;
-    public deltaPosChange: number = 0;
-    public deltaRotChange: number = 0;
-
     protected network: TankNetwork = new TankNetwork();
     public gfx: TankGfx = new TankGfx();
 
@@ -199,21 +193,21 @@ export class TankObject {
 
     public syncState ( positionX: number, positionZ: number, rotation: number ) : void {
 
-        if ( Math.abs( this.position.x - positionX ) > 5 || Math.abs( this.position.z - positionZ ) > 5 ) {
+        // if ( Math.abs( this.gfx.object.position.x - positionX ) > 2 || Math.abs( this.gfx.object.position.z - positionZ ) > 2 ) {
 
-            this.positionCorrection.set( positionX, 0, positionZ );
+        //     this.positionCorrection.set( positionX, 0, positionZ );
 
-        }
+        // }
 
-        let rot = OMath.formatAngle( rotation );
-        if ( rot > Math.PI ) rot -= 2 * Math.PI;
-        if ( rot < - Math.PI ) rot += 2 * Math.PI;
+        // let rot = rotation;
+        // if ( rot > Math.PI ) rot -= 2 * Math.PI;
+        // if ( rot < - Math.PI ) rot += 2 * Math.PI;
 
-        if ( Math.abs( rot - this.rotation ) > 0.05 ) {
+        // if ( Math.abs( rot - this.gfx.object.rotation.y ) > 0.001 ) {
 
-            this.rotationCorrection = rot;
+        //     this.rotationCorrection = rot;
 
-        }
+        // }
 
     };
 
@@ -233,22 +227,20 @@ export class TankObject {
 
         this.gfx.rotateTankXAxis( this.acceleration );
 
-        this.rotCorrect2 = OMath.formatAngle( newRotation ) - OMath.formatAngle( this.gfx.object.rotation.y ) - this.rotCorrect1;
+        this.rotCorrect2 = newRotation - this.gfx.object.rotation.y - this.rotCorrect1;
         if ( this.rotCorrect2 > Math.PI ) this.rotCorrect2 -= 2 * Math.PI;
         if ( this.rotCorrect2 < - Math.PI ) this.rotCorrect2 += 2 * Math.PI;
         this.rotCorrect2 /= CollisionManager.updateRate;
-        this.rotation = newRotation;
-        this.deltaRotChange = CollisionManager.updateRate;
 
         //
 
-        this.possCorrect2.set( newPosition.x - this.gfx.object.position.x - this.possCorrect1.x, newPosition.y - this.gfx.object.position.y, newPosition.z - this.gfx.object.position.z - this.possCorrect1.z );
+        this.possCorrect2.set( newPosition.x - this.gfx.object.position.x - this.possCorrect1.x, newPosition.y - this.gfx.object.position.y - this.possCorrect1.y, newPosition.z - this.gfx.object.position.z - this.possCorrect1.z );
 
         this.possCorrect2.x /= CollisionManager.updateRate;
         this.possCorrect2.y /= CollisionManager.updateRate;
         this.possCorrect2.z /= CollisionManager.updateRate;
-        this.deltaPosChange = CollisionManager.updateRate;
 
+        this.rotation = newRotation;
         this.position.copy( newPosition );
 
     };

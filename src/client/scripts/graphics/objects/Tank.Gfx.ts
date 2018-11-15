@@ -33,8 +33,6 @@ class TankGfx {
     public damageSmoke: DamageSmokeGfx = new DamageSmokeGfx();
     public blastSmoke: BlastSmokeGfx = new BlastSmokeGfx();
 
-    private prevDRotVal: number = 0;
-    private prevDPosVal: OMath.Vec3 = new OMath.Vec3();
     private prevPos: OMath.Vec3 = new OMath.Vec3();
     private prevRot: number = 0;
 
@@ -98,12 +96,6 @@ class TankGfx {
         this.object.position.x = position.x;
         this.object.position.y = position.y;
         this.object.position.z = position.z;
-
-    };
-
-    public setRotation ( angle: number ) : void {
-
-        // this.object.rotation.y = angle;
 
     };
 
@@ -181,58 +173,41 @@ class TankGfx {
         let dPosZ = 0;
         let dRot = 0;
 
-        if ( this.tank.deltaPosChange > 1 ) {
+        const dx = this.tank.possCorrect2.x * delta || 0;
+        const dy = this.tank.possCorrect2.y * delta || 0;
+        const dz = this.tank.possCorrect2.z * delta || 0;
 
-            const d = ( delta > this.tank.deltaPosChange ) ? this.tank.deltaPosChange : delta;
-            const dx = ( this.tank.possCorrect2.x * d + this.prevDPosVal.x ) / 5;
-            const dy = ( this.tank.possCorrect2.y * d + this.prevDPosVal.y ) / 5;
-            const dz = ( this.tank.possCorrect2.z * d + this.prevDPosVal.z ) / 5;
-            this.prevDPosVal.set( dx, dy, dz );
+        dPosX += dx;
+        dPosY += dy;
+        dPosZ += dz;
 
-            dPosX += dx;
-            dPosY += dy;
-            dPosZ += dz;
+        //
 
-            this.tank.deltaPosChange -= d;
+        // const l = Math.sqrt( this.tank.possCorrect1.x * this.tank.possCorrect1.x + this.tank.possCorrect1.z * this.tank.possCorrect1.z );
 
-        }
+        // if ( l > 0.5 ) {
 
-        const l = Math.sqrt( this.tank.possCorrect1.x * this.tank.possCorrect1.x + this.tank.possCorrect1.z * this.tank.possCorrect1.z );
+        //     const dcx1 = ( this.tank.possCorrect1.x / l ) / 3;
+        //     const dcy1 = ( this.tank.possCorrect1.y / l ) / 3;
+        //     const dcz1 = ( this.tank.possCorrect1.z / l ) / 3;
 
-        if ( l > 0.5 ) {
+        //     dPosX += dcx1;
+        //     dPosY += dcy1;
+        //     dPosZ += dcz1;
 
-            const dcx1 = ( this.tank.possCorrect1.x / l ) / 3;
-            const dcy1 = ( this.tank.possCorrect1.y / l ) / 3;
-            const dcz1 = ( this.tank.possCorrect1.z / l ) / 3;
+        //     this.tank.possCorrect1.x -= dcx1;
+        //     this.tank.possCorrect1.y -= dcy1;
+        //     this.tank.possCorrect1.z -= dcz1;
 
-            dPosX += dcx1;
-            dPosY += dcy1;
-            dPosZ += dcz1;
+        // }
 
-            this.tank.possCorrect1.x -= dcx1;
-            this.tank.possCorrect1.y -= dcy1;
-            this.tank.possCorrect1.z -= dcz1;
+        //
 
-        }
+        dRot += this.tank.rotCorrect2 * delta || 0;
 
-        // //
+        if ( Math.abs( this.tank.rotCorrect1 ) > 0.005 ) {
 
-        if ( this.tank.deltaRotChange > 1 ) {
-
-            const d = ( delta > this.tank.deltaRotChange ) ? this.tank.deltaRotChange : delta;
-            const dr = ( this.tank.rotCorrect2 * d + this.prevDRotVal ) / 2;
-            this.prevDRotVal = dr;
-
-            dRot = dr;
-            if ( this.object.rotation.y > Math.PI ) this.object.rotation.y -= 2 * Math.PI;
-            if ( this.object.rotation.y < - Math.PI ) this.object.rotation.y += 2 * Math.PI;
-            this.tank.deltaRotChange -= d;
-
-        }
-
-        if ( this.tank.rotCorrect1 > 0.01 ) {
-
-            let dcr = Math.sign( this.tank.rotCorrect1 ) / 200;
+            let dcr = Math.sign( this.tank.rotCorrect1 ) / 100;
             dcr = ( Math.abs( dcr ) < Math.abs( this.tank.rotCorrect1 ) ) ? dcr : this.tank.rotCorrect1;
 
             dRot += dcr;
@@ -252,9 +227,9 @@ class TankGfx {
         if ( this.object.rotation.y > Math.PI ) this.object.rotation.y -= 2 * Math.PI;
         if ( this.object.rotation.y < - Math.PI ) this.object.rotation.y += 2 * Math.PI;
 
-        this.object.position.x = this.object.position.x + dPosX;
-        this.object.position.y = this.object.position.y + dPosY;
-        this.object.position.z = this.object.position.z + dPosZ;
+        this.object.position.x = this.prevPos.x + dPosX;
+        this.object.position.y = this.prevPos.y + dPosY;
+        this.object.position.z = this.prevPos.z + dPosZ;
 
         this.prevPos.copy( this.object.position );
         this.prevRot = this.object.rotation.y;

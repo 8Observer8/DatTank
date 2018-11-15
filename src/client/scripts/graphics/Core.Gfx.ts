@@ -61,7 +61,7 @@ class GraphicsCore {
 
     private frames: number = 0;
     private lastFPSUpdate: number = 0;
-    private prevCameraPosition: THREE.Vector3 = new THREE.Vector3();
+    private prevCameraDPos: THREE.Vector3 = new THREE.Vector3();
 
     public lights = {
         ambient:    0xfff3bc,
@@ -240,17 +240,16 @@ class GraphicsCore {
 
     private updateCamera ( position: THREE.Vector3, rotation: number ) : void {
 
-        let x = position.x - 100 * Math.sin( rotation ) + this.cameraOffset.x;
-        let z = position.z - 100 * Math.cos( rotation ) + this.cameraOffset.y;
+        let x = ( position.x - 90 * Math.sin( rotation ) + this.cameraOffset.x - this.camera.position.x ) / 18;
+        let z = ( position.z - 90 * Math.cos( rotation ) + this.cameraOffset.y - this.camera.position.z ) / 18;
 
-        x = 0.87 * this.prevCameraPosition.x + 0.13 * x;
-        z = 0.87 * this.prevCameraPosition.z + 0.13 * z;
+        x = 0.2 * x + 0.8 * this.prevCameraDPos.x;
+        z = 0.2 * z + 0.8 * this.prevCameraDPos.z;
+        this.prevCameraDPos.set( x, 0, z );
 
-        this.prevCameraPosition.copy( this.camera.position );
-
-        this.camera.position.x = x;
-        this.camera.position.y = 70 + this.cameraOffset.z;
-        this.camera.position.z = z;
+        this.camera.position.x = x + this.camera.position.x;
+        this.camera.position.y = 50 + this.cameraOffset.z;
+        this.camera.position.z = z + this.camera.position.z;
 
         this.lookAtVector = this.lookAtVector || new THREE.Vector3();
         this.lookAtVector.set( position.x, 40, position.z );
