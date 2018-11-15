@@ -215,12 +215,13 @@ function update ( delta, objectsInfo ) {
         //
 
         objectsParams.push({
-            id:             object.id,
-            type:           object.objType,
-            acceleration:   - Math.sign( dfv ) * Math.min( Math.abs( dfv ), 8 ) / 100 / Math.PI,
-            position:       { x: object.body.position.x, y: object.body.position.y - 10, z: object.body.position.z },
-            velocity:       forwardVelocity,
-            rotation:       objectInfo.rotation
+            id:                     object.id,
+            type:                   object.objType,
+            acceleration:           - Math.sign( dfv ) * Math.min( Math.abs( dfv ), 8 ) / 100 / Math.PI,
+            position:               { x: object.body.position.x, y: object.body.position.y - 10, z: object.body.position.z },
+            velocity:               forwardVelocity,
+            angularVelocityVector:  object.body.angularVelocity,
+            velocityVector:         object.body.velocity,
         });
 
     }
@@ -250,6 +251,7 @@ function initWorld () {
     var groundBody = new CANNON.Body({ mass: 0 });
     groundBody['name'] = 'ground';
     groundBody.addShape( groundShape );
+    groundBody.position.y = - 10;
     groundBody.quaternion.setFromAxisAngle( new CANNON.Vec3( 1, 0, 0 ), - Math.PI / 2 );
     world.addBody( groundBody );
 

@@ -45,6 +45,8 @@ export class TankObject {
     public rotationCorrectionFixed: number = 0;
     public acceleration: number = 0;
     public velocity: number = 0;
+    public velocityVector: OMath.Vec3 = new OMath.Vec3();
+    public angularVelocityVector: OMath.Vec3 = new OMath.Vec3();
 
     public position: OMath.Vec3 = new OMath.Vec3();
     public rotation: number = 0;
@@ -193,25 +195,27 @@ export class TankObject {
 
     public syncState ( positionX: number, positionZ: number, rotation: number ) : void {
 
-        // if ( Math.abs( this.gfx.object.position.x - positionX ) > 2 || Math.abs( this.gfx.object.position.z - positionZ ) > 2 ) {
+        if ( Math.abs( this.gfx.object.position.x - positionX ) > 2 || Math.abs( this.gfx.object.position.z - positionZ ) > 2 ) {
 
-        //     this.positionCorrection.set( positionX, 0, positionZ );
+            this.positionCorrection.set( positionX, 0, positionZ );
+            this.possCorrect1.set( positionX - this.gfx.object.position.x, 0, positionZ - this.gfx.object.position.z );
 
-        // }
+        }
 
-        // let rot = rotation;
-        // if ( rot > Math.PI ) rot -= 2 * Math.PI;
-        // if ( rot < - Math.PI ) rot += 2 * Math.PI;
+        let rot = rotation;
+        if ( rot > Math.PI ) rot -= 2 * Math.PI;
+        if ( rot < - Math.PI ) rot += 2 * Math.PI;
 
-        // if ( Math.abs( rot - this.gfx.object.rotation.y ) > 0.001 ) {
+        if ( Math.abs( rot - this.gfx.object.rotation.y ) > 0.001 ) {
 
-        //     this.rotationCorrection = rot;
+            this.rotationCorrection = rot;
+            this.rotCorrect1 = rot - this.gfx.object.rotation.y;
 
-        // }
+        }
 
     };
 
-    public updateMovement ( delta: number, newPosition: OMath.Vec3, newRotation: number ) : void {
+    public updateMovement ( delta: number, velocity: OMath.Vec3, angularVelocity: OMath.Vec3 ) : void {
 
         if ( this.moveDirection.x !== 0 || this.moveDirection.y !== 0 ) {
 
@@ -226,22 +230,8 @@ export class TankObject {
         //
 
         this.gfx.rotateTankXAxis( this.acceleration );
-
-        this.rotCorrect2 = newRotation - this.gfx.object.rotation.y - this.rotCorrect1;
-        if ( this.rotCorrect2 > Math.PI ) this.rotCorrect2 -= 2 * Math.PI;
-        if ( this.rotCorrect2 < - Math.PI ) this.rotCorrect2 += 2 * Math.PI;
-        this.rotCorrect2 /= CollisionManager.updateRate;
-
-        //
-
-        this.possCorrect2.set( newPosition.x - this.gfx.object.position.x - this.possCorrect1.x, newPosition.y - this.gfx.object.position.y - this.possCorrect1.y, newPosition.z - this.gfx.object.position.z - this.possCorrect1.z );
-
-        this.possCorrect2.x /= CollisionManager.updateRate;
-        this.possCorrect2.y /= CollisionManager.updateRate;
-        this.possCorrect2.z /= CollisionManager.updateRate;
-
-        this.rotation = newRotation;
-        this.position.copy( newPosition );
+        this.velocityVector.copy( velocity );
+        this.angularVelocityVector.copy( angularVelocity );
 
     };
 

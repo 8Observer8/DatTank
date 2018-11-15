@@ -110,7 +110,7 @@ class CollisionManagerCore {
 
                     objParent.acceleration = objects[ i ].acceleration;
                     objParent.velocity = objects[ i ].velocity;
-                    objParent.updateMovement( delta, objects[ i ].position, objects[ i ].rotation );
+                    objParent.updateMovement( delta, objects[ i ].velocityVector, objects[ i ].angularVelocityVector );
 
                 }
 

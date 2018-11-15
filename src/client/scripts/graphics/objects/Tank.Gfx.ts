@@ -173,41 +173,37 @@ class TankGfx {
         let dPosZ = 0;
         let dRot = 0;
 
-        const dx = this.tank.possCorrect2.x * delta || 0;
-        const dy = this.tank.possCorrect2.y * delta || 0;
-        const dz = this.tank.possCorrect2.z * delta || 0;
+        dPosX += this.tank.velocityVector.x * delta / 1000;
+        dPosY += this.tank.velocityVector.y * delta / 1000;
+        dPosZ += this.tank.velocityVector.z * delta / 1000;
 
-        dPosX += dx;
-        dPosY += dy;
-        dPosZ += dz;
+        dRot += this.tank.angularVelocityVector.y * delta / 1000;
 
         //
 
-        // const l = Math.sqrt( this.tank.possCorrect1.x * this.tank.possCorrect1.x + this.tank.possCorrect1.z * this.tank.possCorrect1.z );
+        const l = Math.sqrt( this.tank.possCorrect1.x * this.tank.possCorrect1.x + this.tank.possCorrect1.z * this.tank.possCorrect1.z );
 
-        // if ( l > 0.5 ) {
+        if ( l > 0.1 ) {
 
-        //     const dcx1 = ( this.tank.possCorrect1.x / l ) / 3;
-        //     const dcy1 = ( this.tank.possCorrect1.y / l ) / 3;
-        //     const dcz1 = ( this.tank.possCorrect1.z / l ) / 3;
+            const dcx1 = this.tank.possCorrect1.x / 60;
+            const dcy1 = this.tank.possCorrect1.y / 60;
+            const dcz1 = this.tank.possCorrect1.z / 60;
 
-        //     dPosX += dcx1;
-        //     dPosY += dcy1;
-        //     dPosZ += dcz1;
+            dPosX += dcx1;
+            dPosY += dcy1;
+            dPosZ += dcz1;
 
-        //     this.tank.possCorrect1.x -= dcx1;
-        //     this.tank.possCorrect1.y -= dcy1;
-        //     this.tank.possCorrect1.z -= dcz1;
+            this.tank.possCorrect1.x -= dcx1;
+            this.tank.possCorrect1.y -= dcy1;
+            this.tank.possCorrect1.z -= dcz1;
 
-        // }
+        }
 
         //
 
-        dRot += this.tank.rotCorrect2 * delta || 0;
+        if ( Math.abs( this.tank.rotCorrect1 ) > 0.001 ) {
 
-        if ( Math.abs( this.tank.rotCorrect1 ) > 0.005 ) {
-
-            let dcr = Math.sign( this.tank.rotCorrect1 ) / 100;
+            let dcr = Math.sign( this.tank.rotCorrect1 ) / 1000;
             dcr = ( Math.abs( dcr ) < Math.abs( this.tank.rotCorrect1 ) ) ? dcr : this.tank.rotCorrect1;
 
             dRot += dcr;
@@ -233,6 +229,9 @@ class TankGfx {
 
         this.prevPos.copy( this.object.position );
         this.prevRot = this.object.rotation.y;
+
+        this.tank.position.copy( this.object.position );
+        this.tank.rotation = this.object.position.y;
 
         this.object.updateMatrixWorld( true );
 
