@@ -148,6 +148,33 @@
     z-index: 1;
 }
 
+.garage .right-block .buy-btn {
+    display: none;
+    position: absolute;
+    right: 30px;
+    top: 19px;
+    transform: translateX( -50% );
+    color: white;
+    background-image: linear-gradient(#39c600, #1a7600);
+    border: 1px solid #357e0a;
+    text-align: center;
+    opacity: 0.8;
+    padding: 5px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background-image 200ms ease;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.garage .right-block .buy-btn:hover {
+    background-image: linear-gradient(#2f9f02, #166101);
+}
+
+.garage .right-block .buy-btn:active {
+    top: 20px;
+}
+
 .garage .right-block .item-title {
     margin-top: 20px;
     margin-left: 20px;

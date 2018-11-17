@@ -13,7 +13,6 @@ import { SoundManager } from '../managers/Sound.Manager';
 export class Garage {
 
     public isOpened: boolean = false;
-    private isBuyPopupOpened: boolean = false;
 
     public scene: GarageScene = new GarageScene();
 
@@ -29,7 +28,10 @@ export class Garage {
 
     //
 
-    private updateUserParams () : void {
+    private updateUserParams ( coins?: number, xp?: number ) : void {
+
+        window['userData'].coins = coins || window['userData'].coins;
+        window['userData'].xp = xp || window['userData'].xp;
 
         this.coins = window['userData'].coins;
         this.xp = window['userData'].xp;
@@ -37,115 +39,6 @@ export class Garage {
         $('.garage .garage-title .level-label').html( '(Level ' + this.level + ')' );
         $('.garage .xp .value').html( this.xp );
         $('.garage .coins .value').html( this.coins );
-
-    };
-
-    private openBuyPopup ( category: string, item: any ) : void {
-
-        if ( this.coins < item.price ) {
-
-            $('.garage .buy-item-popup .error').show();
-            $('.garage .buy-item-popup .title').hide();
-            $('.garage .buy-item-popup .price').hide();
-            $('.garage .buy-item-popup .error .price-value').html( ( item.price - this.coins ).toString() );
-            $('.garage .buy-item-popup .buy-btn').hide();
-            $('.garage .buy-item-popup .cancel-btn').hide();
-            $('.garage .buy-item-popup .okay-btn').show();
-
-        } else {
-
-            $('.garage .buy-item-popup .error').hide();
-            $('.garage .buy-item-popup .price').show();
-            $('.garage .buy-item-popup .title').show();
-            $('.garage .buy-item-popup .buy-btn').show();
-            $('.garage .buy-item-popup .cancel-btn').show();
-            $('.garage .buy-item-popup .okay-btn').hide();
-
-        }
-
-        //
-
-        let title = item.title;
-        let image = '';
-
-        switch ( category ) {
-
-            case 'tanks':
-
-                title = '"' + title + '" tank';
-                image = 'tanks/' + item.id + '.png';
-                break;
-
-            case 'cannons':
-
-                title = '"' + title + '" cannon';
-                image = 'cannons/' + item.id + '.png';
-                break;
-
-            case 'engines':
-
-                title = '"' + title + '" engine';
-                image = 'engines/' + item.id + '.png';
-                break;
-
-            case 'armors':
-
-                title = '"' + title + '" armor';
-                image = 'armors/' + item.id + '.png';
-                break;
-
-            case 'textures':
-
-                title = '"' + title + '" texture';
-                image = 'textures/' + item.id + '.png';
-                break;
-
-        }
-
-        $('.garage .buy-item-popup .image').css( 'background-image', 'url(/resources/img/garage/' + image + ')' );
-        $('.garage .buy-item-popup .item-name').html( title );
-        $('.garage .buy-item-popup .price .price-value').html( item.price + ' coins' );
-
-        $('.garage .buy-item-popup-wrapper').show();
-        setTimeout( () => { $('.garage .buy-item-popup-wrapper').css( 'opacity', 1 ); }, 10 );
-        $('.garage .buy-item-popup-wrapper .btn').off();
-
-        //
-
-        $('.garage .buy-item-popup-wrapper .cancel-btn').click( this.closeBuyPopup.bind( this ) );
-        $('.garage .buy-item-popup-wrapper .okay-btn').click( this.closeBuyPopup.bind( this ) );
-
-        $('.garage .buy-item-popup-wrapper .btn').mouseover( () => {
-
-            SoundManager.playSound('ElementHover');
-
-        });
-
-        $('.garage .buy-item-popup-wrapper .buy-btn').click( () => {
-
-            Game.gameService.buyObject( category, item.id, ( response: any ) => {
-
-                this.coins = response.coins;
-                this.params = response.params;
-                localStorage.setItem( 'Selected' + item.type, item.id );
-                this.setupMenu();
-                SoundManager.playSound('MenuBuy');
-                this.closeBuyPopup();
-                this.updateUserParams();
-
-            });
-
-        });
-
-        this.isBuyPopupOpened = true;
-
-    };
-
-    private closeBuyPopup () : void {
-
-        $('.garage .buy-item-popup-wrapper').css( 'opacity', 0 );
-        setTimeout( () => { $('.garage .buy-item-popup-wrapper').hide(); }, 400 );
-        this.isBuyPopupOpened = false;
 
     };
 
@@ -496,16 +389,7 @@ export class Garage {
 
             case 27: // esc key
 
-                if ( this.isBuyPopupOpened ) {
-
-                    this.closeBuyPopup();
-
-                } else {
-
-                    this.hide();
-
-                }
-
+                this.hide();
                 break;
 
             case 13: // enter key
@@ -558,17 +442,7 @@ export class Garage {
         if ( event && event.currentTarget ) {
 
             const tank = Game.GarageConfig.tanks[ $( event.currentTarget ).attr('item-id') || '' ];
-            SoundManager.playSound('ElementSelect');
-
-            if ( $( event.currentTarget ).hasClass('notOwn') ) {
-
-                this.openBuyPopup( 'tanks', tank );
-                return;
-
-            }
-
-            $('.garage .bottom-block .tab.tanks .item').removeClass('active');
-            $( event.currentTarget ).addClass('active');
+            this.selectPart( $( event.currentTarget ).hasClass('notOwn'), event.currentTarget as HTMLElement, 'tanks', tank );
 
             this.params.selected = $( event.currentTarget ).attr('item-id');
             localStorage.setItem( 'SelectedTank', this.params.selected );
@@ -598,17 +472,9 @@ export class Garage {
         const cannon = Game.GarageConfig.cannons[ $( event.currentTarget ).attr('item-id') || '' ];
         SoundManager.playSound('ElementSelect');
 
-        if ( $( event.currentTarget ).hasClass('notOwn') ) {
-
-            this.openBuyPopup( 'cannons', cannon );
-
-        } else {
-
-            $('.garage .bottom-block .tab.cannons .item').removeClass('active');
-            $( event.currentTarget ).addClass('active');
-            localStorage.setItem( 'SelectedCannon', cannon.id );
-
-        }
+        $('.garage .bottom-block .tab.cannons .item').removeClass('active');
+        $( event.currentTarget ).addClass('active');
+        localStorage.setItem( 'SelectedCannon', cannon.id );
 
         this.scene.selectCannon( localStorage.getItem('SelectedCannon') || '' );
 
@@ -625,17 +491,9 @@ export class Garage {
         const engine = Game.GarageConfig.engines[ $( event.currentTarget ).attr('item-id') || '' ];
         SoundManager.playSound('ElementSelect');
 
-        if ( $( event.currentTarget ).hasClass('notOwn') ) {
-
-            this.openBuyPopup( 'engines', engine );
-
-        } else {
-
-            $('.garage .bottom-block .tab.engines .item').removeClass('active');
-            $( event.currentTarget ).addClass('active');
-            localStorage.setItem( 'SelectedEngine', engine.id );
-
-        }
+        $('.garage .bottom-block .tab.engines .item').removeClass('active');
+        $( event.currentTarget ).addClass('active');
+        localStorage.setItem( 'SelectedEngine', engine.id );
 
     };
 
@@ -650,17 +508,9 @@ export class Garage {
         const armor = Game.GarageConfig.armors[ $( event.currentTarget ).attr('item-id') || '' ];
         SoundManager.playSound('ElementSelect');
 
-        if ( $( event.currentTarget ).hasClass('notOwn') ) {
-
-            this.openBuyPopup( 'armors', armor );
-
-        } else {
-
-            $('.garage .bottom-block .tab.armors .item').removeClass('active');
-            $( event.currentTarget ).addClass('active');
-            localStorage.setItem( 'SelectedArmor', armor.id );
-
-        }
+        $('.garage .bottom-block .tab.armors .item').removeClass('active');
+        $( event.currentTarget ).addClass('active');
+        localStorage.setItem( 'SelectedArmor', armor.id );
 
     };
 
@@ -699,6 +549,43 @@ export class Garage {
     public onLoadedResources () : void {
 
         this.selectTank();
+
+    };
+
+    private selectPart ( isOwn: boolean, element: HTMLElement, category: string, item: any ) : void {
+
+        SoundManager.playSound('ElementSelect');
+
+        if ( $( element ).hasClass('notOwn') ) {
+
+            $('.garage .right-block .buy-btn').css({ right: '20px', opacity: 1 });
+            $('.garage .right-block .buy-btn').show();
+            $('.garage .right-block .buy-btn').click( () => { this.buyPart( category, item ); } );
+
+        } else {
+
+            $('.garage .right-block .buy-btn').hide();
+            $('.garage .right-block .buy-btn').off();
+
+        }
+
+        $('.garage .bottom-block .tab.tanks .item').removeClass('active');
+        $( element ).addClass('active');
+
+    };
+
+    private buyPart ( category: string, item: any ) : void {
+
+        Game.gameService.buyObject( category, item.id, ( response: any ) => {
+
+            this.params = response.params;
+            localStorage.setItem( 'Selected' + item.type, item.id );
+            this.setupMenu();
+            SoundManager.playSound('MenuBuy');
+            $('.garage .right-block .buy-btn').animate( { right: '0px', opacity: 0 }, 300 );
+            this.updateUserParams( response.coins );
+
+        });
 
     };
 
