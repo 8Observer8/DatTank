@@ -91,7 +91,9 @@ export class GarageScene {
 
         this.currentModel.remove( this.baseModel );
 
-        const model = ResourceManager.getModel( 'bases/' + modelName )!;
+        const model = ResourceManager.getModel( 'bases/' + modelName );
+        if ( ! model ) return;
+
         this.baseModel = new THREE.Mesh( model.geometry, [
             new THREE.MeshLambertMaterial({ color: 0xaaaaaa, map: new THREE.TextureLoader().load('/resources/textures/IS2.png') }),
             new THREE.MeshLambertMaterial({ color: 0xaaaaaa, map: new THREE.TextureLoader().load('/resources/textures/IS2.png') }),
@@ -109,7 +111,9 @@ export class GarageScene {
 
         this.currentModel.remove( this.cannonModel );
 
-        const model = ResourceManager.getModel( 'cannons/' + modelName )!;
+        const model = ResourceManager.getModel( 'cannons/' + modelName );
+        if ( ! model ) return;
+
         this.cannonModel = new THREE.Mesh( model.geometry, [
             new THREE.MeshLambertMaterial({ color: 0xaaaaaa, map: new THREE.TextureLoader().load('/resources/textures/IS2.png') }),
         ]);

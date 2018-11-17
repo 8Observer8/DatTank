@@ -154,30 +154,18 @@ PlayerManager.prototype.buyObject = function ( pid, objectType, objectId, callba
 
         if ( ! player ) return callback( false, 'player not found' );
 
-        var object = ( GarageConfig[ objectType ] || {} )[ objectId ] || false;
+        var object = ( GarageConfig[ objectType + 's' ] || {} )[ objectId ] || false;
         if ( object === false ) return callback( false, 'object not found' );
 
         if ( player.coins < object.price ) return callback( false, 'not enough coins' );
-        if ( player.params[ objectType ][ objectId ] ) return callback( false, 'you already have this object' );
+        if ( player.params[ objectType ] && player.params[ objectType ][ objectId ] ) return callback( false, 'you already have this object' );
 
         player.coins -= object.price;
 
         //
 
-        if ( objectType === 'tanks' ) {
-
-            player.params['tanks'][ objectId ] = GarageConfig[ objectType ][ objectId ].default;
-            player.params['cannons'][ player.params['tanks'][ objectId ].cannon ] = true;
-            player.params['armors'][ player.params['tanks'][ objectId ].armor ] = true;
-            player.params['engines'][ player.params['tanks'][ objectId ].engine ] = true;
-            player.markModified('params');
-
-        } else {
-
-            player.params[ objectType ][ objectId ] = true;
-            player.markModified('params');
-
-        }
+        player.params[ objectType ][ objectId ] = { active: true };
+        player.markModified('params');
 
         //
 
