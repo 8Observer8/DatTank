@@ -40,13 +40,10 @@ export class TankObject {
     public engine: EngineTankPart;
 
     public moveDirection: OMath.Vec2 = new OMath.Vec2();
-    public positionCorrection: OMath.Vec3 = new OMath.Vec3();
-    public rotationCorrection: number = 0;
-    public rotationCorrectionFixed: number = 0;
     public acceleration: number = 0;
     public velocity: number = 0;
-    public velocityVector: OMath.Vec3 = new OMath.Vec3();
-    public angularVelocityVector: OMath.Vec3 = new OMath.Vec3();
+    public directionVelocity: OMath.Vec3 = new OMath.Vec3();
+    public angularVelocity: OMath.Vec3 = new OMath.Vec3();
 
     public position: OMath.Vec3 = new OMath.Vec3();
     public rotation: number = 0;
@@ -60,10 +57,11 @@ export class TankObject {
 
     public isMe: boolean = false;
 
-    public possCorrect1: OMath.Vec3 = new OMath.Vec3();
-    public possCorrect2: OMath.Vec3 = new OMath.Vec3();
-    public rotCorrect1: number = 0;
-    public rotCorrect2: number = 0;
+    public stateNeedsCorrect: boolean = false;
+    public positionCorrection: OMath.Vec3 = new OMath.Vec3();
+    public rotationCorrection: number = 0;
+    public positionCorrectValue: OMath.Vec3 = new OMath.Vec3();
+    public rotationCorrectValue: number = 0;
 
     //
 
@@ -195,23 +193,12 @@ export class TankObject {
 
     public syncState ( positionX: number, positionZ: number, rotation: number ) : void {
 
-        if ( Math.abs( this.gfx.object.position.x - positionX ) > 2 || Math.abs( this.gfx.object.position.z - positionZ ) > 2 ) {
+        this.positionCorrection.set( positionX, 0, positionZ );
 
-            this.positionCorrection.set( positionX, 0, positionZ );
-            this.possCorrect1.set( positionX - this.gfx.object.position.x, 0, positionZ - this.gfx.object.position.z );
+        rotation = OMath.formatAngle( rotation );
+        this.rotationCorrection = rotation;
 
-        }
-
-        let rot = rotation;
-        if ( rot > Math.PI ) rot -= 2 * Math.PI;
-        if ( rot < - Math.PI ) rot += 2 * Math.PI;
-
-        if ( Math.abs( rot - this.gfx.object.rotation.y ) > 0.001 ) {
-
-            this.rotationCorrection = rot;
-            this.rotCorrect1 = rot - this.gfx.object.rotation.y;
-
-        }
+        this.stateNeedsCorrect = true;
 
     };
 
@@ -229,9 +216,8 @@ export class TankObject {
 
         //
 
-        this.gfx.rotateTankXAxis( this.acceleration );
-        this.velocityVector.copy( velocity );
-        this.angularVelocityVector.copy( angularVelocity );
+        this.directionVelocity.copy( velocity );
+        this.angularVelocity.copy( angularVelocity );
 
     };
 

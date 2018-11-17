@@ -213,7 +213,7 @@ export class CollisionManager {
 
                 //
 
-                const speed = object.body.velocity.distanceTo( new Cannon.Vec3( 0, object.body.velocity.y, 0 ) );
+                let speed = object.body.velocity.distanceTo( new Cannon.Vec3( 0, object.body.velocity.y, 0 ) );
                 const maxSpeed = object.parent.getMaxSpeed() * 3;
                 const velocityAngle = Math.atan2( object.body.velocity.x, object.body.velocity.z );
                 const movementDirection = Math.sign( object.body.velocity.x * Math.sin( object.parent.rotation ) );
@@ -221,6 +221,8 @@ export class CollisionManager {
                 if ( object.parent.moveDirection.x !== 0 ) {
 
                     if ( speed < maxSpeed ) {
+
+                        speed = ( movementDirection === object.parent.moveDirection.x ) ? speed : - speed;
 
                         const forceAmount = object.parent.getEnginePower() * ( 1 - speed / maxSpeed );
                         let force = new Cannon.Vec3( 0, 0, forceAmount * coef );
@@ -249,6 +251,10 @@ export class CollisionManager {
 
                 const dv = object.body.velocity.length() * Math.sin( velocityAngle - object.parent.rotation );
                 object.body.applyLocalImpulse( new Cannon.Vec3( - object.body.mass * dv * coef, 0, 0 ), new Cannon.Vec3( 0, 0, 0 ) );
+
+                if ( Math.abs( object.body.velocity.x ) < 1 ) object.body.velocity.x = 0;
+                if ( Math.abs( object.body.velocity.y ) < 1 ) object.body.velocity.y = 0;
+                if ( Math.abs( object.body.velocity.z ) < 1 ) object.body.velocity.z = 0;
 
                 //
 

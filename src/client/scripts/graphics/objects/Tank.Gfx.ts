@@ -33,9 +33,6 @@ class TankGfx {
     public damageSmoke: DamageSmokeGfx = new DamageSmokeGfx();
     public blastSmoke: BlastSmokeGfx = new BlastSmokeGfx();
 
-    private prevPos: OMath.Vec3 = new OMath.Vec3();
-    private prevRot: number = 0;
-
     private hide: boolean = false;
     private sounds = {};
 
@@ -165,6 +162,7 @@ class TankGfx {
         this.blastSmoke.update( time, delta );
 
         this.cannon.update( delta / 1000 );
+        this.rotateTankXAxis( this.tank.acceleration );
 
         // interpolate tank movement between cannon physic generated points
 
@@ -173,41 +171,43 @@ class TankGfx {
         let dPosZ = 0;
         let dRot = 0;
 
-        dPosX += this.tank.velocityVector.x * delta / 1000;
-        dPosY += this.tank.velocityVector.y * delta / 1000;
-        dPosZ += this.tank.velocityVector.z * delta / 1000;
-
-        dRot += this.tank.angularVelocityVector.y * delta / 1000;
+        dPosX += this.tank.directionVelocity.x * delta / 1000;
+        dPosY += this.tank.directionVelocity.y * delta / 1000;
+        dPosZ += this.tank.directionVelocity.z * delta / 1000;
+        dRot += this.tank.angularVelocity.y * delta / 1000;
 
         //
 
-        const l = Math.sqrt( this.tank.possCorrect1.x * this.tank.possCorrect1.x + this.tank.possCorrect1.z * this.tank.possCorrect1.z );
+        const l = this.tank.positionCorrectValue.length();
+        const correctionSpeed = this.tank.isMe ? 1 : 3;
 
         if ( l > 0.1 ) {
 
-            const dcx1 = this.tank.possCorrect1.x / 60;
-            const dcy1 = this.tank.possCorrect1.y / 60;
-            const dcz1 = this.tank.possCorrect1.z / 60;
+            let dx = correctionSpeed * this.tank.positionCorrectValue.x / 40;
+            let dy = correctionSpeed * this.tank.positionCorrectValue.y / 40;
+            let dz = correctionSpeed * this.tank.positionCorrectValue.z / 40;
 
-            dPosX += dcx1;
-            dPosY += dcy1;
-            dPosZ += dcz1;
+            dx = Math.abs( dx ) < Math.abs( this.tank.positionCorrectValue.x ) ? dx : this.tank.positionCorrectValue.x;
+            dy = Math.abs( dy ) < Math.abs( this.tank.positionCorrectValue.y ) ? dy : this.tank.positionCorrectValue.y;
+            dz = Math.abs( dz ) < Math.abs( this.tank.positionCorrectValue.z ) ? dz : this.tank.positionCorrectValue.z;
 
-            this.tank.possCorrect1.x -= dcx1;
-            this.tank.possCorrect1.y -= dcy1;
-            this.tank.possCorrect1.z -= dcz1;
+            dPosX += dx;
+            dPosY += dy;
+            dPosZ += dz;
+
+            this.tank.positionCorrectValue.sub( dx, dy, dz );
 
         }
 
         //
 
-        if ( Math.abs( this.tank.rotCorrect1 ) > 0.001 ) {
+        if ( Math.abs( this.tank.rotationCorrectValue ) > 0.002 ) {
 
-            let dcr = Math.sign( this.tank.rotCorrect1 ) / 1000;
-            dcr = ( Math.abs( dcr ) < Math.abs( this.tank.rotCorrect1 ) ) ? dcr : this.tank.rotCorrect1;
+            let dr = correctionSpeed * OMath.sign( this.tank.rotationCorrectValue ) / 500;
+            dr = Math.abs( dr ) < Math.abs( this.tank.rotationCorrectValue ) ? dr : this.tank.rotationCorrectValue;
 
-            dRot += dcr;
-            this.tank.rotCorrect1 -= dcr;
+            dRot += dr;
+            this.tank.rotationCorrectValue -= dr;
 
         }
 
@@ -219,16 +219,12 @@ class TankGfx {
 
         }
 
-        this.object.rotation.y = this.prevRot + dRot;
-        if ( this.object.rotation.y > Math.PI ) this.object.rotation.y -= 2 * Math.PI;
-        if ( this.object.rotation.y < - Math.PI ) this.object.rotation.y += 2 * Math.PI;
+        this.object.rotation.y += dRot;
+        this.object.rotation.y = OMath.formatAngle( this.object.rotation.y );
 
-        this.object.position.x = this.prevPos.x + dPosX;
-        this.object.position.y = this.prevPos.y + dPosY;
-        this.object.position.z = this.prevPos.z + dPosZ;
-
-        this.prevPos.copy( this.object.position );
-        this.prevRot = this.object.rotation.y;
+        this.object.position.x += dPosX;
+        this.object.position.y += dPosY;
+        this.object.position.z += dPosZ;
 
         this.tank.position.copy( this.object.position );
         this.tank.rotation = this.object.position.y;
@@ -324,9 +320,6 @@ class TankGfx {
 
         this.object.add( this.wrapper );
         this.object.rotation.y = tank.rotation;
-
-        this.prevPos.copy( this.object.position );
-        this.prevRot = this.object.rotation.y;
 
         //
 

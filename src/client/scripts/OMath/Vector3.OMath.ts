@@ -19,11 +19,37 @@ export class Vec3 {
 
     //
 
+    public add ( dx: number, dy: number, dz: number ) : Vec3 {
+
+        this.x += dx;
+        this.y += dy;
+        this.z += dz;
+
+        return this;
+
+    };
+
+    public sub ( dx: number, dy: number, dz: number ) : Vec3 {
+
+        this.x -= dx;
+        this.y -= dy;
+        this.z -= dz;
+
+        return this;
+
+    };
+
     public set ( x: number, y: number, z: number ) : void {
 
         this.x = x;
         this.y = y;
         this.z = z;
+
+    };
+
+    public length () : number {
+
+        return Math.sqrt( this.x * this.x + this.y * this.y + this.z * this.z );
 
     };
 
@@ -37,7 +63,7 @@ export class Vec3 {
 
     };
 
-    public copy ( point: Vec3 ) : void {
+    public copy ( point: Vec3 | THREE.Vector3 ) : void {
 
         this.x = point.x;
         this.y = point.y;

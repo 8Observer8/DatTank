@@ -71,9 +71,13 @@ class ResourceManagerCore {
                 'bases/IS2001',
                 'bases/OrbitT32s',
                 'bases/TigerS8',
+                'bases/MG813',
                 'cannons/Plasma-g1',
                 'cannons/Plasma-g2',
                 'cannons/Plasma-double',
+                'cannons/Plasma-triple',
+                'cannons/Plasma-zero',
+                'cannons/Razer-v1',
             ],
         },
         ingame: {

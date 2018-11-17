@@ -3,6 +3,10 @@
  * DatTank Arena collision manager
 */
 
+import * as OMath from '../OMath/Core.OMath';
+
+//
+
 class CollisionManagerCore {
 
     private static instance: CollisionManagerCore;
@@ -51,6 +55,7 @@ class CollisionManagerCore {
     public update ( time: number, delta: number ) : void {
 
         const objects = {};
+
         for ( let i = 0, il = this.objects.length; i < il; i ++ ) {
 
             const object = this.objects[ i ];
@@ -59,30 +64,30 @@ class CollisionManagerCore {
             objects[ object.type + '-' + object.id ] = {
                 speed:          object.speed,
                 health:         object.health,
-                position:       ( object.positionCorrection.x || object.positionCorrection.z ) ? { x: object.positionCorrection.x, z: object.positionCorrection.z } : false,
-                rotation:       ( object.rotationCorrection !== 0 ) ? object.rotationCorrection : false,
+                position:       object.stateNeedsCorrect ? { x: object.positionCorrection.x, z: object.positionCorrection.z } : false,
+                rotation:       object.stateNeedsCorrect ? object.rotationCorrection : false,
                 moveDirection:  { x: object.moveDirection.x, y: object.moveDirection.y },
                 maxSpeed:       object.base.speedCoef * object.engine.maxSpeed,
                 power:          object.engine.power,
             };
 
-            if ( object.rotationCorrection !== 0 ) {
+            //
 
-                object.rotCorrect1 = object.rotationCorrection - object.gfx.object.rotation.y;
-                if ( object.rotCorrect1 > Math.PI ) object.rotCorrect1 -= 2 * Math.PI;
-                if ( object.rotCorrect1 < - Math.PI ) object.rotCorrect1 += 2 * Math.PI;
+            if ( object.stateNeedsCorrect ) {
+
+                object.rotationCorrectValue = OMath.formatAngle( object.rotationCorrection - object.gfx.object.rotation.y );
                 object.rotationCorrection = 0;
 
-            }
-
-            if ( Math.abs( object.positionCorrection.x ) || Math.abs( object.positionCorrection.z ) ) {
-
-                object.possCorrect1.set( object.positionCorrection.x - object.gfx.object.position.x, 0, object.positionCorrection.z - object.gfx.object.position.z );
+                object.positionCorrectValue.set( object.positionCorrection.x - object.gfx.object.position.x, 0, object.positionCorrection.z - object.gfx.object.position.z );
                 object.positionCorrection.set( 0, 0, 0 );
+
+                object.stateNeedsCorrect = false;
 
             }
 
         }
+
+        //
 
         this.worker.postMessage({ type: 'update', objects });
 
@@ -110,7 +115,7 @@ class CollisionManagerCore {
 
                     objParent.acceleration = objects[ i ].acceleration;
                     objParent.velocity = objects[ i ].velocity;
-                    objParent.updateMovement( delta, objects[ i ].velocityVector, objects[ i ].angularVelocityVector );
+                    objParent.updateMovement( delta, objects[ i ].directionVelocity, objects[ i ].angularVelocity );
 
                 }
 

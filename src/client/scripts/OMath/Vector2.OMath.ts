@@ -17,6 +17,12 @@ export class Vec2 {
 
     };
 
+    public length () : number {
+
+        return Math.sqrt( this.x * this.x + this.y * this.y );
+
+    };
+
     public distanceTo ( point: Vec2 ) : number {
 
         const dx = this.x - point.x;

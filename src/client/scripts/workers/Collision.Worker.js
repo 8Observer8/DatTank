@@ -169,6 +169,8 @@ function update ( delta, objectsInfo ) {
 
             if ( speed < maxSpeed ) {
 
+                speed = ( movementDirection === objectInfo.moveDirection.x ) ? speed : - speed;
+
                 var forceAmount = objectInfo.power * ( 1 - speed / maxSpeed );
                 var force = new CANNON.Vec3( 0, 0, forceAmount * coef );
                 if ( objectInfo.moveDirection.x < 0 ) force = force.negate();
@@ -212,6 +214,10 @@ function update ( delta, objectsInfo ) {
         dfv = movementDirection * dfv;
         object['prevForwardVelocity'] = forwardVelocity;
 
+        if ( Math.abs( object.body.velocity.x ) < 1 ) object.body.velocity.x = 0;
+        if ( Math.abs( object.body.velocity.y ) < 1 ) object.body.velocity.y = 0;
+        if ( Math.abs( object.body.velocity.z ) < 1 ) object.body.velocity.z = 0;
+
         //
 
         objectsParams.push({
@@ -220,8 +226,8 @@ function update ( delta, objectsInfo ) {
             acceleration:           - Math.sign( dfv ) * Math.min( Math.abs( dfv ), 8 ) / 100 / Math.PI,
             position:               { x: object.body.position.x, y: object.body.position.y - 10, z: object.body.position.z },
             velocity:               forwardVelocity,
-            angularVelocityVector:  object.body.angularVelocity,
-            velocityVector:         object.body.velocity,
+            angularVelocity:        object.body.angularVelocity,
+            directionVelocity:      object.body.velocity,
         });
 
     }

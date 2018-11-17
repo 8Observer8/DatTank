@@ -56,11 +56,8 @@ export function formatAngle ( angle: number ) : number {
 
     angle = angle % ( 2 * Math.PI );
 
-    if ( angle < 0 ) {
-
-        angle += 2 * Math.PI;
-
-    }
+    if (angle > Math.PI ) angle -= 2 * Math.PI;
+    if ( angle < - Math.PI ) angle += 2 * Math.PI;
 
     return angle;
 
