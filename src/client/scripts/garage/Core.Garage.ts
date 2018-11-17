@@ -4,6 +4,7 @@
 */
 
 import { Game } from '../Game';
+import { Arena } from '../core/Arena.Core';
 import { GarageScene } from './Scene.Garage';
 import { SoundManager } from '../managers/Sound.Manager';
 
@@ -23,6 +24,8 @@ export class Garage {
 
     private rightBarChangeTimeout: any;
     private maxConfigValues: any = {};
+
+    private switchMenuTimeout: number;
 
     //
 
@@ -522,6 +525,8 @@ export class Garage {
 
         }
 
+        clearTimeout( this.switchMenuTimeout );
+
         const oldTab = $('.garage .menu-items .item.active').attr('tab');
         const newTab = $( event.currentTarget ).attr('tab');
 
@@ -532,20 +537,17 @@ export class Garage {
 
         $('.garage .bottom-block .tab').removeClass('active');
         $( '.garage .bottom-block .' + newTab ).show();
+        $( '.garage .bottom-block .' + newTab ).addClass('active');
 
         SoundManager.playSound('ElementSelect');
 
-        setTimeout( () => {
-
-            $( '.garage .bottom-block .' + newTab ).addClass('active');
-
-        }, 10 );
-
-        setTimeout( () => {
+        this.switchMenuTimeout = setTimeout( () => {
 
             $( '.garage .bottom-block .' + oldTab ).hide();
 
-        }, 400 );
+        }, 400 ) as any;
+
+        //
 
         this.setupMenu();
 
@@ -715,6 +717,14 @@ export class Garage {
 
         this.scene.reset();
         this.scene.resize();
+
+        //
+
+        if ( Arena.me ) {
+
+            $('.play-btn').html('Back to BATTLE!');
+
+        }
 
     };
 

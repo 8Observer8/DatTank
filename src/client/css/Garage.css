@@ -394,8 +394,8 @@
     border: 1px solid #0493CC;
     text-align: center;
     opacity: 0.8;
-    padding: 8px;
-    width: 100px;
+    padding: 8px 15px;
+    min-width: 100px;
     height: 18px;
     transition: opacity 200ms ease;
     z-index: 1;
