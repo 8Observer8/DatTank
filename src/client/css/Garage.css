@@ -424,12 +424,25 @@
     padding: 8px 15px;
     min-width: 100px;
     height: 18px;
-    transition: opacity 200ms ease;
+    transition: opacity 200ms ease, background-image 200ms background-image;
     z-index: 1;
+    font-weight: 500;
 }
 
 .garage .play-btn:hover {
     opacity: 0.9;
+}
+
+.garage .play-btn.active {
+    background-image: linear-gradient(#39c600, #1a7600);
+    border: 1px solid #889d7c;
+    filter: drop-shadow(0px 0px 6px rgba(200, 255, 200, 0.7));
+}
+
+.garage .play-btn.inactive {
+    background-image: linear-gradient(#ff0d0d, #881010);
+    border: 1px solid #c28e8e;
+    filter: drop-shadow(0px 0px 6px #ff5522);
 }
 
 .garage .play-btn:active {
