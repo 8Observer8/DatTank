@@ -39,7 +39,7 @@ export class Garage {
         this.coins = window['userData'].coins;
         this.xp = window['userData'].xp;
 
-        $('.garage .garage-title .level-label').html( '(Level ' + this.level + ')' );
+        $('.garage .level-block .title').html( 'Level ' + this.level + '' );
         $('.garage .xp .value').html( this.xp );
         $('.garage .coins .value').html( this.coins );
 
