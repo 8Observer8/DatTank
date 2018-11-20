@@ -162,12 +162,7 @@ class GameCore {
             const login = $('#username').val() || localStorage.getItem('login') || '';
             localStorage.setItem( 'login', login + '' );
 
-            const tankConfig = {
-                base:       localStorage.getItem( 'SelectedTank' ) || '',
-                cannon:     localStorage.getItem( 'SelectedCannon' ) || '',
-                armor:      localStorage.getItem( 'SelectedArmor' ) || '',
-                engine:     localStorage.getItem( 'SelectedEngine' ) || '',
-            };
+            const tankConfig = JSON.parse( localStorage.getItem('SelectedParts') || '{}' );
 
             setTimeout( () => {
 
