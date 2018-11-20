@@ -136,6 +136,7 @@ export class TowerObject {
 
                 this.changeTeam( killer.team, killer.player.id );
                 killer.player.changeScore( 5 );
+                killer.player.updateStats( 10, 0 );
                 this.arena.updateLeaderboard();
 
             }

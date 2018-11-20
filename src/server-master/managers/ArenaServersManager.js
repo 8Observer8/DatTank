@@ -85,10 +85,11 @@ ArenaServersManager.prototype.savePlayerInfo = function ( req, res ) {
     var sid = req.body.sid;
     var coins = req.body.coins;
     var xp = req.body.xp;
+    var level = req.body.level;
 
     //
 
-    DT.playerManager.savePlayerInfo( pid, sid, coins, xp, function () {
+    DT.playerManager.savePlayerInfo( pid, sid, coins, xp, level, function () {
 
         return res.send({ success: true });
 

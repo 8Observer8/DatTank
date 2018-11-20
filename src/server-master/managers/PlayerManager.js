@@ -279,7 +279,7 @@ PlayerManager.prototype.getPlayerInfo = function ( pid, callback ) {
 
 };
 
-PlayerManager.prototype.savePlayerInfo = function ( pid, sid, xp, coins, callback ) {
+PlayerManager.prototype.savePlayerInfo = function ( pid, sid, xp, coins, level, callback ) {
 
     DB.models.players
     .findOne({ pid: pid })
@@ -293,12 +293,14 @@ PlayerManager.prototype.savePlayerInfo = function ( pid, sid, xp, coins, callbac
 
         if ( player.sid !== sid ) {
 
-            return callback( 'Cheater.' );
+            return callback( 'Cheater, wrong sid.' );
 
         }
 
         player.coins = coins;
         player.xp = xp;
+        player.level = level;
+
         player.save();
 
     });

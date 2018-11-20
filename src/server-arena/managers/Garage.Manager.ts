@@ -22,6 +22,8 @@ class GarageManagerCore {
     public armors: any[];
     public engines: any[];
 
+    public levels: { [key: number]: number };
+
     //
 
     public set ( config: any ) : void {
@@ -30,6 +32,8 @@ class GarageManagerCore {
         this.cannons = config.cannons;
         this.armors = config.armors;
         this.engines = config.engines;
+
+        this.levels = config.levels;
 
     };
 
@@ -105,7 +109,7 @@ class GarageManagerCore {
 
         if ( player.socket ) {
 
-            if ( ! availableParts.tanks[ params.base ] || ! availableParts.cannons[ params.cannon ] || ! availableParts.armors[ params.armor ] || ! availableParts.engines[ params.engine ] ) {
+            if ( ! availableParts.tank[ params.base ] || ! availableParts.cannon[ params.cannon ] || ! availableParts.armor[ params.armor ] || ! availableParts.engine[ params.engine ] ) {
 
                 params.base = 'IS2001';
                 const rawTankData = this.bases[ params.base ];

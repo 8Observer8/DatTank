@@ -151,13 +151,13 @@ class MasterCore {
 
     };
 
-    public setPlayerXPCoins ( pid: string, sid: string, coins: number, xp: number ) : void {
+    public setPlayerStats ( pid: string, sid: string, coins: number, xp: number, level: number ) : void {
 
         const options = {
             uri:    'http://' + Environment.master.host + ':' + Environment.master.port + '/api/player/save',
             method: 'POST',
             json: {
-                pid, sid, coins, xp,
+                pid, sid, coins, xp, level,
             },
         };
 

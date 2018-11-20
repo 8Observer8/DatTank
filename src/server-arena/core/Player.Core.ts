@@ -85,14 +85,21 @@ export class PlayerCore {
 
     //
 
-    public updateXPCoins ( deltaXP: number, deltaCoins: number ) : void {
+    public updateStats ( deltaXP: number, deltaCoins: number ) : void {
 
         this.xp += deltaXP;
         this.coins += deltaCoins;
 
+        if ( GarageManager.levels[ this.level ] <= this.xp ) {
+
+            this.xp = 0;
+            this.level ++;
+
+        }
+
         //
 
-        Master.setPlayerXPCoins( this.pid, this.sid, this.xp, this.coins );
+        Master.setPlayerStats( this.pid, this.sid, this.xp, this.coins, this.level );
         this.network.updateXPCoins();
 
     };
@@ -331,6 +338,7 @@ export class PlayerCore {
 
                 this.xp = data.xp;
                 this.coins = data.coins;
+                this.level = data.level;
                 this.pid = data.pid;
                 this.sid = data.sid;
                 this.parts = data.parts;

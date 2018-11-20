@@ -347,8 +347,9 @@
     top: 150px;
     right: 20px;
     z-index: 1;
+    color: rgba( 0, 0, 0, 0.4 );
+    filter: drop-shadow(0px 0px 2px);
 }
-
 
 #viewport .xp-coins .coins {
     float: left;
@@ -357,21 +358,24 @@
 #viewport .xp-coins .xp {
     float: left;
     margin-right: 15px;
-    filter: drop-shadow(0px 0px 2px);
 }
 
 #viewport .xp-coins .value {
     float: left;
     color: #fff;
     font: bold 16px Roboto, arial, tahoma;
-    filter: drop-shadow(0px 0px 10px);
 }
 
 #viewport .xp-coins .xp .label {
     float: left;
+    width: 14px;
+    height: 18px;
+    margin-top: -1px;
+    margin-right: 5px;
     padding-right: 5px;
-    color: rgb(24, 189, 2);
-    font: bold 16px Roboto, arial, tahoma;
+    filter: brightness(1.1);
+    background-image: url(/resources/img/xp.png);
+    background-size: 100% 100%;
 }
 
 #viewport .xp-coins .coins .label {
@@ -380,7 +384,7 @@
     height: 22px;
     margin-top: -2px;
     margin-right: 5px;
-    filter: brightness(1.1) drop-shadow(0px 0px 2px);
+    filter: brightness(1.1);
     background-image: url(/resources/img/coin.png);
     background-size: 100% 100%;
 }

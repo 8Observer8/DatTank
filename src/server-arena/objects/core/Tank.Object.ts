@@ -337,6 +337,7 @@ export class TankObject {
 
             killer.player.kills ++;
             killer.player.checkKillSerie();
+            killer.player.updateStats( 20, 0 );
 
         }
 

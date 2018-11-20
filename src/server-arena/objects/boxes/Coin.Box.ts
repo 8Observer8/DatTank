@@ -14,7 +14,7 @@ export class CoinBoxObject extends BoxObject {
     public pickUp ( tank: TankObject ) : void {
 
         this.dispose( tank.player );
-        tank.player.updateXPCoins( 0, this.amount );
+        tank.player.updateStats( 0, this.amount );
 
     };
 
