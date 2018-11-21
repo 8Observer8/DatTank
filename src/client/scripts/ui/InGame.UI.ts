@@ -133,17 +133,17 @@ export class UIInGameModule {
     public updateLevelProgress () : void {
 
         let level = 0;
-        const scores = Game.GarageConfig.arenaLevels;
+        const levels = Game.GarageConfig.arenaLevels;
 
-        while ( scores[ level ] <= Arena.me.score ) {
+        while ( levels[ level ].score <= Arena.me.score ) {
 
             level ++;
 
         }
 
-        level --;
-
-        const levelProgress = 100 * ( Arena.me.score - scores[ level ] ) / ( scores[ level + 1 ] - scores[ level ] );
+        const currentLevelScore = levels[ level ].score;
+        const nextLevelScore = ( levels[ level - 1 ] ) ? levels[ level - 1 ].score : 0;
+        const levelProgress = 100 * ( 1 - ( currentLevelScore - Arena.me.score ) / ( currentLevelScore - nextLevelScore ) );
         $('.arena-level-indicator-block .title').html( 'Level ' + ( level + 1 ) + ' <sup style="font-size: 12px">' + Math.floor( levelProgress ) + '%</sup>' );
         $('.arena-level-indicator-block .progress-bar .progress-indicator').css( 'width', levelProgress + '%' );
 

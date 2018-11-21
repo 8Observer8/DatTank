@@ -171,43 +171,47 @@ class TankGfx {
         let dPosZ = 0;
         let dRot = 0;
 
-        dPosX += this.tank.directionVelocity.x * delta / 1000;
-        dPosY += this.tank.directionVelocity.y * delta / 1000;
-        dPosZ += this.tank.directionVelocity.z * delta / 1000;
-        dRot += this.tank.angularVelocity.y * delta / 1000;
+        if ( this.tank.health > 0 ) {
 
-        //
+            dPosX += this.tank.directionVelocity.x * delta / 1000;
+            dPosY += this.tank.directionVelocity.y * delta / 1000;
+            dPosZ += this.tank.directionVelocity.z * delta / 1000;
+            dRot += this.tank.angularVelocity.y * delta / 1000;
 
-        const l = this.tank.positionCorrectValue.length();
-        const correctionSpeed = this.tank.isMe ? 1 : 3;
+            //
 
-        if ( l > 0.1 ) {
+            const l = this.tank.positionCorrectValue.length();
+            const correctionSpeed = this.tank.isMe ? 1 : 3;
 
-            let dx = correctionSpeed * this.tank.positionCorrectValue.x / 40;
-            let dy = correctionSpeed * this.tank.positionCorrectValue.y / 40;
-            let dz = correctionSpeed * this.tank.positionCorrectValue.z / 40;
+            if ( l > 0.1 ) {
 
-            dx = Math.abs( dx ) < Math.abs( this.tank.positionCorrectValue.x ) ? dx : this.tank.positionCorrectValue.x;
-            dy = Math.abs( dy ) < Math.abs( this.tank.positionCorrectValue.y ) ? dy : this.tank.positionCorrectValue.y;
-            dz = Math.abs( dz ) < Math.abs( this.tank.positionCorrectValue.z ) ? dz : this.tank.positionCorrectValue.z;
+                let dx = correctionSpeed * this.tank.positionCorrectValue.x / 40;
+                let dy = correctionSpeed * this.tank.positionCorrectValue.y / 40;
+                let dz = correctionSpeed * this.tank.positionCorrectValue.z / 40;
 
-            dPosX += dx;
-            dPosY += dy;
-            dPosZ += dz;
+                dx = Math.abs( dx ) < Math.abs( this.tank.positionCorrectValue.x ) ? dx : this.tank.positionCorrectValue.x;
+                dy = Math.abs( dy ) < Math.abs( this.tank.positionCorrectValue.y ) ? dy : this.tank.positionCorrectValue.y;
+                dz = Math.abs( dz ) < Math.abs( this.tank.positionCorrectValue.z ) ? dz : this.tank.positionCorrectValue.z;
 
-            this.tank.positionCorrectValue.sub( dx, dy, dz );
+                dPosX += dx;
+                dPosY += dy;
+                dPosZ += dz;
 
-        }
+                this.tank.positionCorrectValue.sub( dx, dy, dz );
 
-        //
+            }
 
-        if ( Math.abs( this.tank.rotationCorrectValue ) > 0.002 ) {
+            //
 
-            let dr = correctionSpeed * OMath.sign( this.tank.rotationCorrectValue ) / 500;
-            dr = Math.abs( dr ) < Math.abs( this.tank.rotationCorrectValue ) ? dr : this.tank.rotationCorrectValue;
+            if ( Math.abs( this.tank.rotationCorrectValue ) > 0.002 ) {
 
-            dRot += dr;
-            this.tank.rotationCorrectValue -= dr;
+                let dr = correctionSpeed * OMath.sign( this.tank.rotationCorrectValue ) / 500;
+                dr = Math.abs( dr ) < Math.abs( this.tank.rotationCorrectValue ) ? dr : this.tank.rotationCorrectValue;
+
+                dRot += dr;
+                this.tank.rotationCorrectValue -= dr;
+
+            }
 
         }
 

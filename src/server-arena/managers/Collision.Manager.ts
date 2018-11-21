@@ -183,13 +183,6 @@ export class CollisionManager {
 
             if ( object.parent.type === 'Tank' ) {
 
-                if ( object.parent.health <= 0 ) {
-
-                    object.parent.moveDirection.x = 0;
-                    object.parent.moveDirection.y = 0;
-
-                }
-
                 if ( object.parent.moveDirection.y > 0 ) {
 
                     object.body.angularVelocity.set( 0, 0.9, 0 );

@@ -100,7 +100,13 @@ export class TankLabelGfx {
         this.ctx.fillText( login, 30, 35 + offset );
 
         ( this.sprite.material as THREE.SpriteMaterial ).map!.needsUpdate = true;
-        if ( isMe ) this.sprite.scale.set( 0.7 * 47, 0.7 * 12, 1 );
+
+        if ( isMe ) {
+
+            this.sprite.scale.set( 0.7 * 47, 0.7 * 12, 1 );
+            this.sprite.position.y = 30;
+
+        }
 
     };
 

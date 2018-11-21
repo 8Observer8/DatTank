@@ -35,7 +35,7 @@ export class TankObject {
     public health: number = 100;
     public ammo: number;
     public viewRange: number = 750;
-    public size: OMath.Vec3 = new OMath.Vec3( 30, 25, 70 );
+    public size: OMath.Vec3 = new OMath.Vec3( 30, 25, 60 );
 
     public moveDirection: OMath.Vec2 = new OMath.Vec2();
     public deltaPosition: OMath.Vec3 = new OMath.Vec3();
@@ -63,7 +63,7 @@ export class TankObject {
 
     //
 
-    public updateStats ( statId: number ) : void {
+    public upgrade ( statId: number ) : void {
 
         const paramsList = [ 'speed', 'rpm', 'armor', 'cannon' ];
         const paramName = paramsList[ statId ];
@@ -298,10 +298,10 @@ export class TankObject {
 
     };
 
-    public setMovement ( directionX: number, directionY: number ) : void {
+    public setMovement ( directionX: number, directionY: number, force?: boolean ) : void {
 
-        if ( this.health <= 0 ) return;
-        if ( this.moveDirection.x === directionX && this.moveDirection.y === directionY ) return;
+        if ( this.health <= 0 && ! force ) return;
+        if ( this.moveDirection.x === directionX && this.moveDirection.y === directionY && ! force ) return;
 
         this.moveDirection.set( directionX, directionY );
         this.network.updateMovement();
@@ -312,6 +312,8 @@ export class TankObject {
     public die ( killer: TankObject | TowerObject ) : void {
 
         if ( this.player.status !== PlayerCore.Alive ) return;
+
+        this.stopShooting();
 
         this.player.die( killer );
 
@@ -327,9 +329,6 @@ export class TankObject {
             killer.player.updateStats( 20, 0 );
 
         }
-
-        this.stopShooting();
-        this.setMovement( 0, 0 );
 
         //
 

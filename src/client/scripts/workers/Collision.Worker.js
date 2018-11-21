@@ -121,13 +121,6 @@ function update ( delta, objectsInfo ) {
         if ( ! object ) continue;
         if ( object.objType !== 'Tank' ) continue;
 
-        if ( objectInfo.health <= 0 ) {
-
-            objectInfo.moveDirection.x = 0;
-            objectInfo.moveDirection.y = 0;
-
-        }
-
         var speed = object.body.velocity.distanceTo( new CANNON.Vec3( 0, object.body.velocity.y, 0 ) );
         var maxSpeed = 3 * objectInfo.maxSpeed;
 

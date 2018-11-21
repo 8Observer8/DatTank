@@ -386,11 +386,6 @@ export class Garage {
 
         switch ( event.keyCode ) {
 
-            case 27: // esc key
-
-                this.hide();
-                break;
-
             case 13: // enter key
 
                 Game.play();

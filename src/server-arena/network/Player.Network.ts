@@ -58,7 +58,7 @@ export class PlayerNetwork {
         if ( this.filter( data, socket ) ) return;
 
         const statsId = data[1];
-        // this.player.tank.updateStats( statsId );
+        this.player.tank.upgrade( statsId );
 
     };
 
