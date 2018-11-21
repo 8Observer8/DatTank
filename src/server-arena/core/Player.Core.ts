@@ -100,7 +100,7 @@ export class PlayerCore {
         //
 
         Master.setPlayerStats( this.pid, this.sid, this.xp, this.coins, this.level );
-        this.network.updateXPCoins();
+        this.network.updateStats();
 
     };
 
@@ -244,7 +244,7 @@ export class PlayerCore {
 
                 if ( this.bonusLevels > 0 ) {
 
-                    this.network.updateLevel();
+                    // this.network.updateLevel();
 
                 }
 

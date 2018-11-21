@@ -39,8 +39,8 @@ export class UIInGameModule {
 
         if ( ! Arena.me.tank || Arena.me.tank.health <= 0 ) return;
 
-        const statName = ( typeof event === 'string' ) ? event : event.currentTarget!['parentNode'].className.replace( 'bonus ', '' );
-        Arena.me.updateStats( statName );
+        // const statName = ( typeof event === 'string' ) ? event : event.currentTarget!['parentNode'].className.replace( 'bonus ', '' );
+        // Arena.me.updateStats( statName );
         Arena.me.bonusLevels --;
         SoundManager.playSound('MenuClick');
         this.hideTankStatsUpdate();

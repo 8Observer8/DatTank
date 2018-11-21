@@ -38,16 +38,16 @@ export class PlayerNetwork {
 
         if ( this.filter( data ) ) return;
 
-        // const bulletLevel = data[1];
-        // this.player.newLevel( bulletLevel );
+        const playerLevel = data[1];
+        this.player.newLevel( playerLevel );
 
     };
 
-    private setXPCoins ( data: any ) : void {
+    private setStats ( data: any ) : void {
 
         if ( this.filter( data ) ) return;
 
-        this.player.updateXPCoins( data[2] * 10000 + data[1], data[4] * 10000 + data[3] );
+        this.player.updateStats( data[2] * 10000 + data[1], data[4] * 10000 + data[3] );
 
     };
 
@@ -146,13 +146,13 @@ export class PlayerNetwork {
 
         this.setRespawn = this.setRespawn.bind( this );
         this.setLevel = this.setLevel.bind( this );
-        this.setXPCoins = this.setXPCoins.bind( this );
+        this.setStats = this.setStats.bind( this );
 
         //
 
         Network.addMessageListener( 'PlayerRespawn', this.setRespawn );
         Network.addMessageListener( 'PlayerNewLevel', this.setLevel );
-        Network.addMessageListener( 'PlayerXPCoinsUpdate', this.setXPCoins );
+        Network.addMessageListener( 'PlayerStatsUpdate', this.setStats );
 
     };
 

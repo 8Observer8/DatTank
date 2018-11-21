@@ -64,13 +64,13 @@ export class PlayerNetwork {
 
     // send via network
 
-    public updateXPCoins () : void {
+    public updateStats () : void {
 
-        this.buffers['XPCoinsUpdate'] = this.buffers['XPCoinsUpdate'] || {};
-        const buffer = this.buffers['XPCoinsUpdate'].buffer || new ArrayBuffer( 12 );
-        const bufferView = this.buffers['XPCoinsUpdate'].bufferView || new Int16Array( buffer );
-        this.buffers['XPCoinsUpdate'].buffer = buffer;
-        this.buffers['XPCoinsUpdate'].bufferView = bufferView;
+        this.buffers['UpdateStats'] = this.buffers['UpdateStats'] || {};
+        const buffer = this.buffers['UpdateStats'].buffer || new ArrayBuffer( 14 );
+        const bufferView = this.buffers['UpdateStats'].bufferView || new Int16Array( buffer );
+        this.buffers['UpdateStats'].buffer = buffer;
+        this.buffers['UpdateStats'].bufferView = bufferView;
 
         //
 
@@ -79,8 +79,9 @@ export class PlayerNetwork {
         bufferView[ 3 ] = Math.floor( this.player.xp / 10000 );
         bufferView[ 4 ] = this.player.coins % 10000;
         bufferView[ 5 ] = Math.floor( this.player.coins / 10000 );
+        bufferView[ 6 ] = this.player.level;
 
-        Network.send( 'PlayerXPCoinsUpdate', this.player.socket, buffer, bufferView );
+        Network.send( 'PlayerStatsUpdate', this.player.socket, buffer, bufferView );
 
     };
 
@@ -108,7 +109,7 @@ export class PlayerNetwork {
         //
 
         bufferView[ 1 ] = this.player.id;
-        bufferView[ 2 ] = this.player.bonusLevels;
+        bufferView[ 2 ] = this.player.level;
 
         Network.send( 'PlayerNewLevel', this.player.socket, buffer, bufferView );
 

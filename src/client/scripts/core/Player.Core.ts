@@ -33,7 +33,7 @@ export class PlayerCore {
 
     //
 
-    public updateXPCoins ( xp: number, coins: number ) : void {
+    public updateStats ( xp: number, coins: number ) : void {
 
         Arena.myCoins = coins;
         Arena.myXP = xp;
@@ -47,19 +47,15 @@ export class PlayerCore {
 
     public newLevel ( bonusLevels: number ) : void {
 
-        setTimeout( () => {
-
-            UI.InGame.showTankStatsUpdate( bonusLevels );
-
-        }, 3000 );
-
-        this.bonusLevels = bonusLevels;
-
-    };
-
-    public updateStats ( name: string ) : void {
-
         // todo
+
+        // setTimeout( () => {
+
+        //     UI.InGame.showTankStatsUpdate( bonusLevels );
+
+        // }, 3000 );
+
+        // this.bonusLevels = bonusLevels;
 
     };
 
