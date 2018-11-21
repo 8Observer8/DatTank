@@ -53,15 +53,6 @@ export class PlayerNetwork {
 
     };
 
-    private setTankUpgrade ( data: Int16Array, socket: ws ) : void {
-
-        if ( this.filter( data, socket ) ) return;
-
-        const statsId = data[1];
-        this.player.tank.upgrade( statsId );
-
-    };
-
     // send via network
 
     public updateStats () : void {
@@ -109,7 +100,7 @@ export class PlayerNetwork {
         //
 
         bufferView[ 1 ] = this.player.id;
-        bufferView[ 2 ] = this.player.arenaLevel;
+        bufferView[ 2 ] = this.player.bonusArenaLevels;
 
         Network.send( 'PlayerNewArenaLevel', this.player.socket, buffer, bufferView );
 
@@ -148,7 +139,6 @@ export class PlayerNetwork {
     public dispose () : void {
 
         Network.removeMessageListener( 'PlayerRespawn', this.setRespawn );
-        Network.removeMessageListener( 'PlayerTankUpgrade', this.setTankUpgrade );
 
     };
 
@@ -160,12 +150,10 @@ export class PlayerNetwork {
         //
 
         this.setRespawn = this.setRespawn.bind( this );
-        this.setTankUpgrade = this.setTankUpgrade.bind( this );
 
         //
 
         Network.addMessageListener( 'PlayerRespawn', this.setRespawn );
-        Network.addMessageListener( 'PlayerTankUpgrade', this.setTankUpgrade );
 
     };
 

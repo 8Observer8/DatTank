@@ -59,6 +59,15 @@ export class TankNetwork {
 
     };
 
+    private setUpgrade ( data: Int16Array, socket: ws ) : void {
+
+        if ( this.filter( data, socket ) ) return;
+
+        const statsId = data[1];
+        this.tank.upgrade( statsId );
+
+    };
+
     // send via network
 
     public friendlyFire () : void {
@@ -324,6 +333,7 @@ export class TankNetwork {
         Network.removeMessageListener( 'TankMove', this.setMovement );
         Network.removeMessageListener( 'TankStartShooting', this.setShootStart );
         Network.removeMessageListener( 'TankStopShooting', this.setShootStop );
+        Network.removeMessageListener( 'TankUpgrade', this.setUpgrade );
 
     };
 
@@ -337,12 +347,14 @@ export class TankNetwork {
         this.setMovement = this.setMovement.bind( this );
         this.setShootStart = this.setShootStart.bind( this );
         this.setShootStop = this.setShootStop.bind( this );
+        this.setUpgrade = this.setUpgrade.bind( this );
 
         //
 
         Network.addMessageListener( 'TankMove', this.setMovement );
         Network.addMessageListener( 'TankStartShooting', this.setShootStart );
         Network.addMessageListener( 'TankStopShooting', this.setShootStop );
+        Network.addMessageListener( 'TankUpgrade', this.setUpgrade );
 
     };
 

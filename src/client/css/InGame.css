@@ -686,7 +686,7 @@
     filter: drop-shadow( 0px 0px 3px rgba( 255, 255, 255, 0.3 ) );
 }
 
-.stats-update-block {
+.tank-upgrade-block {
     display: none;
     position: absolute;
     bottom: 15px;
@@ -695,20 +695,21 @@
     height: 190px;
 }
 
-.stats-update-block .title {
+.tank-upgrade-block .title {
     font-weight: 700;
     font-size: 22px;
     color: #71C4FA;
+    filter: drop-shadow( 0px 0px 1px rgba( 0, 0, 0, 0.5 ) );
 }
 
-.stats-update-block .bonus {
+.tank-upgrade-block .bonus {
     position: relative;
     width: 100%;
     height: 30px;
     margin: 3px;
 }
 
-.stats-update-block .bonus-title {
+.tank-upgrade-block .bonus-title {
     position: absolute;
     left: 45px;
     color: #ccc;
@@ -716,29 +717,79 @@
     padding-top: 5px;
 }
 
-.stats-update-block .bonus-title span {
+.tank-upgrade-block .bonus-title span {
     float: right;
     font-size: 12px;
     padding: 7px;
 }
 
-.stats-update-block .increase {
+.tank-upgrade-block .increase {
     position: absolute;
     left: 0px;
     display: block;
     text-align: center;
     width: 30px;
+    height: 25px;
     color: #ccc;
     font-size: 17px;
     font-weight: 700;
     padding: 3px;
-    background-color: #222;
-    border-radius: 20px;
-    border: 1px solid #aaa;
-    opacity: 0.5;
-    transition: opacity 200ms ease;
+    background-size: 70% 70%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-color: rgba( 255, 255, 255, 0.4 );
+    border-radius: 10px;
+    transition: background-color 200ms ease;
 }
 
-.stats-update-block .increase:hover {
+.tank-upgrade-block .increase:hover {
+    background-color: rgba( 255, 255, 255, 0.6 );
+}
+
+.tank-upgrade-block .speed .increase {
+    background-image: url(../resources/img/maxspeed-icon.png);
+    background-size: 60% 70%;
+    background-position-x: 55%;
+}
+
+.tank-upgrade-block .rpm .increase {
+    background-image: url(../resources/img/rpm-icon.png);
+    background-size: 65% 65%;
+}
+
+.tank-upgrade-block .armor .increase {
+    background-image: url(../resources/img/armor-icon.png);
+}
+
+.tank-upgrade-block .cannon .increase {
+    background-image: url(../resources/img/cannon-icon.png);
+    background-size: 70% 85%;
+}
+
+.tank-upgrade-block .power .increase {
+    background-image: url(../resources/img/power-icon.png);
+}
+
+.tank-upgrade-block .increase:hover {
     opacity: 1;
+}
+
+.tank-upgrade-block .bonus .progress {
+    position: absolute;
+    bottom: 0px;
+    left: 45px;
+    width: 115px;
+    height: 3px;
+}
+
+.tank-upgrade-block .bonus .progress .item {
+    float: left;
+    width: 20px;
+    height: 100%;
+    margin-right: 3px;
+    background-color: rgba( 255, 255, 255, 0.2 );
+}
+
+.tank-upgrade-block .bonus .progress .item.active {
+    background-color: rgba( 255, 255, 255, 0.6 );
 }

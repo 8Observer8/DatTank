@@ -8,8 +8,8 @@ import { Arena } from '../core/Arena.Core';
 import { UI } from '../ui/Core.UI';
 import { Game } from '../Game';
 import { TeamCore } from '../core/Team.Core';
-import { SoundManager } from '../managers/Sound.Manager';
 import { TeamManager } from '../managers/Team.Manager';
+import { UITankUpgrade } from './TankUpgrade.UI';
 
 //
 
@@ -17,6 +17,8 @@ export class UIInGameModule {
 
     public opened: boolean = false;
     private hideGlobalLabelTimeout: any;
+
+    public tankUpgradeMenu: UITankUpgrade = new UITankUpgrade();
 
     //
 
@@ -35,124 +37,10 @@ export class UIInGameModule {
 
     };
 
-    public updateTankStat ( event: MouseEvent | string ) : void {
-
-        if ( ! Arena.me.tank || Arena.me.tank.health <= 0 ) return;
-
-        // const statName = ( typeof event === 'string' ) ? event : event.currentTarget!['parentNode'].className.replace( 'bonus ', '' );
-        // Arena.me.updateStats( statName );
-        Arena.me.bonusLevels --;
-        SoundManager.playSound('MenuClick');
-        this.hideTankStatsUpdate();
-
-        //
-
-        if ( Arena.me.bonusLevels > 0 ) {
-
-            this.showTankStatsUpdate( Arena.me.bonusLevels );
-
-        }
-
-    };
-
-    public showLevelIndicator () : void {
-
-        $('.arena-level-indicator-block').show();
-        UI.Chat.hideChatMessageInput();
-
-    };
-
-    public hideLevelIndicator () : void {
-
-        $('.arena-level-indicator-block').hide();
-
-    };
-
-    public showTankStatsUpdate ( bonusLevels: number ) : void {
-
-        if ( Arena.me.tank && Arena.me.tank.health <= 0 ) return;
-
-        $('.stats-update-block .bonus .increase').off();
-        $( document ).unbind( 'keypress' );
-
-        $('.stats-update-block').show();
-        $('.stats-update-block').attr('opened', 'true');
-        $('.chat .message-block-separate').hide();
-        this.hideLevelIndicator();
-        $('.stats-update-block .title').html( 'You have ' + bonusLevels + ' bonus levels.' );
-        $('.stats-update-block .bonus .increase').click( this.updateTankStat.bind( this ) );
-        UI.Chat.hideChatMessageInput();
-
-        $( document ).bind( 'keypress', this.statsUpdateByKey.bind( this ) );
-
-    };
-
-    public hideTankStatsUpdate () : void {
-
-        $('.stats-update-block').hide();
-        $('.chat .message-block-separate').show();
-        $('.stats-update-block').attr('opened', 'false');
-        this.showLevelIndicator();
-        $( document ).unbind( 'keypress' );
-
-    };
-
-    private statsUpdateByKey ( event: KeyboardEvent ) : void {
-
-        switch ( event.keyCode ) {
-
-            case 49:
-
-                this.updateTankStat('speed');
-                break;
-
-            case 50:
-
-                this.updateTankStat('rpm');
-                break;
-
-            case 51:
-
-                this.updateTankStat('armor');
-                break;
-
-            case 52:
-
-                this.updateTankStat('gun');
-                break;
-
-            case 53:
-
-                this.updateTankStat('ammoCapacity');
-                break;
-
-        }
-
-    };
-
-    public updateLevelProgress () : void {
-
-        let level = 0;
-        const levels = Game.GarageConfig.arenaLevels;
-
-        while ( levels[ level ].score <= Arena.me.score ) {
-
-            level ++;
-
-        }
-
-        const currentLevelScore = levels[ level ].score;
-        const nextLevelScore = ( levels[ level - 1 ] ) ? levels[ level - 1 ].score : 0;
-        const levelProgress = 100 * ( 1 - ( currentLevelScore - Arena.me.score ) / ( currentLevelScore - nextLevelScore ) );
-        $('.arena-level-indicator-block .title').html( 'Level ' + ( level + 1 ) + ' <sup style="font-size: 12px">' + Math.floor( levelProgress ) + '%</sup>' );
-        $('.arena-level-indicator-block .progress-bar .progress-indicator').css( 'width', levelProgress + '%' );
-
-    };
-
     public showContinueBox ( username: string, color: string ) : void {
 
-        this.hideTankStatsUpdate();
-        this.hideLevelIndicator();
+        this.tankUpgradeMenu.hideUpgradeMenu();
+        this.tankUpgradeMenu.hideProgressIndicator();
 
         $('#viewport #renderport').addClass('dead');
 
@@ -179,7 +67,7 @@ export class UIInGameModule {
 
         $('#viewport #renderport').removeClass('dead');
         $('#continue-box-wrapper').css( 'opacity', 0 );
-        this.showLevelIndicator();
+        this.tankUpgradeMenu.showProgressIndicator();
 
         setTimeout( () => {
 
@@ -318,7 +206,7 @@ export class UIInGameModule {
 
         }
 
-        this.updateLevelProgress();
+        this.tankUpgradeMenu.updateProgressIndicator();
 
     };
 

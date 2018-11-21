@@ -38,8 +38,8 @@ export class PlayerNetwork {
 
         if ( this.filter( data ) ) return;
 
-        const playerLevel = data[1];
-        this.player.newLevel( playerLevel );
+        // const playerLevel = data[1];
+        // this.player.newLevel( playerLevel );
 
     };
 
@@ -47,7 +47,8 @@ export class PlayerNetwork {
 
         if ( this.filter( data ) ) return;
 
-        // todo
+        const playerArenaLevel = data[1];
+        this.player.newArenaLevel( playerArenaLevel );
 
     };
 

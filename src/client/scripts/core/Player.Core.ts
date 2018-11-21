@@ -23,11 +23,11 @@ export class PlayerCore {
 
     public coins: number;
     public xp: number;
-    public kills: number;
-    public score: number;
-    public bonusLevels: number;
-
     public level: number = 0;
+    public kills: number = 0;
+    public score: number = 0;
+    public arenaLevel: number = 0;
+    public bonusArenaLevels: number = 0;
 
     private network: PlayerNetwork = new PlayerNetwork();
 
@@ -45,17 +45,15 @@ export class PlayerCore {
 
     };
 
-    public newLevel ( bonusLevels: number ) : void {
+    public newArenaLevel ( bonusArenaLevels: number ) : void {
 
-        // todo
+        setTimeout( () => {
 
-        // setTimeout( () => {
+            UI.InGame.tankUpgradeMenu.showUpgradeMenu( bonusArenaLevels );
 
-        //     UI.InGame.showTankStatsUpdate( bonusLevels );
+        }, 3000 );
 
-        // }, 3000 );
-
-        // this.bonusLevels = bonusLevels;
+        this.bonusArenaLevels = bonusArenaLevels;
 
     };
 

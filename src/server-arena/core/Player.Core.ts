@@ -66,15 +66,13 @@ export class PlayerCore {
         let arenaLevel = 0;
         this.score += delta;
 
-        while ( GarageManager.arenaLevels[ arenaLevel ] <= this.score ) {
+        while ( GarageManager.arenaLevels[ arenaLevel ].score <= this.score ) {
 
             arenaLevel ++;
 
         }
 
-        arenaLevel --;
-
-        if ( this.level + this.bonusArenaLevels < arenaLevel || delta < 0 ) {
+        if ( this.arenaLevel + this.bonusArenaLevels < arenaLevel || delta < 0 ) {
 
             if ( delta > 0 ) {
 
@@ -84,7 +82,7 @@ export class PlayerCore {
 
             if ( this.socket ) {
 
-                this.bonusArenaLevels = arenaLevel - this.level;
+                this.bonusArenaLevels = arenaLevel - this.arenaLevel;
 
                 if ( this.bonusArenaLevels > 0 ) {
 

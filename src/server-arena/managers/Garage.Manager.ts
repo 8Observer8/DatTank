@@ -23,7 +23,7 @@ class GarageManagerCore {
     public engines: any[];
 
     public levels: { [ key: number ]: number };
-    public arenaLevels: { [ key: number ]: number };
+    public arenaLevels: { [ key: number ]: { score: number, armor: number, cannon: number, maxSpeed: number, enginePower: number } };
 
     //
 

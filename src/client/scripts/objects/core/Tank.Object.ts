@@ -121,13 +121,19 @@ export class TankObject {
 
             Logger.newEvent( 'Kill', 'game' );
             GfxCore.addCameraShake( 1000, 1.5 );
-            UI.InGame.hideTankStatsUpdate();
+            UI.InGame.tankUpgradeMenu.hideUpgradeMenu();
 
         }
 
     };
 
     //
+
+    public upgrade ( upgradeType: string ) : void {
+
+        // todo
+
+    };
 
     public setMovement ( directionX: number, directionZ: number ) : void {
 
