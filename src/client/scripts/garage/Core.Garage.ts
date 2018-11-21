@@ -40,6 +40,7 @@ export class Garage {
         this.xp = window['userData'].xp;
 
         $('.garage .level-block .title').html( 'Level ' + this.level + '' );
+        $('.garage .level-block .progress .progress-value').css({ width: ( 100 * this.xp / Game.GarageConfig.levels[ this.level ] ) + '%' })
         $('.garage .xp .value').html( this.xp );
         $('.garage .coins .value').html( this.coins );
 

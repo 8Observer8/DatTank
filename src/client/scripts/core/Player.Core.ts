@@ -93,7 +93,6 @@ export class PlayerCore {
 
             this.prepareTank( params.tank );
             this.tank.init();
-            this.level = 0;
 
             UI.InGame.updateHealth( this.tank.health );
             UI.InGame.updateAmmo( this.tank.ammo );
@@ -159,6 +158,7 @@ export class PlayerCore {
 
         this.id = params.id;
         this.username = params.login;
+        this.level = params.level;
 
         //
 

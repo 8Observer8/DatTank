@@ -78,48 +78,49 @@ export class ArenaNetwork {
             player = {
                 id:                     data[ offset + 0 ],
                 login:                  '',
-                team:                   data[ offset + 1 ],
+                level:                  data[ offset + 1 ],
+                team:                   data[ offset + 2 ],
                 tank:           {
-                    id:                 data[ offset + 2 ],
+                    id:                 data[ offset + 3 ],
                     moveDirection:  {
-                        x:              data[ offset + 3 ],
-                        y:              data[ offset + 4 ],
+                        x:              data[ offset + 4 ],
+                        y:              data[ offset + 5 ],
                     },
                     position:   {
-                        x:              data[ offset + 5 ],
-                        y:              data[ offset + 6 ],
-                        z:              data[ offset + 7 ],
+                        x:              data[ offset + 6 ],
+                        y:              data[ offset + 7 ],
+                        z:              data[ offset + 8 ],
                     },
-                    rotation:           data[ offset + 8 ] / 1000,
-                    health:             data[ offset + 9 ],
+                    rotation:           data[ offset + 9 ] / 1000,
+                    health:             data[ offset + 10 ],
                     ammo:               0,
                     base:   {
-                        nid:            data[ offset + 10 ],
-                        speedCoef:      data[ offset + 11 ],
+                        nid:            data[ offset + 11 ],
+                        speedCoef:      data[ offset + 12 ],
                         ammoCapacity:   0,
                         armorCoef:      0,
                     },
                     cannon: {
-                        nid:            data[ offset + 12 ],
+                        nid:            data[ offset + 13 ],
                         range:          0,
                         rpm:            0,
                         overheat:       0,
                     },
                     armor: {
-                        nid:            data[ offset + 13 ],
-                        armor:          data[ offset + 14 ],
+                        nid:            data[ offset + 14 ],
+                        armor:          data[ offset + 15 ],
                     },
                     engine: {
-                        nid:            data[ offset + 15 ],
-                        maxSpeed:       data[ offset + 16 ],
-                        power:          data[ offset + 17 ],
+                        nid:            data[ offset + 16 ],
+                        maxSpeed:       data[ offset + 17 ],
+                        power:          data[ offset + 18 ],
                     },
                 },
             };
 
             //
 
-            offset += 18;
+            offset += 19;
 
             for ( let j = 0; j < 13; j ++ ) {
 

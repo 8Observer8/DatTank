@@ -38,8 +38,8 @@ export class PlayerNetwork {
 
         if ( this.filter( data ) ) return;
 
-        const bulletLevel = data[1];
-        this.player.newLevel( bulletLevel );
+        // const bulletLevel = data[1];
+        // this.player.newLevel( bulletLevel );
 
     };
 

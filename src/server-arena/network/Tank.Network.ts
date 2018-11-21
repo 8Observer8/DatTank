@@ -243,7 +243,7 @@ export class TankNetwork {
 
         for ( let i = 0, il = tanks.length; i < il; i ++ ) {
 
-            size += 17; // general
+            size += 19; // general
             size += 13; // login
             size += ( tanks[ i ].id === this.tank.id ) ? 7 : 0; // personal
 
@@ -259,26 +259,27 @@ export class TankNetwork {
             const tank = tanks[ item ];
 
             bufferView[ offset +  0 ] = tank.player.id;
-            bufferView[ offset +  1 ] = tank.team.id;
-            bufferView[ offset +  2 ] = tank.id;
-            bufferView[ offset +  3 ] = tank.moveDirection.x;
-            bufferView[ offset +  4 ] = tank.moveDirection.y;
-            bufferView[ offset +  5 ] = tank.position.x;
-            bufferView[ offset +  6 ] = tank.position.y;
-            bufferView[ offset +  7 ] = tank.position.z;
-            bufferView[ offset +  8 ] = ( tank.rotation % ( 2 * Math.PI ) ) * 1000;
-            bufferView[ offset +  9 ] = tank.health;
+            bufferView[ offset +  1 ] = tank.player.level;
+            bufferView[ offset +  2 ] = tank.team.id;
+            bufferView[ offset +  3 ] = tank.id;
+            bufferView[ offset +  4 ] = tank.moveDirection.x;
+            bufferView[ offset +  5 ] = tank.moveDirection.y;
+            bufferView[ offset +  6 ] = tank.position.x;
+            bufferView[ offset +  7 ] = tank.position.y;
+            bufferView[ offset +  8 ] = tank.position.z;
+            bufferView[ offset +  9 ] = ( tank.rotation % ( 2 * Math.PI ) ) * 1000;
+            bufferView[ offset + 10 ] = tank.health;
 
-            bufferView[ offset + 10 ] = tank.base.nid;
-            bufferView[ offset + 11 ] = tank.base.speedCoef;
-            bufferView[ offset + 12 ] = tank.cannon.nid;
-            bufferView[ offset + 13 ] = tank.armor.nid;
-            bufferView[ offset + 14 ] = tank.armor.armor;
-            bufferView[ offset + 15 ] = tank.engine.nid;
-            bufferView[ offset + 16 ] = tank.engine.maxSpeed;
-            bufferView[ offset + 17 ] = tank.engine.power;
+            bufferView[ offset + 11 ] = tank.base.nid;
+            bufferView[ offset + 12 ] = tank.base.speedCoef;
+            bufferView[ offset + 13 ] = tank.cannon.nid;
+            bufferView[ offset + 14 ] = tank.armor.nid;
+            bufferView[ offset + 15 ] = tank.armor.armor;
+            bufferView[ offset + 16 ] = tank.engine.nid;
+            bufferView[ offset + 17 ] = tank.engine.maxSpeed;
+            bufferView[ offset + 18 ] = tank.engine.power;
 
-            offset += 18;
+            offset += 19;
 
             for ( let j = 0, jl = tank.player.login.length; j < jl; j ++ ) {
 
