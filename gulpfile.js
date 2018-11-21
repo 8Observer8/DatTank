@@ -88,10 +88,14 @@ gulp.task( 'css', function () {
 
 // HTML
 
-gulp.task( 'html', function () {
+gulp.task( 'html', function ( done ) {
 
-    return gulp.src('./src/client/**/*.html')
+    gulp.src('./src/client/**/*.html')
         .pipe( gulp.dest('./bin/client/') );
+
+    restartMasterServer();
+
+    return done();
 
 });
 

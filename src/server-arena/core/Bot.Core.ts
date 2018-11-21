@@ -65,7 +65,7 @@ export class BotCore {
     public levelUp () : void {
 
         const statId = Math.floor( Math.random() * 4 );
-        this.player.tank.updateStats( statId );
+        // this.player.tank.updateStats( statId );
 
     };
 

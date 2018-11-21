@@ -21,32 +21,6 @@ export class PlayerCore {
     public static Dead: number = 0;
     public static Alive: number = 1;
 
-    private static levelScore = {
-        0:      0,
-        1:      10,
-        2:      30,
-        3:      60,
-        4:      100,
-        5:      150,
-        6:      250,
-        7:      340,
-        8:      500,
-        9:      650,
-        10:     1000,
-        11:     1400,
-        12:     1900,
-        13:     2500,
-        14:     3000,
-        15:     3800,
-        16:     4500,
-        17:     5500,
-        18:     6700,
-        19:     7200,
-        20:     8700,
-        21:     9800,
-        22:     12000,
-    };
-
     private static numIds = 1;
 
     //
@@ -69,7 +43,9 @@ export class PlayerCore {
     public death: number = 0;
     public score: number = 0;
     public level: number = 0;
-    public bonusLevels = 0;
+    public arenaLevel: number = 0;
+    public bonusArenaLevels = 0;
+
     public spawnTime: number;
     public tankConfig: object;
 
@@ -84,6 +60,47 @@ export class PlayerCore {
     public readonly type: string = 'Player';
 
     //
+
+    public changeScore ( delta: number ) : void {
+
+        let arenaLevel = 0;
+        this.score += delta;
+
+        while ( GarageManager.arenaLevels[ arenaLevel ] <= this.score ) {
+
+            arenaLevel ++;
+
+        }
+
+        arenaLevel --;
+
+        if ( this.level + this.bonusArenaLevels < arenaLevel || delta < 0 ) {
+
+            if ( delta > 0 ) {
+
+                Master.updateTopList( this.login, this.score, this.kills );
+
+            }
+
+            if ( this.socket ) {
+
+                this.bonusArenaLevels = arenaLevel - this.level;
+
+                if ( this.bonusArenaLevels > 0 ) {
+
+                    this.network.updateArenaLevel();
+
+                }
+
+            } else if ( this.bot ) {
+
+                this.bot.levelUp();
+
+            }
+
+        }
+
+    };
 
     public updateStats ( deltaXP: number, deltaCoins: number ) : void {
 
@@ -191,8 +208,8 @@ export class PlayerCore {
             this.sid = data.sid;
             this.parts = data.parts;
 
-            this.bonusLevels = 0;
-            this.level = 0;
+            this.bonusArenaLevels = 0;
+            this.arenaLevel = 0;
 
             this.prepareTank( tankConfig );
             this.tank.setRespawnPosition();
@@ -214,47 +231,6 @@ export class PlayerCore {
             this.spawnTime = Date.now();
 
         });
-
-    };
-
-    public changeScore ( delta: number ) : void {
-
-        let level = 0;
-        this.score += delta;
-
-        while ( PlayerCore.levelScore[ level ] <= this.score ) {
-
-            level ++;
-
-        }
-
-        level --;
-
-        if ( this.level + this.bonusLevels < level || delta < 0 ) {
-
-            if ( delta > 0 ) {
-
-                Master.updateTopList( this.login, this.score, this.kills );
-
-            }
-
-            if ( this.socket ) {
-
-                this.bonusLevels = level - this.level;
-
-                if ( this.bonusLevels > 0 ) {
-
-                    // this.network.updateLevel();
-
-                }
-
-            } else if ( this.bot ) {
-
-                this.bot.levelUp();
-
-            }
-
-        }
 
     };
 

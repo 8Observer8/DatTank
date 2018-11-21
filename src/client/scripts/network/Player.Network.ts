@@ -43,46 +43,15 @@ export class PlayerNetwork {
 
     };
 
-    private setStats ( data: any ) : void {
+    private setArenaLevel ( data: any ) : void {
 
         if ( this.filter( data ) ) return;
 
-        this.player.updateStats( data[2] * 10000 + data[1], data[4] * 10000 + data[3] );
+        // todo
 
     };
 
     //
-
-    public statsUpdate ( statsId: number ) : void {
-
-        let buffer;
-        let bufferView;
-
-        if ( ! this.buffers['StatsUpdate'] ) {
-
-            buffer = new ArrayBuffer( 6 );
-            bufferView = new Int16Array( buffer );
-
-            this.buffers['StatsUpdate'] = {
-                buffer,
-                view:       bufferView,
-            };
-
-        } else {
-
-            buffer = this.buffers['StatsUpdate'].buffer;
-            bufferView = this.buffers['StatsUpdate'].view;
-
-        }
-
-        //
-
-        bufferView[1] = this.player.id;
-        bufferView[2] = statsId;
-
-        Network.send( 'PlayerTankUpdateStats', buffer, bufferView );
-
-    };
 
     public respawn ( params: any ) : void {
 
@@ -135,6 +104,7 @@ export class PlayerNetwork {
 
         Network.removeMessageListener( 'PlayerRespawn', this.setRespawn.bind( this ) );
         Network.removeMessageListener( 'PlayerNewLevel', this.setLevel.bind( this ) );
+        Network.removeMessageListener( 'PlayerNewArenaLevel', this.setLevel.bind( this ) );
 
     };
 
@@ -146,13 +116,13 @@ export class PlayerNetwork {
 
         this.setRespawn = this.setRespawn.bind( this );
         this.setLevel = this.setLevel.bind( this );
-        this.setStats = this.setStats.bind( this );
+        this.setArenaLevel = this.setArenaLevel.bind( this );
 
         //
 
         Network.addMessageListener( 'PlayerRespawn', this.setRespawn );
         Network.addMessageListener( 'PlayerNewLevel', this.setLevel );
-        Network.addMessageListener( 'PlayerStatsUpdate', this.setStats );
+        Network.addMessageListener( 'PlayerNewArenaLevel', this.setArenaLevel );
 
     };
 

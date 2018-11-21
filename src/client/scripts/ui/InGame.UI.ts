@@ -57,14 +57,14 @@ export class UIInGameModule {
 
     public showLevelIndicator () : void {
 
-        $('.level-indicator-block').show();
+        $('.arena-level-indicator-block').show();
         UI.Chat.hideChatMessageInput();
 
     };
 
     public hideLevelIndicator () : void {
 
-        $('.level-indicator-block').hide();
+        $('.arena-level-indicator-block').hide();
 
     };
 
@@ -132,10 +132,10 @@ export class UIInGameModule {
 
     public updateLevelProgress () : void {
 
-        const levels = [ 0, 10, 30, 60, 100, 150, 250, 340, 500, 650, 1000, 1400, 1900, 2500, 3000, 3800, 4500, 5500, 6700, 7200, 8700, 9800, 12000 ];
         let level = 0;
+        const scores = Game.GarageConfig.arenaLevels;
 
-        while ( levels[ level ] <= Arena.me.score ) {
+        while ( scores[ level ] <= Arena.me.score ) {
 
             level ++;
 
@@ -143,9 +143,9 @@ export class UIInGameModule {
 
         level --;
 
-        const levelProgress = 100 * ( Arena.me.score - levels[ level ] ) / ( levels[ level + 1 ] - levels[ level ] );
-        $('.level-indicator-block .title').html( 'Level ' + ( level + 1 ) + ' <sup style="font-size: 12px">' + Math.floor( levelProgress ) + '%</sup>' );
-        $('.level-indicator-block .progress-bar .progress-indicator').css( 'width', levelProgress + '%' );
+        const levelProgress = 100 * ( Arena.me.score - scores[ level ] ) / ( scores[ level + 1 ] - scores[ level ] );
+        $('.arena-level-indicator-block .title').html( 'Level ' + ( level + 1 ) + ' <sup style="font-size: 12px">' + Math.floor( levelProgress ) + '%</sup>' );
+        $('.arena-level-indicator-block .progress-bar .progress-indicator').css( 'width', levelProgress + '%' );
 
     };
 

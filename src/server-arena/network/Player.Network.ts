@@ -53,12 +53,12 @@ export class PlayerNetwork {
 
     };
 
-    private setTankStatsUpdate ( data: Int16Array, socket: ws ) : void {
+    private setTankUpgrade ( data: Int16Array, socket: ws ) : void {
 
         if ( this.filter( data, socket ) ) return;
 
         const statsId = data[1];
-        this.player.tank.updateStats( statsId );
+        // this.player.tank.updateStats( statsId );
 
     };
 
@@ -98,6 +98,23 @@ export class PlayerNetwork {
 
     };
 
+    public updateArenaLevel () : void {
+
+        this.buffers['NewArenaLevel'] = this.buffers['NewArenaLevel'] || {};
+        const buffer = this.buffers['NewArenaLevel'].buffer || new ArrayBuffer( 6 );
+        const bufferView = this.buffers['NewArenaLevel'].bufferView || new Int16Array( buffer );
+        this.buffers['NewArenaLevel'].buffer = buffer;
+        this.buffers['NewArenaLevel'].bufferView = bufferView;
+
+        //
+
+        bufferView[ 1 ] = this.player.id;
+        bufferView[ 2 ] = this.player.arenaLevel;
+
+        Network.send( 'PlayerNewArenaLevel', this.player.socket, buffer, bufferView );
+
+    };
+
     public updateLevel () : void {
 
         this.buffers['NewLevel'] = this.buffers['NewLevel'] || {};
@@ -131,7 +148,7 @@ export class PlayerNetwork {
     public dispose () : void {
 
         Network.removeMessageListener( 'PlayerRespawn', this.setRespawn );
-        Network.removeMessageListener( 'PlayerTankUpdateStats', this.setTankStatsUpdate );
+        Network.removeMessageListener( 'PlayerTankUpgrade', this.setTankUpgrade );
 
     };
 
@@ -143,12 +160,12 @@ export class PlayerNetwork {
         //
 
         this.setRespawn = this.setRespawn.bind( this );
-        this.setTankStatsUpdate = this.setTankStatsUpdate.bind( this );
+        this.setTankUpgrade = this.setTankUpgrade.bind( this );
 
         //
 
         Network.addMessageListener( 'PlayerRespawn', this.setRespawn );
-        Network.addMessageListener( 'PlayerTankUpdateStats', this.setTankStatsUpdate );
+        Network.addMessageListener( 'PlayerTankUpgrade', this.setTankUpgrade );
 
     };
 

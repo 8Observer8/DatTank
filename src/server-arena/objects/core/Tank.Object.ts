@@ -21,14 +21,6 @@ import { EngineTankPart } from '../tanks/Engine.TankPart';
 export class TankObject {
 
     private static numIds = 1;
-    // private static statsList = [ 'speed', 'rpm', 'armor', 'gun', 'ammoCapacity' ];
-    // private static levelStatsChange = {
-    //     speed:          [  5,  3,  2,  2,  2,  3,  1,  3,  3,  2,  5,  3,  3,  2,  1,  1,  1,  1,  1,  1,  1,  1,  1 ],
-    //     rpm:            [ 30, 20, 20, 15, 10, 15, 20, 20, 30, 40, 30, 20, 10, 10, 20, 30, 20, 10, 20, 20, 20, 10, 15 ],
-    //     armor:         [ 40, 30, 20, 20, 30, 40, 50, 20, 30, 50, 30, 20, 10, 10, 20, 20, 30, 20, 10, 15, 20, 10, 10 ],
-    //     gun:            [ 20, 15, 15, 20, 15, 10,  5,  5, 10, 15, 20, 30, 35, 40, 20, 10, 15, 15, 20, 10, 10, 10, 30 ],
-    //     ammoCapacity:   [ 30, 20, 20, 40, 30, 20,  5,  5, 10, 20, 15, 20, 15, 30, 20, 10, 15, 15, 10, 10, 10, 20, 30 ]
-    // };
 
     //
 
@@ -54,7 +46,6 @@ export class TankObject {
     private sinceHitTime: number;
     private sinceRegenerationLimit: number = 2000;
     private sinceRegenerationTime: number;
-    // private lastSync: number = 0;
 
     public base: BaseTankPart;
     public cannon: CannonTankPart;
@@ -74,50 +65,46 @@ export class TankObject {
 
     public updateStats ( statId: number ) : void {
 
-        // let statName = TankObject.statsList[ statId ];
-        // let levelsStats = TankObject.levelStatsChange;
-        // let level = this.player.level;
-        if ( this.player.bonusLevels <= 0 ) return;
+        const paramsList = [ 'speed', 'rpm', 'armor', 'cannon' ];
+        const paramName = paramsList[ statId ];
+        // const level = this.player.arenaLevel;
+
+        if ( this.player.bonusArenaLevels <= 0 ) return;
 
         //
 
-        // switch ( statName ) {
+        switch ( paramName ) {
 
-        //     case 'speed':
+            case 'speed':
 
         //         this.speed += levelsStats['speed'][ level ];
-        //         break;
+                break;
 
-        //     case 'rpm':
+            case 'rpm':
 
         //         this.rpm += levelsStats['rpm'][ level ];
-        //         break;
+                break;
 
-        //     case 'armor':
+            case 'armor':
 
         //         this.armor += levelsStats['armor'][ level ];
-        //         break;
+                break;
 
-        //     case 'gun':
+            case 'cannon':
 
         //         this.bullet += levelsStats['gun'][ level ];
-        //         break;
+                break;
 
-        //     case 'ammoCapacity':
+            default:
 
-        //         this.ammoCapacity += levelsStats['ammoCapacity'][ level ];
-        //         break;
+                return;
 
-        //     default:
+        }
 
-        //         return;
+        //
 
-        // }
-
-        // todo!
-
-        this.player.bonusLevels --;
-        this.player.level ++;
+        this.player.bonusArenaLevels --;
+        this.player.arenaLevel ++;
 
     };
 
