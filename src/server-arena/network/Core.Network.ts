@@ -249,6 +249,9 @@ class NetworkCore {
         this.registerEvent( 'TankChangeHealth', EventDir.OUT, EventType.BIN, 118 );
         this.registerEvent( 'TankSetAmmo', EventDir.OUT, EventType.BIN, 119 );
 
+        this.registerEvent( 'TankUpgrade', EventDir.IN, EventType.BIN, 120 );
+        this.registerEvent( 'TankUpgrade', EventDir.OUT, EventType.BIN, 121 );
+
         //
 
         this.registerEvent( 'TowerRotateTop', EventDir.OUT, EventType.BIN, 200 );

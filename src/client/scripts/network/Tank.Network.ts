@@ -26,6 +26,39 @@ export class TankNetwork {
 
     //
 
+    public upgrade ( upgradeId: number ) : void {
+
+        let buffer;
+        let bufferView;
+
+        if ( ! this.buffers['TankUpgrade'] ) {
+
+            buffer = new ArrayBuffer( 6 );
+            bufferView = new Int16Array( buffer );
+
+            this.buffers['TankUpgrade'] = {
+                buffer,
+                view:       bufferView,
+            };
+
+        } else {
+
+            buffer = this.buffers['StartShooting'].buffer;
+            bufferView = this.buffers['TankUpgrade'].view;
+
+        }
+
+        //
+
+        bufferView[ 1 ] = this.tank.id;
+        bufferView[ 2 ] = upgradeId;
+
+        //
+
+        Network.send( 'TankUpgrade', buffer, bufferView );
+
+    };
+
     public startShooting () : void {
 
         let buffer;
@@ -155,6 +188,18 @@ export class TankNetwork {
 
     //
 
+    private setUpgrade ( data: any ) : void {
+
+        if ( this.filter( data ) ) return;
+
+        const maxSpeed = data[1];
+        const power = data[2] * 100;
+        const armor = data[3];
+
+        this.tank.setUpgrade( maxSpeed, power, armor );
+
+    };
+
     private syncState ( data: any ) : void {
 
         if ( this.filter( data ) ) return;
@@ -219,6 +264,7 @@ export class TankNetwork {
         Network.removeMessageListener( 'TankMakeShot', this.setShoot );
         Network.removeMessageListener( 'TankSetHealth', this.setHealth );
         Network.removeMessageListener( 'TankSetAmmo', this.setAmmo );
+        Network.removeMessageListener( 'TankUpgrade', this.setUpgrade );
 
     };
 
@@ -234,6 +280,7 @@ export class TankNetwork {
         this.setHealth = this.setHealth.bind( this );
         this.setAmmo = this.setAmmo.bind( this );
         this.syncState = this.syncState.bind( this );
+        this.setUpgrade = this.setUpgrade.bind( this );
 
         //
 
@@ -243,6 +290,7 @@ export class TankNetwork {
         Network.addMessageListener( 'TankSetHealth', this.setHealth );
         Network.addMessageListener( 'TankSetAmmo', this.setAmmo );
         Network.addMessageListener( 'TankSyncState', this.syncState );
+        Network.addMessageListener( 'TankUpgrade', this.setUpgrade );
 
     };
 

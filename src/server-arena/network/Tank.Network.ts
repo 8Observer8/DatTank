@@ -70,6 +70,25 @@ export class TankNetwork {
 
     // send via network
 
+    public upgrade () : void {
+
+        this.buffers['TankUpgrade'] = this.buffers['TankUpgrade'] || {};
+        const buffer = this.buffers['TankUpgrade'].buffer || new ArrayBuffer( 10 );
+        const bufferView = this.buffers['TankUpgrade'].bufferView || new Uint16Array( buffer );
+        this.buffers['TankUpgrade'].buffer = buffer;
+        this.buffers['TankUpgrade'].bufferView = bufferView;
+
+        //
+
+        bufferView[1] = this.tank.id;
+        bufferView[2] = this.tank.engine.maxSpeed;
+        bufferView[3] = this.tank.engine.power;
+        bufferView[4] = this.tank.armor.armor;
+
+        this.arena.network.sendEventToPlayersInRange( this.tank.position, 'TankUpgrade', buffer, bufferView );
+
+    };
+
     public friendlyFire () : void {
 
         this.buffers['FriendlyFire'] = this.buffers['FriendlyFire'] || {};

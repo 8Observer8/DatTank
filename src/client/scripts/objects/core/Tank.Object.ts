@@ -127,11 +127,28 @@ export class TankObject {
 
     };
 
-    //
-
     public upgrade ( upgradeType: string ) : void {
 
-        // todo
+        const upgrades = [ 'speed', 'rpm', 'armor', 'cannon', 'power' ];
+        const upgradeId = upgrades.indexOf( upgradeType );
+
+        if ( upgradeId !== -1 ) {
+
+            this.network.upgrade( upgradeId );
+
+        }
+
+    };
+
+    //
+
+    public setUpgrade ( maxSpeed: number, power: number, armor: number ) : void {
+
+        this.engine.maxSpeed = maxSpeed;
+        this.engine.power = power;
+        this.armor.armor = armor;
+
+        this.gfx.label.update( this.health, this.armor.armor, this.player.team.color, this.cannon.overheat, this.player.username, this.isMe );
 
     };
 

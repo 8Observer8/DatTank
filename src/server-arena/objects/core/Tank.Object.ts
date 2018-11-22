@@ -9,7 +9,8 @@ import { TeamCore } from '../../core/Team.Core';
 import { ArenaCore } from '../../core/Arena.Core';
 import { TowerObject } from './Tower.Object';
 import { BoxObject } from './Box.Object';
-import { TankNetwork } from './../../network/Tank.Network';
+import { TankNetwork } from '../../network/Tank.Network';
+import { GarageManager } from '../../managers/Garage.Manager';
 
 import { BaseTankPart } from '../tanks/Base.TankPart';
 import { CannonTankPart } from '../tanks/Cannon.TankPart';
@@ -59,40 +60,56 @@ export class TankObject {
     public player: PlayerCore;
     public arena: ArenaCore;
 
+    public upgrades = {
+        speed:      0,
+        rpm:        0,
+        armor:      0,
+        cannon:     0,
+        power:      0,
+    };
+
     public network: TankNetwork;
 
     //
 
-    public upgrade ( statId: number ) : void {
+    public upgrade ( upgradeId: number ) : void {
 
-        const paramsList = [ 'speed', 'rpm', 'armor', 'cannon' ];
-        const paramName = paramsList[ statId ];
-        // const level = this.player.arenaLevel;
+        const upgradesList = [ 'speed', 'rpm', 'armor', 'cannon', 'power' ];
+        const upgradeName = upgradesList[ upgradeId ];
 
         if ( this.player.bonusArenaLevels <= 0 ) return;
+        if ( this.upgrades[ upgradeName ] > 5 ) return;
+
+        this.upgrades[ upgradeName ] ++;
+        const upgradeLevel = this.upgrades[ upgradeName ];
 
         //
 
-        switch ( paramName ) {
+        switch ( upgradeName ) {
 
             case 'speed':
 
-        //         this.speed += levelsStats['speed'][ level ];
+                this.engine.maxSpeed += GarageManager.arenaLevels[ upgradeLevel ].maxSpeed;
                 break;
 
             case 'rpm':
 
-        //         this.rpm += levelsStats['rpm'][ level ];
+                this.cannon.rpm += GarageManager.arenaLevels[ upgradeLevel ].rpm;
                 break;
 
             case 'armor':
 
-        //         this.armor += levelsStats['armor'][ level ];
+                this.armor.armor += GarageManager.arenaLevels[ upgradeLevel ].armor;
                 break;
 
             case 'cannon':
 
-        //         this.bullet += levelsStats['gun'][ level ];
+                this.cannon.damage += GarageManager.arenaLevels[ upgradeLevel ].cannon;
+                break;
+
+            case 'power':
+
+                this.engine.power += GarageManager.arenaLevels[ upgradeLevel ].power / 100;
                 break;
 
             default:
@@ -105,6 +122,8 @@ export class TankObject {
 
         this.player.bonusArenaLevels --;
         this.player.arenaLevel ++;
+
+        this.network.upgrade();
 
     };
 

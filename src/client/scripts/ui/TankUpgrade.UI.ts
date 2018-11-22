@@ -39,7 +39,7 @@ export class UITankUpgrade {
         const currentLevelScore = levels[ level ].score;
         const nextLevelScore = ( levels[ level - 1 ] ) ? levels[ level - 1 ].score : 0;
         const levelProgress = 100 * ( 1 - ( currentLevelScore - Arena.me.score ) / ( currentLevelScore - nextLevelScore ) );
-        $('.arena-level-indicator-block .title').html( 'Level ' + ( level + 1 ) + ' <sup style="font-size: 12px">' + Math.floor( levelProgress ) + '%</sup>' );
+        $('.arena-level-indicator-block .title').html( 'Arena Level ' + ( level + 1 ) );
         $('.arena-level-indicator-block .progress-bar .progress-indicator').css( 'width', levelProgress + '%' );
 
     };
