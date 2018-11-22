@@ -43,7 +43,7 @@ export class TankNetwork {
 
         } else {
 
-            buffer = this.buffers['StartShooting'].buffer;
+            buffer = this.buffers['TankUpgrade'].buffer;
             bufferView = this.buffers['TankUpgrade'].view;
 
         }

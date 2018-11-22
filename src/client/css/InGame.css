@@ -743,10 +743,18 @@
 }
 
 .tank-upgrade-block .increase:hover {
-    background-color: rgba( 255, 255, 255, 0.6 );
+    background-color: rgba( 200, 200, 255, 0.6 );
 }
 
-.tank-upgrade-block .speed .increase {
+.tank-upgrade-block .increase.disabled {
+    background-color: rgba( 255, 255, 255, 0.8 );
+}
+
+.tank-upgrade-block .increase.disabled:hover {
+    background-color: rgba( 255, 255, 255, 0.8 );
+}
+
+.tank-upgrade-block .maxSpeed .increase {
     background-image: url(../resources/img/maxspeed-icon.png);
     background-size: 60% 70%;
     background-position-x: 55%;

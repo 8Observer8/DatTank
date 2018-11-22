@@ -109,7 +109,7 @@ export class TankObject {
 
             case 'power':
 
-                this.engine.power += GarageManager.arenaLevels[ upgradeLevel ].power / 100;
+                this.engine.power += GarageManager.arenaLevels[ upgradeLevel ].power;
                 break;
 
             default:

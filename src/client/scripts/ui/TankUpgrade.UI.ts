@@ -46,7 +46,10 @@ export class UITankUpgrade {
 
     public showUpgradeMenu ( bonusLevels: number ) : void {
 
-        if ( Arena.me.tank && Arena.me.tank.health <= 0 ) return;
+        if ( ! Arena.me.tank || ( Arena.me.tank && Arena.me.tank.health <= 0 ) ) return;
+        this.updateUpgradeMenu();
+
+        //
 
         $('.tank-upgrade-block .bonus .increase').off();
         $( document ).unbind( 'keypress' );
@@ -60,6 +63,34 @@ export class UITankUpgrade {
         UI.Chat.hideChatMessageInput();
 
         $( document ).bind( 'keypress', this.keyHandler.bind( this ) );
+
+    };
+
+    public updateUpgradeMenu () : void {
+
+        if ( ! Arena.me.tank || ( Arena.me.tank && Arena.me.tank.health <= 0 ) ) return;
+
+        //
+
+        $('.tank-upgrade-block .bonus.armor .progress .item').removeClass('active');
+
+        for ( let i = 0; i < 5; i ++ ) {
+
+            if ( Arena.me.tank.upgrades.maxSpeed > i ) $( $('.tank-upgrade-block .bonus.maxSpeed .progress .item')[ i ] ).addClass('active');
+            if ( Arena.me.tank.upgrades.rpm > i ) $( $('.tank-upgrade-block .bonus.rpm .progress .item')[ i ] ).addClass('active');
+            if ( Arena.me.tank.upgrades.armor > i ) $( $('.tank-upgrade-block .bonus.armor .progress .item')[ i ] ).addClass('active');
+            if ( Arena.me.tank.upgrades.cannon > i ) $( $('.tank-upgrade-block .bonus.cannon .progress .item')[ i ] ).addClass('active');
+            if ( Arena.me.tank.upgrades.power > i ) $( $('.tank-upgrade-block .bonus.power .progress .item')[ i ] ).addClass('active');
+
+        }
+
+        $('.tank-upgrade-block .bonus .increase').removeClass('disabled');
+
+        if ( Arena.me.tank.upgrades.maxSpeed === 5 ) $('.tank-upgrade-block .bonus.maxSpeed .increase').addClass('disabled');
+        if ( Arena.me.tank.upgrades.rpm === 5 ) $('.tank-upgrade-block .bonus.rpm .increase').addClass('disabled');
+        if ( Arena.me.tank.upgrades.armor === 5 ) $('.tank-upgrade-block .bonus.armor .increase').addClass('disabled');
+        if ( Arena.me.tank.upgrades.cannon === 5 ) $('.tank-upgrade-block .bonus.cannon .increase').addClass('disabled');
+        if ( Arena.me.tank.upgrades.power === 5 ) $('.tank-upgrade-block .bonus.power .increase').addClass('disabled');
 
     };
 
@@ -111,6 +142,9 @@ export class UITankUpgrade {
         if ( ! Arena.me.tank || Arena.me.tank.health <= 0 ) return;
 
         const statName = ( typeof event === 'string' ) ? event : event.currentTarget!['parentNode'].className.replace( 'bonus ', '' );
+        if ( Arena.me.tank.upgrades[ statName ] === 5 ) return;
+
+        this.updateUpgradeMenu();
         Arena.me.tank.upgrade( statName );
         Arena.me.bonusArenaLevels --;
         SoundManager.playSound('MenuClick');

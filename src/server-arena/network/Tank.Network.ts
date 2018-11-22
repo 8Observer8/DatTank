@@ -82,7 +82,7 @@ export class TankNetwork {
 
         bufferView[1] = this.tank.id;
         bufferView[2] = this.tank.engine.maxSpeed;
-        bufferView[3] = this.tank.engine.power;
+        bufferView[3] = this.tank.engine.power / 100;
         bufferView[4] = this.tank.armor.armor;
 
         this.arena.network.sendEventToPlayersInRange( this.tank.position, 'TankUpgrade', buffer, bufferView );

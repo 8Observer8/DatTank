@@ -63,6 +63,14 @@ export class TankObject {
     public positionCorrectValue: OMath.Vec3 = new OMath.Vec3();
     public rotationCorrectValue: number = 0;
 
+    public upgrades = {
+        maxSpeed:   0,
+        rpm:        0,
+        armor:      0,
+        cannon:     0,
+        power:      0,
+    };
+
     //
 
     public startShooting () : void {
@@ -129,11 +137,12 @@ export class TankObject {
 
     public upgrade ( upgradeType: string ) : void {
 
-        const upgrades = [ 'speed', 'rpm', 'armor', 'cannon', 'power' ];
+        const upgrades = [ 'maxSpeed', 'rpm', 'armor', 'cannon', 'power' ];
         const upgradeId = upgrades.indexOf( upgradeType );
 
         if ( upgradeId !== -1 ) {
 
+            this.upgrades[ upgradeType ] ++;
             this.network.upgrade( upgradeId );
 
         }
