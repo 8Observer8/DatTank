@@ -141,7 +141,15 @@ export class Garage {
         let armorId = currentArmorId;
         let engineId = currentEngineId;
 
-        if ( selectedMenu === 'tanks' ) tankId = itemId || currentTankId;
+        if ( selectedMenu === 'tanks' ) {
+
+            tankId = itemId || currentTankId;
+            cannonId = ( this.preSelectedParts[ tankId ] && this.preSelectedParts[ tankId ].cannon ) ? this.preSelectedParts[ tankId ].cannon : Game.GarageConfig.tanks[ tankId ].default.cannon;
+            armorId = ( this.preSelectedParts[ tankId ] && this.preSelectedParts[ tankId ].armor ) ? this.preSelectedParts[ tankId ].armor : Game.GarageConfig.tanks[ tankId ].default.armor;
+            engineId = ( this.preSelectedParts[ tankId ] && this.preSelectedParts[ tankId ].engine ) ? this.preSelectedParts[ tankId ].engine : Game.GarageConfig.tanks[ tankId ].default.engine;
+
+        }
+
         if ( selectedMenu === 'cannons' ) cannonId = itemId || currentCannonId;
         if ( selectedMenu === 'armors' ) armorId = itemId || currentArmorId;
         if ( selectedMenu === 'engines' ) engineId = itemId || currentEngineId;
