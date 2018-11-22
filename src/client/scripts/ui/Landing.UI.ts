@@ -11,6 +11,19 @@ import { Logger } from '../utils/Logger';
 
 export class UILandingModule {
 
+    public showNotSupportInfo () : void {
+
+        $('.mobile-not-supported').show();
+        $('body *:not(.not-disabled-screen)').addClass('disabled-screen');
+
+        setTimeout( () => {
+
+            $('.mobile-not-supported .title').css({ opacity: 1, transform: 'translate( 0px, 40vh )' });
+
+        }, 200 );
+
+    };
+
     public initPlayBtn () : void {
 
         $('#start-btn').html('START');

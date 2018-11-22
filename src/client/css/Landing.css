@@ -1,4 +1,25 @@
 
+.mobile-not-supported {
+    display: none;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
+.mobile-not-supported .title {
+    position: absolute;
+    transform: translate( 0px, 50vh );
+    width: 100%;
+    text-align: center;
+    opacity: 0;
+    color: #ade2ff;
+    font: bold 24px 'Roboto', arial, tahoma;
+    transition: opacity 6s ease-out, transform 6s ease-out;
+}
+
 /**/
 
 #help {

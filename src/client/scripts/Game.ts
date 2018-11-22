@@ -3,6 +3,8 @@
  * Game game core & init
 */
 
+import * as MobileDetect from 'mobile-detect';
+
 import { Network } from './network/Core.Network';
 import { Garage } from './garage/Core.Garage';
 import { ResourceManager } from './managers/Resource.Manager';
@@ -22,8 +24,8 @@ import { DecorationManager } from './managers/Decoration.Manager';
 class GameCore {
 
     public version: string = 'v0.7.0';
-    public isMobile: boolean;
     public ready: boolean = false;
+    public isMobile: boolean = false;
 
     //
 
@@ -47,8 +49,15 @@ class GameCore {
 
         }
 
-        // let mobileDetect = new MobileDetect( window.navigator.userAgent );
-        this.isMobile = false; // mobileDetect.mobile() !== null || mobileDetect.phone() !== null || mobileDetect.tablet() !== null;
+        const mobileDetect = new MobileDetect( window.navigator.userAgent );
+        this.isMobile = mobileDetect.mobile() !== null || mobileDetect.phone() !== null || mobileDetect.tablet() !== null;
+
+        if ( this.isMobile ) {
+
+            UI.Landing.showNotSupportInfo();
+            return;
+
+        }
 
         //
 

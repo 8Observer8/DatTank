@@ -27,6 +27,11 @@ html, body {
     user-select: none;
 }
 
+.disabled-screen {
+    transition: filter 4000ms ease-out;
+    filter: grayscale( 1 ) blur(5px) sepia(0.2) brightness(0.8);
+}
+
 .clearfix {
     clear: both;
 }
