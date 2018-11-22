@@ -31,6 +31,79 @@ export class Garage {
 
     //
 
+    private checkIfTankComplete () : boolean {
+
+        const parts = this.selectedParts;
+
+        if ( this.params['tank'][ parts.base ] && this.params['cannon'][ parts.cannon ] && this.params['engine'][ parts.engine ] && this.params['armor'][ parts.armor ] ) {
+
+            $('.play-btn').html('BATTLE!');
+            $('.play-btn').removeClass('inactive');
+            $('.play-btn').addClass('active');
+            return true;
+
+        } else {
+
+            $('.play-btn').html('Tank Incomplete');
+            $('.play-btn').removeClass('active');
+            $('.play-btn').addClass('inactive');
+            return false;
+
+        }
+
+    };
+
+    public updateIfNeedToBuy () : void {
+
+        let needToBuy = false;
+        let item: any;
+
+        const selectedMenu = $('.garage .menu-items .active').attr('tab');
+
+        if ( selectedMenu === 'tanks' && ! this.params['tank'][ this.selectedParts.base ] ) {
+
+            needToBuy = true;
+            item = Game.GarageConfig['tanks'][ this.selectedParts.base ];
+
+        }
+
+        if ( selectedMenu === 'cannons' && ! this.params['cannon'][ this.selectedParts.cannon ] ) {
+
+            needToBuy = true;
+            item = Game.GarageConfig['cannons'][ this.selectedParts.cannon ];
+
+        }
+
+        if ( selectedMenu === 'engines' && ! this.params['engine'][ this.selectedParts.engine ] ) {
+
+            needToBuy = true;
+            item = Game.GarageConfig['engines'][ this.selectedParts.engine ];
+
+        }
+
+        if ( selectedMenu === 'armors' && ! this.params['armor'][ this.selectedParts.armor ] ) {
+
+            needToBuy = true;
+            item = Game.GarageConfig['armors'][ this.selectedParts.armor ];
+
+        }
+
+        if ( needToBuy ) {
+
+            $('.garage .right-block .buy-btn').css({ right: '30px', opacity: 1 });
+            $('.garage .right-block .buy-btn').show();
+            $('.garage .right-block .buy-btn').off();
+            $('.garage .right-block .buy-btn').click( () => { this.buyPart( item ); } );
+
+        } else {
+
+            $('.garage .right-block .buy-btn').hide();
+            $('.garage .right-block .buy-btn').off();
+
+        }
+
+    };
+
     private updateUserParams ( coins?: number, xp?: number ) : void {
 
         window['userData'].coins = coins || window['userData'].coins;
@@ -46,7 +119,10 @@ export class Garage {
 
     };
 
-    private updateRightMenu ( category: string = 'tanks', itemId: string = '' ) : void {
+    private updateRightMenu ( category: string = '', itemId: string = '' ) : void {
+
+        const selectedMenu = $('.garage .menu-items .active').attr('tab');
+        category = category || $('.garage .menu-items .active').attr('tab') || '';
 
         // getting old / selected tank parts
 
@@ -55,23 +131,25 @@ export class Garage {
         const currentArmorId = this.selectedParts.armor;
         const currentEngineId = this.selectedParts.engine;
 
-        itemId = ( category === 'tanks' && ! itemId ) ? currentTankId : itemId;
-        const tankId = ( category === 'tanks' ) ? itemId : currentTankId;
+        const currentTank = Game.GarageConfig.tanks[ currentTankId ];
+        const currentCannon = Game.GarageConfig.cannons[ currentCannonId ];
+        const currentArmor = Game.GarageConfig.armors[ currentArmorId ];
+        const currentEngine = Game.GarageConfig.engines[ currentEngineId ];
+
+        let tankId = currentTankId;
+        let cannonId = currentCannonId;
+        let armorId = currentArmorId;
+        let engineId = currentEngineId;
+
+        if ( selectedMenu === 'tanks' ) tankId = itemId || currentTankId;
+        if ( selectedMenu === 'cannons' ) cannonId = itemId || currentCannonId;
+        if ( selectedMenu === 'armors' ) armorId = itemId || currentArmorId;
+        if ( selectedMenu === 'engines' ) engineId = itemId || currentEngineId;
 
         const tank = Game.GarageConfig.tanks[ tankId ];
-        const currentTank = Game.GarageConfig.tanks[ currentTankId ];
-
-        const cannonId = ( category === 'cannons' ) ? itemId : ( this.preSelectedParts[ tankId ] && this.preSelectedParts[ tankId ].cannon ? this.preSelectedParts[ tankId ].cannon : Game.GarageConfig.tanks[ tankId ].default.cannon );
         const cannon = Game.GarageConfig.cannons[ cannonId ];
-        const currentCannon = Game.GarageConfig.cannons[ currentCannonId ];
-
-        const armorId = ( category === 'armors' ) ? itemId : ( this.preSelectedParts[ tankId ] && this.preSelectedParts[ tankId ].armor ? this.preSelectedParts[ tankId ].armor : Game.GarageConfig.tanks[ tankId ].default.armor );
         const armor = Game.GarageConfig.armors[ armorId ];
-        const currentArmor = Game.GarageConfig.armors[ currentArmorId ];
-
-        const engineId = ( category === 'engines' ) ? itemId : ( this.preSelectedParts[ tankId ] && this.preSelectedParts[ tankId ].engine ? this.preSelectedParts[ tankId ].engine : Game.GarageConfig.tanks[ tankId ].default.engine );
         const engine = Game.GarageConfig.engines[ engineId ];
-        const currentEngine = Game.GarageConfig.engines[ currentEngineId ];
 
         // updating cannon 'damage' UI
 
@@ -164,36 +242,29 @@ export class Garage {
                 title = 'Tank "' + tank.title + '"';
                 break;
 
-            default:
+            case 'cannons':
 
-                title = 'Tank "' + tank.title + ' + "' + cannon.title + '"';
+                title = 'Cannon "' + cannon.title + '"';
+                break;
+
+            case 'armors':
+
+                title = 'Armor "' + armor.title + '"';
+                break;
+
+            case 'engines':
+
+                title = 'Engine "' + engine.title + '"';
                 break;
 
         }
 
         $('.garage .right-block .item-title').html( title );
 
-    };
+        //
 
-    private checkIfTankComplete () : boolean {
-
-        const parts = JSON.parse( localStorage.getItem('SelectedParts') || '{}' );
-
-        if ( this.params['tank'][ parts.base ] && this.params['cannon'][ parts.cannon ] && this.params['engine'][ parts.engine ] && this.params['armor'][ parts.armor ] ) {
-
-            $('.play-btn').html('BATTLE!');
-            $('.play-btn').removeClass('inactive');
-            $('.play-btn').addClass('active');
-            return true;
-
-        } else {
-
-            $('.play-btn').html('Tank Incomplete');
-            $('.play-btn').removeClass('active');
-            $('.play-btn').addClass('inactive');
-            return false;
-
-        }
+        this.updateIfNeedToBuy();
+        this.checkIfTankComplete();
 
     };
 
@@ -322,8 +393,6 @@ export class Garage {
         $('.garage .bottom-block .tab.cannons .item').click( this.selectCannon.bind( this ) );
         $('.garage .bottom-block .tab.engines .item').click( this.selectEngines.bind( this ) );
         $('.garage .bottom-block .tab.armors .item').click( this.selectArmor.bind( this ) );
-        $('.garage .bottom-block .tab.textures .item').click( this.selectTexture.bind( this ) );
-        $('.garage .bottom-block .tab.decorations .item').click( this.selectDecoration.bind( this ) );
 
         $('.garage .bottom-block .item').click( ( event ) => {
 
@@ -420,12 +489,13 @@ export class Garage {
 
         SoundManager.playSound('ElementSelect');
 
-        setTimeout( ( tabId: string ) => {
+        setTimeout( ( oldTabId: string, newTabId: string ) => {
 
-            $( '.garage .bottom-block .' + tabId ).hide();
+            this.updateRightMenu( newTabId );
+            $( '.garage .bottom-block .' + oldTabId ).hide();
             this.menuTabSwitchBlocked = false;
 
-        }, 300, oldTab );
+        }, 300, oldTab, newTab );
 
         //
 
@@ -500,64 +570,9 @@ export class Garage {
 
     };
 
-    public selectTexture ( event?: MouseEvent ) : void {
-
-        if ( this.menuTabSwitchBlocked ) return;
-
-        if ( ! event || ! event.currentTarget ) {
-
-            return;
-
-        }
-
-        $('.garage .bottom-block .tab.textures .item').removeClass('active');
-        $( event.currentTarget ).addClass('active');
-        SoundManager.playSound('ElementSelect');
-
-        // todo
-
-    };
-
-    public selectDecoration ( event?: MouseEvent ) : void {
-
-        if ( this.menuTabSwitchBlocked ) return;
-
-        if ( ! event || ! event.currentTarget ) {
-
-            return;
-
-        }
-
-        $('.garage .bottom-block .tab.decorations .item').removeClass('active');
-        $( event.currentTarget ).addClass('active');
-        SoundManager.playSound('ElementSelect');
-
-        // todo
-
-    };
-
-    public onLoadedResources () : void {
-
-        this.selectTank();
-
-    };
-
     private selectPart ( element: HTMLElement, item: any ) : void {
 
         SoundManager.playSound('ElementSelect');
-
-        if ( $( element ).hasClass('notOwn') ) {
-
-            $('.garage .right-block .buy-btn').css({ right: '20px', opacity: 1 });
-            $('.garage .right-block .buy-btn').show();
-            $('.garage .right-block .buy-btn').click( () => { this.buyPart( item ); } );
-
-        } else {
-
-            $('.garage .right-block .buy-btn').hide();
-            $('.garage .right-block .buy-btn').off();
-
-        }
 
         //
 
@@ -584,10 +599,6 @@ export class Garage {
         $('.garage .bottom-block .tab .item').removeClass('active');
         $( element ).addClass('active');
 
-        //
-
-        this.checkIfTankComplete();
-
     };
 
     private buyPart ( item: any ) : void {
@@ -600,8 +611,15 @@ export class Garage {
             SoundManager.playSound('MenuBuy');
             $('.garage .right-block .buy-btn').animate( { right: '0px', opacity: 0 }, 300 );
             this.updateUserParams( response.coins );
+            this.checkIfTankComplete();
 
         });
+
+    };
+
+    public onLoadedResources () : void {
+
+        this.selectTank();
 
     };
 
@@ -623,7 +641,6 @@ export class Garage {
 
         this.scene.selectTank( this.selectedParts.base );
         this.scene.selectCannon( this.selectedParts.cannon );
-        this.checkIfTankComplete();
 
         //
 

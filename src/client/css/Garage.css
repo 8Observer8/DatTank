@@ -178,7 +178,7 @@
     top: 100px;
     right: 0px;
     width: 400px;
-    height: 300px;
+    height: 330px;
     z-index: 1;
 }
 
@@ -186,7 +186,7 @@
     display: none;
     position: absolute;
     right: 30px;
-    top: 19px;
+    bottom: 0px;
     transform: translateX( -50% );
     color: white;
     background-image: linear-gradient(#39c600, #1a7600);
@@ -206,7 +206,7 @@
 }
 
 .garage .right-block .buy-btn:active {
-    top: 20px;
+    bottom: -2px;
 }
 
 .garage .right-block .item-title {
