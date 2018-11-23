@@ -101,6 +101,15 @@ export class UILandingModule {
 
     };
 
+    private start () : void {
+
+        $('#signin-box-wrapper #signin-box').css({ transform: 'scale( 0.9 )' });
+        $('#signin-box-wrapper #signin-box').animate({ opacity: 0 }, 300 );
+
+        Game.garage.show();
+
+    };
+
     public init () : void {
 
         // init sign in block
@@ -127,7 +136,7 @@ export class UILandingModule {
 
         //
 
-        $('#start-btn').click( Game.garage.show.bind( Game.garage ) );
+        $('#start-btn').click( this.start );
         $('#fullscreen').click( UI.toggleFullscreenMode.bind( UI ) );
 
         $('#graphics-quality').click( UI.changeQuality.bind( UI ) );

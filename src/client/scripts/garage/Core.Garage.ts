@@ -640,8 +640,8 @@ export class Garage {
         this.isOpened = true;
         this.updateUserParams();
 
-        $('.share-btns').hide();
         $('.garage').show();
+        $('.garage').animate({ opacity: 1 }, 1500 );
         SoundManager.playSound('MenuClick');
 
         this.scene.reset();

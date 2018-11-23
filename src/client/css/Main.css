@@ -12,6 +12,21 @@ html, body {
     background-color: #272727;
 }
 
+body::after {
+    content: "";
+    background: url(/resources/img/background.png);
+    background-size: 100% 100%;
+    opacity: 0.5;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    filter: blur(4px) contrast(1.2);
+    box-shadow: inset 0px 0px 400px rgba( 250, 250, 200, 0.4);
+    z-index: 0;
+}
+
 * {
     cursor: url('/resources/img/cursor.png'), auto !important;
 }

@@ -22,29 +22,6 @@
 
 /**/
 
-#help {
-    position: absolute;
-    top: 16px;
-    right: 188px;
-    width: 50px;
-    height: 50px;
-    background-image: url(/resources/img/help.png);
-    background-size: 100%;
-    opacity: 0.7;
-    transition: opacity 200ms ease;
-}
-
-#help:hover {
-    opacity: 0.85;
-}
-
-#help:active {
-    top: 17px;
-    opacity: 1;
-}
-
-/**/
-
 #fullscreen {
     position: absolute;
     top: 18px;
@@ -55,6 +32,7 @@
     background-size: 100% 200%;
     opacity: 0.7;
     transition: opacity 200ms ease;
+    z-index: 1;
 }
 
 #fullscreen:hover {
@@ -70,45 +48,19 @@
     background-position: 0% 100%;
 }
 
-/**/
-
-#graphics-quality {
-    position: absolute;
-    top: 20px;
-    right: 80px;
-    width: 50px;
-    height: 40px;
-    background-image: url(/resources/img/tank-quality.png);
-    background-size: 100% 200%;
-    opacity: 0.7;
-    transition: opacity 200ms ease;
-}
-
-#graphics-quality:hover {
-    opacity: 0.85;
-}
-
-#graphics-quality:active {
-    top: 21px;
-    opacity: 1;
-}
-
-#graphics-quality[hq="true"] {
-    background-position: 0% 100%;
-}
-
 /* sound-on-off */
 
 #sound {
     position: absolute;
     top: 10px;
-    right: 129px;
+    right: 80px;
     width: 60px;
     height: 60px;
     background-image: url('../resources/img/sound-on-off.png');
     background-size: 100% 200%;
     opacity: 0.7;
     transition: opacity 200ms ease;
+    z-index: 1;
 }
 
 #sound:hover {
@@ -128,20 +80,30 @@
 
 #signin-box-wrapper {
     position: absolute;
-    top: calc( 25% - 100px );
+    top: calc( 25% - 50px );
     left: 0px;
     width: 100%;
     z-index: 1;
 }
 
 #signin-box-wrapper #signin-box {
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
+    position: absolute;
+    right: 13%;
     width: 340px;
-    border: 1px solid #CCC;
-    box-shadow: #888 0 0 40px;
+    border: 1px solid #666;
+    box-shadow: rgba( 0, 0, 0, 0.4 ) 1px 1px 10px;
     background-color: #fff;
+    padding-bottom: 15px;
+    transform: scale( 1 );
+    transition: transform 300ms ease-out;
+}
+
+@media only screen and (max-width: 1200px) {
+    #signin-box-wrapper #signin-box {
+        position: absolute;
+        left: 50%;
+        transform: translate( -50%, 0px );
+    }
 }
 
 #signin-box-wrapper #signin-box .note {
@@ -189,7 +151,8 @@
 }
 
 #signin-box-wrapper #signin-box #start-btn {
-    background-color: #00b6ff;
+    background-image: linear-gradient(#39c600, #1a7600);
+    border: 1px solid #889d7c;
     padding: 10px 0px;
     margin-top: 10px;
     margin-left: 16px;
@@ -198,7 +161,6 @@
     text-align: center;
     font: normal 15px 'Roboto';
     color: #fff;
-    border: 1px solid #0493CC;
     opacity: 0.8;
     transition: opacity 200ms ease;
 }
@@ -207,9 +169,14 @@
     opacity: 1;
 }
 
+#signin-box-wrapper #signin-box #start-btn:active {
+    transform: translate( 0px, 1px );
+}
+
 #signin-box-wrapper #signin-box #signup-btn {
     display: block;
-    background-color: #c48d18;
+    background-image: linear-gradient(#30a6de, #1b7ba9);
+    border: 1px solid #76909d;
     padding: 10px 0px;
     margin-top: 10px;
     margin-left: 16px;
@@ -218,7 +185,6 @@
     text-align: center;
     font: normal 15px 'Roboto';
     color: #fff;
-    border: 1px solid #a37614;
     opacity: 0.8;
     transition: opacity 200ms ease;
     text-decoration: none;
@@ -237,18 +203,14 @@
     opacity: 1;
 }
 
-#signin-box-wrapper #signin-box #instructions {
-    position: relative;
-    width: 100%;
-    margin-top: 11px;
-    font: normal 13px arial, tahoma;
-    text-align: center;
-    color: #888;
+#signin-box-wrapper #signin-box #signup-btn:active {
+    transform: translate( 0px, 1px );
 }
 
 /**/
 
 .new-features-box {
+    display: none;
     position: absolute;
     top: calc( 25% - 100px );
     left: 0px;
@@ -296,7 +258,7 @@
     }
 }
 
-@media only screen and (max-height: 670px) {
+@media only screen and (max-height: 600px) {
     #signin-box-wrapper {
         top: calc( 35% - 100px );
     }
@@ -373,6 +335,7 @@
     }
 }
 .top-players-score table {
+    display: none;
     border: 1px solid white;
     width: 100%;
     text-align: center;
@@ -441,7 +404,7 @@
     color: #fff;
     cursor: default;
     font-size: 11px;
-    opacity: 0.2;
+    opacity: 0.4;
 }
 
 #footer a {

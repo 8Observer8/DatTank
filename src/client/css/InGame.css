@@ -224,7 +224,6 @@
     background-size: 100% 200%;
     opacity: 0.5;
     transition: opacity 200ms ease;
-    z-index: 1;
 }
 
 #viewport-fullscreen:hover {
@@ -323,7 +322,7 @@
     left: 0px;
     width: 100% !important;
     height: 100% !important;
-    z-index: 0;
+    z-index: 1;
     cursor: url('../resources/img/cursor.png'), auto;
 }
 
