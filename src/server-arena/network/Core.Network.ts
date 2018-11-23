@@ -234,6 +234,7 @@ class NetworkCore {
 
         this.registerEvent( 'PlayerNewLevel', EventDir.OUT, EventType.BIN, 90 );
         this.registerEvent( 'PlayerNewArenaLevel', EventDir.OUT, EventType.BIN, 91 );
+        this.registerEvent( 'PlayerStatsUpdate', EventDir.OUT, EventType.BIN, 92 );
 
         //
 
@@ -252,13 +253,14 @@ class NetworkCore {
         this.registerEvent( 'TankUpgrade', EventDir.IN, EventType.BIN, 120 );
         this.registerEvent( 'TankUpgrade', EventDir.OUT, EventType.BIN, 121 );
 
+        this.registerEvent( 'TankSyncState', EventDir.OUT, EventType.BIN, 122 );
+
         //
 
         this.registerEvent( 'TowerRotateTop', EventDir.OUT, EventType.BIN, 200 );
         this.registerEvent( 'TowerMakeShot', EventDir.OUT, EventType.BIN, 201 );
         this.registerEvent( 'TowerChangeTeam', EventDir.OUT, EventType.BIN, 202 );
         this.registerEvent( 'TowerSetHealth', EventDir.OUT, EventType.BIN, 203 );
-        this.registerEvent( 'TankSyncState', EventDir.OUT, EventType.BIN, 204 );
 
         //
 

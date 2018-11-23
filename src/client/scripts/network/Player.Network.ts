@@ -52,6 +52,16 @@ export class PlayerNetwork {
 
     };
 
+    private setStats ( data: any ) : void {
+
+        if ( this.filter( data ) ) return;
+
+        const xp = data[2] * 10000 + data[1];
+        const coins = data[4] * 10000 + data[3];
+        this.player.updateStats( xp, coins );
+
+    };
+
     //
 
     public respawn ( params: any ) : void {
@@ -103,9 +113,10 @@ export class PlayerNetwork {
 
     public dispose () : void {
 
-        Network.removeMessageListener( 'PlayerRespawn', this.setRespawn.bind( this ) );
-        Network.removeMessageListener( 'PlayerNewLevel', this.setLevel.bind( this ) );
-        Network.removeMessageListener( 'PlayerNewArenaLevel', this.setLevel.bind( this ) );
+        Network.removeMessageListener( 'PlayerRespawn', this.setRespawn );
+        Network.removeMessageListener( 'PlayerNewLevel', this.setLevel );
+        Network.removeMessageListener( 'PlayerNewArenaLevel', this.setLevel );
+        Network.removeMessageListener( 'PlayerStatsUpdate', this.setStats );
 
     };
 
@@ -118,12 +129,14 @@ export class PlayerNetwork {
         this.setRespawn = this.setRespawn.bind( this );
         this.setLevel = this.setLevel.bind( this );
         this.setArenaLevel = this.setArenaLevel.bind( this );
+        this.setStats = this.setStats.bind( this );
 
         //
 
         Network.addMessageListener( 'PlayerRespawn', this.setRespawn );
         Network.addMessageListener( 'PlayerNewLevel', this.setLevel );
         Network.addMessageListener( 'PlayerNewArenaLevel', this.setArenaLevel );
+        Network.addMessageListener( 'PlayerStatsUpdate', this.setStats );
 
     };
 
