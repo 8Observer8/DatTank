@@ -63,6 +63,11 @@ export class UITankUpgrade {
         UI.Chat.hideChatMessageInput();
 
         $( document ).bind( 'keypress', this.keyHandler.bind( this ) );
+        $('.tank-upgrade-block .bonus .increase').mouseover( () => {
+
+            SoundManager.playSound('ElementSelect');
+
+        });
 
     };
 
