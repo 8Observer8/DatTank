@@ -188,6 +188,66 @@
     color: rgba( 255, 255, 255, 0.9 );
 }
 
+#signin-box-wrapper #main-block .tab-content.screens img {
+    position: absolute;
+    top: 10%;
+    left: 0px;
+    width: 100%;
+    height: 80%;
+    opacity: 0;
+    transition: opacity 500ms ease;
+}
+
+#signin-box-wrapper #main-block .tab-content.screens img.active {
+    opacity: 1;
+}
+
+#signin-box-wrapper #main-block .tab-content.screens .left-arrow {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translate( 0px, -50% );
+    width: 26px;
+    height: 48px;
+    background-size: 100% 100%;
+    background-image: url(../resources/img/left-arrow.png);
+    z-index: 1;
+    filter: brightness(10);
+    opacity: 0.5;
+    transition: opacity 200ms ease;
+}
+
+#signin-box-wrapper #main-block .tab-content.screens .left-arrow:hover {
+    opacity: 1;
+}
+
+#signin-box-wrapper #main-block .tab-content.screens .left-arrow:active {
+    transform: translate( -2px, -50% );
+}
+
+#signin-box-wrapper #main-block .tab-content.screens .right-arrow {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translate( 0px, -50% );
+    width: 26px;
+    height: 48px;
+    background-size: 100% 100%;
+    background-image: url(../resources/img/right-arrow.png);
+    z-index: 1;
+    filter: brightness(10);
+    opacity: 0.5;
+    transition: opacity 200ms ease;
+}
+
+#signin-box-wrapper #main-block .tab-content.screens .right-arrow:hover {
+    opacity: 1;
+}
+
+#signin-box-wrapper #main-block .tab-content.screens .right-arrow:active {
+    transform: translate( 2px, -50% );
+}
+
 /*  */
 
 #signin-box-wrapper #signin-box {
