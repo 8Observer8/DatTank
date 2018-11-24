@@ -200,9 +200,11 @@ PlayerManager.prototype.getTopBoard = function ( callback ) {
         for ( var i = 0, il = result.length; i < il; i ++ ) {
 
             players.push({
-                login:  result[ i ].login,
-                kills:  result[ i ].kills,
-                score:  result[ i ].score
+                level:  result[ i ].level || 0,
+                login:  result[ i ].login || 0,
+                kills:  result[ i ].kills || 0,
+                death:  result[ i ].death || 0,
+                score:  result[ i ].score || 0
             });
 
         }
