@@ -83,8 +83,107 @@
     top: calc( 25% - 50px );
     left: 0px;
     width: 100%;
+    height: 496px;
     z-index: 1;
 }
+
+#signin-box-wrapper #main-block {
+    position: absolute;
+    left: 13%;
+    width: calc( 74% - 360px );
+    height: 100%;
+    background-color: rgba( 255, 255, 255, 0.1 );
+}
+
+#signin-box-wrapper #main-block #menu {
+    position: absolute;
+    top: -25px;
+    left: 0px;
+}
+
+#signin-box-wrapper #main-block #menu .item {
+    font: normal 20px 'Roboto', arial, tahoma;
+    color: #fff;
+    text-shadow: 0px 0px 3px rgb( 200, 200, 200 );
+    margin-right: 10px;
+    opacity: 0.7;
+    transition: opacity 200ms ease, border-bottom-color 200ms ease;
+    border-bottom: 4px solid rgba( 255, 255, 255, 0 );
+}
+
+#signin-box-wrapper #main-block #menu .item:hover {
+    opacity: 0.85;
+}
+
+#signin-box-wrapper #main-block #menu .item:active {
+    transform: translateY( 2px );
+}
+
+#signin-box-wrapper #main-block #menu .item.active {
+    text-shadow: 0px 0px 3px rgb( 255, 255, 255 );
+    border-bottom: 4px solid rgba( 255, 255, 255, 0.7 );
+    opacity: 1;
+}
+
+#signin-box-wrapper #main-block .tab-content {
+    position: absolute;
+    top: 0px;
+    left: 10px;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 300ms ease, left 300ms ease;
+}
+
+#signin-box-wrapper #main-block .tab-content.active {
+    opacity: 1;
+    left: 0px;
+}
+
+#signin-box-wrapper #main-block .tab-content.home .title {
+    padding: 30px;
+    font: bold 40px 'Roboto', arial, tahoma;
+    color: rgba( 255, 255, 255, 0.5 );
+}
+
+#signin-box-wrapper #main-block .tab-content .top-players-score {
+    width: 100%;
+}
+
+#signin-box-wrapper #main-block .tab-content .top-players-score table {
+    position: relative;
+    width: 80%;
+    padding-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#signin-box-wrapper #main-block .tab-content .top-players-score table .login {
+    width: 300px;
+}
+
+#signin-box-wrapper #main-block .tab-content .top-players-score table .header.login {
+    text-align: left;
+}
+
+#signin-box-wrapper #main-block .tab-content .top-players-score table .header:not(.login) {
+    text-align: center;
+}
+
+#signin-box-wrapper #main-block .tab-content .top-players-score table td:not(.login) {
+    text-align: center;
+}
+
+#signin-box-wrapper #main-block .tab-content .top-players-score table .header {
+    color: #fff;
+    padding-bottom: 10px;
+}
+
+#signin-box-wrapper #main-block .tab-content .top-players-score table td {
+    padding: 10px 0px;
+    color: rgba( 255, 255, 255, 0.9 );
+}
+
+/*  */
 
 #signin-box-wrapper #signin-box {
     position: absolute;
@@ -308,81 +407,6 @@
 *:-ms-scrollbar-thumb {
     border-radius:9px;
     background:#55585b;
-}
-
-/**/
-
-.top-players-score {
-    visibility: hidden;
-    width: 320px;
-    background: transparent;
-    height: initial;
-    left: 0px;
-    color: #d6d6d6;
-    position: fixed;
-    top: 19%;
-    overflow: hidden;
-}
-@media only screen and (max-width: 1020px) {
-    .top-players-score {
-        display: none;
-    }
-}
-@media only screen and (max-height: 700px) {
-    .top-players-score {
-        height: 244px;
-        top: calc(50% - +145px);
-    }
-}
-.top-players-score table {
-    display: none;
-    border: 1px solid white;
-    width: 100%;
-    text-align: center;
-    border-collapse: collapse;
-    pointer-events: none;
-    z-index: 900;
-    color: #dbdbdb;
-    background-color: rgba(0, 0, 0, 0.1);
-    font-weight: bold;
-}
-.top-players-score table tr {
-    border: 1px solid #211e1e;
-    border-left: 1px solid transparent;
-}
-.top-players-score .players-score {
-    float: left;
-    width: 180px;
-    overflow: hidden;
-    display: inline-block;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    padding: 10px 0;
-    padding-left: 10px;
-    font-size: 16px;
-    margin: 0 7px;
-    text-align: left;
-    font-weight: 400;
-}
-.top-players-score .players-score.kills {
-    width: 90px;
-    text-align: center;
-}
-.top-players-score .players-score.header {
-    font-size: 18px;
-}
-.top-players-score .players-score .nmb {
-    opacity: 0.3;
-}
-.top-players-score .header.login {
-    width: 185px;
-    font-weight: 700;
-}
-.top-players-score .header.kills {
-    width: 75px;
-    font-size: 13px;
-    line-height: 22px;
-    font-weight: 700;
 }
 
 /* footer */

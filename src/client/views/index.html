@@ -98,21 +98,117 @@
             <div class="title not-disabled-screen">Mobile not supported yet</div>
         </div>
 
-        <div id="sound" sound="false"></div>
-        <div id="fullscreen" screen="false"></div>
+        <div id="sound" sound="false" class="btn"></div>
+        <div id="fullscreen" screen="false" class="btn"></div>
 
         <div class="change-log-block"></div>
 
         <div id="signin-box-wrapper">
+            <div id="main-block">
+                <div id="menu">
+                    <a class="item active" tab="home">HOME</a>
+                    <a class="item" tab="leaders">LEADERS</a>
+                    <a class="item" tab="help">HELP</a>
+                    <a class="item" tab="screens">SCREENS</a>
+                </div>
+                <div class="tab-content home active hide">
+                    <div class="title"></div>
+                </div>
+                <div class="tab-content leaders hide">
+                    <div class="top-players-score">
+                        <table>
+                            <tr>
+                                <th class="players-score header login"># Top players</th>
+                                <th class="players-score header level">Level</th>
+                                <th class="players-score header score">Score</th>
+                                <th class="players-score header kills">Kills</th>
+                                <th class="players-score header deth">Deth</th>
+                            </tr>
+                            <tr>
+                                <td class="players-score login"></td>
+                                <td class="players-score level"></td>
+                                <td class="players-score score"></td>
+                                <td class="players-score kills"></td>
+                                <td class="players-score deth"></td>
+                            </tr>
+                            <tr>
+                                <td class="players-score login"></td>
+                                <td class="players-score level"></td>
+                                <td class="players-score score"></td>
+                                <td class="players-score kills"></td>
+                                <td class="players-score deth"></td>
+                            </tr>
+                            <tr>
+                                <td class="players-score login"></td>
+                                <td class="players-score level"></td>
+                                <td class="players-score score"></td>
+                                <td class="players-score kills"></td>
+                                <td class="players-score deth"></td>
+                            </tr>
+                            <tr>
+                                <td class="players-score login"></td>
+                                <td class="players-score level"></td>
+                                <td class="players-score score"></td>
+                                <td class="players-score kills"></td>
+                                <td class="players-score deth"></td>
+                            </tr>
+                            <tr>
+                                <td class="players-score login"></td>
+                                <td class="players-score level"></td>
+                                <td class="players-score score"></td>
+                                <td class="players-score kills"></td>
+                                <td class="players-score deth"></td>
+                            </tr>
+                            <tr>
+                                <td class="players-score login"></td>
+                                <td class="players-score level"></td>
+                                <td class="players-score score"></td>
+                                <td class="players-score kills"></td>
+                                <td class="players-score deth"></td>
+                            </tr>
+                            <tr>
+                                <td class="players-score login"></td>
+                                <td class="players-score level"></td>
+                                <td class="players-score score"></td>
+                                <td class="players-score kills"></td>
+                                <td class="players-score deth"></td>
+                            </tr>
+                            <tr>
+                                <td class="players-score login"></td>
+                                <td class="players-score level"></td>
+                                <td class="players-score score"></td>
+                                <td class="players-score kills"></td>
+                                <td class="players-score deth"></td>
+                            </tr>
+                            <tr>
+                                <td class="players-score login"></td>
+                                <td class="players-score level"></td>
+                                <td class="players-score score"></td>
+                                <td class="players-score kills"></td>
+                                <td class="players-score deth"></td>
+                            </tr>
+                            <tr>
+                                <td class="players-score login"></td>
+                                <td class="players-score level"></td>
+                                <td class="players-score score"></td>
+                                <td class="players-score kills"></td>
+                                <td class="players-score deth"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-content help hide">HELP</div>
+                <div class="tab-content screens hide">SCREENS</div>
+            </div>
             <div id="signin-box">
                 <div id="title">DatTank</div>
                 <input id="username" class="field" type="text" placeholder="Username" maxlength="13" />
                 {% if fid %}
                     <div class="user"><img class="userpic"/></div>
                 {% endif %}
-                <div id="start-btn">Connecting...</div>
+                <div id="start-btn" class="btn">Connecting...</div>
                 {% if not fid %}
-                    <a id="signup-btn" href="/auth/facebook"><div class="fb-icon"></div>Login to save progress</a>
+                    <a id="signup-btn" class="btn" href="/auth/facebook"><div class="fb-icon"></div>Login to save progress</a>
                 {% endif %}
                 <div id='div-gpt-ad-1484229654832-0' style='height:250px; width:300px; margin-left: auto; margin-right: auto; margin-bottom: 10px;'>
                     <script>
@@ -154,55 +250,6 @@
                 <div class="date"><p>February, 19</p></div>
                 <div class="description"><p>> Large graphics-pack update.</p></div>
             </div>
-        </div>
-
-        <div class="top-players-score">
-            <table class="w3-table w3-bordered">
-                <tr>
-                  <th class="players-score header login"># Top players</th>
-                  <th class="players-score header kills">Score / Kills</th>
-                </tr>
-                <tr>
-                  <td class="players-score"></td>
-                  <td class="players-score kills"></td>
-                </tr>
-                <tr>
-                  <td class="players-score"></td>
-                  <td class="players-score kills"></td>
-                </tr>
-                <tr>
-                  <td class="players-score"></td>
-                  <td class="players-score kills"></td>
-                </tr>
-                <tr>
-                  <td class="players-score"></td>
-                  <td class="players-score kills"></td>
-                </tr>
-                <tr>
-                  <td class="players-score"></td>
-                  <td class="players-score kills"></td>
-                </tr>
-                <tr>
-                  <td class="players-score"></td>
-                  <td class="players-score kills"></td>
-                </tr>
-                <tr>
-                  <td class="players-score"></td>
-                  <td class="players-score kills"></td>
-                </tr>
-                <tr>
-                  <td class="players-score"></td>
-                  <td class="players-score kills"></td>
-                </tr>
-                <tr>
-                  <td class="players-score"></td>
-                  <td class="players-score kills"></td>
-                </tr>
-                <tr>
-                  <td class="players-score"></td>
-                  <td class="players-score kills"></td>
-                </tr>
-            </table>
         </div>
 
         <div class="help-popup">

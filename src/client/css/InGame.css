@@ -615,7 +615,7 @@
     font-size: 12px;
 }
 
-.kills {
+.top-killers .kills {
     float: left;
     width: 53px;
     text-align: right;

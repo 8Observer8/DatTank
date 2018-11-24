@@ -5,7 +5,7 @@
 
 import { UI } from './Core.UI';
 import { Game } from './../Game';
-import { Logger } from '../utils/Logger';
+import { SoundManager } from '../managers/Sound.Manager';
 
 //
 
@@ -48,8 +48,11 @@ export class UILandingModule {
 
         for ( let i = 0, il = players.length; i < il; i ++ ) {
 
-            $( $('.top-players-score tr')[ i + 1 ] ).find('td')[0].innerHTML = '<span class="nmb">' + ( i + 1 ) + '</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>' + players[ i ].login + '</span>';
-            $( $('.top-players-score tr')[ i + 1 ] ).find('td')[1].innerHTML = players[ i ].score + ' / ' + players[ i ].kills;
+            $( $('.top-players-score tr')[ i + 1 ] ).find('td.login').html( '<span class="nmb">' + ( i + 1 ) + '</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>' + players[ i ].login + '</span>' );
+            $( $('.top-players-score tr')[ i + 1 ] ).find('td.level').html( '0' );
+            $( $('.top-players-score tr')[ i + 1 ] ).find('td.score').html( players[ i ].score );
+            $( $('.top-players-score tr')[ i + 1 ] ).find('td.kills').html( players[ i ].kills );
+            $( $('.top-players-score tr')[ i + 1 ] ).find('td.deth').html( '0' );
 
         }
 
@@ -110,6 +113,28 @@ export class UILandingModule {
 
     };
 
+    private switchMenu ( event: MouseEvent ) : void {
+
+        const oldTab = $('#signin-box-wrapper #main-block #menu .item.active').attr('tab');
+        const newTab = $( event.currentTarget! ).attr('tab');
+        if ( oldTab === newTab ) return;
+
+        SoundManager.playSound('ElementSelect');
+        $('#signin-box-wrapper #main-block #menu .item.active').removeClass('active');
+        $( event.currentTarget! ).addClass('active');
+
+        $('#signin-box-wrapper .tab-content.active').removeClass('active');
+        $('#signin-box-wrapper .tab-content.' + newTab ).show();
+        $('#signin-box-wrapper .tab-content.' + newTab ).addClass('active');
+
+        setTimeout( () => {
+
+            $('#signin-box-wrapper .tab-content.' + oldTab ).hide();
+
+        }, 300 );
+
+    };
+
     public init () : void {
 
         // init sign in block
@@ -145,9 +170,39 @@ export class UILandingModule {
         $('.help-popup .close').click( UI.hideHelp.bind( UI ) );
         $('.help-popup .ok-btn').click( UI.hideHelp.bind( UI ) );
 
-        $('.share-btns .btn-share-vk').mousedown( Logger.newEvent.bind( Logger, 'ShareVK', 'game' ) );
-        $('.share-btns .btn-share-fb').mousedown( Logger.newEvent.bind( Logger, 'ShareFB', 'game' ) );
-        $('.share-btns .btn-share-tw').mousedown( Logger.newEvent.bind( Logger, 'ShareTW', 'game' ) );
+        $('#signin-box-wrapper #main-block #menu .item').click( this.switchMenu.bind( this ) );
+        $('#signin-box-wrapper #main-block #menu .item').mouseenter( () => {
+
+            SoundManager.playSound('ElementHover');
+
+        });
+
+        $('.btn').mouseenter( () => {
+
+            SoundManager.playSound('ElementHover');
+
+        });
+
+        let textLength = 0;
+
+        setInterval( () => {
+
+            const fullText = 'Good tank pilot?|   Are you ready for the bettle ?...                ';
+            let text = $('#signin-box-wrapper #main-block .tab-content.home .title').html();
+
+            if ( ! fullText[ textLength ] ) {
+
+                text = '';
+                textLength = 0;
+
+            }
+
+            const char = ( fullText[ textLength ] === '|' ) ? '<br>' : fullText[ textLength ];
+            $('#signin-box-wrapper #main-block .tab-content.home .title').html( text.replace( '_', '' ) + char + '_' );
+
+            textLength ++;
+
+        }, 250 );
 
         setTimeout( () => { $('.fb-like').animate( { opacity: 1 }, 500 ); }, 1000 );
         setTimeout( () => { $('.folow-btn').animate( { opacity: 1 }, 500 ); }, 1600 );
