@@ -29,6 +29,8 @@ export class Garage {
     private selectedParts: any;
     private preSelectedParts: any;
 
+    private inactiveHintLabelTimeout: any;
+
     //
 
     private checkIfTankComplete () : boolean {
@@ -709,11 +711,22 @@ export class Garage {
 
     private play () : void {
 
+        clearInterval( this.inactiveHintLabelTimeout );
         SoundManager.playSound('ElementSelect');
 
         if ( this.checkIfTankComplete() ) {
 
             Game.play();
+
+        } else {
+
+            $('.garage .play-btn-hint').css({ opacity: 1 });
+
+            this.inactiveHintLabelTimeout = setTimeout( () => {
+
+                $('.garage .play-btn-hint').css({ opacity: 0 });
+
+            }, 3000 );
 
         }
 
