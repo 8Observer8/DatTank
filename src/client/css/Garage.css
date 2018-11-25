@@ -255,16 +255,48 @@
     top: 150px;
     right: 0px;
     width: 400px;
-    height: 330px;
+    height: 320px;
     z-index: 1;
 }
 
-.garage .right-block .buy-btn {
-    display: none;
+.garage .right-block .buy-block {
     position: absolute;
-    right: 30px;
+    display: none;
+    right: 55px;
     bottom: 0px;
-    transform: translateX( -50% );
+    transform: translate( 0px, 0px );
+    transition: opacity 400ms ease, transform 400ms ease;
+}
+
+.garage .right-block .buy-block .price {
+    position: relative;
+    float: right;
+    padding-top: 6px;
+    margin-right: 20px;
+}
+
+.garage .right-block .buy-block .price .label {
+    float: left;
+    width: 18px;
+    height: 18px;
+    margin-top: -2px;
+    margin-right: 5px;
+    color: #fff;
+    filter: brightness(1.1) drop-shadow(0px 0px 2px);
+    background-image: url(/resources/img/coin.png);
+    background-size: 100% 100%;
+}
+
+.garage .right-block .buy-block .price .value {
+    float: left;
+    font: bold 14px 'Roboto', arial, tahoma;
+    color: #fff;
+    filter: drop-shadow(0px 0px 5px);
+}
+
+.garage .right-block .buy-block .buy-btn {
+    position: relative;
+    float: right;
     color: white;
     background-image: linear-gradient(#39c600, #1a7600);
     border: 1px solid #357e0a;
@@ -273,9 +305,13 @@
     padding: 5px 12px;
     font-size: 13px;
     font-weight: 500;
-    transition: background-image 200ms ease;
     z-index: 1;
     cursor: pointer;
+}
+
+.garage .right-block .buy-block .buy-btn.inactive {
+    background-image: linear-gradient(#ff0d0d, #881010);
+    border: 1px solid #c28e8e;
 }
 
 .garage .right-block .buy-btn:hover {
@@ -322,19 +358,29 @@
     color: #fff;
 }
 
+.garage .right-block .tank-stats .stats-delta-value {
+    float: right;
+    width: 30px;
+    font: normal 10px/14px Roboto, arial, tahoma;
+    color: rgb(52, 238, 39);
+    margin-top: -13px;
+    text-align: right;
+}
+
 .garage .right-block .tank-stats .stats-value {
     float: right;
     font: normal 12px Roboto, arial, tahoma;
     color: #fff;
     margin-top: -13px;
+    margin-left: 10px;
 }
 
 .garage .right-block .tank-stats .stats-progress {
     position: relative;
     width: 100%;
     height: 2px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 4px;
+    margin-bottom: 15px;
     background-color: rgba( 255, 255, 255, 0.1 );
 }
 
@@ -568,103 +614,4 @@
 .garage .close-btn:active {
     opacity: 1;
     top: 7px;
-}
-
-.garage .buy-item-popup-wrapper {
-    display: none;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    background-color: rgba( 0, 0, 0, 0.6 );
-    z-index: 10;
-    opacity: 0;
-    transition: opacity 400ms ease;
-}
-
-.garage .buy-item-popup {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate( -50%, -50% );
-    width: 400px;
-    height: 170px;
-    background-color: #c3c3c3;
-    border: 2px solid #bcd4df;
-    filter: drop-shadow( 0px 0px 20px #000 );
-}
-
-.garage .buy-item-popup .error {
-    display: none;
-}
-
-.garage .buy-item-popup .error .price-value {
-    color: #fb4627;
-}
-
-.garage .buy-item-popup .title, .garage .buy-item-popup .error {
-    width: 100%;
-    text-align: center;
-    padding-top: 25px;
-    color: #00b6ff;
-    font-size: 23px;
-    filter: drop-shadow(0px 0px 4px #fff);
-}
-
-.garage .buy-item-popup .price {
-    width: 100%;
-    text-align: center;
-    color: #fff;
-    font-size: 20px;
-    filter: drop-shadow( 0px 0px 10px rgb(141, 236, 253) );
-}
-
-.garage .buy-item-popup .coin-ico {
-    display: inline-block;
-    width: 22px;
-    height: 22px;
-    margin-right: 1px;
-    filter: brightness(1.1);
-    background-image: url(/resources/img/coin.png);
-    background-size: 100% 96%;
-    background-repeat: no-repeat;
-    background-position: 1px 3px;
-}
-
-.garage .buy-item-popup .price-value {
-    display: inline-block;
-}
-
-.garage .buy-item-popup .image {
-    display: inline-block;
-    width: 50px;
-    height: 25px;
-    filter: brightness(0.0) drop-shadow(0px 0px 2px);
-    background-size: 100% 100%;
-    transform: translateY(4px);
-}
-
-.garage .buy-item-popup .btns {
-    width: 300px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-}
-
-.garage .buy-item-popup .btns .btn {
-    width: 86px;
-    margin: 10px;
-}
-
-.garage .buy-item-popup .cancel-btn {
-    background-color: #fb4627;
-    border-color: #ad2f19;
-}
-
-.garage .buy-item-popup .okay-btn {
-    display: none;
-    background-color: #fb4627;
-    border-color: #ad2f19;
-    margin: 20px auto !important;
 }

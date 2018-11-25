@@ -90,14 +90,39 @@ export class Garage {
 
         if ( needToBuy ) {
 
-            $('.garage .right-block .buy-btn').css({ right: '30px', opacity: 1 });
-            $('.garage .right-block .buy-btn').show();
+            $('.garage .right-block .buy-block').show();
+            $('.garage .right-block .buy-block .price .value').html( item.price );
+            $('.garage .right-block .buy-block').css({ transform: 'translate( 0px, 0px )', opacity: 1 });
             $('.garage .right-block .buy-btn').off();
-            $('.garage .right-block .buy-btn').click( () => { this.buyPart( item ); } );
+            $('.garage .right-block .buy-btn').removeClass('inactive');
+
+            $('.garage .right-block .buy-btn').mouseover( () => {
+
+                SoundManager.playSound('ElementHover');
+
+            });
+
+            $('.garage .right-block .buy-btn').click( () => {
+
+                SoundManager.playSound('ElementSelect');
+
+            });
+
+            if ( item.price > this.coins ) {
+
+                $('.garage .right-block .buy-btn').addClass('inactive');
+                $('.garage .right-block .buy-btn').html('Not enough coins');
+
+            } else {
+
+                $('.garage .right-block .buy-btn').html('BUY');
+                $('.garage .right-block .buy-btn').click( () => { this.buyPart( item ); } );
+
+            }
 
         } else {
 
-            $('.garage .right-block .buy-btn').hide();
+            $('.garage .right-block .buy-block').hide();
             $('.garage .right-block .buy-btn').off();
 
         }
@@ -159,6 +184,9 @@ export class Garage {
         const armor = Game.GarageConfig.armors[ armorId ];
         const engine = Game.GarageConfig.engines[ engineId ];
 
+        const greenColor = 'rgba( 74, 239, 74, 1 )';
+        const redColor = 'rgba( 234, 63, 63, 1 )';
+
         // updating cannon 'damage' UI
 
         let progressValue;
@@ -166,12 +194,14 @@ export class Garage {
         const deltaDamage = 100 * ( tank.cannonCoef * cannon.damage - currentTank.cannonCoef * currentCannon.damage ) / this.maxConfigValues.damage;
         progressValue = 100 * Math.min( currentTank.cannonCoef * currentCannon.damage, tank.cannonCoef * cannon.damage ) / this.maxConfigValues.damage;
 
+        $('.garage .tank-stats .cannon.stats-delta-value').html( '(' +  ( deltaDamage >= 0 ? '+' : '' ) + Math.round( deltaDamage ) + ')' );
+        $('.garage .tank-stats .cannon.stats-delta-value').css({ color: ( deltaDamage >= 0 ) ? greenColor : redColor });
         $('.garage .tank-stats .cannon.stats-value').html( cannon.damage + 'p' );
         $('.garage .tank-stats .cannon.stats-progress .green').css( 'width', progressValue + '%' );
         $('.garage .tank-stats .cannon.stats-progress .delta').css({
             'width': Math.abs( deltaDamage ) + '%',
             'left': progressValue + '%',
-            'background-color': ( deltaDamage > 0 ) ? 'rgba( 74, 239, 74, 1 )' : 'rgba( 234, 63, 63, 1 )',
+            'background-color': ( deltaDamage > 0 ) ? greenColor : redColor,
         });
 
         // updating cannon 'reload/rpm' UI
@@ -179,12 +209,14 @@ export class Garage {
         const deltaRPM = 100 * ( cannon.rpm - currentCannon.rpm ) / this.maxConfigValues.rpm;
         progressValue = 100 * Math.min( currentCannon.rpm, cannon.rpm ) / this.maxConfigValues.rpm;
 
+        $('.garage .tank-stats .reload.stats-delta-value').html( '(' + ( deltaRPM >= 0 ? '+' : '' ) + Math.round( deltaRPM ) + ')' );
+        $('.garage .tank-stats .reload.stats-delta-value').css({ color: ( deltaRPM >= 0 ) ? greenColor : redColor });
         $('.garage .tank-stats .reload.stats-value').html( cannon.rpm + 'rpm' );
         $('.garage .tank-stats .reload.stats-progress .green').css( 'width', progressValue + '%' );
         $('.garage .tank-stats .reload.stats-progress .delta').css({
             'width': Math.abs( deltaRPM ) + '%',
             'left': progressValue + '%',
-            'background-color': ( deltaRPM > 0 ) ? 'rgba( 74, 239, 74, 1 )' : 'rgba( 234, 63, 63, 1 )',
+            'background-color': ( deltaRPM > 0 ) ? greenColor : redColor,
         });
 
         // updating cannon 'range' UI
@@ -192,12 +224,14 @@ export class Garage {
         const deltaRange = 100 * ( cannon.range - currentCannon.range ) / this.maxConfigValues.range;
         progressValue = 100 * Math.min( currentCannon.range, cannon.range ) / this.maxConfigValues.range;
 
+        $('.garage .tank-stats .range.stats-delta-value').html( '(' + ( deltaRange >= 0 ? '+' : '' ) + Math.round( deltaRange ) + ')' );
+        $('.garage .tank-stats .range.stats-delta-value').css({ color: ( deltaRange >= 0 ) ? greenColor : redColor });
         $('.garage .tank-stats .range.stats-value').html( cannon.range + 'km' );
         $('.garage .tank-stats .range.stats-progress .green').css( 'width', progressValue + '%' );
         $('.garage .tank-stats .range.stats-progress .delta').css({
             'width': Math.abs( deltaRange ) + '%',
             'left': progressValue + '%',
-            'background-color': ( deltaRange > 0 ) ? 'rgba( 74, 239, 74, 1 )' : 'rgba( 234, 63, 63, 1 )',
+            'background-color': ( deltaRange > 0 ) ? greenColor : redColor,
         });
 
         // updating cannon 'range' UI
@@ -205,12 +239,14 @@ export class Garage {
         const deltaOverheat = 100 * ( cannon.overheat - currentCannon.overheat ) / this.maxConfigValues.overheat;
         progressValue = 100 * Math.min( currentCannon.overheat, cannon.overheat ) / this.maxConfigValues.overheat;
 
+        $('.garage .tank-stats .overheat.stats-delta-value').html( '(' + ( deltaOverheat >= 0 ? '+' : '' ) + Math.round( deltaOverheat ) + ')' );
+        $('.garage .tank-stats .overheat.stats-delta-value').css({ color: ( deltaOverheat >= 0 ) ? greenColor : redColor });
         $('.garage .tank-stats .overheat.stats-value').html( cannon.overheat + 'p' );
         $('.garage .tank-stats .overheat.stats-progress .green').css( 'width', progressValue + '%' );
         $('.garage .tank-stats .overheat.stats-progress .delta').css({
             'width': Math.abs( deltaOverheat ) + '%',
             'left': progressValue + '%',
-            'background-color': ( deltaOverheat > 0 ) ? 'rgba( 74, 239, 74, 1 )' : 'rgba( 234, 63, 63, 1 )',
+            'background-color': ( deltaOverheat > 0 ) ? greenColor : redColor,
         });
 
         // updating armor 'armor' UI
@@ -218,12 +254,14 @@ export class Garage {
         const deltaArmor = 100 * ( tank.armorCoef * armor.armor - currentTank.armorCoef * currentArmor.armor ) / this.maxConfigValues.armor;
         progressValue = 100 * Math.min( currentTank.cannonCoef * currentArmor.armor, tank.armorCoef * armor.armor ) / this.maxConfigValues.armor;
 
+        $('.garage .tank-stats .armor.stats-delta-value').html( '(' + ( deltaArmor >= 0 ? '+' : '' ) + Math.round( deltaArmor ) + ')' );
+        $('.garage .tank-stats .armor.stats-delta-value').css({ color: ( deltaArmor >= 0 ) ? greenColor : redColor });
         $('.garage .tank-stats .armor.stats-value').html( armor.armor + 'p' );
         $('.garage .tank-stats .armor.stats-progress .green').css( 'width', progressValue + '%' );
         $('.garage .tank-stats .armor.stats-progress .delta').css({
             'width': Math.abs( deltaArmor ) + '%',
             'left': progressValue + '%',
-            'background-color': ( deltaArmor > 0 ) ? 'rgba( 74, 239, 74, 1 )' : 'rgba( 234, 63, 63, 1 )',
+            'background-color': ( deltaArmor > 0 ) ? greenColor : redColor,
         });
 
         // updating engine 'maxSpeed' UI
@@ -231,12 +269,14 @@ export class Garage {
         const deltaSpeed = 100 * ( tank.speedCoef * engine.maxSpeed - currentTank.speedCoef * currentEngine.maxSpeed ) / this.maxConfigValues.maxSpeed;
         progressValue = 100 * Math.min( currentTank.speedCoef * currentEngine.maxSpeed, tank.speedCoef * engine.maxSpeed ) / this.maxConfigValues.maxSpeed;
 
+        $('.garage .tank-stats .speed.stats-delta-value').html( '(' + ( deltaSpeed >= 0 ? '+' : '' ) + Math.round( deltaSpeed ) + ')' );
+        $('.garage .tank-stats .speed.stats-delta-value').css({ color: ( deltaSpeed >= 0 ) ? greenColor : redColor });
         $('.garage .tank-stats .speed.stats-value').html( tank.speedCoef * engine.maxSpeed + 'km/h' );
         $('.garage .tank-stats .speed.stats-progress .green').css( 'width', progressValue + '%' );
         $('.garage .tank-stats .speed.stats-progress .delta').css({
             'width': Math.abs( deltaSpeed ) + '%',
             'left': progressValue + '%',
-            'background-color': ( deltaSpeed > 0 ) ? 'rgba( 74, 239, 74, 1 )' : 'rgba( 234, 63, 63, 1 )',
+            'background-color': ( deltaSpeed > 0 ) ? greenColor : redColor,
         });
 
         //
@@ -617,7 +657,7 @@ export class Garage {
             localStorage.setItem( 'Selected' + item.type, item.id );
             this.setupMenu();
             SoundManager.playSound('MenuBuy');
-            $('.garage .right-block .buy-btn').animate( { right: '0px', opacity: 0 }, 300 );
+            $('.garage .right-block .buy-block').css({ transform: 'translate( 30px, 0px )', opacity: 0 });
             this.updateUserParams( response.coins );
             this.checkIfTankComplete();
 
