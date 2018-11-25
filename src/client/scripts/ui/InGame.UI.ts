@@ -270,10 +270,7 @@ export class UIInGameModule {
 
     public updateXPCoins ( xp: number, coins: number ) : void {
 
-        const level = ( Arena.me ) ? Arena.me.level : window['userData'].level;
-
-        $('#viewport .xp-coins .coins .value').html( coins.toString() );
-        $('#viewport .xp-coins .xp .value').html( xp.toString() + '/' + Game.GarageConfig.levels[ level ] );
+        $('#viewport .stats-block .coins .value').html( coins.toString() );
 
     };
 

@@ -106,6 +106,9 @@ export class UILandingModule {
 
     private start () : void {
 
+        const login = $('#username').val() || localStorage.getItem('login') || '';
+        localStorage.setItem( 'login', login + '' );
+
         $('#signin-box-wrapper #signin-box').css({ transform: 'scale( 0.9 )' });
         $('#signin-box-wrapper #signin-box').animate({ opacity: 0 }, 300 );
 

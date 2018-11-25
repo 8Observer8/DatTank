@@ -95,7 +95,7 @@
 
 .garage .header #fullscreen {
     position: absolute;
-    top: 10px;
+    top: 9px;
     right: 10px;
     width: 50px;
     height: 40px;
@@ -111,7 +111,7 @@
 }
 
 .garage .header #fullscreen:active {
-    top: 21px;
+    transform: translate( 0px, 2px );
     opacity: 1;
 }
 
@@ -123,7 +123,7 @@
 
 .garage .header #sound {
     position: absolute;
-    top: 2px;
+    top: 0px;
     right: 60px;
     width: 60px;
     height: 60px;
@@ -139,7 +139,7 @@
 }
 
 .garage .header #sound:active {
-    top: 11px;
+    transform: translate( 0px, 2px );
     opacity: 1;
 }
 
@@ -147,46 +147,34 @@
     background-position: 0% 100%;
 }
 
-/*  */
-
-.garage .stats-block {
+.garage .header .divider {
     position: absolute;
-    top: 75px;
-    right: 20px;
+    top: 20%;
+    right: 120px;
+    width: 1px;
+    height: 60%;
+    border-left: 1px solid rgba( 255, 255, 255, 0.17 );
+}
+
+.garage .header .stats-block {
+    position: absolute;
+    top: 20px;
+    right: 140px;
     z-index: 1;
 }
 
-.garage .stats-block .xp {
-    float: left;
-    margin-right: 15px;
-    filter: drop-shadow(0px 0px 2px);
-}
-
-.garage .stats-block .xp .label {
-    float: left;
-    width: 14px;
-    height: 18px;
-    margin-top: -1px;
-    margin-right: 5px;
-    padding-right: 5px;
-    color: #fff;
-    filter: brightness(1.1) drop-shadow(0px 0px 2px);
-    background-image: url(/resources/img/xp.png);
-    background-size: 100% 100%;
-}
-
-.garage .stats-block .coins {
+.garage .header .stats-block .coins {
     float: left;
 }
 
-.garage .stats-block .value {
+.garage .header .stats-block .coins .value {
     float: left;
     color: #fff;
     font: bold 16px Roboto, arial, tahoma;
     filter: drop-shadow(0px 0px 5px);
 }
 
-.garage .stats-block .coins .label {
+.garage .header .stats-block .coins .label {
     float: left;
     width: 22px;
     height: 22px;
@@ -202,7 +190,7 @@
 
 .garage .level-block {
     position: absolute;
-    top: 85px;
+    top: 80px;
     left: 20px;
     width: 200px;
 }
@@ -233,9 +221,38 @@
     text-shadow: 0px 0px 21px #eee;
 }
 
+.garage .level-block .bonuses {
+    position: absolute;
+    top: -4px;
+    right: -31px;
+    filter: drop-shadow(0px 0px 2px);
+}
+
+.garage .level-block .bonuses .label {
+    float: left;
+    width: 10px;
+    height: 15px;
+    margin-top: -1px;
+    margin-right: 5px;
+    padding-right: 5px;
+    color: #fff;
+    filter: brightness(1.1) drop-shadow(0px 0px 2px);
+    background-image: url(/resources/img/xp.png);
+    background-size: 100% 100%;
+}
+
+.garage .level-block .bonuses .value {
+    float: left;
+    color: #fff;
+    font: normal 12px/16px Roboto, arial, tahoma;
+    filter: drop-shadow(0px 0px 5px);
+}
+
+/*  */
+
 .garage .right-block {
     position: absolute;
-    top: 100px;
+    top: 150px;
     right: 0px;
     width: 400px;
     height: 330px;

@@ -133,7 +133,6 @@ class GameCore {
 
         this.garage.hide();
         Logger.newEvent( 'Play', 'game' );
-        SoundManager.playSound('MenuClick');
 
         //
 
@@ -168,9 +167,7 @@ class GameCore {
 
         Network.init( this.currentServer, () => {
 
-            const login = $('#username').val() || localStorage.getItem('login') || '';
-            localStorage.setItem( 'login', login + '' );
-
+            const login = localStorage.getItem('login') || '';
             const tankConfig = JSON.parse( localStorage.getItem('SelectedParts') || '{}' );
 
             setTimeout( () => {

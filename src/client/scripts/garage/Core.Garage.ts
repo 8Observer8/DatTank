@@ -114,7 +114,7 @@ export class Garage {
 
         $('.garage .level-block .title').html( 'Level ' + this.level + '' );
         $('.garage .level-block .progress .progress-value').css({ width: ( 100 * this.xp / Game.GarageConfig.levels[ this.level ] ) + '%' })
-        $('.garage .xp .value').html( this.xp );
+        $('.garage .bonuses .value').html( this.xp );
         $('.garage .coins .value').html( this.coins );
 
     };
@@ -642,7 +642,7 @@ export class Garage {
 
         $('.garage').show();
         $('.garage').animate({ opacity: 1 }, 1500 );
-        SoundManager.playSound('MenuClick');
+        SoundManager.playSound('ElementSelect');
 
         this.scene.reset();
         this.scene.resize();
@@ -664,11 +664,12 @@ export class Garage {
 
         this.isOpened = false;
         $('.garage').hide();
-        SoundManager.playSound('MenuClick');
 
     };
 
     private play () : void {
+
+        SoundManager.playSound('ElementSelect');
 
         if ( this.checkIfTankComplete() ) {
 
@@ -711,6 +712,12 @@ export class Garage {
         $('.garage .play-btn').click( this.play.bind( this ) );
         $('.garage .close-btn').click( this.hide.bind( this ) );
         $('.garage .menu-items .item').click( this.switchMenu.bind( this ) );
+
+        $('.garage .play-btn').mouseover( () => {
+
+            SoundManager.playSound('ElementHover');
+
+        });
 
         $( document ).keydown( this.keyDown.bind( this ) );
 

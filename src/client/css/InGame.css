@@ -341,7 +341,7 @@
     filter: grayscale(0.8) sepia(1);
 }
 
-#viewport .xp-coins {
+#viewport .stats-block {
     position: absolute;
     top: 150px;
     right: 20px;
@@ -350,34 +350,11 @@
     filter: drop-shadow(0px 0px 2px);
 }
 
-#viewport .xp-coins .coins {
+#viewport .stats-block .coins {
     float: left;
 }
 
-#viewport .xp-coins .xp {
-    float: left;
-    margin-right: 15px;
-}
-
-#viewport .xp-coins .value {
-    float: left;
-    color: #fff;
-    font: bold 16px Roboto, arial, tahoma;
-}
-
-#viewport .xp-coins .xp .label {
-    float: left;
-    width: 14px;
-    height: 18px;
-    margin-top: -1px;
-    margin-right: 5px;
-    padding-right: 5px;
-    filter: brightness(1.1);
-    background-image: url(/resources/img/xp.png);
-    background-size: 100% 100%;
-}
-
-#viewport .xp-coins .coins .label {
+#viewport .stats-block .coins .label {
     float: left;
     width: 22px;
     height: 22px;
@@ -386,6 +363,12 @@
     filter: brightness(1.1);
     background-image: url(/resources/img/coin.png);
     background-size: 100% 100%;
+}
+
+#viewport .stats-block .coins .value {
+    float: left;
+    color: #fff;
+    font: bold 16px Roboto, arial, tahoma;
 }
 
 /*  */
@@ -535,15 +518,6 @@
     background-color: orange;
 }
 
-#top-killers {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    background-color: rgba( 0, 0, 0, 0.5 );
-    color: burlywood;
-    width: 210px;
-}
-
 .fps-ping {
     position: absolute;
     top: 15px;
@@ -564,17 +538,23 @@
     width: 20px;
 }
 
-.leaderboard {
-    display: none;
-    position: relative;
-    width: 100%;
-    height: 35px;
-    text-align: center;
-    font-size: 14px;
-    margin-top: 5px;
+/*  */
+
+#top-killers {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    background-color: rgba( 0, 0, 0, 0.5 );
+    color: burlywood;
+    width: 210px;
 }
 
-.killer-outer {
+#top-killers .leaderboard-wrapper {
+    position: relative;
+    display: block;
+}
+
+#top-killers .killer-outer {
     position: relative;
     display: none;
     width: 100%;
@@ -583,24 +563,19 @@
     margin-bottom: 5px;
 }
 
-.killer-outer.myplace {
+#top-killers .killer-outer.myplace {
     font-weight: 800;
     color: #fff;
 }
 
-.leaderboard-wrapper {
-    position: relative;
-    display: block;
-}
-
-.player-counter {
+#top-killers .player-counter {
     float: left;
     width: 25px;
     text-align: center;
     font-size: 12px;
 }
 
-.players-team-image {
+#top-killers .players-team-image {
     background-color: green;
     width: 8px;
     height: 8px;
@@ -609,18 +584,19 @@
     margin: 3px 3.5px 3px 3.5px;
 }
 
-.player-name {
+#top-killers .player-name {
     float: left;
     width: 110px;
     font-size: 12px;
 }
 
-.top-killers .kills {
-    float: left;
-    width: 53px;
-    text-align: right;
-    font-size: 12px;
+#top-killers .kills {
+    float: right;
+    padding-right: 10px;
+    font: normal 13px 'Roboto', arial, tahoma;
 }
+
+/*  */
 
 .disconnect-warning {
     display: none;
