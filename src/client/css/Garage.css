@@ -222,9 +222,10 @@
 }
 
 .garage .level-block .bonuses {
+    display: table;
     position: absolute;
     top: -4px;
-    right: -31px;
+    left: 205px;
     filter: drop-shadow(0px 0px 2px);
 }
 

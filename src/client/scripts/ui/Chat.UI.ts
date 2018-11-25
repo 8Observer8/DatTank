@@ -34,7 +34,7 @@ export class UIChatModule {
 
         }
 
-        $('.level-indicator-block').hide();
+        $('.arena-level-indicator-block').hide();
 
         $('.chat .message-input').focus();
 
@@ -58,13 +58,13 @@ export class UIChatModule {
 
         if ( $('.stats-update-block').attr('opened') === 'true' ) {
 
-            $('.level-indicator-block').hide();
+            $('.arena-level-indicator-block').hide();
             $('.stats-update-block').show();
             $('.chat .message-block-separate').hide();
 
         } else {
 
-            $('.level-indicator-block').show();
+            $('.arena-level-indicator-block').show();
             $('.stats-update-block').hide();
             $('.chat .message-block-separate').show();
 
