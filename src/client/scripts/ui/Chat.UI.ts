@@ -27,9 +27,9 @@ export class UIChatModule {
         $('.chat .message-block-separate').hide();
         $('.chat .message-input').show();
 
-        if ( $('.stats-update-block').attr('opened') === 'true' ) {
+        if ( $('.tank-upgrade-block').attr('opened') === 'true' ) {
 
-            $('.stats-update-block').hide();
+            $('.tank-upgrade-block').hide();
             $('.chat .message-block-separate').show();
 
         }
@@ -56,16 +56,16 @@ export class UIChatModule {
         $('.chat .message-block-separate').show();
         $('.chat .message-input').hide();
 
-        if ( $('.stats-update-block').attr('opened') === 'true' ) {
+        if ( $('.tank-upgrade-block').attr('opened') === 'true' ) {
 
             $('.arena-level-indicator-block').hide();
-            $('.stats-update-block').show();
+            $('.tank-upgrade-block').show();
             $('.chat .message-block-separate').hide();
 
         } else {
 
             $('.arena-level-indicator-block').show();
-            $('.stats-update-block').hide();
+            $('.tank-upgrade-block').hide();
             $('.chat .message-block-separate').show();
 
         }

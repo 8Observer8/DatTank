@@ -40,6 +40,7 @@ export class Garage {
         if ( this.params['tank'][ parts.base ] && this.params['cannon'][ parts.cannon ] && this.params['engine'][ parts.engine ] && this.params['armor'][ parts.armor ] ) {
 
             $('.play-btn').html('BATTLE!');
+            $('.garage .play-btn-hint').css({ opacity: 0 });
             $('.play-btn').removeClass('inactive');
             $('.play-btn').addClass('active');
             return true;
