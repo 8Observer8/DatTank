@@ -7,6 +7,7 @@ import { Game } from '../Game';
 import { Arena } from '../core/Arena.Core';
 import { GarageScene } from './Scene.Garage';
 import { SoundManager } from '../managers/Sound.Manager';
+import { UI } from '../ui/Core.UI';
 
 //
 
@@ -792,6 +793,8 @@ export class Garage {
 
         //
 
+        $('.garage .sound').click( UI.changeSound.bind( UI ) );
+        $('.garage .fullscreen').click( UI.toggleFullscreenMode.bind( UI ) );
         $('.garage .bottom-block .tab:not(.active)').hide();
 
     };

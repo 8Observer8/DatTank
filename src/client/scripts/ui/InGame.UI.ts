@@ -24,10 +24,10 @@ export class UIInGameModule {
 
     public init () : void {
 
-        $('#viewport-graphics-quality').click( UI.changeQuality.bind( UI ) );
-        $('#viewport-sound').click( UI.changeSound.bind( UI ) );
-        $('#viewport-fullscreen').click( UI.toggleFullscreenMode.bind( UI ) );
-        $('#viewport-help').click( UI.showHelp.bind( UI ) );
+        $('#viewport .graphics-quality').click( UI.changeQuality.bind( UI ) );
+        $('#viewport .sound').click( UI.changeSound.bind( UI ) );
+        $('#viewport .fullscreen').click( UI.toggleFullscreenMode.bind( UI ) );
+        $('#viewport .help').click( UI.showHelp.bind( UI ) );
 
     };
 

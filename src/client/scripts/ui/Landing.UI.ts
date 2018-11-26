@@ -52,14 +52,9 @@ export class UILandingModule {
 
         $('#footer').hide();
         $('#signin-box-wrapper').hide();
-        $('#graphics-quality').hide();
-        $('#sound').hide();
-        $('#fullscreen').hide();
-        $('.share-btns').hide();
-        $('.top-left-like-btns').hide();
-        $('.new-features-box').hide();
-        $('.top-players-score').hide();
-        $('#IOG_CP').hide();
+        $('.landing .graphics-quality').hide();
+        $('.landing .sound').hide();
+        $('.landing .fullscreen').hide();
 
     };
 
@@ -151,11 +146,10 @@ export class UILandingModule {
         //
 
         $('#start-btn').click( this.start );
-        $('#fullscreen').click( UI.toggleFullscreenMode.bind( UI ) );
-
-        $('#graphics-quality').click( UI.changeQuality.bind( UI ) );
-        $('#sound').click( UI.changeSound.bind( UI ) );
-        $('#help').click( UI.showHelp.bind( UI ) );
+        $('.landing .fullscreen').click( UI.toggleFullscreenMode.bind( UI ) );
+        $('.landing .graphics-quality').click( UI.changeQuality.bind( UI ) );
+        $('.landing .sound').click( UI.changeSound.bind( UI ) );
+        $('.landing .help').click( UI.showHelp.bind( UI ) );
         $('.help-popup .close').click( UI.hideHelp.bind( UI ) );
         $('.help-popup .ok-btn').click( UI.hideHelp.bind( UI ) );
 

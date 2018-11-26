@@ -215,7 +215,7 @@
     left: 10px;
 }
 
-#viewport-fullscreen {
+#viewport .fullscreen {
     margin: 3px;
     float: left;
     width: 40px;
@@ -226,20 +226,20 @@
     transition: opacity 200ms ease;
 }
 
-#viewport-fullscreen:hover {
+#viewport .fullscreen:hover {
     opacity: 0.85;
 }
 
-#viewport-fullscreen:active {
+#viewport .fullscreen:active {
     top: 21px;
     opacity: 1;
 }
 
-#viewport-fullscreen[screen="true"] {
+#viewport .fullscreen[screen="true"] {
     background-position: 0% 100%;
 }
 
-#viewport-graphics-quality {
+#viewport .graphics-quality {
     margin: 5px;
     float: left;
     width: 35px;
@@ -251,20 +251,20 @@
     z-index: 1;
 }
 
-#viewport-graphics-quality:hover {
+#viewport .graphics-quality:hover {
     opacity: 0.85;
 }
 
-#viewport-graphics-quality:active {
+#viewport .graphics-quality:active {
     top: 21px;
     opacity: 1;
 }
 
-#viewport-graphics-quality[hq="true"] {
+#viewport .graphics-quality[hq="true"] {
     background-position: 0% 100%;
 }
 
-#viewport-sound {
+#viewport .sound {
     margin: 6px;
     float: left;
     width: 32px;
@@ -278,20 +278,20 @@
     z-index: 1;
 }
 
-#viewport-sound:hover {
+#viewport .sound:hover {
     opacity: 0.85;
 }
 
-#viewport-sound:active {
+#viewport .sound:active {
     top: 11px;
     opacity: 1;
 }
 
-#viewport-sound[sound="true"] {
+#viewport .sound[sound="true"] {
     background-position: -9px 31px;
 }
 
-#viewport-help {
+#viewport .help {
     margin: 3px;
     float: left;
     width: 30px;
@@ -304,11 +304,11 @@
     z-index: 1;
 }
 
-#viewport-help:hover {
+#viewport .help:hover {
     opacity: 0.9;
 }
 
-#viewport-help:active {
+#viewport .help:active {
     background-position: 0px -3px;
     opacity: 1;
 }

@@ -22,7 +22,7 @@
 
 /**/
 
-.landing #fullscreen {
+.landing .fullscreen {
     position: absolute;
     top: 18px;
     right: 20px;
@@ -35,22 +35,22 @@
     z-index: 1;
 }
 
-.landing #fullscreen:hover {
+.landing .fullscreen:hover {
     opacity: 0.85;
 }
 
-.landing #fullscreen:active {
+.landing .fullscreen:active {
     top: 21px;
     opacity: 1;
 }
 
-.landing #fullscreen[screen="true"] {
+.landing .fullscreen[screen="true"] {
     background-position: 0% 100%;
 }
 
 /* sound-on-off */
 
-.landing #sound {
+.landing .sound {
     position: absolute;
     top: 10px;
     right: 80px;
@@ -63,16 +63,16 @@
     z-index: 1;
 }
 
-.landing #sound:hover {
+.landing .sound:hover {
     opacity: 0.85;
 }
 
-.landing #sound:active {
+.landing .sound:active {
     top: 11px;
     opacity: 1;
 }
 
-.landing #sound[sound="true"] {
+.landing .sound[sound="true"] {
     background-position: 0% 100%;
 }
 

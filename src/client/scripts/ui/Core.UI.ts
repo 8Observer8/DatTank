@@ -69,8 +69,7 @@ class UICore {
     public changeSound ( value: boolean | MouseEvent, withoutSound: boolean ) : void {
 
         const isSound = ( typeof value === 'boolean' ) ? value : $( value.currentTarget! ).attr('sound') !== 'true';
-        $('#sound').attr( 'sound', isSound.toString() );
-        $('#viewport-sound').attr( 'sound', isSound.toString() );
+        $('.sound').attr( 'sound', isSound.toString() );
         localStorage.setItem( 'sound', isSound.toString() );
 
         SoundManager.toggleMute( ! isSound );
@@ -91,8 +90,7 @@ class UICore {
 
         //
 
-        $('#fullscreen').attr( 'screen', isFullscreen );
-        $('#viewport-fullscreen').attr( 'screen', isFullscreen );
+        $('.fullscreen').attr( 'screen', isFullscreen );
 
     };
 
@@ -177,5 +175,7 @@ class UICore {
     };
 
 };
+
+//
 
 export let UI = new UICore();
