@@ -24,7 +24,6 @@ import { DecorationManager } from './managers/Decoration.Manager';
 class GameCore {
 
     public version: string = 'v0.7.0';
-    public ready: boolean = false;
     public isMobile: boolean = false;
 
     //
@@ -37,7 +36,7 @@ class GameCore {
     public pid: string = window['userData'].pid;
     public sid: string = window['userData'].sid;
 
-    private currentServer: any;
+    public currentServer: any;
 
     //
 
@@ -72,7 +71,6 @@ class GameCore {
         //
 
         this.gameService.getTopPlayers( UI.Landing.setTopPlayersBoard.bind( UI.Landing ) );
-        this.gameService.getFreeArena( this.preInitArena.bind( this ) );
 
         //
 
@@ -107,23 +105,6 @@ class GameCore {
         //
 
         console.log( 'Game [' + this.version + '] inited successfully.' );
-
-    };
-
-    public preInitArena ( server: any ) : void {
-
-        if ( server.error === 1 ) {
-
-            UI.Landing.noArenaAvailable();
-
-        } else {
-
-            Arena.preInit( server.ip, server.id );
-            this.currentServer = server;
-            UI.Landing.initPlayBtn();
-            this.ready = true;
-
-        }
 
     };
 

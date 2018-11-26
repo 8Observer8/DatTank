@@ -24,18 +24,6 @@ export class UILandingModule {
 
     };
 
-    public initPlayBtn () : void {
-
-        $('#start-btn').html('START');
-
-    };
-
-    public noArenaAvailable () : void {
-
-        $('#start-btn').html('No free arenas :(');
-
-    };
-
     public setVersion ( version: string ) : void {
 
         $('#dt-version').html( version );
@@ -149,8 +137,6 @@ export class UILandingModule {
 
         $('#signin-box #username').focus();
         $('#signin-box #username').keydown( ( event ) => {
-
-            if ( ! Game.ready ) return;
 
             if ( event.keyCode === 13 && ! Game.garage.isOpened ) {
 

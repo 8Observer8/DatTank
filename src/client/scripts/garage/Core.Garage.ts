@@ -678,8 +678,6 @@ export class Garage {
 
     public show () : void {
 
-        if ( ! Game.ready ) return;
-
         this.isOpened = true;
         this.updateUserParams();
 
@@ -717,7 +715,24 @@ export class Garage {
 
         if ( this.checkIfTankComplete() ) {
 
-            Game.play();
+            $('.garage .play-btn').html('CONNECTING');
+
+            Game.gameService.getFreeArena( ( server: any ) => {
+
+                if ( server.error === 1 ) {
+
+                    $('.garage .play-btn').html('All servers filled :(');
+
+                } else {
+
+                    Game.currentServer = server;
+                    $('.garage .play-btn').html('Loading');
+                    Arena.preInit( server.ip, server.id );
+                    Game.play();
+
+                }
+
+            });
 
         } else {
 
