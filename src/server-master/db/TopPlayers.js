@@ -1,6 +1,6 @@
 /*
  * @author ohmed
- * DatTank top players mongoDB schema 
+ * DatTank top players mongoDB schema
 */
 
 var mongoose = require('mongoose');
@@ -16,6 +16,12 @@ var TopPlayersSchema = mongoose.Schema({
     	type: Number
     },
     kills: {
+        type: Number
+    },
+    death: {
+        type: Number
+    },
+    level: {
         type: Number
     }
 

@@ -23,7 +23,8 @@ class GarageManagerCore {
     public engines: any[];
 
     public levels: { [ key: number ]: number };
-    public arenaLevels: { [ key: number ]: { score: number, armor: number, cannon: number, maxSpeed: number, power: number, rpm: number } };
+    public arenaLevels: { [ key: number ]: { score: number } };
+    public arenaUpgrades: { [ key: number ]: { armor: number, cannon: number, maxSpeed: number, power: number, rpm: number } };
 
     //
 
@@ -36,6 +37,7 @@ class GarageManagerCore {
 
         this.levels = config.levels;
         this.arenaLevels = config.arenaLevels;
+        this.arenaUpgrades = config.arenaUpgrades;
 
     };
 

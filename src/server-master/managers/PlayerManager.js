@@ -215,7 +215,7 @@ PlayerManager.prototype.getTopBoard = function ( callback ) {
 
 };
 
-PlayerManager.prototype.updateTopBoard = function ( login, score, kills ) {
+PlayerManager.prototype.updateTopBoard = function ( login, score, kills, death, level ) {
 
     DB.models.topPlayers
     .findOne({ login: login })
@@ -224,7 +224,13 @@ PlayerManager.prototype.updateTopBoard = function ( login, score, kills ) {
         if ( ! result ) {
 
             DB.models.topPlayers
-            .create({ login: login, score: score, kills: kills })
+            .create({
+                login: login,
+                score: score,
+                kills: kills,
+                death: death,
+                level: level
+            })
             .then( function () {} );
             return;
 

@@ -108,6 +108,8 @@ ArenaServersManager.prototype.updateTopList = function ( req, res ) {
     var login = req.query.login;
     var kills = req.query.kills;
     var score = req.query.score;
+    var death = req.query.death;
+    var level = req.query.level;
 
     if ( ! login || ! kills || ! score ) {
 
@@ -115,7 +117,7 @@ ArenaServersManager.prototype.updateTopList = function ( req, res ) {
 
     }
 
-    DT.playerManager.updateTopBoard( login, score, kills );
+    DT.playerManager.updateTopBoard( login, score, kills, death, level );
     return res.send({ success: true });
 
 };

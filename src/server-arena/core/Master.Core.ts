@@ -19,12 +19,12 @@ class MasterCore {
 
     //
 
-    public updateTopList ( login: string, score: number, kills: number ) : void {
+    public updateTopList ( login: string, score: number, kills: number, death: number, level: number ) : void {
 
         http.get({
             hostname:   Environment.master.host,
             port:       Environment.master.port,
-            path:       '/api/update-top-list?login=' + encodeURI( login ) + '&kills=' + kills + '&score=' + score,
+            path:       '/api/update-top-list?login=' + encodeURI( login ) + '&kills=' + kills + '&score=' + score + '&death=' + death + '&level=' + level,
         }, ( res: any ) => {
 
             let response = '';

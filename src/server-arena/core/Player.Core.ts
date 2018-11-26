@@ -76,7 +76,7 @@ export class PlayerCore {
 
             if ( delta > 0 ) {
 
-                Master.updateTopList( this.login, this.score, this.kills );
+                Master.updateTopList( this.login, this.score, this.kills, this.death, this.level );
 
             }
 

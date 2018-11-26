@@ -6,28 +6,28 @@
 var GarageConfig = {
 
     arenaLevels: {
-        0:      { score: 2, maxSpeed: 50, power: 20000, armor: 200, cannon: 2, rpm: 10 },
-        1:      { score: 4, maxSpeed: 50, power: 10000, armor: 200, cannon: 2, rpm: 10 },
-        2:      { score: 5, maxSpeed: 2, power: 100, armor: 2, cannon: 2, rpm: 1 },
-        3:      { score: 7, maxSpeed: 2, power: 100, armor: 2, cannon: 2, rpm: 1 },
-        4:      { score: 8, maxSpeed: 2, power: 100, armor: 2, cannon: 2, rpm: 1 },
-        5:      { score: 10, maxSpeed: 2, power: 100, armor: 2, cannon: 2, rpm: 1 },
-        6:      { score: 12, maxSpeed: 2, power: 100, armor: 2, cannon: 2, rpm: 1 },
-        7:      { score: 500, maxSpeed: 2, power: 100, armor: 2, cannon: 2, rpm: 1 },
-        8:      { score: 650, maxSpeed: 2, power: 100, armor: 2, cannon: 2, rpm: 1 },
-        9:      { score: 1000, maxSpeed: 2, power: 100, armor: 2, cannon: 2, rpm: 1 },
-        10:     { score: 1400, maxSpeed: 2, power: 100, armor: 2, cannon: 2, rpm: 1 },
-        11:     { score: 1900, maxSpeed: 2, power: 100, armor: 2, cannon: 2, rpm: 1 },
-        12:     { score: 2500, maxSpeed: 2, power: 100, armor: 2, cannon: 2, rpm: 1 },
-        13:     { score: 3000, maxSpeed: 2, power: 100, armor: 2, cannon: 2, rpm: 1 },
-        14:     { score: 3800, maxSpeed: 2, power: 100, armor: 2, cannon: 2, rpm: 1 },
-        15:     { score: 4500, maxSpeed: 2, power: 100, armor: 2, cannon: 2, rpm: 1 },
-        16:     { score: 5500, maxSpeed: 2, power: 100, armor: 2, cannon: 2, rpm: 1 },
-        17:     { score: 6700, maxSpeed: 2, power: 100, armor: 2, cannon: 2, rpm: 1 },
-        18:     { score: 7200, maxSpeed: 2, power: 100, armor: 2, cannon: 2, rpm: 1 },
-        19:     { score: 8700, maxSpeed: 2, power: 100, armor: 2, cannon: 2, rpm: 1 },
-        20:     { score: 9800, maxSpeed: 2, power: 100, armor: 2, cannon: 2, rpm: 1 },
-        21:     { score: 12000, maxSpeed: 2, power: 100, armor: 2, cannon: 2, rpm: 1 },
+        0:      { score: 2 },
+        1:      { score: 4 },
+        2:      { score: 5 },
+        3:      { score: 7 },
+        4:      { score: 8 },
+        5:      { score: 10 },
+        6:      { score: 12 },
+        7:      { score: 500 },
+        8:      { score: 650 },
+        9:      { score: 1000 },
+        10:     { score: 1400 },
+        11:     { score: 1900 },
+        12:     { score: 2500 },
+        13:     { score: 3000 },
+        14:     { score: 3800 },
+        15:     { score: 4500 },
+        16:     { score: 5500 },
+        17:     { score: 6700 },
+        18:     { score: 7200 },
+        19:     { score: 8700 },
+        20:     { score: 9800 },
+        21:     { score: 12000 }
     },
 
     levels: {
@@ -41,6 +41,14 @@ var GarageConfig = {
         7:      2500,
         8:      3500,
         9:      4600
+    },
+
+    arenaUpgrades: {
+        1: { maxSpeed: 1, power: 100, armor: 2, cannon: 1, rpm: 1 },
+        2: { maxSpeed: 1, power: 100, armor: 2, cannon: 1, rpm: 1 },
+        3: { maxSpeed: 1, power: 100, armor: 2, cannon: 1, rpm: 1 },
+        4: { maxSpeed: 1, power: 100, armor: 2, cannon: 1, rpm: 1 },
+        5: { maxSpeed: 1, power: 100, armor: 2, cannon: 1, rpm: 1 }
     },
 
     tanks: {

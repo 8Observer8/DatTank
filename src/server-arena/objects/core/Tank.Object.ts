@@ -89,27 +89,27 @@ export class TankObject {
 
             case 'speed':
 
-                this.engine.maxSpeed += GarageManager.arenaLevels[ upgradeLevel ].maxSpeed;
+                this.engine.maxSpeed += GarageManager.arenaUpgrades[ upgradeLevel ].maxSpeed;
                 break;
 
             case 'rpm':
 
-                this.cannon.rpm += GarageManager.arenaLevels[ upgradeLevel ].rpm;
+                this.cannon.rpm += GarageManager.arenaUpgrades[ upgradeLevel ].rpm;
                 break;
 
             case 'armor':
 
-                this.armor.armor += GarageManager.arenaLevels[ upgradeLevel ].armor;
+                this.armor.armor += GarageManager.arenaUpgrades[ upgradeLevel ].armor;
                 break;
 
             case 'cannon':
 
-                this.cannon.damage += GarageManager.arenaLevels[ upgradeLevel ].cannon;
+                this.cannon.damage += GarageManager.arenaUpgrades[ upgradeLevel ].cannon;
                 break;
 
             case 'power':
 
-                this.engine.power += GarageManager.arenaLevels[ upgradeLevel ].power;
+                this.engine.power += GarageManager.arenaUpgrades[ upgradeLevel ].power;
                 break;
 
             default:
