@@ -793,6 +793,39 @@ export class Garage {
 
         //
 
+        let mouseDown = false;
+        const prevMousePos = { x: 0, y: 0 };
+
+        $('.garage #garage-viewport').mousedown( ( event: any ) => {
+
+            mouseDown = true;
+            prevMousePos.x = event.pageX;
+            prevMousePos.y = event.pageY;
+
+        });
+
+        $( document ).mouseup( ( event ) => {
+
+            mouseDown = false;
+
+        });
+
+        $( document ).mousemove( ( event ) => {
+
+            if ( mouseDown ) {
+
+                const dx = event.pageX - prevMousePos.x;
+                this.scene.rotateModel( dx / 300 );
+
+            }
+
+            prevMousePos.x = event.pageX;
+            prevMousePos.y = event.pageY;
+
+        });
+
+        //
+
         $('.garage .sound').click( UI.changeSound.bind( UI ) );
         $('.garage .fullscreen').click( UI.toggleFullscreenMode.bind( UI ) );
         $('.garage .bottom-block .tab:not(.active)').hide();

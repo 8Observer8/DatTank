@@ -26,7 +26,6 @@ export class GarageScene {
     private spotLight: THREE.SpotLight;
 
     private initModelsTimeout: number;
-    private timer: number = 0;
     private lastFrameTime: number = 0;
     private tankRotationSpeed: number = 0.00015;
 
@@ -34,6 +33,8 @@ export class GarageScene {
 
     public width: number = 0;
     public height: number = 0;
+    private autoRotate: boolean = true;
+    private autoRotationResumeTimeout: any = 0;
 
     //
 
@@ -104,6 +105,7 @@ export class GarageScene {
         this.baseModel.scale.set( 0.8, 0.8, 0.8 );
 
         this.currentModel.add( this.baseModel );
+        this.autoRotate = true;
 
     };
 
@@ -122,6 +124,7 @@ export class GarageScene {
         this.cannonModel.scale.set( 0.8, 0.8, 0.8 );
 
         this.currentModel.add( this.cannonModel );
+        this.autoRotate = true;
 
     };
 
@@ -180,6 +183,22 @@ export class GarageScene {
 
     };
 
+    public rotateModel ( deltaAngle: number ) : void {
+
+        if ( ! this.currentModel ) return;
+
+        this.currentModel.rotation.y += deltaAngle;
+        this.autoRotate = false;
+
+        clearTimeout( this.autoRotationResumeTimeout );
+        this.autoRotationResumeTimeout = setTimeout( () => {
+
+            this.autoRotate = true;
+
+        }, 4000 );
+
+    };
+
     private render () : void {
 
         requestAnimationFrame( this.render );
@@ -190,13 +209,12 @@ export class GarageScene {
         this.lastFrameTime = this.lastFrameTime || Date.now();
         const delta = Date.now() - this.lastFrameTime;
         this.lastFrameTime = Date.now();
-        this.timer += delta;
 
         //
 
-        if ( this.currentModel ) {
+        if ( this.currentModel && this.autoRotate ) {
 
-            this.currentModel.rotation.y = this.timer * this.tankRotationSpeed;
+            this.currentModel.rotation.y += delta * this.tankRotationSpeed;
 
         }
 
