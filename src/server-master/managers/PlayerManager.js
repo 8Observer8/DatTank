@@ -165,7 +165,7 @@ PlayerManager.prototype.buyObject = function ( pid, objectType, objectId, callba
 
         //
 
-        player.params[ objectType ][ objectId ] = { active: true };
+        player.params[ objectType ][ objectId ] = { active: true, level: 1 };
         player.markModified('params');
 
         //

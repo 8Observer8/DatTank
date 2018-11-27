@@ -71,7 +71,11 @@ var GarageConfig = {
             cannonCoef:     1,
             armorCoef:      1,
             ammoCapacity:   100,
-            description:    '<b>IS2001 tank</b> - default tank of Russian army in WW VII (2139 year) against other sides on first colonized planet (Mars).<br><br>By default equipped with plasma cannon of first generation, turbo diesel engine and tesla induction generator.<br><br>Easy in movement control, quite fast, powerful cannon, but gets overheated quite fast.<br><br>'
+            description:    '<b>IS2001 tank</b> - default tank of Russian army in WW VII (2139 year) against other sides on first colonized planet (Mars).<br><br>By default equipped with plasma cannon of first generation, turbo diesel engine and tesla induction generator.<br><br>Easy in movement control, quite fast, powerful cannon, but gets overheated quite fast.<br><br>',
+            upgrades:       {
+                0:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 100 } },
+                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } }
+            }
         },
 
         'TigerS8': {

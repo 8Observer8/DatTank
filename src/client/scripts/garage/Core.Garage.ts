@@ -134,6 +134,48 @@ export class Garage {
 
     };
 
+    public updateIfCanUpgrade () : void {
+
+        let item: any;
+        let level: number = 0;
+
+        const selectedMenu = $('.garage .menu-items .active').attr('tab');
+
+        if ( selectedMenu === 'tanks' ) {
+
+            item = Game.GarageConfig['tanks'][ this.selectedParts.base ];
+            level = this.params.tank[ item.id ].level;
+
+        }
+
+        if ( selectedMenu === 'cannons' ) {
+
+            item = Game.GarageConfig['cannons'][ this.selectedParts.cannon ];
+            level = this.params.cannon[ item.id ].level;
+
+        }
+
+        if ( selectedMenu === 'engines' ) {
+
+            item = Game.GarageConfig['engines'][ this.selectedParts.engine ];
+            level = this.params.engine[ item.id ].level;
+
+        }
+
+        if ( selectedMenu === 'armors' ) {
+
+            item = Game.GarageConfig['armors'][ this.selectedParts.armor ];
+            level = this.params.armor[ item.id ].level;
+
+        }
+
+        //
+
+        $('.garage .right-block .upgrade-block .price .coins-value').html( item.upgrades[ level - 1 ].price.coins );
+        $('.garage .right-block .upgrade-block .price .level-bonus-value').html( item.upgrades[ level - 1 ].price.levelBonuses );
+
+    };
+
     private updateUserParams ( coins?: number, xp?: number, level?: number, levelBonuses?: number ) : void {
 
         window['userData'].coins = coins || window['userData'].coins;
@@ -302,36 +344,44 @@ export class Garage {
         //
 
         let title = '';
+        let level = 0;
 
         switch ( category ) {
 
             case 'tanks':
 
+                level = this.params.tank[ tankId ].level;
                 title = 'Tank "' + tank.title + '"';
                 break;
 
             case 'cannons':
 
+                level = this.params.cannon[ cannonId ].level;
                 title = 'Cannon "' + cannon.title + '"';
                 break;
 
             case 'armors':
 
+                level = this.params.armor[ armorId ].level;
                 title = 'Armor "' + armor.title + '"';
                 break;
 
             case 'engines':
 
+                level = this.params.engine[ engineId ].level;
                 title = 'Engine "' + engine.title + '"';
                 break;
 
         }
 
+
         $('.garage .right-block .item-title').html( title );
+        $('.garage .right-block .item-level').html( 'Lv ' + level );
 
         //
 
         this.updateIfNeedToBuy();
+        this.updateIfCanUpgrade();
         this.checkIfTankComplete();
 
     };
