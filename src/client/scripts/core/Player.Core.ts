@@ -33,15 +33,19 @@ export class PlayerCore {
 
     //
 
-    public updateStats ( xp: number, coins: number ) : void {
+    public updateStats ( xp: number, coins: number, level: number, levelBonuses: number ) : void {
 
         Arena.myCoins = coins;
         Arena.myXP = xp;
+        Arena.myLevel = level;
+        Arena.myLevelBonuses = levelBonuses;
 
         window['userData'].coins = coins;
         window['userData'].xp = xp;
+        window['userData'].level = level;
+        window['userData'].levelBonuses = levelBonuses;
 
-        UI.InGame.updateXPCoins( xp, coins );
+        UI.InGame.updateCoins( coins );
 
     };
 

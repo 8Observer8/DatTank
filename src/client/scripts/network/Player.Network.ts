@@ -58,7 +58,10 @@ export class PlayerNetwork {
 
         const xp = data[2] * 10000 + data[1];
         const coins = data[4] * 10000 + data[3];
-        this.player.updateStats( xp, coins );
+        const level = data[5];
+        const levelBonuses = data[6];
+
+        this.player.updateStats( xp, coins, level, levelBonuses );
 
     };
 

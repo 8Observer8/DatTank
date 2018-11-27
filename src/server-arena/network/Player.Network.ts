@@ -58,7 +58,7 @@ export class PlayerNetwork {
     public updateStats () : void {
 
         this.buffers['UpdateStats'] = this.buffers['UpdateStats'] || {};
-        const buffer = this.buffers['UpdateStats'].buffer || new ArrayBuffer( 14 );
+        const buffer = this.buffers['UpdateStats'].buffer || new ArrayBuffer( 16 );
         const bufferView = this.buffers['UpdateStats'].bufferView || new Int16Array( buffer );
         this.buffers['UpdateStats'].buffer = buffer;
         this.buffers['UpdateStats'].bufferView = bufferView;
@@ -71,6 +71,7 @@ export class PlayerNetwork {
         bufferView[ 4 ] = this.player.coins % 10000;
         bufferView[ 5 ] = Math.floor( this.player.coins / 10000 );
         bufferView[ 6 ] = this.player.level;
+        bufferView[ 7 ] = this.player.levelBonuses;
 
         Network.send( 'PlayerStatsUpdate', this.player.socket, buffer, bufferView );
 

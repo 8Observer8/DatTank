@@ -43,6 +43,7 @@ export class PlayerCore {
     public death: number = 0;
     public score: number = 0;
     public level: number = 0;
+    public levelBonuses: number = 0;
     public arenaLevel: number = 0;
     public bonusArenaLevels = 0;
 
@@ -109,6 +110,7 @@ export class PlayerCore {
 
             this.xp = 0;
             this.level ++;
+            this.levelBonuses ++;
 
         }
 
@@ -313,6 +315,7 @@ export class PlayerCore {
                 this.xp = data.xp;
                 this.coins = data.coins;
                 this.level = data.level;
+                this.levelBonuses = data.levelBonuses;
                 this.pid = data.pid;
                 this.sid = data.sid;
                 this.parts = data.parts;

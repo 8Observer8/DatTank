@@ -29,6 +29,8 @@ class ArenaCore {
     public meId: number;
     public myCoins: number;
     public myXP: number;
+    public myLevel: number;
+    public myLevelBonuses: number;
 
     private updateInterval: number;
     private updateIntervalDuration: number = 50;
@@ -47,10 +49,9 @@ class ArenaCore {
     public init ( params: any ) : void {
 
         this.meId = params.me.id;
-
         this.myCoins = params.me.coins;
-        this.myXP = params.me.xp;
-        UI.InGame.updateXPCoins( this.myXP, this.myCoins );
+
+        UI.InGame.updateCoins( this.myCoins );
 
         // setup teams
 

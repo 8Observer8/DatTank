@@ -21,6 +21,7 @@ export class Garage {
     private level = window['userData'].level;
     private coins = window['userData'].coins;
     private xp = window['userData'].xp;
+    private levelBonuses = window['userData'].levelBonuses;
 
     private rightBarChangeTimeout: any;
     private maxConfigValues: any = {};
@@ -133,17 +134,21 @@ export class Garage {
 
     };
 
-    private updateUserParams ( coins?: number, xp?: number ) : void {
+    private updateUserParams ( coins?: number, xp?: number, level?: number, levelBonuses?: number ) : void {
 
         window['userData'].coins = coins || window['userData'].coins;
         window['userData'].xp = xp || window['userData'].xp;
+        window['userData'].level = xp || window['userData'].level;
+        window['userData'].levelBonuses = levelBonuses || window['userData'].levelBonuses;
 
         this.coins = window['userData'].coins;
         this.xp = window['userData'].xp;
+        this.level = window['userData'].level;
+        this.levelBonuses = window['userData'].levelBonuses;
 
-        $('.garage .level-block .title').html( 'Level ' + this.level + '' );
+        $('.garage .level-block .title').html( 'Level ' + ( this.level + 1 ) + '' );
         $('.garage .level-block .progress .progress-value').css({ width: ( 100 * this.xp / Game.GarageConfig.levels[ this.level ] ) + '%' })
-        $('.garage .bonuses .value').html( this.xp );
+        $('.garage .bonuses .value').html( this.levelBonuses );
         $('.garage .coins .value').html( this.coins );
 
     };

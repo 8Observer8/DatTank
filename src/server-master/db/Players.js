@@ -36,6 +36,9 @@ var PlayersSchema = mongoose.Schema({
     level: {
         type: Number
     },
+    levelBonuses: {
+        type: Number
+    },
     lastVisit: {
         type: Date
     }

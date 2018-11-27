@@ -66,7 +66,7 @@ PlayerManager.prototype.register = function ( callback ) {
     var sid = Buffer.from( Date.now() + '-' + pid ).toString('base64').replace( /=/g, '' );
 
     DB.models.players
-    .create({ pid: pid, sid: sid, coins: 1500, level: 0, xp: 0, lastVisit: Date.now() })
+    .create({ pid: pid, sid: sid, coins: 1500, level: 0, levelBonuses: 0, xp: 0, lastVisit: Date.now() })
     .then( ( player ) => {
 
         return callback({
@@ -99,13 +99,14 @@ PlayerManager.prototype.auth = function ( pid, sid, callback ) {
             player.save();
 
             return callback({
-                fid:    player.fid,
-                pid:    player.pid,
-                sid:    player.sid,
-                xp:     player.xp,
-                level:  player.level,
-                coins:  player.coins,
-                params: JSON.stringify( player.params ).replace( /"/g, "'" )
+                fid:            player.fid,
+                pid:            player.pid,
+                sid:            player.sid,
+                xp:             player.xp,
+                level:          player.level,
+                levelBonuses:   player.levelBonuses,
+                coins:          player.coins,
+                params:         JSON.stringify( player.params ).replace( /"/g, "'" )
             });
 
         }
@@ -229,7 +230,7 @@ PlayerManager.prototype.updateTopBoard = function ( login, score, kills, death, 
                 score: score,
                 kills: kills,
                 death: death,
-                level: level
+                level: level,
             })
             .then( function () {} );
             return;
@@ -275,12 +276,13 @@ PlayerManager.prototype.getPlayerInfo = function ( pid, callback ) {
         }
 
         return callback( null, {
-            pid:        player.pid,
-            sid:        player.sid,
-            parts:      player.params,
-            xp:         player.xp,
-            coins:      player.coins,
-            level:      player.level
+            pid:            player.pid,
+            sid:            player.sid,
+            parts:          player.params,
+            xp:             player.xp,
+            coins:          player.coins,
+            level:          player.level,
+            levelBonuses:   player.levelBonuses
         });
 
     });
@@ -307,6 +309,7 @@ PlayerManager.prototype.savePlayerInfo = function ( pid, sid, xp, coins, level, 
 
         player.coins = coins;
         player.xp = xp;
+        player.levelBonuses = level - player.level;
         player.level = level;
 
         player.save();
