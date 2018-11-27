@@ -149,6 +149,17 @@ export class Garage {
         $('.garage .level-block .title').html( 'Level ' + ( this.level + 1 ) + '' );
         $('.garage .level-block .progress .progress-value').css({ width: ( 100 * this.xp / Game.GarageConfig.levels[ this.level ] ) + '%' })
         $('.garage .bonuses .value').html( this.levelBonuses );
+
+        if ( this.levelBonuses === 0 ) {
+
+            $('.garage .bonuses').hide();
+
+        } else {
+
+            $('.garage .bonuses').show();
+
+        }
+
         $('.garage .coins .value').html( this.coins );
 
     };
@@ -355,7 +366,16 @@ export class Garage {
             const isSelected = ( tankId === selectedTankId );
             const isOwn = ( this.params.tank[ tankId ] !== undefined );
 
-            const item = '<div draggable="false" onmousedown="return false" style="user-drag: none" item-id="' + tankId + '" class="item' + ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) + '"><div class="obj-title">' + tank.title + '</div><div class="price"><div class="ico"></div><span class="value">' + tank.price + '</span></div><img class="img" src="/resources/img/garage/tanks/' + tankId + '.png" /></div>';
+            const item = `
+                <div draggable="false" onmousedown="return false" style="user-drag: none" item-id="${ tankId }" class="item${ ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) }">
+                    <div class="obj-title">${ tank.title }</div>
+                    <div class="price">
+                        <div class="ico"></div><span class="value">${ tank.price }</span>
+                    </div>
+                    <img class="img" src="/resources/img/garage/tanks/${ tankId }.png" />
+                </div>
+            `;
+
             $('.garage .bottom-block .tanks .list').append( item );
             width += 174;
 
