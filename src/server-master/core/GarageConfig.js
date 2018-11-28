@@ -73,8 +73,8 @@ var GarageConfig = {
             ammoCapacity:   100,
             description:    '<b>IS2001 tank</b> - default tank of Russian army in WW VII (2139 year) against other sides on first colonized planet (Mars).<br><br>By default equipped with plasma cannon of first generation, turbo diesel engine and tesla induction generator.<br><br>Easy in movement control, quite fast, powerful cannon, but gets overheated quite fast.<br><br>',
             upgrades:       {
-                0:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 100 } },
-                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } }
+                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 100 } },
+                2:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 20000000 } }
             }
         },
 
@@ -98,8 +98,8 @@ var GarageConfig = {
             ammoCapacity:   100,
             description:    '<b>Tiger S8 tank</b> - default tank of Germany army in Venus Planet War III (2140 year) against China.<br><br>By default equipped with plasma cannon of third generation, double turbo diesel engine with generator.<br><br>Is faster and has more powerful cannon than IS2001, but has problem with overheating.<br><br>',
             upgrades:       {
-                0:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 100 } },
-                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } }
+                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 100 } },
+                2:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } }
             }
         },
 
@@ -123,8 +123,8 @@ var GarageConfig = {
             ammoCapacity:   100,
             description:    '<b>Orbit T32s tank</b> - 1/3 tanks of China army in Venus Planet War III (2140 year) against Germany and USA.<br><br>By default equipped with improved second version laser cannon, improved ZEL-72 engine and uranium plates armor.<br><br>',
             upgrades:       {
-                0:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 100 } },
-                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } }
+                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 100 } },
+                2:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } }
             }
         },
 
@@ -148,8 +148,8 @@ var GarageConfig = {
             ammoCapacity:   100,
             description:    '<b>MG 813 tank</b> - popular tank from all sides in Earth Asia War II (2141 year).<br><br>By default equipped with double laser cannon, nice engine improved with Gallium generator core, but has light less secure X-Shield armor.<br><br>',
             upgrades:       {
-                0:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 100 } },
-                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } }
+                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 100 } },
+                2:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } }
             }
         },
 
@@ -173,8 +173,8 @@ var GarageConfig = {
             ammoCapacity:   100,
             description:    '<b>DTEK 72 tank</b> - rare Ukrainian tank designed in private company to defend oil wells from East Eurasian groups after Russia collapse in 2141 year.<br><br>By default equipped with triple plasma cannon, plutonium engine with partly organic generator and 80mm uranium plates armor sys.<br><br>',
             upgrades:       {
-                0:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 100 } },
-                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } }
+                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 100 } },
+                2:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } }
             }
         },
 
@@ -198,8 +198,8 @@ var GarageConfig = {
             ammoCapacity:   100,
             description:    '<b>Riper X3</b> - very powerful elite tank of United Korean Forces in Second War for Moon "Space Harbor" (2143 year).<br><br>By default equipped with special plasma cannon which solved problem of overheating, but this costs lots of energy consumption and lower movement speed and has new light graphene-type armor.<br><br>',
             upgrades:       {
-                0:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 100 } },
-                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } }
+                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 100 } },
+                2:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } }
             }
         }
 
@@ -223,8 +223,8 @@ var GarageConfig = {
             overheat:       110,
             rpm:            10,
             upgrades:       {
-                0:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -243,8 +243,8 @@ var GarageConfig = {
             energy:         0,
             rpm:            13,
             upgrades:       {
-                0:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -263,8 +263,8 @@ var GarageConfig = {
             energy:         0,
             rpm:            9,
             upgrades:       {
-                0:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -283,8 +283,8 @@ var GarageConfig = {
             energy:         0,
             rpm:            9,
             upgrades:       {
-                0:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -303,8 +303,8 @@ var GarageConfig = {
             energy:         0,
             rpm:            25,
             upgrades:       {
-                0:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -325,8 +325,8 @@ var GarageConfig = {
             energy:         0,
             rpm:            11,
             upgrades:       {
-                0:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -345,8 +345,8 @@ var GarageConfig = {
             energy:         0,
             rpm:            14,
             upgrades:       {
-                0:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -365,8 +365,8 @@ var GarageConfig = {
             energy:         0,
             rpm:            12,
             upgrades:       {
-                0:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -385,8 +385,8 @@ var GarageConfig = {
             energy:         0,
             rpm:            10,
             upgrades:       {
-                0:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -407,8 +407,8 @@ var GarageConfig = {
             energy:         0,
             rpm:            15,
             upgrades:       {
-                0:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -427,8 +427,8 @@ var GarageConfig = {
             energy:         0,
             rpm:            16,
             upgrades:       {
-                0:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -447,8 +447,8 @@ var GarageConfig = {
             energy:         0,
             rpm:            13,
             upgrades:       {
-                0:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         }
 
@@ -467,8 +467,8 @@ var GarageConfig = {
             power:          30000,
             maxSpeed:       50,
             upgrades:       {
-                0:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -483,8 +483,8 @@ var GarageConfig = {
             power:          30000,
             maxSpeed:       58,
             upgrades:       {
-                0:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -499,8 +499,8 @@ var GarageConfig = {
             power:          30000,
             maxSpeed:       62,
             upgrades:       {
-                0:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -515,8 +515,8 @@ var GarageConfig = {
             power:          30000,
             maxSpeed:       75,
             upgrades:       {
-                0:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -531,8 +531,8 @@ var GarageConfig = {
             power:          30000,
             maxSpeed:       78,
             upgrades:       {
-                0:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -547,8 +547,8 @@ var GarageConfig = {
             power:          30000,
             maxSpeed:       85,
             upgrades:       {
-                0:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -563,8 +563,8 @@ var GarageConfig = {
             power:          30000,
             maxSpeed:       89,
             upgrades:       {
-                0:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -579,8 +579,8 @@ var GarageConfig = {
             power:          30000,
             maxSpeed:       93,
             upgrades:       {
-                0:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         }
 
@@ -598,8 +598,8 @@ var GarageConfig = {
             price:          400,
             armor:          100,
             upgrades:       {
-                0:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -613,8 +613,8 @@ var GarageConfig = {
             price:          800,
             armor:          140,
             upgrades:       {
-                0:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -628,8 +628,8 @@ var GarageConfig = {
             price:          1400,
             armor:          160,
             upgrades:       {
-                0:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -643,8 +643,8 @@ var GarageConfig = {
             price:          1800,
             armor:          200,
             upgrades:       {
-                0:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -658,8 +658,8 @@ var GarageConfig = {
             price:          2400,
             armor:          250,
             upgrades:       {
-                0:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -673,8 +673,8 @@ var GarageConfig = {
             price:          3500,
             armor:          270,
             upgrades:       {
-                0:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -688,8 +688,8 @@ var GarageConfig = {
             price:          5000,
             armor:          310,
             upgrades:       {
-                0:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -703,8 +703,8 @@ var GarageConfig = {
             price:          8000,
             armor:          350,
             upgrades:       {
-                0:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -718,8 +718,8 @@ var GarageConfig = {
             price:          15000,
             armor:          380,
             upgrades:       {
-                0:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         }
 

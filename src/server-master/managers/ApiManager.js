@@ -77,6 +77,22 @@ var ApiManager = {
 
     },
 
+    upgradeObject: function ( req, res ) {
+
+        var pid = req.cookies['dt-pid'];
+        var objectId = req.params.oid;
+        var objectType = req.params.type;
+
+        //
+
+        DT.playerManager.upgradeObject( pid, objectType, objectId, function ( result, message ) {
+
+            return res.send({ success: result, message: message });
+
+        });
+
+    },
+
     authCheck: function ( req, res, next ) {
 
         var pid = req.cookies['dt-pid'];

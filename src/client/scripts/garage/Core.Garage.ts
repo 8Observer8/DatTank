@@ -155,6 +155,9 @@ export class Garage {
         let level: number = 1;
 
         const selectedMenu = $('.garage .menu-items .active').attr('tab');
+        $('.garage .right-block .upgrade-block').css({ transform: 'translate( 0px, 0px )', opacity: 1 });
+
+        //
 
         if ( selectedMenu === 'tanks' ) {
 
@@ -186,17 +189,34 @@ export class Garage {
 
         //
 
-        $('.garage .right-block .upgrade-block .price .coins-value').html( item.upgrades[ level - 1 ].price.coins );
-        $('.garage .right-block .upgrade-block .price .level-bonus-value').html( item.upgrades[ level - 1 ].price.levelBonuses );
+        $('.garage .right-block .upgrade-block .price .coins-value').html( item.upgrades[ level ].price.coins );
+        $('.garage .right-block .upgrade-block .price .level-bonus-value').html( item.upgrades[ level ].price.levelBonuses );
+        $('.garage .right-block .upgrade-block .upgrade-btn').off();
+        $('.garage .right-block .upgrade-block .upgrade-btn').click( () => { this.upgradePart( item ); } );
+        $('.garage .right-block .upgrade-block .upgrade-btn').removeClass('inactive');
+
+        if ( item.upgrades[ level ].price.levelBonuses > this.levelBonuses ) {
+
+            $('.garage .right-block .upgrade-block .upgrade-btn').html('Need bonus points');
+            $('.garage .right-block .upgrade-block .upgrade-btn').addClass('inactive');
+
+        }
+
+        if ( item.upgrades[ level ].price.coins > this.coins ) {
+
+            $('.garage .right-block .upgrade-block .upgrade-btn').html('Not enough coins');
+            $('.garage .right-block .upgrade-block .upgrade-btn').addClass('inactive');
+
+        }
 
     };
 
     private updateUserParams ( coins?: number, xp?: number, level?: number, levelBonuses?: number ) : void {
 
-        window['userData'].coins = coins || window['userData'].coins;
-        window['userData'].xp = xp || window['userData'].xp;
-        window['userData'].level = xp || window['userData'].level;
-        window['userData'].levelBonuses = levelBonuses || window['userData'].levelBonuses;
+        window['userData'].coins = coins || this.coins;
+        window['userData'].xp = xp || this.xp;
+        window['userData'].level = xp || this.level;
+        window['userData'].levelBonuses = levelBonuses || this.levelBonuses;
 
         this.coins = window['userData'].coins;
         this.xp = window['userData'].xp;
@@ -205,7 +225,8 @@ export class Garage {
 
         $('.garage .level-block .title').html( 'Level ' + ( this.level + 1 ) + '' );
         $('.garage .level-block .progress .progress-value').css({ width: ( 100 * this.xp / Game.GarageConfig.levels[ this.level ] ) + '%' })
-        $('.garage .bonuses .value').html( this.levelBonuses );
+        $('.garage .level-block .bonuses .value').html( this.levelBonuses );
+        $('.garage .level-block .bonuses').attr( 'bonuses', this.levelBonuses );
 
         if ( this.levelBonuses === 0 ) {
 
@@ -530,7 +551,7 @@ export class Garage {
 
             if ( this.menuTabSwitchBlocked ) return;
             clearTimeout( this.rightBarChangeTimeout );
-            this.rightBarChangeTimeout = setTimeout( this.updateRightMenu.bind( this ), 600 );
+            this.rightBarChangeTimeout = setTimeout( this.updateRightMenu.bind( this ), 100 );
 
         });
 
@@ -755,8 +776,36 @@ export class Garage {
             this.setupMenu();
             SoundManager.playSound('MenuBuy');
             $('.garage .right-block .buy-block').css({ transform: 'translate( 30px, 0px )', opacity: 0 });
+            setTimeout( () => { $('.garage .right-block .buy-block').hide(); }, 300 );
             this.updateUserParams( response.coins );
             this.checkIfTankComplete();
+            this.updateIfCanUpgrade( false, item.id );
+
+        });
+
+    };
+
+    private upgradePart ( item: any ) : void {
+
+        Game.gameService.upgradeObject( item.type.toLowerCase(), item.id, ( response: any ) => {
+
+            SoundManager.playSound('MenuBuy');
+
+            this.params = response.params;
+            this.levelBonuses = response.levelBonuses;
+            this.updateUserParams( response.coins );
+
+            $('.garage .right-block .upgrade-block').css({ transform: 'translate( 30px, 0px )', opacity: 0 });
+            $('.garage .right-block .item-level').html( 'Lv ' + response.itemLevel );
+            $('.garage .level-block .bonuses .value').html( this.levelBonuses );
+            $('.garage .level-block .bonuses').attr( 'bonuses', this.levelBonuses );
+
+            setTimeout( () => {
+
+                $('.garage .right-block .upgrade-block').hide();
+                this.updateIfCanUpgrade( false, item.id );
+
+            }, 300 );
 
         });
 

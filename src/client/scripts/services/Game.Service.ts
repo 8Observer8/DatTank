@@ -52,4 +52,18 @@ export class GameService {
 
     };
 
+    public upgradeObject ( type: string, objectId: string, callback: ( result: boolean ) => void ) : void {
+
+        $.post( '/api/garage/upgradeObject/' + type + '/' + objectId, ( response ) => {
+
+            if ( response.success ) {
+
+                return callback( response.message );
+
+            }
+
+        });
+
+    };
+
 };

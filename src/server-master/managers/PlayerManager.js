@@ -188,6 +188,47 @@ PlayerManager.prototype.buyObject = function ( pid, objectType, objectId, callba
 
 };
 
+PlayerManager.prototype.upgradeObject = function ( pid, objectType, objectId, callback ) {
+
+    DB.models.players
+    .findOne({ pid: pid })
+    .then( ( player ) => {
+
+        if ( ! player ) return callback( false, 'player not found' );
+
+        var objectCurrentLevel = player.params[ objectType ][ objectId ].level;
+        var object = ( GarageConfig[ objectType + 's' ] || {} )[ objectId ] || false;
+
+        if ( object === false ) return callback( false, 'object not found' );
+        if ( ! player.params[ objectType ][ objectId ] ) return callback( false, 'object not bought' );
+        if ( player.levelBonuses === 0 ) return callback( false, 'nought enough level bonuses');
+        if ( player.coins < object.upgrades[ objectCurrentLevel ].price.coins ) return callback( false, 'not enough coins' );
+
+        player.coins -= object.upgrades[ objectCurrentLevel ].price.coins;
+        player.levelBonuses --;
+
+        //
+
+        player.params[ objectType ][ objectId ].level ++;
+        player.markModified('params');
+
+        //
+
+        player.save( function () {
+
+            return callback( true, {
+                params:             player.params,
+                itemLevel:          player.params[ objectType ][ objectId ].level,
+                coins:              player.coins,
+                levelBonuses:       player.levelBonuses
+            });
+
+        });
+
+    });
+
+};
+
 PlayerManager.prototype.getTopBoard = function ( callback ) {
 
     DB.models.topPlayers
