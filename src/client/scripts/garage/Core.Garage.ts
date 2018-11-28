@@ -213,10 +213,10 @@ export class Garage {
 
     private updateUserParams ( coins?: number, xp?: number, level?: number, levelBonuses?: number ) : void {
 
-        window['userData'].coins = coins || this.coins;
-        window['userData'].xp = xp || this.xp;
-        window['userData'].level = xp || this.level;
-        window['userData'].levelBonuses = levelBonuses || this.levelBonuses;
+        window['userData'].coins = ( coins !== undefined ) ? coins : this.coins;
+        window['userData'].xp = ( xp !== undefined ) ? xp : this.xp;
+        window['userData'].level = ( level !== undefined ) ? level : this.level;
+        window['userData'].levelBonuses = ( levelBonuses !== undefined ) ? levelBonuses : this.levelBonuses;
 
         this.coins = window['userData'].coins;
         this.xp = window['userData'].xp;
