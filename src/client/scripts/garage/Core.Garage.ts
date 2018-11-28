@@ -58,7 +58,20 @@ export class Garage {
 
     };
 
-    public updateIfNeedToBuy () : void {
+    public updateIfNeedToBuy ( forceHide: boolean ) : boolean {
+
+        if ( forceHide ) {
+
+            $('.garage .right-block .buy-block').hide();
+            return false;
+
+        } else {
+
+            $('.garage .right-block .buy-block').show();
+
+        }
+
+        //
 
         let needToBuy = false;
         let item: any;
@@ -132,40 +145,55 @@ export class Garage {
 
         }
 
+        return needToBuy;
+
     };
 
-    public updateIfCanUpgrade () : void {
+    public updateIfCanUpgrade ( forceHide: boolean, ifNeedToBy: boolean ) : void {
+
+        if ( forceHide || ifNeedToBy ) {
+
+            $('.garage .right-block .upgrade-block').hide();
+            return;
+
+        } else {
+
+            $('.garage .right-block .upgrade-block').show();
+
+        }
+
+        //
 
         let item: any;
-        let level: number = 0;
+        let level: number = 1;
 
         const selectedMenu = $('.garage .menu-items .active').attr('tab');
 
         if ( selectedMenu === 'tanks' ) {
 
             item = Game.GarageConfig['tanks'][ this.selectedParts.base ];
-            level = this.params.tank[ item.id ].level;
+            level = ( this.params.tank[ item.id ] ) ? this.params.tank[ item.id ].level : 1;
 
         }
 
         if ( selectedMenu === 'cannons' ) {
 
             item = Game.GarageConfig['cannons'][ this.selectedParts.cannon ];
-            level = this.params.cannon[ item.id ].level;
+            level = ( this.params.cannon[ item.id ] ) ? this.params.cannon[ item.id ].level : 1;
 
         }
 
         if ( selectedMenu === 'engines' ) {
 
             item = Game.GarageConfig['engines'][ this.selectedParts.engine ];
-            level = this.params.engine[ item.id ].level;
+            level = ( this.params.engine[ item.id ] ) ? this.params.engine[ item.id ].level : 1;
 
         }
 
         if ( selectedMenu === 'armors' ) {
 
             item = Game.GarageConfig['armors'][ this.selectedParts.armor ];
-            level = this.params.armor[ item.id ].level;
+            level = ( this.params.armor[ item.id ] ) ? this.params.armor[ item.id ].level : 1;
 
         }
 
@@ -344,44 +372,47 @@ export class Garage {
         //
 
         let title = '';
-        let level = 0;
+        let level = 1;
 
         switch ( category ) {
 
             case 'tanks':
 
-                level = this.params.tank[ tankId ].level;
+                level = ( this.params.tank[ tankId ] ) ? this.params.tank[ tankId ].level : 1;
                 title = 'Tank "' + tank.title + '"';
                 break;
 
             case 'cannons':
 
-                level = this.params.cannon[ cannonId ].level;
+                level = ( this.params.cannon[ cannonId ] ) ? this.params.cannon[ cannonId ].level : 1;
                 title = 'Cannon "' + cannon.title + '"';
                 break;
 
             case 'armors':
 
-                level = this.params.armor[ armorId ].level;
+                level = ( this.params.armor[ armorId ] ) ? this.params.armor[ armorId ].level : 1;
                 title = 'Armor "' + armor.title + '"';
                 break;
 
             case 'engines':
 
-                level = this.params.engine[ engineId ].level;
+                level = ( this.params.engine[ engineId ] ) ? this.params.engine[ engineId ].level : 1;
                 title = 'Engine "' + engine.title + '"';
                 break;
 
         }
-
 
         $('.garage .right-block .item-title').html( title );
         $('.garage .right-block .item-level').html( 'Lv ' + level );
 
         //
 
-        this.updateIfNeedToBuy();
-        this.updateIfCanUpgrade();
+        const ifChangedParts = ( Math.abs( deltaSpeed ) + Math.abs( deltaRange ) + Math.abs( deltaRPM ) + Math.abs( deltaOverheat ) + Math.abs( deltaDamage ) + Math.abs( deltaArmor ) ) !== 0;
+
+        //
+
+        const ifNeedToBy = this.updateIfNeedToBuy( ifChangedParts );
+        this.updateIfCanUpgrade( ifChangedParts, ifNeedToBy );
         this.checkIfTankComplete();
 
     };

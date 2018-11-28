@@ -96,7 +96,11 @@ var GarageConfig = {
             cannonCoef:     1,
             armorCoef:      1,
             ammoCapacity:   100,
-            description:    '<b>Tiger S8 tank</b> - default tank of Germany army in Venus Planet War III (2140 year) against China.<br><br>By default equipped with plasma cannon of third generation, double turbo diesel engine with generator.<br><br>Is faster and has more powerful cannon than IS2001, but has problem with overheating.<br><br>'
+            description:    '<b>Tiger S8 tank</b> - default tank of Germany army in Venus Planet War III (2140 year) against China.<br><br>By default equipped with plasma cannon of third generation, double turbo diesel engine with generator.<br><br>Is faster and has more powerful cannon than IS2001, but has problem with overheating.<br><br>',
+            upgrades:       {
+                0:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 100 } },
+                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } }
+            }
         },
 
         'OrbitT32s': {
@@ -117,7 +121,11 @@ var GarageConfig = {
             cannonCoef:     1,
             armorCoef:      1,
             ammoCapacity:   100,
-            description:    '<b>Orbit T32s tank</b> - 1/3 tanks of China army in Venus Planet War III (2140 year) against Germany and USA.<br><br>By default equipped with improved second version laser cannon, improved ZEL-72 engine and uranium plates armor.<br><br>'
+            description:    '<b>Orbit T32s tank</b> - 1/3 tanks of China army in Venus Planet War III (2140 year) against Germany and USA.<br><br>By default equipped with improved second version laser cannon, improved ZEL-72 engine and uranium plates armor.<br><br>',
+            upgrades:       {
+                0:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 100 } },
+                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } }
+            }
         },
 
         'MG813': {
@@ -138,7 +146,11 @@ var GarageConfig = {
             cannonCoef:     1,
             armorCoef:      1,
             ammoCapacity:   100,
-            description:    '<b>MG 813 tank</b> - popular tank from all sides in Earth Asia War II (2141 year).<br><br>By default equipped with double laser cannon, nice engine improved with Gallium generator core, but has light less secure X-Shield armor.<br><br>'
+            description:    '<b>MG 813 tank</b> - popular tank from all sides in Earth Asia War II (2141 year).<br><br>By default equipped with double laser cannon, nice engine improved with Gallium generator core, but has light less secure X-Shield armor.<br><br>',
+            upgrades:       {
+                0:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 100 } },
+                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } }
+            }
         },
 
         'DTEK72': {
@@ -159,7 +171,11 @@ var GarageConfig = {
             cannonCoef:     1,
             armorCoef:      1,
             ammoCapacity:   100,
-            description:    '<b>DTEK 72 tank</b> - rare Ukrainian tank designed in private company to defend oil wells from East Eurasian groups after Russia collapse in 2141 year.<br><br>By default equipped with triple plasma cannon, plutonium engine with partly organic generator and 80mm uranium plates armor sys.<br><br>'
+            description:    '<b>DTEK 72 tank</b> - rare Ukrainian tank designed in private company to defend oil wells from East Eurasian groups after Russia collapse in 2141 year.<br><br>By default equipped with triple plasma cannon, plutonium engine with partly organic generator and 80mm uranium plates armor sys.<br><br>',
+            upgrades:       {
+                0:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 100 } },
+                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } }
+            }
         },
 
         'RiperX3': {
@@ -180,7 +196,11 @@ var GarageConfig = {
             cannonCoef:     1,
             armorCoef:      1,
             ammoCapacity:   100,
-            description:    '<b>Riper X3</b> - very powerful elite tank of United Korean Forces in Second War for Moon "Space Harbor" (2143 year).<br><br>By default equipped with special plasma cannon which solved problem of overheating, but this costs lots of energy consumption and lower movement speed and has new light graphene-type armor.<br><br>'
+            description:    '<b>Riper X3</b> - very powerful elite tank of United Korean Forces in Second War for Moon "Space Harbor" (2143 year).<br><br>By default equipped with special plasma cannon which solved problem of overheating, but this costs lots of energy consumption and lower movement speed and has new light graphene-type armor.<br><br>',
+            upgrades:       {
+                0:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 100 } },
+                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } }
+            }
         }
 
     },
@@ -201,7 +221,11 @@ var GarageConfig = {
             antiArmor:      1,
             range:          200,
             overheat:       110,
-            rpm:            10
+            rpm:            10,
+            upgrades:       {
+                0:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         'Plasma-g2': {
@@ -217,7 +241,11 @@ var GarageConfig = {
             range:          220,
             overheat:       110,
             energy:         0,
-            rpm:            13
+            rpm:            13,
+            upgrades:       {
+                0:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         'Plasma-double': {
@@ -233,7 +261,11 @@ var GarageConfig = {
             range:          180,
             overheat:       90,
             energy:         0,
-            rpm:            9
+            rpm:            9,
+            upgrades:       {
+                0:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         'Plasma-triple': {
@@ -249,7 +281,11 @@ var GarageConfig = {
             range:          170,
             overheat:       70,
             energy:         0,
-            rpm:            9
+            rpm:            9,
+            upgrades:       {
+                0:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         'Plasma-zero': {
@@ -265,7 +301,11 @@ var GarageConfig = {
             range:          210,
             overheat:       300,
             energy:         0,
-            rpm:            25
+            rpm:            25,
+            upgrades:       {
+                0:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         // Laser cannons
@@ -283,7 +323,11 @@ var GarageConfig = {
             range:          250,
             overheat:       65,
             energy:         0,
-            rpm:            11
+            rpm:            11,
+            upgrades:       {
+                0:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         'Razer-v2': {
@@ -299,7 +343,11 @@ var GarageConfig = {
             range:          270,
             overheat:       70,
             energy:         0,
-            rpm:            14
+            rpm:            14,
+            upgrades:       {
+                0:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         'Razer-double': {
@@ -315,7 +363,11 @@ var GarageConfig = {
             range:          250,
             overheat:       60,
             energy:         0,
-            rpm:            12
+            rpm:            12,
+            upgrades:       {
+                0:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         'Razer-quadro': {
@@ -331,7 +383,11 @@ var GarageConfig = {
             range:          200,
             overheat:       30,
             energy:         0,
-            rpm:            10
+            rpm:            10,
+            upgrades:       {
+                0:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         // Magnet cannons
@@ -349,7 +405,11 @@ var GarageConfig = {
             range:          250,
             overheat:       45,
             energy:         0,
-            rpm:            15
+            rpm:            15,
+            upgrades:       {
+                0:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         'Mag87s': {
@@ -365,7 +425,11 @@ var GarageConfig = {
             range:          170,
             overheat:       65,
             energy:         0,
-            rpm:            16
+            rpm:            16,
+            upgrades:       {
+                0:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         'Mag87s-turbo': {
@@ -381,7 +445,11 @@ var GarageConfig = {
             range:          160,
             overheat:       50,
             energy:         0,
-            rpm:            13
+            rpm:            13,
+            upgrades:       {
+                0:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         }
 
     },
@@ -397,7 +465,11 @@ var GarageConfig = {
             shortDesc:      'Turbo diesel 1.3k HP engine with tesla induction generator.',
             price:          500,
             power:          30000,
-            maxSpeed:       50
+            maxSpeed:       50,
+            upgrades:       {
+                0:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         'ZEL-72': {
@@ -409,7 +481,11 @@ var GarageConfig = {
             shortDesc:      'Double turbo diesel 1.8k HP engine with tesla induction generator.',
             price:          800,
             power:          30000,
-            maxSpeed:       58
+            maxSpeed:       58,
+            upgrades:       {
+                0:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         'ZEL-72s': {
@@ -421,7 +497,11 @@ var GarageConfig = {
             shortDesc:      'Double turbo diesel 2.1k HP engine with tesla induction generator with Gallium winding.',
             price:          1300,
             power:          30000,
-            maxSpeed:       62
+            maxSpeed:       62,
+            upgrades:       {
+                0:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         'KTZ-r1': {
@@ -433,7 +513,11 @@ var GarageConfig = {
             shortDesc:      'Plutonium 3.2k HP engine with organic-based generator.',
             price:          1700,
             power:          30000,
-            maxSpeed:       75
+            maxSpeed:       75,
+            upgrades:       {
+                0:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         'KTZ-r2': {
@@ -445,7 +529,11 @@ var GarageConfig = {
             shortDesc:      'Improved plutonium 3.4k HP engine with organic-based generator.',
             price:          2000,
             power:          30000,
-            maxSpeed:       78
+            maxSpeed:       78,
+            upgrades:       {
+                0:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         'VAX-32': {
@@ -457,7 +545,11 @@ var GarageConfig = {
             shortDesc:      'Polonium ARK 3.7k HP engine with generator and Lithium batteries.',
             price:          3000,
             power:          30000,
-            maxSpeed:       85
+            maxSpeed:       85,
+            upgrades:       {
+                0:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         'VAX-32s': {
@@ -469,7 +561,11 @@ var GarageConfig = {
             shortDesc:      'Improved polonium ARK 4.2k HP engine.',
             price:          4500,
             power:          30000,
-            maxSpeed:       89
+            maxSpeed:       89,
+            upgrades:       {
+                0:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         'VAX-32v2': {
@@ -481,7 +577,11 @@ var GarageConfig = {
             shortDesc:      'Modified VAX32s with Cesium core, 4.6k HP.',
             price:          6000,
             power:          30000,
-            maxSpeed:       93
+            maxSpeed:       93,
+            upgrades:       {
+                0:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         }
 
     },
@@ -496,7 +596,11 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Basic 100mm titanium list.',
             price:          400,
-            armor:          100
+            armor:          100,
+            upgrades:       {
+                0:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         'KS-shield': {
@@ -507,7 +611,11 @@ var GarageConfig = {
             description:    '',
             shortDesc:      '20mm Iridium armor.',
             price:          800,
-            armor:          140
+            armor:          140,
+            upgrades:       {
+                0:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         'KS200-shield': {
@@ -518,7 +626,11 @@ var GarageConfig = {
             description:    '',
             shortDesc:      '35mm Iridium armor with active barrier.',
             price:          1400,
-            armor:          160
+            armor:          160,
+            upgrades:       {
+                0:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         'Z8-shield': {
@@ -529,7 +641,11 @@ var GarageConfig = {
             description:    '',
             shortDesc:      '80mm uranium plates armor.',
             price:          1800,
-            armor:          200
+            armor:          200,
+            upgrades:       {
+                0:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         'MG-defence': {
@@ -540,7 +656,11 @@ var GarageConfig = {
             description:    '',
             shortDesc:      '3mm graphene nanotubes plates armor.',
             price:          2400,
-            armor:          250
+            armor:          250,
+            upgrades:       {
+                0:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         'MG-defence-v2': {
@@ -551,7 +671,11 @@ var GarageConfig = {
             description:    '',
             shortDesc:      '5mm graphene nanotubes plates with Adamantium strings.',
             price:          3500,
-            armor:          270
+            armor:          270,
+            upgrades:       {
+                0:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         'P12-shield': {
@@ -562,7 +686,11 @@ var GarageConfig = {
             description:    '',
             shortDesc:      '5mm graphene nanotubes plates with Adamantium strings.',
             price:          5000,
-            armor:          310
+            armor:          310,
+            upgrades:       {
+                0:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         'P12.5-shield': {
@@ -573,7 +701,11 @@ var GarageConfig = {
             description:    '',
             shortDesc:      '5mm graphene nanotubes plates with Adamantium strings.',
             price:          8000,
-            armor:          350
+            armor:          350,
+            upgrades:       {
+                0:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         },
 
         'T215-armor': {
@@ -584,7 +716,11 @@ var GarageConfig = {
             description:    '',
             shortDesc:      '5mm graphene nanotubes plates with adamantium strings.',
             price:          15000,
-            armor:          380
+            armor:          380,
+            upgrades:       {
+                0:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
+                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+            }
         }
 
     }
