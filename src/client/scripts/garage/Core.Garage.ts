@@ -93,6 +93,8 @@ export class Garage {
 
         }
 
+        $('.garage .right-block .buy-btn').off();
+
         if ( needToBuy ) {
 
             $('.garage .right-block .buy-block').show();
@@ -107,16 +109,13 @@ export class Garage {
 
             });
 
-            $('.garage .right-block .buy-btn').click( () => {
-
-                SoundManager.playSound('ElementSelect');
-
-            });
+            $('.garage .right-block .buy-block .price .value').removeClass('not-enough');
 
             if ( item.price > this.coins ) {
 
                 $('.garage .right-block .buy-btn').addClass('inactive');
-                $('.garage .right-block .buy-btn').html('Not enough coins');
+                $('.garage .right-block .buy-block .price .value').addClass('not-enough');
+                $('.garage .right-block .buy-btn').click( () => { SoundManager.playSound('ElementSelect'); });
 
             } else {
 
@@ -128,7 +127,6 @@ export class Garage {
         } else {
 
             $('.garage .right-block .buy-block').hide();
-            $('.garage .right-block .buy-btn').off();
 
         }
 
@@ -191,21 +189,33 @@ export class Garage {
 
         $('.garage .right-block .upgrade-block .price .coins-value').html( item.upgrades[ level ].price.coins );
         $('.garage .right-block .upgrade-block .price .level-bonus-value').html( item.upgrades[ level ].price.levelBonuses );
-        $('.garage .right-block .upgrade-block .upgrade-btn').off();
-        $('.garage .right-block .upgrade-block .upgrade-btn').click( () => { this.upgradePart( item ); } );
+
         $('.garage .right-block .upgrade-block .upgrade-btn').removeClass('inactive');
+        $('.garage .right-block .upgrade-block .upgrade-btn .level-bonus-value').removeClass('not-enough');
+        $('.garage .right-block .upgrade-block .coins-value').removeClass('not-enough');
+        $('.garage .right-block .upgrade-block .upgrade-btn').off();
+
+        $('.garage .right-block .upgrade-block .upgrade-btn').mouseover( () => {
+
+            SoundManager.playSound('ElementHover');
+
+        });
 
         if ( item.upgrades[ level ].price.levelBonuses > this.levelBonuses ) {
 
-            $('.garage .right-block .upgrade-block .upgrade-btn').html('Need bonus points');
+            $('.garage .right-block .upgrade-block .level-bonus-value').addClass('not-enough');
             $('.garage .right-block .upgrade-block .upgrade-btn').addClass('inactive');
+            $('.garage .right-block .upgrade-block .upgrade-btn').click( () => { SoundManager.playSound('ElementSelect'); } );
 
-        }
+        } else if ( item.upgrades[ level ].price.coins > this.coins ) {
 
-        if ( item.upgrades[ level ].price.coins > this.coins ) {
-
-            $('.garage .right-block .upgrade-block .upgrade-btn').html('Not enough coins');
+            $('.garage .right-block .upgrade-block .coins-value').addClass('not-enough');
             $('.garage .right-block .upgrade-block .upgrade-btn').addClass('inactive');
+            $('.garage .right-block .upgrade-block .upgrade-btn').click( () => { SoundManager.playSound('ElementSelect'); } );
+
+        } else {
+
+            $('.garage .right-block .upgrade-block .upgrade-btn').click( () => { this.upgradePart( item ); } );
 
         }
 
@@ -226,17 +236,6 @@ export class Garage {
         $('.garage .level-block .title').html( 'Level ' + ( this.level + 1 ) + '' );
         $('.garage .level-block .progress .progress-value').css({ width: ( 100 * this.xp / Game.GarageConfig.levels[ this.level ] ) + '%' })
         $('.garage .level-block .bonuses .value').html( this.levelBonuses );
-        $('.garage .level-block .bonuses').attr( 'bonuses', this.levelBonuses );
-
-        if ( this.levelBonuses === 0 ) {
-
-            $('.garage .bonuses').hide();
-
-        } else {
-
-            $('.garage .bonuses').show();
-
-        }
 
         $('.garage .coins .value').html( this.coins );
 
@@ -798,7 +797,6 @@ export class Garage {
             $('.garage .right-block .upgrade-block').css({ transform: 'translate( 30px, 0px )', opacity: 0 });
             $('.garage .right-block .item-level').html( 'Lv ' + response.itemLevel );
             $('.garage .level-block .bonuses .value').html( this.levelBonuses );
-            $('.garage .level-block .bonuses').attr( 'bonuses', this.levelBonuses );
 
             setTimeout( () => {
 
