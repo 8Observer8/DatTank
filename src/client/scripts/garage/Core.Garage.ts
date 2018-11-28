@@ -58,51 +58,38 @@ export class Garage {
 
     };
 
-    public updateIfNeedToBuy ( forceHide: boolean ) : boolean {
-
-        if ( forceHide ) {
-
-            $('.garage .right-block .buy-block').hide();
-            return false;
-
-        } else {
-
-            $('.garage .right-block .buy-block').show();
-
-        }
-
-        //
+    public updateIfNeedToBuy ( itemId: string ) : boolean {
 
         let needToBuy = false;
         let item: any;
 
         const selectedMenu = $('.garage .menu-items .active').attr('tab');
 
-        if ( selectedMenu === 'tanks' && ! this.params['tank'][ this.selectedParts.base ] ) {
+        if ( selectedMenu === 'tanks' && ! this.params['tank'][ itemId ] ) {
 
             needToBuy = true;
-            item = Game.GarageConfig['tanks'][ this.selectedParts.base ];
+            item = Game.GarageConfig['tanks'][ itemId ];
 
         }
 
-        if ( selectedMenu === 'cannons' && ! this.params['cannon'][ this.selectedParts.cannon ] ) {
+        if ( selectedMenu === 'cannons' && ! this.params['cannon'][ itemId ] ) {
 
             needToBuy = true;
-            item = Game.GarageConfig['cannons'][ this.selectedParts.cannon ];
+            item = Game.GarageConfig['cannons'][ itemId ];
 
         }
 
-        if ( selectedMenu === 'engines' && ! this.params['engine'][ this.selectedParts.engine ] ) {
+        if ( selectedMenu === 'engines' && ! this.params['engine'][ itemId ] ) {
 
             needToBuy = true;
-            item = Game.GarageConfig['engines'][ this.selectedParts.engine ];
+            item = Game.GarageConfig['engines'][ itemId ];
 
         }
 
-        if ( selectedMenu === 'armors' && ! this.params['armor'][ this.selectedParts.armor ] ) {
+        if ( selectedMenu === 'armors' && ! this.params['armor'][ itemId ] ) {
 
             needToBuy = true;
-            item = Game.GarageConfig['armors'][ this.selectedParts.armor ];
+            item = Game.GarageConfig['armors'][ itemId ];
 
         }
 
@@ -149,9 +136,9 @@ export class Garage {
 
     };
 
-    public updateIfCanUpgrade ( forceHide: boolean, ifNeedToBy: boolean ) : void {
+    public updateIfCanUpgrade ( ifNeedToBy: boolean, itemId: string ) : void {
 
-        if ( forceHide || ifNeedToBy ) {
+        if ( ifNeedToBy ) {
 
             $('.garage .right-block .upgrade-block').hide();
             return;
@@ -171,28 +158,28 @@ export class Garage {
 
         if ( selectedMenu === 'tanks' ) {
 
-            item = Game.GarageConfig['tanks'][ this.selectedParts.base ];
+            item = Game.GarageConfig['tanks'][ itemId ];
             level = ( this.params.tank[ item.id ] ) ? this.params.tank[ item.id ].level : 1;
 
         }
 
         if ( selectedMenu === 'cannons' ) {
 
-            item = Game.GarageConfig['cannons'][ this.selectedParts.cannon ];
+            item = Game.GarageConfig['cannons'][ itemId ];
             level = ( this.params.cannon[ item.id ] ) ? this.params.cannon[ item.id ].level : 1;
 
         }
 
         if ( selectedMenu === 'engines' ) {
 
-            item = Game.GarageConfig['engines'][ this.selectedParts.engine ];
+            item = Game.GarageConfig['engines'][ itemId ];
             level = ( this.params.engine[ item.id ] ) ? this.params.engine[ item.id ].level : 1;
 
         }
 
         if ( selectedMenu === 'armors' ) {
 
-            item = Game.GarageConfig['armors'][ this.selectedParts.armor ];
+            item = Game.GarageConfig['armors'][ itemId ];
             level = ( this.params.armor[ item.id ] ) ? this.params.armor[ item.id ].level : 1;
 
         }
@@ -380,24 +367,28 @@ export class Garage {
 
                 level = ( this.params.tank[ tankId ] ) ? this.params.tank[ tankId ].level : 1;
                 title = 'Tank "' + tank.title + '"';
+                itemId = tankId;
                 break;
 
             case 'cannons':
 
                 level = ( this.params.cannon[ cannonId ] ) ? this.params.cannon[ cannonId ].level : 1;
                 title = 'Cannon "' + cannon.title + '"';
+                itemId = cannonId;
                 break;
 
             case 'armors':
 
                 level = ( this.params.armor[ armorId ] ) ? this.params.armor[ armorId ].level : 1;
                 title = 'Armor "' + armor.title + '"';
+                itemId = armorId;
                 break;
 
             case 'engines':
 
                 level = ( this.params.engine[ engineId ] ) ? this.params.engine[ engineId ].level : 1;
                 title = 'Engine "' + engine.title + '"';
+                itemId = engineId;
                 break;
 
         }
@@ -407,12 +398,8 @@ export class Garage {
 
         //
 
-        const ifChangedParts = ( Math.abs( deltaSpeed ) + Math.abs( deltaRange ) + Math.abs( deltaRPM ) + Math.abs( deltaOverheat ) + Math.abs( deltaDamage ) + Math.abs( deltaArmor ) ) !== 0;
-
-        //
-
-        const ifNeedToBy = this.updateIfNeedToBuy( ifChangedParts );
-        this.updateIfCanUpgrade( ifChangedParts, ifNeedToBy );
+        const ifNeedToBy = this.updateIfNeedToBuy( itemId );
+        this.updateIfCanUpgrade( ifNeedToBy, itemId );
         this.checkIfTankComplete();
 
     };
