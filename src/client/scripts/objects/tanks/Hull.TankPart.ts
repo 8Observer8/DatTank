@@ -1,9 +1,9 @@
 /*
  * @author ohmed
- * Tank Base part
+ * Tank Hull part
 */
 
-export class BaseTankPart {
+export class HullTankPart {
 
     public nid: number;
     public title: string;

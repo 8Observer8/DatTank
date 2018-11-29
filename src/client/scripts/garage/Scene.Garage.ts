@@ -19,7 +19,7 @@ export class GarageScene {
 
     private garage: Garage;
     private currentModel: THREE.Object3D = new THREE.Object3D();
-    private baseModel: THREE.Mesh;
+    private hullModel: THREE.Mesh;
     private cannonModel: THREE.Mesh;
 
     private ambientLight: THREE.AmbientLight;
@@ -88,23 +88,23 @@ export class GarageScene {
 
     };
 
-    public selectTank ( modelName: string ) : void {
+    public selectHull ( modelName: string ) : void {
 
-        this.currentModel.remove( this.baseModel );
+        this.currentModel.remove( this.hullModel );
 
-        const model = ResourceManager.getModel( 'bases/' + modelName );
+        const model = ResourceManager.getModel( 'hulls/' + modelName );
         if ( ! model ) return;
 
-        this.baseModel = new THREE.Mesh( model.geometry, [
+        this.hullModel = new THREE.Mesh( model.geometry, [
             new THREE.MeshLambertMaterial({ color: 0xaaaaaa, map: new THREE.TextureLoader().load('/resources/textures/IS2.png') }),
             new THREE.MeshLambertMaterial({ color: 0xaaaaaa, map: new THREE.TextureLoader().load('/resources/textures/IS2.png') }),
             new THREE.MeshLambertMaterial({ color: 0xaaaaaa, map: new THREE.TextureLoader().load('/resources/textures/IS2.png') }),
         ]);
-        this.baseModel.castShadow = true;
-        this.baseModel.receiveShadow = true;
-        this.baseModel.scale.set( 0.8, 0.8, 0.8 );
+        this.hullModel.castShadow = true;
+        this.hullModel.receiveShadow = true;
+        this.hullModel.scale.set( 0.8, 0.8, 0.8 );
 
-        this.currentModel.add( this.baseModel );
+        this.currentModel.add( this.hullModel );
         this.autoRotate = true;
 
     };

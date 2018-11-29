@@ -40,7 +40,7 @@ export class Garage {
 
         const parts = this.selectedParts;
 
-        if ( this.availableParts['tank'][ parts.base ] && this.availableParts['cannon'][ parts.cannon ] && this.availableParts['engine'][ parts.engine ] && this.availableParts['armor'][ parts.armor ] ) {
+        if ( this.availableParts['hull'][ parts.hull ] && this.availableParts['cannon'][ parts.cannon ] && this.availableParts['engine'][ parts.engine ] && this.availableParts['armor'][ parts.armor ] ) {
 
             $('.play-btn').html('BATTLE!');
             $('.garage .play-btn-hint').css({ opacity: 0 });
@@ -94,16 +94,16 @@ export class Garage {
 
     };
 
-    public selectTank ( event?: MouseEvent ) : void {
+    public selectHull ( event?: MouseEvent ) : void {
 
         if ( this.lockPartsChange ) return;
 
         if ( event && event.currentTarget ) {
 
-            const tank = Game.GarageConfig.tanks[ $( event.currentTarget ).attr('item-id') || '' ];
-            this.selectPart( event.currentTarget as HTMLElement, tank );
+            const hull = Game.GarageConfig.hull[ $( event.currentTarget ).attr('item-id') || '' ];
+            this.selectPart( event.currentTarget as HTMLElement, hull );
 
-            this.scene.selectTank( this.selectedParts.base );
+            this.scene.selectHull( this.selectedParts.hull );
             this.scene.selectCannon( this.selectedParts.cannon );
 
         }
@@ -124,14 +124,14 @@ export class Garage {
 
         }
 
-        const cannon = Game.GarageConfig.cannons[ $( event.currentTarget ).attr('item-id') || '' ];
+        const cannon = Game.GarageConfig.cannon[ $( event.currentTarget ).attr('item-id') || '' ];
         this.selectPart( event.currentTarget as HTMLElement, cannon );
 
         this.scene.selectCannon( this.selectedParts.cannon );
 
     };
 
-    public selectEngines ( event?: MouseEvent ) : void {
+    public selectEngine ( event?: MouseEvent ) : void {
 
         if ( this.lockPartsChange ) return;
 
@@ -141,7 +141,7 @@ export class Garage {
 
         }
 
-        const engine = Game.GarageConfig.engines[ $( event.currentTarget ).attr('item-id') || '' ];
+        const engine = Game.GarageConfig.engine[ $( event.currentTarget ).attr('item-id') || '' ];
         this.selectPart( event.currentTarget as HTMLElement, engine );
 
     };
@@ -156,7 +156,7 @@ export class Garage {
 
         }
 
-        const armor = Game.GarageConfig.armors[ $( event.currentTarget ).attr('item-id') || '' ];
+        const armor = Game.GarageConfig.armor[ $( event.currentTarget ).attr('item-id') || '' ];
         this.selectPart( event.currentTarget as HTMLElement, armor );
 
     };
@@ -167,20 +167,20 @@ export class Garage {
 
         //
 
-        if ( item.type.toLowerCase() === 'tank' ) {
+        if ( item.type.toLowerCase() === 'hull' ) {
 
             const tankConfig = this.preSelectedParts[ item.id ];
 
-            this.selectedParts['base'] = item.id;
-            this.selectedParts['cannon'] = tankConfig && tankConfig['cannon'] ? tankConfig['cannon'] : Game.GarageConfig['tanks'][ item.id ].default.cannon;
-            this.selectedParts['armor'] = tankConfig && tankConfig['armor'] ? tankConfig['armor'] : Game.GarageConfig['tanks'][ item.id ].default.armor;
-            this.selectedParts['engine'] = tankConfig && tankConfig['engine'] ? tankConfig['engine'] : Game.GarageConfig['tanks'][ item.id ].default.engine;
+            this.selectedParts['hull'] = item.id;
+            this.selectedParts['cannon'] = tankConfig && tankConfig['cannon'] ? tankConfig['cannon'] : Game.GarageConfig['hull'][ item.id ].default.cannon;
+            this.selectedParts['armor'] = tankConfig && tankConfig['armor'] ? tankConfig['armor'] : Game.GarageConfig['hull'][ item.id ].default.armor;
+            this.selectedParts['engine'] = tankConfig && tankConfig['engine'] ? tankConfig['engine'] : Game.GarageConfig['hull'][ item.id ].default.engine;
 
         } else {
 
             this.selectedParts[ item.type.toLowerCase() ] = item.id;
-            this.preSelectedParts[ this.selectedParts.base ] = this.preSelectedParts[ this.selectedParts.base ] || {};
-            this.preSelectedParts[ this.selectedParts.base ][ item.type.toLowerCase() ] = item.id;
+            this.preSelectedParts[ this.selectedParts.hull ] = this.preSelectedParts[ this.selectedParts.hull ] || {};
+            this.preSelectedParts[ this.selectedParts.hull ][ item.type.toLowerCase() ] = item.id;
 
         }
 
@@ -237,7 +237,7 @@ export class Garage {
 
     public onLoadedResources () : void {
 
-        this.selectTank();
+        this.selectHull();
 
     };
 
@@ -255,7 +255,7 @@ export class Garage {
         this.scene.reset();
         this.scene.resize();
 
-        this.scene.selectTank( this.selectedParts.base );
+        this.scene.selectHull( this.selectedParts.hull );
         this.scene.selectCannon( this.selectedParts.cannon );
 
         //
@@ -340,7 +340,7 @@ export class Garage {
         localStorage.setItem( 'PreSelectedParts', JSON.stringify( this.preSelectedParts ) );
 
         this.selectedParts = JSON.parse( localStorage.getItem('SelectedParts') || 'false' );
-        this.selectedParts = this.selectedParts || { base: 'IS2001', cannon: 'Plasma-g1', armor: 'X-shield', engine: 'KX-v8' };
+        this.selectedParts = this.selectedParts || { hull: 'IS2001', cannon: 'Plasma-g1', armor: 'X-shield', engine: 'KX-v8' };
         localStorage.setItem( 'SelectedParts', JSON.stringify( this.selectedParts ) );
 
         //

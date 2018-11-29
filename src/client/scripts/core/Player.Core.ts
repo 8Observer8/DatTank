@@ -73,7 +73,7 @@ export class PlayerCore {
         if ( ! this.tank ) return;
 
         this.network.respawn({
-            base:       this.tank.base.nid,
+            hull:       this.tank.hull.nid,
             cannon:     this.tank.cannon.nid,
             armor:      this.tank.armor.nid,
             engine:     this.tank.engine.nid,

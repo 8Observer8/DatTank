@@ -12,7 +12,7 @@ import { BoxObject } from './Box.Object';
 import { TankNetwork } from '../../network/Tank.Network';
 import { GarageManager } from '../../managers/Garage.Manager';
 
-import { BaseTankPart } from '../tanks/Base.TankPart';
+import { HullTankPart } from '../tanks/Hull.TankPart';
 import { CannonTankPart } from '../tanks/Cannon.TankPart';
 import { ArmorTankPart } from '../tanks/Armor.TankPart';
 import { EngineTankPart } from '../tanks/Engine.TankPart';
@@ -48,7 +48,7 @@ export class TankObject {
     private sinceRegenerationLimit: number = 2000;
     private sinceRegenerationTime: number;
 
-    public base: BaseTankPart;
+    public hull: HullTankPart;
     public cannon: CannonTankPart;
     public armor: ArmorTankPart;
     public engine: EngineTankPart;
@@ -192,11 +192,11 @@ export class TankObject {
 
             if ( killer instanceof TankObject ) {
 
-                this.changeHealth( - 20 * ( 0.3 * Math.random() + 0.7 ) * ( killer.base.cannonCoef * killer.cannon.damage ) / ( this.base.armorCoef * this.armor.armor ), killer );
+                this.changeHealth( - 20 * ( 0.3 * Math.random() + 0.7 ) * ( killer.hull.cannonCoef * killer.cannon.damage ) / ( this.hull.armorCoef * this.armor.armor ), killer );
 
             } else if ( killer instanceof TowerObject ) {
 
-                this.changeHealth( - 20 * ( 0.3 * Math.random() + 0.7 ) * ( killer.damage ) / ( this.base.armorCoef * this.armor.armor ), killer );
+                this.changeHealth( - 20 * ( 0.3 * Math.random() + 0.7 ) * ( killer.damage ) / ( this.hull.armorCoef * this.armor.armor ), killer );
 
             }
 
@@ -223,7 +223,7 @@ export class TankObject {
         if ( this.health <= 0 ) return;
 
         this.ammo += delta;
-        this.ammo = Math.max( Math.min( this.base.ammoCapacity, this.ammo ), 0 );
+        this.ammo = Math.max( Math.min( this.hull.ammoCapacity, this.ammo ), 0 );
 
         //
 
@@ -513,7 +513,7 @@ export class TankObject {
 
     public getMaxSpeed () : number {
 
-        return this.engine.maxSpeed * this.base.speedCoef;
+        return this.engine.maxSpeed * this.hull.speedCoef;
 
     };
 
@@ -533,11 +533,11 @@ export class TankObject {
             position:       this.position.toJSON(),
             moveDirection:  this.moveDirection.toJSON(),
             base:           {
-                nid:            this.base.nid,
-                speedCoef:      this.base.speedCoef,
-                cannonCoef:     this.base.speedCoef,
-                armorCoef:      this.base.armorCoef,
-                ammoCapacity:   this.base.ammoCapacity,
+                nid:            this.hull.nid,
+                speedCoef:      this.hull.speedCoef,
+                cannonCoef:     this.hull.speedCoef,
+                armorCoef:      this.hull.armorCoef,
+                ammoCapacity:   this.hull.ammoCapacity,
             },
             cannon:         {
                 nid:            this.cannon.nid,

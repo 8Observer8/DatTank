@@ -94,7 +94,7 @@ export class ArenaNetwork {
                     rotation:           data[ offset + 9 ] / 1000,
                     health:             data[ offset + 10 ],
                     ammo:               0,
-                    base:   {
+                    hull:   {
                         nid:            data[ offset + 11 ],
                         speedCoef:      data[ offset + 12 ],
                         ammoCapacity:   0,
@@ -139,8 +139,8 @@ export class ArenaNetwork {
             if ( Arena.meId === player.id ) {
 
                 player.tank.ammo = data[ offset + 0 ];
-                player.tank.base.ammoCapacity = data[ offset + 1 ];
-                player.tank.base.armorCoef = data[ offset + 2 ];
+                player.tank.hull.ammoCapacity = data[ offset + 1 ];
+                player.tank.hull.armorCoef = data[ offset + 2 ];
                 player.tank.cannon.range = data[ offset + 3 ];
                 player.tank.cannon.rpm = data[ offset + 4 ];
                 player.tank.cannon.overheat = data[ offset + 5 ];

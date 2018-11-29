@@ -92,7 +92,7 @@ export class PlayerNetwork {
         //
 
         bufferView[1] = this.player.id;
-        bufferView[2] = params.base;
+        bufferView[2] = params.hull;
         bufferView[3] = params.cannon;
         bufferView[4] = params.armor;
         bufferView[5] = params.engine;

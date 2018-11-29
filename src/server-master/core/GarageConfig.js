@@ -51,17 +51,17 @@ var GarageConfig = {
         5: { maxSpeed: 1, power: 100, armor: 2, cannon: 1, rpm: 1 }
     },
 
-    tanks: {
+    hull: {
 
         'IS2001': {
             nid:            1,
-            type:           'Tank',
+            type:           'Hull',
             id:             'IS2001',
             title:          'IS 2001',
             price:          500,
-            cannons:        [ 'Plasma-g1', 'Plasma-g2', 'Razer-v1', 'Razer-double' ],
-            engines:        [ 'KX-v8', 'ZEL-72', 'KTZ-r1' ],
-            armors:         [ 'X-shield', 'KS-shield', 'Z8-shield' ],
+            cannon:         [ 'Plasma-g1', 'Plasma-g2', 'Razer-v1', 'Razer-double' ],
+            engine:         [ 'KX-v8', 'ZEL-72', 'KTZ-r1' ],
+            armor:          [ 'X-shield', 'KS-shield', 'Z8-shield' ],
             default:        {
                 cannon:     'Plasma-g1',
                 engine:     'KX-v8',
@@ -79,13 +79,13 @@ var GarageConfig = {
 
         'TigerS8': {
             nid:            2,
-            type:           'Tank',
+            type:           'Hull',
             id:             'TigerS8',
             title:          'Tiger S8',
             price:          1500,
-            cannons:        [ 'Plasma-g2', 'Plasma-double', 'Razer-v2', 'Razer-double' ],
-            engines:        [ 'ZEL-72s', 'KTZ-r2' ],
-            armors:         [ 'KS-shield', 'Z8-shield', 'KS200-shield' ],
+            cannon:         [ 'Plasma-g2', 'Plasma-double', 'Razer-v2', 'Razer-double' ],
+            engine:         [ 'ZEL-72s', 'KTZ-r2' ],
+            armor:          [ 'KS-shield', 'Z8-shield', 'KS200-shield' ],
             default:        {
                 cannon:     'Plasma-double',
                 engine:     'ZEL-72s',
@@ -103,13 +103,13 @@ var GarageConfig = {
 
         'OrbitT32s': {
             nid:            3,
-            type:           'Tank',
+            type:           'Hull',
             id:             'OrbitT32s',
             title:          'Orbit T32s',
             price:          2800,
-            cannons:        [ 'Plasma-double', 'Plasma-triple', 'Razer-v2', 'Razer-double' ],
-            engines:        [ 'KTZ-r2', 'VAX-32', 'VAX-32s' ],
-            armors:         [ 'KS200-shield', 'Z8-shield', 'MG-defence' ],
+            cannon:         [ 'Plasma-double', 'Plasma-triple', 'Razer-v2', 'Razer-double' ],
+            engine:         [ 'KTZ-r2', 'VAX-32', 'VAX-32s' ],
+            armor:          [ 'KS200-shield', 'Z8-shield', 'MG-defence' ],
             default:        {
                 cannon:     'Razer-v2',
                 engine:     'VAX-32',
@@ -127,13 +127,13 @@ var GarageConfig = {
 
         'MG813': {
             nid:            4,
-            type:           'Tank',
+            type:           'Hull',
             id:             'MG813',
             title:          'MG 813',
             price:          5000,
-            cannons:        [ 'Plasma-triple', 'Razer-double', 'Razer-quadro', 'Mag87' ],
-            engines:        [ 'ZEL-72s', 'KTZ-r2', 'VAX-32s' ],
-            armors:         [ 'X-shield', 'KS-shield', 'z8-shield' ],
+            cannon:         [ 'Plasma-triple', 'Razer-double', 'Razer-quadro', 'Mag87' ],
+            engine:         [ 'ZEL-72s', 'KTZ-r2', 'VAX-32s' ],
+            armor:          [ 'X-shield', 'KS-shield', 'z8-shield' ],
             default:        {
                 cannon:     'Razer-double',
                 engine:     'ZEL-72s',
@@ -151,13 +151,13 @@ var GarageConfig = {
 
         'DTEK72': {
             nid:            5,
-            type:           'Tank',
+            type:           'Hull',
             id:             'DTEK72',
             title:          'DTEK 72',
             price:          8700,
-            cannons:        [ 'Plasma-triple', 'Razer-quadro', 'Mag87', 'Mag87s' ],
-            engines:        [ 'KTZ-r1', 'KTZ-r2', 'VAX-32', 'VAX-32s' ],
-            armors:         [ 'Z8-shield', 'MG-defence', 'MG-defence-v2', 'P12-shield' ],
+            cannon:         [ 'Plasma-triple', 'Razer-quadro', 'Mag87', 'Mag87s' ],
+            engine:         [ 'KTZ-r1', 'KTZ-r2', 'VAX-32', 'VAX-32s' ],
+            armor:          [ 'Z8-shield', 'MG-defence', 'MG-defence-v2', 'P12-shield' ],
             default:        {
                 cannon:     'Plasma-triple',
                 engine:     'KTZ-r1',
@@ -175,13 +175,13 @@ var GarageConfig = {
 
         'RiperX3': {
             nid:            6,
-            type:           'Tank',
+            type:           'Hull',
             id:             'RiperX3',
             title:          'Riper X3',
             price:          12000,
-            cannons:        [ 'Plasma-zero', 'Razer-quadro', 'Mag87', 'Mag87s', 'Plasma-zero' ],
-            engines:        [ 'KTZ-r2', 'VAX-32s', 'VAX-32v2' ],
-            armors:         [ 'MG-defence', 'MG-defence-v2', 'T215'],
+            cannon:         [ 'Plasma-zero', 'Razer-quadro', 'Mag87', 'Mag87s', 'Plasma-zero' ],
+            engine:         [ 'KTZ-r2', 'VAX-32s', 'VAX-32v2' ],
+            armor:          [ 'MG-defence', 'MG-defence-v2', 'T215'],
             default:        {
                 cannon:     'Plasma-zero',
                 engine:     'KTZ-r2',
@@ -199,7 +199,7 @@ var GarageConfig = {
 
     },
 
-    cannons: {
+    cannon: {
 
         // Plasma cannons
 
@@ -413,7 +413,7 @@ var GarageConfig = {
 
     },
 
-    engines: {
+    engine: {
 
         'KX-v8': {
             nid:            201,
@@ -553,7 +553,7 @@ var GarageConfig = {
 
     },
 
-    armors: {
+    armor: {
 
         'X-shield': {
             nid:            301,

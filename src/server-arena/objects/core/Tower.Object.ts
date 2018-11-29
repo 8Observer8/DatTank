@@ -128,7 +128,7 @@ export class TowerObject {
 
             killer.player.changeScore( 1 );
             this.arena.updateLeaderboard();
-            this.changeHealth( - 20 * ( 0.3 * Math.random() + 0.7 ) * ( killer.base.cannonCoef * killer.cannon.damage ) / this.armor );
+            this.changeHealth( - 20 * ( 0.3 * Math.random() + 0.7 ) * ( killer.hull.cannonCoef * killer.cannon.damage ) / this.armor );
 
             //
 

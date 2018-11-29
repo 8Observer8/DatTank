@@ -298,8 +298,8 @@ export class TankNetwork {
             bufferView[ offset +  9 ] = ( tank.rotation % ( 2 * Math.PI ) ) * 1000;
             bufferView[ offset + 10 ] = tank.health;
 
-            bufferView[ offset + 11 ] = tank.base.nid;
-            bufferView[ offset + 12 ] = tank.base.speedCoef;
+            bufferView[ offset + 11 ] = tank.hull.nid;
+            bufferView[ offset + 12 ] = tank.hull.speedCoef;
             bufferView[ offset + 13 ] = tank.cannon.nid;
             bufferView[ offset + 14 ] = tank.armor.nid;
             bufferView[ offset + 15 ] = tank.armor.armor;
@@ -326,8 +326,8 @@ export class TankNetwork {
             if ( tank.id === this.tank.id ) {
 
                 bufferView[ offset + 0 ] = tank.ammo;
-                bufferView[ offset + 1 ] = tank.base.ammoCapacity;
-                bufferView[ offset + 2 ] = tank.base.armorCoef;
+                bufferView[ offset + 1 ] = tank.hull.ammoCapacity;
+                bufferView[ offset + 2 ] = tank.hull.armorCoef;
                 bufferView[ offset + 3 ] = tank.cannon.range;
                 bufferView[ offset + 4 ] = tank.cannon.rpm;
                 bufferView[ offset + 5 ] = tank.cannon.overheat;

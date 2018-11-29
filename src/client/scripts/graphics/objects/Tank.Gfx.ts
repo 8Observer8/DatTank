@@ -24,7 +24,7 @@ class TankGfx {
 
     public wrapper: THREE.Object3D = new THREE.Object3D();
     public object: THREE.Object3D = new THREE.Object3D();
-    private base: THREE.Mesh;
+    private hull: THREE.Mesh;
     private cannon: MorphBlendMesh;
     private tank: TankObject;
     private traces: TankTracesGfx = new TankTracesGfx();
@@ -121,9 +121,9 @@ class TankGfx {
 
         // if tank moves update tracks
 
-        if ( ! this.base.material[2] ) return;
-        const track1Map = this.base.material[1].map;
-        const track2Map = this.base.material[2].map;
+        if ( ! this.hull.material[2] ) return;
+        const track1Map = this.hull.material[1].map;
+        const track2Map = this.hull.material[2].map;
 
         if ( Math.abs( tank.velocity ) > 20 ) {
 
@@ -243,25 +243,25 @@ class TankGfx {
 
         //
 
-        let baseId = '';
+        let hullId = '';
         let cannonId = '';
 
-        for ( const tankName in Game.GarageConfig.tanks ) {
+        for ( const hullName in Game.GarageConfig.hull ) {
 
-            if ( Game.GarageConfig.tanks[ tankName ].nid === this.tank.base.nid ) {
+            if ( Game.GarageConfig.hull[ hullName ].nid === this.tank.hull.nid ) {
 
-                baseId = Game.GarageConfig.tanks[ tankName ].id;
+                hullId = Game.GarageConfig.hull[ hullName ].id;
                 break;
 
             }
 
         }
 
-        for ( const cannonName in Game.GarageConfig.cannons ) {
+        for ( const cannonName in Game.GarageConfig.cannon ) {
 
-            if ( Game.GarageConfig.cannons[ cannonName ].nid === this.tank.cannon.nid ) {
+            if ( Game.GarageConfig.cannon[ cannonName ].nid === this.tank.cannon.nid ) {
 
-                cannonId = Game.GarageConfig.cannons[ cannonName ].id;
+                cannonId = Game.GarageConfig.cannon[ cannonName ].id;
                 break;
 
             }
@@ -271,9 +271,9 @@ class TankGfx {
         //
 
         const materials = [];
-        const tankModel = ResourceManager.getModel( 'bases/' + baseId )!;
+        const tankModel = ResourceManager.getModel( 'hulls/' + hullId )!;
 
-        // add tank base mesh
+        // add tank hull mesh
 
         const inMaterials = tankModel.material as THREE.MeshBasicMaterial[] || [];
         const texture = ResourceManager.getTexture( 'IS2.png' )!;
@@ -289,9 +289,9 @@ class TankGfx {
 
         }
 
-        this.base = new THREE.Mesh( tankModel.geometry, materials );
-        this.base.scale.set( 10, 10, 10 );
-        this.wrapper.add( this.base );
+        this.hull = new THREE.Mesh( tankModel.geometry, materials );
+        this.hull.scale.set( 10, 10, 10 );
+        this.wrapper.add( this.hull );
 
         // add tank cannon mesh
 

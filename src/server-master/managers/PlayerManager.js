@@ -155,7 +155,7 @@ PlayerManager.prototype.buyObject = function ( pid, objectType, objectId, callba
 
         if ( ! player ) return callback( false, 'player not found' );
 
-        var object = ( GarageConfig[ objectType + 's' ] || {} )[ objectId ] || false;
+        var object = ( GarageConfig[ objectType ] || {} )[ objectId ] || false;
         if ( object === false ) return callback( false, 'object not found' );
 
         if ( player.coins < object.price ) return callback( false, 'not enough coins' );
@@ -197,7 +197,7 @@ PlayerManager.prototype.upgradeObject = function ( pid, objectType, objectId, ca
         if ( ! player ) return callback( false, 'player not found' );
 
         var objectCurrentLevel = player.params[ objectType ][ objectId ].level;
-        var object = ( GarageConfig[ objectType + 's' ] || {} )[ objectId ] || false;
+        var object = ( GarageConfig[ objectType ] || {} )[ objectId ] || false;
 
         if ( objectCurrentLevel === 5 ) return callback( false, 'object has max level already');
         if ( object === false ) return callback( false, 'object not found' );

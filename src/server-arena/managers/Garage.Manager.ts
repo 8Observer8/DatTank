@@ -6,7 +6,7 @@
 import { PlayerCore } from '../core/Player.Core';
 import { TankObject } from '../objects/core/Tank.Object';
 
-import { BaseTankPart } from '../objects/tanks/Base.TankPart';
+import { HullTankPart } from '../objects/tanks/Hull.TankPart';
 import { ArmorTankPart } from '../objects/tanks/Armor.TankPart';
 import { CannonTankPart } from '../objects/tanks/Cannon.TankPart';
 import { EngineTankPart } from '../objects/tanks/Engine.TankPart';
@@ -17,10 +17,10 @@ class GarageManagerCore {
 
     private static instance: GarageManagerCore;
 
-    public bases: any[];
-    public cannons: any[];
-    public armors: any[];
-    public engines: any[];
+    public hull: any[];
+    public cannon: any[];
+    public armor: any[];
+    public engine: any[];
 
     public levels: { [ key: number ]: number };
     public arenaLevels: { [ key: number ]: { score: number } };
@@ -30,10 +30,10 @@ class GarageManagerCore {
 
     public set ( config: any ) : void {
 
-        this.bases = config.tanks;
-        this.cannons = config.cannons;
-        this.armors = config.armors;
-        this.engines = config.engines;
+        this.hull = config.hull;
+        this.cannon = config.cannon;
+        this.armor = config.armor;
+        this.engine = config.engine;
 
         this.levels = config.levels;
         this.arenaLevels = config.arenaLevels;
@@ -43,11 +43,11 @@ class GarageManagerCore {
 
     public getBaseById ( id: number ) : any {
 
-        for ( const i in this.bases ) {
+        for ( const i in this.hull ) {
 
-            if ( this.bases[ i ].nid === id ) {
+            if ( this.hull[ i ].nid === id ) {
 
-                return this.bases[ i ];
+                return this.hull[ i ];
 
             }
 
@@ -59,11 +59,11 @@ class GarageManagerCore {
 
     public getCannonById ( id: number ) : any {
 
-        for ( const i in this.cannons ) {
+        for ( const i in this.cannon ) {
 
-            if ( this.cannons[ i ].nid === id ) {
+            if ( this.cannon[ i ].nid === id ) {
 
-                return this.cannons[ i ];
+                return this.cannon[ i ];
 
             }
 
@@ -75,11 +75,11 @@ class GarageManagerCore {
 
     public getArmorById ( id: number ) : any {
 
-        for ( const i in this.armors ) {
+        for ( const i in this.armor ) {
 
-            if ( this.armors[ i ].nid === id ) {
+            if ( this.armor[ i ].nid === id ) {
 
-                return this.armors[ i ];
+                return this.armor[ i ];
 
             }
 
@@ -91,11 +91,11 @@ class GarageManagerCore {
 
     public getEngineById ( id: number ) : any {
 
-        for ( const i in this.engines ) {
+        for ( const i in this.engine ) {
 
-            if ( this.engines[ i ].nid === id ) {
+            if ( this.engine[ i ].nid === id ) {
 
-                return this.engines[ i ];
+                return this.engine[ i ];
 
             }
 
@@ -113,10 +113,10 @@ class GarageManagerCore {
 
         if ( player.socket ) {
 
-            if ( ! availableParts.tank[ params.base ] || ! availableParts.cannon[ params.cannon ] || ! availableParts.armor[ params.armor ] || ! availableParts.engine[ params.engine ] ) {
+            if ( ! availableParts.hull[ params.hull ] || ! availableParts.cannon[ params.cannon ] || ! availableParts.armor[ params.armor ] || ! availableParts.engine[ params.engine ] ) {
 
                 params.base = 'IS2001';
-                const rawTankData = this.bases[ params.base ];
+                const rawTankData = this.hull[ params.hull ];
 
                 params.cannon = rawTankData.default.cannon;
                 params.armor = rawTankData.default.armor;
@@ -131,11 +131,11 @@ class GarageManagerCore {
         //
 
         const tankObject = new TankObject( player );
-        tankObject.base = new BaseTankPart( this.bases[ params.base ], availableParts ? availableParts.tank[ params.base ].level : 1 );
-        tankObject.cannon = new CannonTankPart( this.cannons[ params.cannon ], availableParts ? availableParts.cannon[ params.cannon ].level : 1 );
-        tankObject.armor = new ArmorTankPart( this.armors[ params.armor ], availableParts ? availableParts.armor[ params.armor ].level : 1 );
-        tankObject.engine = new EngineTankPart( this.engines[ params.engine ], availableParts ? availableParts.engine[ params.engine ].level : 1 );
-        tankObject.ammo = tankObject.base.ammoCapacity;
+        tankObject.hull = new HullTankPart( this.hull[ params.hull ], availableParts ? availableParts.hull[ params.hull ].level : 1 );
+        tankObject.cannon = new CannonTankPart( this.cannon[ params.cannon ], availableParts ? availableParts.cannon[ params.cannon ].level : 1 );
+        tankObject.armor = new ArmorTankPart( this.armor[ params.armor ], availableParts ? availableParts.armor[ params.armor ].level : 1 );
+        tankObject.engine = new EngineTankPart( this.engine[ params.engine ], availableParts ? availableParts.engine[ params.engine ].level : 1 );
+        tankObject.ammo = tankObject.hull.ammoCapacity;
 
         //
 

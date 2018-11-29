@@ -14,12 +14,10 @@
 
 .garage .btn {
     display: inline-block;
-    background-color: #00b6ff;
     padding: 10px 20px;
     text-align: center;
     font: normal 15px 'Roboto';
     color: #fff;
-    border: 1px solid #0493CC;
     opacity: 0.6;
     transition: opacity 200ms ease;
 }
@@ -681,8 +679,6 @@
     top: 12px;
     transform: translateX( -50% );
     color: white;
-    background-color: #00b6ff;
-    border: 1px solid #0493CC;
     text-align: center;
     opacity: 0.8;
     padding: 8px 15px;

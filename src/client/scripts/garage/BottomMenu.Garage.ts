@@ -59,106 +59,132 @@ export class GarageBottomMenu {
         const availableParts = garage.availableParts;
         const selectedParts = garage.selectedParts;
 
-        const selectedTankId = selectedParts.base;
+        const selectedHullId = selectedParts.hull;
         const selectedCannonId = selectedParts.cannon;
         const selectedArmorId = selectedParts.armor;
         const selectedEngineId = selectedParts.engine;
-        const tankParams = Game.GarageConfig.tanks[ selectedTankId ];
+        const hullParams = Game.GarageConfig.hull[ selectedHullId ];
 
         // clear lists
 
-        $('.garage .bottom-block .tanks .list').html('');
-        $('.garage .bottom-block .cannons .list').html('');
-        $('.garage .bottom-block .engines .list').html('');
-        $('.garage .bottom-block .armors .list').html('');
-        $('.garage .bottom-block .textures .list').html('');
+        $('.garage .bottom-block .hull .list').html('');
+        $('.garage .bottom-block .cannon .list').html('');
+        $('.garage .bottom-block .engine .list').html('');
+        $('.garage .bottom-block .armor .list').html('');
 
-        // set up tanks list
+        // set up hulls list
 
         width = 0;
 
-        for ( const tankId in Game.GarageConfig.tanks ) {
+        for ( const hullId in Game.GarageConfig.hull ) {
 
-            const tank = Game.GarageConfig.tanks[ tankId ];
-            const isSelected = ( tankId === selectedTankId );
-            const isOwn = ( availableParts.tank[ tankId ] !== undefined );
+            const hull = Game.GarageConfig.hull[ hullId ];
+            const isSelected = ( hullId === selectedHullId );
+            const isOwn = ( availableParts.hull[ hullId ] !== undefined );
 
             const item = `
-                <div draggable="false" onmousedown="return false" style="user-drag: none" item-id="${ tankId }" class="item${ ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) }">
-                    <div class="obj-title">${ tank.title }</div>
+                <div draggable="false" onmousedown="return false" style="user-drag: none" item-id="${ hullId }" class="item${ ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) }">
+                    <div class="obj-title">${ hull.title }</div>
                     <div class="price">
-                        <div class="ico"></div><span class="value">${ tank.price }</span>
+                        <div class="ico"></div><span class="value">${ hull.price }</span>
                     </div>
-                    <img class="img" src="/resources/img/garage/tanks/${ tankId }.png" />
+                    <img class="img" src="/resources/img/garage/hulls/${ hullId }.png" />
                 </div>
             `;
 
-            $('.garage .bottom-block .tanks .list').append( item );
+            $('.garage .bottom-block .hull .list').append( item );
             width += 174;
 
         }
 
-        $('.garage .bottom-block .tanks .list').css( 'width', width + 'px' );
+        $('.garage .bottom-block .hull .list').css( 'width', width + 'px' );
 
         // set up cannon list
 
         width = 0;
 
-        for ( const cannonId in Game.GarageConfig.cannons ) {
+        for ( const cannonId in Game.GarageConfig.cannon ) {
 
-            const cannon = Game.GarageConfig.cannons[ cannonId ];
-            if ( tankParams.cannons.indexOf( cannonId ) === - 1 ) continue;
+            const cannon = Game.GarageConfig.cannon[ cannonId ];
+            if ( hullParams.cannon.indexOf( cannonId ) === - 1 ) continue;
 
             const isSelected = ( cannonId === selectedCannonId );
             const isOwn = ( availableParts.cannon[ cannonId ] !== undefined );
 
-            const item = '<div draggable="false" onmousedown="return false" style="user-drag: none" item-id="' + cannonId + '" class="item' + ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) + '"><div class="obj-title">' + cannon.title + '</div><div class="price"><div class="ico"></div><span class="value">' + cannon.price + '</span></div><img class="img" src="/resources/img/garage/cannons/' + cannonId + '.png" /></div>';
-            $('.garage .bottom-block .cannons .list').append( item );
+            const item = `
+                <div draggable="false" onmousedown="return false" style="user-drag: none" item-id="${ cannonId }" class="item${ ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) }">
+                    <div class="obj-title">${ cannon.title }</div>
+                    <div class="price">
+                        <div class="ico"></div><span class="value">${ cannon.price }</span>
+                    </div>
+                    <img class="img" src="/resources/img/garage/cannons/${ cannonId }.png" />
+                </div>
+            `;
+
+            $('.garage .bottom-block .cannon .list').append( item );
             width += 174;
 
         }
 
-        $('.garage .bottom-block .cannons .list').css( 'width', width + 'px' );
+        $('.garage .bottom-block .cannon .list').css( 'width', width + 'px' );
 
         // set up engines list
 
         width = 0;
 
-        for ( const engineId in Game.GarageConfig.engines ) {
+        for ( const engineId in Game.GarageConfig.engine ) {
 
-            const engine = Game.GarageConfig.engines[ engineId ];
-            if ( tankParams.engines.indexOf( engineId ) === - 1 ) continue;
+            const engine = Game.GarageConfig.engine[ engineId ];
+            if ( hullParams.engine.indexOf( engineId ) === - 1 ) continue;
 
             const isSelected = ( engineId === selectedEngineId );
             const isOwn = ( availableParts.engine[ engineId ] !== undefined );
 
-            const item = '<div draggable="false" onmousedown="return false" style="user-drag: none" item-id="' + engineId + '" class="item' + ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) + '"><div class="obj-title">' + engine.title + '</div><div class="price"><div class="ico"></div><span class="value">' + engine.price + '</span></div><img class="img" src="/resources/img/garage/engines/' + engineId + '.png" /></div>';
-            $('.garage .bottom-block .engines .list').append( item );
+            const item = `
+                <div draggable="false" onmousedown="return false" style="user-drag: none" item-id="${ engineId }" class="item${ ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) }">
+                    <div class="obj-title">${ engine.title }</div>
+                    <div class="price">
+                        <div class="ico"></div><span class="value">${ engine.price }</span>
+                    </div>
+                    <img class="img" src="/resources/img/garage/engines/${ engineId }.png" />
+                </div>
+            `;
+
+            $('.garage .bottom-block .engine .list').append( item );
             width += 174;
 
         }
 
-        $('.garage .bottom-block .engines .list').css( 'width', width + 'px' );
+        $('.garage .bottom-block .engine .list').css( 'width', width + 'px' );
 
         // set up armor list
 
         width = 0;
 
-        for ( const armorId in Game.GarageConfig.armors ) {
+        for ( const armorId in Game.GarageConfig.armor ) {
 
-            const armor = Game.GarageConfig.armors[ armorId ];
-            if ( tankParams.armors.indexOf( armorId ) === - 1 ) continue;
+            const armor = Game.GarageConfig.armor[ armorId ];
+            if ( hullParams.armor.indexOf( armorId ) === - 1 ) continue;
 
             const isSelected = ( armorId === selectedArmorId );
             const isOwn = ( availableParts.armor[ armorId ] !== undefined );
 
-            const item = '<div draggable="false" onmousedown="return false" style="user-drag: none" item-id="' + armorId + '" class="item' + ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) + '"><div class="obj-title">' + armor.title + '</div><div class="price"><div class="ico"></div><span class="value">' + armor.price + '</span></div><img class="img" src="/resources/img/garage/armors/' + armorId + '.png" /></div>';
-            $('.garage .bottom-block .armors .list').append( item );
+            const item = `
+                <div draggable="false" onmousedown="return false" style="user-drag: none" item-id="${ armorId }" class="item${ ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) }">
+                    <div class="obj-title">${ armor.title }</div>
+                    <div class="price">
+                        <div class="ico"></div><span class="value">${ armor.price }</span>
+                    </div>
+                    <img class="img" src="/resources/img/garage/armors/${ armorId }.png" />
+                </div>
+            `;
+
+            $('.garage .bottom-block .armor .list').append( item );
             width += 174;
 
         }
 
-        $('.garage .bottom-block .armors .list').css( 'width', width + 'px' );
+        $('.garage .bottom-block .armor .list').css( 'width', width + 'px' );
 
         //
 
@@ -184,10 +210,10 @@ export class GarageBottomMenu {
 
         });
 
-        $('.garage .bottom-block .tab.tanks .item').click( garage.selectTank.bind( garage ) );
-        $('.garage .bottom-block .tab.cannons .item').click( garage.selectCannon.bind( garage ) );
-        $('.garage .bottom-block .tab.engines .item').click( garage.selectEngines.bind( garage ) );
-        $('.garage .bottom-block .tab.armors .item').click( garage.selectArmor.bind( garage ) );
+        $('.garage .bottom-block .tab.hull .item').click( garage.selectHull.bind( garage ) );
+        $('.garage .bottom-block .tab.cannon .item').click( garage.selectCannon.bind( garage ) );
+        $('.garage .bottom-block .tab.engine .item').click( garage.selectEngine.bind( garage ) );
+        $('.garage .bottom-block .tab.armor .item').click( garage.selectArmor.bind( garage ) );
 
         $('.garage .bottom-block .item').click( ( event ) => {
 

@@ -67,7 +67,7 @@ class CollisionManagerCore {
                 position:       object.stateNeedsCorrect ? { x: object.positionCorrection.x, z: object.positionCorrection.z } : false,
                 rotation:       object.stateNeedsCorrect ? object.rotationCorrection : false,
                 moveDirection:  { x: object.moveDirection.x, y: object.moveDirection.y },
-                maxSpeed:       object.base.speedCoef * object.engine.maxSpeed,
+                maxSpeed:       object.hull.speedCoef * object.engine.maxSpeed,
                 power:          object.engine.power,
             };
 

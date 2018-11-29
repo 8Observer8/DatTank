@@ -21,35 +21,14 @@ export class GarageRightMenu {
         let item: any;
 
         const availableParts = Game.garage.availableParts;
-        const selectedMenu = $('.garage .menu-items .active').attr('tab');
+        const selectedMenu = $('.garage .menu-items .active').attr('tab') || '';
 
         //
 
-        if ( selectedMenu === 'tanks' && ! availableParts['tank'][ itemId ] ) {
+        if ( availableParts[ selectedMenu ] && ! availableParts[ selectedMenu ][ itemId ] ) {
 
             needToBuy = true;
-            item = Game.GarageConfig['tanks'][ itemId ];
-
-        }
-
-        if ( selectedMenu === 'cannons' && ! availableParts['cannon'][ itemId ] ) {
-
-            needToBuy = true;
-            item = Game.GarageConfig['cannons'][ itemId ];
-
-        }
-
-        if ( selectedMenu === 'engines' && ! availableParts['engine'][ itemId ] ) {
-
-            needToBuy = true;
-            item = Game.GarageConfig['engines'][ itemId ];
-
-        }
-
-        if ( selectedMenu === 'armors' && ! availableParts['armor'][ itemId ] ) {
-
-            needToBuy = true;
-            item = Game.GarageConfig['armors'][ itemId ];
+            item = Game.GarageConfig[ selectedMenu ][ itemId ];
 
         }
 
@@ -109,42 +88,11 @@ export class GarageRightMenu {
 
         //
 
-        let item: any;
-        let level: number = 1;
         const availableParts = Game.garage.availableParts;
-
-        const selectedMenu = $('.garage .menu-items .active').attr('tab');
+        const selectedMenu = $('.garage .menu-items .active').attr('tab') || '';
+        const item = Game.GarageConfig[ selectedMenu ][ itemId ];
+        const level = ( availableParts[ selectedMenu ][ item.id ] ) ? availableParts[ selectedMenu ][ item.id ].level : 1;
         $('.garage .right-block .upgrade-block').css({ transform: 'translate( 0px, 0px )', opacity: 1 });
-
-        //
-
-        if ( selectedMenu === 'tanks' ) {
-
-            item = Game.GarageConfig['tanks'][ itemId ];
-            level = ( availableParts.tank[ item.id ] ) ? availableParts.tank[ item.id ].level : 1;
-
-        }
-
-        if ( selectedMenu === 'cannons' ) {
-
-            item = Game.GarageConfig['cannons'][ itemId ];
-            level = ( availableParts.cannon[ item.id ] ) ? availableParts.cannon[ item.id ].level : 1;
-
-        }
-
-        if ( selectedMenu === 'engines' ) {
-
-            item = Game.GarageConfig['engines'][ itemId ];
-            level = ( availableParts.engine[ item.id ] ) ? availableParts.engine[ item.id ].level : 1;
-
-        }
-
-        if ( selectedMenu === 'armors' ) {
-
-            item = Game.GarageConfig['armors'][ itemId ];
-            level = ( availableParts.armor[ item.id ] ) ? availableParts.armor[ item.id ].level : 1;
-
-        }
 
         //
 
@@ -200,9 +148,9 @@ export class GarageRightMenu {
 
         //
 
-        for ( const name in Game.GarageConfig.cannons ) {
+        for ( const name in Game.GarageConfig.cannon ) {
 
-            const cannon = Game.GarageConfig.cannons[ name ].levels[5];
+            const cannon = Game.GarageConfig.cannon[ name ].levels[5];
             this.maxConfigValues.damage = ( 1.2 * cannon.damage > this.maxConfigValues.damage ) ? 1.2 * cannon.damage : this.maxConfigValues.damage;
             this.maxConfigValues.rpm = ( 1.2 * cannon.rpm > this.maxConfigValues.rpm ) ? 1.2 * cannon.rpm : this.maxConfigValues.rpm;
             this.maxConfigValues.range = ( 1.2 * cannon.range > this.maxConfigValues.range ) ? 1.2 * cannon.range : this.maxConfigValues.range;
@@ -214,9 +162,9 @@ export class GarageRightMenu {
 
         this.maxConfigValues.armor = 0;
 
-        for ( const name in Game.GarageConfig.armors ) {
+        for ( const name in Game.GarageConfig.armor ) {
 
-            const armor = Game.GarageConfig.armors[ name ].levels[5];
+            const armor = Game.GarageConfig.armor[ name ].levels[5];
             this.maxConfigValues.armor = ( 1.8 * armor.armor > this.maxConfigValues.armor ) ? 1.8 * armor.armor : this.maxConfigValues.armor;
 
         }
@@ -225,9 +173,9 @@ export class GarageRightMenu {
 
         this.maxConfigValues.maxSpeed = 0;
 
-        for ( const name in Game.GarageConfig.engines ) {
+        for ( const name in Game.GarageConfig.engine ) {
 
-            const engine = Game.GarageConfig.engines[ name ].levels[5];
+            const engine = Game.GarageConfig.engine[ name ].levels[5];
             this.maxConfigValues.maxSpeed = ( 1.8 * engine.maxSpeed > this.maxConfigValues.maxSpeed ) ? 1.8 * engine.maxSpeed : this.maxConfigValues.maxSpeed;
 
         }
@@ -244,45 +192,45 @@ export class GarageRightMenu {
 
         // getting old / selected tank parts
 
-        const currentTankId = selectedParts.base;
+        const currentHullId = selectedParts.hull;
         const currentCannonId = selectedParts.cannon;
         const currentArmorId = selectedParts.armor;
         const currentEngineId = selectedParts.engine;
 
-        const currentTank = Game.GarageConfig.tanks[ currentTankId ];
-        const currentTankLevel = ( availableParts.tank[ currentTankId ] || { level: 1 } ).level;
-        const currentCannon = Game.GarageConfig.cannons[ currentCannonId ];
+        const currentHull = Game.GarageConfig.hull[ currentHullId ];
+        const currentHullLevel = ( availableParts.hull[ currentHullId ] || { level: 1 } ).level;
+        const currentCannon = Game.GarageConfig.cannon[ currentCannonId ];
         const currentCannonLevel = ( availableParts.cannon[ currentCannonId ] || { level: 1 } ).level;
-        const currentArmor = Game.GarageConfig.armors[ currentArmorId ];
+        const currentArmor = Game.GarageConfig.armor[ currentArmorId ];
         const currentArmorLevel = ( availableParts.armor[ currentArmorId ] || { level: 1 } ).level;
-        const currentEngine = Game.GarageConfig.engines[ currentEngineId ];
+        const currentEngine = Game.GarageConfig.engine[ currentEngineId ];
         const currentEngineLevel = ( availableParts.engine[ currentEngineId ] || { level: 1 } ).level;
 
-        let tankId = currentTankId;
+        let hullId = currentHullId;
         let cannonId = currentCannonId;
         let armorId = currentArmorId;
         let engineId = currentEngineId;
 
-        if ( selectedMenu === 'tanks' ) {
+        if ( selectedMenu === 'hull' ) {
 
-            tankId = itemId || currentTankId;
-            cannonId = ( preSelectedParts[ tankId ] && preSelectedParts[ tankId ].cannon ) ? preSelectedParts[ tankId ].cannon : Game.GarageConfig.tanks[ tankId ].default.cannon;
-            armorId = ( preSelectedParts[ tankId ] && preSelectedParts[ tankId ].armor ) ? preSelectedParts[ tankId ].armor : Game.GarageConfig.tanks[ tankId ].default.armor;
-            engineId = ( preSelectedParts[ tankId ] && preSelectedParts[ tankId ].engine ) ? preSelectedParts[ tankId ].engine : Game.GarageConfig.tanks[ tankId ].default.engine;
+            hullId = itemId || currentHullId;
+            cannonId = ( preSelectedParts[ hullId ] && preSelectedParts[ hullId ].cannon ) ? preSelectedParts[ hullId ].cannon : Game.GarageConfig.hull[ hullId ].default.cannon;
+            armorId = ( preSelectedParts[ hullId ] && preSelectedParts[ hullId ].armor ) ? preSelectedParts[ hullId ].armor : Game.GarageConfig.hull[ hullId ].default.armor;
+            engineId = ( preSelectedParts[ hullId ] && preSelectedParts[ hullId ].engine ) ? preSelectedParts[ hullId ].engine : Game.GarageConfig.hull[ hullId ].default.engine;
 
         }
 
-        if ( selectedMenu === 'cannons' ) cannonId = itemId || currentCannonId;
-        if ( selectedMenu === 'armors' ) armorId = itemId || currentArmorId;
-        if ( selectedMenu === 'engines' ) engineId = itemId || currentEngineId;
+        if ( selectedMenu === 'cannon' ) cannonId = itemId || currentCannonId;
+        if ( selectedMenu === 'armor' ) armorId = itemId || currentArmorId;
+        if ( selectedMenu === 'engine' ) engineId = itemId || currentEngineId;
 
-        const tank = Game.GarageConfig.tanks[ tankId ];
-        const tankLevel = ( availableParts.tank[ tankId ] || { level: 1 } ).level;
-        const cannon = Game.GarageConfig.cannons[ cannonId ];
+        const hull = Game.GarageConfig.hull[ hullId ];
+        const hullLevel = ( availableParts.hull[ hullId ] || { level: 1 } ).level;
+        const cannon = Game.GarageConfig.cannon[ cannonId ];
         const cannonLevel = ( availableParts.cannon[ cannonId ] || { level: 1 } ).level;
-        const armor = Game.GarageConfig.armors[ armorId ];
+        const armor = Game.GarageConfig.armor[ armorId ];
         const armorLevel = ( availableParts.armor[ armorId ] || { level: 1 } ).level;
-        const engine = Game.GarageConfig.engines[ engineId ];
+        const engine = Game.GarageConfig.engine[ engineId ];
         const engineLevel = ( availableParts.engine[ engineId ] || { level: 1 } ).level;
 
         const greenColor = 'rgba( 74, 239, 74, 1 )';
@@ -292,8 +240,8 @@ export class GarageRightMenu {
 
         let progressValue;
 
-        const deltaDamage = 100 * ( tank.levels[ tankLevel ].cannonCoef * cannon.levels[ cannonLevel ].damage - currentTank.levels[ currentTankLevel ].cannonCoef * currentCannon.levels[ currentCannonLevel ].damage ) / this.maxConfigValues.damage;
-        progressValue = 100 * Math.min( currentTank.levels[ currentTankLevel ].cannonCoef * currentCannon.levels[ currentCannonLevel ].damage, tank.levels[ tankLevel ].cannonCoef * cannon.levels[ cannonLevel ].damage ) / this.maxConfigValues.damage;
+        const deltaDamage = 100 * ( hull.levels[ hullLevel ].cannonCoef * cannon.levels[ cannonLevel ].damage - currentHull.levels[ currentHullLevel ].cannonCoef * currentCannon.levels[ currentCannonLevel ].damage ) / this.maxConfigValues.damage;
+        progressValue = 100 * Math.min( currentHull.levels[ currentHullLevel ].cannonCoef * currentCannon.levels[ currentCannonLevel ].damage, hull.levels[ hullLevel ].cannonCoef * cannon.levels[ cannonLevel ].damage ) / this.maxConfigValues.damage;
 
         $('.garage .tank-stats .cannon.stats-delta-value').html( '(' +  ( deltaDamage >= 0 ? '+' : '' ) + Math.round( deltaDamage ) + ')' );
         $('.garage .tank-stats .cannon.stats-delta-value').css({ color: ( deltaDamage >= 0 ) ? greenColor : redColor });
@@ -352,8 +300,8 @@ export class GarageRightMenu {
 
         // updating armor 'armor' UI
 
-        const deltaArmor = 100 * ( tank.levels[ tankLevel ].armorCoef * armor.levels[ armorLevel ].armor - currentTank.levels[ currentTankLevel ].armorCoef * currentArmor.levels[ currentArmorLevel ].armor ) / this.maxConfigValues.armor;
-        progressValue = 100 * Math.min( currentTank.levels[ currentTankLevel ].cannonCoef * currentArmor.levels[ currentArmorLevel ].armor, tank.levels[ tankLevel ].armorCoef * armor.levels[ armorLevel ].armor ) / this.maxConfigValues.armor;
+        const deltaArmor = 100 * ( hull.levels[ hullLevel ].armorCoef * armor.levels[ armorLevel ].armor - currentHull.levels[ currentHullLevel ].armorCoef * currentArmor.levels[ currentArmorLevel ].armor ) / this.maxConfigValues.armor;
+        progressValue = 100 * Math.min( currentHull.levels[ currentHullLevel ].cannonCoef * currentArmor.levels[ currentArmorLevel ].armor, hull.levels[ hullLevel ].armorCoef * armor.levels[ armorLevel ].armor ) / this.maxConfigValues.armor;
 
         $('.garage .tank-stats .armor.stats-delta-value').html( '(' + ( deltaArmor >= 0 ? '+' : '' ) + Math.round( deltaArmor ) + ')' );
         $('.garage .tank-stats .armor.stats-delta-value').css({ color: ( deltaArmor >= 0 ) ? greenColor : redColor });
@@ -367,12 +315,12 @@ export class GarageRightMenu {
 
         // updating engine 'maxSpeed' UI
 
-        const deltaSpeed = 100 * ( tank.levels[ tankLevel ].speedCoef * engine.levels[ engineLevel ].maxSpeed - currentTank.levels[ currentTankLevel ].speedCoef * currentEngine.levels[ currentEngineLevel ].maxSpeed ) / this.maxConfigValues.maxSpeed;
-        progressValue = 100 * Math.min( currentTank.levels[ currentTankLevel ].speedCoef * currentEngine.levels[ currentEngineLevel ].maxSpeed, tank.levels[ tankLevel ].speedCoef * engine.levels[ engineLevel ].maxSpeed ) / this.maxConfigValues.maxSpeed;
+        const deltaSpeed = 100 * ( hull.levels[ hullLevel ].speedCoef * engine.levels[ engineLevel ].maxSpeed - currentHull.levels[ currentHullLevel ].speedCoef * currentEngine.levels[ currentEngineLevel ].maxSpeed ) / this.maxConfigValues.maxSpeed;
+        progressValue = 100 * Math.min( currentHull.levels[ currentHullLevel ].speedCoef * currentEngine.levels[ currentEngineLevel ].maxSpeed, hull.levels[ hullLevel ].speedCoef * engine.levels[ engineLevel ].maxSpeed ) / this.maxConfigValues.maxSpeed;
 
         $('.garage .tank-stats .speed.stats-delta-value').html( '(' + ( deltaSpeed >= 0 ? '+' : '' ) + Math.round( deltaSpeed ) + ')' );
         $('.garage .tank-stats .speed.stats-delta-value').css({ color: ( deltaSpeed >= 0 ) ? greenColor : redColor });
-        $('.garage .tank-stats .speed.stats-value').html( tank.levels[ tankLevel ].speedCoef * engine.levels[ engineLevel ].maxSpeed + 'km/h' );
+        $('.garage .tank-stats .speed.stats-value').html( hull.levels[ hullLevel ].speedCoef * engine.levels[ engineLevel ].maxSpeed + 'km/h' );
         $('.garage .tank-stats .speed.stats-progress .green').css( 'width', progressValue + '%' );
         $('.garage .tank-stats .speed.stats-progress .delta').css({
             'width': Math.abs( deltaSpeed ) + '%',
@@ -387,28 +335,28 @@ export class GarageRightMenu {
 
         switch ( category ) {
 
-            case 'tanks':
+            case 'hull':
 
-                level = ( availableParts.tank[ tankId ] ) ? availableParts.tank[ tankId ].level : 1;
-                title = 'Tank "' + tank.title + '"';
-                itemId = tankId;
+                level = ( availableParts.hull[ hullId ] ) ? availableParts.hull[ hullId ].level : 1;
+                title = 'Hull "' + hull.title + '"';
+                itemId = hullId;
                 break;
 
-            case 'cannons':
+            case 'cannon':
 
                 level = ( availableParts.cannon[ cannonId ] ) ? availableParts.cannon[ cannonId ].level : 1;
                 title = 'Cannon "' + cannon.title + '"';
                 itemId = cannonId;
                 break;
 
-            case 'armors':
+            case 'armor':
 
                 level = ( availableParts.armor[ armorId ] ) ? availableParts.armor[ armorId ].level : 1;
                 title = 'Armor "' + armor.title + '"';
                 itemId = armorId;
                 break;
 
-            case 'engines':
+            case 'engine':
 
                 level = ( availableParts.engine[ engineId ] ) ? availableParts.engine[ engineId ].level : 1;
                 title = 'Engine "' + engine.title + '"';

@@ -10,7 +10,7 @@ import { Arena } from '../../core/Arena.Core';
 import { UI } from '../../ui/Core.UI';
 import { PlayerCore } from '../../core/Player.Core';
 
-import { BaseTankPart } from '../tanks/Base.TankPart';
+import { HullTankPart } from '../tanks/Hull.TankPart';
 import { CannonTankPart } from '../tanks/Cannon.TankPart';
 import { ArmorTankPart } from '../tanks/Armor.TankPart';
 import { EngineTankPart } from '../tanks/Engine.TankPart';
@@ -34,7 +34,7 @@ export class TankObject {
     public health: number;
     public ammo: number;
 
-    public base: BaseTankPart;
+    public hull: HullTankPart;
     public cannon: CannonTankPart;
     public armor: ArmorTankPart;
     public engine: EngineTankPart;
@@ -322,7 +322,7 @@ export class TankObject {
         this.health = params.health;
         this.ammo = params.ammo;
 
-        this.base = new BaseTankPart( params.base );
+        this.hull = new HullTankPart( params.hull );
         this.cannon = new CannonTankPart( params.cannon );
         this.armor = new ArmorTankPart( params.armor );
         this.engine = new EngineTankPart( params.engine );

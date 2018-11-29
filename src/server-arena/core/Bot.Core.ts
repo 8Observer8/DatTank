@@ -47,7 +47,7 @@ export class BotCore {
     public login: string;
 
     public tankConfig = {
-        base:       'IS2001',
+        hull:       'IS2001',
         cannon:     'Plasma-g1',
         armor:      'X-shield',
         engine:     'KX-v8',
@@ -140,7 +140,7 @@ export class BotCore {
         if ( target instanceof TankObject ) {
 
             if ( target.ammo < 8 ) return 0;
-            return ( target.health * target.cannon.rpm * target.base.cannonCoef * target.cannon.damage * target.armor.armor );
+            return ( target.health * target.cannon.rpm * target.hull.cannonCoef * target.cannon.damage * target.armor.armor );
 
         } else {
 
