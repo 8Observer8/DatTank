@@ -13,13 +13,13 @@ export class EngineTankPart {
 
     //
 
-    constructor ( params: any ) {
+    constructor ( params: any, level: number ) {
 
         this.nid = params.nid;
         this.title = params.title;
 
-        this.maxSpeed = params.maxSpeed;
-        this.power = params.power;
+        this.maxSpeed = params.levels[ level ].maxSpeed;
+        this.power = params.levels[ level ].power;
 
     };
 

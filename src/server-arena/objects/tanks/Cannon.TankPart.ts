@@ -17,15 +17,15 @@ export class CannonTankPart {
 
     //
 
-    constructor ( params: any ) {
+    constructor ( params: any, level: number ) {
 
         this.nid = params.nid;
         this.title = params.title;
 
-        this.rpm = params.rpm;
-        this.damage = params.damage;
-        this.overheat = params.overheat;
-        this.range = params.range;
+        this.rpm = params.levels[ level ].rpm;
+        this.damage = params.levels[ level ].damage;
+        this.overheat = params.levels[ level ].overheat;
+        this.range = params.levels[ level ].range;
 
         this.temperature = 0;
 

@@ -12,12 +12,12 @@ export class ArmorTankPart {
 
     //
 
-    constructor ( params: any ) {
+    constructor ( params: any, level: number ) {
 
         this.nid = params.nid;
         this.title = params.title;
 
-        this.armor = params.armor;
+        this.armor = params.levels[ level ].armor;
 
     };
 

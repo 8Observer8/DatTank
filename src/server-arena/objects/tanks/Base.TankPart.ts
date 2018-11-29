@@ -15,15 +15,15 @@ export class BaseTankPart {
 
     //
 
-    constructor ( params: any ) {
+    constructor ( params: any, level: number ) {
 
         this.nid = params.nid;
         this.title = params.title;
 
-        this.cannonCoef = params.cannonCoef;
-        this.armorCoef = params.armorCoef;
-        this.speedCoef = params.speedCoef;
-        this.ammoCapacity = params.ammoCapacity;
+        this.cannonCoef = params.levels[ level ].cannonCoef;
+        this.armorCoef = params.levels[ level ].armorCoef;
+        this.speedCoef = params.levels[ level ].speedCoef;
+        this.ammoCapacity = params.levels[ level ].ammoCapacity;
 
     };
 
