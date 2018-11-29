@@ -198,7 +198,7 @@ export class TankObject {
 
         }
 
-        if ( this.health - value !== 0 ) {
+        if ( this.health - value > 0 ) {
 
             HealthChangeLabelManager.showHealthChangeLabel( new OMath.Vec3( this.position.x + 5 * ( Math.random() - 0.5 ), this.position.y, this.position.z + 5 * ( Math.random() - 0.5 ) ), value - this.health );
 

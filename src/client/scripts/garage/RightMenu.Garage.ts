@@ -376,4 +376,10 @@ export class GarageRightMenu {
 
     };
 
+    public init () : void {
+
+        // todo
+
+    };
+
 };

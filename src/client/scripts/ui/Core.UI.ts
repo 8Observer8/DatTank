@@ -41,8 +41,7 @@ class UICore {
     public changeQuality ( value: boolean | MouseEvent, withoutSound: boolean ) : void {
 
         const isHQ = ( typeof value === 'boolean' ) ? value : $( value.currentTarget! ).attr('hq') !== 'true';
-        $('#graphics-quality').attr( 'hq', isHQ.toString() );
-        $('#viewport-graphics-quality').attr( 'hq', isHQ.toString() );
+        $('.graphics-quality').attr( 'hq', isHQ.toString() );
         localStorage.setItem( 'hq', isHQ.toString() );
 
         if ( isHQ ) {

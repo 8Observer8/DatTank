@@ -83,12 +83,19 @@ export class GarageBottomMenu {
             const isOwn = ( availableParts.hull[ hullId ] !== undefined );
 
             const item = `
-                <div draggable="false" onmousedown="return false" style="user-drag: none" item-id="${ hullId }" class="item${ ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) }">
+                <div draggable="false" level="${ ( isOwn ) ? availableParts.hull[ hullId ].level : 0 }" onmousedown="return false" style="user-drag: none" item-id="${ hullId }" class="item${ ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) }">
                     <div class="obj-title">${ hull.title }</div>
                     <div class="price">
                         <div class="ico"></div><span class="value">${ hull.price }</span>
                     </div>
                     <img class="img" src="/resources/img/garage/hulls/${ hullId }.png" />
+                    <div class="level-indicator">
+                        <div class="level5"></div>
+                        <div class="level4"></div>
+                        <div class="level3"></div>
+                        <div class="level2"></div>
+                        <div class="level1"></div>
+                    </div>
                 </div>
             `;
 
@@ -112,12 +119,19 @@ export class GarageBottomMenu {
             const isOwn = ( availableParts.cannon[ cannonId ] !== undefined );
 
             const item = `
-                <div draggable="false" onmousedown="return false" style="user-drag: none" item-id="${ cannonId }" class="item${ ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) }">
+                <div draggable="false" level="${ ( isOwn ) ? availableParts.cannon[ cannonId ].level : 0 }" onmousedown="return false" style="user-drag: none" item-id="${ cannonId }" class="item${ ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) }">
                     <div class="obj-title">${ cannon.title }</div>
                     <div class="price">
                         <div class="ico"></div><span class="value">${ cannon.price }</span>
                     </div>
                     <img class="img" src="/resources/img/garage/cannons/${ cannonId }.png" />
+                    <div class="level-indicator">
+                        <div class="level5"></div>
+                        <div class="level4"></div>
+                        <div class="level3"></div>
+                        <div class="level2"></div>
+                        <div class="level1"></div>
+                    </div>
                 </div>
             `;
 
@@ -141,12 +155,19 @@ export class GarageBottomMenu {
             const isOwn = ( availableParts.engine[ engineId ] !== undefined );
 
             const item = `
-                <div draggable="false" onmousedown="return false" style="user-drag: none" item-id="${ engineId }" class="item${ ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) }">
+                <div draggable="false" level="${ ( isOwn ) ? availableParts.engine[ engineId ].level : 0 }" onmousedown="return false" style="user-drag: none" item-id="${ engineId }" class="item${ ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) }">
                     <div class="obj-title">${ engine.title }</div>
                     <div class="price">
                         <div class="ico"></div><span class="value">${ engine.price }</span>
                     </div>
                     <img class="img" src="/resources/img/garage/engines/${ engineId }.png" />
+                    <div class="level-indicator">
+                        <div class="level5"></div>
+                        <div class="level4"></div>
+                        <div class="level3"></div>
+                        <div class="level2"></div>
+                        <div class="level1"></div>
+                    </div>
                 </div>
             `;
 
@@ -170,12 +191,19 @@ export class GarageBottomMenu {
             const isOwn = ( availableParts.armor[ armorId ] !== undefined );
 
             const item = `
-                <div draggable="false" onmousedown="return false" style="user-drag: none" item-id="${ armorId }" class="item${ ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) }">
+                <div draggable="false" level="${ ( isOwn ) ? availableParts.armor[ armorId ].level : 0 }" onmousedown="return false" style="user-drag: none" item-id="${ armorId }" class="item${ ( isSelected ? ' active' : '' ) + ( isOwn ? '' : ' notOwn' ) }">
                     <div class="obj-title">${ armor.title }</div>
                     <div class="price">
                         <div class="ico"></div><span class="value">${ armor.price }</span>
                     </div>
                     <img class="img" src="/resources/img/garage/armors/${ armorId }.png" />
+                    <div class="level-indicator">
+                        <div class="level5"></div>
+                        <div class="level4"></div>
+                        <div class="level3"></div>
+                        <div class="level2"></div>
+                        <div class="level1"></div>
+                    </div>
                 </div>
             `;
 
@@ -224,6 +252,19 @@ export class GarageBottomMenu {
             Game.garage.rightRightMenu.update( category, itemId );
 
         });
+
+    };
+
+    public init () : void {
+
+        $('.garage .menu-items .item').mouseover( () => {
+
+            SoundManager.playSound('ElementHover');
+
+        });
+
+        $('.garage .menu-items .item').click( this.switchMenu.bind( this ) );
+        $('.garage .bottom-block .tab:not(.active)').hide();
 
     };
 

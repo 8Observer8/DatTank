@@ -584,7 +584,7 @@
 
 .garage .bottom-block .item:hover {
     opacity: 0.9;
-    border-color: #eee;
+    border-color: #666;
 }
 
 .garage .bottom-block .tab {
@@ -611,6 +611,93 @@
     margin-left: 10px;
     margin-right: 10px;
 }
+
+.garage .bottom-block .item .level-indicator {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+.garage .bottom-block .item .level-indicator div {
+    width: 4px;
+    height: 4px;
+    background-color: rgba( 255, 255, 255, 0.1 );
+    margin-top: 5px;
+    transition: background-color 200ms ease;
+}
+
+/*  */
+
+.garage .bottom-block .item[level="0"] .level-indicator {
+    display: none;
+}
+
+.garage .bottom-block .item[level="1"] .level-indicator .level1 {
+    background-color: #fff;
+    filter: drop-shadow( 0px 0px 2px #fff );
+}
+.garage .bottom-block .item[level="2"] .level-indicator .level1 {
+    background-color: #fff;
+    filter: drop-shadow( 0px 0px 2px #fff );
+}
+.garage .bottom-block .item[level="3"] .level-indicator .level1 {
+    background-color: #fff;
+    filter: drop-shadow( 0px 0px 2px #fff );
+}
+.garage .bottom-block .item[level="4"] .level-indicator .level1 {
+    background-color: #fff;
+    filter: drop-shadow( 0px 0px 2px #fff );
+}
+.garage .bottom-block .item[level="5"] .level-indicator .level1 {
+    background-color: #fff;
+    filter: drop-shadow( 0px 0px 2px #fff );
+}
+
+.garage .bottom-block .item[level="2"] .level-indicator .level2 {
+    background-color: #fff;
+    filter: drop-shadow( 0px 0px 2px #fff );
+}
+.garage .bottom-block .item[level="3"] .level-indicator .level2 {
+    background-color: #fff;
+    filter: drop-shadow( 0px 0px 2px #fff );
+}
+.garage .bottom-block .item[level="4"] .level-indicator .level2 {
+    background-color: #fff;
+    filter: drop-shadow( 0px 0px 2px #fff );
+}
+.garage .bottom-block .item[level="5"] .level-indicator .level2 {
+    background-color: #fff;
+    filter: drop-shadow( 0px 0px 2px #fff );
+}
+
+.garage .bottom-block .item[level="3"] .level-indicator .level3 {
+    background-color: #fff;
+    filter: drop-shadow( 0px 0px 2px #fff );
+}
+.garage .bottom-block .item[level="4"] .level-indicator .level3 {
+    background-color: #fff;
+    filter: drop-shadow( 0px 0px 2px #fff );
+}
+.garage .bottom-block .item[level="5"] .level-indicator .level3 {
+    background-color: #fff;
+    filter: drop-shadow( 0px 0px 2px #fff );
+}
+
+.garage .bottom-block .item[level="4"] .level-indicator .level4 {
+    background-color: #fff;
+    filter: drop-shadow( 0px 0px 2px #fff );
+}
+.garage .bottom-block .item[level="5"] .level-indicator .level4 {
+    background-color: #fff;
+    filter: drop-shadow( 0px 0px 2px #fff );
+}
+
+.garage .bottom-block .item[level="5"] .level-indicator .level5 {
+    background-color: #fff;
+    filter: drop-shadow( 0px 0px 2px #fff );
+}
+
+/*  */
 
 .garage .bottom-block .item.notOwn .img {
     filter: brightness(0.0);
@@ -640,7 +727,7 @@
     position:absolute;
     z-index: 1;
     top: 0;
-    right: -10px;  
+    right: -10px;
     bottom: 0;
     width: 13px;
     background: #333;
@@ -650,11 +737,11 @@
 }
 
 .garage .menu-items div:hover {
-    background-color: #D8D8D8;
+    background-color: #555;
 }
 
 .garage .menu-items .item:hover .decoration {
-    background-color: #D8D8D8;
+    background-color: #555;
 }
 
 .garage .menu-items .item.active {
@@ -665,6 +752,8 @@
 .garage .menu-items .item.active .decoration {
     background-color: #32ABE3;
 }
+
+/*  */
 
 .garage .tank-title {
     color: #fffdfd;
@@ -721,13 +810,4 @@
 .garage .play-btn:active {
     opacity: 1;
     transform: translate( -50%, 2px );
-}
-
-.garage .close-btn:hover {
-    opacity: 0.8;
-}
-
-.garage .close-btn:active {
-    opacity: 1;
-    top: 7px;
 }

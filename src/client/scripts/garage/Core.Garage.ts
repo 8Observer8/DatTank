@@ -223,6 +223,7 @@ export class Garage {
             $('.garage .right-block .upgrade-block').css({ transform: 'translate( 30px, 0px )', opacity: 0 });
             $('.garage .right-block .item-level').html( 'Lv ' + response.itemLevel );
             $('.garage .level-block .bonuses .value').html( this.levelBonuses );
+            $('.garage .bottom-block .item[item-id="' + item.id + '"]').attr( 'level', response.itemLevel );
 
             setTimeout( () => {
 
@@ -346,16 +347,11 @@ export class Garage {
         //
 
         $('.garage .play-btn').click( this.startArena.bind( this ) );
-        $('.garage .close-btn').click( this.hide.bind( this ) );
-        $('.garage .menu-items .item').click( this.bottomRightMenu.switchMenu.bind( this.bottomRightMenu ) );
-
         $('.garage .play-btn').mouseover( () => {
 
             SoundManager.playSound('ElementHover');
 
         });
-
-        $( document ).keydown( this.keyDown.bind( this ) );
 
         //
 
@@ -369,6 +365,10 @@ export class Garage {
             prevMousePos.y = event.pageY;
 
         });
+
+        //
+
+        $( document ).keydown( this.keyDown.bind( this ) );
 
         $( document ).mouseup( ( event ) => {
 
@@ -394,7 +394,11 @@ export class Garage {
 
         $('.garage .sound').click( UI.changeSound.bind( UI ) );
         $('.garage .fullscreen').click( UI.toggleFullscreenMode.bind( UI ) );
-        $('.garage .bottom-block .tab:not(.active)').hide();
+
+        //
+
+        this.bottomRightMenu.init();
+        this.rightRightMenu.init();
 
     };
 

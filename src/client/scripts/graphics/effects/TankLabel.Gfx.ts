@@ -84,29 +84,33 @@ export class TankLabelGfx {
 
         }
 
-        this.ctx.shadowColor = 'rgba( 0, 0, 0, 1 )';
-        this.ctx.shadowBlur = 4;
-
-        // draw team color rect
-
-        this.ctx.fillStyle = OMath.intToHex( teamColor );
-        this.ctx.fillRect( 0, 12 + offset, 25, 25 );
-
-        // draw player login
-
-        this.ctx.fillStyle = '#ffffff';
-        this.ctx.font = '26px Tahoma';
-        this.ctx.textAlign = 'left';
-        this.ctx.fillText( login, 30, 35 + offset );
-
-        ( this.sprite.material as THREE.SpriteMaterial ).map!.needsUpdate = true;
+        //
 
         if ( isMe ) {
 
             this.sprite.scale.set( 0.7 * 47, 0.7 * 12, 1 );
             this.sprite.position.y = 30;
 
+        } else {
+
+            this.ctx.shadowColor = 'rgba( 0, 0, 0, 1 )';
+            this.ctx.shadowBlur = 4;
+
+            // draw player login
+
+            this.ctx.fillStyle = '#ffffff';
+            this.ctx.font = '26px Tahoma';
+            this.ctx.textAlign = 'left';
+            this.ctx.fillText( login, 30, 35 + offset );
+
+            // draw team color rect
+
+            this.ctx.fillStyle = OMath.intToHex( teamColor );
+            this.ctx.fillRect( 0, 12 + offset, 25, 25 );
+
         }
+
+        ( this.sprite.material as THREE.SpriteMaterial ).map!.needsUpdate = true;
 
     };
 
