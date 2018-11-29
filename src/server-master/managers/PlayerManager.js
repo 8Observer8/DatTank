@@ -199,6 +199,7 @@ PlayerManager.prototype.upgradeObject = function ( pid, objectType, objectId, ca
         var objectCurrentLevel = player.params[ objectType ][ objectId ].level;
         var object = ( GarageConfig[ objectType + 's' ] || {} )[ objectId ] || false;
 
+        if ( objectCurrentLevel === 5 ) return callback( false, 'object has max level already');
         if ( object === false ) return callback( false, 'object not found' );
         if ( ! player.params[ objectType ][ objectId ] ) return callback( false, 'object not bought' );
         if ( player.levelBonuses === 0 ) return callback( false, 'nought enough level bonuses');

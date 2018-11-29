@@ -187,6 +187,15 @@ export class Garage {
 
         //
 
+        if ( level === 5 ) {
+
+            $('.garage .right-block .upgrade-block').hide();
+            return;
+
+        }
+
+        //
+
         $('.garage .right-block .upgrade-block .price .coins-value').html( item.upgrades[ level ].price.coins );
         $('.garage .right-block .upgrade-block .price .level-bonus-value').html( item.upgrades[ level ].price.levelBonuses );
 
