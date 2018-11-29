@@ -203,9 +203,9 @@ PlayerManager.prototype.upgradeObject = function ( pid, objectType, objectId, ca
         if ( object === false ) return callback( false, 'object not found' );
         if ( ! player.params[ objectType ][ objectId ] ) return callback( false, 'object not bought' );
         if ( player.levelBonuses === 0 ) return callback( false, 'nought enough level bonuses');
-        if ( player.coins < object.upgrades[ objectCurrentLevel ].price.coins ) return callback( false, 'not enough coins' );
+        if ( player.coins < object.levels[ objectCurrentLevel ].price.coins ) return callback( false, 'not enough coins' );
 
-        player.coins -= object.upgrades[ objectCurrentLevel ].price.coins;
+        player.coins -= object.levels[ objectCurrentLevel ].price.coins;
         player.levelBonuses --;
 
         //

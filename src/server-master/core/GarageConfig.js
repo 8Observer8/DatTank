@@ -67,16 +67,13 @@ var GarageConfig = {
                 engine:     'KX-v8',
                 armor:      'X-shield'
             },
-            speedCoef:      1,
-            cannonCoef:     1,
-            armorCoef:      1,
-            ammoCapacity:   100,
             description:    '<b>IS2001 tank</b> - default tank of Russian army in WW VII (2139 year) against other sides on first colonized planet (Mars).<br><br>By default equipped with plasma cannon of first generation, turbo diesel engine and tesla induction generator.<br><br>Easy in movement control, quite fast, powerful cannon, but gets overheated quite fast.<br><br>',
-            upgrades:       {
-                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 100 } },
-                2:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } },
-                3:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } },
-                4:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } }
+            levels:         {
+                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 100 } },
+                2:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } },
+                3:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } },
+                4:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } },
+                5:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } }
             }
         },
 
@@ -94,16 +91,13 @@ var GarageConfig = {
                 engine:     'ZEL-72s',
                 armor:      'KS-shield'
             },
-            speedCoef:      1,
-            cannonCoef:     1,
-            armorCoef:      1,
-            ammoCapacity:   100,
             description:    '<b>Tiger S8 tank</b> - default tank of Germany army in Venus Planet War III (2140 year) against China.<br><br>By default equipped with plasma cannon of third generation, double turbo diesel engine with generator.<br><br>Is faster and has more powerful cannon than IS2001, but has problem with overheating.<br><br>',
-            upgrades:       {
-                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 100 } },
-                2:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } },
-                3:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } },
-                4:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } }
+            levels:         {
+                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 100 } },
+                2:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } },
+                3:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } },
+                4:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } },
+                5:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } }
             }
         },
 
@@ -121,16 +115,13 @@ var GarageConfig = {
                 engine:     'VAX-32',
                 armor:      'Z8-shield'
             },
-            speedCoef:      1,
-            cannonCoef:     1,
-            armorCoef:      1,
-            ammoCapacity:   100,
             description:    '<b>Orbit T32s tank</b> - 1/3 tanks of China army in Venus Planet War III (2140 year) against Germany and USA.<br><br>By default equipped with improved second version laser cannon, improved ZEL-72 engine and uranium plates armor.<br><br>',
-            upgrades:       {
-                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 100 } },
-                2:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } },
-                3:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } },
-                4:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } }
+            levels:         {
+                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 100 } },
+                2:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } },
+                3:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } },
+                4:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } },
+                5:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } }
             }
         },
 
@@ -148,16 +139,13 @@ var GarageConfig = {
                 engine:     'ZEL-72s',
                 armor:      'X-shield'
             },
-            speedCoef:      1,
-            cannonCoef:     1,
-            armorCoef:      1,
-            ammoCapacity:   100,
             description:    '<b>MG 813 tank</b> - popular tank from all sides in Earth Asia War II (2141 year).<br><br>By default equipped with double laser cannon, nice engine improved with Gallium generator core, but has light less secure X-Shield armor.<br><br>',
-            upgrades:       {
-                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 100 } },
-                2:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } },
-                3:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } },
-                4:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } }
+            levels:         {
+                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 100 } },
+                2:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } },
+                3:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } },
+                4:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } },
+                5:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } }
             }
         },
 
@@ -175,16 +163,13 @@ var GarageConfig = {
                 engine:     'KTZ-r1',
                 armor:      'Z8-shield'
             },
-            speedCoef:      1,
-            cannonCoef:     1,
-            armorCoef:      1,
-            ammoCapacity:   100,
             description:    '<b>DTEK 72 tank</b> - rare Ukrainian tank designed in private company to defend oil wells from East Eurasian groups after Russia collapse in 2141 year.<br><br>By default equipped with triple plasma cannon, plutonium engine with partly organic generator and 80mm uranium plates armor sys.<br><br>',
-            upgrades:       {
-                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 100 } },
-                2:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } },
-                3:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } },
-                4:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } }
+            levels:         {
+                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 100 } },
+                2:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } },
+                3:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } },
+                4:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } },
+                5:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } }
             }
         },
 
@@ -202,16 +187,13 @@ var GarageConfig = {
                 engine:     'KTZ-r2',
                 armor:      'MG-defence'
             },
-            speedCoef:      1,
-            cannonCoef:     1,
-            armorCoef:      1,
-            ammoCapacity:   100,
             description:    '<b>Riper X3</b> - very powerful elite tank of United Korean Forces in Second War for Moon "Space Harbor" (2143 year).<br><br>By default equipped with special plasma cannon which solved problem of overheating, but this costs lots of energy consumption and lower movement speed and has new light graphene-type armor.<br><br>',
-            upgrades:       {
-                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 100 } },
-                2:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } },
-                3:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } },
-                4:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 1, price: { levelBonuses: 1, coins: 200 } }
+            levels:         {
+                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 100 } },
+                2:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } },
+                3:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } },
+                4:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } },
+                5:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } }
             }
         }
 
@@ -229,16 +211,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Plasma cannon first Gen.',
             price:          400,
-            damage:         30,
-            antiArmor:      1,
-            range:          200,
-            overheat:       110,
-            rpm:            10,
-            upgrades:       {
-                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { damage: 30, range: 200, overheat: 110, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 30, range: 200, overheat: 110, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 30, range: 200, overheat: 110, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 30, range: 200, overheat: 110, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 30, range: 200, overheat: 110, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -250,17 +228,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Plasma cannon second Gen.',
             price:          500,
-            damage:         40,
-            antiArmor:      1,
-            range:          220,
-            overheat:       110,
-            energy:         0,
-            rpm:            13,
-            upgrades:       {
-                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { damage: 40, range: 220, overheat: 110, rpm: 13, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 40, range: 220, overheat: 110, rpm: 13, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 40, range: 220, overheat: 110, rpm: 13, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 40, range: 220, overheat: 110, rpm: 13, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 40, range: 220, overheat: 110, rpm: 13, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -272,17 +245,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Plasma cannon with double oscillator.',
             price:          800,
-            damage:         50,
-            antiArmor:      1,
-            range:          180,
-            overheat:       90,
-            energy:         0,
-            rpm:            9,
-            upgrades:       {
-                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { damage: 50, range: 180, overheat: 90, rpm: 9, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 50, range: 180, overheat: 90, rpm: 9, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 50, range: 180, overheat: 90, rpm: 9, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 50, range: 180, overheat: 90, rpm: 9, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 50, range: 180, overheat: 90, rpm: 9, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -294,17 +262,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Plasma cannon with triple oscillator.',
             price:          1200,
-            damage:         80,
-            antiArmor:      1,
-            range:          170,
-            overheat:       70,
-            energy:         0,
-            rpm:            9,
-            upgrades:       {
-                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { damage: 80, range: 170, overheat: 70, rpm: 9, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 80, range: 170, overheat: 70, rpm: 9, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 80, range: 170, overheat: 70, rpm: 9, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 80, range: 170, overheat: 70, rpm: 9, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 80, range: 170, overheat: 70, rpm: 9, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -316,17 +279,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Plasma cannon with zero heat release.',
             price:          4000,
-            damage:         45,
-            antiArmor:      1,
-            range:          210,
-            overheat:       300,
-            energy:         0,
-            rpm:            25,
-            upgrades:       {
-                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { damage: 45, range: 210, overheat: 300, rpm: 25, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 45, range: 210, overheat: 300, rpm: 25, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 45, range: 210, overheat: 300, rpm: 25, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 45, range: 210, overheat: 300, rpm: 25, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 45, range: 210, overheat: 300, rpm: 25, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -340,17 +298,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Laser cannon first prototype',
             price:          900,
-            damage:         95,
-            antiArmor:      1,
-            range:          250,
-            overheat:       65,
-            energy:         0,
-            rpm:            11,
-            upgrades:       {
-                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { damage: 95, range: 250, overheat: 65, rpm: 11, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 95, range: 250, overheat: 65, rpm: 11, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 95, range: 250, overheat: 65, rpm: 11, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 95, range: 250, overheat: 65, rpm: 11, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 95, range: 250, overheat: 65, rpm: 11, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -362,17 +315,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Second prototype version of laser cannon',
             price:          1500,
-            damage:         115,
-            antiArmor:      1,
-            range:          270,
-            overheat:       70,
-            energy:         0,
-            rpm:            14,
-            upgrades:       {
-                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { damage: 115, range: 270, overheat: 70, rpm: 14, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 115, range: 270, overheat: 70, rpm: 14, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 115, range: 270, overheat: 70, rpm: 14, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 115, range: 270, overheat: 70, rpm: 14, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 115, range: 270, overheat: 70, rpm: 14, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -384,17 +332,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Original Razer cannon with double oscillator core.',
             price:          4000,
-            damage:         140,
-            antiArmor:      1,
-            range:          250,
-            overheat:       60,
-            energy:         0,
-            rpm:            12,
-            upgrades:       {
-                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { damage: 140, range: 250, overheat: 60, rpm: 12, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 140, range: 250, overheat: 60, rpm: 12, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 140, range: 250, overheat: 60, rpm: 12, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 140, range: 250, overheat: 60, rpm: 12, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 140, range: 250, overheat: 60, rpm: 12, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -406,17 +349,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Original Razer cannon with quadro oscillator core.',
             price:          5000,
-            damage:         180,
-            antiArmor:      1,
-            range:          200,
-            overheat:       30,
-            energy:         0,
-            rpm:            10,
-            upgrades:       {
-                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { damage: 180, range: 200, overheat: 30, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 180, range: 200, overheat: 30, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 180, range: 200, overheat: 30, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 180, range: 200, overheat: 30, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 180, range: 200, overheat: 30, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -430,17 +368,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Magnet cannon v87 release.',
             price:          7000,
-            damage:         190,
-            antiArmor:      1,
-            range:          250,
-            overheat:       45,
-            energy:         0,
-            rpm:            15,
-            upgrades:       {
-                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { damage: 190, range: 250, overheat: 45, rpm: 15, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 190, range: 250, overheat: 45, rpm: 15, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 190, range: 250, overheat: 45, rpm: 15, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 190, range: 250, overheat: 45, rpm: 15, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 190, range: 250, overheat: 45, rpm: 15, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -452,17 +385,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Improved magnet cannon v87S.',
             price:          10000,
-            damage:         220,
-            antiArmor:      1,
-            range:          170,
-            overheat:       65,
-            energy:         0,
-            rpm:            16,
-            upgrades:       {
-                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { damage: 220, range: 170, overheat: 65, rpm: 16, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 220, range: 170, overheat: 65, rpm: 16, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 220, range: 170, overheat: 65, rpm: 16, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 220, range: 170, overheat: 65, rpm: 16, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 220, range: 170, overheat: 65, rpm: 16, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -474,17 +402,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Magnet cannon v87s turbo version.',
             price:          14000,
-            damage:         235,
-            antiArmor:      1,
-            range:          160,
-            overheat:       50,
-            energy:         0,
-            rpm:            13,
-            upgrades:       {
-                1:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 10, overheat: 10, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { damage: 235, range: 160, overheat: 50, rpm: 13, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 235, range: 160, overheat: 50, rpm: 13, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 235, range: 160, overheat: 50, rpm: 13, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 235, range: 160, overheat: 50, rpm: 13, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 235, range: 160, overheat: 50, rpm: 13, price: { levelBonuses: 1, coins: 100 } }
             }
         }
 
@@ -500,13 +423,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Turbo diesel 1.3k HP engine with tesla induction generator.',
             price:          500,
-            power:          30000,
-            maxSpeed:       50,
-            upgrades:       {
-                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { maxSpeed: 50, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                2:      { maxSpeed: 50, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                3:      { maxSpeed: 50, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                4:      { maxSpeed: 50, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                5:      { maxSpeed: 50, power: 30000, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -518,13 +440,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Double turbo diesel 1.8k HP engine with tesla induction generator.',
             price:          800,
-            power:          30000,
-            maxSpeed:       58,
-            upgrades:       {
-                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { maxSpeed: 58, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                2:      { maxSpeed: 58, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                3:      { maxSpeed: 58, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                4:      { maxSpeed: 58, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                5:      { maxSpeed: 58, power: 30000, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -536,13 +457,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Double turbo diesel 2.1k HP engine with tesla induction generator with Gallium winding.',
             price:          1300,
-            power:          30000,
-            maxSpeed:       62,
-            upgrades:       {
-                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { maxSpeed: 62, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                2:      { maxSpeed: 62, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                3:      { maxSpeed: 62, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                4:      { maxSpeed: 62, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                5:      { maxSpeed: 62, power: 30000, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -554,13 +474,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Plutonium 3.2k HP engine with organic-based generator.',
             price:          1700,
-            power:          30000,
-            maxSpeed:       75,
-            upgrades:       {
-                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { maxSpeed: 75, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                2:      { maxSpeed: 75, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                3:      { maxSpeed: 75, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                4:      { maxSpeed: 75, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                5:      { maxSpeed: 75, power: 30000, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -572,13 +491,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Improved plutonium 3.4k HP engine with organic-based generator.',
             price:          2000,
-            power:          30000,
-            maxSpeed:       78,
-            upgrades:       {
-                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { maxSpeed: 78, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                2:      { maxSpeed: 78, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                3:      { maxSpeed: 78, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                4:      { maxSpeed: 78, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                5:      { maxSpeed: 78, power: 30000, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -590,13 +508,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Polonium ARK 3.7k HP engine with generator and Lithium batteries.',
             price:          3000,
-            power:          30000,
-            maxSpeed:       85,
-            upgrades:       {
-                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { maxSpeed: 85, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                2:      { maxSpeed: 85, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                3:      { maxSpeed: 85, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                4:      { maxSpeed: 85, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                5:      { maxSpeed: 85, power: 30000, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -608,13 +525,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Improved polonium ARK 4.2k HP engine.',
             price:          4500,
-            power:          30000,
-            maxSpeed:       89,
-            upgrades:       {
-                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { maxSpeed: 89, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                2:      { maxSpeed: 89, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                3:      { maxSpeed: 89, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                4:      { maxSpeed: 89, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                5:      { maxSpeed: 89, power: 30000, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -626,13 +542,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Modified VAX32s with Cesium core, 4.6k HP.',
             price:          6000,
-            power:          30000,
-            maxSpeed:       93,
-            upgrades:       {
-                1:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { maxSpeed: 10, power: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { maxSpeed: 93, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                2:      { maxSpeed: 93, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                3:      { maxSpeed: 93, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                4:      { maxSpeed: 93, power: 30000, price: { levelBonuses: 1, coins: 100 } },
+                5:      { maxSpeed: 93, power: 30000, price: { levelBonuses: 1, coins: 100 } }
             }
         }
 
@@ -648,12 +563,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Basic 100mm titanium list.',
             price:          400,
-            armor:          100,
-            upgrades:       {
-                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { armor: 100, price: { levelBonuses: 1, coins: 100 } },
+                2:      { armor: 100, price: { levelBonuses: 1, coins: 100 } },
+                3:      { armor: 100, price: { levelBonuses: 1, coins: 100 } },
+                4:      { armor: 100, price: { levelBonuses: 1, coins: 100 } },
+                5:      { armor: 100, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -665,12 +580,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      '20mm Iridium armor.',
             price:          800,
-            armor:          140,
-            upgrades:       {
-                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { armor: 140, price: { levelBonuses: 1, coins: 100 } },
+                2:      { armor: 140, price: { levelBonuses: 1, coins: 100 } },
+                3:      { armor: 140, price: { levelBonuses: 1, coins: 100 } },
+                4:      { armor: 140, price: { levelBonuses: 1, coins: 100 } },
+                5:      { armor: 140, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -682,12 +597,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      '35mm Iridium armor with active barrier.',
             price:          1400,
-            armor:          160,
-            upgrades:       {
-                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { armor: 160, price: { levelBonuses: 1, coins: 100 } },
+                2:      { armor: 160, price: { levelBonuses: 1, coins: 100 } },
+                3:      { armor: 160, price: { levelBonuses: 1, coins: 100 } },
+                4:      { armor: 160, price: { levelBonuses: 1, coins: 100 } },
+                5:      { armor: 160, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -699,12 +614,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      '80mm uranium plates armor.',
             price:          1800,
-            armor:          200,
-            upgrades:       {
-                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { armor: 200, price: { levelBonuses: 1, coins: 100 } },
+                2:      { armor: 200, price: { levelBonuses: 1, coins: 100 } },
+                3:      { armor: 200, price: { levelBonuses: 1, coins: 100 } },
+                4:      { armor: 200, price: { levelBonuses: 1, coins: 100 } },
+                5:      { armor: 200, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -716,12 +631,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      '3mm graphene nanotubes plates armor.',
             price:          2400,
-            armor:          250,
-            upgrades:       {
-                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { armor: 250, price: { levelBonuses: 1, coins: 100 } },
+                2:      { armor: 250, price: { levelBonuses: 1, coins: 100 } },
+                3:      { armor: 250, price: { levelBonuses: 1, coins: 100 } },
+                4:      { armor: 250, price: { levelBonuses: 1, coins: 100 } },
+                5:      { armor: 250, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -733,12 +648,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      '5mm graphene nanotubes plates with Adamantium strings.',
             price:          3500,
-            armor:          270,
-            upgrades:       {
-                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { armor: 270, price: { levelBonuses: 1, coins: 100 } },
+                2:      { armor: 270, price: { levelBonuses: 1, coins: 100 } },
+                3:      { armor: 270, price: { levelBonuses: 1, coins: 100 } },
+                4:      { armor: 270, price: { levelBonuses: 1, coins: 100 } },
+                5:      { armor: 270, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -750,12 +665,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      '5mm graphene nanotubes plates with Adamantium strings.',
             price:          5000,
-            armor:          310,
-            upgrades:       {
-                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { armor: 310, price: { levelBonuses: 1, coins: 100 } },
+                2:      { armor: 310, price: { levelBonuses: 1, coins: 100 } },
+                3:      { armor: 310, price: { levelBonuses: 1, coins: 100 } },
+                4:      { armor: 310, price: { levelBonuses: 1, coins: 100 } },
+                5:      { armor: 310, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -767,12 +682,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      '5mm graphene nanotubes plates with Adamantium strings.',
             price:          8000,
-            armor:          350,
-            upgrades:       {
-                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { armor: 350, price: { levelBonuses: 1, coins: 100 } },
+                2:      { armor: 350, price: { levelBonuses: 1, coins: 100 } },
+                3:      { armor: 350, price: { levelBonuses: 1, coins: 100 } },
+                4:      { armor: 350, price: { levelBonuses: 1, coins: 100 } },
+                5:      { armor: 350, price: { levelBonuses: 1, coins: 100 } }
             }
         },
 
@@ -784,12 +699,12 @@ var GarageConfig = {
             description:    '',
             shortDesc:      '5mm graphene nanotubes plates with adamantium strings.',
             price:          15000,
-            armor:          380,
-            upgrades:       {
-                1:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { armor: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { armor: 10, price: { levelBonuses: 1, coins: 100 } }
+            levels:         {
+                1:      { armor: 380, price: { levelBonuses: 1, coins: 100 } },
+                2:      { armor: 380, price: { levelBonuses: 1, coins: 100 } },
+                3:      { armor: 380, price: { levelBonuses: 1, coins: 100 } },
+                4:      { armor: 380, price: { levelBonuses: 1, coins: 100 } },
+                5:      { armor: 380, price: { levelBonuses: 1, coins: 100 } }
             }
         }
 
