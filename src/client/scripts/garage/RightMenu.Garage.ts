@@ -116,6 +116,15 @@ export class GarageRightMenu {
         $('.garage .right-block .upgrade-block .upgrade-btn').mouseover( () => {
 
             SoundManager.playSound('ElementHover');
+            this.update( '', '', level + 1 );
+
+        });
+
+        $('.garage .right-block .upgrade-block .upgrade-btn').mouseout( () => {
+
+            if ( Game.garage.lockPartsChange ) return;
+            clearTimeout( this.barChangeTimeout );
+            this.barChangeTimeout = setTimeout( this.update.bind( this ), 100 );
 
         });
 
@@ -182,7 +191,7 @@ export class GarageRightMenu {
 
     };
 
-    public update ( category: string = '', itemId: string = '' ) : void {
+    public update ( category: string = '', itemId: string = '', itemLevel: number = 0 ) : void {
 
         const availableParts = Game.garage.availableParts;
         const selectedParts = Game.garage.selectedParts;
@@ -225,13 +234,18 @@ export class GarageRightMenu {
         if ( selectedMenu === 'engine' ) engineId = itemId || currentEngineId;
 
         const hull = Game.GarageConfig.hull[ hullId ];
-        const hullLevel = ( availableParts.hull[ hullId ] || { level: 1 } ).level;
+        let hullLevel = ( availableParts.hull[ hullId ] || { level: 1 } ).level;
         const cannon = Game.GarageConfig.cannon[ cannonId ];
-        const cannonLevel = ( availableParts.cannon[ cannonId ] || { level: 1 } ).level;
+        let cannonLevel = ( availableParts.cannon[ cannonId ] || { level: 1 } ).level;
         const armor = Game.GarageConfig.armor[ armorId ];
-        const armorLevel = ( availableParts.armor[ armorId ] || { level: 1 } ).level;
+        let armorLevel = ( availableParts.armor[ armorId ] || { level: 1 } ).level;
         const engine = Game.GarageConfig.engine[ engineId ];
-        const engineLevel = ( availableParts.engine[ engineId ] || { level: 1 } ).level;
+        let engineLevel = ( availableParts.engine[ engineId ] || { level: 1 } ).level;
+
+        if ( selectedMenu === 'hull' ) hullLevel = itemLevel || hullLevel;
+        if ( selectedMenu === 'cannon' ) cannonLevel = itemLevel || cannonLevel;
+        if ( selectedMenu === 'armor' ) armorLevel = itemLevel || armorLevel;
+        if ( selectedMenu === 'engine' ) engineLevel = itemLevel || engineLevel;
 
         const greenColor = 'rgba( 74, 239, 74, 1 )';
         const redColor = 'rgba( 234, 63, 63, 1 )';

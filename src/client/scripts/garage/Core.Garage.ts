@@ -229,6 +229,7 @@ export class Garage {
 
                 $('.garage .right-block .upgrade-block').hide();
                 this.rightRightMenu.updateIfCanUpgrade( false, item.id );
+                this.rightRightMenu.update();
 
             }, 300 );
 

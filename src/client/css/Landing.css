@@ -1,4 +1,13 @@
 
+.landing {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    min-height: 600px;
+}
+
 .landing .mobile-not-supported {
     display: none;
     position: absolute;
@@ -83,7 +92,6 @@
     top: calc( 25% - 50px );
     left: 0px;
     width: 100%;
-    height: 446px;
     z-index: 1;
 }
 
@@ -91,7 +99,7 @@
     position: absolute;
     left: 13%;
     width: calc( 74% - 360px );
-    height: 100%;
+    height: 517px;
     background-color: rgba( 255, 255, 255, 0.1 );
 }
 
@@ -254,6 +262,7 @@
     position: absolute;
     right: 13%;
     width: 340px;
+    height: 500px;
     border: 1px solid #666;
     box-shadow: rgba( 0, 0, 0, 0.4 ) 1px 1px 10px;
     background-color: #fff;
@@ -264,9 +273,9 @@
 
 @media only screen and (max-width: 1200px) {
     #signin-box-wrapper #signin-box {
-        position: absolute;
-        left: 50%;
-        transform: translate( -50%, 0px );
+        position: absolute !important;
+        left: 50% !important;
+        transform: translate( -50%, 0px ) !important;
     }
     #signin-box-wrapper #main-block {
         display: none;
@@ -425,4 +434,10 @@
 #footer a:hover {
     text-decoration: underline;
     opacity: 0.8;
+}
+
+@media only screen and (max-height: 700px) {
+    #footer {
+        display: none;
+    }
 }

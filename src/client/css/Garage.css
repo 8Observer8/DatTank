@@ -252,11 +252,17 @@
 
 .garage .right-block {
     position: absolute;
-    top: 150px;
-    right: 0px;
+    top: 15%;
+    right: 10%;
     width: 400px;
     height: 320px;
     z-index: 1;
+}
+
+@media only screen and (max-width: 1300px) {
+    .garage .right-block {
+        right: 0px;
+    }
 }
 
 .garage .right-block .item-title {
