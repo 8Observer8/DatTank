@@ -3,8 +3,13 @@
  * Tank Engine part
 */
 
+import { TankObject } from '../core/Tank.Object';
+
+//
+
 export class EngineTankPart {
 
+    public tank: TankObject;
     public nid: number;
     public title: string;
 
@@ -13,8 +18,9 @@ export class EngineTankPart {
 
     //
 
-    constructor ( params: any, level: number ) {
+    constructor ( tank: TankObject, params: any, level: number ) {
 
+        this.tank = tank;
         this.nid = params.nid;
         this.title = params.title;
 

@@ -211,6 +211,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Plasma cannon first Gen.',
             price:          400,
+            shootType:      'bullet',
             levels:         {
                 1:      { damage: 30, range: 200, overheat: 110, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
                 2:      { damage: 50, range: 200, overheat: 110, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
@@ -228,6 +229,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Plasma cannon second Gen.',
             price:          500,
+            shootType:      'bullet',
             levels:         {
                 1:      { damage: 40, range: 220, overheat: 110, rpm: 13, price: { levelBonuses: 1, coins: 100 } },
                 2:      { damage: 40, range: 220, overheat: 110, rpm: 13, price: { levelBonuses: 1, coins: 100 } },
@@ -245,6 +247,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Plasma cannon with double oscillator.',
             price:          800,
+            shootType:      'bullet',
             levels:         {
                 1:      { damage: 50, range: 180, overheat: 90, rpm: 9, price: { levelBonuses: 1, coins: 100 } },
                 2:      { damage: 50, range: 180, overheat: 90, rpm: 9, price: { levelBonuses: 1, coins: 100 } },
@@ -262,6 +265,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Plasma cannon with triple oscillator.',
             price:          1200,
+            shootType:      'bullet',
             levels:         {
                 1:      { damage: 80, range: 170, overheat: 70, rpm: 9, price: { levelBonuses: 1, coins: 100 } },
                 2:      { damage: 80, range: 170, overheat: 70, rpm: 9, price: { levelBonuses: 1, coins: 100 } },
@@ -279,6 +283,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Plasma cannon with zero heat release.',
             price:          4000,
+            shootType:      'bullet',
             levels:         {
                 1:      { damage: 45, range: 210, overheat: 300, rpm: 25, price: { levelBonuses: 1, coins: 100 } },
                 2:      { damage: 45, range: 210, overheat: 300, rpm: 25, price: { levelBonuses: 1, coins: 100 } },
@@ -298,6 +303,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Laser cannon first prototype',
             price:          900,
+            shootType:      'laser',
             levels:         {
                 1:      { damage: 95, range: 250, overheat: 65, rpm: 11, price: { levelBonuses: 1, coins: 100 } },
                 2:      { damage: 95, range: 250, overheat: 65, rpm: 11, price: { levelBonuses: 1, coins: 100 } },
@@ -315,6 +321,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Second prototype version of laser cannon',
             price:          1500,
+            shootType:      'laser',
             levels:         {
                 1:      { damage: 115, range: 270, overheat: 70, rpm: 14, price: { levelBonuses: 1, coins: 100 } },
                 2:      { damage: 115, range: 270, overheat: 70, rpm: 14, price: { levelBonuses: 1, coins: 100 } },
@@ -332,6 +339,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Original Razer cannon with double oscillator core.',
             price:          4000,
+            shootType:      'laser',
             levels:         {
                 1:      { damage: 140, range: 250, overheat: 60, rpm: 12, price: { levelBonuses: 1, coins: 100 } },
                 2:      { damage: 140, range: 250, overheat: 60, rpm: 12, price: { levelBonuses: 1, coins: 100 } },
@@ -349,6 +357,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Original Razer cannon with quadro oscillator core.',
             price:          5000,
+            shootType:      'laser',
             levels:         {
                 1:      { damage: 180, range: 200, overheat: 30, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
                 2:      { damage: 180, range: 200, overheat: 30, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
@@ -368,6 +377,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Magnet cannon v87 release.',
             price:          7000,
+            shootType:      'fire',
             levels:         {
                 1:      { damage: 190, range: 250, overheat: 45, rpm: 15, price: { levelBonuses: 1, coins: 100 } },
                 2:      { damage: 190, range: 250, overheat: 45, rpm: 15, price: { levelBonuses: 1, coins: 100 } },
@@ -385,6 +395,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Improved magnet cannon v87S.',
             price:          10000,
+            shootType:      'fire',
             levels:         {
                 1:      { damage: 220, range: 170, overheat: 65, rpm: 16, price: { levelBonuses: 1, coins: 100 } },
                 2:      { damage: 220, range: 170, overheat: 65, rpm: 16, price: { levelBonuses: 1, coins: 100 } },
@@ -402,6 +413,7 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Magnet cannon v87s turbo version.',
             price:          14000,
+            shootType:      'fire',
             levels:         {
                 1:      { damage: 235, range: 160, overheat: 50, rpm: 13, price: { levelBonuses: 1, coins: 100 } },
                 2:      { damage: 235, range: 160, overheat: 50, rpm: 13, price: { levelBonuses: 1, coins: 100 } },

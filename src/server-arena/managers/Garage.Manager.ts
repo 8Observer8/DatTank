@@ -131,10 +131,10 @@ class GarageManagerCore {
         //
 
         const tankObject = new TankObject( player );
-        tankObject.hull = new HullTankPart( this.hull[ params.hull ], availableParts ? availableParts.hull[ params.hull ].level : 1 );
-        tankObject.cannon = new CannonTankPart( this.cannon[ params.cannon ], availableParts ? availableParts.cannon[ params.cannon ].level : 1 );
-        tankObject.armor = new ArmorTankPart( this.armor[ params.armor ], availableParts ? availableParts.armor[ params.armor ].level : 1 );
-        tankObject.engine = new EngineTankPart( this.engine[ params.engine ], availableParts ? availableParts.engine[ params.engine ].level : 1 );
+        tankObject.hull = new HullTankPart( tankObject, this.hull[ params.hull ], availableParts ? availableParts.hull[ params.hull ].level : 1 );
+        tankObject.cannon = new CannonTankPart( tankObject, this.cannon[ params.cannon ], availableParts ? availableParts.cannon[ params.cannon ].level : 1 );
+        tankObject.armor = new ArmorTankPart( tankObject, this.armor[ params.armor ], availableParts ? availableParts.armor[ params.armor ].level : 1 );
+        tankObject.engine = new EngineTankPart( tankObject, this.engine[ params.engine ], availableParts ? availableParts.engine[ params.engine ].level : 1 );
         tankObject.ammo = tankObject.hull.ammoCapacity;
 
         //
