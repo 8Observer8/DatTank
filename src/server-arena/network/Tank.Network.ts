@@ -47,7 +47,7 @@ export class TankNetwork {
 
         if ( this.filter( data, socket ) ) return;
 
-        this.tank.startShooting();
+        this.tank.cannon.startShooting();
 
     };
 
@@ -55,7 +55,7 @@ export class TankNetwork {
 
         if ( this.filter( data, socket ) ) return;
 
-        this.tank.stopShooting();
+        this.tank.cannon.stopShooting();
 
     };
 

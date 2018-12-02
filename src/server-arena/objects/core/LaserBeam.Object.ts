@@ -14,7 +14,6 @@ export class LaserBeamObject {
 
     private static numIds: number = 1;
 
-    private arena: ArenaCore;
     public id: number;
     public active: boolean = false;
     public owner: TankObject | TowerObject;
@@ -56,7 +55,6 @@ export class LaserBeamObject {
 
         if ( LaserBeamObject.numIds > 1000 ) LaserBeamObject.numIds = 0;
         this.id = LaserBeamObject.numIds ++;
-        this.arena = arena;
 
     };
 

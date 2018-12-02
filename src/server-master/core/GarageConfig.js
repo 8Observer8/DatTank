@@ -218,7 +218,10 @@ var GarageConfig = {
                 3:      { damage: 70, range: 200, overheat: 110, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
                 4:      { damage: 30, range: 200, overheat: 110, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
                 5:      { damage: 30, range: 200, overheat: 110, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
-            }
+            },
+            shootInfo: [
+                { dAngle:   0, offset: 25 }
+            ]
         },
 
         'Plasma-g2': {
@@ -236,7 +239,10 @@ var GarageConfig = {
                 3:      { damage: 40, range: 220, overheat: 110, rpm: 13, price: { levelBonuses: 1, coins: 100 } },
                 4:      { damage: 40, range: 220, overheat: 110, rpm: 13, price: { levelBonuses: 1, coins: 100 } },
                 5:      { damage: 40, range: 220, overheat: 110, rpm: 13, price: { levelBonuses: 1, coins: 100 } }
-            }
+            },
+            shootInfo: [
+                { dAngle:   0, offset: 25 }
+            ]
         },
 
         'Plasma-double': {
@@ -254,7 +260,11 @@ var GarageConfig = {
                 3:      { damage: 50, range: 180, overheat: 90, rpm: 9, price: { levelBonuses: 1, coins: 100 } },
                 4:      { damage: 50, range: 180, overheat: 90, rpm: 9, price: { levelBonuses: 1, coins: 100 } },
                 5:      { damage: 50, range: 180, overheat: 90, rpm: 9, price: { levelBonuses: 1, coins: 100 } }
-            }
+            },
+            shootInfo: [
+                { dAngle:   0.16, offset: 25 },
+                { dAngle: - 0.16, offset: 25 }
+            ]
         },
 
         'Plasma-triple': {

@@ -3,6 +3,7 @@
  * Tank Cannon part
 */
 
+import * as OMath from '../../OMath/Core.OMath';
 import { TankObject } from '../core/Tank.Object';
 
 //
@@ -21,6 +22,7 @@ export class CannonTankPart {
 
     public temperature: number;
 
+    private shootTimeout: any;
     private shootingInterval: any;
 
     //
@@ -94,7 +96,41 @@ export class CannonTankPart {
 
     private bulletShot () : void {
 
-        // todo
+        if ( this.tank.health <= 0 ) return;
+        if ( this.shootTimeout ) return;
+        if ( this.tank.ammo <= 0 ) return;
+
+        //
+
+        this.shootTimeout = setTimeout( () => {
+
+            this.shootTimeout = false;
+
+        }, 1000 * 60 / ( this.rpm * 5 ) );
+
+        // overheating
+
+        if ( this.temperature >= 80 ) return;
+        this.temperature *= 1.2;
+        this.temperature += 12;
+        this.temperature = Math.min( this.temperature, 100 );
+
+        //
+
+        const bullet = this.tank.arena.bulletManager.getInactiveBullet();
+        if ( ! bullet ) return;
+
+        // compute proper position of bullet
+
+        const position = new OMath.Vec3( this.tank.position.x, 20, this.tank.position.z );
+        const offset = 45;
+        position.x += offset * Math.cos( Math.PI / 2 - this.tank.rotation );
+        position.z += offset * Math.sin( Math.PI / 2 - this.tank.rotation );
+
+        bullet.activate( position, this.tank.rotation, this.range, this.tank );
+        this.tank.ammo --;
+
+        this.tank.network.makeShoot( bullet );
 
     };
 

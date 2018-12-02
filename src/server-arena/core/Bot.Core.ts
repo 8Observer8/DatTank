@@ -305,7 +305,7 @@ export class BotCore {
 
             if ( deltaAngle < 0.2 ) {
 
-                this.player.tank.makeShot();
+                this.player.tank.cannon.makeShot();
 
             }
 

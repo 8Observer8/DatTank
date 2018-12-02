@@ -3,7 +3,6 @@
  * DatTank Tank network handler
 */
 
-import * as OMath from '../OMath/Core.OMath';
 import { Network } from '../network/Core.Network';
 import { TankObject } from '../objects/core/Tank.Object';
 
@@ -229,13 +228,10 @@ export class TankNetwork {
         if ( this.filter( data ) ) return;
 
         const bulletId = data[1];
-        const x = data[2];
-        const y = 20;
-        const z = data[3];
         const directionRotation = data[4] / 1000;
         const overheating = data[5];
 
-        this.tank.makeShot( bulletId, new OMath.Vec3( x, y, z ), directionRotation, overheating );
+        this.tank.cannon.makeShot( bulletId, directionRotation, overheating );
 
     };
 

@@ -231,7 +231,7 @@ class TankGfx {
         this.object.position.z += dPosZ;
 
         this.tank.position.copy( this.object.position );
-        this.tank.rotation = this.object.position.y;
+        this.tank.rotation = this.object.rotation.y;
 
         this.object.updateMatrixWorld( true );
 

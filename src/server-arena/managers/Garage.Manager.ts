@@ -41,7 +41,7 @@ class GarageManagerCore {
 
     };
 
-    public getBaseById ( id: number ) : any {
+    public getHullById ( id: number ) : any {
 
         for ( const i in this.hull ) {
 
@@ -115,7 +115,7 @@ class GarageManagerCore {
 
             if ( ! availableParts.hull[ params.hull ] || ! availableParts.cannon[ params.cannon ] || ! availableParts.armor[ params.armor ] || ! availableParts.engine[ params.engine ] ) {
 
-                params.base = 'IS2001';
+                params.hull = 'IS2001';
                 const rawTankData = this.hull[ params.hull ];
 
                 params.cannon = rawTankData.default.cannon;

@@ -35,21 +35,21 @@ export class PlayerNetwork {
 
         if ( this.filter( data, socket ) ) return;
 
-        const baseId = data[1];
+        const hullId = data[1];
         const cannonId = data[2];
         const armorId = data[3];
         const engineId = data[4];
 
-        const base = GarageManager.getBaseById( baseId );
+        const hull = GarageManager.getHullById( hullId );
         const cannon = GarageManager.getCannonById( cannonId );
         const armor = GarageManager.getArmorById( armorId );
         const engine = GarageManager.getEngineById( engineId );
 
-        if ( ! base || ! cannon || ! armor || ! engine ) return;
+        if ( ! hull || ! cannon || ! armor || ! engine ) return;
 
         //
 
-        this.player.respawn({ base: base.id, cannon: cannon.id, armor: armor.id, engine: engine.id });
+        this.player.respawn({ hull: hull.id, cannon: cannon.id, armor: armor.id, engine: engine.id });
 
     };
 

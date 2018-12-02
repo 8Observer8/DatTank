@@ -18,7 +18,6 @@ import { EngineTankPart } from '../tanks/Engine.TankPart';
 import { TankNetwork } from '../../network/Tank.Network';
 import { TankGfx } from '../../graphics/objects/Tank.Gfx';
 import { HealthChangeLabelManager } from '../../managers/HealthChangeLabel.Manager';
-import { BulletManager } from '../../managers/Bullet.Manager';
 import { CollisionManager } from '../../managers/Collision.Manager';
 import { GfxCore } from '../../graphics/Core.Gfx';
 
@@ -49,7 +48,7 @@ export class TankObject {
     public rotation: number = 0;
     public size: OMath.Vec3 = new OMath.Vec3( 30, 25, 60 );
 
-    protected network: TankNetwork = new TankNetwork();
+    public network: TankNetwork = new TankNetwork();
     public gfx: TankGfx = new TankGfx();
 
     public collisionBox: any;
@@ -72,42 +71,6 @@ export class TankObject {
     };
 
     //
-
-    public startShooting () : void {
-
-        this.network.startShooting();
-
-    };
-
-    public stopShooting () : void {
-
-        this.network.stopShooting();
-
-    };
-
-    public makeShot ( bulletId: number, position: OMath.Vec3, directionRotation: number, overheating: number ) : void {
-
-        if ( this.health <= 0 ) return;
-
-        if ( this.isMe ) {
-
-            this.cannon.overheat = overheating;
-            this.gfx.label.update( this.health, this.armor.armor, this.player.team.color, this.cannon.overheat, this.player.username, this.isMe );
-
-        }
-
-        BulletManager.showBullet( bulletId, position, this.cannon.range, directionRotation + Math.PI / 2 );
-        this.gfx.shoot();
-
-        if ( this.player.id === Arena.me.id ) {
-
-            Logger.newEvent( 'Shot', 'game' );
-            this.setAmmo( this.ammo - 1 );
-            UI.InGame.setAmmoReloadAnimation( 60 * 1000 / this.cannon.rpm );
-
-        }
-
-    };
 
     public move ( directionX: number, directionZ: number ) : void {
 
@@ -322,10 +285,10 @@ export class TankObject {
         this.health = params.health;
         this.ammo = params.ammo;
 
-        this.hull = new HullTankPart( params.hull );
-        this.cannon = new CannonTankPart( params.cannon );
-        this.armor = new ArmorTankPart( params.armor );
-        this.engine = new EngineTankPart( params.engine );
+        this.hull = new HullTankPart( this, params.hull );
+        this.cannon = new CannonTankPart( this, params.cannon );
+        this.armor = new ArmorTankPart( this, params.armor );
+        this.engine = new EngineTankPart( this, params.engine );
 
         this.rotation = params.rotation % ( 2 * Math.PI );
         this.rotationCorrection = 0;

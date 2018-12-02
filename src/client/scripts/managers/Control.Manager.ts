@@ -30,7 +30,7 @@ class ControlsManagerCore {
 
         if ( Arena.me.tank ) {
 
-            Arena.me.tank.startShooting();
+            Arena.me.tank.cannon.startShooting();
 
         }
 
@@ -40,7 +40,7 @@ class ControlsManagerCore {
 
         if ( Arena.me.tank ) {
 
-            Arena.me.tank.stopShooting();
+            Arena.me.tank.cannon.stopShooting();
 
         }
 

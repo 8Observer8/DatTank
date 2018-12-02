@@ -27,22 +27,22 @@ export class TankObject {
 
     public active: boolean = false;
 
+    public player: PlayerCore;
+    public arena: ArenaCore;
     public id: number;
     public title: string;
     public team: TeamCore;
+
     public position: OMath.Vec3 = new OMath.Vec3();
     public rotation: number = 0;
-    public radius: number = 25;
     public health: number = 100;
-    public ammo: number;
+    public ammo: number = 0;
     public viewRange: number = 750;
     public size: OMath.Vec3 = new OMath.Vec3( 30, 25, 60 );
 
     public moveDirection: OMath.Vec2 = new OMath.Vec2();
     public deltaPosition: OMath.Vec3 = new OMath.Vec3();
 
-    private shootTimeout: any;
-    private shootingInterval: any;
     private sinceHitRegenerationLimit: number = 5000;
     private sinceHitTime: number;
     private sinceRegenerationLimit: number = 2000;
@@ -57,8 +57,6 @@ export class TankObject {
     public collisionBox: object;
 
     public readonly type = 'Tank';
-    public player: PlayerCore;
-    public arena: ArenaCore;
 
     public upgrades = {
         speed:      0,
@@ -258,65 +256,6 @@ export class TankObject {
 
     };
 
-    public makeShot () : void {
-
-        if ( this.health <= 0 ) return;
-        if ( this.shootTimeout ) return;
-        if ( this.ammo <= 0 ) return;
-
-        //
-
-        this.shootTimeout = setTimeout( () => {
-
-            this.shootTimeout = false;
-
-        }, 1000 * 60 / ( this.cannon.rpm * 5 ) );
-
-        // overheating
-
-        if ( this.cannon.temperature >= 80 ) return;
-        this.cannon.temperature *= 1.2;
-        this.cannon.temperature += 12;
-        this.cannon.temperature = Math.min( this.cannon.temperature, 100 );
-
-        //
-
-        const bullet = this.arena.bulletManager.getInactiveBullet();
-        if ( ! bullet ) return;
-
-        // compute proper position of bullet
-
-        const position = new OMath.Vec3( this.position.x, 20, this.position.z );
-        const offset = 45;
-        position.x += offset * Math.cos( Math.PI / 2 - this.rotation );
-        position.z += offset * Math.sin( Math.PI / 2 - this.rotation );
-
-        bullet.activate( position, this.rotation, this.cannon.range, this );
-        this.ammo --;
-
-        this.network.makeShoot( bullet );
-
-    };
-
-    public startShooting () : void {
-
-        clearInterval( this.shootingInterval );
-        this.shootingInterval = setInterval( () => {
-
-            this.makeShot();
-
-        }, 100 );
-
-        this.makeShot();
-
-    };
-
-    public stopShooting () : void {
-
-        clearInterval( this.shootingInterval );
-
-    };
-
     public setMovement ( directionX: number, directionY: number, force?: boolean ) : void {
 
         if ( this.health <= 0 && ! force ) return;
@@ -332,7 +271,7 @@ export class TankObject {
 
         if ( this.player.status !== PlayerCore.Alive ) return;
 
-        this.stopShooting();
+        this.cannon.stopShooting();
 
         this.player.die( killer );
 
@@ -532,7 +471,7 @@ export class TankObject {
             rotation:       this.rotation,
             position:       this.position.toJSON(),
             moveDirection:  this.moveDirection.toJSON(),
-            base:           {
+            hull:           {
                 nid:            this.hull.nid,
                 speedCoef:      this.hull.speedCoef,
                 cannonCoef:     this.hull.speedCoef,
