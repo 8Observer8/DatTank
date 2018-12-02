@@ -15,6 +15,16 @@ export class LaserBeamShotManager {
 
     //
 
+    public update ( delta: number, time: number ) : void {
+
+        for ( let i = 0, il = this.laserBeams.length; i < il; i ++ ) {
+
+            this.laserBeams[ i ].update( delta, time );
+
+        }
+
+    };
+
     public getInactiveLaserBeam () : LaserBeamShotObject {
 
         for ( let i = 0, il = this.laserBeams.length; i < il; i ++ ) {

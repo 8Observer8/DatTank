@@ -19,6 +19,19 @@ export class CollisionManager {
 
     //
 
+    public raycast ( shot: any ) : void {
+
+        shot.raycastResult = shot.raycastResult || new Cannon.RaycastResult();
+        shot.ray = shot.ray || new Cannon.Ray();
+
+        const ray = shot.ray;
+        ray.from.set( 40 * Math.sin( shot.angle ) + shot.position.x, shot.position.y, 40 * Math.cos( shot.angle ) + shot.position.z );
+        ray.to.set( shot.range * Math.sin( shot.angle ) + shot.position.x, shot.position.y, shot.range * Math.cos( shot.angle ) + shot.position.z );
+
+        ray['intersectBodies']( this.world.bodies, shot.raycastResult );
+
+    };
+
     public isPlaceFree ( position: OMath.Vec3, radius: number, skip: number[] = [] ) : boolean {
 
         if ( Math.abs( position.x ) > 1250 || Math.abs( position.z ) > 1250 ) return false;
@@ -86,7 +99,7 @@ export class CollisionManager {
 
     };
 
-    public addObject ( object: any, type: string = 'circle', isDynamic: boolean, onlyIntersect?: boolean ) : void {
+    public addObject ( object: any, type: string = 'circle', isDynamic: boolean, onlyIntersect?: boolean ) : any {
 
         // if object is already in world and not yet removed remove immediately
 
@@ -135,6 +148,8 @@ export class CollisionManager {
         this.world.addBody( collisionBox.body );
         this.objects.push( collisionBox );
         object.collisionBox = collisionBox;
+
+        return collisionBox;
 
     };
 

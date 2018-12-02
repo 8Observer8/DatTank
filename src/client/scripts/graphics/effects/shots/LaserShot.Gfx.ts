@@ -23,6 +23,8 @@ export class LaserShotGfx {
     public laserSpeed: number = 1;
     public dPos: number = 0;
 
+    private raycaster: THREE.Raycaster = new THREE.Raycaster();
+
     //
 
     public update ( time: number, delta: number ) : void {
@@ -48,7 +50,24 @@ export class LaserShotGfx {
 
         //
 
-        if ( this.dPos < this.range ) {
+        this.raycaster['iter'] = this.raycaster['iter'] ? this.raycaster['iter'] + 1 : 1;
+
+        if ( this.raycaster['iter'] === 3 ) {
+
+            this.raycaster['iter'] = 0;
+            this.raycaster.near = 50;
+            this.raycaster.far = this.range;
+            this.raycaster.ray.direction.set( Math.cos( Math.PI / 2 - this.parent.rotation ), 0, Math.sin( Math.PI / 2 - this.parent.rotation ) );
+            this.raycaster.ray.origin.set( this.parent.position.x, 15, this.parent.position.z );
+            const intersects = this.raycaster.intersectObjects( GfxCore.scene.children, true );
+
+            if ( intersects.length ) {
+
+                this.dPos = intersects[0].distance;
+
+            }
+
+        } else if ( this.dPos < this.range ) {
 
             const dz = this.laserSpeed * delta;
             this.dPos += dz;

@@ -213,11 +213,11 @@ var GarageConfig = {
             price:          400,
             shootType:      'bullet',
             levels:         {
-                1:      { damage: 30, range: 200, overheat: 110, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 50, range: 200, overheat: 110, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 70, range: 200, overheat: 110, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 30, range: 200, overheat: 110, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                5:      { damage: 30, range: 200, overheat: 110, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 30, range: 200, overheat: 110, rpm: 40, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 50, range: 200, overheat: 110, rpm: 40, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 70, range: 200, overheat: 110, rpm: 40, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 30, range: 200, overheat: 110, rpm: 40, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 30, range: 200, overheat: 110, rpm: 40, price: { levelBonuses: 1, coins: 100 } }
             },
             shootInfo: [
                 { dAngle:   0, offset: 25 }
@@ -255,11 +255,11 @@ var GarageConfig = {
             price:          800,
             shootType:      'bullet',
             levels:         {
-                1:      { damage: 50, range: 180, overheat: 90, rpm: 9, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 50, range: 180, overheat: 90, rpm: 9, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 50, range: 180, overheat: 90, rpm: 9, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 50, range: 180, overheat: 90, rpm: 9, price: { levelBonuses: 1, coins: 100 } },
-                5:      { damage: 50, range: 180, overheat: 90, rpm: 9, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 50, range: 180, overheat: 90, rpm: 120, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 50, range: 180, overheat: 90, rpm: 120, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 50, range: 180, overheat: 90, rpm: 120, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 50, range: 180, overheat: 90, rpm: 120, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 50, range: 180, overheat: 90, rpm: 120, price: { levelBonuses: 1, coins: 100 } }
             },
             shootInfo: [
                 { dAngle:   0.16, offset: 25 },
@@ -341,7 +341,10 @@ var GarageConfig = {
                 3:      { damage: 115, range: 270, overheat: 70, rpm: 14, price: { levelBonuses: 1, coins: 100 } },
                 4:      { damage: 115, range: 270, overheat: 70, rpm: 14, price: { levelBonuses: 1, coins: 100 } },
                 5:      { damage: 115, range: 270, overheat: 70, rpm: 14, price: { levelBonuses: 1, coins: 100 } }
-            }
+            },
+            shootInfo: [
+                { dAngle:   0, offset: 70 }
+            ]
         },
 
         'Razer-double': {

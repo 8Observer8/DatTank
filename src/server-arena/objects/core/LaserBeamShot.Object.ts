@@ -14,6 +14,7 @@ export class LaserBeamShotObject {
 
     private static numIds: number = 1;
 
+    private arena: ArenaCore;
     public id: number;
     public active: boolean = false;
     public owner: TankObject | TowerObject;
@@ -23,10 +24,21 @@ export class LaserBeamShotObject {
     public range: number = 200;
     public readonly type: string = 'LaserBeam';
 
+    public size: OMath.Vec3 = new OMath.Vec3( 2, 2, 2 );
+    public raycastResult: any;
+    public ray: any;
+
+    private dPos: number = 0;
+    private speed: number = 1;
+
+    private shootDuration: number = 0;
+
     //
 
     public activate ( position: OMath.Vec3, angle: number, range: number, owner: TankObject | TowerObject ) : void {
 
+        this.dPos = 0;
+        this.shootDuration = 0;
         this.active = true;
         this.position.set( position.x, 8, position.z );
 
@@ -36,10 +48,45 @@ export class LaserBeamShotObject {
 
     };
 
-    public updatePosRot ( position: OMath.Vec3, angle: number ) : void {
+    public update ( delta: number, time: number ) : void {
 
-        this.position.copy( position );
-        this.angle = angle;
+        if ( ! this.active ) {
+
+            return;
+
+        }
+
+        //
+
+        if ( this.raycastResult && this.raycastResult.body ) {
+
+            if ( this.raycastResult.body.name === 'Tank' || this.raycastResult.body.name === 'Tower' ) {
+
+                const target = this.raycastResult.body.parent as TankObject | TowerObject;
+                target.hit( this.owner );
+
+            }
+
+            this.raycastResult = false;
+
+        }
+
+        //
+
+        this.position.copy( this.owner.position );
+        this.angle = this.owner.rotation;
+
+        this.dPos += delta * this.speed;
+        this.arena.collisionManager.raycast( this );
+
+        this.shootDuration += delta;
+
+        if ( this.shootDuration > 100 && this.owner instanceof TankObject ) {
+
+            this.owner.changeAmmo( - 1 );
+            this.shootDuration = 0;
+
+        }
 
     };
 
@@ -55,6 +102,8 @@ export class LaserBeamShotObject {
 
         if ( LaserBeamShotObject.numIds > 1000 ) LaserBeamShotObject.numIds = 0;
         this.id = LaserBeamShotObject.numIds ++;
+
+        this.arena = arena;
 
     };
 

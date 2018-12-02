@@ -64,6 +64,7 @@ export class CannonTankPart {
         } else if ( this.shootType === 'laser' ) {
 
             const laserBeam = this.tank.arena.laserBeamShotManager.getInactiveLaserBeam();
+            laserBeam.activate( this.tank.position, this.tank.rotation, this.range, this.tank );
             this.tank.network.startShooting( laserBeam.id );
             this.lastShot = laserBeam;
 
@@ -77,7 +78,9 @@ export class CannonTankPart {
 
         if ( this.shootType !== 'bullet' ) {
 
+            this.lastShot.deactivate();
             this.tank.network.stopShooting( this.lastShot.id );
+            this.lastShot = false;
 
         }
 
