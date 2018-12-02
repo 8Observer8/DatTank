@@ -7,7 +7,7 @@ import * as OMath from '../OMath/Core.OMath';
 import { Logger } from '../utils/Logger';
 import { UI } from './Core.UI';
 import { Arena } from '../core/Arena.Core';
-import { TeamManager } from '../managers/Team.Manager';
+import { TeamManager } from '../managers/arena/Team.Manager';
 import { Network } from '../network/Core.Network';
 
 //

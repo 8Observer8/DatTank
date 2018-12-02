@@ -8,8 +8,8 @@ import * as ip from 'ip';
 import * as request from 'request';
 
 import { Environment } from '../environments/Detect.Environment';
-import { ArenaManager } from '../managers/Arena.Manager';
-import { GarageManager } from '../managers/Garage.Manager';
+import { ArenaManager } from '../managers/core/Arena.Manager';
+import { GarageManager } from '../managers/core/Garage.Manager';
 
 //
 

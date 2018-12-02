@@ -8,14 +8,14 @@ import { MorphBlendMesh } from '../utils/MorphMesh.Gfx';
 
 import * as OMath from '../../OMath/Core.OMath';
 import { GfxCore } from '../Core.Gfx';
-import { TankLabelGfx } from '../effects/TankLabel.Gfx';
+import { TankLabelGfx } from '../effects/labels/TankLabel.Gfx';
 import { TankObject } from '../../objects/core/Tank.Object';
-import { ResourceManager } from '../../managers/Resource.Manager';
-import { TankTracesGfx } from '../effects/TankTraces.Gfx';
-import { LargeExplosionManager } from '../../managers/LargeExplosion.Manager';
-import { FriendlyFireLabelGfx } from '../effects/FriendlyFireLabel.Gfx';
-import { DamageSmokeGfx } from '../effects/DamageSmoke.Gfx';
-import { BlastSmokeGfx } from '../effects/BlastSmoke.Gfx';
+import { ResourceManager } from '../../managers/other/Resource.Manager';
+import { TankTracesGfx } from '../effects/other/TankTraces.Gfx';
+import { LargeExplosionManager } from '../managers/LargeExplosion.Manager';
+import { FriendlyFireLabelGfx } from '../effects/labels/FriendlyFireLabel.Gfx';
+import { DamageSmokeGfx } from '../effects/smokes/DamageSmoke.Gfx';
+import { BlastSmokeGfx } from '../effects/smokes/BlastSmoke.Gfx';
 import { Game } from '../../Game';
 
 //

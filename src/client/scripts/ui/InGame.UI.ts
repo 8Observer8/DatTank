@@ -8,7 +8,7 @@ import { Arena } from '../core/Arena.Core';
 import { UI } from '../ui/Core.UI';
 import { Game } from '../Game';
 import { TeamCore } from '../core/Team.Core';
-import { TeamManager } from '../managers/Team.Manager';
+import { TeamManager } from '../managers/arena/Team.Manager';
 import { UITankUpgrade } from './TankUpgrade.UI';
 
 //

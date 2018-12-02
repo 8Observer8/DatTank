@@ -10,8 +10,8 @@ import { Logger } from '../../utils/Logger';
 import { Arena } from '../../core/Arena.Core';
 import { TankObject } from '../core/Tank.Object';
 import { UI } from '../../ui/Core.UI';
-import { BulletManager } from '../../managers/Bullet.Manager';
-import { LaserShotManager } from '../../managers/LaserShot.Manager';
+import { BulletShotManager } from '../../graphics/managers/BulletShot.Manager';
+import { LaserBeamShotManager } from '../../graphics/managers/LaserBeamShot.Manager';
 
 //
 
@@ -94,7 +94,7 @@ export class CannonTankPart {
 
     public stopShot ( shotId: number ) : void {
 
-        LaserShotManager.hideLaserShot( shotId );
+        LaserBeamShotManager.hideLaserShot( shotId );
 
     };
 
@@ -118,7 +118,7 @@ export class CannonTankPart {
             position.x += offset * Math.cos( Math.PI / 2 - this.tank.rotation + this.sourceParam.shootInfo[ i ].dAngle );
             position.z += offset * Math.sin( Math.PI / 2 - this.tank.rotation + this.sourceParam.shootInfo[ i ].dAngle );
 
-            BulletManager.showBullet( shotId, position, this.range, directionRotation + Math.PI / 2 );
+            BulletShotManager.showBullet( shotId, position, this.range, directionRotation + Math.PI / 2 );
 
         }
 
@@ -136,7 +136,7 @@ export class CannonTankPart {
 
     private makeLaserShot ( shotId: number, directionRotation: number, overheating: number ) : void {
 
-        LaserShotManager.showLaserShot( shotId, this.sourceParam.shootInfo[0].offset, this.range, directionRotation, this.tank );
+        LaserBeamShotManager.showLaserShot( shotId, this.sourceParam.shootInfo[0].offset, this.range, directionRotation, this.tank );
 
     };
 

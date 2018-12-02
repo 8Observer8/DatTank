@@ -87,7 +87,7 @@ export class TowerObject {
         position.x += offset * Math.cos( - this.rotation - Math.PI / 2 );
         position.z += offset * Math.sin( - this.rotation - Math.PI / 2 );
 
-        const bullet = this.arena.bulletManager.getInactiveBullet();
+        const bullet = this.arena.bulletShotManager.getInactiveBullet();
         if ( ! bullet ) return;
         bullet.activate( position, this.rotation + Math.PI, this.range, this );
 

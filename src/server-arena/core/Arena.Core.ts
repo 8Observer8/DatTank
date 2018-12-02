@@ -8,17 +8,17 @@ import { PlayerCore } from './Player.Core';
 import { BotCore } from './Bot.Core';
 import { TeamCore } from './Team.Core';
 
-import { ArenaManager } from '../managers/Arena.Manager';
-import { TeamManager } from '../managers/Team.Manager';
-import { PlayerManager } from '../managers/Player.Manager';
-import { BotManager } from '../managers/Bot.Manager';
-import { TowerManager } from '../managers/Tower.Manager';
-import { DecorationManager } from '../managers/Decoration.Manager';
-import { BoxManager } from '../managers/Box.Manager';
-import { CollisionManager } from '../managers/Collision.Manager';
-import { BulletManager } from '../managers/Bullet.Manager';
-import { LaserBeamManager } from '../managers/LaserBeam.Manager';
-import { TankManager } from '../managers/Tank.Manager';
+import { ArenaManager } from '../managers/core/Arena.Manager';
+import { TeamManager } from '../managers/arena/Team.Manager';
+import { PlayerManager } from '../managers/arena/Player.Manager';
+import { BotManager } from '../managers/arena/Bot.Manager';
+import { TowerManager } from '../managers/objects/Tower.Manager';
+import { DecorationManager } from '../managers/objects/Decoration.Manager';
+import { BoxManager } from '../managers/objects/Box.Manager';
+import { CollisionManager } from '../managers/arena/Collision.Manager';
+import { BulletShotManager } from '../managers/objects/BulletShot.Manager';
+import { LaserBeamShotManager } from '../managers/objects/LaserBeamShot.Manager';
+import { TankManager } from '../managers/objects/Tank.Manager';
 import { ArenaNetwork } from '../network/Arena.Network';
 
 //
@@ -30,8 +30,8 @@ export class ArenaCore {
 
     public id: number;
 
-    public bulletManager: BulletManager;
-    public laserBeamManager: LaserBeamManager;
+    public bulletShotManager: BulletShotManager;
+    public laserBeamShotManager: LaserBeamShotManager;
     public teamManager: TeamManager;
     public tankManager: TankManager;
     public playerManager: PlayerManager;
@@ -279,8 +279,8 @@ export class ArenaCore {
 
         this.network = new ArenaNetwork( this );
         this.tankManager = new TankManager( this );
-        this.bulletManager = new BulletManager( this );
-        this.laserBeamManager = new LaserBeamManager( this );
+        this.bulletShotManager = new BulletShotManager( this );
+        this.laserBeamShotManager = new LaserBeamShotManager( this );
         this.teamManager = new TeamManager();
         this.playerManager = new PlayerManager( this );
         this.botManager = new BotManager( this );

@@ -10,7 +10,7 @@ import { ArenaCore } from '../../core/Arena.Core';
 import { TowerObject } from './Tower.Object';
 import { BoxObject } from './Box.Object';
 import { TankNetwork } from '../../network/Tank.Network';
-import { GarageManager } from '../../managers/Garage.Manager';
+import { GarageManager } from '../../managers/core/Garage.Manager';
 
 import { HullTankPart } from '../tanks/Hull.TankPart';
 import { CannonTankPart } from '../tanks/Cannon.TankPart';

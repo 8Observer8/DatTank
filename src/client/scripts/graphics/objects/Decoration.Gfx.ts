@@ -7,7 +7,7 @@ import * as THREE from 'three';
 
 import { GfxCore } from '../Core.Gfx';
 import { DecorationObject } from '../../objects/core/Decoration.Object';
-import { ResourceManager } from '../../managers/Resource.Manager';
+import { ResourceManager } from '../../managers/other/Resource.Manager';
 
 //
 

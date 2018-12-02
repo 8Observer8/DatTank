@@ -8,8 +8,8 @@ import { UILandingModule } from './Landing.UI';
 import { UIInGameModule } from './InGame.UI';
 import { UIChatModule } from './Chat.UI';
 import { GfxCore } from '../graphics/Core.Gfx';
-import { SoundManager } from '../managers/Sound.Manager';
-import { ControlsManager } from '../managers/Control.Manager';
+import { SoundManager } from '../managers/other/Sound.Manager';
+import { ControlsManager } from '../managers/other/Control.Manager';
 
 //
 

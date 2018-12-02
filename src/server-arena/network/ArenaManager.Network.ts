@@ -6,7 +6,7 @@
 import * as ws from 'ws';
 
 import { Network } from './Core.Network';
-import { ArenaManager } from '../managers/Arena.Manager';
+import { ArenaManager } from '../managers/core/Arena.Manager';
 
 //
 

@@ -12,7 +12,7 @@ import { TeamCore } from './Team.Core';
 import { TankObject } from '../objects/core/Tank.Object';
 import { TowerObject } from '../objects/core/Tower.Object';
 import { PlayerNetwork } from '../network/Player.Network';
-import { GarageManager } from '../managers/Garage.Manager';
+import { GarageManager } from '../managers/core/Garage.Manager';
 
 //
 

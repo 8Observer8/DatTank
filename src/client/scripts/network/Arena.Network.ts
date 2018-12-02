@@ -6,9 +6,9 @@
 import * as OMath from '../OMath/Core.OMath';
 import { Network } from '../network/Core.Network';
 import { Arena } from '../core/Arena.Core';
-import { BoxManager } from '../managers/Box.Manager';
-import { ControlsManager } from '../managers/Control.Manager';
-import { PlayerManager } from '../managers/Player.Manager';
+import { BoxManager } from '../managers/objects/Box.Manager';
+import { ControlsManager } from '../managers/other/Control.Manager';
+import { PlayerManager } from '../managers/arena/Player.Manager';
 import { UI } from '../ui/Core.UI';
 
 //

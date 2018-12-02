@@ -6,7 +6,7 @@
 import { UI } from '../ui/Core.UI';
 import { Arena } from '../core/Arena.Core';
 import { Game } from '../Game';
-import { SoundManager } from '../managers/Sound.Manager';
+import { SoundManager } from '../managers/other/Sound.Manager';
 
 //
 

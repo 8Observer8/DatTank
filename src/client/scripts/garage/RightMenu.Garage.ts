@@ -4,7 +4,7 @@
 */
 
 import { Game } from '../Game';
-import { SoundManager } from '../managers/Sound.Manager';
+import { SoundManager } from '../managers/other/Sound.Manager';
 
 //
 

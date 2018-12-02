@@ -10,10 +10,10 @@ import { Logger } from '../../utils/Logger';
 import { TowerNetwork } from '../../network/Tower.Network';
 import { TowerGfx } from '../../graphics/objects/Tower.Gfx';
 import { TeamCore } from '../../core/Team.Core';
-import { TeamManager } from '../../managers/Team.Manager';
-import { HealthChangeLabelManager } from '../../managers/HealthChangeLabel.Manager';
-import { BulletManager } from '../../managers/Bullet.Manager';
-import { CollisionManager } from '../../managers/Collision.Manager';
+import { TeamManager } from '../../managers/arena/Team.Manager';
+import { HealthChangeLabelManager } from '../../graphics/managers/HealthChangeLabel.Manager';
+import { BulletShotManager } from '../../graphics/managers/BulletShot.Manager';
+import { CollisionManager } from '../../managers/arena/Collision.Manager';
 
 //
 
@@ -45,7 +45,7 @@ export class TowerObject {
 
         if ( this.health <= 0 ) return;
 
-        BulletManager.showBullet( bulletId, position, this.range, directionRotation );
+        BulletShotManager.showBullet( bulletId, position, this.range, directionRotation );
         this.gfx.shoot();
 
     };

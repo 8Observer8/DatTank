@@ -5,7 +5,7 @@
 
 import { TowerObject } from '../objects/core/Tower.Object';
 import { ArenaCore } from '../core/Arena.Core';
-import { BulletObject } from '../objects/core/Bullet.Object';
+import { BulletShotObject } from '../objects/core/BulletShot.Object';
 
 //
 
@@ -17,7 +17,7 @@ export class TowerNetwork {
 
     //
 
-    public makeShot ( bullet: BulletObject ) : void {
+    public makeShot ( bullet: BulletShotObject ) : void {
 
         this.buffers['MakeShot'] = this.buffers['MakeShot'] || {};
         const buffer = this.buffers['MakeShot'].buffer || new ArrayBuffer( 12 );

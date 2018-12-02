@@ -63,7 +63,7 @@ export class CannonTankPart {
 
         } else if ( this.shootType === 'laser' ) {
 
-            const laserBeam = this.tank.arena.laserBeamManager.getInactiveLaserBeam();
+            const laserBeam = this.tank.arena.laserBeamShotManager.getInactiveLaserBeam();
             this.tank.network.startShooting( laserBeam.id );
             this.lastShot = laserBeam;
 
@@ -106,7 +106,7 @@ export class CannonTankPart {
 
         //
 
-        const bullet = this.tank.arena.bulletManager.getInactiveBullet();
+        const bullet = this.tank.arena.bulletShotManager.getInactiveBullet();
 
         // compute proper position of bullet
 

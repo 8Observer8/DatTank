@@ -9,17 +9,17 @@ import { UI } from '../ui/Core.UI';
 import { Arena } from '../core/Arena.Core';
 import { LandscapeGfx } from './objects/Landscape.Gfx';
 
-import { PlayerManager } from '../managers/Player.Manager';
-import { SoundManager } from '../managers/Sound.Manager';
-import { BoxManager } from '../managers/Box.Manager';
-import { TowerManager } from '../managers/Tower.Manager';
-import { DecorationManager } from '../managers/Decoration.Manager';
-import { ControlsManager } from '../managers/Control.Manager';
-import { ExplosionManager } from '../managers/Explosion.Manager';
-import { HealthChangeLabelManager } from '../managers/HealthChangeLabel.Manager';
-import { BulletManager } from '../managers/Bullet.Manager';
-import { LaserShotManager } from '../managers/LaserShot.Manager';
-import { LargeExplosionManager } from '../managers/LargeExplosion.Manager';
+import { PlayerManager } from '../managers/arena/Player.Manager';
+import { SoundManager } from '../managers/other/Sound.Manager';
+import { BoxManager } from '../managers/objects/Box.Manager';
+import { TowerManager } from '../managers/objects/Tower.Manager';
+import { DecorationManager } from '../managers/objects/Decoration.Manager';
+import { ControlsManager } from '../managers/other/Control.Manager';
+import { ExplosionManager } from './managers/Explosion.Manager';
+import { HealthChangeLabelManager } from './managers/HealthChangeLabel.Manager';
+import { BulletShotManager } from './managers/BulletShot.Manager';
+import { LaserBeamShotManager } from './managers/LaserBeamShot.Manager';
+import { LargeExplosionManager } from './managers/LargeExplosion.Manager';
 
 //
 
@@ -145,7 +145,7 @@ class GraphicsCore {
 
         //
 
-        BulletManager.init();
+        BulletShotManager.init();
         LargeExplosionManager.init();
         ExplosionManager.init();
         HealthChangeLabelManager.init();
@@ -275,8 +275,8 @@ class GraphicsCore {
         ExplosionManager.update( time, delta );
         LargeExplosionManager.update( time, delta );
         HealthChangeLabelManager.update( time, delta );
-        BulletManager.update( time, delta );
-        LaserShotManager.update( time, delta );
+        BulletShotManager.update( time, delta );
+        LaserBeamShotManager.update( time, delta );
 
         this.updateCamera( Arena.me.tank.gfx.object.position, Arena.me.tank.gfx.object.rotation.y );
 

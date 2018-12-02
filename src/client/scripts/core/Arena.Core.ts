@@ -3,19 +3,19 @@
  * DatTank Arena core
 */
 
-import { TeamManager } from '../managers/Team.Manager';
-import { PlayerManager } from '../managers/Player.Manager';
-import { TowerManager } from '../managers/Tower.Manager';
-import { BoxManager } from '../managers/Box.Manager';
-import { DecorationManager } from '../managers/Decoration.Manager';
-import { ExplosionManager } from '../managers/Explosion.Manager';
+import { TeamManager } from '../managers/arena/Team.Manager';
+import { PlayerManager } from '../managers/arena/Player.Manager';
+import { TowerManager } from '../managers/objects/Tower.Manager';
+import { BoxManager } from '../managers/objects/Box.Manager';
+import { DecorationManager } from '../managers/objects/Decoration.Manager';
+import { ExplosionManager } from '../graphics/managers/Explosion.Manager';
 
 import * as OMath from '../OMath/Core.OMath';
 import { GfxCore } from '../graphics/Core.Gfx';
 import { PlayerCore } from './Player.Core';
 import { ArenaNetwork } from '../network/Arena.Network';
-import { BulletManager } from '../managers/Bullet.Manager';
-import { CollisionManager } from '../managers/Collision.Manager';
+import { BulletShotManager } from '../graphics/managers/BulletShot.Manager';
+import { CollisionManager } from '../managers/arena/Collision.Manager';
 import { UI } from '../ui/Core.UI';
 import { TeamCore } from './Team.Core';
 
@@ -144,7 +144,7 @@ class ArenaCore {
     public newExplosion ( position: OMath.Vec3, bulletId: number, explosionType: number ) : void {
 
         ExplosionManager.showExplosion( position, explosionType );
-        BulletManager.hideBullet( bulletId );
+        BulletShotManager.hideBullet( bulletId );
 
     };
 

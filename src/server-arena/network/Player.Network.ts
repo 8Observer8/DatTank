@@ -5,7 +5,7 @@
 
 import * as ws from 'ws';
 
-import { GarageManager } from '../managers/Garage.Manager';
+import { GarageManager } from '../managers/core/Garage.Manager';
 import { Network } from '../network/Core.Network';
 import { PlayerCore } from '../core/Player.Core';
 import { ArenaCore } from '../core/Arena.Core';

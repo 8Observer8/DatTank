@@ -6,7 +6,7 @@
 import * as OMath from '../../../OMath/Core.OMath';
 
 import { DecorationObject } from '../../../objects/core/Decoration.Object';
-import { CollisionManager } from '../../../managers/Collision.Manager';
+import { CollisionManager } from '../../../managers/arena/Collision.Manager';
 
 //
 

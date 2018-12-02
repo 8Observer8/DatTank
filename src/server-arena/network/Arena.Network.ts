@@ -9,7 +9,7 @@ import { ArenaCore } from '../core/Arena.Core';
 import { PlayerCore } from '../core/Player.Core';
 import { TowerObject } from '../objects/core/Tower.Object';
 import { TankObject } from '../objects/core/Tank.Object';
-import { BulletObject } from '../objects/core/Bullet.Object';
+import { BulletShotObject } from '../objects/core/BulletShot.Object';
 import { BoxObject } from '../objects/core/Box.Object';
 import { Network } from './Core.Network';
 
@@ -120,7 +120,7 @@ export class ArenaNetwork {
 
     };
 
-    public explosion ( bullet: BulletObject, position: any, explosionType: number ) : void {
+    public explosion ( bullet: BulletShotObject, position: any, explosionType: number ) : void {
 
         this.buffers['BulletExplosion'] = this.buffers['BulletExplosion'] || {};
         const buffer = this.buffers['BulletExplosion'].buffer || new ArrayBuffer( 10 );

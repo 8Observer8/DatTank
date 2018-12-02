@@ -9,7 +9,7 @@ import { Network } from '../network/Core.Network';
 import { TankObject } from '../objects/core/Tank.Object';
 import { TowerObject } from '../objects/core/Tower.Object';
 import { BoxObject } from '../objects/core/Box.Object';
-import { BulletObject } from '../objects/core/Bullet.Object';
+import { BulletShotObject } from '../objects/core/BulletShot.Object';
 import { ArenaCore } from '../core/Arena.Core';
 
 //
@@ -142,7 +142,7 @@ export class TankNetwork {
 
     };
 
-    public makeShoot ( bullet: BulletObject ) : void {
+    public makeShoot ( bullet: BulletShotObject ) : void {
 
         this.buffers['MakeShot'] = this.buffers['MakeShot'] || {};
         const buffer = this.buffers['MakeShot'].buffer || new ArrayBuffer( 10 );

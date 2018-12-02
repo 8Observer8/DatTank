@@ -7,8 +7,8 @@ import * as THREE from 'three';
 
 import { GfxCore } from '../Core.Gfx';
 import { BoxObject } from '../../objects/core/Box.Object';
-import { ResourceManager } from '../../managers/Resource.Manager';
-import { BoxManager } from '../../managers/Box.Manager';
+import { ResourceManager } from '../../managers/other/Resource.Manager';
+import { BoxManager } from '../../managers/objects/Box.Manager';
 
 //
 

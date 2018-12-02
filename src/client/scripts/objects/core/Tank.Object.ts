@@ -17,8 +17,8 @@ import { EngineTankPart } from '../tanks/Engine.TankPart';
 
 import { TankNetwork } from '../../network/Tank.Network';
 import { TankGfx } from '../../graphics/objects/Tank.Gfx';
-import { HealthChangeLabelManager } from '../../managers/HealthChangeLabel.Manager';
-import { CollisionManager } from '../../managers/Collision.Manager';
+import { HealthChangeLabelManager } from '../../graphics/managers/HealthChangeLabel.Manager';
+import { CollisionManager } from '../../managers/arena/Collision.Manager';
 import { GfxCore } from '../../graphics/Core.Gfx';
 
 //

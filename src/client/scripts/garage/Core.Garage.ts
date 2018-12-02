@@ -6,7 +6,7 @@
 import { Game } from '../Game';
 import { Arena } from '../core/Arena.Core';
 import { GarageScene } from './Scene.Garage';
-import { SoundManager } from '../managers/Sound.Manager';
+import { SoundManager } from '../managers/other/Sound.Manager';
 import { UI } from '../ui/Core.UI';
 import { GarageBottomMenu } from './BottomMenu.Garage';
 import { GarageRightMenu } from './RightMenu.Garage';

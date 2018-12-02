@@ -7,8 +7,8 @@ import * as THREE from 'three';
 
 import * as OMath from '../../OMath/Core.OMath';
 import { GfxCore } from '../Core.Gfx';
-import { ResourceManager } from '../../managers/Resource.Manager';
-import { TeamManager } from '../../managers/Team.Manager';
+import { ResourceManager } from '../../managers/other/Resource.Manager';
+import { TeamManager } from '../../managers/arena/Team.Manager';
 
 //
 

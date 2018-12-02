@@ -7,7 +7,7 @@ import { Logger } from '../utils/Logger';
 import { TankObject } from '../objects/core/Tank.Object';
 import { Arena } from './Arena.Core';
 import { TeamCore } from './Team.Core';
-import { TeamManager } from '../managers/Team.Manager';
+import { TeamManager } from '../managers/arena/Team.Manager';
 import { PlayerNetwork } from '../network/Player.Network';
 import { UI } from '../ui/Core.UI';
 

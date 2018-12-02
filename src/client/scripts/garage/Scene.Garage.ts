@@ -5,7 +5,7 @@
 
 import * as THREE from 'three';
 
-import { ResourceManager } from '../managers/Resource.Manager';
+import { ResourceManager } from '../managers/other/Resource.Manager';
 import { Garage } from './Core.Garage';
 
 //

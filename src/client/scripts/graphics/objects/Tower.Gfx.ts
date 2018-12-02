@@ -8,10 +8,10 @@ import { MorphBlendMesh } from '../utils/MorphMesh.Gfx';
 
 import * as OMath from '../../OMath/Core.OMath';
 import { GfxCore } from '../Core.Gfx';
-import { TowerLabelGfx } from '../effects/TowerLabel.Gfx';
-import { ResourceManager } from '../../managers/Resource.Manager';
-import { TowerChangeTeamGfx } from './../effects/TowerChangeTeam.gfx';
-import { BlastSmokeGfx } from './../effects/BlastSmoke.gfx';
+import { TowerLabelGfx } from '../effects/labels/TowerLabel.Gfx';
+import { ResourceManager } from '../../managers/other/Resource.Manager';
+import { TowerChangeTeamGfx } from '../effects/other/TowerChangeTeam.gfx';
+import { BlastSmokeGfx } from '../effects/smokes/BlastSmoke.Gfx';
 import { TowerObject } from './../../objects/core/Tower.Object';
 
 //

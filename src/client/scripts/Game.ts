@@ -7,17 +7,17 @@ import * as MobileDetect from 'mobile-detect';
 
 import { Network } from './network/Core.Network';
 import { Garage } from './garage/Core.Garage';
-import { ResourceManager } from './managers/Resource.Manager';
-import { SoundManager } from './managers/Sound.Manager';
+import { ResourceManager } from './managers/other/Resource.Manager';
+import { SoundManager } from './managers/other/Sound.Manager';
 import { GameService } from './services/Game.Service';
 import { Arena } from './core/Arena.Core';
 import { UI } from './ui/Core.UI';
 import { Logger } from './utils/Logger';
 
-import { ControlsManager } from './managers/Control.Manager';
+import { ControlsManager } from './managers/other/Control.Manager';
 import { GfxCore } from './graphics/Core.Gfx';
-import { TowerManager } from './managers/Tower.Manager';
-import { DecorationManager } from './managers/Decoration.Manager';
+import { TowerManager } from './managers/objects/Tower.Manager';
+import { DecorationManager } from './managers/objects/Decoration.Manager';
 
 //
 
