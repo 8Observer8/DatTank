@@ -15,7 +15,7 @@ export class BulletManager {
 
     //
 
-    public getInactiveBullet () : BulletObject | null {
+    public getInactiveBullet () : BulletObject {
 
         for ( let i = 0, il = this.bullets.length; i < il; i ++ ) {
 
@@ -27,7 +27,10 @@ export class BulletManager {
 
         }
 
-        return null;
+        const bullet = new BulletObject( this.arena, {} );
+        this.bullets.push( bullet );
+
+        return bullet;
 
     };
 

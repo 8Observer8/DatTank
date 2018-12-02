@@ -255,6 +255,9 @@ class NetworkCore {
 
         this.registerEvent( 'TankSyncState', EventDir.OUT, EventType.BIN, 122 );
 
+        this.registerEvent( 'TankStartShooting', EventDir.OUT, EventType.BIN, 123 );
+        this.registerEvent( 'TankStopShooting', EventDir.OUT, EventType.BIN, 124 );
+
         //
 
         this.registerEvent( 'TowerRotateTop', EventDir.OUT, EventType.BIN, 200 );

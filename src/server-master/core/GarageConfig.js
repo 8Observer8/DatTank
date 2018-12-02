@@ -315,12 +315,15 @@ var GarageConfig = {
             price:          900,
             shootType:      'laser',
             levels:         {
-                1:      { damage: 95, range: 250, overheat: 65, rpm: 11, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 95, range: 250, overheat: 65, rpm: 11, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 95, range: 250, overheat: 65, rpm: 11, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 95, range: 250, overheat: 65, rpm: 11, price: { levelBonuses: 1, coins: 100 } },
-                5:      { damage: 95, range: 250, overheat: 65, rpm: 11, price: { levelBonuses: 1, coins: 100 } }
-            }
+                1:      { damage: 95, range: 250, overheat: 65, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 95, range: 250, overheat: 65, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 95, range: 250, overheat: 65, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 95, range: 250, overheat: 65, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 95, range: 250, overheat: 65, rpm: 600, price: { levelBonuses: 1, coins: 100 } }
+            },
+            shootInfo: [
+                { dAngle:   0, offset: 60 }
+            ]
         },
 
         'Razer-v2': {

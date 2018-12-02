@@ -1,6 +1,6 @@
 /*
  * @author ohmed
- * DatTank Default bullet graphics class
+ * Tank plasma bullet blast graphics
 */
 
 import * as THREE from 'three';

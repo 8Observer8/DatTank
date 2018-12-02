@@ -18,6 +18,7 @@ import { ControlsManager } from '../managers/Control.Manager';
 import { ExplosionManager } from '../managers/Explosion.Manager';
 import { HealthChangeLabelManager } from '../managers/HealthChangeLabel.Manager';
 import { BulletManager } from '../managers/Bullet.Manager';
+import { LaserShotManager } from '../managers/LaserShot.Manager';
 import { LargeExplosionManager } from '../managers/LargeExplosion.Manager';
 
 //
@@ -275,6 +276,7 @@ class GraphicsCore {
         LargeExplosionManager.update( time, delta );
         HealthChangeLabelManager.update( time, delta );
         BulletManager.update( time, delta );
+        LaserShotManager.update( time, delta );
 
         this.updateCamera( Arena.me.tank.gfx.object.position, Arena.me.tank.gfx.object.rotation.y );
 

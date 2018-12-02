@@ -1,6 +1,6 @@
 /*
  * @author ohmed
- * DatTank Arena bullet manager
+ * Arena bullet manager
 */
 
 import { BulletGfx } from '../graphics/effects/Bullet.Gfx';

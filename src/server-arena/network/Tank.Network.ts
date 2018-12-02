@@ -145,7 +145,7 @@ export class TankNetwork {
     public makeShoot ( bullet: BulletObject ) : void {
 
         this.buffers['MakeShot'] = this.buffers['MakeShot'] || {};
-        const buffer = this.buffers['MakeShot'].buffer || new ArrayBuffer( 14 );
+        const buffer = this.buffers['MakeShot'].buffer || new ArrayBuffer( 10 );
         const bufferView = this.buffers['MakeShot'].bufferView || new Int16Array( buffer );
         this.buffers['MakeShot'].buffer = buffer;
         this.buffers['MakeShot'].bufferView = bufferView;
@@ -154,12 +154,43 @@ export class TankNetwork {
 
         bufferView[1] = this.tank.id;
         bufferView[2] = bullet.id;
-        bufferView[3] = bullet.position.x;
-        bufferView[4] = bullet.position.z;
-        bufferView[5] = ( - this.tank.rotation ) * 1000;
-        bufferView[6] = this.tank.cannon.temperature;
+        bufferView[3] = ( - this.tank.rotation ) * 1000;
+        bufferView[4] = this.tank.cannon.temperature;
 
         this.arena.network.sendEventToPlayersInRange( this.tank.position, 'TankMakeShot', buffer, bufferView );
+
+    };
+
+    public startShooting ( shotId: number ) : void {
+
+        this.buffers['StartShooting'] = this.buffers['StartShooting'] || {};
+        const buffer = this.buffers['StartShooting'].buffer || new ArrayBuffer( 8 );
+        const bufferView = this.buffers['StartShooting'].bufferView || new Int16Array( buffer );
+        this.buffers['StartShooting'].buffer = buffer;
+        this.buffers['StartShooting'].bufferView = bufferView;
+
+        //
+
+        bufferView[1] = this.tank.id;
+        bufferView[2] = shotId;
+        bufferView[3] = this.tank.cannon.overheat;
+
+        this.arena.network.sendEventToPlayersInRange( this.tank.position, 'TankStartShooting', buffer, bufferView );
+
+    };
+
+    public stopShooting ( shotId: number ) : void {
+
+        this.buffers['StopShooting'] = this.buffers['StopShooting'] || {};
+        const buffer = this.buffers['StopShooting'].buffer || new ArrayBuffer( 6 );
+        const bufferView = this.buffers['StopShooting'].bufferView || new Int16Array( buffer );
+        this.buffers['StopShooting'].buffer = buffer;
+        this.buffers['StopShooting'].bufferView = bufferView;
+
+        bufferView[1] = this.tank.id;
+        bufferView[2] = shotId;
+
+        this.arena.network.sendEventToPlayersInRange( this.tank.position, 'TankStopShooting', buffer, bufferView );
 
     };
 

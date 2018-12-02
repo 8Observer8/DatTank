@@ -25,6 +25,8 @@ export class CannonTankPart {
     private shootTimeout: any;
     private shootingInterval: any;
 
+    private lastShot: any;
+
     //
 
     constructor ( tank: TankObject, params: any, level: number ) {
@@ -48,13 +50,24 @@ export class CannonTankPart {
     public startShooting () : void {
 
         clearInterval( this.shootingInterval );
-        this.shootingInterval = setInterval( () => {
+
+        if ( this.shootType === 'bullet' ) {
+
+            this.shootingInterval = setInterval( () => {
+
+                this.makeShot();
+
+            }, 100 );
 
             this.makeShot();
 
-        }, 100 );
+        } else if ( this.shootType === 'laser' ) {
 
-        this.makeShot();
+            const laserBeam = this.tank.arena.laserBeamManager.getInactiveLaserBeam();
+            this.tank.network.startShooting( laserBeam.id );
+            this.lastShot = laserBeam;
+
+        }
 
     };
 
@@ -62,39 +75,15 @@ export class CannonTankPart {
 
         clearInterval( this.shootingInterval );
 
-    };
+        if ( this.shootType !== 'bullet' ) {
 
-    public makeShot () : void {
-
-        if ( this.shootType === 'bullet' ) {
-
-            this.bulletShot();
-
-        } else if ( this.shootType === 'laser' ) {
-
-            this.laserShot();
-
-        } else if ( this.shootType === 'fire' ) {
-
-            this.fireShot();
-
-        } else {
-
-            return console.log('Unknown cannon shoot type.');
+            this.tank.network.stopShooting( this.lastShot.id );
 
         }
 
     };
 
-    //
-
-    private laserShot () : void {
-
-        // todo
-
-    };
-
-    private bulletShot () : void {
+    public makeShot () : void {
 
         if ( this.tank.health <= 0 ) return;
         if ( this.shootTimeout ) return;
@@ -106,7 +95,7 @@ export class CannonTankPart {
 
             this.shootTimeout = false;
 
-        }, 1000 * 60 / ( this.rpm * 5 ) );
+        }, 1000 * 60 / this.rpm );
 
         // overheating
 
@@ -118,7 +107,6 @@ export class CannonTankPart {
         //
 
         const bullet = this.tank.arena.bulletManager.getInactiveBullet();
-        if ( ! bullet ) return;
 
         // compute proper position of bullet
 
@@ -129,14 +117,9 @@ export class CannonTankPart {
 
         bullet.activate( position, this.tank.rotation, this.range, this.tank );
         this.tank.ammo --;
+        this.lastShot = bullet;
 
         this.tank.network.makeShoot( bullet );
-
-    };
-
-    private fireShot () : void {
-
-        // todo
 
     };
 

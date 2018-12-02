@@ -9,8 +9,9 @@ import { Game } from '../../Game';
 import { Logger } from '../../utils/Logger';
 import { Arena } from '../../core/Arena.Core';
 import { TankObject } from '../core/Tank.Object';
-import { BulletManager } from '../../managers/Bullet.Manager';
 import { UI } from '../../ui/Core.UI';
+import { BulletManager } from '../../managers/Bullet.Manager';
+import { LaserShotManager } from '../../managers/LaserShot.Manager';
 
 //
 
@@ -69,15 +70,15 @@ export class CannonTankPart {
 
     };
 
-    public makeShot ( bulletId: number, directionRotation: number, overheating: number ) : void {
+    public makeShot ( shotId: number, directionRotation: number, overheating: number ) : void {
 
         if ( this.shootType === 'bullet' ) {
 
-            this.makeBulletShot( bulletId, directionRotation, overheating );
+            this.makeBulletShot( shotId, directionRotation, overheating );
 
         } else if ( this.shootType === 'laser' ) {
 
-            this.makeLaserShot();
+            this.makeLaserShot( shotId, directionRotation, overheating );
 
         } else if ( this.shootType === 'fire' ) {
 
@@ -91,9 +92,15 @@ export class CannonTankPart {
 
     };
 
+    public stopShot ( shotId: number ) : void {
+
+        LaserShotManager.hideLaserShot( shotId );
+
+    };
+
     //
 
-    private makeBulletShot ( bulletId: number, directionRotation: number, overheating: number ) : void {
+    private makeBulletShot ( shotId: number, directionRotation: number, overheating: number ) : void {
 
         if ( this.tank.health <= 0 ) return;
 
@@ -111,7 +118,7 @@ export class CannonTankPart {
             position.x += offset * Math.cos( Math.PI / 2 - this.tank.rotation + this.sourceParam.shootInfo[ i ].dAngle );
             position.z += offset * Math.sin( Math.PI / 2 - this.tank.rotation + this.sourceParam.shootInfo[ i ].dAngle );
 
-            BulletManager.showBullet( bulletId, position, this.range, directionRotation + Math.PI / 2 );
+            BulletManager.showBullet( shotId, position, this.range, directionRotation + Math.PI / 2 );
 
         }
 
@@ -127,9 +134,9 @@ export class CannonTankPart {
 
     };
 
-    private makeLaserShot () : void {
+    private makeLaserShot ( shotId: number, directionRotation: number, overheating: number ) : void {
 
-        // todo
+        LaserShotManager.showLaserShot( shotId, this.sourceParam.shootInfo[0].offset, this.range, directionRotation, this.tank );
 
     };
 

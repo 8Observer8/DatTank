@@ -223,13 +223,29 @@ export class TankNetwork {
 
     };
 
+    private setShootingStart ( data: any ) : void {
+
+        if ( this.filter( data ) ) return;
+
+        this.tank.cannon.makeShot( data[1], data[2], data[3] );
+
+    };
+
+    private setShootingStop ( data: any ) : void {
+
+        if ( this.filter( data ) ) return;
+
+        this.tank.cannon.stopShot( data[1] );
+
+    };
+
     private setShoot ( data: any ) : void {
 
         if ( this.filter( data ) ) return;
 
         const bulletId = data[1];
-        const directionRotation = data[4] / 1000;
-        const overheating = data[5];
+        const directionRotation = data[2] / 1000;
+        const overheating = data[3];
 
         this.tank.cannon.makeShot( bulletId, directionRotation, overheating );
 
@@ -257,6 +273,8 @@ export class TankNetwork {
 
         Network.removeMessageListener( 'TankFriendlyFire', this.setFriendlyFire );
         Network.removeMessageListener( 'TankMove', this.setMove );
+        Network.removeMessageListener( 'TankStartShooting', this.setShootingStart );
+        Network.removeMessageListener( 'TankStopShooting', this.setShootingStop );
         Network.removeMessageListener( 'TankMakeShot', this.setShoot );
         Network.removeMessageListener( 'TankSetHealth', this.setHealth );
         Network.removeMessageListener( 'TankSetAmmo', this.setAmmo );
@@ -272,6 +290,8 @@ export class TankNetwork {
 
         this.setFriendlyFire = this.setFriendlyFire.bind( this );
         this.setMove = this.setMove.bind( this );
+        this.setShootingStart = this.setShootingStart.bind( this );
+        this.setShootingStop = this.setShootingStop.bind( this );
         this.setShoot = this.setShoot.bind( this );
         this.setHealth = this.setHealth.bind( this );
         this.setAmmo = this.setAmmo.bind( this );
@@ -282,6 +302,8 @@ export class TankNetwork {
 
         Network.addMessageListener( 'TankFriendlyFire', this.setFriendlyFire );
         Network.addMessageListener( 'TankMove', this.setMove );
+        Network.addMessageListener( 'TankStartShooting', this.setShootingStart );
+        Network.addMessageListener( 'TankStopShooting', this.setShootingStop );
         Network.addMessageListener( 'TankMakeShot', this.setShoot );
         Network.addMessageListener( 'TankSetHealth', this.setHealth );
         Network.addMessageListener( 'TankSetAmmo', this.setAmmo );
