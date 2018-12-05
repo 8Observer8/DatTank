@@ -26,7 +26,7 @@ export class LandscapeGfx {
     // private mapExtraSize = 1800;
     private wallWidth = 30;
 
-    private material = new THREE.MeshLambertMaterial({ color: 0x526b3b, depthWrite: false });
+    private material = new THREE.MeshLambertMaterial({ color: 0x688c44, depthWrite: false, flatShading: true });
     private blocksCount = { x: 15, z: 15 };
 
     private raycaster: THREE.Raycaster = new THREE.Raycaster();
@@ -68,13 +68,20 @@ export class LandscapeGfx {
 
                 const vX = Math.round( vNum * ( 0.5 + geometry.vertices[ vNum * j + i ].x / xVSize ) ) + x * vNum;
                 const vZ = Math.round( vNum * ( 0.5 + geometry.vertices[ vNum * j + i ].z / zVSize ) ) + z * vNum;
-                geometry.vertices[ vNum * j + i ].y = this.heightField[ vZ ][ vX ];
+                geometry.vertices[ vNum * j + i ].y = 2 * this.heightField[ vZ ][ vX ];
 
             }
 
         }
 
         geometry.computeFlatVertexNormals();
+
+        for ( let i = 0, il = geometry.vertices.length; i < il; i ++ ) {
+
+            geometry.vertices[ i ].y /= 2;
+
+        }
+
 
         const mesh = new THREE.Mesh( new THREE.BufferGeometry().fromGeometry( geometry ), this.material );
         mesh.renderOrder = 6;

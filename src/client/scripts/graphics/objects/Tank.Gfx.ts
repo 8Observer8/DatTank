@@ -275,12 +275,12 @@ class TankGfx {
 
         // add tank hull mesh
 
-        const inMaterials = tankModel.material as THREE.MeshBasicMaterial[] || [];
+        const inMaterials = tankModel.material as THREE.MeshLambertMaterial[] || [];
         const texture = ResourceManager.getTexture( 'IS2.png' )!;
 
         for ( let i = 0, il = inMaterials.length; i < il; i ++ ) {
 
-            const material = new THREE.MeshBasicMaterial({ color: 0x777777 });
+            const material = new THREE.MeshLambertMaterial({ color: 0x777777 });
             material.map = texture.clone();
             material.map.uuid = texture.uuid;
             material.map.needsUpdate = true;

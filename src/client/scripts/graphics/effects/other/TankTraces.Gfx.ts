@@ -145,7 +145,7 @@ export class TankTracesGfx {
 
         //
 
-        if ( this.prevPosition.distanceTo( pos ) < 3 ) return;
+        if ( this.prevPosition.distanceTo( pos ) < 7 ) return;
 
         if ( this.route.length >= this.traceLength ) this.route.shift();
         this.offset = ( this.offset + 1 ) % this.traceLength;

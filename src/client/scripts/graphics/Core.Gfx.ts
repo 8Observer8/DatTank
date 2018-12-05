@@ -65,10 +65,10 @@ class GraphicsCore {
     private prevCameraDPos: THREE.Vector3 = new THREE.Vector3();
 
     public lights = {
-        ambient:    0xfff3bc,
+        ambient:    0xf9f9f9,
         sun:        {
-            color:      0xfff3bc,
-            intensity:  0.6,
+            color:      0xf4f3eb,
+            intensity:  0.4,
             position:   new THREE.Vector3( 0, 100, 0 ),
             target:     new THREE.Vector3( 50, 0, 50 ),
         },
