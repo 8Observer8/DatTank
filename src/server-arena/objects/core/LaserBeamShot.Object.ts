@@ -28,8 +28,8 @@ export class LaserBeamShotObject {
     public raycastResult: any;
     public ray: any;
 
-    private dPos: number = 0;
-    private speed: number = 1;
+    // private dPos: number = 0;
+    // private speed: number = 1;
 
     private shootDuration: number = 0;
 
@@ -37,7 +37,7 @@ export class LaserBeamShotObject {
 
     public activate ( position: OMath.Vec3, angle: number, range: number, owner: TankObject | TowerObject ) : void {
 
-        this.dPos = 0;
+        // this.dPos = 0;
         this.shootDuration = 0;
         this.active = true;
         this.position.set( position.x, 8, position.z );
@@ -76,7 +76,7 @@ export class LaserBeamShotObject {
         this.position.copy( this.owner.position );
         this.angle = this.owner.rotation;
 
-        this.dPos += delta * this.speed;
+        // this.dPos += delta * this.speed;
         this.arena.collisionManager.raycast( this );
 
         this.shootDuration += delta;

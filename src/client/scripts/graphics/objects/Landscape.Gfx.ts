@@ -17,12 +17,17 @@ export class LandscapeGfx {
     private object: THREE.Object3D = new THREE.Object3D();
     private ground: THREE.Mesh[] = [];
 
-    private terrainMesh: THREE.Mesh;
+    private vPerBlock: number = 10;
+    private heightField: number[][] = [];
+    private groundBlocks: THREE.Object3D = new THREE.Object3D();
     private shadowMaterial: THREE.MeshBasicMaterial;
 
     private mapSize: number = 2430;
-    private mapExtraSize = 1800;
+    // private mapExtraSize = 1800;
     private wallWidth = 30;
+
+    private material = new THREE.MeshLambertMaterial({ color: 0x526b3b, depthWrite: false });
+    private blocksCount = { x: 15, z: 15 };
 
     private raycaster: THREE.Raycaster = new THREE.Raycaster();
 
@@ -30,10 +35,10 @@ export class LandscapeGfx {
 
     public getPointHeight ( x: number, z: number ) : number {
 
-        this.raycaster.ray.origin.set( x, 10, z );
+        this.raycaster.ray.origin.set( x, 30, z );
         this.raycaster.ray.direction.set( 0, -1, 0 );
         this.raycaster.near = 1;
-        this.raycaster.far = 15;
+        this.raycaster.far = 60;
 
         const intersects = this.raycaster.intersectObjects( this.ground );
 
@@ -47,34 +52,71 @@ export class LandscapeGfx {
 
     };
 
-    private addTerrain () : void {
+    private generateTerrainBlock ( x: number, z: number ) : THREE.Mesh {
 
-        const material = new THREE.MeshLambertMaterial({ color: 0x526b3b });
-        const geometry = new THREE.PlaneGeometry( this.mapSize + this.mapExtraSize, this.mapSize + this.mapExtraSize, 150, 150 );
+        const vNum = this.vPerBlock;
+        const xVSize = this.mapSize / this.blocksCount.x;
+        const zVSize = this.mapSize / this.blocksCount.z;
+        const geometry = new THREE.PlaneGeometry( xVSize, zVSize, vNum - 1, vNum - 1 );
         geometry.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2 ) );
 
-        for ( let i = 0, il = 150 * 150; i < il; i ++ ) {
+        //
 
-            geometry.vertices[ i ].y = ( Math.random() - 0.5 ) * 30;
+        for ( let i = 0, il = vNum; i < il; i ++ ) {
+
+            for ( let j = 0, jl = vNum; j < jl; j ++ ) {
+
+                const vX = Math.round( vNum * ( 0.5 + geometry.vertices[ vNum * j + i ].x / xVSize ) ) + x * vNum;
+                const vZ = Math.round( vNum * ( 0.5 + geometry.vertices[ vNum * j + i ].z / zVSize ) ) + z * vNum;
+                geometry.vertices[ vNum * j + i ].y = this.heightField[ vZ ][ vX ];
+
+            }
 
         }
 
         geometry.computeFlatVertexNormals();
 
-        for ( let i = 0, il = 150 * 150; i < il; i ++ ) {
+        const mesh = new THREE.Mesh( new THREE.BufferGeometry().fromGeometry( geometry ), this.material );
+        mesh.renderOrder = 6;
+        mesh.position.set( ( x - this.blocksCount.x / 2 + 0.5 ) * xVSize, 0, ( z - this.blocksCount.z / 2 + 0.5 ) * zVSize );
+        mesh.geometry.computeBoundingBox();
+        mesh.updateMatrixWorld( true );
 
-            geometry.vertices[ i ].y /= 5;
+        return mesh;
+
+    };
+
+    private addTerrain () : void {
+
+        for ( let i = 0, il = this.vPerBlock * this.blocksCount.z; i <= il; i ++ ) {
+
+            const row = [];
+
+            for ( let j = 0, jl = this.vPerBlock * this.blocksCount.x; j <= jl; j ++ ) {
+
+                row.push( ( Math.random() - 0.5 ) * 7 );
+
+            }
+
+            this.heightField.push( row );
 
         }
 
-        const bGeometry = new THREE.BufferGeometry().fromGeometry( geometry );
+        //
 
-        this.terrainMesh = new THREE.Mesh( bGeometry, material );
-        this.terrainMesh.renderOrder = 6;
-        this.object.add( this.terrainMesh );
-        this.object.updateMatrixWorld( true );
+        for ( let i = 0; i < this.blocksCount.z; i ++ ) {
 
-        this.ground.push( this.terrainMesh );
+            for ( let j = 0; j < this.blocksCount.x; j ++ ) {
+
+                const block = this.generateTerrainBlock( j, i );
+                this.groundBlocks.add( block );
+                this.ground.push( block );
+
+            }
+
+        }
+
+        this.object.add( this.groundBlocks );
 
     };
 
@@ -150,8 +192,9 @@ export class LandscapeGfx {
 
             plane.rotation.x = - Math.PI / 2;
             plane.position.set( x, 2, z );
-            plane.renderOrder = 9;
             plane.updateMatrixWorld( true );
+            plane.geometry.computeBoundingBox();
+            plane.geometry.computeBoundingSphere();
             this.object.add( plane );
             this.ground.push( plane );
 

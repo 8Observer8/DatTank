@@ -76,7 +76,7 @@ export class CannonTankPart {
 
         clearInterval( this.shootingInterval );
 
-        if ( this.shootType !== 'bullet' ) {
+        if ( this.shootType !== 'bullet' && this.lastShot ) {
 
             this.lastShot.deactivate();
             this.tank.network.stopShooting( this.lastShot.id );

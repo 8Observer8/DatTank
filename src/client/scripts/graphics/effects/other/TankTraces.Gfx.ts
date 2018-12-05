@@ -51,7 +51,7 @@ export class TankTracesGfx {
 
     private target: THREE.Object3D;
     private prevPosition: OMath.Vec3 = new OMath.Vec3();
-    private traceLength: number = 18;
+    private traceLength: number = 35;
     private trackWidth: number = 3;
     private tankWidth: number = 13.5;
     private object: THREE.Object3D = new THREE.Object3D();
@@ -101,8 +101,8 @@ export class TankTracesGfx {
             const wx = width * Math.sin( Math.PI / 2 - angle );
             const wz = - width * Math.cos( Math.PI / 2 - angle );
 
-            a[0] = [ routPoint[0] - pos.x - wx, pos.y, routPoint[2] - pos.z - wz ];
-            a[1] = [ routPoint[0] - pos.x + wx, pos.y, routPoint[2] - pos.z + wz ];
+            a[0] = [ routPoint[0] - pos.x - wx, routPoint[1], routPoint[2] - pos.z - wz ];
+            a[1] = [ routPoint[0] - pos.x + wx, routPoint[1], routPoint[2] - pos.z + wz ];
 
             //
 
@@ -122,7 +122,7 @@ export class TankTracesGfx {
             rtAlpha.setX( i + 0, alpha );
             rtAlpha.setX( i + 1, alpha );
 
-            const v = 5 * ( textureDir === 1 ? routPoint[4] / this.traceLength : 1 - routPoint[4] / this.traceLength );
+            const v = 4 * ( textureDir === 1 ? routPoint[4] / this.traceLength : 1 - routPoint[4] / this.traceLength );
 
             ltUVs.setXY( i + 0, 0, v );
             ltUVs.setXY( i + 1, 1, v );
@@ -145,11 +145,11 @@ export class TankTracesGfx {
 
         //
 
-        if ( this.prevPosition.distanceTo( pos ) < 5 ) return;
+        if ( this.prevPosition.distanceTo( pos ) < 3 ) return;
 
         if ( this.route.length >= this.traceLength ) this.route.shift();
         this.offset = ( this.offset + 1 ) % this.traceLength;
-        this.route.push( [ pos.x, this.target.position.y - 10, pos.z, rot, this.offset ] );
+        this.route.push( [ pos.x, GfxCore.landscape.getPointHeight( pos.x, pos.z ) + 1, pos.z, rot, this.offset ] );
 
         this.prevPosition.copy( pos );
 
