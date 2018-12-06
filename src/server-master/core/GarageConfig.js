@@ -318,11 +318,11 @@ var GarageConfig = {
             price:          900,
             shootType:      'laser',
             levels:         {
-                1:      { damage: 95, range: 150, overheat: 65, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 95, range: 150, overheat: 65, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 95, range: 150, overheat: 65, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 95, range: 150, overheat: 65, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
-                5:      { damage: 95, range: 150, overheat: 65, rpm: 600, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 25, range: 150, overheat: 65, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 25, range: 150, overheat: 65, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 25, range: 150, overheat: 65, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 25, range: 150, overheat: 65, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 25, range: 150, overheat: 65, rpm: 600, price: { levelBonuses: 1, coins: 100 } }
             },
             shotSpeed:      1,
             shootInfo: [

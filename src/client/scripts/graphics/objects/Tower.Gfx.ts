@@ -123,6 +123,7 @@ class TowerGfx {
 
             GfxCore.coreObjects['towers'] = new THREE.Object3D();
             GfxCore.coreObjects['towers'].name = 'Towers';
+            GfxCore.coreObjects['towers'].userData.canIntersect = true;
             GfxCore.scene.add( GfxCore.coreObjects['towers'] );
 
         }
