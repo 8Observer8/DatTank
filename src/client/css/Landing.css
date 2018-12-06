@@ -196,11 +196,15 @@
     color: rgba( 255, 255, 255, 0.9 );
 }
 
+.landing #signin-box-wrapper #main-block .tab-content.screens {
+    overflow: hidden;
+}
+
 .landing #signin-box-wrapper #main-block .tab-content.screens img {
     position: absolute;
     top: 10%;
-    left: 0px;
-    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
     height: 80%;
     opacity: 0;
     transition: opacity 500ms ease;
@@ -403,8 +407,9 @@
     bottom: 0px;
     width: 100%;
     height: 40px;
-    background-color: #333;
+    background-color: rgba( 0, 0, 0, 0.3 );
     border-top: 1px solid #444;
+    z-index: 10;
 }
 
 #footer #dt-version {

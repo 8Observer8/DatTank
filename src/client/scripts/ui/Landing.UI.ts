@@ -125,7 +125,7 @@ export class UILandingModule {
 
         // init sign in block
 
-        const login = $('#username').val() || localStorage.getItem('login') || '';
+        const login = localStorage.getItem('login') || '';
         $('#username').val( login );
 
         // add handlers
@@ -137,7 +137,7 @@ export class UILandingModule {
 
                 event.stopPropagation();
                 document.activeElement!['blur']();
-                Game.garage.show();
+                this.start();
 
             }
 
@@ -184,7 +184,6 @@ export class UILandingModule {
             }
 
         });
-
 
         $('#signin-box-wrapper #main-block .tab-content.screens .left-arrow').click( () => {
 

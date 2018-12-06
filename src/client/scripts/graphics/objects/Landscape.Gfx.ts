@@ -22,8 +22,7 @@ export class LandscapeGfx {
     private groundBlocks: THREE.Object3D = new THREE.Object3D();
     private shadowMaterial: THREE.MeshBasicMaterial;
 
-    private mapSize: number = 2430;
-    // private mapExtraSize = 1800;
+    private mapSize: number = 2630;
     private wallWidth = 30;
 
     private material = new THREE.MeshLambertMaterial({ color: 0x688c44, depthWrite: false, flatShading: true });
@@ -82,7 +81,6 @@ export class LandscapeGfx {
 
         }
 
-
         const mesh = new THREE.Mesh( new THREE.BufferGeometry().fromGeometry( geometry ), this.material );
         mesh.renderOrder = 6;
         mesh.position.set( ( x - this.blocksCount.x / 2 + 0.5 ) * xVSize, 0, ( z - this.blocksCount.z / 2 + 0.5 ) * zVSize );
@@ -131,7 +129,7 @@ export class LandscapeGfx {
 
         const wallWidth = this.wallWidth;
         const offset = 100;
-        const size = this.mapSize;
+        const size = this.mapSize - 200;
         let edgeTexture;
         let material;
         let wall1;

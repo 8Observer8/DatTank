@@ -15,6 +15,7 @@ export class LaserShotGfx {
     public active: boolean = false;
     public id: number;
 
+    private wrapper: THREE.Object3D = new THREE.Object3D();
     private object: THREE.Object3D = new THREE.Object3D();
     private trace: THREE.Mesh;
     // private sound: THREE.PositionalAudio;
@@ -22,6 +23,7 @@ export class LaserShotGfx {
     private parent: TankObject;
     public laserSpeed: number = 1;
     public dPos: number = 0;
+    private dPosOffset: number = 0;
 
     private raycaster: THREE.Raycaster = new THREE.Raycaster();
 
@@ -63,7 +65,7 @@ export class LaserShotGfx {
 
             if ( intersects.length ) {
 
-                this.dPos = intersects[0].distance;
+                this.dPos = intersects[0].distance - this.dPosOffset;
 
             }
 
@@ -72,13 +74,17 @@ export class LaserShotGfx {
             const dz = this.laserSpeed * delta;
             this.dPos += dz;
 
-            this.trace.position.set( 0, 22, this.dPos / 2 );
-            this.trace.scale.y = this.dPos / 3;
+            this.trace.position.set( 0, 0, this.dPos / 2 );
+            this.trace.scale.y = this.dPos;
             this.trace.material['opacity'] = Math.max( 0.5 - this.trace.scale.x / 280, 0 );
 
             this.trace.updateMatrixWorld( true );
 
         }
+
+        //
+
+        this.wrapper.rotation.x = - this.object.parent!.parent!.rotation.x;
 
     };
 
@@ -88,13 +94,14 @@ export class LaserShotGfx {
 
     };
 
-    public setActive ( shotId: number, offset: number, range: number, directionRotation: number, parent: TankObject ) : void {
+    public setActive ( shotId: number, offset: number, yPos: number, range: number, parent: TankObject ) : void {
 
         this.active = true;
         this.id = shotId;
         this.range = range;
         this.parent = parent;
-        this.dPos = offset;
+        this.dPos = 0;
+        this.dPosOffset = offset;
 
         this.trace.material['opacity'] = 1;
         this.object.visible = true;
@@ -107,31 +114,22 @@ export class LaserShotGfx {
 
         }
 
-        this.parent.gfx.object.add( this.object );
+        this.parent.gfx.cannon.add( this.object );
+        this.object.position.z = offset / this.parent.gfx.cannon.scale.z;
+        this.object.position.y = yPos / this.parent.gfx.cannon.scale.y;
+        this.object.scale.set( 1 / this.parent.gfx.cannon.scale.x, 1 / this.parent.gfx.cannon.scale.y, 1 / this.parent.gfx.cannon.scale.z );
 
     };
 
     public init () : void {
 
-        this.trace = new THREE.Mesh( new THREE.PlaneGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ color: 0xff3333, opacity: 0.5, transparent: true }) );
+        this.trace = new THREE.Mesh( new THREE.PlaneGeometry( 1, 1 ), new THREE.MeshBasicMaterial({ color: 0xff3333, opacity: 0.5, transparent: true }) );
         this.trace.rotation.x = - Math.PI / 2;
-        this.trace.renderOrder = 5;
+        this.trace.renderOrder = 10;
         this.trace.scale.x = 0.4;
-        this.object.add( this.trace );
-
         this.object.visible = false;
-
-        //
-
-        if ( ! GfxCore.coreObjects['laserShots'] ) {
-
-            GfxCore.coreObjects['laserShots'] = new THREE.Object3D();
-            GfxCore.coreObjects['laserShots'].name = 'LaserShots';
-            GfxCore.scene.add( GfxCore.coreObjects['laserShots'] );
-
-        }
-
-        GfxCore.coreObjects['laserShots'].add( this.object );
+        this.object.add( this.wrapper );
+        this.wrapper.add( this.trace );
 
     };
 

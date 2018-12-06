@@ -322,7 +322,7 @@ var GarageConfig = {
                 5:      { damage: 95, range: 250, overheat: 65, rpm: 600, price: { levelBonuses: 1, coins: 100 } }
             },
             shootInfo: [
-                { dAngle:   0, offset: 60 }
+                { dAngle: 0, offset: 40, y: 20 }
             ]
         },
 

@@ -51,7 +51,7 @@ export class TankTracesGfx {
 
     private target: THREE.Object3D;
     private prevPosition: OMath.Vec3 = new OMath.Vec3();
-    private traceLength: number = 35;
+    private traceLength: number = 15;
     private trackWidth: number = 3;
     private tankWidth: number = 13.5;
     private object: THREE.Object3D = new THREE.Object3D();
@@ -67,6 +67,12 @@ export class TankTracesGfx {
     public dispose () : void {
 
         GfxCore.coreObjects['tank-traces'].remove( this.object );
+
+    };
+
+    public hide () : void {
+
+        this.object.visible = false;
 
     };
 
@@ -122,7 +128,7 @@ export class TankTracesGfx {
             rtAlpha.setX( i + 0, alpha );
             rtAlpha.setX( i + 1, alpha );
 
-            const v = 4 * ( textureDir === 1 ? routPoint[4] / this.traceLength : 1 - routPoint[4] / this.traceLength );
+            const v = 5 * ( textureDir === 1 ? routPoint[4] / this.traceLength : 1 - routPoint[4] / this.traceLength );
 
             ltUVs.setXY( i + 0, 0, v );
             ltUVs.setXY( i + 1, 1, v );
@@ -167,6 +173,7 @@ export class TankTracesGfx {
         geometry.addAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
         geometry.addAttribute( 'alpha', new THREE.BufferAttribute( alphas, 1 ) );
         geometry.addAttribute( 'uv', new THREE.BufferAttribute( uvs, 2 ) );
+        geometry.boundingSphere = new THREE.Sphere( new THREE.Vector3(), 400 );
 
         const material = new THREE.ShaderMaterial( {
             uniforms:       this.material.uniforms,

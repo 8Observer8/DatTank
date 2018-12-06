@@ -24,10 +24,10 @@ class TankGfx {
 
     public wrapper: THREE.Object3D = new THREE.Object3D();
     public object: THREE.Object3D = new THREE.Object3D();
-    private hull: THREE.Mesh;
-    private cannon: MorphBlendMesh;
-    private tank: TankObject;
-    private traces: TankTracesGfx = new TankTracesGfx();
+    public hull: THREE.Mesh;
+    public cannon: MorphBlendMesh;
+    public tank: TankObject;
+    public traces: TankTracesGfx = new TankTracesGfx();
     public label: TankLabelGfx = new TankLabelGfx();
     public friendlyFireLabel: FriendlyFireLabelGfx = new FriendlyFireLabelGfx();
     public damageSmoke: DamageSmokeGfx = new DamageSmokeGfx();
@@ -343,6 +343,8 @@ class TankGfx {
 
         LargeExplosionManager.showExplosion( this.tank.position );
         this.sounds['explosion'].play();
+
+        this.traces.hide();
 
         //
 

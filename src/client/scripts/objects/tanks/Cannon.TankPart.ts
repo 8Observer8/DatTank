@@ -136,7 +136,7 @@ export class CannonTankPart {
 
     private makeLaserShot ( shotId: number, directionRotation: number, overheating: number ) : void {
 
-        LaserBeamShotManager.showLaserShot( shotId, this.sourceParam.shootInfo[0].offset, this.range, directionRotation, this.tank );
+        LaserBeamShotManager.showLaserShot( shotId, this.sourceParam.shootInfo[0].offset, this.sourceParam.shootInfo[0].y, this.range, this.tank );
 
     };
 
