@@ -239,7 +239,7 @@ function initWorld () {
 
     world = new CANNON.World();
     world.gravity.set( 0, -30, 0 );
-    world.defaultContactMaterial.contactEquationStiffness = 200000;
+    world.defaultContactMaterial.contactEquationStiffness = 500000;
     world.defaultContactMaterial.friction = 0;
     world.defaultContactMaterial.restitution = 0.2;
     world.solver.iterations = 20;

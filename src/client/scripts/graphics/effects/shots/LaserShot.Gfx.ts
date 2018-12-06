@@ -18,12 +18,12 @@ export class LaserShotGfx {
     private wrapper: THREE.Object3D = new THREE.Object3D();
     private object: THREE.Object3D = new THREE.Object3D();
     private trace: THREE.Mesh;
-    // private sound: THREE.PositionalAudio;
     private range: number = 0;
     private parent: TankObject;
-    public laserSpeed: number = 1;
-    public dPos: number = 0;
+    public dPos: number;
+    public speed: number;
     private dPosOffset: number = 0;
+    private yPos: number;
 
     private raycaster: THREE.Raycaster = new THREE.Raycaster();
 
@@ -39,7 +39,7 @@ export class LaserShotGfx {
 
             } else {
 
-                const dz = this.laserSpeed * delta;
+                const dz = this.speed * delta;
                 this.dPos += dz;
                 this.trace.position.z = this.dPos;
                 this.trace.material['opacity'] -= 0.05;
@@ -60,7 +60,7 @@ export class LaserShotGfx {
             this.raycaster.near = 50;
             this.raycaster.far = this.range;
             this.raycaster.ray.direction.set( Math.cos( Math.PI / 2 - this.parent.rotation ), 0, Math.sin( Math.PI / 2 - this.parent.rotation ) );
-            this.raycaster.ray.origin.set( this.parent.position.x, 15, this.parent.position.z );
+            this.raycaster.ray.origin.set( this.parent.position.x, this.yPos + this.parent.position.y, this.parent.position.z );
             const intersects = this.raycaster.intersectObjects( GfxCore.scene.children, true );
 
             if ( intersects.length ) {
@@ -71,7 +71,7 @@ export class LaserShotGfx {
 
         } else if ( this.dPos < this.range ) {
 
-            const dz = this.laserSpeed * delta;
+            const dz = this.speed * delta;
             this.dPos += dz;
 
             this.trace.position.set( 0, 0, this.dPos / 2 );
@@ -94,7 +94,7 @@ export class LaserShotGfx {
 
     };
 
-    public setActive ( shotId: number, offset: number, yPos: number, range: number, parent: TankObject ) : void {
+    public setActive ( shotId: number, offset: number, yPos: number, range: number, shotSpeed: number, parent: TankObject ) : void {
 
         this.active = true;
         this.id = shotId;
@@ -102,6 +102,8 @@ export class LaserShotGfx {
         this.parent = parent;
         this.dPos = 0;
         this.dPosOffset = offset;
+        this.speed = shotSpeed;
+        this.yPos = yPos;
 
         this.trace.material['opacity'] = 1;
         this.object.visible = true;

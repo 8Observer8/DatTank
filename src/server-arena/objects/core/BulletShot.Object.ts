@@ -21,20 +21,21 @@ export class BulletShotObject {
     public radius: number = 10;
     public startPosition: OMath.Vec3 = new OMath.Vec3();
     public position: OMath.Vec3 = new OMath.Vec3();
-    public rotation: number = 0;
-    public angle: number = 0;
-    public speed: number = 1.8;
-    public range: number = 200;
+    public rotation: number;
+    public angle: number;
+    public speed: number;
+    public range: number;
     public readonly type: string = 'Bullet';
 
     //
 
-    public activate ( position: OMath.Vec3, angle: number, range: number, owner: TankObject | TowerObject ) : void {
+    public activate ( position: OMath.Vec3, angle: number, range: number, shotSpeed: number, owner: TankObject | TowerObject ) : void {
 
         this.active = true;
         this.position.set( position.x, 8, position.z );
         this.startPosition.set( position.x, 8, position.z );
 
+        this.speed = shotSpeed;
         this.range = range;
         this.angle = angle;
         this.owner = owner;

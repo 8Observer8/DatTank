@@ -145,7 +145,7 @@ export class TankNetwork {
     public makeShoot ( bullet: BulletShotObject ) : void {
 
         this.buffers['MakeShot'] = this.buffers['MakeShot'] || {};
-        const buffer = this.buffers['MakeShot'].buffer || new ArrayBuffer( 10 );
+        const buffer = this.buffers['MakeShot'].buffer || new ArrayBuffer( 8 );
         const bufferView = this.buffers['MakeShot'].bufferView || new Int16Array( buffer );
         this.buffers['MakeShot'].buffer = buffer;
         this.buffers['MakeShot'].bufferView = bufferView;
@@ -154,8 +154,7 @@ export class TankNetwork {
 
         bufferView[1] = this.tank.id;
         bufferView[2] = bullet.id;
-        bufferView[3] = ( - this.tank.rotation ) * 1000;
-        bufferView[4] = this.tank.cannon.temperature;
+        bufferView[3] = this.tank.cannon.temperature;
 
         this.arena.network.sendEventToPlayersInRange( this.tank.position, 'TankMakeShot', buffer, bufferView );
 

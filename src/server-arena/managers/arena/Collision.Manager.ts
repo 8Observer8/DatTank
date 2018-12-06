@@ -26,7 +26,7 @@ export class CollisionManager {
 
         const ray = shot.ray;
         ray.from.set( 40 * Math.sin( shot.angle ) + shot.position.x, shot.position.y, 40 * Math.cos( shot.angle ) + shot.position.z );
-        ray.to.set( shot.range * Math.sin( shot.angle ) + shot.position.x, shot.position.y, shot.range * Math.cos( shot.angle ) + shot.position.z );
+        ray.to.set( shot.dPos * Math.sin( shot.angle ) + shot.position.x, shot.position.y, shot.dPos * Math.cos( shot.angle ) + shot.position.z );
 
         ray['intersectBodies']( this.world.bodies, shot.raycastResult );
 
@@ -368,7 +368,7 @@ export class CollisionManager {
 
         this.world = new Cannon.World();
         this.world.gravity.set( 0, -30, 0 );
-        this.world.defaultContactMaterial.contactEquationStiffness = 200000;
+        this.world.defaultContactMaterial.contactEquationStiffness = 500000;
         this.world.defaultContactMaterial.friction = 0;
         this.world.defaultContactMaterial.restitution = 0.2;
         this.world.solver.iterations = 20;

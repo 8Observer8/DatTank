@@ -24,7 +24,7 @@ export class BulletShotGfx {
 
     private directionRotation: number;
     private position: OMath.Vec3 = new OMath.Vec3();
-    private bulletSpeed: number = 1.8;
+    private speed: number;
 
     //
 
@@ -37,8 +37,8 @@ export class BulletShotGfx {
         let dx;
         let dz;
 
-        x = this.point.position.x + this.bulletSpeed * Math.cos( this.directionRotation ) * delta;
-        z = this.point.position.z + this.bulletSpeed * Math.sin( this.directionRotation ) * delta;
+        x = this.point.position.x + this.speed * Math.cos( this.directionRotation ) * delta;
+        z = this.point.position.z + this.speed * Math.sin( this.directionRotation ) * delta;
         this.point.position.set( x, this.point.position.y, z );
 
         this.trace.position.set( ( x + this.position.x ) / 2, this.position.y, ( z + this.position.z ) / 2 );
@@ -66,11 +66,12 @@ export class BulletShotGfx {
 
     };
 
-    public setActive ( bulletId: number, position: OMath.Vec3, range: number, directionRotation: number ) : void {
+    public setActive ( bulletId: number, position: OMath.Vec3, range: number, shootSpeed: number, directionRotation: number ) : void {
 
         this.active = true;
         this.id = bulletId;
         this.range = range;
+        this.speed = shootSpeed;
         this.object.visible = true;
         this.position.copy( position );
         this.point.position.set( this.position.x, this.position.y, this.position.z );

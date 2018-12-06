@@ -70,15 +70,15 @@ export class CannonTankPart {
 
     };
 
-    public makeShot ( shotId: number, directionRotation: number, overheating: number ) : void {
+    public makeShot ( shotId: number, overheating: number ) : void {
 
         if ( this.shootType === 'bullet' ) {
 
-            this.makeBulletShot( shotId, directionRotation, overheating );
+            this.makeBulletShot( shotId, overheating );
 
         } else if ( this.shootType === 'laser' ) {
 
-            this.makeLaserShot( shotId, directionRotation, overheating );
+            this.makeLaserShot( shotId, overheating );
 
         } else if ( this.shootType === 'fire' ) {
 
@@ -100,7 +100,7 @@ export class CannonTankPart {
 
     //
 
-    private makeBulletShot ( shotId: number, directionRotation: number, overheating: number ) : void {
+    private makeBulletShot ( shotId: number, overheating: number ) : void {
 
         if ( this.tank.health <= 0 ) return;
 
@@ -118,7 +118,7 @@ export class CannonTankPart {
             position.x += offset * Math.cos( Math.PI / 2 - this.tank.rotation + this.sourceParam.shootInfo[ i ].dAngle );
             position.z += offset * Math.sin( Math.PI / 2 - this.tank.rotation + this.sourceParam.shootInfo[ i ].dAngle );
 
-            BulletShotManager.showBullet( shotId, position, this.range, directionRotation + Math.PI / 2 );
+            BulletShotManager.showBullet( shotId, position, this.range, this.sourceParam.shootSpeed, Math.PI / 2 - this.tank.rotation );
 
         }
 
@@ -134,9 +134,9 @@ export class CannonTankPart {
 
     };
 
-    private makeLaserShot ( shotId: number, directionRotation: number, overheating: number ) : void {
+    private makeLaserShot ( shotId: number, overheating: number ) : void {
 
-        LaserBeamShotManager.showLaserShot( shotId, this.sourceParam.shootInfo[0].offset, this.sourceParam.shootInfo[0].y, this.range, this.tank );
+        LaserBeamShotManager.showLaserShot( shotId, this.sourceParam.shootInfo[0].offset, this.sourceParam.shootInfo[0].y, this.range, this.sourceParam.shotSpeed, this.tank );
 
     };
 

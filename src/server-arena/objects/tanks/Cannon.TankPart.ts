@@ -26,6 +26,7 @@ export class CannonTankPart {
     private shootingInterval: any;
 
     private lastShot: any;
+    private shotSpeed: number;
 
     //
 
@@ -40,6 +41,7 @@ export class CannonTankPart {
         this.damage = params.levels[ level ].damage;
         this.overheat = params.levels[ level ].overheat;
         this.range = params.levels[ level ].range;
+        this.shotSpeed = params.shotSpeed;
 
         this.temperature = 0;
 
@@ -64,7 +66,7 @@ export class CannonTankPart {
         } else if ( this.shootType === 'laser' ) {
 
             const laserBeam = this.tank.arena.laserBeamShotManager.getInactiveLaserBeam();
-            laserBeam.activate( this.tank.position, this.tank.rotation, this.range, this.tank );
+            laserBeam.activate( this.tank.position, this.tank.rotation, this.range, this.shotSpeed, this.tank );
             this.tank.network.startShooting( laserBeam.id );
             this.lastShot = laserBeam;
 
@@ -118,7 +120,7 @@ export class CannonTankPart {
         position.x += offset * Math.cos( Math.PI / 2 - this.tank.rotation );
         position.z += offset * Math.sin( Math.PI / 2 - this.tank.rotation );
 
-        bullet.activate( position, this.tank.rotation, this.range, this.tank );
+        bullet.activate( position, this.tank.rotation, this.range, this.shotSpeed, this.tank );
         this.tank.ammo --;
         this.lastShot = bullet;
 

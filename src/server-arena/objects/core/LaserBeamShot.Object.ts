@@ -21,30 +21,32 @@ export class LaserBeamShotObject {
     public position: OMath.Vec3 = new OMath.Vec3();
     public angle: number = 0;
 
-    public range: number = 200;
+    public range: number;
     public readonly type: string = 'LaserBeam';
 
     public size: OMath.Vec3 = new OMath.Vec3( 2, 2, 2 );
     public raycastResult: any;
     public ray: any;
 
-    // private dPos: number = 0;
-    // private speed: number = 1;
+    // @ts-ignore
+    private dPos: number = 0;
+    private speed: number;
 
     private shootDuration: number = 0;
 
     //
 
-    public activate ( position: OMath.Vec3, angle: number, range: number, owner: TankObject | TowerObject ) : void {
+    public activate ( position: OMath.Vec3, angle: number, range: number, shotSpeed: number, owner: TankObject | TowerObject ) : void {
 
-        // this.dPos = 0;
         this.shootDuration = 0;
         this.active = true;
         this.position.set( position.x, 8, position.z );
 
+        this.dPos = 0;
         this.range = range;
         this.angle = angle;
         this.owner = owner;
+        this.speed = shotSpeed;
 
     };
 
@@ -59,6 +61,8 @@ export class LaserBeamShotObject {
         //
 
         if ( this.raycastResult && this.raycastResult.body ) {
+
+            this.dPos = this.raycastResult.distance;
 
             if ( this.raycastResult.body.name === 'Tank' || this.raycastResult.body.name === 'Tower' ) {
 
@@ -76,7 +80,12 @@ export class LaserBeamShotObject {
         this.position.copy( this.owner.position );
         this.angle = this.owner.rotation;
 
-        // this.dPos += delta * this.speed;
+        if ( this.dPos < this.range ) {
+
+            this.dPos += delta * this.speed;
+
+        }
+
         this.arena.collisionManager.raycast( this );
 
         this.shootDuration += delta;

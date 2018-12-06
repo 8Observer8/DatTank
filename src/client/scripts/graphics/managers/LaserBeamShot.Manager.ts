@@ -46,13 +46,13 @@ class LaserBeamShotManagerCore {
 
     };
 
-    public showLaserShot ( shotId: number, offset: number, range: number, directionRotation: number, parent: TankObject ) : void {
+    public showLaserShot ( shotId: number, offset: number, yPos: number, range: number, shotSpeed: number, parent: TankObject ) : void {
 
         const laserShot = this.getNewLaserShot();
 
         if ( laserShot ) {
 
-            laserShot.setActive( shotId, offset, range, directionRotation, parent );
+            laserShot.setActive( shotId, offset, yPos, range, shotSpeed, parent );
 
         }
 

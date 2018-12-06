@@ -89,7 +89,7 @@ export class TowerObject {
 
         const bullet = this.arena.bulletShotManager.getInactiveBullet();
         if ( ! bullet ) return;
-        bullet.activate( position, this.rotation + Math.PI, this.range, this );
+        bullet.activate( position, this.rotation + Math.PI, 1.8, this.range, this );
 
         this.network.makeShot( bullet );
 
