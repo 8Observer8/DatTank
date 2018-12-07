@@ -29,6 +29,12 @@ export class BulletShotObject {
 
     //
 
+    public deactivate () : void {
+
+        // nothing here
+
+    };
+
     public activate ( position: OMath.Vec3, angle: number, range: number, shotSpeed: number, owner: TankObject | TowerObject ) : void {
 
         this.active = true;

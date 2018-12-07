@@ -31,25 +31,28 @@ export class LaserBeamShotObject {
     // @ts-ignore
     private dPos: number = 0;
     // @ts-ignore
-    private dPosOffset: number;
     private speed: number;
+    private yPos: number;
+    private dAngle: number;
+    private offset: number;
 
     private shootDuration: number = 0;
 
     //
 
-    public activate ( position: OMath.Vec3, offset: number, angle: number, range: number, shotSpeed: number, owner: TankObject | TowerObject ) : void {
+    public activate ( offset: number, yPos: number, dAngle: number, range: number, shotSpeed: number, owner: TankObject | TowerObject ) : void {
+
+        this.active = true;
+
+        this.owner = owner;
+        this.range = range;
+        this.speed = shotSpeed;
 
         this.shootDuration = 0;
-        this.active = true;
-        this.position.set( position.x, 8, position.z );
-
-        this.dPos = 0;
-        this.dPosOffset = offset;
-        this.range = range;
-        this.angle = angle;
-        this.owner = owner;
-        this.speed = shotSpeed;
+        this.offset = offset;
+        this.angle = owner.rotation;
+        this.dAngle = dAngle;
+        this.yPos = yPos;
 
     };
 
@@ -76,20 +79,27 @@ export class LaserBeamShotObject {
 
             this.raycastResult = false;
 
+        } else {
+
+            if ( this.dPos < this.range ) {
+
+                this.dPos += delta * this.speed;
+
+            }
+
         }
 
         //
 
-        this.position.copy( this.owner.position );
-        this.angle = this.owner.rotation;
+        this.angle = Math.PI / 2 - this.owner.rotation;
 
-        if ( this.dPos < this.range ) {
-
-            this.dPos += delta * this.speed;
-
-        }
+        this.position.set( this.owner.position.x, this.owner.position.y + this.yPos, this.owner.position.z );
+        this.position.x += this.offset * Math.cos( this.angle + this.dAngle );
+        this.position.z += this.offset * Math.sin( this.angle + this.dAngle );
 
         this.arena.collisionManager.raycast( this );
+
+        //
 
         this.shootDuration += delta;
 

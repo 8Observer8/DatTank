@@ -23,6 +23,7 @@ export class CannonTankPart {
     public overheat: number;
     public range: number;
     public shootType: string;
+    public shotSpeed: number;
     public sourceParam: any;
 
     public tank: TankObject;
@@ -51,6 +52,7 @@ export class CannonTankPart {
 
         this.sourceParam = cannonParams;
         this.shootType = cannonParams.shootType;
+        this.shotSpeed = cannonParams.shotSpeed;
         this.overheat = params.overheat;
         this.range = params.range;
 
@@ -118,7 +120,7 @@ export class CannonTankPart {
             position.x += offset * Math.cos( Math.PI / 2 - this.tank.rotation + this.sourceParam.shootInfo[ i ].dAngle );
             position.z += offset * Math.sin( Math.PI / 2 - this.tank.rotation + this.sourceParam.shootInfo[ i ].dAngle );
 
-            BulletShotManager.showBullet( shotId, position, this.range, this.sourceParam.shootSpeed, Math.PI / 2 - this.tank.rotation );
+            BulletShotManager.showBullet( shotId, position, this.range, this.shotSpeed, Math.PI / 2 - this.tank.rotation );
 
         }
 

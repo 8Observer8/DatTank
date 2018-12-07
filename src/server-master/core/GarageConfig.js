@@ -221,7 +221,7 @@ var GarageConfig = {
             },
             shotSpeed:      1.8,
             shootInfo: [
-                { dAngle:   0, offset: 25 }
+                { dAngle: 0, offset: 25, y: 20 }
             ]
         },
 
@@ -243,7 +243,7 @@ var GarageConfig = {
             },
             shotSpeed:      1.8,
             shootInfo: [
-                { dAngle:   0, offset: 25 }
+                { dAngle: 0, offset: 25, y: 20 }
             ]
         },
 
@@ -265,8 +265,8 @@ var GarageConfig = {
             },
             shotSpeed:      1.8,
             shootInfo: [
-                { dAngle:   0.16, offset: 25 },
-                { dAngle: - 0.16, offset: 25 }
+                { dAngle:   0.16, offset: 25, y: 20 },
+                { dAngle: - 0.16, offset: 25, y: 20 }
             ]
         },
 

@@ -66,12 +66,12 @@ export class BulletShotGfx {
 
     };
 
-    public setActive ( bulletId: number, position: OMath.Vec3, range: number, shootSpeed: number, directionRotation: number ) : void {
+    public setActive ( bulletId: number, position: OMath.Vec3, range: number, shotSpeed: number, directionRotation: number ) : void {
 
         this.active = true;
         this.id = bulletId;
         this.range = range;
-        this.speed = shootSpeed;
+        this.speed = shotSpeed;
         this.object.visible = true;
         this.position.copy( position );
         this.point.position.set( this.position.x, this.position.y, this.position.z );
