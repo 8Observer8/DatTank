@@ -3,6 +3,8 @@
  * Arena laser shot manager
 */
 
+import * as OMath from '../../OMath/Core.OMath';
+
 import { LaserShotGfx } from '../effects/shots/LaserShot.Gfx';
 import { TankObject } from '../../objects/core/Tank.Object';
 
@@ -46,13 +48,13 @@ class LaserBeamShotManagerCore {
 
     };
 
-    public showLaserShot ( shotId: number, offset: number, yPos: number, range: number, shotSpeed: number, parent: TankObject ) : void {
+    public showLaserShot ( shotId: number, offset: OMath.Vec3, range: number, shotSpeed: number, parent: TankObject ) : void {
 
         const laserShot = this.getNewLaserShot();
 
         if ( laserShot ) {
 
-            laserShot.setActive( shotId, offset, yPos, range, shotSpeed, parent );
+            laserShot.setActive( shotId, offset, range, shotSpeed, parent );
 
         }
 

@@ -114,6 +114,7 @@ export class DamageSmokeGfx {
             sprite.scale.set( scale, scale, scale );
             this.object.add( sprite );
             this.sprites.push( sprite );
+            sprite.userData.ignoreCollision = true;
 
         }
 

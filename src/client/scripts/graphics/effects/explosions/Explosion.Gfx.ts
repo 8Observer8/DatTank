@@ -176,6 +176,7 @@ export class ExplosionGfx {
         this.object = new THREE.Points( geometry, material );
         this.object.name = 'Explosion';
         this.object.visible = false;
+        this.object.userData.ignoreCollision = true;
 
         //
 

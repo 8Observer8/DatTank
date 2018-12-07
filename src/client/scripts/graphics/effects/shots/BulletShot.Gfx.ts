@@ -95,11 +95,13 @@ export class BulletShotGfx {
     public init () : void {
 
         this.point = new THREE.Mesh( new THREE.BoxGeometry( 2.5, 2.5, 2.5 ), new THREE.MeshBasicMaterial({ color: 0xff3333 }) );
+        this.point.userData.ignoreCollision = true;
         this.object.add( this.point );
 
         this.trace = new THREE.Mesh( new THREE.PlaneGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 0.5, transparent: true }) );
         this.trace.rotation.x = - Math.PI / 2;
         this.trace.renderOrder = 5;
+        this.trace.userData.ignoreCollision = true;
         this.object.add( this.trace );
 
         this.sound = new THREE.PositionalAudio( GfxCore.audioListener );

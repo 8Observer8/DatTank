@@ -30,19 +30,22 @@ export class LaserBeamShotObject {
 
     // @ts-ignore
     private dPos: number = 0;
+    // @ts-ignore
+    private dPosOffset: number;
     private speed: number;
 
     private shootDuration: number = 0;
 
     //
 
-    public activate ( position: OMath.Vec3, angle: number, range: number, shotSpeed: number, owner: TankObject | TowerObject ) : void {
+    public activate ( position: OMath.Vec3, offset: number, angle: number, range: number, shotSpeed: number, owner: TankObject | TowerObject ) : void {
 
         this.shootDuration = 0;
         this.active = true;
         this.position.set( position.x, 8, position.z );
 
         this.dPos = 0;
+        this.dPosOffset = offset;
         this.range = range;
         this.angle = angle;
         this.owner = owner;

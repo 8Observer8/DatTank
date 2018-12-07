@@ -25,8 +25,8 @@ export class CollisionManager {
         shot.ray = shot.ray || new Cannon.Ray();
 
         const ray = shot.ray;
-        ray.from.set( 40 * Math.sin( shot.angle ) + shot.position.x, shot.position.y, 40 * Math.cos( shot.angle ) + shot.position.z );
-        ray.to.set( shot.dPos * Math.sin( shot.angle ) + shot.position.x, shot.position.y, shot.dPos * Math.cos( shot.angle ) + shot.position.z );
+        ray.from.set( shot.dPosOffset * Math.sin( shot.angle ) + shot.position.x, shot.position.y, shot.dPosOffset * Math.cos( shot.angle ) + shot.position.z );
+        ray.to.set( ( shot.dPos + shot.dPosOffset ) * Math.sin( shot.angle ) + shot.position.x, shot.position.y, ( shot.dPos + shot.dPosOffset ) * Math.cos( shot.angle ) + shot.position.z );
 
         ray['intersectBodies']( this.world.bodies, shot.raycastResult );
 
