@@ -81,6 +81,9 @@ export class TankObject {
     public die () : void {
 
         CollisionManager.removeObject( this );
+        this.gfx.damageSmoke.deactivate();
+        this.gfx.shadow.visible = false;
+        this.gfx.label.hide();
 
         this.gfx.destroy( () => {
 
@@ -176,11 +179,11 @@ export class TankObject {
 
         } else if ( this.health <= 50 ) {
 
-            this.gfx.damageSmoke.show();
+            this.gfx.damageSmoke.setActive();
 
         } else {
 
-            this.gfx.damageSmoke.hide();
+            this.gfx.damageSmoke.deactivate();
 
         }
 
@@ -259,7 +262,7 @@ export class TankObject {
 
         if ( this.health <= 50 ) {
 
-            this.gfx.damageSmoke.show();
+            this.gfx.damageSmoke.setActive();
 
         }
 

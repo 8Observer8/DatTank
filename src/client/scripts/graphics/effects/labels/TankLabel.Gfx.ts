@@ -14,12 +14,22 @@ export class TankLabelGfx {
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D | null;
     private sprite: THREE.Sprite;
+    private isHiding: boolean = false;
 
     //
 
     public update ( health: number, armor: number, teamColor: number, overheating: number, login: string, isMe: boolean ) : void {
 
         if ( ! this.ctx ) return;
+
+        if ( this.isHiding ) {
+
+            this.sprite.material.opacity -= 0.008;
+            return;
+
+        }
+
+        //
 
         const width = this.canvas.width;
         const height = this.canvas.height;
@@ -114,6 +124,12 @@ export class TankLabelGfx {
 
     };
 
+    public hide () : void {
+
+        this.isHiding = true;
+
+    };
+
     public dispose () : void {
 
         const material = this.sprite.material as THREE.SpriteMaterial;
@@ -143,7 +159,7 @@ export class TankLabelGfx {
 
         }
 
-        const material = new THREE.SpriteMaterial({ alphaTest: 0.1, map: new THREE.Texture( this.canvas ), color: 0xffffff, fog: true });
+        const material = new THREE.SpriteMaterial({ alphaTest: 0.1, map: new THREE.Texture( this.canvas ), color: 0xffffff, fog: true, transparent: true });
         this.sprite = new THREE.Sprite( material );
 
         this.sprite.position.set( 0, 40, 0 );

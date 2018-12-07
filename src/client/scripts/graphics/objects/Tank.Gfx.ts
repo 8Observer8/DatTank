@@ -32,6 +32,7 @@ class TankGfx {
     public friendlyFireLabel: FriendlyFireLabelGfx = new FriendlyFireLabelGfx();
     public damageSmoke: DamageSmokeGfx = new DamageSmokeGfx();
     public blastSmoke: BlastSmokeGfx = new BlastSmokeGfx();
+    public shadow: THREE.Mesh;
 
     private hide: boolean = false;
     private sounds = {};
@@ -154,6 +155,10 @@ class TankGfx {
     };
 
     public update ( time: number, delta: number ) : void {
+
+        if ( this.tank.health <= 0 ) this.label.update( this.tank.health, this.tank.armor.armor, this.tank.player.team.color, this.tank.cannon.overheat, this.tank.player.username, this.tank.isMe );
+
+        //
 
         this.updateTracks();
         this.traces.update( time, delta );
@@ -308,12 +313,13 @@ class TankGfx {
         tankShadow.rotation.x = - Math.PI / 2;
         tankShadow.position.y += 0.5;
         tankShadow.renderOrder = 10;
+        this.shadow = tankShadow;
         this.object.add( tankShadow );
 
         //
 
         this.friendlyFireLabel.init( this.object );
-        this.damageSmoke.init( this.object );
+        this.damageSmoke.init( this.tank );
         this.blastSmoke.init( this.object, new OMath.Vec3( 0, 0, 5.5 ) );
         this.traces.init( this.object );
         this.label.init( this.object );
@@ -368,6 +374,7 @@ class TankGfx {
 
         this.traces.dispose();
         this.label.dispose();
+        this.damageSmoke.dispose();
 
         // stop all audio
 
