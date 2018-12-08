@@ -5,10 +5,14 @@
 
 import * as OMath from '../../OMath/Core.OMath';
 import { TankObject } from '../core/Tank.Object';
+import { LaserBeamShotObject } from '../core/LaserBeamShot.Object';
+import { BulletShotObject } from '../core/BulletShot.Object';
 
 //
 
 export class CannonTankPart {
+
+    public static shotNumId: number = 1;
 
     public tank: TankObject;
     public nid: number;
@@ -25,8 +29,11 @@ export class CannonTankPart {
     private shootTimeout: any;
     private shootingInterval: any;
 
-    private lastShot: any;
+    private lastShots: Array< LaserBeamShotObject | BulletShotObject >;
     private shotSpeed: number;
+
+    private sourceParam: any;
+    private activeShotId: number;
 
     //
 
@@ -43,11 +50,21 @@ export class CannonTankPart {
         this.range = params.levels[ level ].range;
         this.shotSpeed = params.shotSpeed;
 
+        this.sourceParam = params;
+
         this.temperature = 0;
+        this.lastShots = [];
 
     };
 
     //
+
+    public getShotId () : number {
+
+        CannonTankPart.shotNumId = ( CannonTankPart.shotNumId > 1000 ) ? 1 : CannonTankPart.shotNumId + 1;
+        return CannonTankPart.shotNumId;
+
+    };
 
     public startShooting () : void {
 
@@ -65,10 +82,20 @@ export class CannonTankPart {
 
         } else if ( this.shootType === 'laser' ) {
 
-            const laserBeam = this.tank.arena.laserBeamShotManager.getInactiveLaserBeam();
-            laserBeam.activate( this.tank.position, this.tank.rotation, this.range, this.shotSpeed, this.tank );
-            this.tank.network.startShooting( laserBeam.id );
-            this.lastShot = laserBeam;
+            this.lastShots = [];
+            const shotId = this.getShotId();
+
+            for ( let i = 0, il = this.sourceParam.shootInfo.length; i < il; i ++ ) {
+
+                const laserBeam = this.tank.arena.laserBeamShotManager.getInactiveLaserBeam();
+                laserBeam.id = shotId;
+                laserBeam.activate( this.sourceParam.shootInfo[ i ].offset, this.sourceParam.shootInfo[ i ].y, this.sourceParam.shootInfo[ i ].dAngle, this.range, this.shotSpeed, this.tank );
+                this.lastShots.push( laserBeam );
+
+            }
+
+            this.activeShotId = shotId;
+            this.tank.network.startShooting( shotId );
 
         }
 
@@ -78,11 +105,16 @@ export class CannonTankPart {
 
         clearInterval( this.shootingInterval );
 
-        if ( this.shootType !== 'bullet' && this.lastShot ) {
+        if ( this.shootType !== 'bullet' ) {
 
-            this.lastShot.deactivate();
-            this.tank.network.stopShooting( this.lastShot.id );
-            this.lastShot = false;
+            for ( let i = 0, il = this.lastShots.length; i < il; i ++ ) {
+
+                this.lastShots[ i ].deactivate();
+
+            }
+
+            this.lastShots = [];
+            this.tank.network.stopShooting( this.activeShotId );
 
         }
 
@@ -111,20 +143,31 @@ export class CannonTankPart {
 
         //
 
-        const bullet = this.tank.arena.bulletShotManager.getInactiveBullet();
+        const shotId = this.getShotId();
+        this.activeShotId = shotId;
+        this.lastShots = [];
 
-        // compute proper position of bullet
+        for ( let i = 0, il = this.sourceParam.shootInfo.length; i < il; i ++ ) {
 
-        const position = new OMath.Vec3( this.tank.position.x, 20, this.tank.position.z );
-        const offset = 45;
-        position.x += offset * Math.cos( Math.PI / 2 - this.tank.rotation );
-        position.z += offset * Math.sin( Math.PI / 2 - this.tank.rotation );
+            const bullet = this.tank.arena.bulletShotManager.getInactiveBullet();
+            bullet.id = shotId;
 
-        bullet.activate( position, this.tank.rotation, this.range, this.shotSpeed, this.tank );
-        this.tank.ammo --;
-        this.lastShot = bullet;
+            // compute proper position of bullet
 
-        this.tank.network.makeShoot( bullet );
+            const position = new OMath.Vec3( this.tank.position.x, this.tank.position.y + this.sourceParam.shootInfo[ i ].y, this.tank.position.z );
+            const offset = this.sourceParam.shootInfo[ i ].offset;
+            position.x += offset * Math.cos( Math.PI / 2 - this.tank.rotation + this.sourceParam.shootInfo[ i ].dAngle );
+            position.z += offset * Math.sin( Math.PI / 2 - this.tank.rotation + this.sourceParam.shootInfo[ i ].dAngle );
+
+            bullet.activate( position, this.tank.rotation, this.range, this.shotSpeed, this.tank );
+            this.tank.ammo --;
+            this.lastShots.push( bullet );
+
+        }
+
+        //
+
+        this.tank.network.makeShoot( this.activeShotId );
 
     };
 

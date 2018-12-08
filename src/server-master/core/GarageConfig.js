@@ -221,7 +221,7 @@ var GarageConfig = {
             },
             shotSpeed:      1.8,
             shootInfo: [
-                { dAngle:   0, offset: 25 }
+                { dAngle: 0, offset: 25, y: 20 }
             ]
         },
 
@@ -243,7 +243,7 @@ var GarageConfig = {
             },
             shotSpeed:      1.8,
             shootInfo: [
-                { dAngle:   0, offset: 25 }
+                { dAngle: 0, offset: 25, y: 20 }
             ]
         },
 
@@ -265,8 +265,8 @@ var GarageConfig = {
             },
             shotSpeed:      1.8,
             shootInfo: [
-                { dAngle:   0.16, offset: 25 },
-                { dAngle: - 0.16, offset: 25 }
+                { dAngle:   0.16, offset: 25, y: 20 },
+                { dAngle: - 0.16, offset: 25, y: 20 }
             ]
         },
 
@@ -362,15 +362,16 @@ var GarageConfig = {
             price:          4000,
             shootType:      'laser',
             levels:         {
-                1:      { damage: 140, range: 250, overheat: 60, rpm: 12, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 140, range: 250, overheat: 60, rpm: 12, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 140, range: 250, overheat: 60, rpm: 12, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 140, range: 250, overheat: 60, rpm: 12, price: { levelBonuses: 1, coins: 100 } },
-                5:      { damage: 140, range: 250, overheat: 60, rpm: 12, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 140, range: 250, overheat: 60, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 140, range: 250, overheat: 60, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 140, range: 250, overheat: 60, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 140, range: 250, overheat: 60, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 140, range: 250, overheat: 60, rpm: 600, price: { levelBonuses: 1, coins: 100 } }
             },
             shotSpeed:      1,
             shootInfo: [
-
+                { dAngle: - 1.3, offset: 20, y: 16 },
+                { dAngle:   1.3, offset: 20, y: 16 }
             ]
         },
 

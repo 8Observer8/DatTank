@@ -23,6 +23,7 @@ export class CannonTankPart {
     public overheat: number;
     public range: number;
     public shootType: string;
+    public shotSpeed: number;
     public sourceParam: any;
 
     public tank: TankObject;
@@ -51,6 +52,7 @@ export class CannonTankPart {
 
         this.sourceParam = cannonParams;
         this.shootType = cannonParams.shootType;
+        this.shotSpeed = cannonParams.shotSpeed;
         this.overheat = params.overheat;
         this.range = params.range;
 
@@ -118,7 +120,7 @@ export class CannonTankPart {
             position.x += offset * Math.cos( Math.PI / 2 - this.tank.rotation + this.sourceParam.shootInfo[ i ].dAngle );
             position.z += offset * Math.sin( Math.PI / 2 - this.tank.rotation + this.sourceParam.shootInfo[ i ].dAngle );
 
-            BulletShotManager.showBullet( shotId, position, this.range, this.sourceParam.shootSpeed, Math.PI / 2 - this.tank.rotation );
+            BulletShotManager.showBullet( shotId, position, this.range, this.shotSpeed, Math.PI / 2 - this.tank.rotation );
 
         }
 
@@ -136,7 +138,16 @@ export class CannonTankPart {
 
     private makeLaserShot ( shotId: number, overheating: number ) : void {
 
-        LaserBeamShotManager.showLaserShot( shotId, this.sourceParam.shootInfo[0].offset, this.sourceParam.shootInfo[0].y, this.range, this.sourceParam.shotSpeed, this.tank );
+        for ( let i = 0, il = this.sourceParam.shootInfo.length; i < il; i ++ ) {
+
+            const offset = new OMath.Vec3();
+            offset.x = this.sourceParam.shootInfo[ i ].offset * Math.sin( this.sourceParam.shootInfo[ i ].dAngle );
+            offset.y = this.sourceParam.shootInfo[ i ].y;
+            offset.z = this.sourceParam.shootInfo[ i ].offset * Math.cos( this.sourceParam.shootInfo[ i ].dAngle );
+
+            LaserBeamShotManager.showLaserShot( shotId, offset, this.range, this.sourceParam.shotSpeed, this.tank );
+
+        }
 
     };
 

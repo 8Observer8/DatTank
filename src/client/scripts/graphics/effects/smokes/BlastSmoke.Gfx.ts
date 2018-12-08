@@ -103,6 +103,7 @@ export class BlastSmokeGfx {
             sprite.material = sprite.material.clone();
             sprite.material.opacity = 0.8 - 0.8 / 5 * ( 5 - i );
             sprite.scale.set( scale, scale, scale );
+            sprite.userData.ignoreCollision = true;
 
             this.sprites.push( sprite );
             this.object.add( sprite );

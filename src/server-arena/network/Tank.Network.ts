@@ -9,7 +9,6 @@ import { Network } from '../network/Core.Network';
 import { TankObject } from '../objects/core/Tank.Object';
 import { TowerObject } from '../objects/core/Tower.Object';
 import { BoxObject } from '../objects/core/Box.Object';
-import { BulletShotObject } from '../objects/core/BulletShot.Object';
 import { ArenaCore } from '../core/Arena.Core';
 
 //
@@ -142,7 +141,7 @@ export class TankNetwork {
 
     };
 
-    public makeShoot ( bullet: BulletShotObject ) : void {
+    public makeShoot ( shotId: number ) : void {
 
         this.buffers['MakeShot'] = this.buffers['MakeShot'] || {};
         const buffer = this.buffers['MakeShot'].buffer || new ArrayBuffer( 8 );
@@ -153,7 +152,7 @@ export class TankNetwork {
         //
 
         bufferView[1] = this.tank.id;
-        bufferView[2] = bullet.id;
+        bufferView[2] = shotId;
         bufferView[3] = this.tank.cannon.temperature;
 
         this.arena.network.sendEventToPlayersInRange( this.tank.position, 'TankMakeShot', buffer, bufferView );
@@ -301,9 +300,9 @@ export class TankNetwork {
 
         for ( let i = 0, il = tanks.length; i < il; i ++ ) {
 
-            size += 19; // general
+            size += 20; // general
             size += 13; // login
-            size += ( tanks[ i ].id === this.tank.id ) ? 7 : 0; // personal
+            size += ( tanks[ i ].id === this.tank.id ) ? 5 : 0; // personal
 
         }
 
@@ -331,13 +330,14 @@ export class TankNetwork {
             bufferView[ offset + 11 ] = tank.hull.nid;
             bufferView[ offset + 12 ] = tank.hull.speedCoef;
             bufferView[ offset + 13 ] = tank.cannon.nid;
-            bufferView[ offset + 14 ] = tank.armor.nid;
-            bufferView[ offset + 15 ] = tank.armor.armor;
-            bufferView[ offset + 16 ] = tank.engine.nid;
-            bufferView[ offset + 17 ] = tank.engine.maxSpeed;
-            bufferView[ offset + 18 ] = tank.engine.power;
+            bufferView[ offset + 14 ] = tank.cannon.range;
+            bufferView[ offset + 15 ] = tank.armor.nid;
+            bufferView[ offset + 16 ] = tank.armor.armor;
+            bufferView[ offset + 17 ] = tank.engine.nid;
+            bufferView[ offset + 18 ] = tank.engine.maxSpeed;
+            bufferView[ offset + 19 ] = tank.engine.power;
 
-            offset += 19;
+            offset += 20;
 
             for ( let j = 0, jl = tank.player.login.length; j < jl; j ++ ) {
 
@@ -358,10 +358,9 @@ export class TankNetwork {
                 bufferView[ offset + 0 ] = tank.ammo;
                 bufferView[ offset + 1 ] = tank.hull.ammoCapacity;
                 bufferView[ offset + 2 ] = tank.hull.armorCoef;
-                bufferView[ offset + 3 ] = tank.cannon.range;
-                bufferView[ offset + 4 ] = tank.cannon.rpm;
-                bufferView[ offset + 5 ] = tank.cannon.overheat;
-                offset += 6;
+                bufferView[ offset + 3 ] = tank.cannon.rpm;
+                bufferView[ offset + 4 ] = tank.cannon.overheat;
+                offset += 5;
 
             }
 

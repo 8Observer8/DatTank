@@ -48,12 +48,13 @@ export class LaserCollisionGfx {
 
     public active: boolean = false;
 
-    private mode: number = 0;
     private parent: LaserShotGfx;
     private object: THREE.Points;
     private particleCount: number = 200;
     private particlesVelocityVectors: THREE.Vector3[] = [];
     private particlesState: number[] = [];
+    private particlesMode: number[] = [];
+    private mode: number = 0;
 
     //
 
@@ -82,6 +83,7 @@ export class LaserCollisionGfx {
             if ( this.particlesState[ i ] > 1 ) {
 
                 this.particlesState[ i ] = ( ! this.active ) ? - 1 : 0;
+                this.particlesMode[ i ] = this.mode;
                 pos.setXYZ( i, this.parent.collisionPoint.x, this.parent.collisionPoint.y, this.parent.collisionPoint.z );
 
             } else {
@@ -90,7 +92,7 @@ export class LaserCollisionGfx {
                 if ( this.particlesState[ i ] > 0 ) opacity = 2 * this.particlesState[ i ];
                 if ( this.particlesState[ i ] > 0.5 ) opacity = 2 * ( 1 - this.particlesState[ i ] );
 
-                if ( this.mode === 0 ) {
+                if ( this.particlesMode[ i ] === 0 ) {
 
                     colors.setXYZW( i, 0.2 + 2 * Math.abs( Math.sin( 3.14 * this.particlesState[ i ] ) ), 2 * Math.abs( Math.sin( 3.14 * this.particlesState[ i ] ) ), 2 * Math.abs( Math.sin( 3.14 * this.particlesState[ i ] ) ), opacity / 2 );
                     sizes.setX( i, 2 * opacity );
@@ -101,9 +103,9 @@ export class LaserCollisionGfx {
                         pos.getZ( i ) + 0.3 * this.particlesVelocityVectors[ i ].z * this.particlesState[ i ],
                     );
 
-                } else if ( this.mode === 1 ) {
+                } else if ( this.particlesMode[ i ] === 1 ) {
 
-                    colors.setXYZW( i, 0.2 + 0.7 * Math.abs( Math.sin( 3.14 * this.particlesState[ i ] ) ), 0.7 * Math.abs( Math.sin( 3.14 * this.particlesState[ i ] ) ), 0.0, opacity );
+                    colors.setXYZW( i, 0.2 + 0.7 * Math.abs( Math.sin( 3.14 * this.particlesState[ i ] ) ), 0.7 * Math.abs( Math.sin( 3.14 * this.particlesState[ i ] ) ), 0.0, opacity / 2 );
                     sizes.setX( i, 15 * opacity );
 
                     pos.setXYZ( i,
@@ -177,10 +179,12 @@ export class LaserCollisionGfx {
         this.object = new THREE.Points( geometry, material );
         this.object.name = 'LaserCollision';
         this.object.visible = false;
+        this.object.userData.ignoreCollision = true;
 
         for ( let i = 0, il = this.particleCount; i < il; i ++ ) {
 
             this.particlesState[ i ] = - Math.random();
+            this.particlesMode[ i ] = 0;
             this.particlesVelocityVectors.push( new THREE.Vector3( 1.5 * ( Math.random() - 0.5 ), 5 * Math.random(), 1.5 * ( Math.random() - 0.5 ) ) );
 
         }

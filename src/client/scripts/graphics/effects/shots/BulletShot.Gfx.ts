@@ -66,12 +66,12 @@ export class BulletShotGfx {
 
     };
 
-    public setActive ( bulletId: number, position: OMath.Vec3, range: number, shootSpeed: number, directionRotation: number ) : void {
+    public setActive ( bulletId: number, position: OMath.Vec3, range: number, shotSpeed: number, directionRotation: number ) : void {
 
         this.active = true;
         this.id = bulletId;
         this.range = range;
-        this.speed = shootSpeed;
+        this.speed = shotSpeed;
         this.object.visible = true;
         this.position.copy( position );
         this.point.position.set( this.position.x, this.position.y, this.position.z );
@@ -95,11 +95,13 @@ export class BulletShotGfx {
     public init () : void {
 
         this.point = new THREE.Mesh( new THREE.BoxGeometry( 2.5, 2.5, 2.5 ), new THREE.MeshBasicMaterial({ color: 0xff3333 }) );
+        this.point.userData.ignoreCollision = true;
         this.object.add( this.point );
 
         this.trace = new THREE.Mesh( new THREE.PlaneGeometry( 2, 2 ), new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 0.5, transparent: true }) );
         this.trace.rotation.x = - Math.PI / 2;
         this.trace.renderOrder = 5;
+        this.trace.userData.ignoreCollision = true;
         this.object.add( this.trace );
 
         this.sound = new THREE.PositionalAudio( GfxCore.audioListener );
