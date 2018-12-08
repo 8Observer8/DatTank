@@ -54,14 +54,19 @@ class ResourceManagerCore {
         'tanks/hulls/OrbitT32s.jpg',
         'tanks/hulls/MG813.jpg',
         'tanks/hulls/DTEK72.jpg',
+        'tanks/hulls/RiperX3.jpg',
 
         'tanks/cannons/Plasma-g1.jpg',
         'tanks/cannons/Plasma-g2.jpg',
         'tanks/cannons/Plasma-double.jpg',
         'tanks/cannons/Plasma-triple.jpg',
+        'tanks/cannons/Plasma-zero.jpg',
         'tanks/cannons/Razer-v1.jpg',
         'tanks/cannons/Razer-v2.jpg',
         'tanks/cannons/Razer-double.jpg',
+        'tanks/cannons/Mag87.jpg',
+        'tanks/cannons/Mag87s.jpg',
+        'tanks/cannons/Mag87s-turbo.jpg',
     ];
 
     private soundsList: string[] = [
@@ -86,6 +91,7 @@ class ResourceManagerCore {
                 'hulls/TigerS8',
                 'hulls/MG813',
                 'hulls/DTEK72',
+                'hulls/RiperX3',
                 'cannons/Plasma-g1',
                 'cannons/Plasma-g2',
                 'cannons/Plasma-double',
@@ -94,6 +100,9 @@ class ResourceManagerCore {
                 'cannons/Razer-v1',
                 'cannons/Razer-v2',
                 'cannons/Razer-double',
+                'cannons/Mag87',
+                'cannons/Mag87s',
+                'cannons/Mag87s-turbo',
             ],
         },
         ingame: {

@@ -239,7 +239,9 @@ export class Garage {
 
     public onLoadedResources () : void {
 
-        this.selectHull();
+        this.scene.selectHull( this.selectedParts.hull );
+        this.scene.selectCannon( this.selectedParts.cannon );
+        this.rightRightMenu.update();
 
     };
 
@@ -256,9 +258,6 @@ export class Garage {
 
         this.scene.reset();
         this.scene.resize();
-
-        this.scene.selectHull( this.selectedParts.hull );
-        this.scene.selectCannon( this.selectedParts.cannon );
 
         //
 
