@@ -6,45 +6,12 @@
 import * as THREE from 'three';
 
 import { GfxCore } from '../../Core.Gfx';
-import { LaserShotGfx } from '../shots/LaserShot.Gfx';
+import { LaserShotGfx } from '../shots/LaserShot.Gfx'
+import { ParticleMaterial } from '../../utils/ParticleMaterial.Gfx';
 
 //
 
 export class LaserCollisionGfx {
-
-    private material = {
-        uniforms: {
-            fogColor: { value: new THREE.Vector3() },
-            fogDensity: { value: 0 },
-        },
-        vertexShader: `
-            attribute float size;
-            attribute vec4 color;
-            varying vec4 vColor;
-            varying float fogDepth;
-            void main() {
-                vColor = color;
-                vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
-                fogDepth = -mvPosition.z;
-                gl_PointSize = size;
-                gl_Position = projectionMatrix * mvPosition;
-            }
-        `,
-        fragmentShader: `
-            #define whiteCompliment(a) ( 1.0 - saturate( a ) )
-            const float LOG2 = 1.442695;
-            uniform vec3 fogColor;
-            varying float fogDepth;
-            uniform float fogDensity;
-            varying vec4 vColor;
-            uniform float opacity;
-            void main() {
-                gl_FragColor = vColor.rgba;
-                float fogFactor = whiteCompliment( exp2( - fogDensity * fogDensity * fogDepth * fogDepth * LOG2 ) );
-                gl_FragColor.rgb = mix( gl_FragColor.rgb, fogColor, fogFactor );
-            }
-        `,
-    };
 
     public active: boolean = false;
 
@@ -157,15 +124,7 @@ export class LaserCollisionGfx {
 
         this.parent = parent;
 
-        const material = new THREE.ShaderMaterial( {
-            uniforms: this.material.uniforms,
-            vertexShader: this.material.vertexShader,
-            fragmentShader: this.material.fragmentShader,
-            transparent: true,
-            depthWrite: false,
-            fog: true,
-        });
-
+        const material = new ParticleMaterial();
         const geometry = new THREE.BufferGeometry();
         const points = new Float32Array( this.particleCount * 3 );
         const colors = new Float32Array( this.particleCount * 4 );

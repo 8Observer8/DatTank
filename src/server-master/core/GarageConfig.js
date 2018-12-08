@@ -131,7 +131,7 @@ var GarageConfig = {
             id:             'MG813',
             title:          'MG 813',
             price:          5000,
-            cannon:         [ 'Plasma-triple', 'Plasma-zero', 'Razer-double', 'Razer-quadro', 'Mag87' ],
+            cannon:         [ 'Plasma-triple', 'Plasma-zero', 'Razer-double', 'Mag87' ],
             engine:         [ 'ZEL-72s', 'KTZ-r2', 'VAX-32s' ],
             armor:          [ 'X-shield', 'KS-shield', 'z8-shield' ],
             default:        {
@@ -155,7 +155,7 @@ var GarageConfig = {
             id:             'DTEK72',
             title:          'DTEK 72',
             price:          8700,
-            cannon:         [ 'Plasma-triple', 'Plasma-zero', 'Razer-quadro', 'Mag87', 'Mag87s' ],
+            cannon:         [ 'Plasma-triple', 'Plasma-zero', 'Mag87', 'Mag87s' ],
             engine:         [ 'KTZ-r1', 'KTZ-r2', 'VAX-32', 'VAX-32s' ],
             armor:          [ 'Z8-shield', 'MG-defence', 'MG-defence-v2', 'P12-shield' ],
             default:        {
@@ -179,7 +179,7 @@ var GarageConfig = {
             id:             'RiperX3',
             title:          'Riper X3',
             price:          12000,
-            cannon:         [ 'Plasma-zero', 'Razer-quadro', 'Mag87s', 'Mag87s-turbo' ],
+            cannon:         [ 'Plasma-zero', 'Mag87s', 'Mag87s-turbo' ],
             engine:         [ 'KTZ-r2', 'VAX-32s', 'VAX-32v2' ],
             armor:          [ 'MG-defence', 'MG-defence-v2', 'T215'],
             default:        {
@@ -375,28 +375,6 @@ var GarageConfig = {
             ]
         },
 
-        'Razer-quadro': {
-            nid:            109,
-            type:           'Cannon',
-            id:             'Razer-quadro',
-            title:          'Razer quadro',
-            description:    '',
-            shortDesc:      'Original Razer cannon with quadro oscillator core.',
-            price:          5000,
-            shootType:      'laser',
-            levels:         {
-                1:      { damage: 180, range: 200, overheat: 30, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 180, range: 200, overheat: 30, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 180, range: 200, overheat: 30, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 180, range: 200, overheat: 30, rpm: 10, price: { levelBonuses: 1, coins: 100 } },
-                5:      { damage: 180, range: 200, overheat: 30, rpm: 10, price: { levelBonuses: 1, coins: 100 } }
-            },
-            shotSpeed:      1,
-            shootInfo: [
-
-            ]
-        },
-
         // Magnet cannons
 
         'Mag87': {
@@ -447,7 +425,7 @@ var GarageConfig = {
             nid:            112,
             type:           'Cannon',
             id:             'Mag87s-turbo',
-            title:          'Mag 87s turbo version',
+            title:          'Mag 87s turbo',
             description:    '',
             shortDesc:      'Magnet cannon v87s turbo version.',
             price:          14000,
