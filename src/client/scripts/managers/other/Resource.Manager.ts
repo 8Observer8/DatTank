@@ -42,13 +42,26 @@ class ResourceManagerCore {
         'Decorations.jpg',
         'Boxes.jpg',
         'traces.png',
-        'IS2.png',
 
         'garage-ceiling.jpeg',
         'garage-ground1.jpg',
         'garage-ground2.jpg',
         'garage-wall1.jpg',
         'garage-wall2.jpg',
+
+        'tanks/hulls/IS2001.jpg',
+        'tanks/hulls/TigerS8.jpg',
+        'tanks/hulls/OrbitT32s.jpg',
+        'tanks/hulls/MG813.jpg',
+        'tanks/hulls/DTEK72.jpg',
+
+        'tanks/cannons/Plasma-g1.jpg',
+        'tanks/cannons/Plasma-g2.jpg',
+        'tanks/cannons/Plasma-double.jpg',
+        'tanks/cannons/Plasma-triple.jpg',
+        'tanks/cannons/Razer-v1.jpg',
+        'tanks/cannons/Razer-v2.jpg',
+        'tanks/cannons/Razer-double.jpg',
     ];
 
     private soundsList: string[] = [

@@ -92,14 +92,11 @@ export class GarageScene {
 
         this.currentModel.remove( this.hullModel );
 
-        const model = ResourceManager.getModel( 'hulls/' + modelName );
-        if ( ! model ) return;
+        const model = ResourceManager.getModel( 'hulls/' + modelName )!;
+        const texture = new THREE.TextureLoader().load( '/resources/textures/tanks/hulls/' + modelName + '.jpg' );
+        const material = new THREE.MeshLambertMaterial({ color: 0xaaaaaa, map: texture });
 
-        this.hullModel = new THREE.Mesh( model.geometry, [
-            new THREE.MeshLambertMaterial({ color: 0xaaaaaa, map: new THREE.TextureLoader().load('/resources/textures/IS2.png') }),
-            new THREE.MeshLambertMaterial({ color: 0xaaaaaa, map: new THREE.TextureLoader().load('/resources/textures/IS2.png') }),
-            new THREE.MeshLambertMaterial({ color: 0xaaaaaa, map: new THREE.TextureLoader().load('/resources/textures/IS2.png') }),
-        ]);
+        this.hullModel = new THREE.Mesh( model.geometry, [ material, material, material ]);
         this.hullModel.castShadow = true;
         this.hullModel.receiveShadow = true;
         this.hullModel.scale.set( 0.8, 0.8, 0.8 );
@@ -117,7 +114,7 @@ export class GarageScene {
         if ( ! model ) return;
 
         this.cannonModel = new THREE.Mesh( model.geometry, [
-            new THREE.MeshLambertMaterial({ color: 0xaaaaaa, map: new THREE.TextureLoader().load('/resources/textures/IS2.png') }),
+            new THREE.MeshLambertMaterial({ color: 0xaaaaaa, map: new THREE.TextureLoader().load( '/resources/textures/tanks/cannons/' + modelName + '.jpg' ) }),
         ]);
         this.cannonModel.castShadow = true;
         this.cannonModel.receiveShadow = true;

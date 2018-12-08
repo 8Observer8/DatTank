@@ -276,7 +276,7 @@ class TankGfx {
         // add tank hull mesh
 
         const inMaterials = tankModel.material as THREE.MeshLambertMaterial[] || [];
-        const texture = ResourceManager.getTexture( 'IS2.png' )!;
+        const texture = ResourceManager.getTexture( 'tanks/hulls/' + hullId + '.jpg' )!;
 
         for ( let i = 0, il = inMaterials.length; i < il; i ++ ) {
 
@@ -296,7 +296,7 @@ class TankGfx {
         // add tank cannon mesh
 
         const cannonModel = ResourceManager.getModel( 'cannons/' + cannonId )!;
-        this.cannon = new MorphBlendMesh( cannonModel.geometry as THREE.BufferGeometry, materials );
+        this.cannon = new MorphBlendMesh( cannonModel.geometry as THREE.BufferGeometry, [ new THREE.MeshLambertMaterial({ color: 0x777777, map: ResourceManager.getTexture( 'tanks/cannons/' + cannonId + '.jpg' )! }) ] );
         this.cannon.scale.set( 10, 10, 10 );
         this.wrapper.add( this.cannon );
 
