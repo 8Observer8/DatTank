@@ -13,7 +13,7 @@ class Ruins1Decoration extends DecorationObject {
 
     public static canPlace ( arena: ArenaCore, position: OMath.Vec3 ) {
 
-        return arena.collisionManager.isPlaceFree( position, 4.5 * 25 );
+        return arena.collisionManager.isPlaceFree( position, 4.5 * 12 );
 
     };
 

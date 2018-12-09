@@ -46,17 +46,45 @@ export class BotCore {
     public removed: boolean = false;
     public login: string;
 
-    public tankConfig = {
-        hull:       'IS2001',
-        cannon:     'Plasma-g1',
-        armor:      'X-shield',
-        engine:     'KX-v8',
-    };
+    public tankConfigs = [
+        {
+            hull:       'IS2001',
+            cannon:     'Plasma-g1',
+            armor:      'X-shield',
+            engine:     'KX-v8',
+        },
+        {
+            hull:       'TigerS8',
+            cannon:     'Plasma-g2',
+            armor:      'KS-shield',
+            engine:     'ZEL-72s',
+        },
+        {
+            hull:       'TigerS8',
+            cannon:     'Plasma-double',
+            armor:      'KS-shield',
+            engine:     'ZEL-72s',
+        },
+        {
+            hull:       'TigerS8',
+            cannon:     'Razer-v1',
+            armor:      'KS-shield',
+            engine:     'ZEL-72s',
+        },
+        {
+            hull:       'MG813',
+            cannon:     'Razer-double',
+            armor:      'X-shield',
+            engine:     'KTZ-r2',
+        },
+    ];
 
     private target: TankObject | TowerObject | null;
     private action: ACTION;
     private maxKills: number;
     private readonly delayAfterSpawn: number = 2200;
+
+    private internalRayCastObj: any;
 
     private arena: ArenaCore;
 
@@ -77,7 +105,7 @@ export class BotCore {
 
         if ( players.length - bots.length < botNum && this.player.kills < this.maxKills ) {
 
-            setTimeout( this.player.respawn.bind( this.player, this.tankConfig ), 3000 );
+            setTimeout( this.player.respawn.bind( this.player, this.tankConfigs[ Math.floor( Math.random() * 5 ) ] ), 3000 );
 
         } else {
 
@@ -123,7 +151,7 @@ export class BotCore {
 
     private init () : void {
 
-        this.arena.addPlayer({ login: this.login, tankConfig: this.tankConfig, socket: false }, ( player: PlayerCore ) => {
+        this.arena.addPlayer({ login: this.login, tankConfig: this.tankConfigs[ Math.floor( Math.random() * 5 ) ], socket: false }, ( player: PlayerCore ) => {
 
             this.player = player;
             player.tank.ammo = 10000000;
@@ -179,20 +207,26 @@ export class BotCore {
             const angle = OMath.formatAngle( Math.atan2( dx, dz ) );
             const deltaAngle = angle - this.player.tank.rotation;
 
+            //
+
+            const x = ( this.action === ACTION.CHAISE && dist < this.player.tank.cannon.range ) ? 0 : 1;
+            let y = ( Math.abs( deltaAngle ) > 0.2 ) ? OMath.sign( deltaAngle ) : 0;
+
+            //
+
             const viewRange = 40;
             const newPos1 = this.player.tank.position.clone();
             newPos1.x += viewRange * Math.cos( Math.PI / 2 - this.player.tank.rotation );
             newPos1.z += viewRange * Math.sin( Math.PI / 2 - this.player.tank.rotation );
 
             const newPos2 = this.player.tank.position.clone();
-            newPos2.x += viewRange * Math.cos( angle );
-            newPos2.z += viewRange * Math.sin( angle );
+            newPos2.x += 50 * Math.cos( Math.PI / 2 - this.player.tank.rotation );
+            newPos2.z += 50 * Math.sin( Math.PI / 2 - this.player.tank.rotation );
 
-            const x = ( this.action === ACTION.CHAISE && dist < this.player.tank.cannon.range ) ? 0 : 1;
-            let y = ( Math.abs( deltaAngle ) > 0.2 ) ? OMath.sign( deltaAngle ) : 0;
-
-            const freeDirection = this.player.arena.collisionManager.isPlaceFree( newPos1, 20, [ this.player.tank.id ] ) && this.player.arena.collisionManager.isPlaceFree( newPos2, 20, [ this.player.tank.id ] );
+            const freeDirection = this.player.arena.collisionManager.isPlaceFree( newPos1, 15, [ this.player.tank.id ] ) && this.player.arena.collisionManager.isPlaceFree( newPos1, 20, [ this.player.tank.id ] );
             if ( ! freeDirection ) y = 1;
+
+            //
 
             this.player.tank.setMovement( x, y );
 

@@ -13,7 +13,7 @@ class Rock4Decoration extends DecorationObject {
 
     public static canPlace ( arena: ArenaCore, position: OMath.Vec3 ) {
 
-        return arena.collisionManager.isPlaceFree( new OMath.Vec3( position.x, 0, position.z ), 30 );
+        return arena.collisionManager.isPlaceFree( new OMath.Vec3( position.x, 0, position.z ), 15 );
 
     };
 

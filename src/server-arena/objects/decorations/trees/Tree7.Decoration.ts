@@ -15,7 +15,7 @@ class Tree7Decoration extends DecorationObject {
 
     public static canPlace ( arena: ArenaCore, position: OMath.Vec3 ) : boolean {
 
-        return arena.collisionManager.isPlaceFree( position, 40 );
+        return arena.collisionManager.isPlaceFree( position, 20 );
 
     };
 

@@ -19,16 +19,16 @@ export class CollisionManager {
 
     //
 
-    public raycast ( shot: any ) : void {
+    public raycast ( params: any ) : void {
 
-        shot.raycastResult = shot.raycastResult || new Cannon.RaycastResult();
-        shot.ray = shot.ray || new Cannon.Ray();
+        params.raycastResult = params.raycastResult || new Cannon.RaycastResult();
+        params.ray = params.ray || new Cannon.Ray();
 
-        const ray = shot.ray;
-        ray.from.set( shot.position.x, shot.position.y, shot.position.z );
-        ray.to.set( shot.dPos * Math.cos( shot.angle ) + shot.position.x, shot.position.y, shot.dPos * Math.sin( shot.angle ) + shot.position.z );
+        const ray = params.ray;
+        ray.from.set( params.position.x, params.position.y, params.position.z );
+        ray.to.set( params.dPos * Math.cos( params.angle ) + params.position.x, params.position.y, params.dPos * Math.sin( params.angle ) + params.position.z );
 
-        ray['intersectBodies']( this.world.bodies, shot.raycastResult );
+        ray['intersectBodies']( this.world.bodies, params.raycastResult );
 
     };
 
@@ -44,7 +44,7 @@ export class CollisionManager {
         dummyBody.type = Cannon.Body.STATIC;
         dummyBody.collisionResponse = false;
 
-        const dummyShape = new Cannon.Box( new Cannon.Vec3( radius / 2, 100, radius / 2 ) );
+        const dummyShape = new Cannon.Cylinder( radius, radius, 100, 8 );
         dummyBody.addShape( dummyShape );
 
         // Check bodies
@@ -62,7 +62,7 @@ export class CollisionManager {
                 n.result = [];
                 n.currentContactMaterial = this.world.defaultContactMaterial;
 
-                n['boxBox']( shape, dummyShape, body.position, dummyBody.position, body.quaternion, dummyBody.quaternion, body, dummyBody );
+                n['boxConvex']( shape, dummyShape, body.position, dummyBody.position, body.quaternion, dummyBody.quaternion, body, dummyBody );
                 const result = n.result.length;
                 n.result = tmpResult;
                 n.currentContactMaterial = false;
@@ -79,7 +79,7 @@ export class CollisionManager {
                 n.result = [];
                 n.currentContactMaterial = this.world.defaultContactMaterial;
 
-                n['boxConvex']( dummyShape, shape, dummyBody.position, body.position, dummyBody.quaternion, body.quaternion, dummyBody, body );
+                n['convexConvex']( shape, dummyShape, body.position, dummyBody.position, body.quaternion, dummyBody.quaternion, body, dummyBody );
 
                 const result = n.result.length;
                 n.result = tmpResult;

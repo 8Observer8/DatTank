@@ -31,7 +31,7 @@ export class BoxManager {
 
         if ( ! params.position ) {
 
-            while ( ! position || ! this.arena.collisionManager.isPlaceFree( new OMath.Vec3( position.x, 10, position.z ), 30 ) ) {
+            while ( ! position || ! this.arena.collisionManager.isPlaceFree( new OMath.Vec3( position.x, 10, position.z ), 15 ) ) {
 
                 position = new OMath.Vec3( Math.floor( 2300 * ( Math.random() - 0.5 ) ), 20, Math.floor( 2300 * ( Math.random() - 0.5 ) ) );
 
