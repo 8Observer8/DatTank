@@ -250,6 +250,12 @@ export class TankObject {
 
     public init () : void {
 
+        if ( this.health <= 0 ) {
+
+            return;
+
+        }
+
         if ( Arena.meId === this.player.id ) {
 
             this.cannon.overheat = 0;
@@ -263,12 +269,6 @@ export class TankObject {
         if ( this.health <= 50 ) {
 
             this.gfx.damageSmoke.setActive();
-
-        }
-
-        if ( this.health <= 0 ) {
-
-            this.gfx.makeTankDestroyed();
 
         }
 

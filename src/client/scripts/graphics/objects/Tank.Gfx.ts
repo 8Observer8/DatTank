@@ -104,12 +104,6 @@ class TankGfx {
 
     };
 
-    public makeTankDestroyed () : void {
-
-        // todo
-
-    };
-
     private updateTracks () : void {
 
         const tank = this.tank;

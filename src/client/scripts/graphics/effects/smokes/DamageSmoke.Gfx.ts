@@ -103,7 +103,7 @@ export class DamageSmokeGfx {
 
     public dispose () : void {
 
-        this.parent.gfx.object.remove( this.object );
+        this.object.remove( this.object );
 
     };
 

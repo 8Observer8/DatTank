@@ -33,7 +33,7 @@ export class CannonTankPart {
     private shotSpeed: number;
 
     private sourceParam: any;
-    private activeShotId: number;
+    private activeShotId: number | null;
 
     //
 
@@ -68,6 +68,7 @@ export class CannonTankPart {
 
     public startShooting () : void {
 
+        if ( this.shootingInterval || this.activeShotId ) return;
         clearInterval( this.shootingInterval );
 
         if ( this.shootType === 'bullet' ) {
@@ -103,9 +104,11 @@ export class CannonTankPart {
 
     public stopShooting () : void {
 
+        if ( ! this.shootingInterval && ! this.activeShotId ) return;
         clearInterval( this.shootingInterval );
+        this.shootingInterval = false;
 
-        if ( this.shootType !== 'bullet' ) {
+        if ( this.shootType !== 'bullet' && this.activeShotId ) {
 
             for ( let i = 0, il = this.lastShots.length; i < il; i ++ ) {
 
@@ -115,6 +118,7 @@ export class CannonTankPart {
 
             this.lastShots = [];
             this.tank.network.stopShooting( this.activeShotId );
+            this.activeShotId = null;
 
         }
 

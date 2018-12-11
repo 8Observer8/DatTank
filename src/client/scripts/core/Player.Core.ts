@@ -3,6 +3,7 @@
  * DatTank Player core
 */
 
+import { Game } from '../Game';
 import { Logger } from '../utils/Logger';
 import { TankObject } from '../objects/core/Tank.Object';
 import { Arena } from './Arena.Core';
@@ -73,10 +74,10 @@ export class PlayerCore {
         if ( ! this.tank ) return;
 
         this.network.respawn({
-            hull:       this.tank.hull.nid,
-            cannon:     this.tank.cannon.nid,
-            armor:      this.tank.armor.nid,
-            engine:     this.tank.engine.nid,
+            hull:       Game.GarageConfig.hull[ localStorage.getItem('SelectedHull') || '' ].nid,
+            cannon:     Game.GarageConfig.cannon[ localStorage.getItem('SelectedCannon') || '' ].nid,
+            armor:      Game.GarageConfig.armor[ localStorage.getItem('SelectedArmor') || '' ].nid,
+            engine:     Game.GarageConfig.engine[ localStorage.getItem('SelectedEngine') || '' ].nid,
         });
 
         //

@@ -84,8 +84,6 @@ export class BotCore {
     private maxKills: number;
     private readonly delayAfterSpawn: number = 2200;
 
-    private internalRayCastObj: any;
-
     private arena: ArenaCore;
 
     //
@@ -339,9 +337,17 @@ export class BotCore {
 
             if ( deltaAngle < 0.2 ) {
 
-                this.player.tank.cannon.makeShot();
+                this.player.tank.cannon.startShooting();
+
+            } else {
+
+                this.player.tank.cannon.stopShooting();
 
             }
+
+        } else {
+
+            this.player.tank.cannon.stopShooting();
 
         }
 
