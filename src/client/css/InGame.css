@@ -135,10 +135,10 @@
 
 #loader-wrapper #loader {
     position: relative;
-    top: 42%;
+    top: 50%;
     margin-left: auto;
     margin-right: auto;
-    width: 250px;
+    width: 400px;
 }
 
 #loader-wrapper #loader-wrapper-title {
@@ -147,37 +147,12 @@
     font: normal 13px Roboto, arial, tahoma;
 }
 
-#loader-wrapper #background-img-left {
-    position: absolute;
-    width: 400px;
-    height: 150px;
-    right: 10%;
-    bottom: 12%;
-    opacity: 0.5;
-    background-image: url('../resources/img/tank-bg.png');
-    background-size: 100% 100%;
-}
-
-#loader-wrapper #background-img-right {
-    position: absolute;
-    width: 400px;
-    height: 150px;
-    left: 10%;
-    bottom: 12%;
-    opacity: 0.5;
-    background-image: url('../resources/img/tank-bg.png');
-    background-size: 100% 100%;
-    transform: scale( -1, 1 );
-}
-
 #loader-wrapper #progress-wrapper {
     position: relative;
-    width: 250px;
-    height: 3px;
+    width: 400px;
+    height: 2px;
     margin-left: auto;
     margin-right: auto;
-    border: 1px solid #555;
-    overflow: hidden;
 }
 
 #loader-wrapper #progress-wrapper #progress-bar {
@@ -186,7 +161,9 @@
     left: 0px;
     width: 0%;
     height: 100%;
-    background-color: #777;
+    background-color: #fff;
+    filter: drop-shadow( 0px 0px 3px );
+    transition: width 400ms ease;
 }
 
 #kill-events {
