@@ -202,9 +202,9 @@ export class TankObject {
 
     };
 
-    public syncState ( positionX: number, positionZ: number, rotation: number ) : void {
+    public syncState ( positionX: number, positionY: number, positionZ: number, rotation: number ) : void {
 
-        this.positionCorrection.set( positionX, 0, positionZ );
+        this.positionCorrection.set( positionX, positionY, positionZ );
 
         rotation = OMath.formatAngle( rotation );
         this.rotationCorrection = rotation;

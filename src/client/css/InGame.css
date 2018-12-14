@@ -556,8 +556,8 @@
 
 .fps-ping {
     position: absolute;
-    top: 15px;
-    right: 240px;
+    bottom: 15px;
+    right: 15px;
     color: #fff;
     font-size: 12px;
     opacity: 0.7;
@@ -723,9 +723,10 @@
 .tank-upgrade-block .bonus-title {
     position: absolute;
     left: 45px;
-    color: #ccc;
+    color: #fff;
     font-size: 15px;
     padding-top: 5px;
+    text-shadow: 0px 0px 5px #000;
 }
 
 .tank-upgrade-block .bonus-title span {

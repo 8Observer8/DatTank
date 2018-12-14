@@ -203,7 +203,7 @@ export class TankNetwork {
 
         if ( this.filter( data ) ) return;
 
-        this.tank.syncState( data[1] / 10, data[2] / 10, data[3] / 1000 );
+        this.tank.syncState( data[1] / 10, data[2] / 10, data[3] / 10, data[4] / 1000 );
 
     };
 

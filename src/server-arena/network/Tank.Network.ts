@@ -195,7 +195,7 @@ export class TankNetwork {
     public syncState () : void {
 
         this.buffers['SyncState'] = this.buffers['SyncState'] || {};
-        const buffer = this.buffers['SyncState'].buffer || new ArrayBuffer( 10 );
+        const buffer = this.buffers['SyncState'].buffer || new ArrayBuffer( 12 );
         const bufferView = this.buffers['SyncState'].bufferView || new Int16Array( buffer );
         this.buffers['SyncState'].buffer = buffer;
         this.buffers['SyncState'].bufferView = bufferView;
@@ -204,8 +204,9 @@ export class TankNetwork {
 
         bufferView[1] = this.tank.id;
         bufferView[2] = this.tank.position.x * 10;
-        bufferView[3] = this.tank.position.z * 10;
-        bufferView[4] = this.tank.rotation * 1000;
+        bufferView[3] = this.tank.position.y * 10;
+        bufferView[4] = this.tank.position.z * 10;
+        bufferView[5] = this.tank.rotation * 1000;
 
         this.arena.network.sendEventToPlayersInRange( this.tank.position, 'TankSyncState', buffer, bufferView );
 
@@ -214,7 +215,7 @@ export class TankNetwork {
     public updateMovement () : void {
 
         this.buffers['SetMovement'] = this.buffers['SetMovement'] || {};
-        const buffer = this.buffers['SetMovement'].buffer || new ArrayBuffer( 14 );
+        const buffer = this.buffers['SetMovement'].buffer || new ArrayBuffer( 8 );
         const bufferView = this.buffers['SetMovement'].bufferView || new Int16Array( buffer );
         this.buffers['SetMovement'].buffer = buffer;
         this.buffers['SetMovement'].bufferView = bufferView;
@@ -224,9 +225,6 @@ export class TankNetwork {
         bufferView[ 1 ] = this.tank.id;
         bufferView[ 2 ] = this.tank.moveDirection.x;
         bufferView[ 3 ] = this.tank.moveDirection.y;
-        bufferView[ 4 ] = this.tank.position.x;
-        bufferView[ 5 ] = this.tank.position.z;
-        bufferView[ 6 ] = this.tank.rotation * 1000;
 
         this.arena.network.sendEventToPlayersInRange( this.tank.position, 'TankMove', buffer, bufferView );
 

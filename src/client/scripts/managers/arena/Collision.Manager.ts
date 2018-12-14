@@ -78,7 +78,7 @@ class CollisionManagerCore {
                 object.rotationCorrectValue = OMath.formatAngle( object.rotationCorrection - object.gfx.object.rotation.y );
                 object.rotationCorrection = 0;
 
-                object.positionCorrectValue.set( object.positionCorrection.x - object.gfx.object.position.x, 0, object.positionCorrection.z - object.gfx.object.position.z );
+                object.positionCorrectValue.set( object.positionCorrection.x - object.gfx.object.position.x, object.positionCorrection.y - object.gfx.object.position.y, object.positionCorrection.z - object.gfx.object.position.z );
                 object.positionCorrection.set( 0, 0, 0 );
 
                 object.stateNeedsCorrect = false;

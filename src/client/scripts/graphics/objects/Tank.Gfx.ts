@@ -167,7 +167,7 @@ class TankGfx {
         this.blastSmoke.update( time, delta );
 
         this.cannon.update( delta / 1000 );
-        this.rotateTankXAxis( this.tank.acceleration );
+        this.rotateTankXAxis( this.tank.acceleration * delta / 16 );
 
         // interpolate tank movement between cannon physic generated points
 
@@ -208,9 +208,9 @@ class TankGfx {
 
             //
 
-            if ( Math.abs( this.tank.rotationCorrectValue ) > 0.002 ) {
+            if ( Math.abs( this.tank.rotationCorrectValue ) > 0.001 ) {
 
-                let dr = correctionSpeed * OMath.sign( this.tank.rotationCorrectValue ) / 500;
+                let dr = correctionSpeed * OMath.sign( this.tank.rotationCorrectValue ) / 300;
                 dr = Math.abs( dr ) < Math.abs( this.tank.rotationCorrectValue ) ? dr : this.tank.rotationCorrectValue;
 
                 dRot += dr;

@@ -231,7 +231,7 @@ export class TowerObject {
 
         }
 
-        if ( Math.abs( deltaRot ) > 0.0003 ) {
+        if ( Math.abs( deltaRot ) > 0.0001 ) {
 
             this.rotation = OMath.formatAngle( this.rotation + Math.sign( deltaRot ) / 30 * ( delta / 50 ) );
 

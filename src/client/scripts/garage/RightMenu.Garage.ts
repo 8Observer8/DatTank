@@ -98,8 +98,15 @@ export class GarageRightMenu {
 
         if ( level === 5 ) {
 
-            $('.garage .right-block .upgrade-block').hide();
+            $('.garage .right-block .upgrade-block .price').hide();
+            $('.garage .right-block .upgrade-block .max-level').show();
+            $('.garage .right-block .upgrade-block .upgrade-btn').addClass('inactive');
             return;
+
+        } else {
+
+            $('.garage .right-block .upgrade-block .price').show();
+            $('.garage .right-block .upgrade-block .max-level').hide();
 
         }
 

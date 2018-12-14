@@ -431,6 +431,16 @@
     transition: opacity 400ms ease, transform 400ms ease;
 }
 
+.garage .right-block .upgrade-block .max-level {
+    position: relative;
+    float: right;
+    padding-top: 6px;
+    margin-right: 20px;
+    color: #c00;
+    font: bold 14px Roboto, tahoma, arial;
+    text-shadow: 0px 0px 5px #000;
+}
+
 .garage .right-block .upgrade-block .price {
     position: relative;
     float: right;
