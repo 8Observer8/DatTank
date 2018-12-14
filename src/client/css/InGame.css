@@ -135,16 +135,25 @@
 
 #loader-wrapper #loader {
     position: relative;
-    top: 50%;
+    top: 35%;
     margin-left: auto;
     margin-right: auto;
     width: 400px;
+}
+
+#loader-wrapper #loader .img {
+    width: 400px;
+    height: 228px;
+    background-image: url(/resources/img/loading-pick.png);
+    filter: blur(4px) drop-shadow(6px 6px 5px #333) opacity(0.5);
 }
 
 #loader-wrapper #loader-wrapper-title {
     color: #fff;
     width: 250px;
     font: normal 13px Roboto, arial, tahoma;
+    letter-spacing: 0.02em;
+    font-weight: 800;
 }
 
 #loader-wrapper #progress-wrapper {
@@ -162,7 +171,7 @@
     width: 0%;
     height: 100%;
     background-color: #fff;
-    filter: drop-shadow( 0px 0px 3px );
+    filter: drop-shadow( 6px 1px 4px #fff );
     transition: width 400ms ease;
 }
 
@@ -367,77 +376,74 @@
 
 #player-params {
     position: absolute;
-    right: 20px;
-    bottom: 10px;
-    height: 50px;
-    color: burlywood;
-    cursor: url('../resources/img/cursor.png'), auto;
+    height: 20px;
+    top: -60px;
+    left: 50%;
+    transform: translateX( -50% );
+    opacity: 0;
+    transition: opacity 1000ms ease, top 1000ms ease;
 }
 
-#ammo {
-    float: left;
-    height: 100%;
+#player-params[active="true"] {
+    top: 20px;
+    opacity: 1;
 }
 
-#ammo-image {
-    height: 100%;
-    float: left;
-    background-image: url('../resources/img/ammo1.png');
-    width: 50px;
-    background-size: 100% 100%;
-    overflow: hidden;
+.health {
+    width: 400px;
+    height: 20px;
 }
 
-#empty-ammo-image {
-    height: 100%;
-    background-image: url('../resources/img/ammo.png');
-    width: 50px;
-    background-size: cover;
-}
-
-.ammo-animation {
-    animation-name: reload;
-    animation-fill-mode: forwards;
-}
-
-#ammo-number {
-    height: 100%;
-    float: left;
-    font-size: 32px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-}
-
-#health {
-    float: left;
-    height: 100%;
-    margin-left: 10px;
-}
-
-#health-image {
-    height: 100%;
+.health .health-image {
     float: left;
     background-image: url('../resources/img/health.png');
-    width: 50px;
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
     background-size: 100% 100%;
-    overflow: hidden;
+    filter: brightness(20);
+    margin: 2px;
 }
 
-#empty-health-image {
-    height: 0%;
-    background-image: url('../resources/img/health1.png');
-    width: 50px;
-    background-size: cover;
-}
-
-#health-number {
-    height: 100%;
+.health .health-number {
     float: left;
     font-size: 32px;
     text-align: center;
     display: flex;
     align-items: center;
+}
+
+.health .health-progress {
+    float: left;
+    position: relative;
+    width: calc( 100% - 25px );
+    height: 100%;
+    background-color: rgba( 0, 0, 0, 0.3 );
+}
+
+.health .health-progress .progress {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: #51a951;
+    width: 50%;
+    height: 100%;
+    z-index: 0;
+    transition: width 300ms ease, color 600ms ease;
+}
+
+.health .health-progress .text {
+    position: absolute;
+    font: bold 12px / 20px Roboto, arial;
+    padding-left: 10px;
+    color: #f9c127;
+    z-index: 1;
+}
+
+.health .health-progress .text .value {
+    float: left;
+    padding-right: 5px;
+    color: #fff;
 }
 
 #team-params {

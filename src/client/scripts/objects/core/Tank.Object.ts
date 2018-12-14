@@ -123,7 +123,11 @@ export class TankObject {
         this.engine.power = power;
         this.armor.armor = armor;
 
-        this.gfx.label.update( this.health, this.armor.armor, this.player.team.color, this.cannon.overheat, this.player.username, this.isMe );
+        if ( ! this.isMe ) {
+
+            this.gfx.label.update( this.health, this.armor.armor, this.player.team.color, this.player.username );
+
+        }
 
     };
 
@@ -171,7 +175,16 @@ export class TankObject {
         }
 
         this.health = value;
-        this.gfx.label.update( this.health, this.armor.armor, this.player.team.color, this.cannon.overheat, this.player.username, this.isMe );
+
+        if ( this.isMe ) {
+
+            UI.InGame.updateHealth( this.health );
+
+        } else {
+
+            this.gfx.label.update( this.health, this.armor.armor, this.player.team.color, this.player.username );
+
+        }
 
         if ( this.health <= 0 ) {
 
@@ -228,15 +241,6 @@ export class TankObject {
     public update ( time: number, delta: number ) : void {
 
         this.gfx.update( time, delta );
-
-        if ( this.health <= 0 ) return;
-
-        if ( this.cannon.overheat > 0 ) {
-
-            this.cannon.overheat -= 0.2 * delta / 16;
-            this.gfx.label.update( this.health, this.armor.armor, this.player.team.color, this.cannon.overheat, this.player.username, this.isMe );
-
-        }
 
     };
 

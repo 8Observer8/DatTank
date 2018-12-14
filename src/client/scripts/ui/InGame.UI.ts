@@ -85,8 +85,28 @@ export class UIInGameModule {
 
     public updateHealth ( value: number ) : void {
 
-        $('#health-number').html( value + '' );
-        $('#empty-health-image').css( 'height', ( 100 - value ) + '%' );
+        const colors = [
+            'rgb( 81, 169, 81 )',
+            'rgb( 179, 206, 24 )',
+            'rgb( 206, 161, 24 )',
+            'rgb( 255, 33, 0 )',
+        ];
+
+        $('#player-params .health .text .value').html( value + '' );
+        $('#player-params .health .progress').css({
+            'width': value + '%',
+            'background-color': colors[ colors.length - 1 - Math.floor( value / ( 100 / colors.length ) - 0.1 ) ],
+        });
+
+        if ( value > 0 ) {
+
+            $('#player-params').attr( 'active', 'true' );
+
+        } else {
+
+            $('#player-params').attr( 'active', 'false' );
+
+        }
 
     };
 

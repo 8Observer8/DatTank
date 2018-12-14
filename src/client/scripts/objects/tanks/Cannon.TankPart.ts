@@ -109,7 +109,7 @@ export class CannonTankPart {
         if ( this.tank.isMe ) {
 
             this.overheat = overheating;
-            this.tank.gfx.label.update( this.tank.health, this.tank.armor.armor, this.tank.player.team.color, this.overheat, this.tank.player.username, this.tank.isMe );
+            // todo
 
         }
 

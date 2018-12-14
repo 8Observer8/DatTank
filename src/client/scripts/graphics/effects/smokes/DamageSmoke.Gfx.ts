@@ -103,7 +103,7 @@ export class DamageSmokeGfx {
 
     public dispose () : void {
 
-        this.object.remove( this.object );
+        GfxCore.coreObjects['laserCollisions'].remove( this.object );
 
     };
 
