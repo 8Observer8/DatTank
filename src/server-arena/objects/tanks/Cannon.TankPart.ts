@@ -32,8 +32,12 @@ export class CannonTankPart {
     private lastShots: Array< LaserBeamShotObject | BulletShotObject >;
     private shotSpeed: number;
 
+    private tempLimit: number = 2300;
+
     private sourceParam: any;
     private activeShotId: number | null;
+
+    private shotDuration: number = 0;
 
     //
 
@@ -59,6 +63,45 @@ export class CannonTankPart {
 
     //
 
+    public update ( delta: number, time: number ) : void {
+
+        if ( this.shootType !== 'bullet' && ( this.shootingInterval || this.activeShotId ) ) {
+
+            this.temperature += Math.pow( this.temperature + 1, 0.1 ) * this.overheat * delta / 16;
+            this.temperature = Math.min( this.temperature, this.tempLimit );
+
+        } else if ( this.temperature > 0 ) {
+
+            this.temperature -= 5 * delta / 16;
+            this.temperature = Math.max( this.temperature, 0 );
+
+        }
+
+        if ( this.temperature > 0.998 * this.tempLimit && ( this.shootingInterval || this.activeShotId ) ) {
+
+            this.stopShooting();
+
+        }
+
+        if ( this.tank.ammo <= 0 ) {
+
+            this.stopShooting();
+
+        }
+
+        //
+
+        this.shotDuration += delta;
+
+        if ( this.activeShotId && this.shotDuration > 300 ) {
+
+            this.tank.changeAmmo( - 1 );
+            this.shotDuration = 0;
+
+        }
+
+    };
+
     public getShotId () : number {
 
         CannonTankPart.shotNumId = ( CannonTankPart.shotNumId > 1000 ) ? 1 : CannonTankPart.shotNumId + 1;
@@ -68,8 +111,11 @@ export class CannonTankPart {
 
     public startShooting () : void {
 
+        if ( this.temperature > 0.9 * this.tempLimit ) return;
         if ( this.shootingInterval || this.activeShotId ) return;
         clearInterval( this.shootingInterval );
+
+        //
 
         if ( this.shootType === 'bullet' ) {
 
@@ -82,6 +128,9 @@ export class CannonTankPart {
             this.makeShot();
 
         } else if ( this.shootType === 'laser' ) {
+
+            if ( this.temperature >= 0.8 * this.tempLimit ) return;
+            if ( this.tank.ammo <= 0 ) return;
 
             this.lastShots = [];
             const shotId = this.getShotId();
@@ -107,6 +156,7 @@ export class CannonTankPart {
         if ( ! this.shootingInterval && ! this.activeShotId ) return;
         clearInterval( this.shootingInterval );
         this.shootingInterval = false;
+        this.shotDuration = 0;
 
         if ( this.shootType !== 'bullet' && this.activeShotId ) {
 
@@ -140,7 +190,7 @@ export class CannonTankPart {
 
         // overheating
 
-        if ( this.temperature >= 2000 ) return;
+        if ( this.temperature >= 0.8 * this.tempLimit ) return;
         this.temperature *= 1.2;
         this.temperature += this.overheat;
         this.temperature = Math.min( this.temperature, 2300 );

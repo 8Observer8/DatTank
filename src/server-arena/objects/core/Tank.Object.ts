@@ -430,12 +430,7 @@ export class TankObject {
 
         if ( this.health <= 0 ) return;
 
-        if ( this.cannon.temperature > 0 ) {
-
-            this.cannon.temperature -= 5 * delta / 20;
-
-        }
-
+        this.cannon.update( delta, time );
         this.regenerationUpdate( delta );
         this.updateObjectsInRange();
 

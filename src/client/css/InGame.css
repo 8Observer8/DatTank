@@ -483,7 +483,7 @@
     height: 100%;
     width: 0%;
     background-color: #44ce00;
-    transition: width 300ms ease, background-color 1000ms ease;
+    transition: width 100ms ease, background-color 1000ms ease;
 }
 
 #player-params .temperature .title {

@@ -213,11 +213,11 @@ var GarageConfig = {
             price:          400,
             shootType:      'bullet',
             levels:         {
-                1:      { damage: 30, range: 200, overheat: 500, rpm: 40, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 50, range: 200, overheat: 500, rpm: 40, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 70, range: 200, overheat: 500, rpm: 40, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 30, range: 200, overheat: 500, rpm: 40, price: { levelBonuses: 1, coins: 100 } },
-                5:      { damage: 30, range: 200, overheat: 500, rpm: 40, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 30, range: 200, overheat: 600, rpm: 60, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 50, range: 200, overheat: 600, rpm: 60, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 70, range: 200, overheat: 600, rpm: 60, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 30, range: 200, overheat: 600, rpm: 60, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 30, range: 200, overheat: 600, rpm: 60, price: { levelBonuses: 1, coins: 100 } }
             },
             shotSpeed:      1.8,
             shootInfo: [

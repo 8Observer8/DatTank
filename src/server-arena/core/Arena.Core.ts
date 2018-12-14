@@ -46,7 +46,7 @@ export class ArenaCore {
     private updateInterval: any;
     private prevUpdateTime: number;
     private leaderboardUpdateTimeout: any;
-    private updateRate = 50;
+    public updateRate = 50;
 
     public network: ArenaNetwork;
 

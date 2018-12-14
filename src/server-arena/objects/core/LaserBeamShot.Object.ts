@@ -36,8 +36,6 @@ export class LaserBeamShotObject {
     private dAngle: number;
     private offset: number;
 
-    private shootDuration: number = 0;
-
     //
 
     public activate ( offset: number, yPos: number, dAngle: number, range: number, shotSpeed: number, owner: TankObject | TowerObject ) : void {
@@ -48,7 +46,6 @@ export class LaserBeamShotObject {
         this.range = range;
         this.speed = shotSpeed;
 
-        this.shootDuration = 0;
         this.offset = offset;
         this.angle = owner.rotation;
         this.dAngle = dAngle;
@@ -98,17 +95,6 @@ export class LaserBeamShotObject {
         this.position.z += this.offset * Math.sin( this.angle + this.dAngle );
 
         this.arena.collisionManager.raycast( this );
-
-        //
-
-        this.shootDuration += delta;
-
-        if ( this.shootDuration > 100 && this.owner instanceof TankObject ) {
-
-            this.owner.changeAmmo( - 1 );
-            this.shootDuration = 0;
-
-        }
 
     };
 
