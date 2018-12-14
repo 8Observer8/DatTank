@@ -150,6 +150,8 @@ class TankGfx {
 
     public update ( time: number, delta: number ) : void {
 
+        if ( ! this.tank ) return;
+
         if ( this.tank.health <= 0 && ! this.tank.isMe ) {
 
             this.label.update( this.tank.health, this.tank.armor.armor, this.tank.player.team.color, this.tank.player.username );

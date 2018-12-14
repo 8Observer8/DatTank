@@ -418,6 +418,7 @@
     width: calc( 100% - 25px );
     height: 100%;
     background-color: rgba( 0, 0, 0, 0.3 );
+    border-bottom: 3px solid rgba( 255, 255, 255, 0.8 );
 }
 
 #player-params .health .health-progress .progress {
@@ -449,7 +450,7 @@
     margin-left: auto;
     margin-right: auto;
     width: 60px;
-    margin-top: 3px;
+    margin-top: 6px;
 }
 
 #player-params .ammo-image {
@@ -465,6 +466,35 @@
 #player-params .ammo-number {
     font: bold 14px/18px Roboto, arial, tahoma;
     color: #fff;
+}
+
+#player-params .temperature {
+    position: absolute;
+    height: 3px;
+    bottom: -3px;
+    left: 19px;
+    width: calc( 100% - 25px );
+}
+
+#player-params .temperature .temperature-progress {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 0%;
+    background-color: #44ce00;
+    transition: width 300ms ease, background-color 1000ms ease;
+}
+
+#player-params .temperature .title {
+    position: absolute;
+    top: 5px;
+    right: 0px;
+    color: rgba(221, 0, 0, 0.767);
+    font: bold 14px Roboto, arial, tahoma;
+    text-shadow: 0px 0px 4px #fff;
+    opacity: 0;
+    transition: opacity 1s ease;
 }
 
 /*  */

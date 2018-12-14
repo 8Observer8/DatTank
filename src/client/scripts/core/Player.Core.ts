@@ -73,11 +73,13 @@ export class PlayerCore {
 
         if ( ! this.tank ) return;
 
+        const selected = JSON.parse( localStorage.getItem('SelectedParts') || '{}' );
+
         this.network.respawn({
-            hull:       Game.GarageConfig.hull[ localStorage.getItem('SelectedHull') || '' ].nid,
-            cannon:     Game.GarageConfig.cannon[ localStorage.getItem('SelectedCannon') || '' ].nid,
-            armor:      Game.GarageConfig.armor[ localStorage.getItem('SelectedArmor') || '' ].nid,
-            engine:     Game.GarageConfig.engine[ localStorage.getItem('SelectedEngine') || '' ].nid,
+            hull:       Game.GarageConfig.hull[ selected.hull || '' ].nid,
+            cannon:     Game.GarageConfig.cannon[ selected.cannon || '' ].nid,
+            armor:      Game.GarageConfig.armor[ selected.armor || '' ].nid,
+            engine:     Game.GarageConfig.engine[ selected.engine || '' ].nid,
         });
 
         //
@@ -95,6 +97,7 @@ export class PlayerCore {
 
             UI.InGame.updateHealth( this.tank.health );
             UI.InGame.updateAmmo( this.tank.ammo );
+            UI.InGame.updateOverheat( 0 );
             UI.InGame.hideContinueBox();
             UI.InGame.refreshAds();
 

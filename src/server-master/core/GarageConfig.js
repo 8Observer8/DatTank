@@ -69,11 +69,11 @@ var GarageConfig = {
             },
             description:    '<b>IS2001 tank</b> - default tank of Russian army in WW VII (2139 year) against other sides on first colonized planet (Mars).<br><br>By default equipped with plasma cannon of first generation, turbo diesel engine and tesla induction generator.<br><br>Easy in movement control, quite fast, powerful cannon, but gets overheated quite fast.<br><br>',
             levels:         {
-                1:    { speedCoef: 1, cannonCoef: 1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 100 } },
+                1:    { speedCoef: 1, cannonCoef:   1, armorCoef: 1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 100 } },
                 2:    { speedCoef: 2, cannonCoef: 0.5, armorCoef: 3, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } },
-                3:    { speedCoef: 3, cannonCoef: 1, armorCoef: 3, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } },
-                4:    { speedCoef: 4, cannonCoef: 1, armorCoef: 3, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } },
-                5:    { speedCoef: 5, cannonCoef: 1, armorCoef: 3, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } }
+                3:    { speedCoef: 3, cannonCoef:   1, armorCoef: 3, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } },
+                4:    { speedCoef: 4, cannonCoef:   1, armorCoef: 3, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } },
+                5:    { speedCoef: 5, cannonCoef:   1, armorCoef: 3, ammoCapacity: 100, price: { levelBonuses: 1, coins: 200 } }
             }
         },
 
@@ -213,11 +213,11 @@ var GarageConfig = {
             price:          400,
             shootType:      'bullet',
             levels:         {
-                1:      { damage: 30, range: 200, overheat: 110, rpm: 40, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 50, range: 200, overheat: 110, rpm: 40, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 70, range: 200, overheat: 110, rpm: 40, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 30, range: 200, overheat: 110, rpm: 40, price: { levelBonuses: 1, coins: 100 } },
-                5:      { damage: 30, range: 200, overheat: 110, rpm: 40, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 30, range: 200, overheat: 500, rpm: 40, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 50, range: 200, overheat: 500, rpm: 40, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 70, range: 200, overheat: 500, rpm: 40, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 30, range: 200, overheat: 500, rpm: 40, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 30, range: 200, overheat: 500, rpm: 40, price: { levelBonuses: 1, coins: 100 } }
             },
             shotSpeed:      1.8,
             shootInfo: [
@@ -362,11 +362,11 @@ var GarageConfig = {
             price:          4000,
             shootType:      'laser',
             levels:         {
-                1:      { damage: 140, range: 250, overheat: 60, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 140, range: 250, overheat: 60, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 140, range: 250, overheat: 60, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 140, range: 250, overheat: 60, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
-                5:      { damage: 140, range: 250, overheat: 60, rpm: 600, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 140, range: 250, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 140, range: 250, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 140, range: 250, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 140, range: 250, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 140, range: 250, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 100 } }
             },
             shotSpeed:      1,
             shootInfo: [

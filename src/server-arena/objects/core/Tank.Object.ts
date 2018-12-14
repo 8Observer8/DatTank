@@ -432,7 +432,7 @@ export class TankObject {
 
         if ( this.cannon.temperature > 0 ) {
 
-            this.cannon.temperature -= 0.2 * delta / 20;
+            this.cannon.temperature -= 2 * delta / 20;
 
         }
 
@@ -481,7 +481,7 @@ export class TankObject {
             cannon:         {
                 nid:            this.cannon.nid,
                 damage:         this.cannon.damage,
-                overheating:    this.cannon.overheat,
+                overheat:       this.cannon.overheat,
                 range:          this.cannon.range,
             },
             armor:          {

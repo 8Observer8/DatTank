@@ -227,7 +227,7 @@ export class TankNetwork {
 
         if ( this.filter( data ) ) return;
 
-        this.tank.cannon.makeShot( data[1], data[2] );
+        this.tank.cannon.makeShot( data[1] );
 
     };
 
@@ -243,10 +243,7 @@ export class TankNetwork {
 
         if ( this.filter( data ) ) return;
 
-        const bulletId = data[1];
-        const overheating = data[2];
-
-        this.tank.cannon.makeShot( bulletId, overheating );
+        this.tank.cannon.makeShot( data[1] );
 
     };
 

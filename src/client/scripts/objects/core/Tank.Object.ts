@@ -241,6 +241,7 @@ export class TankObject {
     public update ( time: number, delta: number ) : void {
 
         this.gfx.update( time, delta );
+        this.cannon.update( time, delta );
 
     };
 
@@ -262,7 +263,7 @@ export class TankObject {
 
         if ( Arena.meId === this.player.id ) {
 
-            this.cannon.overheat = 0;
+            this.cannon.temperature = 0;
             this.isMe = true;
 
         }

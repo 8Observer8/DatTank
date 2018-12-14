@@ -116,6 +116,36 @@ export class UIInGameModule {
 
     };
 
+    public updateOverheat ( value: number ) : void {
+
+        let overheatColor = '#44ce00';
+        if ( value > 40 ) {
+
+            overheatColor = '#e5c510';
+            $('#player-params .temperature .title').css({ opacity: '0.8', color: overheatColor });
+
+        }
+
+        if ( value > 80 ) {
+
+            overheatColor = '#ff0000';
+            $('#player-params .temperature .title').css({ opacity: '1', color: overheatColor });
+
+        }
+
+        if ( value < 40 ) {
+
+            $('#player-params .temperature .title').css( 'opacity', '0' );
+
+        }
+
+        $('#player-params .temperature .temperature-progress').css({
+            'width':            value + '%',
+            'background-color': overheatColor,
+        });
+
+    };
+
     public showKills ( killerId: number, killer: string, killed: string, killerColor: string, killedColor: string ) : void {
 
         $('#kill-events').append( '<p><span style="font-weight: bold; color:' + killerColor + '">' + killer + '</span> killed <span style="font-weight: bold; color:' + killedColor + '">' + killed + '</span>!</p>');

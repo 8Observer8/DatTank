@@ -359,7 +359,7 @@ export class TankNetwork {
                 bufferView[ offset + 1 ] = tank.hull.ammoCapacity;
                 bufferView[ offset + 2 ] = tank.hull.armorCoef;
                 bufferView[ offset + 3 ] = tank.cannon.rpm;
-                bufferView[ offset + 4 ] = tank.cannon.temperature;
+                bufferView[ offset + 4 ] = tank.cannon.overheat;
                 offset += 5;
 
             }

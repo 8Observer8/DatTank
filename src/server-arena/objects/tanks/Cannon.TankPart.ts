@@ -140,10 +140,10 @@ export class CannonTankPart {
 
         // overheating
 
-        if ( this.temperature >= 80 ) return;
+        if ( this.temperature >= 2000 ) return;
         this.temperature *= 1.2;
-        this.temperature += 12;
-        this.temperature = Math.min( this.temperature, 100 );
+        this.temperature += this.overheat;
+        this.temperature = Math.min( this.temperature, 2300 );
 
         //
 
