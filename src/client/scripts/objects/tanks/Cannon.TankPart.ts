@@ -76,7 +76,7 @@ export class CannonTankPart {
 
         } else if ( this.temperature > 0 ) {
 
-            this.temperature -= 2 * delta / 16;
+            this.temperature -= 5 * delta / 16;
             UI.InGame.updateOverheat( 100 * this.temperature / this.tempLimit );
 
         }
