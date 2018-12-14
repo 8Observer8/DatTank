@@ -171,7 +171,7 @@ export class TankNetwork {
 
         bufferView[1] = this.tank.id;
         bufferView[2] = shotId;
-        bufferView[3] = this.tank.cannon.overheat;
+        bufferView[3] = this.tank.cannon.temperature;
 
         this.arena.network.sendEventToPlayersInRange( this.tank.position, 'TankStartShooting', buffer, bufferView );
 
@@ -359,7 +359,7 @@ export class TankNetwork {
                 bufferView[ offset + 1 ] = tank.hull.ammoCapacity;
                 bufferView[ offset + 2 ] = tank.hull.armorCoef;
                 bufferView[ offset + 3 ] = tank.cannon.rpm;
-                bufferView[ offset + 4 ] = tank.cannon.overheat;
+                bufferView[ offset + 4 ] = tank.cannon.temperature;
                 offset += 5;
 
             }

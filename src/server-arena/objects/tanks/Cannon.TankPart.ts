@@ -148,7 +148,6 @@ export class CannonTankPart {
         //
 
         const shotId = this.getShotId();
-        this.activeShotId = shotId;
         this.lastShots = [];
 
         for ( let i = 0, il = this.sourceParam.shootInfo.length; i < il; i ++ ) {
@@ -171,7 +170,7 @@ export class CannonTankPart {
 
         //
 
-        this.tank.network.makeShoot( this.activeShotId );
+        this.tank.network.makeShoot( shotId );
 
     };
 

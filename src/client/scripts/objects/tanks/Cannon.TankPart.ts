@@ -9,7 +9,6 @@ import { Game } from '../../Game';
 import { Logger } from '../../utils/Logger';
 import { Arena } from '../../core/Arena.Core';
 import { TankObject } from '../core/Tank.Object';
-import { UI } from '../../ui/Core.UI';
 import { BulletShotManager } from '../../graphics/managers/BulletShot.Manager';
 import { LaserBeamShotManager } from '../../graphics/managers/LaserBeamShot.Manager';
 
@@ -130,7 +129,6 @@ export class CannonTankPart {
 
             Logger.newEvent( 'Shot', 'game' );
             this.tank.setAmmo( this.tank.ammo - 1 );
-            UI.InGame.setAmmoReloadAnimation( 60 * 1000 / this.rpm );
 
         }
 

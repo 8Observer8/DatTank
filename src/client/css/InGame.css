@@ -389,23 +389,22 @@
     opacity: 1;
 }
 
-.health {
+#player-params .health {
     width: 400px;
     height: 20px;
 }
 
-.health .health-image {
+#player-params .health .health-image {
     float: left;
     background-image: url('../resources/img/health.png');
     width: 15px;
     height: 15px;
     margin-right: 5px;
     background-size: 100% 100%;
-    filter: brightness(20);
     margin: 2px;
 }
 
-.health .health-number {
+#player-params .health .health-number {
     float: left;
     font-size: 32px;
     text-align: center;
@@ -413,7 +412,7 @@
     align-items: center;
 }
 
-.health .health-progress {
+#player-params .health .health-progress {
     float: left;
     position: relative;
     width: calc( 100% - 25px );
@@ -421,7 +420,7 @@
     background-color: rgba( 0, 0, 0, 0.3 );
 }
 
-.health .health-progress .progress {
+#player-params .health .health-progress .progress {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -432,7 +431,7 @@
     transition: width 300ms ease, color 600ms ease;
 }
 
-.health .health-progress .text {
+#player-params .health .health-progress .text {
     position: absolute;
     font: bold 12px / 20px Roboto, arial;
     padding-left: 10px;
@@ -440,11 +439,35 @@
     z-index: 1;
 }
 
-.health .health-progress .text .value {
+#player-params .health .health-progress .text .value {
     float: left;
     padding-right: 5px;
     color: #fff;
 }
+
+#player-params .ammo {
+    margin-left: auto;
+    margin-right: auto;
+    width: 60px;
+    margin-top: 3px;
+}
+
+#player-params .ammo-image {
+    float: left;
+    background-image: url('../resources/img/ammo.png');
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    background-size: 100% 100%;
+    margin: 2px;
+}
+
+#player-params .ammo-number {
+    font: bold 14px/18px Roboto, arial, tahoma;
+    color: #fff;
+}
+
+/*  */
 
 #team-params {
     top: 10px;

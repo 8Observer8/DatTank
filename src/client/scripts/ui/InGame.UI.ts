@@ -112,25 +112,7 @@ export class UIInGameModule {
 
     public updateAmmo ( value: number ) : void {
 
-        $('#ammo-number').html( value + '' );
-
-    };
-
-    public setAmmoReloadAnimation ( duration: number ) : void {
-
-        const element = $('#empty-ammo-image');
-        // -> removing the class
-        element.removeClass('ammo-animation');
-        element.css( 'height', '100%' );
-
-        // -> triggering reflow / The actual magic /
-        // without this it wouldn't work. Try uncommenting the line and the transition won't be retriggered.
-        // const test = element[0].offsetWidth === 1;
-        element.css( 'background-image', 'url(../resources/img/ammo.png)' );
-
-        // -> and re-adding the class
-        element.addClass('ammo-animation');
-        element.css( 'animation-duration', 1.2 * duration + 'ms' );
+        $('#player-params .ammo-number').html( value + '' );
 
     };
 

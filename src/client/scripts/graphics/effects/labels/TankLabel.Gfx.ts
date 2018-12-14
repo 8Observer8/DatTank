@@ -36,7 +36,7 @@ export class TankLabelGfx {
 
         this.ctx.clearRect( 0, 0, width, height );
 
-        // overheating label
+        //
 
         const offset = 20;
 
