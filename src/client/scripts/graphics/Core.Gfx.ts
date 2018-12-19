@@ -239,7 +239,7 @@ class GraphicsCore {
 
     };
 
-    private updateCamera ( position: THREE.Vector3, rotation: number ) : void {
+    private updateCamera ( delta: number, position: THREE.Vector3, rotation: number ) : void {
 
         let x = ( position.x - 100 * Math.sin( rotation ) + this.cameraOffset.x - this.camera.position.x ) / 14;
         let z = ( position.z - 100 * Math.cos( rotation ) + this.cameraOffset.y - this.camera.position.z ) / 14;
@@ -248,9 +248,9 @@ class GraphicsCore {
         z = 0.15 * z + 0.85 * this.prevCameraDPos.z;
         this.prevCameraDPos.set( x, 0, z );
 
-        this.camera.position.x = x + this.camera.position.x;
+        this.camera.position.x = x * ( delta / 16 ) + this.camera.position.x;
         this.camera.position.y = 60 + this.cameraOffset.z;
-        this.camera.position.z = z + this.camera.position.z;
+        this.camera.position.z = z * ( delta / 16 ) + this.camera.position.z;
 
         this.lookAtVector = this.lookAtVector || new THREE.Vector3();
         this.lookAtVector.set( position.x, 40, position.z );
@@ -278,7 +278,7 @@ class GraphicsCore {
         BulletShotManager.update( time, delta );
         LaserBeamShotManager.update( time, delta );
 
-        this.updateCamera( Arena.me.tank.gfx.object.position, Arena.me.tank.gfx.object.rotation.y );
+        this.updateCamera( delta, Arena.me.tank.gfx.object.position, Arena.me.tank.gfx.object.rotation.y );
 
     };
 

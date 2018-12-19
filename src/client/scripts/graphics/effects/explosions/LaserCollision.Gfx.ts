@@ -66,18 +66,18 @@ export class LaserCollisionGfx {
 
                     pos.setXYZ( i,
                         pos.getX( i ) + 0.3 * this.particlesVelocityVectors[ i ].x * this.particlesState[ i ],
-                        pos.getY( i ) + 0.2 * this.particlesVelocityVectors[ i ].y,
+                        pos.getY( i ) + 0.3 * this.particlesVelocityVectors[ i ].y * this.particlesState[ i ],
                         pos.getZ( i ) + 0.3 * this.particlesVelocityVectors[ i ].z * this.particlesState[ i ],
                     );
 
                 } else if ( this.particlesMode[ i ] === 1 ) {
 
                     colors.setXYZW( i, 0.2 + 0.7 * Math.abs( Math.sin( 3.14 * this.particlesState[ i ] ) ), 0.7 * Math.abs( Math.sin( 3.14 * this.particlesState[ i ] ) ), 0.0, opacity / 2 );
-                    sizes.setX( i, 15 * opacity );
+                    sizes.setX( i, 12 * opacity );
 
                     pos.setXYZ( i,
                         pos.getX( i ) + 0.6 * this.particlesVelocityVectors[ i ].x * this.particlesState[ i ],
-                        pos.getY( i ) + 0.2 * this.particlesVelocityVectors[ i ].y,
+                        pos.getY( i ) + 0.3 * this.particlesVelocityVectors[ i ].y * this.particlesState[ i ],
                         pos.getZ( i ) + 0.6 * this.particlesVelocityVectors[ i ].z * this.particlesState[ i ],
                     );
 

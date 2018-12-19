@@ -186,7 +186,7 @@ class TankGfx {
             //
 
             const l = this.tank.positionCorrectValue.length();
-            const correctionSpeed = this.tank.isMe ? 1 : 3;
+            const correctionSpeed = ( delta / 16 ) * ( this.tank.isMe ? 1 : 3 );
 
             if ( l > 0.1 ) {
 

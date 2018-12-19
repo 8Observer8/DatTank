@@ -20,6 +20,7 @@ export class ExplosionGfx {
     private particlesVelocityVectors: THREE.Vector3[] = [];
 
     public active: boolean = false;
+    private type: number = 0;
 
     //
 
@@ -39,16 +40,19 @@ export class ExplosionGfx {
         for ( let i = 0, il = this.particleCount; i < il; i ++ ) {
 
             const vel = this.particlesVelocityVectors[ i ];
-            sizes.setX( i, sizes.getX( i ) * 1.06 );
+            sizes.setX( i, sizes.getX( i ) + 0.2 * progress );
+
+            let coef = 0.7;
+            if ( this.type === 1 ) coef = 1;
 
             if ( progress < 0.7 ) {
 
-                pos.setXYZ( i, pos.getX( i ) + vel.x * progress, pos.getY( i ) + vel.y * progress, pos.getZ( i ) + vel.z * progress );
-                colors.setXYZ( i, colors.getX( i ) - 0.002, colors.getY( i ) - 0.002, colors.getZ( i ) - 0.002 );
+                pos.setXYZ( i, pos.getX( i ) + coef * vel.x * progress, pos.getY( i ) + coef * vel.y * progress, pos.getZ( i ) + coef * vel.z * progress );
+                colors.setXYZ( i, colors.getX( i ) - coef * 0.002 * progress, colors.getY( i ) - 0.002 * progress, colors.getZ( i ) - 0.002 * progress );
 
             } else {
 
-                pos.setXYZ( i, pos.getX( i ) - vel.x * ( progress - 0.7 ) * 0.8, pos.getY( i ) - vel.y * ( progress - 0.7 ) * 0.8, pos.getZ( i ) - vel.z * ( progress - 0.7 ) * 0.8 );
+                pos.setXYZ( i, pos.getX( i ) - coef * vel.x * ( progress - 0.7 ) * 0.8, pos.getY( i ) - coef * vel.y * ( progress - 0.7 ) * 0.8, pos.getZ( i ) - coef * vel.z * ( progress - 0.7 ) * 0.8 );
                 colors.setXYZ( i, colors.getX( i ) / 1.1, colors.getY( i ) / 1.1, colors.getZ( i ) / 1.1 );
 
             }
@@ -111,6 +115,7 @@ export class ExplosionGfx {
         sizes.needsUpdate = true;
         colors.needsUpdate = true;
 
+        this.type = type;
         this.time = 0;
         this.object.position.set( position.x, position.y, position.z );
         this.object.updateMatrixWorld( true );
