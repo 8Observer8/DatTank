@@ -61,7 +61,7 @@ export class DamageSmokeGfx {
 
                 pos.setXYZ( i,
                     pos.getX( i ) + 0.6 * this.particlesVelocityVectors[ i ].x * this.particlesState[ i ],
-                    pos.getY( i ) + 0.2 * this.particlesVelocityVectors[ i ].y,
+                    pos.getY( i ) + 0.3 * this.particlesVelocityVectors[ i ].y * this.particlesState[ i ],
                     pos.getZ( i ) + 0.6 * this.particlesVelocityVectors[ i ].z * this.particlesState[ i ],
                 );
 

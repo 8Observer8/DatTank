@@ -142,7 +142,7 @@ export class CannonTankPart {
         for ( let i = 0, il = this.sourceParam.shootInfo.length; i < il; i ++ ) {
 
             const offset = this.sourceParam.shootInfo[ i ].offset;
-            const position = new OMath.Vec3( this.tank.position.x, 20, this.tank.position.z );
+            const position = new OMath.Vec3( this.tank.position.x, this.sourceParam.shootInfo[ i ].y, this.tank.position.z );
             position.x += offset * Math.cos( Math.PI / 2 - this.tank.rotation + this.sourceParam.shootInfo[ i ].dAngle );
             position.z += offset * Math.sin( Math.PI / 2 - this.tank.rotation + this.sourceParam.shootInfo[ i ].dAngle );
 

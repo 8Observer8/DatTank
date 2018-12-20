@@ -11,16 +11,15 @@ import { ParticleMaterial } from '../../utils/ParticleMaterial.Gfx';
 
 //
 
-export class ExplosionGfx {
+export class DeathExplosionGfx {
 
     private object: THREE.Points;
     private time: number;
-    private duration: number = 800;
-    private particleCount: number = 200;
+    private duration: number = 2500;
+    private particleCount: number = 400;
     private particlesVelocityVectors: THREE.Vector3[] = [];
 
     public active: boolean = false;
-    private type: number = 0;
 
     //
 
@@ -40,20 +39,18 @@ export class ExplosionGfx {
         for ( let i = 0, il = this.particleCount; i < il; i ++ ) {
 
             const vel = this.particlesVelocityVectors[ i ];
-            sizes.setX( i, sizes.getX( i ) + 0.4 * progress );
 
-            let coef = 0.6;
-            if ( this.type === 1 ) coef = 0.9;
+            if ( progress < 0.4 ) {
 
-            if ( progress < 0.7 ) {
-
-                pos.setXYZ( i, pos.getX( i ) + coef * vel.x * progress, pos.getY( i ) + coef * vel.y * progress, pos.getZ( i ) + coef * vel.z * progress );
-                colors.setXYZ( i, colors.getX( i ) - coef * 0.002 * progress, colors.getY( i ) - 0.002 * progress, colors.getZ( i ) - 0.002 * progress );
+                pos.setXYZ( i, pos.getX( i ) + vel.x * delta / 16, pos.getY( i ) + vel.y * delta / 16, pos.getZ( i ) + vel.z * delta / 16 );
+                colors.setXYZ( i, colors.getX( i ) - 0.002 * progress, colors.getY( i ) - 0.002 * progress, colors.getZ( i ) - 0.002 * progress );
+                sizes.setX( i, sizes.getX( i ) + 0.4 * progress );
 
             } else {
 
-                pos.setXYZ( i, pos.getX( i ) - coef * vel.x * ( progress - 0.7 ) * 0.8, pos.getY( i ) - coef * vel.y * ( progress - 0.7 ) * 0.8, pos.getZ( i ) - coef * vel.z * ( progress - 0.7 ) * 0.8 );
+                pos.setXYZ( i, pos.getX( i ) + 0.2 * vel.x * delta / 16, pos.getY( i ) - 0.1 * delta / 16, pos.getZ( i ) + 0.2 * vel.z * delta / 16 );
                 colors.setXYZ( i, colors.getX( i ) / 1.1, colors.getY( i ) / 1.1, colors.getZ( i ) / 1.1 );
+                sizes.setX( i, sizes.getX( i ) - 0.4 * progress );
 
             }
 
@@ -63,13 +60,13 @@ export class ExplosionGfx {
         sizes.needsUpdate = true;
         colors.needsUpdate = true;
 
-        if ( progress < 0.3 ) {
+        if ( progress < 0.5 ) {
 
-            material.uniforms['opacity'].value = progress / 0.3;
+            material.uniforms['opacity'].value = progress / 0.5;
 
         } else {
 
-            material.uniforms['opacity'].value = 1 - ( progress - 0.3 ) / 0.7;
+            material.uniforms['opacity'].value = 1 - ( progress - 0.5 ) / 0.5;
 
         }
 
@@ -84,7 +81,7 @@ export class ExplosionGfx {
 
     };
 
-    public setActive ( position: OMath.Vec3, type: number ) : void {
+    public setActive ( position: OMath.Vec3 ) : void {
 
         const pos = ( this.object.geometry as THREE.BufferGeometry ).attributes['position'] as THREE.BufferAttribute;
         const sizes = ( this.object.geometry as THREE.BufferGeometry ).attributes['size'] as THREE.BufferAttribute;
@@ -92,22 +89,20 @@ export class ExplosionGfx {
 
         for ( let i = 0, il = this.particleCount; i < il; i ++ ) {
 
-            pos.setXYZ( i, 15 * ( Math.random() - 0.5 ), 15 * ( Math.random() - 0.5 ), 15 * ( Math.random() - 0.5 ) );
+            pos.setXYZ( i, 0, 0, 0 );
             sizes.setX( i, ( Math.random() + 1 ) );
 
-            if ( type === 0 ) {
+            colors.setXYZW( i, 1, 0.5 * Math.random() + 0.5, Math.random() / 3, Math.random() / 3 + 0.66 );
 
-                colors.setXYZW( i, 1, 0.5 * Math.random() + 0.5, Math.random() / 3, Math.random() / 3 + 0.66 );
-                this.particlesVelocityVectors.push( new THREE.Vector3( 1.5 * ( Math.random() - 0.5 ), 1.5 *  ( Math.random() - 0.5 ), 1.5 * ( Math.random() - 0.5 ) ) );
-                this.duration = 600;
+            const r = 0.8 * Math.random();
+            const alpha = 2 * Math.PI * Math.random();
+            const beta = 2 * Math.PI * Math.random();
+            const y = r * Math.abs( Math.sin( beta ) );
+            const rXZ = r * Math.abs( Math.cos( beta ) );
+            const x = rXZ * Math.sin( alpha );
+            const z = rXZ * Math.cos( alpha );
 
-            } else {
-
-                colors.setXYZW( i, 0.9, 0.4 * Math.random() + 0.2, Math.random() / 4, Math.random() / 3 + 0.66 );
-                this.particlesVelocityVectors.push( new THREE.Vector3( 1 * ( Math.random() - 0.5 ), 1 *  ( Math.random() - 0.5 ), 1 * ( Math.random() - 0.5 ) ) );
-                this.duration = 1000;
-
-            }
+            this.particlesVelocityVectors.push( new THREE.Vector3( x, y, z ) );
 
         }
 
@@ -115,7 +110,6 @@ export class ExplosionGfx {
         sizes.needsUpdate = true;
         colors.needsUpdate = true;
 
-        this.type = type;
         this.time = 0;
         this.object.position.set( position.x, position.y, position.z );
         this.object.updateMatrixWorld( true );
@@ -139,19 +133,20 @@ export class ExplosionGfx {
         this.object = new THREE.Points( geometry, material );
         this.object.name = 'Explosion';
         this.object.visible = false;
+        this.object.renderOrder = 1;
         this.object.userData.ignoreCollision = true;
 
         //
 
-        if ( ! GfxCore.coreObjects['explosions'] ) {
+        if ( ! GfxCore.coreObjects['deathExplosions'] ) {
 
-            GfxCore.coreObjects['explosions'] = new THREE.Object3D();
-            GfxCore.coreObjects['explosions'].name = 'Explosions';
-            GfxCore.scene.add( GfxCore.coreObjects['explosions'] );
+            GfxCore.coreObjects['deathExplosions'] = new THREE.Object3D();
+            GfxCore.coreObjects['deathExplosions'].name = 'DeathExplosions';
+            GfxCore.scene.add( GfxCore.coreObjects['deathExplosions'] );
 
         }
 
-        GfxCore.coreObjects['explosions'].add( this.object );
+        GfxCore.coreObjects['deathExplosions'].add( this.object );
 
     };
 
