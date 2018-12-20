@@ -1,22 +1,22 @@
 /*
  * @author ohmed
- * DatTank Arena large explosion manager
+ * Arena tank death explosion manager
 */
 
-import { LargeExplosionGfx } from '../effects/explosions/LargeExplosion.Gfx';
+import { DeathExplosionGfx } from '../effects/explosions/DeathExplosion.Gfx';
 import * as OMath from '../../OMath/Core.OMath';
 
 //
 
-class LargeExplosionManagerCore {
+class DeathExplosionManagerCore {
 
-    private static instance: LargeExplosionManagerCore;
-    private pool: LargeExplosionGfx[] = [];
+    private static instance: DeathExplosionManagerCore;
+    private pool: DeathExplosionGfx[] = [];
     private poolSize: number = 10;
 
     //
 
-    private getNewExplosion () : LargeExplosionGfx | null {
+    private getNewExplosion () : DeathExplosionGfx | null {
 
         for ( let i = 0, il = this.pool.length; i < il; i ++ ) {
 
@@ -44,9 +44,9 @@ class LargeExplosionManagerCore {
 
     public showExplosion ( position: OMath.Vec3 ) : void {
 
-        const largeExplosion = this.getNewExplosion();
-        if ( ! largeExplosion ) return;
-        largeExplosion.setActive( position );
+        const deathExplosion = this.getNewExplosion();
+        if ( ! deathExplosion ) return;
+        deathExplosion.setActive( position );
 
     };
 
@@ -54,7 +54,7 @@ class LargeExplosionManagerCore {
 
         for ( let i = 0; i < this.poolSize; i ++ ) {
 
-            const explosion = new LargeExplosionGfx();
+            const explosion = new DeathExplosionGfx();
             explosion.init();
             this.pool.push( explosion );
 
@@ -66,13 +66,13 @@ class LargeExplosionManagerCore {
 
     constructor () {
 
-        if ( LargeExplosionManagerCore.instance ) {
+        if ( DeathExplosionManagerCore.instance ) {
 
-            return LargeExplosionManagerCore.instance;
+            return DeathExplosionManagerCore.instance;
 
         }
 
-        LargeExplosionManagerCore.instance = this;
+        DeathExplosionManagerCore.instance = this;
 
     };
 
@@ -80,4 +80,4 @@ class LargeExplosionManagerCore {
 
 //
 
-export let LargeExplosionManager = new LargeExplosionManagerCore();
+export let DeathExplosionManager = new DeathExplosionManagerCore();

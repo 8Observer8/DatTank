@@ -19,7 +19,7 @@ import { ExplosionManager } from './managers/Explosion.Manager';
 import { HealthChangeLabelManager } from './managers/HealthChangeLabel.Manager';
 import { BulletShotManager } from './managers/BulletShot.Manager';
 import { LaserBeamShotManager } from './managers/LaserBeamShot.Manager';
-import { LargeExplosionManager } from './managers/LargeExplosion.Manager';
+import { DeathExplosionManager } from './managers/DeathExplosion.Manager';
 
 //
 
@@ -146,7 +146,7 @@ class GraphicsCore {
         //
 
         BulletShotManager.init();
-        LargeExplosionManager.init();
+        DeathExplosionManager.init();
         ExplosionManager.init();
         HealthChangeLabelManager.init();
 
@@ -273,7 +273,7 @@ class GraphicsCore {
         DecorationManager.update( time, delta );
         ControlsManager.update( time, delta );
         ExplosionManager.update( time, delta );
-        LargeExplosionManager.update( time, delta );
+        DeathExplosionManager.update( time, delta );
         HealthChangeLabelManager.update( time, delta );
         BulletShotManager.update( time, delta );
         LaserBeamShotManager.update( time, delta );

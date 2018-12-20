@@ -27,7 +27,7 @@ export class TowerObject {
     public target: TankObject | null;
 
     public range: number = 500;
-    public armor: number = 100;
+    public armor: number = 300;
     public damage: number = 150;
     public collisionBox: any;
 

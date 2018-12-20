@@ -214,8 +214,8 @@ var GarageConfig = {
             shootType:      'bullet',
             levels:         {
                 1:      { damage: 30, range: 200, overheat: 600, rpm: 60, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 50, range: 200, overheat: 600, rpm: 60, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 70, range: 200, overheat: 600, rpm: 60, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 30, range: 200, overheat: 600, rpm: 60, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 30, range: 200, overheat: 600, rpm: 60, price: { levelBonuses: 1, coins: 100 } },
                 4:      { damage: 30, range: 200, overheat: 600, rpm: 60, price: { levelBonuses: 1, coins: 100 } },
                 5:      { damage: 30, range: 200, overheat: 600, rpm: 60, price: { levelBonuses: 1, coins: 100 } }
             },
@@ -235,11 +235,11 @@ var GarageConfig = {
             price:          500,
             shootType:      'bullet',
             levels:         {
-                1:      { damage: 40, range: 220, overheat: 110, rpm: 13, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 40, range: 220, overheat: 110, rpm: 13, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 40, range: 220, overheat: 110, rpm: 13, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 40, range: 220, overheat: 110, rpm: 13, price: { levelBonuses: 1, coins: 100 } },
-                5:      { damage: 40, range: 220, overheat: 110, rpm: 13, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 50, range: 200, overheat: 600, rpm: 45, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 50, range: 200, overheat: 600, rpm: 60, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 50, range: 200, overheat: 600, rpm: 60, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 50, range: 200, overheat: 600, rpm: 60, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 50, range: 200, overheat: 600, rpm: 60, price: { levelBonuses: 1, coins: 100 } }
             },
             shotSpeed:      1.8,
             shootInfo: [
@@ -280,12 +280,18 @@ var GarageConfig = {
             price:          1200,
             shootType:      'bullet',
             levels:         {
-                1:      { damage: 80, range: 170, overheat: 70, rpm: 9, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 80, range: 170, overheat: 70, rpm: 9, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 80, range: 170, overheat: 70, rpm: 9, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 80, range: 170, overheat: 70, rpm: 9, price: { levelBonuses: 1, coins: 100 } },
-                5:      { damage: 80, range: 170, overheat: 70, rpm: 9, price: { levelBonuses: 1, coins: 100 } }
-            }
+                1:      { damage: 80, range: 170, overheat: 70, rpm: 120, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 80, range: 170, overheat: 70, rpm: 120, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 80, range: 170, overheat: 70, rpm: 120, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 80, range: 170, overheat: 70, rpm: 120, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 80, range: 170, overheat: 70, rpm: 120, price: { levelBonuses: 1, coins: 100 } }
+            },
+            shotSpeed:      1.8,
+            shootInfo: [
+                { dAngle:   0.10, offset: 25, y: 21 },
+                { dAngle:   0.00, offset: 25, y: 23 },
+                { dAngle: - 0.10, offset: 25, y: 21 }
+            ]
         },
 
         'Plasma-zero': {
@@ -298,12 +304,16 @@ var GarageConfig = {
             price:          4000,
             shootType:      'bullet',
             levels:         {
-                1:      { damage: 45, range: 210, overheat: 300, rpm: 25, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 45, range: 210, overheat: 300, rpm: 25, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 45, range: 210, overheat: 300, rpm: 25, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 45, range: 210, overheat: 300, rpm: 25, price: { levelBonuses: 1, coins: 100 } },
-                5:      { damage: 45, range: 210, overheat: 300, rpm: 25, price: { levelBonuses: 1, coins: 100 } }
-            }
+                1:      { damage: 80, range: 170, overheat: 0, rpm: 170, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 80, range: 170, overheat: 0, rpm: 170, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 80, range: 170, overheat: 0, rpm: 170, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 80, range: 170, overheat: 0, rpm: 170, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 80, range: 170, overheat: 0, rpm: 170, price: { levelBonuses: 1, coins: 100 } }
+            },
+            shotSpeed:      1.8,
+            shootInfo: [
+                { dAngle:   0.00, offset: 30, y: 23 }
+            ]
         },
 
         // Laser cannons
@@ -340,15 +350,15 @@ var GarageConfig = {
             price:          1500,
             shootType:      'laser',
             levels:         {
-                1:      { damage: 115, range: 270, overheat: 70, rpm: 14, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 115, range: 270, overheat: 70, rpm: 14, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 115, range: 270, overheat: 70, rpm: 14, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 115, range: 270, overheat: 70, rpm: 14, price: { levelBonuses: 1, coins: 100 } },
-                5:      { damage: 115, range: 270, overheat: 70, rpm: 14, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 115, range: 270, overheat: 40, rpm: 14, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 115, range: 270, overheat: 40, rpm: 14, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 115, range: 270, overheat: 40, rpm: 14, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 115, range: 270, overheat: 40, rpm: 14, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 115, range: 270, overheat: 40, rpm: 14, price: { levelBonuses: 1, coins: 100 } }
             },
             shotSpeed:      1,
             shootInfo: [
-                { dAngle:   0, offset: 70 }
+                { dAngle: 0, offset: 40, y: 20 }
             ]
         },
 
@@ -362,11 +372,11 @@ var GarageConfig = {
             price:          4000,
             shootType:      'laser',
             levels:         {
-                1:      { damage: 140, range: 250, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 140, range: 250, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 140, range: 250, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 140, range: 250, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
-                5:      { damage: 140, range: 250, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 25, range: 250, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 25, range: 250, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 25, range: 250, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 25, range: 250, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 25, range: 250, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 100 } }
             },
             shotSpeed:      1,
             shootInfo: [
@@ -385,17 +395,17 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Magnet cannon v87 release.',
             price:          7000,
-            shootType:      'fire',
+            shootType:      'bullet',
             levels:         {
-                1:      { damage: 190, range: 250, overheat: 45, rpm: 15, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 190, range: 250, overheat: 45, rpm: 15, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 190, range: 250, overheat: 45, rpm: 15, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 190, range: 250, overheat: 45, rpm: 15, price: { levelBonuses: 1, coins: 100 } },
-                5:      { damage: 190, range: 250, overheat: 45, rpm: 15, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 30, range: 200, overheat: 100, rpm: 450, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 50, range: 200, overheat: 100, rpm: 450, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 70, range: 200, overheat: 100, rpm: 450, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 30, range: 200, overheat: 100, rpm: 450, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 30, range: 200, overheat: 100, rpm: 450, price: { levelBonuses: 1, coins: 100 } }
             },
-            shotSpeed:      1,
+            shotSpeed:      1.8,
             shootInfo: [
-
+                { dAngle: 0, offset: 25, y: 20 }
             ]
         },
 
@@ -407,17 +417,17 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Improved magnet cannon v87S.',
             price:          10000,
-            shootType:      'fire',
+            shootType:      'bullet',
             levels:         {
-                1:      { damage: 220, range: 170, overheat: 65, rpm: 16, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 220, range: 170, overheat: 65, rpm: 16, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 220, range: 170, overheat: 65, rpm: 16, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 220, range: 170, overheat: 65, rpm: 16, price: { levelBonuses: 1, coins: 100 } },
-                5:      { damage: 220, range: 170, overheat: 65, rpm: 16, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 30, range: 200, overheat: 110, rpm: 550, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 50, range: 200, overheat: 110, rpm: 550, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 70, range: 200, overheat: 110, rpm: 550, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 30, range: 200, overheat: 110, rpm: 550, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 30, range: 200, overheat: 110, rpm: 550, price: { levelBonuses: 1, coins: 100 } }
             },
-            shotSpeed:      1,
+            shotSpeed:      1.8,
             shootInfo: [
-
+                { dAngle: 0, offset: 25, y: 20 }
             ]
         },
 
@@ -429,17 +439,17 @@ var GarageConfig = {
             description:    '',
             shortDesc:      'Magnet cannon v87s turbo version.',
             price:          14000,
-            shootType:      'fire',
+            shootType:      'bullet',
             levels:         {
-                1:      { damage: 235, range: 160, overheat: 50, rpm: 13, price: { levelBonuses: 1, coins: 100 } },
-                2:      { damage: 235, range: 160, overheat: 50, rpm: 13, price: { levelBonuses: 1, coins: 100 } },
-                3:      { damage: 235, range: 160, overheat: 50, rpm: 13, price: { levelBonuses: 1, coins: 100 } },
-                4:      { damage: 235, range: 160, overheat: 50, rpm: 13, price: { levelBonuses: 1, coins: 100 } },
-                5:      { damage: 235, range: 160, overheat: 50, rpm: 13, price: { levelBonuses: 1, coins: 100 } }
+                1:      { damage: 30, range: 200, overheat: 110, rpm: 550, price: { levelBonuses: 1, coins: 100 } },
+                2:      { damage: 50, range: 200, overheat: 110, rpm: 550, price: { levelBonuses: 1, coins: 100 } },
+                3:      { damage: 70, range: 200, overheat: 110, rpm: 550, price: { levelBonuses: 1, coins: 100 } },
+                4:      { damage: 30, range: 200, overheat: 110, rpm: 550, price: { levelBonuses: 1, coins: 100 } },
+                5:      { damage: 30, range: 200, overheat: 110, rpm: 550, price: { levelBonuses: 1, coins: 100 } }
             },
-            shotSpeed:      1,
+            shotSpeed:      1.8,
             shootInfo: [
-
+                { dAngle: 0.28, offset: 45, y: 21 }
             ]
         }
 

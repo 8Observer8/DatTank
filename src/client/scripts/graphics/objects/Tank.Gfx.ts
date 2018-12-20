@@ -12,7 +12,7 @@ import { TankLabelGfx } from '../effects/labels/TankLabel.Gfx';
 import { TankObject } from '../../objects/core/Tank.Object';
 import { ResourceManager } from '../../managers/other/Resource.Manager';
 import { TankTracesGfx } from '../effects/other/TankTraces.Gfx';
-import { LargeExplosionManager } from '../managers/LargeExplosion.Manager';
+import { DeathExplosionManager } from '../managers/DeathExplosion.Manager';
 import { FriendlyFireLabelGfx } from '../effects/labels/FriendlyFireLabel.Gfx';
 import { DamageSmokeGfx } from '../effects/smokes/DamageSmoke.Gfx';
 import { BlastSmokeGfx } from '../effects/smokes/BlastSmoke.Gfx';
@@ -224,7 +224,7 @@ class TankGfx {
 
         if ( this.hide ) {
 
-            dPosY -= 0.7;
+            dPosY -= 0.7 * delta / 16;
 
         }
 
@@ -353,7 +353,7 @@ class TankGfx {
 
     public destroy ( callback: () => void ) : void {
 
-        LargeExplosionManager.showExplosion( this.tank.position );
+        DeathExplosionManager.showExplosion( this.tank.position );
         this.sounds['explosion'].play();
 
         this.traces.hide();
