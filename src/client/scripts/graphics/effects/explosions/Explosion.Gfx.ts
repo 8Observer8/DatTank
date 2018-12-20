@@ -40,10 +40,10 @@ export class ExplosionGfx {
         for ( let i = 0, il = this.particleCount; i < il; i ++ ) {
 
             const vel = this.particlesVelocityVectors[ i ];
-            sizes.setX( i, sizes.getX( i ) + 0.2 * progress );
+            sizes.setX( i, sizes.getX( i ) + 0.4 * progress );
 
-            let coef = 0.7;
-            if ( this.type === 1 ) coef = 1;
+            let coef = 0.6;
+            if ( this.type === 1 ) coef = 0.9;
 
             if ( progress < 0.7 ) {
 
