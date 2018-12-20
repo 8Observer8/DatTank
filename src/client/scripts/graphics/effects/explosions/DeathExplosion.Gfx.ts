@@ -90,7 +90,7 @@ export class DeathExplosionGfx {
         for ( let i = 0, il = this.particleCount; i < il; i ++ ) {
 
             pos.setXYZ( i, 0, 0, 0 );
-            sizes.setX( i, ( Math.random() + 1 ) );
+            sizes.setX( i, 10 * ( Math.random() + 1 ) );
 
             colors.setXYZW( i, 1, 0.5 * Math.random() + 0.5, Math.random() / 3, Math.random() / 3 + 0.66 );
 

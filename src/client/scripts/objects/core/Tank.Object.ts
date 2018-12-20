@@ -80,6 +80,7 @@ export class TankObject {
 
     public die () : void {
 
+        this.cannon.stopShooting();
         CollisionManager.removeObject( this );
         this.gfx.damageSmoke.deactivate();
         this.gfx.shadow.visible = false;
