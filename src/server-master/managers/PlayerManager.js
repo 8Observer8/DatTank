@@ -280,8 +280,10 @@ PlayerManager.prototype.updateTopBoard = function ( login, score, kills, death, 
         } else {
 
             if ( result.score >= score ) return;
-            result.kills = kills;
             result.score = score;
+            result.kills = kills;
+            result.death = death;
+            result.level = level;
 
         }
 

@@ -32,8 +32,6 @@ export class UILandingModule {
 
     public setTopPlayersBoard ( players: any[] ) : void {
 
-        if ( players.length < 10 ) return;
-
         for ( let i = 0, il = players.length; i < il; i ++ ) {
 
             $( $('.top-players-score tr')[ i + 1 ] ).find('td.login').html( '<span class="nmb">' + ( i + 1 ) + '</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>' + players[ i ].login + '</span>' );

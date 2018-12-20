@@ -10,6 +10,8 @@ import { Game } from '../Game';
 import { TeamCore } from '../core/Team.Core';
 import { TeamManager } from '../managers/arena/Team.Manager';
 import { UITankUpgrade } from './TankUpgrade.UI';
+import { GfxCore } from '../graphics/Core.Gfx';
+import { SoundManager } from '../managers/other/Sound.Manager';
 
 //
 
@@ -39,6 +41,8 @@ export class UIInGameModule {
 
     public showContinueBox ( username: string, color: string ) : void {
 
+        GfxCore.audioListener.setMasterVolume( 0.1 );
+
         this.tankUpgradeMenu.hideUpgradeMenu();
         this.tankUpgradeMenu.hideProgressIndicator();
 
@@ -48,6 +52,12 @@ export class UIInGameModule {
         $('#continue-box-wrapper #continue-btn').click( () => {
 
             Arena.me.triggerRespawn();
+
+            if ( ! SoundManager.muted ) {
+
+                GfxCore.audioListener.setMasterVolume( 1 );
+
+            }
 
         });
 

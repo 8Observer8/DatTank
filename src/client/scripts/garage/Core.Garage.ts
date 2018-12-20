@@ -10,6 +10,7 @@ import { SoundManager } from '../managers/other/Sound.Manager';
 import { UI } from '../ui/Core.UI';
 import { GarageBottomMenu } from './BottomMenu.Garage';
 import { GarageRightMenu } from './RightMenu.Garage';
+import { GfxCore } from '../graphics/Core.Gfx';
 
 //
 
@@ -285,22 +286,37 @@ export class Garage {
 
             $('.garage .play-btn').html('CONNECTING');
 
-            Game.gameService.getFreeArena( ( server: any ) => {
+            if ( Arena.me ) {
 
-                if ( server.error === 1 ) {
+                Arena.me.triggerRespawn();
+                this.hide();
 
-                    $('.garage .play-btn').html('All servers filled :(');
+                if ( ! SoundManager.muted ) {
 
-                } else {
-
-                    Game.currentServer = server;
-                    $('.garage .play-btn').html('Loading');
-                    Arena.preInit( server.ip, server.id );
-                    Game.play();
+                    GfxCore.audioListener.setMasterVolume( 1 );
 
                 }
 
-            });
+            } else {
+
+                Game.gameService.getFreeArena( ( server: any ) => {
+
+                    if ( server.error === 1 ) {
+
+                        $('.garage .play-btn').html('All servers filled :(');
+
+                    } else {
+
+                        Game.currentServer = server;
+                        $('.garage .play-btn').html('Loading');
+                        Arena.preInit( server.ip, server.id );
+                        Game.play();
+
+                    }
+
+                });
+
+            }
 
         } else {
 
