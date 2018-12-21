@@ -95,19 +95,30 @@ export class ExplosionGfx {
             pos.setXYZ( i, 15 * ( Math.random() - 0.5 ), 15 * ( Math.random() - 0.5 ), 15 * ( Math.random() - 0.5 ) );
             sizes.setX( i, ( Math.random() + 1 ) );
 
+            let speedCoef: number = 0;
+
             if ( type === 0 ) {
 
+                speedCoef = 1.05;
                 colors.setXYZW( i, 1, 0.5 * Math.random() + 0.5, Math.random() / 3, Math.random() / 3 + 0.66 );
-                this.particlesVelocityVectors.push( new THREE.Vector3( 1.5 * ( Math.random() - 0.5 ), 1.5 *  ( Math.random() - 0.5 ), 1.5 * ( Math.random() - 0.5 ) ) );
                 this.duration = 600;
 
             } else {
 
+                speedCoef = 1;
                 colors.setXYZW( i, 0.9, 0.4 * Math.random() + 0.2, Math.random() / 4, Math.random() / 3 + 0.66 );
-                this.particlesVelocityVectors.push( new THREE.Vector3( 1 * ( Math.random() - 0.5 ), 1 *  ( Math.random() - 0.5 ), 1 * ( Math.random() - 0.5 ) ) );
                 this.duration = 1000;
 
             }
+
+            const r = speedCoef * Math.random();
+            const alpha = 2 * Math.PI * Math.random();
+            const beta = 2 * Math.PI * Math.random();
+            const y = r * Math.abs( Math.sin( beta ) );
+            const rXZ = r * Math.abs( Math.cos( beta ) );
+            const x = rXZ * Math.sin( alpha );
+            const z = rXZ * Math.cos( alpha );
+            this.particlesVelocityVectors.push( new THREE.Vector3( x, y, z ) );
 
         }
 

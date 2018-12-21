@@ -62,7 +62,6 @@ class GraphicsCore {
 
     private frames: number = 0;
     private lastFPSUpdate: number = 0;
-    private prevCameraDPos: THREE.Vector3 = new THREE.Vector3();
 
     public lights = {
         ambient:    0xf9f9f9,
@@ -244,13 +243,8 @@ class GraphicsCore {
         const dX = ( position.x - 100 * Math.sin( rotation ) + this.cameraOffset.x - this.camera.position.x ) / 13;
         const dZ = ( position.z - 100 * Math.cos( rotation ) + this.cameraOffset.y - this.camera.position.z ) / 13;
 
-        let x = ( 0.25 * dX + 0.75 * this.prevCameraDPos.x ) * delta / 16;
-        let z = ( 0.25 * dZ + 0.75 * this.prevCameraDPos.z ) * delta / 16;
-
-        x = Math.sign( x ) * Math.min( Math.abs( dX ) / 2, Math.abs( x ) );
-        z = Math.sign( z ) * Math.min( Math.abs( dZ ) / 2, Math.abs( z ) );
-
-        this.prevCameraDPos.set( x, 0, z );
+        const x: number = Math.sign( dX ) * Math.min( Math.abs( dX ) / 2, Math.abs( dX ) * delta / 16 );
+        const z: number = Math.sign( dZ ) * Math.min( Math.abs( dZ ) / 2, Math.abs( dZ ) * delta / 16 );
 
         this.camera.position.x = x + this.camera.position.x;
         this.camera.position.y = 60 + this.cameraOffset.z;
@@ -318,7 +312,6 @@ class GraphicsCore {
 
         if ( ! this.scene ) return;
         this.removeCameraShake();
-        this.prevCameraDPos.set( 0, 0, 0 );
 
         //
 

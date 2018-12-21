@@ -104,7 +104,7 @@ class TankGfx {
 
     };
 
-    private updateTracks () : void {
+    private updateTracks ( time: number, delta: number ) : void {
 
         const tank = this.tank;
 
@@ -122,26 +122,26 @@ class TankGfx {
 
         if ( Math.abs( tank.velocity ) > 20 ) {
 
-            track1Map.offset.y = track1Map.offset.y - 0.0001 * tank.velocity;
+            track1Map.offset.y = track1Map.offset.y - 0.0001 * tank.velocity * delta / 16;
             if ( track1Map.offset.y > 1 ) track1Map.offset.y = 0;
 
-            track2Map.offset.y = track2Map.offset.y - 0.0001 * tank.velocity;
+            track2Map.offset.y = track2Map.offset.y - 0.0001 * tank.velocity * delta / 16;
             if ( track2Map.offset.y > 1 ) track2Map.offset.y = 0;
 
         } else if ( tank.moveDirection.y === -1 ) {
 
-            track1Map.offset.y = track1Map.offset.y - 0.005;
+            track1Map.offset.y = track1Map.offset.y - 0.005 * delta / 16;
             if ( track1Map.offset.y > 1 ) track1Map.offset.y = 0;
 
-            track2Map.offset.y = track2Map.offset.y + 0.005;
+            track2Map.offset.y = track2Map.offset.y + 0.005 * delta / 16;
             if ( track2Map.offset.y > 1 ) track2Map.offset.y = 0;
 
         } else if ( tank.moveDirection.y === 1 ) {
 
-            track1Map.offset.y = track1Map.offset.y + 0.005;
+            track1Map.offset.y = track1Map.offset.y + 0.005 * delta / 16;
             if ( track1Map.offset.y > 1 ) track1Map.offset.y = 0;
 
-            track2Map.offset.y = track2Map.offset.y - 0.005;
+            track2Map.offset.y = track2Map.offset.y - 0.005 * delta / 16;
             if ( track2Map.offset.y > 1 ) track2Map.offset.y = 0;
 
         }
@@ -160,7 +160,7 @@ class TankGfx {
 
         //
 
-        this.updateTracks();
+        this.updateTracks( time, delta );
         this.traces.update( time, delta );
         this.friendlyFireLabel.update( time, delta );
         this.damageSmoke.update( time, delta );
