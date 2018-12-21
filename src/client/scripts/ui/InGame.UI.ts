@@ -93,6 +93,36 @@ export class UIInGameModule {
 
     };
 
+    public showStartingTeamLabel ( team: string, color: number ) : void {
+
+        $('#starting-team-label').html( 'You play for ' + team + ' team!' );
+        $('#starting-team-label').css({
+            'color':        OMath.intToHex( color ),
+            'text-shadow':  '0px 0px 8px ' + OMath.intToHex( OMath.darkerColor( color, 0.3 ) ),
+        });
+
+        setTimeout( () => {
+
+            $('#starting-team-label').css({
+                opacity:    1,
+                top:        '20%',
+            });
+
+        }, 2000 );
+
+        //
+
+        setTimeout( () => {
+
+            $('#starting-team-label').css({
+                opacity:    0,
+                top:        '10%',
+            });
+
+        }, 5000 );
+
+    };
+
     public updateHealth ( value: number ) : void {
 
         const colors = [

@@ -5,6 +5,7 @@
 
 import { PlayerCore } from '../../core/Player.Core';
 import { Arena } from '../../core/Arena.Core';
+import { UI } from '../../UI/Core.UI';
 
 //
 
@@ -20,6 +21,7 @@ class PlayerManagerCore {
         if ( player.id === Arena.meId ) {
 
             Arena.me = player;
+            UI.InGame.showStartingTeamLabel( player.team.name, player.team.color );
 
         }
 

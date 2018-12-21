@@ -175,6 +175,18 @@
     transition: width 400ms ease;
 }
 
+#starting-team-label {
+    position: absolute;
+    left: 50%;
+    transform: translateX( -50% );
+    top: 10%;
+    color: white;
+    font: bold 43px Roboto, arial, tahoma;
+    text-shadow: 0px 0px 8px #fff;
+    opacity: 0;
+    transition: top 2000ms ease, opacity 2000ms ease;
+}
+
 #kill-events {
     position: absolute;
     left: 20px;
