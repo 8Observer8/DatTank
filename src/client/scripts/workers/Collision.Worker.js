@@ -207,9 +207,9 @@ function update ( delta, objectsInfo ) {
         dfv = movementDirection * dfv;
         object['prevForwardVelocity'] = forwardVelocity;
 
-        if ( Math.abs( object.body.velocity.x ) < 1 ) object.body.velocity.x = 0;
-        if ( Math.abs( object.body.velocity.y ) < 1 ) object.body.velocity.y = 0;
-        if ( Math.abs( object.body.velocity.z ) < 1 ) object.body.velocity.z = 0;
+        if ( Math.abs( object.body.velocity.x ) < 5 ) object.body.velocity.x = 0;
+        if ( Math.abs( object.body.velocity.y ) < 5 ) object.body.velocity.y = 0;
+        if ( Math.abs( object.body.velocity.z ) < 5 ) object.body.velocity.z = 0;
 
         //
 

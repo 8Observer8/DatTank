@@ -95,7 +95,11 @@ export class CannonTankPart {
 
     };
 
-    public makeShot ( shotId: number ) : void {
+    public makeShot ( shotId: number, temperature: number ) : void {
+
+        this.temperature = temperature;
+
+        //
 
         if ( this.shootType === 'bullet' ) {
 

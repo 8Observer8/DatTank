@@ -227,7 +227,7 @@ export class TankNetwork {
 
         if ( this.filter( data ) ) return;
 
-        this.tank.cannon.makeShot( data[1] );
+        this.tank.cannon.makeShot( data[1], data[2] );
 
     };
 
@@ -243,7 +243,7 @@ export class TankNetwork {
 
         if ( this.filter( data ) ) return;
 
-        this.tank.cannon.makeShot( data[1] );
+        this.tank.cannon.makeShot( data[1], data[2] );
 
     };
 
