@@ -164,7 +164,7 @@ NetworkManager.prototype.init = function () {
     this.app.use( compression() );
     this.app.use( express.static( __dirname + './../../client' ) );
 
-    this.app.use( '/terms', express.static( __dirname + './../../сlient/terms.html') );
+    this.app.use( '/terms', express.static( __dirname + './../../client/terms.html') );
     this.app.use( '/policy', express.static( __dirname + './../../client/policy.html') );
     this.app.use( '/changelog', express.static( __dirname + './../../client/changelog.html') );
     this.app.use( '/*', express.static( __dirname + './../../client/notfound.html') );
