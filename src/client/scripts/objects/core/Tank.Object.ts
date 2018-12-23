@@ -95,7 +95,7 @@ export class TankObject {
         if ( this.player.id === Arena.me.id ) {
 
             Logger.newEvent( 'Kill', 'game' );
-            GfxCore.addCameraShake( 1000, 1.5 );
+            GfxCore.addCameraShake( 1000, 0.5 );
             UI.InGame.tankUpgradeMenu.hideUpgradeMenu();
 
         }
