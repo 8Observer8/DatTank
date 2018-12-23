@@ -216,7 +216,7 @@ function update ( delta, objectsInfo ) {
         objectsParams.push({
             id:                     object.id,
             type:                   object.objType,
-            acceleration:           - Math.sign( dfv ) * Math.min( Math.abs( dfv ), 8 ) / 100 / Math.PI,
+            acceleration:           - Math.sign( dfv ) * Math.min( Math.abs( dfv ), 8 ) / 200 / Math.PI,
             position:               { x: object.body.position.x, y: object.body.position.y - 10, z: object.body.position.z },
             velocity:               forwardVelocity,
             angularVelocity:        object.body.angularVelocity,

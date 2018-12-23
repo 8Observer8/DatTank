@@ -17,7 +17,7 @@
     position: relative;
     margin-top: 10px;
     width: 100%;
-    height: 43px;
+    height: 100px;
 }
 
 #continue-box-wrapper #continue-box {
@@ -42,30 +42,18 @@
     text-align: center;
 }
 
-#continue-box-wrapper #continue-box #share-btns {
-    display: table;
-    position: relative;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-#continue-box-wrapper #continue-box #share-btns .fb-like {
-    float: left;
-    margin: 2px;
-}
-
-#continue-box-wrapper #continue-box #share-btns .twitter-follow-button {
-    padding-top: 2px;
-    padding-left: 10px;
+#continue-box-wrapper #continue-box #continue-box-wrapper-title p {
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 #continue-box-wrapper #continue-box #continue-btn {
-    float: left;
     background-color: #00b6ff;
     height: 41px;
     margin-left: 10px;
     margin-right: auto;
-    width: calc( 90% - 37px );
+    margin-top: 5px;
+    width: calc( 100% - 20px );
     text-align: center;
     font: normal 15px 'Roboto';
     color: #fff;
@@ -79,43 +67,43 @@
     top: 10px;
 }
 
-#change-tank {
-    position: relative;
-    border: 1px solid #0493CC;
-    height: 41px;
-    right: 5%;
-    float: right;
-    width: 40px;
-    background: #9a9a9a;
-    opacity: 0.75;
-}
-
-#change-tank:hover {
-    position: relative;
-    height: 41px;
-    right: 5%;
-    float: right;
-    opacity: 0.85;
-}
-
-#change-tank img {
-    margin-top: 6px;
-    margin-left: 5px;
-    width: 30px;
-    height: 30px;
-}
-
 #continue-box-wrapper #continue-box #continue-btn:hover {
     opacity: 1;
 }
 
-#continue-box-wrapper #continue-box #instructions {
-    position: relative;
-    width: 100%;
-    margin-top: 11px;
-    font: normal 13px arial, tahoma;
+#garage-btn {
+    background-color: #00b6ff;
+    height: 41px;
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-right: auto;
+    width: calc( 100% - 20px );
     text-align: center;
-    color: #888;
+    font: normal 15px 'Roboto';
+    color: #fff;
+    border: 1px solid #0493CC;
+    opacity: 0.8;
+    transition: opacity 200ms ease;
+}
+
+#continue-box-wrapper #garage-btn #garage-btn-text {
+    position: relative;
+    top: 10px;
+}
+
+#continue-box-wrapper #garage-btn .garage-img {
+    background-image: url(/resources/img/garage.png);
+    background-size: 100% 100%;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    left: 50%;
+    margin-left: -67px;
+    margin-top: 5px;
+}
+
+#garage-btn:hover {
+    opacity: 1;
 }
 
 /* loader screen */

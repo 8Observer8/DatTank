@@ -122,10 +122,10 @@ class TankGfx {
 
         if ( Math.abs( tank.velocity ) > 20 ) {
 
-            track1Map.offset.y = track1Map.offset.y - 0.0001 * tank.velocity * delta / 16;
+            track1Map.offset.y = track1Map.offset.y - 0.00006 * tank.velocity * delta / 16;
             if ( track1Map.offset.y > 1 ) track1Map.offset.y = 0;
 
-            track2Map.offset.y = track2Map.offset.y - 0.0001 * tank.velocity * delta / 16;
+            track2Map.offset.y = track2Map.offset.y - 0.00006 * tank.velocity * delta / 16;
             if ( track2Map.offset.y > 1 ) track2Map.offset.y = 0;
 
         } else if ( tank.moveDirection.y === -1 ) {

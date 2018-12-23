@@ -40,7 +40,6 @@ class GraphicsCore {
     public camera: THREE.PerspectiveCamera;
     private lookAtVector: THREE.Vector3 = new THREE.Vector3();
     private cameraOffset = new THREE.Vector3();
-    private cameraShakeInterval: number | null;
 
     public container: HTMLCanvasElement;
     public renderer: THREE.WebGLRenderer;
@@ -62,6 +61,9 @@ class GraphicsCore {
 
     private frames: number = 0;
     private lastFPSUpdate: number = 0;
+
+    private cameraShakeIntensity: number = 0;
+    private cameraShakeTime: number = 0;
 
     public lights = {
         ambient:    0xf9f9f9,
@@ -190,61 +192,27 @@ class GraphicsCore {
 
     public addCameraShake ( duration: number, intensity: number ) : void {
 
-        let iter = 0;
-
-        if ( this.cameraShakeInterval !== null ) {
-
-            clearInterval( this.cameraShakeInterval );
-            this.cameraOffset.set( 0, 0, 0 );
-
-        }
-
-        this.cameraShakeInterval = setInterval( () => {
-
-            this.cameraOffset.x = intensity * ( Math.random() - 0.5 ) * iter / 2;
-            this.cameraOffset.y = intensity * ( Math.random() - 0.5 ) * iter / 2;
-            this.cameraOffset.z = intensity * ( Math.random() - 0.5 ) * iter / 2;
-
-            iter ++;
-
-            if ( iter > Math.floor( ( duration - 100 ) / 40 ) ) {
-
-                if ( this.cameraShakeInterval ) {
-
-                    clearInterval( this.cameraShakeInterval );
-                    this.cameraOffset.set( 0, 0, 0 );
-                    this.cameraShakeInterval = null;
-
-                }
-
-            }
-
-        }, 40 ) as any;
+        this.cameraShakeTime = duration;
+        this.cameraShakeIntensity = intensity;
 
     };
 
     public removeCameraShake () : void {
 
+        this.cameraShakeIntensity = 0;
+        this.cameraShakeTime = 0;
         this.camera.position.y = 400;
-
-        if ( this.cameraShakeInterval !== null ) {
-
-            clearInterval( this.cameraShakeInterval );
-            this.cameraShakeInterval = null;
-
-        }
-
         this.cameraOffset.set( 0, 0, 0 );
 
     };
 
     private updateCamera ( delta: number, position: THREE.Vector3, rotation: number ) : void {
 
-        const dX = ( position.x - 100 * Math.sin( rotation ) + this.cameraOffset.x - this.camera.position.x ) / 13;
-        const dZ = ( position.z - 100 * Math.cos( rotation ) + this.cameraOffset.y - this.camera.position.z ) / 13;
+        const dX = ( position.x - 100 * Math.sin( rotation ) + this.cameraOffset.x - this.camera.position.x ) / 7;
+        const dZ = ( position.z - 100 * Math.cos( rotation ) + this.cameraOffset.y - this.camera.position.z ) / 7;
 
-        const x: number = Math.sign( dX ) * Math.min( Math.abs( dX ) / 2, Math.abs( dX ) * delta / 16 );
-        const z: number = Math.sign( dZ ) * Math.min( Math.abs( dZ ) / 2, Math.abs( dZ ) * delta / 16 );
+        const x: number = Math.sign( dX ) * Math.min( 7, Math.abs( dX ) * delta / 16 );
+        const z: number = Math.sign( dZ ) * Math.min( 7, Math.abs( dZ ) * delta / 16 );
 
         this.camera.position.x = x + this.camera.position.x;
         this.camera.position.y = 60 + this.cameraOffset.z;
@@ -253,6 +221,19 @@ class GraphicsCore {
         this.lookAtVector = this.lookAtVector || new THREE.Vector3();
         this.lookAtVector.set( position.x, 40, position.z );
         this.camera.lookAt( this.lookAtVector );
+
+        // apply camera shake
+
+        if ( this.cameraShakeTime > 0 ) {
+
+            this.cameraOffset.x = ( delta / 16 ) * this.cameraShakeIntensity * ( Math.random() - 0.5 ) * this.cameraShakeTime / delta;
+            this.cameraOffset.y = ( delta / 16 ) * this.cameraShakeIntensity * ( Math.random() - 0.5 ) * this.cameraShakeTime / delta;
+            this.cameraOffset.z = ( delta / 16 ) * this.cameraShakeIntensity * ( Math.random() - 0.5 ) * this.cameraShakeTime / delta;
+            this.cameraShakeTime = ( this.cameraShakeTime - delta > 0 ) ? this.cameraShakeTime - delta : 0;
+
+        }
+
+        //
 
         this.camera.updateMatrixWorld( true );
 

@@ -12,6 +12,7 @@ import { TankObject } from '../core/Tank.Object';
 import { BulletShotManager } from '../../graphics/managers/BulletShot.Manager';
 import { LaserBeamShotManager } from '../../graphics/managers/LaserBeamShot.Manager';
 import { UI } from '../../ui/Core.UI';
+import { GfxCore } from '../../graphics/Core.Gfx';
 
 //
 
@@ -102,6 +103,12 @@ export class CannonTankPart {
         //
 
         if ( this.shootType === 'bullet' ) {
+
+            if ( this.tank.isMe ) {
+
+                GfxCore.addCameraShake( 300, 0.3 );
+
+            }
 
             this.makeBulletShot( shotId );
 
