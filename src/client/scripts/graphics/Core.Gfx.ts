@@ -240,8 +240,8 @@ class GraphicsCore {
 
     private updateCamera ( delta: number, position: THREE.Vector3, rotation: number ) : void {
 
-        const dX = ( position.x - 100 * Math.sin( rotation ) + this.cameraOffset.x - this.camera.position.x ) / 13;
-        const dZ = ( position.z - 100 * Math.cos( rotation ) + this.cameraOffset.y - this.camera.position.z ) / 13;
+        const dX = ( position.x - 100 * Math.sin( rotation ) + this.cameraOffset.x - this.camera.position.x ) / 7;
+        const dZ = ( position.z - 100 * Math.cos( rotation ) + this.cameraOffset.y - this.camera.position.z ) / 7;
 
         const x: number = Math.sign( dX ) * Math.min( Math.abs( dX ) / 2, Math.abs( dX ) * delta / 16 );
         const z: number = Math.sign( dZ ) * Math.min( Math.abs( dZ ) / 2, Math.abs( dZ ) * delta / 16 );
