@@ -63,7 +63,7 @@ export class UIInGameModule {
 
         $('#continue-box-wrapper').show();
         $('#continue-box-wrapper #continue-box-wrapper-title').html('<p>Killed by <span style="color:' + color + '">' + username + '</span></p>');
-        $('#continue-box-wrapper #change-tank').click( Game.garage.show.bind( Game.garage ) );
+        $('#continue-box-wrapper #garage-btn').click( Game.garage.show.bind( Game.garage ) );
 
         setTimeout( () => {
 

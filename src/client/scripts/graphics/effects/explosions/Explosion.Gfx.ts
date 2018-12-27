@@ -8,6 +8,7 @@ import * as THREE from 'three';
 import * as OMath from '../../../OMath/Core.OMath';
 import { GfxCore } from '../../Core.Gfx';
 import { ParticleMaterial } from '../../utils/ParticleMaterial.Gfx';
+import { Arena } from '../../../core/Arena.Core';
 
 //
 
@@ -132,6 +133,20 @@ export class ExplosionGfx {
         this.object.updateMatrixWorld( true );
         this.object.visible = true;
         this.active = true;
+
+        //
+
+        if ( Arena.me.tank ) {
+
+            const dist = Arena.me.tank.position.distanceTo( position );
+
+            if ( dist < 100 ) {
+
+                GfxCore.addCameraShake( 300, 0.3 * dist / 100 );
+
+            }
+
+        }
 
     };
 

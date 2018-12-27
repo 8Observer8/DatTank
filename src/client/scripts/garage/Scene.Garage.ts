@@ -139,18 +139,12 @@ export class GarageScene {
 
         const model = ResourceManager.getModel('Garage')!;
         const mesh = new THREE.Mesh( model.geometry, [
-            new THREE.MeshPhongMaterial({ color: 0xaaaaaa, side: THREE.DoubleSide, map: new THREE.TextureLoader().load( '/resources/textures/garage-wall1.jpg' ) }),
-            new THREE.MeshPhongMaterial({ color: 0xaaaaaa, side: THREE.DoubleSide, map: new THREE.TextureLoader().load( '/resources/textures/garage-wall2.jpg' ) }),
-            new THREE.MeshPhongMaterial({ color: 0xaaaaaa, side: THREE.DoubleSide, map: new THREE.TextureLoader().load( '/resources/textures/garage-ground1.jpg' ) }),
-            new THREE.MeshPhongMaterial({ color: 0xaaaaaa, side: THREE.DoubleSide, map: new THREE.TextureLoader().load( '/resources/textures/garage-ceiling.jpeg' ) }),
-            new THREE.MeshPhongMaterial({ color: 0xaaaaaa, side: THREE.DoubleSide, map: new THREE.TextureLoader().load( '/resources/textures/garage-ground2.jpg' ) }),
+            new THREE.MeshPhongMaterial({ color: 0x5B5B5B, side: THREE.DoubleSide }), // wall 1
+            new THREE.MeshPhongMaterial({ color: 0x59584C, side: THREE.DoubleSide }), // wall 2
+            new THREE.MeshPhongMaterial({ color: 0x434343, side: THREE.DoubleSide }), // ground 1
+            new THREE.MeshPhongMaterial({ color: 0x434343, side: THREE.DoubleSide }), // ceiling
+            new THREE.MeshPhongMaterial({ color: 0x434343, side: THREE.DoubleSide }), // ground2
         ] );
-
-        mesh.material[0].map.wrapS = mesh.material[0].map.wrapT = THREE.RepeatWrapping;
-        mesh.material[1].map.wrapS = mesh.material[1].map.wrapT = THREE.RepeatWrapping;
-        mesh.material[2].map.wrapS = mesh.material[2].map.wrapT = THREE.RepeatWrapping;
-        mesh.material[3].map.wrapS = mesh.material[3].map.wrapT = THREE.RepeatWrapping;
-        mesh.material[4].map.wrapS = mesh.material[4].map.wrapT = THREE.RepeatWrapping;
 
         mesh.receiveShadow = true;
         mesh.castShadow = true;

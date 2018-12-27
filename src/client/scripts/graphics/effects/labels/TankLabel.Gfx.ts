@@ -99,6 +99,7 @@ export class TankLabelGfx {
 
         const material = this.sprite.material as THREE.SpriteMaterial;
         material.map!.dispose();
+        this.sprite.parent!.remove( this.sprite );
 
     };
 
@@ -129,6 +130,7 @@ export class TankLabelGfx {
 
         this.sprite.position.set( 0, 40, 0 );
         this.sprite.scale.set( 47, 12, 1 );
+        this.sprite.userData.ignoreCollision = true;
 
     };
 
