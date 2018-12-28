@@ -211,8 +211,8 @@ class GraphicsCore {
         const dX = ( position.x - 100 * Math.sin( rotation ) + this.cameraOffset.x - this.camera.position.x ) / 7;
         const dZ = ( position.z - 100 * Math.cos( rotation ) + this.cameraOffset.y - this.camera.position.z ) / 7;
 
-        const x: number = Math.sign( dX ) * Math.min( 7, Math.abs( dX ) * delta / 16 );
-        const z: number = Math.sign( dZ ) * Math.min( 7, Math.abs( dZ ) * delta / 16 );
+        const x: number = Math.sign( dX ) * Math.min( 7 * Math.abs( dX ), Math.abs( dX ) * delta / 16 );
+        const z: number = Math.sign( dZ ) * Math.min( 7 * Math.abs( dZ ), Math.abs( dZ ) * delta / 16 );
 
         this.camera.position.x = x + this.camera.position.x;
         this.camera.position.y = 60 + this.cameraOffset.z;

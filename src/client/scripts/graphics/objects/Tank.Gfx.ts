@@ -37,12 +37,21 @@ class TankGfx {
     private hide: boolean = false;
     private sounds = {};
 
+    private rotateTankTime: number = 0;
+
     //
 
     public rotateTankXAxis ( delta: number ) : void {
 
-        this.wrapper.rotation.x += delta;
-        this.wrapper.rotation.x *= 0.9;
+        this.wrapper.rotation.x += this.tank.acceleration * delta / 16;
+        this.rotateTankTime += delta;
+
+        for ( let i = 0, il = Math.floor( this.rotateTankTime / 16 ); i < il; i ++ ) {
+
+            this.wrapper.rotation.x *= 0.95;
+            this.rotateTankTime -= 16;
+
+        }
 
     };
 
@@ -167,7 +176,7 @@ class TankGfx {
         this.blastSmoke.update( time, delta );
 
         this.cannon.update( delta / 1000 );
-        this.rotateTankXAxis( this.tank.acceleration * delta / 16 );
+        this.rotateTankXAxis( delta );
 
         // interpolate tank movement between cannon physic generated points
 

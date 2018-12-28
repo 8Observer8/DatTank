@@ -221,7 +221,7 @@ export class BotCore {
             newPos2.x += 50 * Math.cos( Math.PI / 2 - this.player.tank.rotation );
             newPos2.z += 50 * Math.sin( Math.PI / 2 - this.player.tank.rotation );
 
-            const freeDirection = this.player.arena.collisionManager.isPlaceFree( newPos1, 15, [ this.player.tank.id ] ) && this.player.arena.collisionManager.isPlaceFree( newPos1, 20, [ this.player.tank.id ] );
+            const freeDirection = this.player.arena.collisionManager.isPlaceFree( newPos1, 15, [ this.player.tank.id ], true ) && this.player.arena.collisionManager.isPlaceFree( newPos1, 20, [ this.player.tank.id ], true );
             if ( ! freeDirection ) y = 1;
 
             //

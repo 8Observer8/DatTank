@@ -32,7 +32,7 @@ export class CollisionManager {
 
     };
 
-    public isPlaceFree ( position: OMath.Vec3, radius: number, skip: number[] = [] ) : boolean {
+    public isPlaceFree ( position: OMath.Vec3, radius: number, skip: number[] = [], ignoreBoxes: boolean = false ) : boolean {
 
         if ( Math.abs( position.x ) > 1250 || Math.abs( position.z ) > 1250 ) return false;
 
@@ -50,6 +50,8 @@ export class CollisionManager {
         // Check bodies
 
         for ( let i = 0, il = this.objects.length; i < il; i ++ ) {
+
+            if ( this.objects[ i ].parent.type === 'Box' && ignoreBoxes ) continue;
 
             body = this.objects[ i ].body;
             shape = body.shapes[0];

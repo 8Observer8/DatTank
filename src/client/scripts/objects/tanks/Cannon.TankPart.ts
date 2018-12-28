@@ -166,7 +166,7 @@ export class CannonTankPart {
         if ( this.tank.player.id === Arena.me.id ) {
 
             Logger.newEvent( 'Shot', 'game' );
-            this.tank.setAmmo( this.tank.ammo - 1 );
+            this.tank.setAmmo( this.tank.ammo - this.sourceParam.shootInfo.length );
 
         }
 

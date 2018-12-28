@@ -208,7 +208,6 @@ function update ( delta, objectsInfo ) {
         object['prevForwardVelocity'] = forwardVelocity;
 
         if ( Math.abs( object.body.velocity.x ) < 5 ) object.body.velocity.x = 0;
-        if ( Math.abs( object.body.velocity.y ) < 5 ) object.body.velocity.y = 0;
         if ( Math.abs( object.body.velocity.z ) < 5 ) object.body.velocity.z = 0;
 
         //
@@ -217,7 +216,7 @@ function update ( delta, objectsInfo ) {
             id:                     object.id,
             type:                   object.objType,
             acceleration:           - Math.sign( dfv ) * Math.min( Math.abs( dfv ), 8 ) / 200 / Math.PI,
-            position:               { x: object.body.position.x, y: object.body.position.y - 10, z: object.body.position.z },
+            position:               { x: object.body.position.x, y: object.body.position.y, z: object.body.position.z },
             velocity:               forwardVelocity,
             angularVelocity:        object.body.angularVelocity,
             directionVelocity:      object.body.velocity,
