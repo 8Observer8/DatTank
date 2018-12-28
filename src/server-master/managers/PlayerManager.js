@@ -66,7 +66,7 @@ PlayerManager.prototype.register = function ( callback ) {
     var sid = Buffer.from( Date.now() + '-' + pid ).toString('base64').replace( /=/g, '' );
 
     DB.models.players
-    .create({ pid: pid, sid: sid, coins: 1500, level: 0, levelBonuses: 0, xp: 0, lastVisit: Date.now() })
+    .create({ pid: pid, sid: sid, coins: 100000, level: 0, levelBonuses: 0, xp: 0, lastVisit: Date.now() })
     .then( ( player ) => {
 
         return callback({

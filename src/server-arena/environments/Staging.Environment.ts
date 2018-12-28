@@ -8,13 +8,13 @@ export let StagingEnvironment = {
     name:           'Staging environment',
 
     web: {
-        host:       'http://dattank.com',
+        host:       'http://167.99.255.211',
         port:       8086,
         socketPort: 8085,
     },
 
     master: {
-        host:       '165.227.160.4',
+        host:       '167.99.255.211',
         port:       3100,
     },
 
