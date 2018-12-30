@@ -111,11 +111,12 @@ export class CollisionManager {
 
         let shape;
         const collisionBox = {
-            parent:     object,
             type,
-            body:       new Cannon.Body({ mass: ( isDynamic ) ? 5000 : 0 }),
-            sensor:     false,
-            collision:  false,
+            parent:         object,
+            body:           new Cannon.Body({ mass: ( isDynamic ) ? 5000 : 0 }),
+            sensor:         false,
+            collision:      false,
+            needsToRemove:  false,
         };
 
         if ( type === 'box' ) {

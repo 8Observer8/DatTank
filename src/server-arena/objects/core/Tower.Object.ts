@@ -26,7 +26,7 @@ export class TowerObject {
     public newRotation: number = 0;
     public target: TankObject | null;
 
-    public range: number = 500;
+    public range: number = 200;
     public armor: number = 300;
     public damage: number = 150;
     public collisionBox: any;
@@ -89,7 +89,7 @@ export class TowerObject {
 
         const bullet = this.arena.bulletShotManager.getInactiveBullet();
         if ( ! bullet ) return;
-        bullet.activate( position, this.rotation + Math.PI, 1.8, this.range, this );
+        bullet.activate( position, this.rotation + Math.PI, this.range, 1.8, this );
 
         this.network.makeShot( bullet );
 

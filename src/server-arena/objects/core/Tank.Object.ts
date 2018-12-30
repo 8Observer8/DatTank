@@ -148,11 +148,13 @@ export class TankObject {
 
         const position = new OMath.Vec3( this.team.spawnPosition.x, this.team.spawnPosition.y + 5, this.team.spawnPosition.z );
         const offset = new OMath.Vec3();
+        let iter = 0;
 
-        while ( offset.length() < 80 || ! this.arena.collisionManager.isPlaceFree( position.sum( offset ), 30, [], true ) ) {
+        while ( iter < 500 && ( offset.length() < 80 || ! this.arena.collisionManager.isPlaceFree( position.sum( offset ), 30, [], true ) ) ) {
 
             offset.x = ( Math.random() - 0.5 ) * 250;
             offset.z = ( Math.random() - 0.5 ) * 250;
+            iter ++;
 
         }
 
