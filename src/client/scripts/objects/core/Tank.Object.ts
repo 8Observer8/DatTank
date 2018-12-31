@@ -269,6 +269,12 @@ export class TankObject {
 
         }
 
+        this.upgrades.armor = 0;
+        this.upgrades.cannon = 0;
+        this.upgrades.maxSpeed = 0;
+        this.upgrades.power = 0;
+        this.upgrades.rpm = 0;
+
         this.gfx.init( this );
         this.network.init( this );
 

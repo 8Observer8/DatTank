@@ -200,13 +200,17 @@ export class PlayerCore {
 
     public respawn ( tankConfig: object ) : void {
 
-        Master.getPlayerInfo( this.pid, this.sid, ( data: any ) => {
+        const callback = ( data: any ) : void => {
 
-            this.xp = data.xp;
-            this.coins = data.coins;
-            this.pid = data.pid;
-            this.sid = data.sid;
-            this.parts = data.parts;
+            if ( data ) {
+
+                this.xp = data.xp;
+                this.coins = data.coins;
+                this.pid = data.pid;
+                this.sid = data.sid;
+                this.parts = data.parts;
+
+            }
 
             this.bonusArenaLevels = 0;
             this.arenaLevel = 0;
@@ -230,7 +234,17 @@ export class PlayerCore {
 
             this.spawnTime = Date.now();
 
-        });
+        };
+
+        if ( this.bot ) {
+
+            callback( null );
+
+        } else {
+
+            Master.getPlayerInfo( this.pid, this.sid, callback );
+
+        }
 
     };
 
