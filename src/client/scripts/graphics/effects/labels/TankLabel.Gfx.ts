@@ -99,7 +99,12 @@ export class TankLabelGfx {
 
         const material = this.sprite.material as THREE.SpriteMaterial;
         material.map!.dispose();
-        this.sprite.parent!.remove( this.sprite );
+
+        if ( this.sprite.parent ) {
+
+            this.sprite.parent.remove( this.sprite );
+
+        }
 
     };
 

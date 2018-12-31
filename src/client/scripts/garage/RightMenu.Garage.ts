@@ -167,7 +167,8 @@ export class GarageRightMenu {
         for ( const name in Game.GarageConfig.cannon ) {
 
             const cannon = Game.GarageConfig.cannon[ name ].levels[5];
-            this.maxConfigValues.damage = ( 1.2 * cannon.damage > this.maxConfigValues.damage ) ? 1.2 * cannon.damage : this.maxConfigValues.damage;
+            const cannonNum = Game.GarageConfig.cannon[ name ].shootInfo.length;
+            this.maxConfigValues.damage = ( 1.2 * cannonNum * cannon.damage > this.maxConfigValues.damage ) ? 1.2 * cannonNum * cannon.damage : this.maxConfigValues.damage;
             this.maxConfigValues.rpm = ( 1.2 * cannon.rpm > this.maxConfigValues.rpm ) ? 1.2 * cannon.rpm : this.maxConfigValues.rpm;
             this.maxConfigValues.range = ( 1.2 * cannon.range > this.maxConfigValues.range ) ? 1.2 * cannon.range : this.maxConfigValues.range;
             this.maxConfigValues.overheat = ( 1.2 * cannon.overheat > this.maxConfigValues.overheat ) ? 1.2 * cannon.overheat : this.maxConfigValues.overheat;
@@ -261,12 +262,12 @@ export class GarageRightMenu {
 
         let progressValue;
 
-        const deltaDamage = 100 * ( hull.levels[ hullLevel ].cannonCoef * cannon.levels[ cannonLevel ].damage - currentHull.levels[ currentHullLevel ].cannonCoef * currentCannon.levels[ currentCannonLevel ].damage ) / this.maxConfigValues.damage;
-        progressValue = 100 * Math.min( currentHull.levels[ currentHullLevel ].cannonCoef * currentCannon.levels[ currentCannonLevel ].damage, hull.levels[ hullLevel ].cannonCoef * cannon.levels[ cannonLevel ].damage ) / this.maxConfigValues.damage;
+        const deltaDamage = 100 * ( hull.levels[ hullLevel ].cannonCoef * cannon.shootInfo.length * cannon.levels[ cannonLevel ].damage - currentCannon.shootInfo.length * currentHull.levels[ currentHullLevel ].cannonCoef * currentCannon.levels[ currentCannonLevel ].damage ) / this.maxConfigValues.damage;
+        progressValue = 100 * Math.min( currentCannon.shootInfo.length * currentHull.levels[ currentHullLevel ].cannonCoef * currentCannon.levels[ currentCannonLevel ].damage, cannon.shootInfo.length * hull.levels[ hullLevel ].cannonCoef * cannon.levels[ cannonLevel ].damage ) / this.maxConfigValues.damage;
 
         $('.garage .tank-stats .cannon.stats-delta-value').html( '(' +  ( deltaDamage >= 0 ? '+' : '' ) + Math.round( deltaDamage ) + ')' );
         $('.garage .tank-stats .cannon.stats-delta-value').css({ color: ( deltaDamage >= 0 ) ? greenColor : redColor });
-        $('.garage .tank-stats .cannon.stats-value').html( cannon.levels[ cannonLevel ].damage + 'p' );
+        $('.garage .tank-stats .cannon.stats-value').html( cannon.shootInfo.length * cannon.levels[ cannonLevel ].damage + 'p' );
         $('.garage .tank-stats .cannon.stats-progress .green').css( 'width', progressValue + '%' );
         $('.garage .tank-stats .cannon.stats-progress .delta').css({
             'width': Math.abs( deltaDamage ) + '%',
@@ -341,7 +342,7 @@ export class GarageRightMenu {
 
         $('.garage .tank-stats .speed.stats-delta-value').html( '(' + ( deltaSpeed >= 0 ? '+' : '' ) + Math.round( deltaSpeed ) + ')' );
         $('.garage .tank-stats .speed.stats-delta-value').css({ color: ( deltaSpeed >= 0 ) ? greenColor : redColor });
-        $('.garage .tank-stats .speed.stats-value').html( hull.levels[ hullLevel ].speedCoef * engine.levels[ engineLevel ].maxSpeed + 'km/h' );
+        $('.garage .tank-stats .speed.stats-value').html( Math.floor( hull.levels[ hullLevel ].speedCoef * engine.levels[ engineLevel ].maxSpeed ) + 'km/h' );
         $('.garage .tank-stats .speed.stats-progress .green').css( 'width', progressValue + '%' );
         $('.garage .tank-stats .speed.stats-progress .delta').css({
             'width': Math.abs( deltaSpeed ) + '%',

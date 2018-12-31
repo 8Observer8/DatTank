@@ -66,7 +66,7 @@ PlayerManager.prototype.register = function ( callback ) {
     var sid = Buffer.from( Date.now() + '-' + pid ).toString('base64').replace( /=/g, '' );
 
     DB.models.players
-    .create({ pid: pid, sid: sid, coins: 100000, level: 0, levelBonuses: 0, xp: 0, lastVisit: Date.now() })
+    .create({ pid: pid, sid: sid, coins: 20, level: 0, levelBonuses: 0, xp: 0, lastVisit: Date.now() })
     .then( ( player ) => {
 
         return callback({
@@ -202,11 +202,11 @@ PlayerManager.prototype.upgradeObject = function ( pid, objectType, objectId, ca
         if ( objectCurrentLevel === 5 ) return callback( false, 'object has max level already');
         if ( object === false ) return callback( false, 'object not found' );
         if ( ! player.params[ objectType ][ objectId ] ) return callback( false, 'object not bought' );
-        if ( player.levelBonuses === 0 ) return callback( false, 'nought enough level bonuses');
+        if ( player.levelBonuses < object.levels[ objectCurrentLevel ].price.levelBonuses ) return callback( false, 'nought enough level bonuses');
         if ( player.coins < object.levels[ objectCurrentLevel ].price.coins ) return callback( false, 'not enough coins' );
 
         player.coins -= object.levels[ objectCurrentLevel ].price.coins;
-        player.levelBonuses --;
+        player.levelBonuses -= object.levels[ objectCurrentLevel ].price.levelBonuses;
 
         //
 

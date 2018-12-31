@@ -24,7 +24,7 @@ export class CoinBoxObject extends BoxObject {
 
         super( arena, params );
         this.typeId = 2;
-        this.amount = params.amount || 20;
+        this.amount = params.amount || 1;
 
     };
 

@@ -113,7 +113,7 @@ export class ArenaNetwork {
                     engine: {
                         nid:            data[ offset + 17 ],
                         maxSpeed:       data[ offset + 18 ],
-                        power:          data[ offset + 19 ],
+                        power:          data[ offset + 19 ] * 100,
                     },
                 },
             };

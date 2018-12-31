@@ -333,7 +333,7 @@ export class TankNetwork {
             bufferView[ offset + 16 ] = tank.armor.armor;
             bufferView[ offset + 17 ] = tank.engine.nid;
             bufferView[ offset + 18 ] = tank.engine.maxSpeed;
-            bufferView[ offset + 19 ] = tank.engine.power;
+            bufferView[ offset + 19 ] = tank.engine.power / 100;
 
             offset += 20;
 
