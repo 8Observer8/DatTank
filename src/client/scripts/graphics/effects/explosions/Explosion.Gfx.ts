@@ -93,7 +93,6 @@ export class ExplosionGfx {
 
         for ( let i = 0, il = this.particleCount; i < il; i ++ ) {
 
-            pos.setXYZ( i, 15 * ( Math.random() - 0.5 ), 15 * ( Math.random() - 0.5 ), 15 * ( Math.random() - 0.5 ) );
             sizes.setX( i, ( Math.random() + 1 ) );
 
             let speedCoef: number = 0;
@@ -115,11 +114,13 @@ export class ExplosionGfx {
             const r = speedCoef * Math.random();
             const alpha = 2 * Math.PI * Math.random();
             const beta = 2 * Math.PI * Math.random();
-            const y = r * Math.abs( Math.sin( beta ) );
-            const rXZ = r * Math.abs( Math.cos( beta ) );
+            const y = r * Math.sin( beta );
+            const rXZ = r * Math.cos( beta );
             const x = rXZ * Math.sin( alpha );
             const z = rXZ * Math.cos( alpha );
-            this.particlesVelocityVectors.push( new THREE.Vector3( x, y, z ) );
+
+            this.particlesVelocityVectors.push( new THREE.Vector3( 1.5 * x, 1.5 * y, 1.5 * z ) );
+            pos.setXYZ( i, 5 * x, 5 * y, 5 * z );
 
         }
 

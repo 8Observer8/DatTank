@@ -263,9 +263,9 @@ export class CollisionManager {
                 const dv = object.body.velocity.length() * Math.sin( velocityAngle - object.parent.rotation );
                 object.body.applyLocalImpulse( new Cannon.Vec3( - object.body.mass * dv * coef, 0, 0 ), new Cannon.Vec3( 0, 0, 0 ) );
 
-                if ( Math.abs( object.body.velocity.x ) < 5 ) object.body.velocity.x = 0;
-                if ( Math.abs( object.body.velocity.y ) < 5 ) object.body.velocity.y = 0;
-                if ( Math.abs( object.body.velocity.z ) < 5 ) object.body.velocity.z = 0;
+                if ( Math.abs( object.body.velocity.x ) < 1 ) object.body.velocity.x = 0;
+                if ( Math.abs( object.body.velocity.y ) < 1 ) object.body.velocity.y = 0;
+                if ( Math.abs( object.body.velocity.z ) < 1 ) object.body.velocity.z = 0;
 
                 //
 
