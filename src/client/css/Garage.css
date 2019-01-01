@@ -369,7 +369,7 @@
     margin-right: 20px;
 }
 
-.garage .right-block .buy-block .price .label {
+.garage .right-block .buy-block .price .coins-label {
     float: left;
     width: 18px;
     height: 18px;
@@ -381,7 +381,29 @@
     background-size: 100% 100%;
 }
 
-.garage .right-block .buy-block .price .value {
+.garage .right-block .buy-block .price .coins-value {
+    float: left;
+    font: bold 14px 'Roboto', arial, tahoma;
+    color: #fff;
+    padding-right: 10px;
+    filter: drop-shadow(0px 0px 5px);
+    transition: color 300ms ease;
+}
+
+.garage .right-block .buy-block .price .level-bonus-label {
+    float: left;
+    width: 10px;
+    height: 15px;
+    margin-top: -1px;
+    margin-right: 5px;
+    padding-right: 5px;
+    color: #fff;
+    filter: brightness(1.1) drop-shadow(0px 0px 2px);
+    background-image: url(/resources/img/xp.png);
+    background-size: 100% 100%;
+}
+
+.garage .right-block .buy-block .price .level-bonus-value {
     float: left;
     font: bold 14px 'Roboto', arial, tahoma;
     color: #fff;
@@ -389,7 +411,7 @@
     transition: color 300ms ease;
 }
 
-.garage .right-block .buy-block .price .value.not-enough {
+.garage .right-block .buy-block .price .not-enough {
     color: #f00;
 }
 
@@ -569,20 +591,21 @@
     display: none;
 }
 
-.garage .bottom-block .item .price {
+.garage .bottom-block .item .price .coins {
     position: absolute;
-    top: 2px;
+    top: 0px;
     right: 5px;
     text-align: right;
     color: rgb(247, 234, 56);
 }
 
-.garage .bottom-block .item .price .value {
+.garage .bottom-block .item .price .coins .value {
     color: #fff;
     font-size: 12px;
+    padding-left: 3px;
 }
 
-.garage .bottom-block .item .price .ico {
+.garage .bottom-block .item .price .coins .ico {
     float: left;
     width: 13px;
     height: 13px;
@@ -593,8 +616,35 @@
     background-size: 100% 100%;
 }
 
+.garage .bottom-block .item .price .levels {
+    position: absolute;
+    top: 0px;
+    left: 5px;
+    text-align: right;
+    color: rgb(247, 234, 56);
+}
+
+.garage .bottom-block .item .price .levels .ico {
+    float: left;
+    width: 13px;
+    height: 13px;
+    margin-top: 4px;
+    margin-right: 1px;
+    filter: brightness(1.1) drop-shadow(0px 0px 2px);
+    background-image: url(/resources/img/xp.png);
+    background-size: 100% 100%;
+}
+
+.garage .bottom-block .item .price .levels .value {
+    color: #fff;
+    font-size: 12px;
+    padding-left: 3px;
+}
+
+/*  */
+
 .garage .bottom-block .item img {
-    position: relative;
+    position: absolute;
     top: 50%;
     transform: translate( 0%, -50% );
     width: 100%;

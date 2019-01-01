@@ -37,7 +37,8 @@ export class GarageRightMenu {
         if ( needToBuy ) {
 
             $('.garage .right-block .buy-block').show();
-            $('.garage .right-block .buy-block .price .value').html( item.price );
+            $('.garage .right-block .buy-block .price .coins-value').html( item.price.coins );
+            $('.garage .right-block .buy-block .price .level-bonus-value').html( item.price.levelBonuses );
             $('.garage .right-block .buy-block').css({ transform: 'translate( 0px, 0px )', opacity: 1 });
             $('.garage .right-block .buy-btn').off();
             $('.garage .right-block .buy-btn').removeClass('inactive');
@@ -48,15 +49,30 @@ export class GarageRightMenu {
 
             });
 
-            $('.garage .right-block .buy-block .price .value').removeClass('not-enough');
+            $('.garage .right-block .buy-block .price .coins-value').removeClass('not-enough');
+            $('.garage .right-block .buy-block .price .level-bonus-value').removeClass('not-enough');
 
-            if ( item.price > Game.garage.coins ) {
+            let canBuy = true;
+
+            if ( item.price.coins > Game.garage.coins ) {
 
                 $('.garage .right-block .buy-btn').addClass('inactive');
-                $('.garage .right-block .buy-block .price .value').addClass('not-enough');
+                $('.garage .right-block .buy-block .price .coins-value').addClass('not-enough');
                 $('.garage .right-block .buy-btn').click( () => { SoundManager.playSound('ElementSelect'); });
+                canBuy = false;
 
-            } else {
+            }
+
+            if ( item.price.levelBonuses > Game.garage.levelBonuses ) {
+
+                $('.garage .right-block .buy-btn').addClass('inactive');
+                $('.garage .right-block .buy-block .price .level-bonus-value').addClass('not-enough');
+                $('.garage .right-block .buy-btn').click( () => { SoundManager.playSound('ElementSelect'); });
+                canBuy = false;
+
+            }
+
+            if ( canBuy ) {
 
                 $('.garage .right-block .buy-btn').html('BUY');
                 $('.garage .right-block .buy-btn').click( () => { Game.garage.buyPart( item ); } );
@@ -136,19 +152,29 @@ export class GarageRightMenu {
 
         });
 
+        //
+
+        let canUpgrade = true;
+
         if ( item.levels[ level ].price.levelBonuses > Game.garage.levelBonuses ) {
 
             $('.garage .right-block .upgrade-block .level-bonus-value').addClass('not-enough');
             $('.garage .right-block .upgrade-block .upgrade-btn').addClass('inactive');
             $('.garage .right-block .upgrade-block .upgrade-btn').click( () => { SoundManager.playSound('ElementSelect'); } );
+            canUpgrade = false;
 
-        } else if ( item.levels[ level ].price.coins > Game.garage.coins ) {
+        }
+
+        if ( item.levels[ level ].price.coins > Game.garage.coins ) {
 
             $('.garage .right-block .upgrade-block .coins-value').addClass('not-enough');
             $('.garage .right-block .upgrade-block .upgrade-btn').addClass('inactive');
             $('.garage .right-block .upgrade-block .upgrade-btn').click( () => { SoundManager.playSound('ElementSelect'); } );
+            canUpgrade = false;
 
-        } else {
+        }
+
+        if ( canUpgrade ) {
 
             $('.garage .right-block .upgrade-block .upgrade-btn').click( () => { Game.garage.upgradePart( item ); } );
 

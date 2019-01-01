@@ -69,7 +69,10 @@ var GarageConfig = {
             type:           'Hull',
             id:             'IS2001',
             title:          'IS 2001',
-            price:          10,
+            price: {
+                coins:          10,
+                levelBonuses:   0
+            },
             cannon:         [ 'Plasma-g1', 'Plasma-double', 'Razer-v1' ],
             engine:         [ 'KX-v8', 'ZEL-72', 'KTZ-r1' ],
             armor:          [ 'X-shield', 'KS-shield', 'Z8-shield' ],
@@ -93,8 +96,10 @@ var GarageConfig = {
             type:           'Hull',
             id:             'TigerS8',
             title:          'Tiger S8',
-            price:          14,
-            levelBonuses:   0,
+            price: {
+                coins:          14,
+                levelBonuses:   1
+            },
             cannon:         [ 'Plasma-g1', 'Plasma-g2', 'Plasma-double', 'Razer-v1', 'Razer-v2' ],
             engine:         [ 'ZEL-72s', 'KTZ-r2' ],
             armor:          [ 'KS-shield', 'Z8-shield', 'KS200-shield' ],
@@ -118,8 +123,10 @@ var GarageConfig = {
             type:           'Hull',
             id:             'OrbitT32s',
             title:          'Orbit T32s',
-            price:          25,
-            levelBonuses:   1,
+            price: {
+                coins:          25,
+                levelBonuses:   2
+            },
             cannon:         [ 'Plasma-g1', 'Plasma-g2', 'Plasma-double', 'Plasma-triple', 'Razer-v1', 'Razer-v2', 'Mag87' ],
             engine:         [ 'KTZ-r2', 'VAX-32', 'VAX-32s' ],
             armor:          [ 'KS200-shield', 'Z8-shield', 'MG-defence' ],
@@ -143,8 +150,10 @@ var GarageConfig = {
             type:           'Hull',
             id:             'MG813',
             title:          'MG 813',
-            price:          45,
-            levelBonuses:   1,
+            price: {
+                coins:          45,
+                levelBonuses:   3
+            },
             cannon:         [ 'Plasma-double', 'Plasma-triple', 'Razer-v1', 'Razer-v2', 'Razer-double', 'Mag87', 'Mag87s' ],
             engine:         [ 'ZEL-72s', 'KTZ-r2', 'VAX-32s' ],
             armor:          [ 'X-shield', 'KS-shield', 'z8-shield' ],
@@ -168,8 +177,10 @@ var GarageConfig = {
             type:           'Hull',
             id:             'DTEK72',
             title:          'DTEK 72',
-            price:          70,
-            levelBonuses:   2,
+            price: {
+                coins:          70,
+                levelBonuses:   3
+            },
             cannon:         [ 'Plasma-double', 'Plasma-triple', 'Razer-v2', 'Razer-double', 'Mag87', 'Mag87s' ],
             engine:         [ 'KTZ-r1', 'KTZ-r2', 'VAX-32', 'VAX-32s' ],
             armor:          [ 'Z8-shield', 'MG-defence', 'MG-defence-v2', 'P12-shield' ],
@@ -193,8 +204,10 @@ var GarageConfig = {
             type:           'Hull',
             id:             'RiperX3',
             title:          'Riper X3',
-            price:          100,
-            levelBonuses:   3,
+            price: {
+                coins:          100,
+                levelBonuses:   4
+            },
             cannon:         [ 'Plasma-double', 'Plasma-triple', 'Plasma-zero', 'Razer-v2', 'Razer-double', 'Mag87', 'Mag87s', 'Mag87s-turbo' ],
             engine:         [ 'KTZ-r2', 'VAX-32s', 'VAX-32v2' ],
             armor:          [ 'MG-defence', 'MG-defence-v2', 'T215'],
@@ -226,7 +239,6 @@ var GarageConfig = {
             title:          'Plasma g1',
             description:    '',
             shortDesc:      'Plasma cannon first Gen.',
-            price:          8,
             shootType:      'bullet',
             levels:         {
                 1:      { damage: 30, range: 200, overheat: 200, rpm: 140, price: { levelBonuses: 0, coins:  5 } },
@@ -238,7 +250,11 @@ var GarageConfig = {
             shotSpeed:      1.8,
             shootInfo: [
                 { dAngle: 0, offset: 25, y: 20 }
-            ]
+            ],
+            price: {
+                coins:          8,
+                levelBonuses:   0
+            },
         },
 
         'Plasma-g2': {
@@ -248,7 +264,6 @@ var GarageConfig = {
             title:          'Plasma g2',
             description:    '',
             shortDesc:      'Plasma cannon second Gen.',
-            price:          12,
             shootType:      'bullet',
             levels:         {
                 1:      { damage: 40, range: 200, overheat: 210, rpm: 140, price: { levelBonuses: 0, coins:  7 } },
@@ -260,7 +275,11 @@ var GarageConfig = {
             shotSpeed:      1.8,
             shootInfo: [
                 { dAngle: 0, offset: 25, y: 20 }
-            ]
+            ],
+            price: {
+                coins:          12,
+                levelBonuses:   0
+            },
         },
 
         'Plasma-double': {
@@ -270,7 +289,6 @@ var GarageConfig = {
             title:          'Plasma double',
             description:    '',
             shortDesc:      'Plasma cannon with double oscillator.',
-            price:          20,
             shootType:      'bullet',
             levels:         {
                 1:      { damage: 30, range: 180, overheat: 270, rpm: 120, price: { levelBonuses: 0, coins: 13 } },
@@ -283,7 +301,11 @@ var GarageConfig = {
             shootInfo: [
                 { dAngle:   0.16, offset: 25, y: 20 },
                 { dAngle: - 0.16, offset: 25, y: 20 }
-            ]
+            ],
+            price: {
+                coins:          20,
+                levelBonuses:   0
+            },
         },
 
         'Plasma-triple': {
@@ -293,7 +315,6 @@ var GarageConfig = {
             title:          'Plasma triple',
             description:    '',
             shortDesc:      'Plasma cannon with triple oscillator.',
-            price:          40,
             shootType:      'bullet',
             levels:         {
                 1:      { damage: 20, range: 170, overheat: 330, rpm: 120, price: { levelBonuses: 0, coins: 20 } },
@@ -307,7 +328,11 @@ var GarageConfig = {
                 { dAngle:   0.10, offset: 25, y: 21 },
                 { dAngle:   0.00, offset: 25, y: 23 },
                 { dAngle: - 0.10, offset: 25, y: 21 }
-            ]
+            ],
+            price: {
+                coins:          40,
+                levelBonuses:   0
+            },
         },
 
         'Plasma-zero': {
@@ -317,7 +342,6 @@ var GarageConfig = {
             title:          'Plasma zero',
             description:    '',
             shortDesc:      'Plasma cannon with zero heat release.',
-            price:          50,
             shootType:      'bullet',
             levels:         {
                 1:      { damage: 35, range: 170, overheat: 0, rpm: 150, price: { levelBonuses: 0, coins: 25 } },
@@ -329,7 +353,11 @@ var GarageConfig = {
             shotSpeed:      1.8,
             shootInfo: [
                 { dAngle:   0.00, offset: 30, y: 23 }
-            ]
+            ],
+            price: {
+                coins:          50,
+                levelBonuses:   0
+            },
         },
 
         // Laser cannons
@@ -341,7 +369,6 @@ var GarageConfig = {
             title:          'Razer v1',
             description:    '',
             shortDesc:      'Laser cannon first prototype',
-            price:          70,
             shootType:      'laser',
             levels:         {
                 1:      { damage: 12, range: 170, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 35 } },
@@ -353,7 +380,11 @@ var GarageConfig = {
             shotSpeed:      1,
             shootInfo: [
                 { dAngle: 0, offset: 40, y: 20 }
-            ]
+            ],
+            price: {
+                coins:          70,
+                levelBonuses:   0
+            },
         },
 
         'Razer-v2': {
@@ -363,7 +394,6 @@ var GarageConfig = {
             title:          'Razer v2',
             description:    '',
             shortDesc:      'Second prototype version of laser cannon',
-            price:          95,
             shootType:      'laser',
             levels:         {
                 1:      { damage: 10, range: 200, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 40 } },
@@ -375,7 +405,11 @@ var GarageConfig = {
             shotSpeed:      1,
             shootInfo: [
                 { dAngle: 0, offset: 40, y: 20 }
-            ]
+            ],
+            price: {
+                coins:          95,
+                levelBonuses:   0
+            },
         },
 
         'Razer-double': {
@@ -385,7 +419,6 @@ var GarageConfig = {
             title:          'Razer double',
             description:    '',
             shortDesc:      'Original Razer cannon with double oscillator core.',
-            price:          130,
             shootType:      'laser',
             levels:         {
                 1:      { damage:  8, range: 190, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 35 } },
@@ -398,7 +431,11 @@ var GarageConfig = {
             shootInfo: [
                 { dAngle: - 1.3, offset: 20, y: 16 },
                 { dAngle:   1.3, offset: 20, y: 16 }
-            ]
+            ],
+            price: {
+                coins:          130,
+                levelBonuses:   0
+            },
         },
 
         // Magnet cannons
@@ -410,7 +447,6 @@ var GarageConfig = {
             title:          'Mag 87',
             description:    '',
             shortDesc:      'Magnet cannon v87 release.',
-            price:          160,
             shootType:      'bullet',
             levels:         {
                 1:      { damage: 10, range: 220, overheat: 10, rpm: 450, price: { levelBonuses: 1, coins: 50 } },
@@ -422,7 +458,11 @@ var GarageConfig = {
             shotSpeed:      1.8,
             shootInfo: [
                 { dAngle: 0, offset: 25, y: 20 }
-            ]
+            ],
+            price: {
+                coins:          160,
+                levelBonuses:   0
+            },
         },
 
         'Mag87s': {
@@ -432,7 +472,6 @@ var GarageConfig = {
             title:          'Mag 87S',
             description:    '',
             shortDesc:      'Improved magnet cannon v87S.',
-            price:          180,
             shootType:      'bullet',
             levels:         {
                 1:      { damage: 10, range: 220, overheat: 10, rpm: 550, price: { levelBonuses: 1, coins: 60 } },
@@ -444,7 +483,11 @@ var GarageConfig = {
             shotSpeed:      1.8,
             shootInfo: [
                 { dAngle: 0, offset: 25, y: 20 }
-            ]
+            ],
+            price: {
+                coins:          180,
+                levelBonuses:   0
+            },
         },
 
         'Mag87s-turbo': {
@@ -454,7 +497,6 @@ var GarageConfig = {
             title:          'Mag 87s turbo',
             description:    '',
             shortDesc:      'Magnet cannon v87s turbo version.',
-            price:          220,
             shootType:      'bullet',
             levels:         {
                 1:      { damage: 8, range: 220, overheat: 10, rpm: 650, price: { levelBonuses: 2, coins: 70 } },
@@ -466,7 +508,11 @@ var GarageConfig = {
             shotSpeed:      1.8,
             shootInfo: [
                 { dAngle: 0.28, offset: 45, y: 21 }
-            ]
+            ],
+            price: {
+                coins:          220,
+                levelBonuses:   0
+            },
         }
 
     },
@@ -480,13 +526,16 @@ var GarageConfig = {
             title:          'KX v8',
             description:    '',
             shortDesc:      'Turbo diesel 1.3k HP engine with tesla induction generator.',
-            price:          10,
             levels:         {
                 1:      { maxSpeed: 50, power: 24000, price: { levelBonuses: 0, coins: 4 } },
                 2:      { maxSpeed: 52, power: 26000, price: { levelBonuses: 0, coins: 5 } },
                 3:      { maxSpeed: 53, power: 27000, price: { levelBonuses: 0, coins: 7 } },
                 4:      { maxSpeed: 55, power: 28000, price: { levelBonuses: 0, coins: 7 } },
                 5:      { maxSpeed: 57, power: 30000, price: { levelBonuses: 1, coins: 8 } }
+            },
+            price: {
+                coins:          10,
+                levelBonuses:   0
             }
         },
 
@@ -497,13 +546,16 @@ var GarageConfig = {
             title:          'ZEL 72',
             description:    '',
             shortDesc:      'Double turbo diesel 1.8k HP engine with tesla induction generator.',
-            price:          20,
             levels:         {
                 1:      { maxSpeed: 52, power: 28000, price: { levelBonuses: 0, coins: 4 } },
                 2:      { maxSpeed: 53, power: 30000, price: { levelBonuses: 0, coins: 5 } },
                 3:      { maxSpeed: 55, power: 32000, price: { levelBonuses: 1, coins: 7 } },
                 4:      { maxSpeed: 56, power: 33000, price: { levelBonuses: 1, coins: 7 } },
                 5:      { maxSpeed: 57, power: 35000, price: { levelBonuses: 1, coins: 8 } }
+            },
+            price: {
+                coins:          20,
+                levelBonuses:   0
             }
         },
 
@@ -514,14 +566,17 @@ var GarageConfig = {
             title:          'ZEL 72s',
             description:    '',
             shortDesc:      'Double turbo diesel 2.1k HP engine with tesla induction generator with Gallium winding.',
-            price:          35,
             levels:         {
                 1:      { maxSpeed: 54, power: 33000, price: { levelBonuses: 0, coins:  7 } },
                 2:      { maxSpeed: 56, power: 35000, price: { levelBonuses: 0, coins:  8 } },
                 3:      { maxSpeed: 57, power: 38000, price: { levelBonuses: 1, coins:  8 } },
                 4:      { maxSpeed: 58, power: 40000, price: { levelBonuses: 1, coins: 10 } },
                 5:      { maxSpeed: 59, power: 43000, price: { levelBonuses: 1, coins: 12 } }
-            }
+            },
+            price: {
+                coins:          35,
+                levelBonuses:   0
+            },
         },
 
         'KTZ-r1': {
@@ -531,13 +586,16 @@ var GarageConfig = {
             title:          'KTZ r1',
             description:    '',
             shortDesc:      'Plutonium 3.2k HP engine with organic-based generator.',
-            price:          45,
             levels:         {
                 1:      { maxSpeed: 54, power: 33000, price: { levelBonuses: 1, coins:  7 } },
                 2:      { maxSpeed: 56, power: 35000, price: { levelBonuses: 1, coins:  8 } },
                 3:      { maxSpeed: 57, power: 38000, price: { levelBonuses: 1, coins:  8 } },
                 4:      { maxSpeed: 58, power: 40000, price: { levelBonuses: 1, coins: 10 } },
                 5:      { maxSpeed: 59, power: 43000, price: { levelBonuses: 1, coins: 12 } }
+            },
+            price: {
+                coins:          45,
+                levelBonuses:   0
             }
         },
 
@@ -548,14 +606,17 @@ var GarageConfig = {
             title:          'KTZ r2',
             description:    '',
             shortDesc:      'Improved plutonium 3.4k HP engine with organic-based generator.',
-            price:          60,
             levels:         {
                 1:      { maxSpeed: 56, power: 36000, price: { levelBonuses: 1, coins: 15 } },
                 2:      { maxSpeed: 58, power: 37000, price: { levelBonuses: 1, coins: 18 } },
                 3:      { maxSpeed: 60, power: 38000, price: { levelBonuses: 1, coins: 20 } },
                 4:      { maxSpeed: 62, power: 41000, price: { levelBonuses: 1, coins: 23 } },
                 5:      { maxSpeed: 65, power: 44000, price: { levelBonuses: 2, coins: 25 } }
-            }
+            },
+            price: {
+                coins:          60,
+                levelBonuses:   0
+            },
         },
 
         'VAX-32': {
@@ -565,13 +626,16 @@ var GarageConfig = {
             title:          'VAX 32',
             description:    '',
             shortDesc:      'Polonium ARK 3.7k HP engine with generator and Lithium batteries.',
-            price:          80,
             levels:         {
                 1:      { maxSpeed: 60, power: 36000, price: { levelBonuses: 1, coins: 20 } },
                 2:      { maxSpeed: 61, power: 38000, price: { levelBonuses: 1, coins: 22 } },
                 3:      { maxSpeed: 63, power: 42000, price: { levelBonuses: 1, coins: 24 } },
                 4:      { maxSpeed: 65, power: 44000, price: { levelBonuses: 2, coins: 28 } },
                 5:      { maxSpeed: 68, power: 48000, price: { levelBonuses: 2, coins: 30 } }
+            },
+            price: {
+                coins:          80,
+                levelBonuses:   0
             }
         },
 
@@ -582,13 +646,16 @@ var GarageConfig = {
             title:          'VAX 32s',
             description:    '',
             shortDesc:      'Improved polonium ARK 4.2k HP engine.',
-            price:          100,
             levels:         {
                 1:      { maxSpeed: 60, power: 36000, price: { levelBonuses: 1, coins: 20 } },
                 2:      { maxSpeed: 61, power: 38000, price: { levelBonuses: 1, coins: 22 } },
                 3:      { maxSpeed: 63, power: 42000, price: { levelBonuses: 2, coins: 24 } },
                 4:      { maxSpeed: 65, power: 44000, price: { levelBonuses: 2, coins: 28 } },
                 5:      { maxSpeed: 68, power: 48000, price: { levelBonuses: 3, coins: 30 } }
+            },
+            price: {
+                coins:          100,
+                levelBonuses:   0
             }
         },
 
@@ -599,13 +666,16 @@ var GarageConfig = {
             title:          'VAX 32v2',
             description:    '',
             shortDesc:      'Modified VAX32s with Cesium core, 4.6k HP.',
-            price:          130,
             levels:         {
                 1:      { maxSpeed: 63, power: 32000, price: { levelBonuses: 1, coins: 25 } },
                 2:      { maxSpeed: 65, power: 40000, price: { levelBonuses: 2, coins: 27 } },
                 3:      { maxSpeed: 66, power: 45000, price: { levelBonuses: 2, coins: 29 } },
                 4:      { maxSpeed: 68, power: 48000, price: { levelBonuses: 2, coins: 34 } },
                 5:      { maxSpeed: 71, power: 50000, price: { levelBonuses: 3, coins: 40 } }
+            },
+            price: {
+                coins:          130,
+                levelBonuses:   0
             }
         }
 
@@ -620,13 +690,16 @@ var GarageConfig = {
             title:          'X Shield',
             description:    '',
             shortDesc:      'Basic 100mm titanium list.',
-            price:          10,
             levels:         {
                 1:      { armor: 30, price: { levelBonuses: 0, coins:  3 } },
                 2:      { armor: 33, price: { levelBonuses: 0, coins:  5 } },
                 3:      { armor: 36, price: { levelBonuses: 0, coins:  7 } },
                 4:      { armor: 40, price: { levelBonuses: 0, coins:  8 } },
                 5:      { armor: 50, price: { levelBonuses: 1, coins: 10 } }
+            },
+            price: {
+                coins:          10,
+                levelBonuses:   0
             }
         },
 
@@ -637,13 +710,16 @@ var GarageConfig = {
             title:          'KS Shield',
             description:    '',
             shortDesc:      '20mm Iridium armor.',
-            price:          20,
             levels:         {
                 1:      { armor: 40, price: { levelBonuses: 0, coins:  6 } },
                 2:      { armor: 45, price: { levelBonuses: 0, coins: 10 } },
                 3:      { armor: 48, price: { levelBonuses: 0, coins: 12 } },
                 4:      { armor: 55, price: { levelBonuses: 1, coins: 13 } },
                 5:      { armor: 65, price: { levelBonuses: 1, coins: 15 } }
+            },
+            price: {
+                coins:          20,
+                levelBonuses:   0
             }
         },
 
@@ -654,13 +730,16 @@ var GarageConfig = {
             title:          'KS200 Shield',
             description:    '',
             shortDesc:      '35mm Iridium armor with active barrier.',
-            price:          35,
             levels:         {
                 1:      { armor: 45, price: { levelBonuses: 0, coins: 10 } },
                 2:      { armor: 50, price: { levelBonuses: 0, coins: 13 } },
                 3:      { armor: 55, price: { levelBonuses: 1, coins: 16 } },
                 4:      { armor: 65, price: { levelBonuses: 1, coins: 18 } },
                 5:      { armor: 72, price: { levelBonuses: 1, coins: 20 } }
+            },
+            price: {
+                coins:          35,
+                levelBonuses:   0
             }
         },
 
@@ -671,13 +750,16 @@ var GarageConfig = {
             title:          'Z8 Shield',
             description:    '',
             shortDesc:      '80mm uranium plates armor.',
-            price:          45,
             levels:         {
                 1:      { armor: 50, price: { levelBonuses: 0, coins: 15 } },
                 2:      { armor: 56, price: { levelBonuses: 1, coins: 18 } },
                 3:      { armor: 64, price: { levelBonuses: 1, coins: 20 } },
                 4:      { armor: 72, price: { levelBonuses: 1, coins: 22 } },
                 5:      { armor: 85, price: { levelBonuses: 1, coins: 25 } }
+            },
+            price: {
+                coins:          45,
+                levelBonuses:   0
             }
         },
 
@@ -688,13 +770,16 @@ var GarageConfig = {
             title:          'MG Defence',
             description:    '',
             shortDesc:      '3mm graphene nanotubes plates armor.',
-            price:          55,
             levels:         {
                 1:      { armor:  65, price: { levelBonuses: 0, coins: 18 } },
                 2:      { armor:  72, price: { levelBonuses: 1, coins: 20 } },
                 3:      { armor:  84, price: { levelBonuses: 1, coins: 24 } },
                 4:      { armor:  90, price: { levelBonuses: 1, coins: 26 } },
                 5:      { armor: 100, price: { levelBonuses: 2, coins: 30 } }
+            },
+            price: {
+                coins:          55,
+                levelBonuses:   0
             }
         },
 
@@ -705,13 +790,16 @@ var GarageConfig = {
             title:          'MG Defence v2',
             description:    '',
             shortDesc:      '5mm graphene nanotubes plates with Adamantium strings.',
-            price:          70,
             levels:         {
                 1:      { armor:  75, price: { levelBonuses: 1, coins: 23 } },
                 2:      { armor:  90, price: { levelBonuses: 1, coins: 27 } },
                 3:      { armor: 100, price: { levelBonuses: 2, coins: 29 } },
                 4:      { armor: 110, price: { levelBonuses: 2, coins: 32 } },
                 5:      { armor: 130, price: { levelBonuses: 2, coins: 35 } }
+            },
+            price: {
+                coins:          70,
+                levelBonuses:   0
             }
         },
 
@@ -729,6 +817,10 @@ var GarageConfig = {
                 3:      { armor: 115, price: { levelBonuses: 1, coins: 43 } },
                 4:      { armor: 135, price: { levelBonuses: 1, coins: 48 } },
                 5:      { armor: 150, price: { levelBonuses: 2, coins: 50 } }
+            },
+            price: {
+                coins:          85,
+                levelBonuses:   0
             }
         },
 
@@ -739,14 +831,17 @@ var GarageConfig = {
             title:          'P12.5 shield',
             description:    '',
             shortDesc:      '5mm graphene nanotubes plates with Adamantium strings.',
-            price:          100,
             levels:         {
                 1:      { armor: 110, price: { levelBonuses: 1, coins: 45 } },
                 2:      { armor: 120, price: { levelBonuses: 1, coins: 50 } },
                 3:      { armor: 135, price: { levelBonuses: 2, coins: 54 } },
                 4:      { armor: 155, price: { levelBonuses: 2, coins: 58 } },
                 5:      { armor: 170, price: { levelBonuses: 2, coins: 60 } }
-            }
+            },
+            price: {
+                coins:          100,
+                levelBonuses:   0
+            },
         },
 
         'T215-armor': {
@@ -763,6 +858,10 @@ var GarageConfig = {
                 3:      { armor: 165, price: { levelBonuses: 2, coins: 60 } },
                 4:      { armor: 180, price: { levelBonuses: 3, coins: 62 } },
                 5:      { armor: 200, price: { levelBonuses: 3, coins: 70 } }
+            },
+            price: {
+                coins:          120,
+                levelBonuses:   0
             }
         }
 

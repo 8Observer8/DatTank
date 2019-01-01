@@ -87,7 +87,8 @@ export class GarageBottomMenu {
                     <img class="img" src="/resources/img/garage/hulls/${ hullId }.png" />
                     <div class="obj-title">${ hull.title }</div>
                     <div class="price">
-                        <div class="ico"></div><span class="value">${ hull.price }</span>
+                        <div class="coins"><div class="ico"></div><span class="value">${ hull.price.coins }</span></div>
+                        <div class="levels"><div class="ico"></div><span class="value">${ hull.price.levelBonuses }</span><div>
                     </div>
                     <div class="level-indicator">
                         <div class="level5"></div>
@@ -123,7 +124,8 @@ export class GarageBottomMenu {
                     <img class="img" src="/resources/img/garage/cannons/${ cannonId }.png" />
                     <div class="obj-title">${ cannon.title }</div>
                     <div class="price">
-                        <div class="ico"></div><span class="value">${ cannon.price }</span>
+                        <div class="coins"><div class="ico"></div><span class="value">${ cannon.price.coins }</span></div>
+                        <div class="levels"><div class="ico"></div><span class="value">${ cannon.price.levelBonuses }</span><div>
                     </div>
                     <div class="level-indicator">
                         <div class="level5"></div>
@@ -159,7 +161,8 @@ export class GarageBottomMenu {
                     <img class="img" src="/resources/img/garage/engines/${ engineId }.png" />
                     <div class="obj-title">${ engine.title }</div>
                     <div class="price">
-                        <div class="ico"></div><span class="value">${ engine.price }</span>
+                        <div class="coins"><div class="ico"></div><span class="value">${ engine.price.coins }</span></div>
+                        <div class="levels"><div class="ico"></div><span class="value">${ engine.price.levelBonuses }</span><div>
                     </div>
                     <div class="level-indicator">
                         <div class="level5"></div>
@@ -195,7 +198,8 @@ export class GarageBottomMenu {
                     <img class="img" src="/resources/img/garage/armors/${ armorId }.png" />
                     <div class="obj-title">${ armor.title }</div>
                     <div class="price">
-                        <div class="ico"></div><span class="value">${ armor.price }</span>
+                        <div class="coins"><div class="ico"></div><span class="value">${ armor.price.coins }</span></div>
+                        <div class="levels"><div class="ico"></div><span class="value">${ armor.price.levelBonuses }</span><div>
                     </div>
                     <div class="level-indicator">
                         <div class="level5"></div>
