@@ -116,9 +116,10 @@ export class GarageRightMenu {
         $('.garage .right-block .upgrade-block .price .level-bonus-value').html( item.levels[ level ].price.levelBonuses );
 
         $('.garage .right-block .upgrade-block .upgrade-btn').removeClass('inactive');
-        $('.garage .right-block .upgrade-block .upgrade-btn .level-bonus-value').removeClass('not-enough');
-        $('.garage .right-block .upgrade-block .coins-value').removeClass('not-enough');
         $('.garage .right-block .upgrade-block .upgrade-btn').off();
+
+        $('.garage .right-block .upgrade-block .price .level-bonus-value').removeClass('not-enough');
+        $('.garage .right-block .upgrade-block .price .coins-value').removeClass('not-enough');
 
         $('.garage .right-block .upgrade-block .upgrade-btn').mouseover( () => {
 

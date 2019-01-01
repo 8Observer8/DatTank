@@ -18,7 +18,7 @@ export class BoxObject {
     public arena: ArenaCore;
     public id: number;
     public removed: boolean = false;
-    public radius: number = 8;
+    public radius: number = 10;
     public position: OMath.Vec3 = new OMath.Vec3();
     public rotation: number = 0;
     public typeId: number;

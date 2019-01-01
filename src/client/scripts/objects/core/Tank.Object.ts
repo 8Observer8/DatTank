@@ -143,7 +143,7 @@ export class TankObject {
 
         if ( this.health <= 0 ) return;
 
-        this.ammo = value;
+        this.ammo = Math.max( value, 0 );
 
         if ( this.player.id === Arena.me.id ) {
 
@@ -248,6 +248,7 @@ export class TankObject {
 
     public dispose () : void {
 
+        this.cannon.stopShooting();
         this.gfx.dispose();
         this.network.dispose();
         CollisionManager.removeObject( this );

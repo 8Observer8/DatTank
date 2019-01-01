@@ -202,6 +202,8 @@ export class CannonTankPart {
 
         for ( let i = 0, il = this.sourceParam.shootInfo.length; i < il; i ++ ) {
 
+            if ( this.tank.ammo <= 0 ) continue;
+
             const bullet = this.tank.arena.bulletShotManager.getInactiveBullet();
             bullet.id = shotId;
 
