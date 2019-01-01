@@ -158,10 +158,12 @@ PlayerManager.prototype.buyObject = function ( pid, objectType, objectId, callba
         var object = ( GarageConfig[ objectType ] || {} )[ objectId ] || false;
         if ( object === false ) return callback( false, 'object not found' );
 
-        if ( player.coins < object.price ) return callback( false, 'not enough coins' );
+        if ( player.coins < object.price.coins ) return callback( false, 'not enough coins' );
+        if ( player.levelBonuses < object.price.levelBonuses ) return callback( false, 'nought enough level bonuses');
         if ( player.params[ objectType ] && player.params[ objectType ][ objectId ] ) return callback( false, 'you already have this object' );
 
-        player.coins -= object.price;
+        player.coins -= object.price.coins;
+        player.levelBonuses -= object.price.levelBonuses;
 
         //
 
@@ -173,8 +175,11 @@ PlayerManager.prototype.buyObject = function ( pid, objectType, objectId, callba
         player.save( function () {
 
             return callback( true, {
-                params:     player.params,
-                coins:      player.coins
+                params:         player.params,
+                coins:          player.coins,
+                xp:             player.xp,
+                level:          player.level,
+                levelBonuses:   player.levelBonuses
             });
 
         });
@@ -221,6 +226,8 @@ PlayerManager.prototype.upgradeObject = function ( pid, objectType, objectId, ca
                 params:             player.params,
                 itemLevel:          player.params[ objectType ][ objectId ].level,
                 coins:              player.coins,
+                xp:                 player.xp,
+                level:              player.level,
                 levelBonuses:       player.levelBonuses
             });
 

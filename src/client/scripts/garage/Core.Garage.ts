@@ -76,7 +76,7 @@ export class Garage {
         $('.garage .level-block .progress .progress-value').css({ width: ( 100 * this.xp / Game.GarageConfig.levels[ this.level ] ) + '%' })
         $('.garage .level-block .bonuses .value').html( this.levelBonuses );
 
-        $('.garage .coins .value').html( this.coins );
+        $('.garage .header .coins .value').html( this.coins );
 
     };
 
@@ -203,7 +203,7 @@ export class Garage {
             SoundManager.playSound('MenuBuy');
             $('.garage .right-block .buy-block').css({ transform: 'translate( 30px, 0px )', opacity: 0 });
             setTimeout( () => { $('.garage .right-block .buy-block').hide(); }, 300 );
-            this.updateUserParams( response.coins );
+            this.updateUserParams( response.coins, response.xp, response.level, response.levelBonuses );
             this.checkIfTankComplete();
             this.rightRightMenu.updateIfCanUpgrade( false, item.id );
 

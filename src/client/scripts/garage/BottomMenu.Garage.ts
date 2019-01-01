@@ -88,7 +88,7 @@ export class GarageBottomMenu {
                     <div class="obj-title">${ hull.title }</div>
                     <div class="price">
                         <div class="coins"><div class="ico"></div><span class="value">${ hull.price.coins }</span></div>
-                        <div class="levels"><div class="ico"></div><span class="value">${ hull.price.levelBonuses }</span><div>
+                        <div class="levels"><div class="ico"></div><span class="value">${ hull.price.levelBonuses }</span></div>
                     </div>
                     <div class="level-indicator">
                         <div class="level5"></div>
