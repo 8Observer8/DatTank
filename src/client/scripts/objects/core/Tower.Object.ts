@@ -45,7 +45,7 @@ export class TowerObject {
 
         if ( this.health <= 0 ) return;
 
-        BulletShotManager.showBullet( bulletId, position, this.range, 1.8, directionRotation );
+        BulletShotManager.showBullet( this, bulletId, position, this.range, 1.8, directionRotation );
         this.gfx.shoot();
 
     };

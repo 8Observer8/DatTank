@@ -141,8 +141,8 @@ class GraphicsCore {
         // setup sound listener
 
         this.audioListener = new THREE.AudioListener();
-        if ( SoundManager.muted ) this.audioListener.setMasterVolume( 0 );
         this.camera.add( this.audioListener );
+        if ( SoundManager.muted ) this.audioListener.setMasterVolume( 0 );
 
         //
 

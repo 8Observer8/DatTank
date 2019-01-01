@@ -5,6 +5,8 @@
 
 import { BulletShotGfx } from '../effects/shots/BulletShot.Gfx';
 import * as OMath from '../../OMath/Core.OMath';
+import { TankObject } from '../../objects/core/Tank.Object';
+import { TowerObject } from '../../objects/core/Tower.Object';
 
 //
 
@@ -42,13 +44,13 @@ class BulletShotManagerCore {
 
     };
 
-    public showBullet ( bulletId: number, position: OMath.Vec3, range: number, shotSpeed: number, directionRotation: number ) : void {
+    public showBullet ( parent: TankObject | TowerObject, bulletId: number, position: OMath.Vec3, range: number, shotSpeed: number, directionRotation: number ) : void {
 
         const bullet = this.getNewBullet();
 
         if ( bullet ) {
 
-            bullet.setActive( bulletId, position, range, shotSpeed, directionRotation );
+            bullet.setActive( parent, bulletId, position, range, shotSpeed, directionRotation );
 
         }
 

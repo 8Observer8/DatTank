@@ -33,10 +33,10 @@ class TankGfx {
     public damageSmoke: DamageSmokeGfx = new DamageSmokeGfx();
     public blastSmoke: BlastSmokeGfx = new BlastSmokeGfx();
     public shadow: THREE.Mesh;
+    public movingSound: THREE.PositionalAudio;
+    public explosionSound: THREE.PositionalAudio;
 
     private hide: boolean = false;
-    private sounds = {};
-
     private rotateTankTime: number = 0;
 
     //
@@ -57,40 +57,28 @@ class TankGfx {
 
     private initSounds () : void {
 
-        const movingSound = new THREE.PositionalAudio( GfxCore.audioListener );
-        movingSound.setBuffer( ResourceManager.getSound('tank_moving.wav') as THREE.AudioBuffer );
-        movingSound.setRefDistance( 11 );
-        movingSound.autoplay = false;
-        this.object.add( movingSound );
-        this.sounds['moving'] = movingSound;
+        this.movingSound = new THREE.PositionalAudio( GfxCore.audioListener );
+        this.movingSound.setBuffer( ResourceManager.getSound('tank_moving.wav') as THREE.AudioBuffer );
+        this.movingSound.setRefDistance( 5 );
+        this.movingSound.autoplay = false;
+        this.object.add( this.movingSound );
 
-        const explosionSound = new THREE.PositionalAudio( GfxCore.audioListener );
-        explosionSound.setBuffer( ResourceManager.getSound('tank_explosion.wav') as THREE.AudioBuffer );
-        explosionSound.setRefDistance( 15 );
-        explosionSound.autoplay = false;
-        this.object.add( explosionSound );
-        this.sounds['explosion'] = explosionSound;
+        this.explosionSound = new THREE.PositionalAudio( GfxCore.audioListener );
+        this.explosionSound.setBuffer( ResourceManager.getSound('tank_explosion.wav') as THREE.AudioBuffer );
+        this.explosionSound.setRefDistance( 15 );
+        this.explosionSound.autoplay = false;
+        this.object.add( this.explosionSound );
 
     };
 
     public toggleMovementSound ( enable: boolean ) : void {
 
-        const sound = this.sounds['moving'];
+        if ( this.movingSound.buffer ) {
 
-        if ( sound.buffer ) {
+            if ( ! this.movingSound.isPlaying && enable ) {
 
-            if ( ! sound.isPlaying && enable ) {
-
-                sound.play();
-                sound.isPlaying = true;
-
-            }
-
-            if ( sound.isPlaying && ! enable ) {
-
-                sound.stop();
-                sound.startTime = false;
-                sound.isPlaying = false;
+                this.movingSound.play();
+                this.movingSound.isPlaying = true;
 
             }
 
@@ -168,6 +156,8 @@ class TankGfx {
         }
 
         //
+
+        this.movingSound.setVolume( this.tank.velocity / 40 );
 
         this.updateTracks( time, delta );
         this.traces.update( time, delta );
@@ -363,7 +353,7 @@ class TankGfx {
     public destroy ( callback: () => void ) : void {
 
         DeathExplosionManager.showExplosion( this.tank.position );
-        this.sounds['explosion'].play();
+        this.explosionSound.play();
 
         this.traces.hide();
 
@@ -393,11 +383,8 @@ class TankGfx {
 
         // stop all audio
 
-        for ( const s in this.sounds ) {
-
-            if ( this.sounds[ s ] ) this.sounds[ s ].pause();
-
-        }
+        this.explosionSound.pause();
+        this.movingSound.pause();
 
         // remove tank object from scene
 

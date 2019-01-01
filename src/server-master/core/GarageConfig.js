@@ -449,11 +449,11 @@ var GarageConfig = {
             shortDesc:      'Magnet cannon v87 release.',
             shootType:      'bullet',
             levels:         {
-                1:      { damage: 10, range: 220, overheat: 10, rpm: 450, price: { levelBonuses: 1, coins: 50 } },
-                2:      { damage: 12, range: 230, overheat: 10, rpm: 460, price: { levelBonuses: 2, coins: 53 } },
-                3:      { damage: 13, range: 230, overheat: 10, rpm: 470, price: { levelBonuses: 2, coins: 55 } },
-                4:      { damage: 14, range: 240, overheat: 10, rpm: 480, price: { levelBonuses: 2, coins: 58 } },
-                5:      { damage: 15, range: 240, overheat: 10, rpm: 500, price: { levelBonuses: 3, coins: 60 } }
+                1:      { damage: 13, range: 220, overheat: 10, rpm: 450, price: { levelBonuses: 1, coins: 50 } },
+                2:      { damage: 14, range: 230, overheat: 10, rpm: 460, price: { levelBonuses: 2, coins: 53 } },
+                3:      { damage: 15, range: 230, overheat: 10, rpm: 470, price: { levelBonuses: 2, coins: 55 } },
+                4:      { damage: 16, range: 240, overheat: 10, rpm: 480, price: { levelBonuses: 2, coins: 58 } },
+                5:      { damage: 17, range: 240, overheat: 10, rpm: 500, price: { levelBonuses: 3, coins: 60 } }
             },
             shotSpeed:      1.8,
             shootInfo: [

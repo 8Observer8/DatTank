@@ -8,6 +8,8 @@ import * as THREE from 'three';
 import * as OMath from '../../../OMath/Core.OMath';
 import { GfxCore } from '../../Core.Gfx';
 import { ResourceManager } from '../../../managers/other/Resource.Manager';
+import { TankObject } from '../../../objects/core/Tank.Object';
+import { TowerObject } from '../../../objects/core/Tower.Object';
 
 //
 
@@ -66,7 +68,7 @@ export class BulletShotGfx {
 
     };
 
-    public setActive ( bulletId: number, position: OMath.Vec3, range: number, shotSpeed: number, directionRotation: number ) : void {
+    public setActive (  parent: TankObject | TowerObject, bulletId: number, position: OMath.Vec3, range: number, shotSpeed: number, directionRotation: number ) : void {
 
         this.active = true;
         this.id = bulletId;
@@ -77,6 +79,26 @@ export class BulletShotGfx {
         this.point.position.set( this.position.x, this.position.y, this.position.z );
         this.directionRotation = directionRotation;
         this.trace.rotation.z = - directionRotation;
+
+        //
+
+        if ( parent instanceof TankObject ) {
+
+            if ( parent.cannon.name.indexOf( 'Mag' ) !== -1 ) {
+
+                this.sound.setBuffer( ResourceManager.getSound('tank_mag.wav') as THREE.AudioBuffer );
+
+            } else {
+
+                this.sound.setBuffer( ResourceManager.getSound('tank_shooting.wav') as THREE.AudioBuffer );
+
+            }
+
+        } else {
+
+            this.sound.setBuffer( ResourceManager.getSound('tank_shooting.wav') as THREE.AudioBuffer );
+
+        }
 
         //
 
@@ -105,8 +127,7 @@ export class BulletShotGfx {
         this.object.add( this.trace );
 
         this.sound = new THREE.PositionalAudio( GfxCore.audioListener );
-        this.sound.setBuffer( ResourceManager.getSound('tank_shooting.wav') as THREE.AudioBuffer );
-        this.sound.setRefDistance( 70 );
+        this.sound.setRefDistance( 30 );
         this.sound.autoplay = false;
         this.object.add( this.sound );
 

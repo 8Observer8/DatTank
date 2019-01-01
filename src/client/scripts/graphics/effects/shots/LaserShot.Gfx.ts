@@ -7,6 +7,7 @@ import * as THREE from 'three';
 import * as OMath from '../../../OMath/Core.OMath';
 
 import { GfxCore } from '../../Core.Gfx';
+import { ResourceManager } from '../../../managers/other/Resource.Manager';
 import { LaserCollisionGfx } from '../explosions/LaserCollision.Gfx';
 import { TankObject } from '../../../objects/core/Tank.Object';
 
@@ -20,6 +21,7 @@ export class LaserShotGfx {
     private wrapper: THREE.Object3D = new THREE.Object3D();
     private object: THREE.Object3D = new THREE.Object3D();
     private trace: THREE.Mesh;
+    private sound: THREE.PositionalAudio;
     private range: number = 0;
     private parent: TankObject;
     public dPos: number;
@@ -134,10 +136,15 @@ export class LaserShotGfx {
 
         this.active = false;
         this.collisionEffect.deactivate();
+        this.sound.stop();
 
     };
 
     public setActive ( shotId: number, offset: OMath.Vec3, range: number, shotSpeed: number, parent: TankObject ) : void {
+
+        this.sound.setBuffer( ResourceManager.getSound('tank_laser.wav') as THREE.AudioBuffer );
+        this.sound.loop = true;
+        this.sound.play();
 
         this.active = true;
         this.id = shotId;
@@ -154,6 +161,7 @@ export class LaserShotGfx {
 
         if ( this.object.parent ) {
 
+            this.object.parent.remove( this.sound );
             this.object.parent.remove( this.object );
 
         }
@@ -161,10 +169,12 @@ export class LaserShotGfx {
         //
 
         this.parent.gfx.cannon.add( this.object );
+        this.parent.gfx.cannon.add( this.sound );
 
         this.object.position.x = this.offset.x / this.parent.gfx.cannon.scale.x;
         this.object.position.y = this.offset.y / this.parent.gfx.cannon.scale.y;
         this.object.position.z = this.offset.z / this.parent.gfx.cannon.scale.z;
+        this.sound.position.set( - this.object.position.x / this.parent.gfx.cannon.scale.x, 0, - this.object.position.z / this.parent.gfx.cannon.scale.z );
 
         this.object.scale.set( 1 / this.parent.gfx.cannon.scale.x, 1 / this.parent.gfx.cannon.scale.y, 1 / this.parent.gfx.cannon.scale.z );
 
@@ -177,6 +187,11 @@ export class LaserShotGfx {
             GfxCore.coreObjects['towers'],
             GfxCore.coreObjects['decorations'],
         ];
+
+        this.sound = new THREE.PositionalAudio( GfxCore.audioListener );
+        this.sound.setRefDistance( 100 );
+        this.sound.setVolume( 0.5 );
+        this.sound.autoplay = false;
 
         this.trace = new THREE.Mesh( new THREE.PlaneGeometry( 1, 1 ), new THREE.MeshBasicMaterial({ color: 0xff3333, opacity: 0.5, transparent: true }) );
         this.trace.rotation.x = - Math.PI / 2;

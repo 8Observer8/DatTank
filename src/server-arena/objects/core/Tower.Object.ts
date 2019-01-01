@@ -26,9 +26,9 @@ export class TowerObject {
     public newRotation: number = 0;
     public target: TankObject | null;
 
-    public range: number = 270;
+    public range: number = 330;
     public armor: number = 50;
-    public damage: number = 150;
+    public damage: number = 100;
     public collisionBox: any;
 
     public arena: ArenaCore;

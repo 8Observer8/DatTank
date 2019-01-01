@@ -66,6 +66,8 @@ class ResourceManagerCore {
         'tank_shooting.wav',
         'tank_moving.wav',
         'tank_explosion.wav',
+        'tank_laser.wav',
+        'tank_mag.wav',
         'box_pick.wav',
         'coin_pick.wav',
     ];
