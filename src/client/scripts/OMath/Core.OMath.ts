@@ -17,9 +17,9 @@ export function darkerColor ( value: number, coef: number ) : number {
     let g = Math.floor( value / 256 ) % 256;
     let b = value % 256;
 
-    r = Math.floor( r * coef );
-    g = Math.floor( g * coef );
-    b = Math.floor( b * coef );
+    r = Math.min( Math.floor( r * coef ), 255 );
+    g = Math.min( Math.floor( g * coef ), 255 );
+    b = Math.min( Math.floor( b * coef ), 255 );
 
     return r * 65536 + g * 256 + b;
 

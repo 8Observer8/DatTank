@@ -432,6 +432,14 @@
     transition: width 300ms ease, color 600ms ease;
 }
 
+#player-params .health .health-progress .armor {
+    position: absolute;
+    top: 0px;
+    width: 2px;
+    height: 100%;
+    background-color: rgba( 255, 255, 255, 0.1 );
+}
+
 #player-params .health .health-progress .text {
     position: absolute;
     font: bold 12px / 20px Roboto, arial;

@@ -307,7 +307,8 @@ export class TankObject {
         setTimeout( ( tank: TankObject ) => {
 
             tank.dispose();
-            tank.arena.boxManager.add({ type: 'Coin', position: tank.position.clone() });
+            const type = [ 'Coin', 'Health', 'Ammo' ][ Math.floor( 3 * Math.random() ) ];
+            tank.arena.boxManager.add({ type, position: tank.position.clone() });
             tank.active = false;
 
         }, 100, this );

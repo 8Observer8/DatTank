@@ -284,7 +284,7 @@ class TankGfx {
 
         for ( let i = 0, il = inMaterials.length; i < il; i ++ ) {
 
-            const material = new THREE.MeshLambertMaterial({ color: 0x777777 });
+            const material = new THREE.MeshLambertMaterial({ color: OMath.intToHex( OMath.darkerColor( this.tank.player.team.color, 1.4 ) ) });
             material.map = texture.clone();
             material.map.uuid = texture.uuid;
             material.map.needsUpdate = true;
@@ -300,7 +300,7 @@ class TankGfx {
         // add tank cannon mesh
 
         const cannonModel = ResourceManager.getModel( 'cannons/' + cannonId )!;
-        this.cannon = new MorphBlendMesh( cannonModel.geometry as THREE.BufferGeometry, [ new THREE.MeshLambertMaterial({ color: 0x777777, map: ResourceManager.getTexture( 'tanks/cannons/' + cannonId + '.jpg' )! }) ] );
+        this.cannon = new MorphBlendMesh( cannonModel.geometry as THREE.BufferGeometry, [ new THREE.MeshLambertMaterial({ color: OMath.intToHex( OMath.darkerColor( this.tank.player.team.color, 1.4 ) ), map: ResourceManager.getTexture( 'tanks/cannons/' + cannonId + '.jpg' )! }) ] );
         this.cannon.scale.set( 10, 10, 10 );
         this.wrapper.add( this.cannon );
 

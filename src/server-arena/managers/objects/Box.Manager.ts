@@ -16,7 +16,7 @@ import { CoinBoxObject } from '../../objects/boxes/Coin.Box';
 
 export class BoxManager {
 
-    private boxNum: number = 20;
+    private boxNum: number = 40;
     private boxes: BoxObject[] = [];
     private arena: ArenaCore;
 
@@ -126,7 +126,7 @@ export class BoxManager {
 
         const boxTypeRnd = Math.random();
 
-        if ( boxTypeRnd < 0.4 ) {
+        if ( boxTypeRnd < 0.2 ) {
 
             return 'Coin';
 

@@ -53,30 +53,60 @@ export class BotCore {
             armor:      'X-shield',
             engine:     'KX-v8',
         },
-        {
-            hull:       'TigerS8',
-            cannon:     'Plasma-g2',
-            armor:      'KS-shield',
-            engine:     'ZEL-72s',
-        },
+
         {
             hull:       'TigerS8',
             cannon:     'Plasma-double',
-            armor:      'KS-shield',
-            engine:     'ZEL-72s',
+            armor:      'Z8-shield',
+            engine:     'KTZ-r2',
         },
+
         {
-            hull:       'TigerS8',
-            cannon:     'Razer-v1',
+            hull:       'OrbitT32s',
+            cannon:     'Plasma-triple',
+            armor:      'Z8-shield',
+            engine:     'VAX-32',
+        },
+
+        {
+            hull:       'MG813',
+            cannon:     'Razer-v2',
             armor:      'KS-shield',
-            engine:     'ZEL-72s',
+            engine:     'VAX-32s',
         },
         {
             hull:       'MG813',
             cannon:     'Razer-double',
-            armor:      'X-shield',
-            engine:     'KTZ-r2',
+            armor:      'KS-shield',
+            engine:     'VAX-32s',
         },
+
+        {
+            hull:       'DTEK72',
+            cannon:     'Mag87',
+            armor:      'MG-defence',
+            engine:     'VAX-32',
+        },
+        {
+            hull:       'DTEK72',
+            cannon:     'Razer-double',
+            armor:      'MG-defence',
+            engine:     'VAX-32',
+        },
+
+        {
+            hull:       'RiperX3',
+            cannon:     'Mag87s',
+            armor:      'MG-defence',
+            engine:     'VAX-32s',
+        },
+        {
+            hull:       'RiperX3',
+            cannon:     'Plasma-zero',
+            armor:      'MG-defence',
+            engine:     'VAX-32s',
+        },
+
     ];
 
     private target: TankObject | TowerObject | null;
@@ -97,6 +127,7 @@ export class BotCore {
 
     public die () : void {
 
+        this.player.status = PlayerCore.Dead;
         const players = this.arena.playerManager.getPlayers();
         const bots = this.arena.botManager.getBots();
         const botNum = this.arena.botManager.botNum;
@@ -177,6 +208,8 @@ export class BotCore {
     };
 
     private updateMovement () : void {
+
+        if ( this.player.status === PlayerCore.Dead ) return;
 
         if ( Math.abs( this.player.tank.position.x ) > 1400 || Math.abs( this.player.tank.position.z ) > 1400 ) {
 

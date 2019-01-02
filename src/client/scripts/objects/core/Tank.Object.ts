@@ -161,7 +161,7 @@ export class TankObject {
 
             if ( value < this.health ) {
 
-                GfxCore.addCameraShake( 300, 3 );
+                GfxCore.addCameraShake( 300, 2 );
 
             }
 

@@ -83,11 +83,11 @@ var GarageConfig = {
             },
             description:    '<b>IS2001 tank</b> - default tank of Russian army in WW VII (2139 year) against other sides on first colonized planet (Mars).<br><br>By default equipped with plasma cannon of first generation, turbo diesel engine and tesla induction generator.<br><br>Easy in movement control, quite fast, powerful cannon, but gets overheated quite fast.<br><br>',
             levels:         {
-                1:    { speedCoef:   1, cannonCoef:   1, armorCoef:   1, ammoCapacity: 30, price: { levelBonuses: 0, coins: 5 } },
-                2:    { speedCoef: 1.1, cannonCoef: 1.1, armorCoef: 1.5, ammoCapacity: 30, price: { levelBonuses: 0, coins: 7 } },
-                3:    { speedCoef: 1.1, cannonCoef: 1.2, armorCoef: 1.7, ammoCapacity: 35, price: { levelBonuses: 1, coins: 10 } },
+                1:    { speedCoef:   1, cannonCoef:   1, armorCoef:   1, ammoCapacity: 40, price: { levelBonuses: 0, coins: 5 } },
+                2:    { speedCoef: 1.1, cannonCoef: 1.1, armorCoef: 1.5, ammoCapacity: 40, price: { levelBonuses: 0, coins: 7 } },
+                3:    { speedCoef: 1.1, cannonCoef: 1.2, armorCoef: 1.7, ammoCapacity: 55, price: { levelBonuses: 1, coins: 10 } },
                 4:    { speedCoef: 1.2, cannonCoef: 1.3, armorCoef: 1.8, ammoCapacity: 40, price: { levelBonuses: 1, coins: 15 } },
-                5:    { speedCoef: 1.3, cannonCoef: 1.5, armorCoef:   2, ammoCapacity: 45, price: { levelBonuses: 2, coins: 18 } }
+                5:    { speedCoef: 1.3, cannonCoef: 1.5, armorCoef:   2, ammoCapacity: 55, price: { levelBonuses: 2, coins: 18 } }
             }
         },
 
@@ -110,11 +110,11 @@ var GarageConfig = {
             },
             description:    '<b>Tiger S8 tank</b> - default tank of Germany army in Venus Planet War III (2140 year) against China.<br><br>By default equipped with plasma cannon of third generation, double turbo diesel engine with generator.<br><br>Is faster and has more powerful cannon than IS2001, but has problem with overheating.<br><br>',
             levels:         {
-                1:    { speedCoef:   1, cannonCoef:   1, armorCoef:   1, ammoCapacity: 30, price: { levelBonuses: 0, coins:  7 } },
-                2:    { speedCoef: 1.1, cannonCoef: 1.1, armorCoef: 1.5, ammoCapacity: 30, price: { levelBonuses: 0, coins: 10 } },
-                3:    { speedCoef: 1.1, cannonCoef: 1.2, armorCoef: 1.7, ammoCapacity: 35, price: { levelBonuses: 1, coins: 10 } },
-                4:    { speedCoef: 1.2, cannonCoef: 1.3, armorCoef: 1.8, ammoCapacity: 40, price: { levelBonuses: 1, coins: 12 } },
-                5:    { speedCoef: 1.3, cannonCoef: 1.5, armorCoef:   2, ammoCapacity: 45, price: { levelBonuses: 1, coins: 13 } }
+                1:    { speedCoef:   1, cannonCoef:   1, armorCoef:   1, ammoCapacity: 60, price: { levelBonuses: 0, coins:  7 } },
+                2:    { speedCoef: 1.1, cannonCoef: 1.1, armorCoef: 1.5, ammoCapacity: 60, price: { levelBonuses: 0, coins: 10 } },
+                3:    { speedCoef: 1.1, cannonCoef: 1.2, armorCoef: 1.7, ammoCapacity: 45, price: { levelBonuses: 1, coins: 10 } },
+                4:    { speedCoef: 1.2, cannonCoef: 1.3, armorCoef: 1.8, ammoCapacity: 50, price: { levelBonuses: 1, coins: 12 } },
+                5:    { speedCoef: 1.3, cannonCoef: 1.5, armorCoef:   2, ammoCapacity: 55, price: { levelBonuses: 1, coins: 13 } }
             }
         },
 
@@ -137,11 +137,11 @@ var GarageConfig = {
             },
             description:    '<b>Orbit T32s tank</b> - 1/3 tanks of China army in Venus Planet War III (2140 year) against Germany and USA.<br><br>By default equipped with improved second version laser cannon, improved ZEL-72 engine and uranium plates armor.<br><br>',
             levels:         {
-                1:    { speedCoef:   1, cannonCoef:   1, armorCoef:   1, ammoCapacity: 30, price: { levelBonuses: 0, coins: 10 } },
-                2:    { speedCoef: 1.1, cannonCoef: 1.1, armorCoef: 1.5, ammoCapacity: 30, price: { levelBonuses: 1, coins: 15 } },
-                3:    { speedCoef: 1.1, cannonCoef: 1.2, armorCoef: 1.7, ammoCapacity: 35, price: { levelBonuses: 1, coins: 20 } },
-                4:    { speedCoef: 1.2, cannonCoef: 1.3, armorCoef: 1.8, ammoCapacity: 40, price: { levelBonuses: 1, coins: 22 } },
-                5:    { speedCoef: 1.3, cannonCoef: 1.5, armorCoef:   2, ammoCapacity: 45, price: { levelBonuses: 2, coins: 25 } }
+                1:    { speedCoef:   1, cannonCoef:   1, armorCoef:   1, ammoCapacity: 70, price: { levelBonuses: 0, coins: 10 } },
+                2:    { speedCoef: 1.1, cannonCoef: 1.1, armorCoef: 1.5, ammoCapacity: 70, price: { levelBonuses: 1, coins: 15 } },
+                3:    { speedCoef: 1.1, cannonCoef: 1.2, armorCoef: 1.7, ammoCapacity: 75, price: { levelBonuses: 1, coins: 20 } },
+                4:    { speedCoef: 1.2, cannonCoef: 1.3, armorCoef: 1.8, ammoCapacity: 80, price: { levelBonuses: 1, coins: 22 } },
+                5:    { speedCoef: 1.3, cannonCoef: 1.5, armorCoef:   2, ammoCapacity: 85, price: { levelBonuses: 2, coins: 25 } }
             }
         },
 
@@ -164,11 +164,11 @@ var GarageConfig = {
             },
             description:    '<b>MG 813 tank</b> - popular tank from all sides in Earth Asia War II (2141 year).<br><br>By default equipped with double laser cannon, nice engine improved with Gallium generator core, but has light less secure X-Shield armor.<br><br>',
             levels:         {
-                1:    { speedCoef:   1, cannonCoef:   1, armorCoef:   1, ammoCapacity: 30, price: { levelBonuses: 1, coins: 20 } },
-                2:    { speedCoef: 1.1, cannonCoef: 1.1, armorCoef: 1.5, ammoCapacity: 30, price: { levelBonuses: 1, coins: 25 } },
-                3:    { speedCoef: 1.1, cannonCoef: 1.2, armorCoef: 1.7, ammoCapacity: 35, price: { levelBonuses: 1, coins: 26 } },
-                4:    { speedCoef: 1.2, cannonCoef: 1.3, armorCoef: 1.8, ammoCapacity: 40, price: { levelBonuses: 2, coins: 30 } },
-                5:    { speedCoef: 1.3, cannonCoef: 1.5, armorCoef:   2, ammoCapacity: 45, price: { levelBonuses: 2, coins: 35 } }
+                1:    { speedCoef:   1, cannonCoef:   1, armorCoef:   1, ammoCapacity: 60, price: { levelBonuses: 1, coins: 20 } },
+                2:    { speedCoef: 1.1, cannonCoef: 1.1, armorCoef: 1.5, ammoCapacity: 60, price: { levelBonuses: 1, coins: 25 } },
+                3:    { speedCoef: 1.1, cannonCoef: 1.2, armorCoef: 1.7, ammoCapacity: 65, price: { levelBonuses: 1, coins: 26 } },
+                4:    { speedCoef: 1.2, cannonCoef: 1.3, armorCoef: 1.8, ammoCapacity: 70, price: { levelBonuses: 2, coins: 30 } },
+                5:    { speedCoef: 1.3, cannonCoef: 1.5, armorCoef:   2, ammoCapacity: 75, price: { levelBonuses: 2, coins: 35 } }
             }
         },
 
@@ -191,11 +191,11 @@ var GarageConfig = {
             },
             description:    '<b>DTEK 72 tank</b> - rare Ukrainian tank designed in private company to defend oil wells from East Eurasian groups after Russia collapse in 2141 year.<br><br>By default equipped with triple plasma cannon, plutonium engine with partly organic generator and 80mm uranium plates armor sys.<br><br>',
             levels:         {
-                1:    { speedCoef:   1, cannonCoef:   1, armorCoef:   1, ammoCapacity: 30, price: { levelBonuses: 1, coins: 40 } },
-                2:    { speedCoef: 1.1, cannonCoef: 1.1, armorCoef: 1.5, ammoCapacity: 30, price: { levelBonuses: 1, coins: 50 } },
-                3:    { speedCoef: 1.1, cannonCoef: 1.2, armorCoef: 1.7, ammoCapacity: 35, price: { levelBonuses: 2, coins: 60 } },
-                4:    { speedCoef: 1.2, cannonCoef: 1.3, armorCoef: 1.8, ammoCapacity: 40, price: { levelBonuses: 2, coins: 80 } },
-                5:    { speedCoef: 1.3, cannonCoef: 1.5, armorCoef:   2, ammoCapacity: 45, price: { levelBonuses: 3, coins: 85 } }
+                1:    { speedCoef:   1, cannonCoef:   1, armorCoef:   1, ammoCapacity: 100, price: { levelBonuses: 1, coins: 40 } },
+                2:    { speedCoef: 1.1, cannonCoef: 1.1, armorCoef: 1.5, ammoCapacity: 110, price: { levelBonuses: 1, coins: 50 } },
+                3:    { speedCoef: 1.1, cannonCoef: 1.2, armorCoef: 1.7, ammoCapacity: 125, price: { levelBonuses: 2, coins: 60 } },
+                4:    { speedCoef: 1.2, cannonCoef: 1.3, armorCoef: 1.8, ammoCapacity: 130, price: { levelBonuses: 2, coins: 80 } },
+                5:    { speedCoef: 1.3, cannonCoef: 1.5, armorCoef:   2, ammoCapacity: 145, price: { levelBonuses: 3, coins: 85 } }
             }
         },
 
@@ -218,11 +218,11 @@ var GarageConfig = {
             },
             description:    '<b>Riper X3</b> - very powerful elite tank of United Korean Forces in Second War for Moon "Space Harbor" (2143 year).<br><br>By default equipped with special plasma cannon which solved problem of overheating, but this costs lots of energy consumption and lower movement speed and has new light graphene-type armor.<br><br>',
             levels:         {
-                1:    { speedCoef:   1, cannonCoef:   1, armorCoef:   1, ammoCapacity: 30, price: { levelBonuses: 2, coins:  70 } },
-                2:    { speedCoef: 1.1, cannonCoef: 1.1, armorCoef: 1.5, ammoCapacity: 30, price: { levelBonuses: 2, coins:  85 } },
-                3:    { speedCoef: 1.1, cannonCoef: 1.2, armorCoef: 1.7, ammoCapacity: 35, price: { levelBonuses: 3, coins: 100 } },
-                4:    { speedCoef: 1.2, cannonCoef: 1.3, armorCoef: 1.8, ammoCapacity: 40, price: { levelBonuses: 3, coins: 120 } },
-                5:    { speedCoef: 1.3, cannonCoef: 1.5, armorCoef:   2, ammoCapacity: 45, price: { levelBonuses: 4, coins: 140 } }
+                1:    { speedCoef:   1, cannonCoef:   1, armorCoef:   1, ammoCapacity: 110, price: { levelBonuses: 2, coins:  70 } },
+                2:    { speedCoef: 1.1, cannonCoef: 1.1, armorCoef: 1.5, ammoCapacity: 130, price: { levelBonuses: 2, coins:  85 } },
+                3:    { speedCoef: 1.1, cannonCoef: 1.2, armorCoef: 1.7, ammoCapacity: 145, price: { levelBonuses: 3, coins: 100 } },
+                4:    { speedCoef: 1.2, cannonCoef: 1.3, armorCoef: 1.8, ammoCapacity: 150, price: { levelBonuses: 3, coins: 120 } },
+                5:    { speedCoef: 1.3, cannonCoef: 1.5, armorCoef:   2, ammoCapacity: 165, price: { levelBonuses: 4, coins: 140 } }
             }
         }
 
@@ -449,11 +449,11 @@ var GarageConfig = {
             shortDesc:      'Magnet cannon v87 release.',
             shootType:      'bullet',
             levels:         {
-                1:      { damage: 13, range: 220, overheat: 10, rpm: 450, price: { levelBonuses: 1, coins: 50 } },
-                2:      { damage: 14, range: 230, overheat: 10, rpm: 460, price: { levelBonuses: 2, coins: 53 } },
-                3:      { damage: 15, range: 230, overheat: 10, rpm: 470, price: { levelBonuses: 2, coins: 55 } },
-                4:      { damage: 16, range: 240, overheat: 10, rpm: 480, price: { levelBonuses: 2, coins: 58 } },
-                5:      { damage: 17, range: 240, overheat: 10, rpm: 500, price: { levelBonuses: 3, coins: 60 } }
+                1:      { damage: 13, range: 220, overheat: 80, rpm: 450, price: { levelBonuses: 1, coins: 50 } },
+                2:      { damage: 14, range: 230, overheat: 80, rpm: 460, price: { levelBonuses: 2, coins: 53 } },
+                3:      { damage: 15, range: 230, overheat: 80, rpm: 470, price: { levelBonuses: 2, coins: 55 } },
+                4:      { damage: 16, range: 240, overheat: 80, rpm: 480, price: { levelBonuses: 2, coins: 58 } },
+                5:      { damage: 17, range: 240, overheat: 80, rpm: 500, price: { levelBonuses: 3, coins: 60 } }
             },
             shotSpeed:      1.8,
             shootInfo: [
@@ -474,11 +474,11 @@ var GarageConfig = {
             shortDesc:      'Improved magnet cannon v87S.',
             shootType:      'bullet',
             levels:         {
-                1:      { damage: 10, range: 220, overheat: 10, rpm: 550, price: { levelBonuses: 1, coins: 60 } },
-                2:      { damage: 12, range: 230, overheat: 10, rpm: 560, price: { levelBonuses: 2, coins: 66 } },
-                3:      { damage: 13, range: 230, overheat: 10, rpm: 570, price: { levelBonuses: 2, coins: 70 } },
-                4:      { damage: 14, range: 240, overheat: 10, rpm: 580, price: { levelBonuses: 2, coins: 75 } },
-                5:      { damage: 15, range: 240, overheat: 10, rpm: 620, price: { levelBonuses: 3, coins: 80 } }
+                1:      { damage: 10, range: 220, overheat: 65, rpm: 550, price: { levelBonuses: 1, coins: 60 } },
+                2:      { damage: 12, range: 230, overheat: 65, rpm: 560, price: { levelBonuses: 2, coins: 66 } },
+                3:      { damage: 13, range: 230, overheat: 65, rpm: 570, price: { levelBonuses: 2, coins: 70 } },
+                4:      { damage: 14, range: 240, overheat: 65, rpm: 580, price: { levelBonuses: 2, coins: 75 } },
+                5:      { damage: 15, range: 240, overheat: 65, rpm: 620, price: { levelBonuses: 3, coins: 80 } }
             },
             shotSpeed:      1.8,
             shootInfo: [
@@ -499,11 +499,11 @@ var GarageConfig = {
             shortDesc:      'Magnet cannon v87s turbo version.',
             shootType:      'bullet',
             levels:         {
-                1:      { damage: 8, range: 220, overheat: 10, rpm: 650, price: { levelBonuses: 2, coins: 70 } },
-                2:      { damage: 9, range: 230, overheat: 10, rpm: 660, price: { levelBonuses: 2, coins: 76 } },
-                3:      { damage: 10, range: 230, overheat: 10, rpm: 670, price: { levelBonuses: 2, coins: 82 } },
-                4:      { damage: 12, range: 240, overheat: 10, rpm: 680, price: { levelBonuses: 3, coins: 86 } },
-                5:      { damage: 13, range: 240, overheat: 10, rpm: 720, price: { levelBonuses: 4, coins: 90 } }
+                1:      { damage: 8, range: 220, overheat: 80, rpm: 650, price: { levelBonuses: 2, coins: 70 } },
+                2:      { damage: 9, range: 230, overheat: 80, rpm: 660, price: { levelBonuses: 2, coins: 76 } },
+                3:      { damage: 10, range: 230, overheat: 80, rpm: 670, price: { levelBonuses: 2, coins: 82 } },
+                4:      { damage: 12, range: 240, overheat: 80, rpm: 680, price: { levelBonuses: 3, coins: 86 } },
+                5:      { damage: 13, range: 240, overheat: 80, rpm: 720, price: { levelBonuses: 4, coins: 90 } }
             },
             shotSpeed:      1.8,
             shootInfo: [

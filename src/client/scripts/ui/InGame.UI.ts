@@ -129,6 +129,8 @@ export class UIInGameModule {
 
     public updateHealth ( value: number ) : void {
 
+        if ( ! Arena.me.tank ) return;
+
         const colors = [
             'rgb( 81, 169, 81 )',
             'rgb( 179, 206, 24 )',
@@ -149,6 +151,18 @@ export class UIInGameModule {
         } else {
 
             $('#player-params').attr( 'active', 'false' );
+
+        }
+
+        for ( let i = $('#player-params .health-progress .armor').length, il = Arena.me.tank.armor.armor / 5; i < il; i ++ ) {
+
+            $('#player-params .health-progress').append('<div class="armor"></div>');
+
+        }
+
+        for ( let i = 0, il = $('#player-params .health-progress .armor').length; i < il; i ++ ) {
+
+            $( $('#player-params .health-progress .armor')[ i ] ).css( 'margin-left', i * 100 / ( Arena.me.tank.armor.armor / 5 ) + '%' );
 
         }
 

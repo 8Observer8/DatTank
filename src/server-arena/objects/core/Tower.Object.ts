@@ -28,7 +28,7 @@ export class TowerObject {
 
     public range: number = 330;
     public armor: number = 50;
-    public damage: number = 100;
+    public damage: number = 70;
     public collisionBox: any;
 
     public arena: ArenaCore;
