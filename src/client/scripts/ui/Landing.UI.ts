@@ -206,7 +206,7 @@ export class UILandingModule {
 
         setInterval( () => {
 
-            const fullText = 'Good tank pilot?|   Are you ready for the bettle ?...                ';
+            const fullText = 'Good tank pilot?|   Are you ready for the battle ?...                ';
             let text = $('#signin-box-wrapper #main-block .tab-content.home .title').html();
 
             if ( ! fullText[ textLength ] ) {

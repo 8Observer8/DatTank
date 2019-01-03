@@ -360,7 +360,7 @@ PlayerManager.prototype.savePlayerInfo = function ( pid, sid, xp, coins, level, 
 
         player.coins = coins;
         player.xp = xp;
-        player.levelBonuses = level - player.level;
+        player.levelBonuses += level - player.level;
         player.level = level;
 
         player.save();
