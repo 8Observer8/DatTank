@@ -140,10 +140,10 @@ export class CollisionManager {
 
             const q = new Cannon.Quaternion().setFromEuler( - Math.PI / 2, 0, 0, 'XYZ' );
 
-            shape = new Cannon.Cylinder( 1.2 * object.size.x / 2, 1.2 * object.size.x / 2, object.size.z / 2, 8 );
-            collisionBox.body.addShape( shape, new Cannon.Vec3( 0, 0, object.size.z / 1.2 ), q );
+            shape = new Cannon.Cylinder( 1.1 * object.size.x / 2, 1.1 * object.size.x / 2, object.size.z / 2, 8 );
+            collisionBox.body.addShape( shape, new Cannon.Vec3( 0, 0, object.size.z / 1.4 ), q );
 
-            shape = new Cannon.Cylinder( 1.2 * object.size.x / 2, 1.2 * object.size.x / 2, object.size.z / 2, 8 );
+            shape = new Cannon.Cylinder( 1.1 * object.size.x / 2, 1.1 * object.size.x / 2, object.size.z / 2, 8 );
             collisionBox.body.addShape( shape, new Cannon.Vec3( 0, 0, - object.size.z / 3 ), q );
 
             collisionBox.body.angularDamping = 0.01;
@@ -225,11 +225,11 @@ export class CollisionManager {
 
                 if ( object.parent.moveDirection.y > 0 ) {
 
-                    object.aV += 0.15 * coef;
+                    object.aV += 0.2 * coef;
 
                 } else if ( object.parent.moveDirection.y < 0 ) {
 
-                    object.aV -= 0.15 * coef;
+                    object.aV -= 0.2 * coef;
 
                 } else {
 

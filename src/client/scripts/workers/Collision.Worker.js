@@ -151,11 +151,11 @@ function update ( delta, objectsInfo ) {
 
         if ( objectInfo.moveDirection.y > 0 ) {
 
-            object.aV += 0.15 * coef;
+            object.aV += 0.2 * coef;
 
         } else if ( objectInfo.moveDirection.y < 0 ) {
 
-            object.aV -= 0.15 * coef;
+            object.aV -= 0.2 * coef;
 
         } else {
 

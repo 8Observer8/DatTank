@@ -10,7 +10,7 @@ import { BotCore } from '../../core/Bot.Core';
 
 export class BotManager {
 
-    public botNum: number = 0; // 15 + Math.floor( Math.random() * 8 );
+    public botNum: number = 15 + Math.floor( Math.random() * 8 );
 
     private arena: ArenaCore;
     private bots: BotCore[] = [];
