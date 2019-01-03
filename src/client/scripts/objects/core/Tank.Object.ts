@@ -285,7 +285,7 @@ export class TankObject {
 
         }
 
-        CollisionManager.addObject( this, 'box', true );
+        CollisionManager.addObject( this, 'tank', true );
 
     };
 
@@ -309,7 +309,7 @@ export class TankObject {
         this.rotation = params.rotation % ( 2 * Math.PI );
         this.rotationCorrection = 0;
 
-        this.moveDirection.set( params.moveDirection.x, params.moveDirection.y );
+        this.setMovement( params.moveDirection.x, params.moveDirection.y );
 
     };
 

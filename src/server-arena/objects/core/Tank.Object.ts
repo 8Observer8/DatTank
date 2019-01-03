@@ -507,7 +507,7 @@ export class TankObject {
         this.team = player.team;
 
         this.network = new TankNetwork( this );
-        this.arena.collisionManager.addObject( this, 'box', true );
+        this.arena.collisionManager.addObject( this, 'tank', true );
 
     };
 

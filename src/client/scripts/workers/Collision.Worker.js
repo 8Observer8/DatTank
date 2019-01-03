@@ -63,17 +63,32 @@ function addObject ( object, type, isDynamic ) {
 
         shape = new CANNON.Box( new CANNON.Vec3( object.size.x / 2, object.size.y / 2, object.size.z / 2 ) );
         collisionBox.body.quaternion.setFromEuler( 0, object.rotation, 0, 'XYZ' );
+        collisionBox.body.addShape( shape );
 
     } else if ( type === 'circle' ) {
 
         shape = new CANNON.Cylinder( object.radius, object.radius, 100, 8 );
         collisionBox.body.quaternion.setFromEuler( - Math.PI / 2, 0, 0, 'XYZ' );
+        collisionBox.body.addShape( shape );
+
+    } else if ( type === 'tank' ) {
+
+        collisionBox.body.quaternion.setFromEuler( 0, object.rotation, 0, 'XYZ' );
+
+        shape = new CANNON.Box( new CANNON.Vec3( object.size.x / 2, object.size.y / 2, object.size.z / 2 ) );
+        collisionBox.body.addShape( shape, new CANNON.Vec3( 0, 0, 0 ) );
+
+        const q = new CANNON.Quaternion().setFromEuler( - Math.PI / 2, 0, 0, 'XYZ' );
+
+        shape = new CANNON.Cylinder( 1.1 * object.size.x / 2, 1.1 * object.size.x / 2, object.size.z / 2, 8 );
+        collisionBox.body.addShape( shape, new CANNON.Vec3( 0, 0, object.size.z / 1.4 ), q );
+
+        shape = new CANNON.Cylinder( 1.1 * object.size.x / 2, 1.1 * object.size.x / 2, object.size.z / 2, 8 );
+        collisionBox.body.addShape( shape, new CANNON.Vec3( 0, 0, - object.size.z / 3 ), q );
 
     }
 
     collisionBox.body.position.set( object.position.x, object.position.y, object.position.z );
-
-    collisionBox.body.addShape( shape );
     collisionBox.body.type = ( ! isDynamic ) ? CANNON.Body.STATIC : CANNON.Body.DYNAMIC;
 
     //
@@ -121,8 +136,7 @@ function update ( delta, objectsInfo ) {
         if ( ! object ) continue;
         if ( object.objType !== 'Tank' ) continue;
 
-        var speed = object.body.velocity.distanceTo( new CANNON.Vec3( 0, object.body.velocity.y, 0 ) );
-        var maxSpeed = 3 * objectInfo.maxSpeed;
+        //
 
         if ( objectInfo.position !== false ) {
 
@@ -130,6 +144,37 @@ function update ( delta, objectsInfo ) {
             object.body.position.z = objectInfo.position.z;
 
         }
+
+        //
+
+        object.aV = object.aV || 0;
+
+        if ( objectInfo.moveDirection.y > 0 ) {
+
+            object.aV += 0.15 * coef;
+
+        } else if ( objectInfo.moveDirection.y < 0 ) {
+
+            object.aV -= 0.15 * coef;
+
+        } else {
+
+            if ( Math.abs( object.aV ) > 1 ) {
+
+                object.aV -= Math.sign( object.aV ) * 0.5 * coef;
+
+            } else {
+
+                object.aV = 0;
+
+            }
+
+        }
+
+        object.aV = Math.sign( object.aV ) * Math.min( Math.abs( object.aV ), 1.3 );
+        object.body.angularVelocity.y = object.aV;
+
+        //
 
         const rot = { x: 0, y: 0, z: 0 };
         object.body.quaternion.toEuler( rot );
@@ -139,22 +184,8 @@ function update ( delta, objectsInfo ) {
 
         //
 
-        if ( objectInfo.moveDirection.y > 0 ) {
-
-            object.body.angularVelocity.set( 0, 0.9, 0 );
-
-        } else if ( objectInfo.moveDirection.y < 0 ) {
-
-            object.body.angularVelocity.set( 0, - 0.9, 0 );
-
-        } else {
-
-            object.body.angularVelocity.y = 0; // /= 1 + 0.4 * delta / 60;
-
-        }
-
-        //
-
+        var speed = object.body.velocity.distanceTo( new CANNON.Vec3( 0, object.body.velocity.y, 0 ) );
+        var maxSpeed = 3 * objectInfo.maxSpeed;
         var velocityAngle = Math.atan2( object.body.velocity.x, object.body.velocity.z );
         var movementDirection = Math.sign( object.body.velocity.x * Math.sin( objectInfo.rotation ) );
 
@@ -250,7 +281,6 @@ function initWorld () {
     var groundBody = new CANNON.Body({ mass: 0 });
     groundBody['name'] = 'ground';
     groundBody.addShape( groundShape );
-    groundBody.position.y = - 10;
     groundBody.quaternion.setFromAxisAngle( new CANNON.Vec3( 1, 0, 0 ), - Math.PI / 2 );
     world.addBody( groundBody );
 
@@ -260,10 +290,10 @@ function initWorld () {
 
     // add map borders
 
-    addObject({ rotation: 0, position: new CANNON.Vec3(   1315, 0,      0 ), size: new CANNON.Vec3( 30, 100, 2630 ) }, 'box', false );
-    addObject({ rotation: 0, position: new CANNON.Vec3( - 1315, 0,      0 ), size: new CANNON.Vec3( 30, 100, 2630 ) }, 'box', false );
-    addObject({ rotation: 0, position: new CANNON.Vec3(      0, 0,   1315 ), size: new CANNON.Vec3( 2630, 100, 30 ) }, 'box', false );
-    addObject({ rotation: 0, position: new CANNON.Vec3(      0, 0, - 1315 ), size: new CANNON.Vec3( 2630, 100, 30 ) }, 'box', false );
+    addObject({ rotation: 0, position: new CANNON.Vec3(   1330, 0,      0 ), size: new CANNON.Vec3( 60, 100, 2630 ) }, 'box', false );
+    addObject({ rotation: 0, position: new CANNON.Vec3( - 1330, 0,      0 ), size: new CANNON.Vec3( 60, 100, 2630 ) }, 'box', false );
+    addObject({ rotation: 0, position: new CANNON.Vec3(      0, 0,   1330 ), size: new CANNON.Vec3( 2630, 100, 60 ) }, 'box', false );
+    addObject({ rotation: 0, position: new CANNON.Vec3(      0, 0, - 1330 ), size: new CANNON.Vec3( 2630, 100, 60 ) }, 'box', false );
 
 };
 

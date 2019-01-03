@@ -211,7 +211,7 @@ export class BotCore {
 
         if ( this.player.status === PlayerCore.Dead ) return;
 
-        if ( Math.abs( this.player.tank.position.x ) > 1400 || Math.abs( this.player.tank.position.z ) > 1400 ) {
+        if ( Math.abs( this.player.tank.position.x ) > 1320 || Math.abs( this.player.tank.position.z ) > 1320 ) {
 
             this.die();
             return;

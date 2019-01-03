@@ -123,11 +123,30 @@ export class CollisionManager {
 
             shape = new Cannon.Box( new Cannon.Vec3( object.size.x / 2, object.size.y / 2, object.size.z / 2 ) );
             collisionBox.body.quaternion.setFromEuler( 0, object.rotation, 0, 'XYZ' );
+            collisionBox.body.addShape( shape as Cannon.Shape );
 
         } else if ( type === 'circle' ) {
 
             shape = new Cannon.Cylinder( object.radius, object.radius, 100, 8 );
             collisionBox.body.quaternion.setFromEuler( - Math.PI / 2, 0, 0, 'XYZ' );
+            collisionBox.body.addShape( shape as Cannon.Shape );
+
+        } else if ( type === 'tank' ) {
+
+            collisionBox.body.quaternion.setFromEuler( 0, object.rotation, 0, 'XYZ' );
+
+            shape = new Cannon.Box( new Cannon.Vec3( object.size.x / 2, object.size.y / 2, object.size.z / 2 ) );
+            collisionBox.body.addShape( shape as Cannon.Shape, new Cannon.Vec3( 0, 0, 0 ) );
+
+            const q = new Cannon.Quaternion().setFromEuler( - Math.PI / 2, 0, 0, 'XYZ' );
+
+            shape = new Cannon.Cylinder( 1.2 * object.size.x / 2, 1.2 * object.size.x / 2, object.size.z / 2, 8 );
+            collisionBox.body.addShape( shape, new Cannon.Vec3( 0, 0, object.size.z / 1.2 ), q );
+
+            shape = new Cannon.Cylinder( 1.2 * object.size.x / 2, 1.2 * object.size.x / 2, object.size.z / 2, 8 );
+            collisionBox.body.addShape( shape, new Cannon.Vec3( 0, 0, - object.size.z / 3 ), q );
+
+            collisionBox.body.angularDamping = 0.01;
 
         }
 
@@ -137,7 +156,6 @@ export class CollisionManager {
 
         collisionBox.body['parent'] = object;
         collisionBox.body['name'] = object.type;
-        collisionBox.body.addShape( shape as Cannon.Shape );
         collisionBox.body.type = ( ! isDynamic ) ? Cannon.Body.STATIC : Cannon.Body.DYNAMIC;
 
         if ( isDynamic ) {
@@ -199,22 +217,38 @@ export class CollisionManager {
             const object = this.objects[ i ];
             if ( ! object ) continue;
 
+            //
+
             if ( object.parent.type === 'Tank' ) {
+
+                object.aV = object.aV || 0;
 
                 if ( object.parent.moveDirection.y > 0 ) {
 
-                    object.body.angularVelocity.set( 0, 0.9, 0 );
+                    object.aV += 0.15 * coef;
 
                 } else if ( object.parent.moveDirection.y < 0 ) {
 
-                    object.body.angularVelocity.set( 0, - 0.9, 0 );
+                    object.aV -= 0.15 * coef;
 
                 } else {
 
-                    object.body.angularVelocity.y = 0; // /= 1 + 0.4 * delta / 60;
-                    // object.parent.network.updateMovement();
+                    if ( Math.abs( object.aV ) > 1 ) {
+
+                        object.aV -= Math.sign( object.aV ) * 0.5 * coef;
+
+                    } else {
+
+                        object.aV = 0;
+
+                    }
 
                 }
+
+                object.aV = Math.sign( object.aV ) * Math.min( Math.abs( object.aV ), 1.3 );
+                object.body.angularVelocity.y = object.aV;
+
+                //
 
                 const rot = { x: 0, y: 0, z: 0 };
                 object.body.quaternion.toEuler( rot );
@@ -387,10 +421,10 @@ export class CollisionManager {
 
         // add map borders
 
-        this.addObject( { rotation: 0, position: new OMath.Vec3(   1315, 0,      0 ), size: new OMath.Vec3( 30, 100, 2630 ) }, 'box', false );
-        this.addObject( { rotation: 0, position: new OMath.Vec3( - 1315, 0,      0 ), size: new OMath.Vec3( 30, 100, 2630 ) }, 'box', false );
-        this.addObject( { rotation: 0, position: new OMath.Vec3(      0, 0,   1315 ), size: new OMath.Vec3( 2630, 100, 30 ) }, 'box', false );
-        this.addObject( { rotation: 0, position: new OMath.Vec3(      0, 0, - 1315 ), size: new OMath.Vec3( 2630, 100, 30 ) }, 'box', false );
+        this.addObject( { rotation: 0, position: new OMath.Vec3(   1330, 0,      0 ), size: new OMath.Vec3( 60, 1000, 2630 ) }, 'box', false );
+        this.addObject( { rotation: 0, position: new OMath.Vec3( - 1330, 0,      0 ), size: new OMath.Vec3( 60, 1000, 2630 ) }, 'box', false );
+        this.addObject( { rotation: 0, position: new OMath.Vec3(      0, 0,   1330 ), size: new OMath.Vec3( 2630, 1000, 60 ) }, 'box', false );
+        this.addObject( { rotation: 0, position: new OMath.Vec3(      0, 0, - 1330 ), size: new OMath.Vec3( 2630, 1000, 60 ) }, 'box', false );
 
     };
 

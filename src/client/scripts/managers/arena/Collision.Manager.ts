@@ -24,7 +24,7 @@ class CollisionManagerCore {
                 id:         object.id,
                 type:       object.type,
                 radius:     object.radius,
-                size:       ( type === 'box' ) ? { x: object.size.x, y: object.size.y, z: object.size.z } : { x: 0, y: 0, z: 0 },
+                size:       ( type === 'box' || type === 'tank' ) ? { x: object.size.x, y: object.size.y, z: object.size.z } : { x: 0, y: 0, z: 0 },
                 position:   { x: object.position.x, y: object.position.y, z: object.position.z },
                 rotation:   object.rotation,
             },
