@@ -185,7 +185,7 @@ class TankGfx {
             //
 
             const l = this.tank.positionCorrectValue.length();
-            const correctionSpeed = ( delta / 16 ) * ( this.tank.isMe ? 1 : 3 );
+            const correctionSpeed = ( delta / 16 ) * ( this.tank.isMe ? 2 : 10 );
 
             if ( l > 0.1 ) {
 
@@ -214,6 +214,11 @@ class TankGfx {
 
                 dRot += dr;
                 this.tank.rotationCorrectValue -= dr;
+
+            } else {
+
+                dRot += this.tank.rotationCorrectValue;
+                this.tank.rotationCorrectValue = 0;
 
             }
 

@@ -221,7 +221,7 @@ function update ( delta, objectsInfo ) {
         //
 
         const dv = object.body.velocity.length() * Math.sin( velocityAngle - objectInfo.rotation );
-        object.body.applyLocalImpulse( new CANNON.Vec3( - object.body.mass * dv * coef, 0, 0 ), new CANNON.Vec3( 0, 0, 0 ) );
+        object.body.applyLocalImpulse( new CANNON.Vec3( - 0.2 * object.body.mass * dv * coef, 0, 0 ), new CANNON.Vec3( 0, 0, 0 ) );
 
         //
 
@@ -273,7 +273,7 @@ function initWorld () {
     world.defaultContactMaterial.contactEquationStiffness = 500000;
     world.defaultContactMaterial.friction = 0;
     world.defaultContactMaterial.restitution = 0.2;
-    world.solver.iterations = 20;
+    world.solver.iterations = 10;
 
     // add ground
 

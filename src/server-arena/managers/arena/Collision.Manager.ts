@@ -295,7 +295,7 @@ export class CollisionManager {
                 //
 
                 const dv = object.body.velocity.length() * Math.sin( velocityAngle - object.parent.rotation );
-                object.body.applyLocalImpulse( new Cannon.Vec3( - object.body.mass * dv * coef, 0, 0 ), new Cannon.Vec3( 0, 0, 0 ) );
+                object.body.applyLocalImpulse( new Cannon.Vec3( - 0.2 * object.body.mass * dv * coef, 0, 0 ), new Cannon.Vec3( 0, 0, 0 ) );
 
                 if ( Math.abs( object.body.velocity.x ) < 1 ) object.body.velocity.x = 0;
                 if ( Math.abs( object.body.velocity.y ) < 1 ) object.body.velocity.y = 0;
@@ -408,7 +408,7 @@ export class CollisionManager {
         this.world.defaultContactMaterial.contactEquationStiffness = 500000;
         this.world.defaultContactMaterial.friction = 0;
         this.world.defaultContactMaterial.restitution = 0.2;
-        this.world.solver.iterations = 20;
+        this.world.solver.iterations = 10;
 
         // add ground
 
