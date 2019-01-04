@@ -251,7 +251,7 @@ export class Garage {
     public show () : void {
 
         this.isOpened = true;
-        this.updateUserParams();
+        this.updateUserParams( Arena.myCoins, Arena.myXP, Arena.myLevel, Arena.myLevelBonuses );
 
         $('.garage').show();
         $('.garage').animate({ opacity: 1 }, 1500 );
