@@ -368,12 +368,6 @@ export class CollisionManager {
 
         if ( event.body['name'] === 'ground' ) return;
 
-        if ( object.type === 'Tank' ) {
-
-            object.network.syncState();
-
-        }
-
         if ( event.body['name'] === 'Box' && object.type === 'Tank' ) {
 
             if ( event.body.parent.removed || object.health <= 0 ) return;

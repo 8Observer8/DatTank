@@ -56,6 +56,8 @@ export class TankObject {
     public inRangeOf: object = {};
     public collisionBox: object;
 
+    private sinceLastSync: number = 0;
+
     public readonly type = 'Tank';
 
     public upgrades = {
@@ -436,6 +438,16 @@ export class TankObject {
         this.cannon.update( delta, time );
         this.regenerationUpdate( delta );
         this.updateObjectsInRange();
+
+        //
+
+        this.sinceLastSync += delta;
+        if ( this.sinceLastSync > 1000 ) {
+
+            this.network.syncState();
+            this.sinceLastSync = 0;
+
+        }
 
     };
 
