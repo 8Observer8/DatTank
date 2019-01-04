@@ -453,6 +453,7 @@ export class TankObject {
 
     public dispose () : void {
 
+        this.cannon.stopShooting();
         this.network.dispose();
         this.arena.removeObjectFromRangeParams( this );
         this.arena.collisionManager.removeObject( this );
