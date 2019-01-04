@@ -56,6 +56,8 @@ export class TankObject {
     public inRangeOf: object = {};
     public collisionBox: object;
 
+    private sinceLastSync: number = 0;
+
     public readonly type = 'Tank';
 
     public upgrades = {
@@ -437,10 +439,21 @@ export class TankObject {
         this.regenerationUpdate( delta );
         this.updateObjectsInRange();
 
+        //
+
+        this.sinceLastSync += delta;
+        if ( this.sinceLastSync > 1000 ) {
+
+            this.network.syncState();
+            this.sinceLastSync = 0;
+
+        }
+
     };
 
     public dispose () : void {
 
+        this.cannon.stopShooting();
         this.network.dispose();
         this.arena.removeObjectFromRangeParams( this );
         this.arena.collisionManager.removeObject( this );

@@ -248,7 +248,6 @@ export class TankObject {
 
     public dispose () : void {
 
-        this.cannon.stopShooting();
         this.gfx.dispose();
         this.network.dispose();
         CollisionManager.removeObject( this );

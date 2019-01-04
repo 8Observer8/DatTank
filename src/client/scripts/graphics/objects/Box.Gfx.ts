@@ -35,10 +35,10 @@ export class BoxGfx {
     public pick () : void {
 
         const sound = new THREE.PositionalAudio( GfxCore.audioListener );
-        sound.position.copy( this.mesh.position );
         sound.setBuffer( ResourceManager.getSound( this.box.pickSound ) as THREE.AudioBuffer );
+        sound.setRefDistance( 40 );
 
-        sound.setRefDistance( 200 );
+        this.mesh.add( sound );
         sound.play();
         this.pickedAnimation.enabled = true;
 

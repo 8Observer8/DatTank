@@ -209,7 +209,7 @@ class TankGfx {
 
             if ( Math.abs( this.tank.rotationCorrectValue ) > 0.001 ) {
 
-                let dr = correctionSpeed * OMath.sign( this.tank.rotationCorrectValue ) / 300;
+                let dr = correctionSpeed * OMath.sign( this.tank.rotationCorrectValue ) / 100;
                 dr = Math.abs( dr ) < Math.abs( this.tank.rotationCorrectValue ) ? dr : this.tank.rotationCorrectValue;
 
                 dRot += dr;

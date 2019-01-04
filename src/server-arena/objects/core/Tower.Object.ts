@@ -51,7 +51,6 @@ export class TowerObject {
 
     public shoot ( target: TankObject ) : void {
 
-        return;
         const dx = target.position.x - this.position.x;
         const dz = target.position.z - this.position.z;
         let rotation;
