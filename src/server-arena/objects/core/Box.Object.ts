@@ -11,7 +11,7 @@ import { PlayerCore } from '../../core/Player.Core';
 
 export class BoxObject {
 
-    private static numIds = 0;
+    private static numIds = 1;
 
     //
 
@@ -40,7 +40,7 @@ export class BoxObject {
 
     constructor ( arena: ArenaCore, params: any ) {
 
-        if ( BoxObject.numIds > 1000 ) BoxObject.numIds = 0;
+        if ( BoxObject.numIds > 1000 ) BoxObject.numIds = 1;
         this.id = BoxObject.numIds ++;
         this.arena = arena;
 

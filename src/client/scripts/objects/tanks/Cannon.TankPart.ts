@@ -33,6 +33,8 @@ export class CannonTankPart {
 
     public tank: TankObject;
 
+    private lastShotId: number | null = null;
+
     //
 
     constructor ( tank: TankObject, params: any ) {
@@ -118,10 +120,6 @@ export class CannonTankPart {
 
             this.makeLaserShot( shotId );
 
-        } else if ( this.shootType === 'fire' ) {
-
-            this.makeFireShot();
-
         } else {
 
             console.warn( 'Shot type not defined.' );
@@ -130,10 +128,14 @@ export class CannonTankPart {
 
     };
 
-    public stopShot ( shotId: number ) : void {
+    public stopShot ( shotId?: number | null ) : void {
+
+        shotId = shotId || this.lastShotId;
+        if ( ! shotId ) return;
 
         LaserBeamShotManager.hideLaserShot( shotId );
         this.laserShooting = false;
+        this.lastShotId = null;
 
     };
 
@@ -172,9 +174,13 @@ export class CannonTankPart {
 
         }
 
+        this.lastShotId = shotId;
+
     };
 
     private makeLaserShot ( shotId: number ) : void {
+
+        this.stopShot();
 
         for ( let i = 0, il = this.sourceParam.shootInfo.length; i < il; i ++ ) {
 
@@ -187,13 +193,8 @@ export class CannonTankPart {
 
         }
 
+        this.lastShotId = shotId;
         this.laserShooting = true;
-
-    };
-
-    private makeFireShot () : void {
-
-        // todo
 
     };
 

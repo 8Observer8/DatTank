@@ -80,7 +80,7 @@ export class TankObject {
 
     public die () : void {
 
-        this.cannon.stopShooting();
+        this.cannon.stopShot();
         CollisionManager.removeObject( this );
         this.gfx.damageSmoke.deactivate();
         this.gfx.shadow.visible = false;
@@ -248,6 +248,7 @@ export class TankObject {
 
     public dispose () : void {
 
+        this.cannon.stopShot();
         this.gfx.dispose();
         this.network.dispose();
         CollisionManager.removeObject( this );

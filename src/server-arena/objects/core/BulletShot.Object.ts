@@ -74,7 +74,7 @@ export class BulletShotObject {
 
     constructor ( arena: ArenaCore, params: any ) {
 
-        if ( BulletShotObject.numIds > 1000 ) BulletShotObject.numIds = 0;
+        if ( BulletShotObject.numIds > 1000 ) BulletShotObject.numIds = 1;
         this.id = BulletShotObject.numIds ++;
         this.arena = arena;
 

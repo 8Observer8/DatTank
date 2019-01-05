@@ -21,14 +21,11 @@ export class CollisionManager {
 
     public raycast ( params: any ) : void {
 
-        params.raycastResult = params.raycastResult || new Cannon.RaycastResult();
-        params.ray = params.ray || new Cannon.Ray();
-
-        const ray = params.ray;
+        const ray = params.ray as Cannon.Ray;
         ray.from.set( params.position.x, params.position.y, params.position.z );
         ray.to.set( params.dPos * Math.cos( params.angle ) + params.position.x, params.position.y, params.dPos * Math.sin( params.angle ) + params.position.z );
-
-        ray['intersectBodies']( this.world.bodies, params.raycastResult );
+        ray['_updateDirection']();
+        ray['intersectBodies']( this.world.bodies );
 
     };
 
@@ -141,7 +138,7 @@ export class CollisionManager {
             const q = new Cannon.Quaternion().setFromEuler( - Math.PI / 2, 0, 0, 'XYZ' );
 
             shape = new Cannon.Cylinder( 1.1 * object.size.x / 2, 1.1 * object.size.x / 2, object.size.z / 2, 8 );
-            collisionBox.body.addShape( shape, new Cannon.Vec3( 0, 0, object.size.z / 1.4 ), q );
+            collisionBox.body.addShape( shape, new Cannon.Vec3( 0, 0, object.size.z / 1.7 ), q );
 
             shape = new Cannon.Cylinder( 1.1 * object.size.x / 2, 1.1 * object.size.x / 2, object.size.z / 2, 8 );
             collisionBox.body.addShape( shape, new Cannon.Vec3( 0, 0, - object.size.z / 3 ), q );
@@ -337,7 +334,7 @@ export class CollisionManager {
 
         //
 
-        this.world.step( 1 / 60, delta / 1000, 5 );
+        this.world.step( 1 / 30, delta / 1000, 5 );
 
     };
 
@@ -402,7 +399,7 @@ export class CollisionManager {
         this.world.defaultContactMaterial.contactEquationStiffness = 500000;
         this.world.defaultContactMaterial.friction = 0;
         this.world.defaultContactMaterial.restitution = 0.2;
-        this.world.solver.iterations = 10;
+        this.world.solver.iterations = 5;
 
         // add ground
 

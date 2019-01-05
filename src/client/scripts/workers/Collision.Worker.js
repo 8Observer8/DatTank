@@ -81,7 +81,7 @@ function addObject ( object, type, isDynamic ) {
         const q = new CANNON.Quaternion().setFromEuler( - Math.PI / 2, 0, 0, 'XYZ' );
 
         shape = new CANNON.Cylinder( 1.1 * object.size.x / 2, 1.1 * object.size.x / 2, object.size.z / 2, 8 );
-        collisionBox.body.addShape( shape, new CANNON.Vec3( 0, 0, object.size.z / 1.4 ), q );
+        collisionBox.body.addShape( shape, new CANNON.Vec3( 0, 0, object.size.z / 1.7 ), q );
 
         shape = new CANNON.Cylinder( 1.1 * object.size.x / 2, 1.1 * object.size.x / 2, object.size.z / 2, 8 );
         collisionBox.body.addShape( shape, new CANNON.Vec3( 0, 0, - object.size.z / 3 ), q );
@@ -258,7 +258,7 @@ function update ( delta, objectsInfo ) {
 
     //
 
-    world.step( 1 / 60, delta / 1000, 5 );
+    world.step( 1 / 30, delta / 1000, 5 );
 
     self.postMessage({ type: 'update', objects: objectsParams });
 
@@ -273,7 +273,7 @@ function initWorld () {
     world.defaultContactMaterial.contactEquationStiffness = 500000;
     world.defaultContactMaterial.friction = 0;
     world.defaultContactMaterial.restitution = 0.2;
-    world.solver.iterations = 10;
+    world.solver.iterations = 5;
 
     // add ground
 

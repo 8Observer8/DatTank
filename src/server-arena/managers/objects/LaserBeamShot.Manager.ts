@@ -37,7 +37,7 @@ export class LaserBeamShotManager {
 
         }
 
-        const laserBeam = new LaserBeamShotObject( this.arena, {} );
+        const laserBeam = new LaserBeamShotObject( this.arena );
         this.laserBeams.push( laserBeam );
 
         return laserBeam;
@@ -58,7 +58,7 @@ export class LaserBeamShotManager {
 
         for ( let i = 0; i < 10; i ++ ) {
 
-            this.laserBeams.push( new LaserBeamShotObject( this.arena, {} ) );
+            this.laserBeams.push( new LaserBeamShotObject( this.arena ) );
 
         }
 

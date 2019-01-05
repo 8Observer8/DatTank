@@ -3,6 +3,8 @@
  * Laser beam object
 */
 
+import * as Cannon from 'cannon';
+
 import * as OMath from '../../OMath/Core.OMath';
 import { ArenaCore } from '../../core/Arena.Core';
 import { TankObject } from './Tank.Object';
@@ -23,23 +25,38 @@ export class LaserBeamShotObject {
 
     public range: number;
     public readonly type: string = 'LaserBeam';
-
     public size: OMath.Vec3 = new OMath.Vec3( 2, 2, 2 );
-    public raycastResult: any;
-    public ray: any;
 
-    // @ts-ignore
     private dPos: number = 0;
-    // @ts-ignore
     private speed: number;
     private yPos: number;
     private dAngle: number;
     private offset: number;
 
+    private ray: Cannon.Ray = new Cannon.Ray();
+    private sinceLastRaycast: number = 0;
+    private raycastDelay: number = 200;
+
     //
+
+    private collisionEvent ( intersect: any ) : any {
+
+        if ( intersect.body.parent.id === this.owner.id ) return;
+
+        if ( intersect.body.name === 'Tank' || intersect.body.name === 'Tower' ) {
+
+            const target = intersect.body.parent as TankObject | TowerObject;
+            target.hit( this.owner );
+
+        }
+
+        this.dPos = intersect.distance;
+
+    };
 
     public activate ( offset: number, yPos: number, dAngle: number, range: number, shotSpeed: number, owner: TankObject | TowerObject ) : void {
 
+        this.sinceLastRaycast = 0;
         this.active = true;
 
         this.owner = owner;
@@ -63,26 +80,9 @@ export class LaserBeamShotObject {
 
         //
 
-        if ( this.raycastResult && this.raycastResult.body ) {
+        if ( this.dPos < this.range ) {
 
-            this.dPos = this.raycastResult.distance;
-
-            if ( this.raycastResult.body.name === 'Tank' || this.raycastResult.body.name === 'Tower' ) {
-
-                const target = this.raycastResult.body.parent as TankObject | TowerObject;
-                target.hit( this.owner );
-
-            }
-
-            this.raycastResult = false;
-
-        } else {
-
-            if ( this.dPos < this.range ) {
-
-                this.dPos += delta * this.speed;
-
-            }
+            this.dPos += delta * this.speed;
 
         }
 
@@ -94,7 +94,14 @@ export class LaserBeamShotObject {
         this.position.x += this.offset * Math.cos( this.angle + this.dAngle );
         this.position.z += this.offset * Math.sin( this.angle + this.dAngle );
 
-        this.arena.collisionManager.raycast( this );
+        this.sinceLastRaycast += delta;
+
+        if ( this.sinceLastRaycast > this.raycastDelay ) {
+
+            this.arena.collisionManager.raycast( this );
+            this.sinceLastRaycast = 0;
+
+        }
 
     };
 
@@ -106,10 +113,13 @@ export class LaserBeamShotObject {
 
     //
 
-    constructor ( arena: ArenaCore, params: any ) {
+    constructor ( arena: ArenaCore ) {
 
-        if ( LaserBeamShotObject.numIds > 1000 ) LaserBeamShotObject.numIds = 0;
+        if ( LaserBeamShotObject.numIds > 1000 ) LaserBeamShotObject.numIds = 1;
         this.id = LaserBeamShotObject.numIds ++;
+
+        this.ray['mode'] = Cannon.Ray['ALL'];
+        this.ray['callback'] = this.collisionEvent.bind( this );
 
         this.arena = arena;
 
