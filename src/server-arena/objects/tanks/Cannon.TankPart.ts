@@ -78,6 +78,12 @@ export class CannonTankPart {
 
         }
 
+        if ( this.shootingEnabled && this.shootType === 'laser' && ! this.activeShotId ) {
+
+            this.makeLaserShot();
+
+        }
+
         //
 
         if ( this.shootingEnabled && this.shootType !== 'bullet' ) {
@@ -137,17 +143,7 @@ export class CannonTankPart {
         if ( this.temperature > 0.9 * this.tempLimit ) return;
         if ( this.shootingEnabled ) return;
 
-        //
-
-        if ( this.shootType === 'bullet' ) {
-
-            this.makeBulletShot();
-
-        } else if ( this.shootType === 'laser' ) {
-
-            this.makeLaserShot();
-
-        }
+        this.shootingEnabled = true;
 
     };
 
@@ -165,11 +161,12 @@ export class CannonTankPart {
 
             }
 
-            this.lastShots = [];
             this.tank.network.stopShooting( this.activeShotId );
-            this.activeShotId = null;
 
         }
+
+        this.lastShots = [];
+        this.activeShotId = null;
 
     };
 
@@ -199,7 +196,7 @@ export class CannonTankPart {
             if ( this.tank.ammo <= 0 ) continue;
 
             const bullet = this.tank.arena.bulletShotManager.getInactiveBullet();
-            bullet.id = shotId;
+            bullet.shotId = shotId;
 
             // compute proper position of bullet
 
@@ -232,7 +229,7 @@ export class CannonTankPart {
         for ( let i = 0, il = this.sourceParam.shootInfo.length; i < il; i ++ ) {
 
             const laserBeam = this.tank.arena.laserBeamShotManager.getInactiveLaserBeam();
-            laserBeam.id = shotId;
+            laserBeam.shotId = shotId;
             laserBeam.activate( this.sourceParam.shootInfo[ i ].offset, this.sourceParam.shootInfo[ i ].y, this.sourceParam.shootInfo[ i ].dAngle, this.range, this.shotSpeed, this.tank );
             this.lastShots.push( laserBeam );
 

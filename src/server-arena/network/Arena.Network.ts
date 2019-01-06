@@ -130,7 +130,7 @@ export class ArenaNetwork {
 
         //
 
-        bufferView[1] = bullet.id;
+        bufferView[1] = bullet.shotId;
         bufferView[2] = position.x;
         bufferView[3] = position.z;
         bufferView[4] = explosionType;

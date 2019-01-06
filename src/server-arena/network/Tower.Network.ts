@@ -26,7 +26,7 @@ export class TowerNetwork {
         this.buffers['MakeShot'].bufferView = bufferView;
 
         bufferView[1] = this.tower.id;
-        bufferView[2] = bullet.id;
+        bufferView[2] = bullet.shotId;
         bufferView[3] = bullet.position.x;
         bufferView[4] = bullet.position.z;
         bufferView[5] = ( - this.tower.rotation - Math.PI / 2 ) * 1000;

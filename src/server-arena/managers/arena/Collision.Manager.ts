@@ -314,18 +314,14 @@ export class CollisionManager {
                 if ( OMath.Vec3.dist( object.parent.position, object.parent.startPosition ) > object.parent.range ) {
 
                     object.parent.detonate( null, null );
-                    return;
+                    continue;
 
                 }
 
-                if ( object.body.velocity.distanceTo( new Cannon.Vec3( 0, object.body.velocity.y, 0 ) ) === 0 ) {
+                //
 
-                    const bulletSpeed = 1200;
-                    object.body.velocity.set( bulletSpeed * Math.sin( object.parent.angle ), 0, bulletSpeed * Math.cos( object.parent.angle ) );
-
-                }
-
-                object.body.velocity.y = 0;
+                const bulletSpeed = 1200;
+                object.body.velocity.set( bulletSpeed * Math.sin( object.parent.angle ), 0, bulletSpeed * Math.cos( object.parent.angle ) );
                 object.parent.position.set( object.body.position.x, object.body.position.y, object.body.position.z );
 
             }

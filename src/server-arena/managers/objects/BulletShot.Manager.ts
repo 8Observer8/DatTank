@@ -27,7 +27,7 @@ export class BulletShotManager {
 
         }
 
-        const bullet = new BulletShotObject( this.arena, {} );
+        const bullet = new BulletShotObject( this.arena );
         this.bullets.push( bullet );
 
         return bullet;
@@ -48,7 +48,7 @@ export class BulletShotManager {
 
         for ( let i = 0; i < 10; i ++ ) {
 
-            this.bullets.push( new BulletShotObject( this.arena, {} ) );
+            this.bullets.push( new BulletShotObject( this.arena ) );
 
         }
 

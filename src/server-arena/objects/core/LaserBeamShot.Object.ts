@@ -18,6 +18,7 @@ export class LaserBeamShotObject {
 
     private arena: ArenaCore;
     public id: number;
+    public shotId: number;
     public active: boolean = false;
     public owner: TankObject | TowerObject;
     public position: OMath.Vec3 = new OMath.Vec3();

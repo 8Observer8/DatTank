@@ -16,6 +16,7 @@ export class BulletShotObject {
 
     private arena: ArenaCore;
     public id: number;
+    public shotId: number;
     public active: boolean = false;
     public owner: TankObject | TowerObject;
     public radius: number = 10;
@@ -72,7 +73,7 @@ export class BulletShotObject {
 
     //
 
-    constructor ( arena: ArenaCore, params: any ) {
+    constructor ( arena: ArenaCore ) {
 
         if ( BulletShotObject.numIds > 1000 ) BulletShotObject.numIds = 1;
         this.id = BulletShotObject.numIds ++;
