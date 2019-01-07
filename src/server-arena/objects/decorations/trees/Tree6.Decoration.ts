@@ -11,7 +11,7 @@ import { ArenaCore } from '../../../core/Arena.Core';
 
 class Tree6Decoration extends DecorationObject {
 
-    public radius: number = 20;
+    public radius: number = 10;
 
     public static canPlace ( arena: ArenaCore, position: OMath.Vec3 ) : boolean {
 

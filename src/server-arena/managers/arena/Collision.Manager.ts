@@ -250,7 +250,6 @@ export class CollisionManager {
                 const rot = { x: 0, y: 0, z: 0 };
                 object.body.quaternion.toEuler( rot );
                 object.parent.rotation = rot.y;
-                object.parent.rotation = Math.floor( object.parent.rotation * 1000 ) / 1000;
                 object.body.quaternion.setFromEuler( 0, object.parent.rotation, 0, 'XYZ' );
 
                 //

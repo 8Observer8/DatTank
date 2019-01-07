@@ -74,7 +74,12 @@ export class CannonTankPart {
 
         if ( this.laserShooting ) {
 
-            this.temperature += Math.pow( this.temperature + 1, 0.1 ) * this.overheat * delta / 16;
+            let coef = 1;
+            if ( this.temperature > 800 ) coef = 1.5;
+            if ( this.temperature > 1400 ) coef = 2;
+            if ( this.temperature > 2400 ) coef = 2.5;
+
+            this.temperature += coef * this.overheat * delta / 16;
             this.temperature = Math.min( this.temperature, this.tempLimit );
             UI.InGame.updateOverheat( 100 * this.temperature / this.tempLimit );
 

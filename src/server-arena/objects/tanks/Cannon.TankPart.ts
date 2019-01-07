@@ -34,6 +34,7 @@ export class CannonTankPart {
     private shotSpeed: number;
 
     private tempLimit: number = 2300;
+    private tempStopShootingCoef: number = 0.98;
 
     private sourceParam: any;
     private activeShotId: number | null;
@@ -88,7 +89,12 @@ export class CannonTankPart {
 
         if ( this.shootingEnabled && this.shootType !== 'bullet' ) {
 
-            this.temperature += Math.pow( this.temperature + 1, 0.1 ) * this.overheat * delta / 16;
+            let coef = 1;
+            if ( this.temperature > 800 ) coef = 1.5;
+            if ( this.temperature > 1400 ) coef = 2;
+            if ( this.temperature > 2400 ) coef = 2.5;
+
+            this.temperature += coef * this.overheat * delta / 16;
             this.temperature = Math.min( this.temperature, this.tempLimit );
 
         } else if ( this.temperature > 0 ) {
@@ -100,7 +106,7 @@ export class CannonTankPart {
 
         if ( this.shootingEnabled ) {
 
-            if ( this.temperature > 0.998 * this.tempLimit ) {
+            if ( this.temperature > this.tempStopShootingCoef * this.tempLimit ) {
 
                 this.stopShooting();
 
@@ -140,7 +146,7 @@ export class CannonTankPart {
 
     public startShooting () : void {
 
-        if ( this.temperature > 0.9 * this.tempLimit ) return;
+        if ( this.temperature > this.tempStopShootingCoef * this.tempLimit ) return;
         if ( this.shootingEnabled ) return;
 
         this.shootingEnabled = true;
@@ -219,7 +225,7 @@ export class CannonTankPart {
 
     private makeLaserShot () : void {
 
-        if ( this.temperature >= 0.8 * this.tempLimit ) return;
+        if ( this.temperature >= this.tempStopShootingCoef * this.tempLimit ) return;
         if ( this.tank.ammo <= 0 ) return;
 
         this.shootingEnabled = true;

@@ -11,7 +11,7 @@ import { CollisionManager } from '../../../managers/arena/Collision.Manager';
 export class Tree2Decoration extends DecorationObject {
 
     public static title: string = 'Tree2';
-    public radius: number = 20;
+    public radius: number = 10;
 
     //
 
