@@ -167,17 +167,17 @@ export class UILandingModule {
         $('#signin-box-wrapper #main-block .tab-content.screens .right-arrow').click( () => {
 
             SoundManager.playSound('ElementSelect');
-            const active = $('#signin-box-wrapper #main-block .tab-content.screens img.active');
+            const active = $('#signin-box-wrapper #main-block .tab-content.screens .item.active');
             const iid = + active.attr('iid')!;
             active.removeClass('active');
 
-            if ( iid === 3 ) {
+            if ( iid === 5 ) {
 
-                $( '#signin-box-wrapper #main-block .tab-content.screens img[iid="1"]' ).addClass('active');
+                $( '#signin-box-wrapper #main-block .tab-content.screens .item[iid="1"]' ).addClass('active');
 
             } else {
 
-                $( '#signin-box-wrapper #main-block .tab-content.screens img[iid="' + ( iid + 1 ) + '"]' ).addClass('active');
+                $( '#signin-box-wrapper #main-block .tab-content.screens .item[iid="' + ( iid + 1 ) + '"]' ).addClass('active');
 
             }
 
@@ -186,17 +186,17 @@ export class UILandingModule {
         $('#signin-box-wrapper #main-block .tab-content.screens .left-arrow').click( () => {
 
             SoundManager.playSound('ElementSelect');
-            const active = $('#signin-box-wrapper #main-block .tab-content.screens img.active');
+            const active = $('#signin-box-wrapper #main-block .tab-content.screens .item.active');
             const iid = + active.attr('iid')!;
             active.removeClass('active');
 
             if ( iid === 1 ) {
 
-                $( '#signin-box-wrapper #main-block .tab-content.screens img[iid="3"]' ).addClass('active');
+                $( '#signin-box-wrapper #main-block .tab-content.screens .item[iid="3"]' ).addClass('active');
 
             } else {
 
-                $( '#signin-box-wrapper #main-block .tab-content.screens img[iid="' + ( iid - 1 ) + '"]' ).addClass('active');
+                $( '#signin-box-wrapper #main-block .tab-content.screens .item[iid="' + ( iid - 1 ) + '"]' ).addClass('active');
 
             }
 
@@ -222,9 +222,6 @@ export class UILandingModule {
             textLength ++;
 
         }, 250 );
-
-        setTimeout( () => { $('.fb-like').animate( { opacity: 1 }, 500 ); }, 1000 );
-        setTimeout( () => { $('.folow-btn').animate( { opacity: 1 }, 500 ); }, 1600 );
 
     };
 

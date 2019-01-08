@@ -202,7 +202,7 @@
     overflow: hidden;
 }
 
-.landing #signin-box-wrapper #main-block .tab-content.screens img {
+.landing #signin-box-wrapper #main-block .tab-content.screens .item {
     position: absolute;
     top: 10%;
     left: 50%;
@@ -212,8 +212,9 @@
     transition: opacity 500ms ease;
 }
 
-.landing #signin-box-wrapper #main-block .tab-content.screens img.active {
+.landing #signin-box-wrapper #main-block .tab-content.screens .item.active {
     opacity: 1;
+    z-index: 10;
 }
 
 .landing #signin-box-wrapper #main-block .tab-content.screens .left-arrow {
@@ -229,6 +230,7 @@
     filter: brightness(10);
     opacity: 0.5;
     transition: opacity 200ms ease;
+    z-index: 100;
 }
 
 .landing #signin-box-wrapper #main-block .tab-content.screens .left-arrow:hover {
@@ -252,6 +254,7 @@
     filter: brightness(10);
     opacity: 0.5;
     transition: opacity 200ms ease;
+    z-index: 100;
 }
 
 .landing #signin-box-wrapper #main-block .tab-content.screens .right-arrow:hover {
@@ -363,6 +366,7 @@
     margin-top: 10px;
     margin-left: 16px;
     margin-right: auto;
+    margin-bottom: 30px;
     width: calc( 90% - 2px );
     text-align: center;
     font: normal 15px 'Roboto';
