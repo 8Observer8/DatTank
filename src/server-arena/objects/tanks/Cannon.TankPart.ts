@@ -33,7 +33,7 @@ export class CannonTankPart {
     private lastShots: Array< LaserBeamShotObject | BulletShotObject >;
     private shotSpeed: number;
 
-    private tempLimit: number = 2300;
+    public tempLimit: number = 2300;
     private tempStopShootingCoef: number = 0.98;
 
     private sourceParam: any;

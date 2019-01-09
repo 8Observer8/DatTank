@@ -350,7 +350,7 @@ export class BotCore {
             deltaAngle = ( deltaAngle > Math.PI ) ? deltaAngle - 2 * Math.PI : deltaAngle;
             deltaAngle = ( deltaAngle < - Math.PI ) ? - deltaAngle + 2 * Math.PI : deltaAngle;
 
-            if ( deltaAngle < 0.2 ) {
+            if ( deltaAngle < 0.2 && this.player.tank.cannon.temperature < 0.7 * this.player.tank.cannon.tempLimit ) {
 
                 this.player.tank.cannon.startShooting();
 
