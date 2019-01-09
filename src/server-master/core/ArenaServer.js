@@ -10,6 +10,9 @@ var ArenaServer = function ( aid, ip ) {
 
     this.lastStatusUpdate = false;
     this.players = 0;
+    this.bots = 0;
+    this.boxes = 0;
+    this.bullets = 0;
 
 };
 

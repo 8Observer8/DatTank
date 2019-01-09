@@ -18,9 +18,13 @@ var ApiManager = {
             var arena = DT.arenaServersManager.arenaServers[ aid ];
 
             arenas.push({
-                id:         arena.aid,
-                ip:         arena.ip,
-                players:    arena.players
+                id:             arena.aid,
+                ip:             arena.ip,
+                players:        arena.players,
+                bots:           arena.bots,
+                boxes:          arena.boxes,
+                bullets:        arena.bullets,
+                cannonObjects:  arena.cannonObjects
             });
 
         }

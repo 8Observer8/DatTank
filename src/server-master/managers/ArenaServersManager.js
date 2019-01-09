@@ -147,6 +147,10 @@ ArenaServersManager.prototype.arenaServerStatusUpdate = function ( req, res ) {
 
     var aid = req.query.aid;
     var players = req.query.players;
+    var bots = req.query.bots;
+    var boxes = req.query.boxes;
+    var bullets = req.query.bullets;
+    var cannonObjects = req.query.cannonObjects;
     var ip = req.query.ip;
 
     if ( ! aid ) {
@@ -169,6 +173,10 @@ ArenaServersManager.prototype.arenaServerStatusUpdate = function ( req, res ) {
 
     this.arenaServers[ aid ].lastStatusUpdate = Date.now();
     this.arenaServers[ aid ].players = players;
+    this.arenaServers[ aid ].bots = bots;
+    this.arenaServers[ aid ].boxes = boxes;
+    this.arenaServers[ aid ].bullets = bullets;
+    this.arenaServers[ aid ].cannonObjects = cannonObjects;
 
     //
 

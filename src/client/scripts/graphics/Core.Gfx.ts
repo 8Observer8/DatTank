@@ -5,6 +5,7 @@
 
 import * as THREE from 'three';
 
+import { Logger } from '../utils/Logger';
 import { UI } from '../ui/Core.UI';
 import { Arena } from '../core/Arena.Core';
 import { LandscapeGfx } from './objects/Landscape.Gfx';
@@ -61,6 +62,7 @@ class GraphicsCore {
 
     private frames: number = 0;
     private lastFPSUpdate: number = 0;
+    private lastGAStats: number = 0;
 
     private cameraShakeIntensity: number = 0;
     private cameraShakeTime: number = 0;
@@ -274,6 +276,13 @@ class GraphicsCore {
         //
 
         if ( time - this.lastFPSUpdate > 1000 ) {
+
+            if ( time - this.lastGAStats > 60 * 1000 ) {
+
+                Logger.newEvent( ( 10 * Math.round( this.frames / 10 ) ).toString() + 'fps', 'fps-stats' );
+                this.lastGAStats = time + 20 * 60 * 1000;
+
+            }
 
             UI.InGame.updateFPS( this.frames );
             this.lastFPSUpdate = time;

@@ -7,11 +7,11 @@ var GarageConfig = {
 
     arenaLevels: {
         0:      { score: 5 },
-        1:      { score: 15 },
-        2:      { score: 30 },
-        3:      { score: 60 },
-        4:      { score: 100 },
-        5:      { score: 150 },
+        1:      { score: 25 },
+        2:      { score: 50 },
+        3:      { score: 80 },
+        4:      { score: 120 },
+        5:      { score: 170 },
         6:      { score: 250 },
         7:      { score: 380 },
         8:      { score: 450 },
@@ -241,11 +241,11 @@ var GarageConfig = {
             shortDesc:      'Plasma cannon first Gen.',
             shootType:      'bullet',
             levels:         {
-                1:      { damage: 30, range: 200, overheat: 200, rpm: 140, price: { levelBonuses: 0, coins:  5 } },
-                2:      { damage: 35, range: 210, overheat: 250, rpm: 160, price: { levelBonuses: 0, coins:  8 } },
-                3:      { damage: 38, range: 220, overheat: 220, rpm: 170, price: { levelBonuses: 0, coins: 10 } },
-                4:      { damage: 42, range: 230, overheat: 180, rpm: 180, price: { levelBonuses: 1, coins: 10 } },
-                5:      { damage: 45, range: 240, overheat: 200, rpm: 200, price: { levelBonuses: 1, coins: 12 } }
+                1:      { damage: 20, range: 200, overheat: 200, rpm: 140, price: { levelBonuses: 0, coins:  5 } },
+                2:      { damage: 25, range: 210, overheat: 250, rpm: 160, price: { levelBonuses: 0, coins:  8 } },
+                3:      { damage: 28, range: 220, overheat: 220, rpm: 170, price: { levelBonuses: 0, coins: 10 } },
+                4:      { damage: 32, range: 230, overheat: 180, rpm: 180, price: { levelBonuses: 1, coins: 10 } },
+                5:      { damage: 35, range: 240, overheat: 200, rpm: 200, price: { levelBonuses: 1, coins: 12 } }
             },
             shotSpeed:      1.8,
             shootInfo: [
@@ -266,11 +266,11 @@ var GarageConfig = {
             shortDesc:      'Plasma cannon second Gen.',
             shootType:      'bullet',
             levels:         {
-                1:      { damage: 40, range: 200, overheat: 210, rpm: 140, price: { levelBonuses: 0, coins:  7 } },
-                2:      { damage: 43, range: 210, overheat: 220, rpm: 150, price: { levelBonuses: 0, coins:  8 } },
-                3:      { damage: 46, range: 220, overheat: 230, rpm: 150, price: { levelBonuses: 1, coins: 10 } },
-                4:      { damage: 52, range: 230, overheat: 210, rpm: 170, price: { levelBonuses: 1, coins: 12 } },
-                5:      { damage: 60, range: 250, overheat: 190, rpm: 190, price: { levelBonuses: 2, coins: 13 } }
+                1:      { damage: 30, range: 200, overheat: 210, rpm: 140, price: { levelBonuses: 0, coins:  7 } },
+                2:      { damage: 33, range: 210, overheat: 220, rpm: 150, price: { levelBonuses: 0, coins:  8 } },
+                3:      { damage: 36, range: 220, overheat: 230, rpm: 150, price: { levelBonuses: 1, coins: 10 } },
+                4:      { damage: 42, range: 230, overheat: 210, rpm: 170, price: { levelBonuses: 1, coins: 12 } },
+                5:      { damage: 50, range: 250, overheat: 190, rpm: 190, price: { levelBonuses: 2, coins: 13 } }
             },
             shotSpeed:      1.8,
             shootInfo: [

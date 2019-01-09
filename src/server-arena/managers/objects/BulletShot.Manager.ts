@@ -15,6 +15,12 @@ export class BulletShotManager {
 
     //
 
+    public getCount () : number {
+
+        return this.bullets.length;
+
+    };
+
     public getInactiveBullet () : BulletShotObject {
 
         for ( let i = 0, il = this.bullets.length; i < il; i ++ ) {

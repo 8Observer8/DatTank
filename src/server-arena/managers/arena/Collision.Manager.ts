@@ -19,6 +19,12 @@ export class CollisionManager {
 
     //
 
+    public getObjectsCount () : number {
+
+        return this.objects.length;
+
+    };
+
     public raycast ( params: any ) : void {
 
         const ray = params.ray as Cannon.Ray;

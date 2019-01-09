@@ -50,10 +50,15 @@ class MasterCore {
 
         const arenas = ArenaManager.getArenas();
         let players = 0;
+        let bots = 0;
+        let bullets = 0;
+        let cannonObjects = 0;
 
         for ( let i = 0, il = arenas.length; i < il; i ++ ) {
 
             const arena = arenas[ i ];
+            bullets += arena.bulletShotManager.getCount();
+            cannonObjects += arena.collisionManager.getObjectsCount();
             const playersList = arena.playerManager.getPlayers();
 
             for ( let j = 0, jl = playersList.length; j < jl; j ++ ) {
@@ -61,6 +66,10 @@ class MasterCore {
                 if ( playersList[ j ].socket ) {
 
                     players ++;
+
+                } else {
+
+                    bots ++;
 
                 }
 
@@ -73,7 +82,7 @@ class MasterCore {
         http.get({
             hostname:   Environment.master.host,
             port:       Environment.master.port,
-            path:       '/api/status-update?aid=' + serverId + '&players=' + players + '&ip=' + ip.address(),
+            path:       '/api/status-update?aid=' + serverId + '&players=' + players + '&ip=' + ip.address() + '&bots=' + bots + '&bullets=' + bullets + '&cannonObjects=' + cannonObjects,
         }, ( res: any ) => {
 
             let response = '';
