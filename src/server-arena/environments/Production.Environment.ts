@@ -10,6 +10,10 @@ export let ProductionEnvironment = {
     web: {
         host:       'http://dattank.io',
         port:       80,
+    },
+
+    arena: {
+        host:       'fr-arena-s1.dattank.io',
         socketPort: 80,
     },
 

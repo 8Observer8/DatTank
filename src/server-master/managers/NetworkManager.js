@@ -4,6 +4,7 @@
 */
 
 var http = require('http');
+var https = require('https');
 var express = require('express');
 var compression = require('compression');
 var passport = require('passport');
@@ -13,6 +14,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var MongoStore = require('connect-mongo')( session );
 var nunjucks = require('nunjucks');
+var fs = require('fs');
 
 var ApiManager = require('./ApiManager');
 
@@ -37,6 +39,26 @@ NetworkManager.prototype.init = function () {
 
     this.app = express();
     this.server = http.createServer( this.app );
+
+    // redirect http -> https
+
+    this.app.use( ( req, res, next ) => {
+
+        if ( req.get('host') === 'beta.dattank.com' ) {
+
+            return res.redirect( 'https://dattank.io' + req.url );
+
+        }
+
+        if ( ! req.secure && req.get('x-forwarded-proto') !== 'https' && environment.name === 'Production environment' ) {
+
+            return res.redirect( 'https://' + req.get('host') + req.url );
+
+        }
+
+        return next();
+
+    });
 
     //
 
@@ -172,6 +194,29 @@ NetworkManager.prototype.init = function () {
     //
 
     this.server.listen( environment.web.port );
+
+    // HTTPS
+
+    if ( environment.name === 'Production environment' ) {
+
+        // certificate
+
+        const privateKey = fs.readFileSync('/etc/letsencrypt/live/dattank.io/privkey.pem', 'utf8');
+        const certificate = fs.readFileSync('/etc/letsencrypt/live/dattank.io/cert.pem', 'utf8');
+        const ca = fs.readFileSync('/etc/letsencrypt/live/dattank.io/chain.pem', 'utf8');
+
+        const credentials = {
+            key: privateKey,
+            cert: certificate,
+            ca: ca
+        };
+
+        // Starting both http & https servers
+
+        const httpsServer = https.createServer( credentials, this.app );
+        httpsServer.listen( 443 );
+
+    }
 
 };
 

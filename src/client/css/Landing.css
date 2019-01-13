@@ -99,8 +99,9 @@
 
 .landing #signin-box-wrapper #main-block {
     position: absolute;
-    left: 13%;
-    width: calc( 74% - 360px );
+    right: calc( 12% + 365px );
+    width: calc( 76% - 365px );
+    max-width: 750px;
     height: 517px;
     background-color: rgba( 255, 255, 255, 0.1 );
 }
@@ -154,7 +155,7 @@
 }
 
 .landing #signin-box-wrapper #main-block .tab-content.home .title {
-    padding: 30px;
+    padding: 80px;
     font: bold 40px 'Roboto', arial, tahoma;
     color: rgba( 255, 255, 255, 0.5 );
 }
@@ -269,18 +270,36 @@
 
 .landing #signin-box-wrapper #signin-box {
     position: absolute;
-    right: 13%;
+    right: 12%;
     width: 340px;
     height: 500px;
     border: 1px solid #666;
     box-shadow: rgba( 0, 0, 0, 0.4 ) 1px 1px 10px;
-    background-color: #fff;
     padding-bottom: 15px;
     transform: scale( 1 );
     transition: transform 300ms ease-out;
 }
 
-@media only screen and (max-width: 1200px) {
+.landing #signin-box-wrapper #signin-box .background {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: -1;
+}
+
+@media only screen and (min-width: 1470px) {
+    .landing #signin-box-wrapper #signin-box {
+        right: calc( 50% - 550px );
+    }
+    .landing #signin-box-wrapper #main-block {
+        right: calc( 50% - 530px + 340px );
+    }
+}
+
+@media only screen and (max-width: 1250px) {
     #signin-box-wrapper #signin-box {
         position: absolute !important;
         left: 50% !important;
@@ -291,15 +310,69 @@
     }
 }
 
-.landing #signin-box-wrapper #signin-box .note {
-    display: table;
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 3px;
-    font-size: 12px;
-    color: #ff9844;
-    text-align: center;
+/*  */
+
+.landing #signin-box-wrapper #signin-box .social {
+    position: absolute;
+    right: -35px;
+    width: 40px;
+    height: 31px;
+    border-radius: 0px 7px 7px 0px;
+    overflow: hidden;
+    transform: rotateX(30deg) rotateZ(10deg);
+    transition: transform 100ms cubic-bezier(0.075, 0.82, 0.165, 1);
+    box-shadow: 2px 2px 8px rgba( 0, 0, 0, 0.3 );
+    z-index: -2;
 }
+
+.landing #signin-box-wrapper #signin-box .social:hover {
+    transform: rotateY( -20deg ) rotateZ(10deg);
+}
+
+.landing #signin-box-wrapper #signin-box .fb-ico {
+    bottom: 90px;
+}
+
+.landing #signin-box-wrapper #signin-box .tw-ico {
+    bottom: 55px;
+}
+
+.landing #signin-box-wrapper #signin-box .dd-ico {
+    bottom: 20px;
+}
+
+.landing #signin-box-wrapper #signin-box .social .img {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    width: 25px;
+    height: 25px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.landing #signin-box-wrapper #signin-box .social .bg {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba( 255, 255, 255, 0.5 );
+}
+
+.landing #signin-box-wrapper #signin-box .social.fb-ico .img {
+    background-image: url(../resources/img/social/facebook-icon.png);
+}
+
+.landing #signin-box-wrapper #signin-box .social.tw-ico .img {
+    background-image: url(../resources/img/social/twitter-icon.png);
+}
+
+.landing #signin-box-wrapper #signin-box .social.dd-ico .img {
+    background-image: url(../resources/img/social/discord-icon.png);
+}
+
+/*  */
 
 .landing #signin-box-wrapper #signin-box #title {
     position: relative;
@@ -311,6 +384,7 @@
 }
 
 .landing #signin-box-wrapper #signin-box .field {
+    position: relative;
     display: table;
     margin-top: 10px;
     margin-left: 16px;
@@ -351,7 +425,7 @@
 }
 
 .landing #signin-box-wrapper #signin-box #start-btn:hover {
-    opacity: 1;
+    opacity: 0.99;
 }
 
 .landing #signin-box-wrapper #signin-box #start-btn:active {
@@ -386,7 +460,7 @@
 }
 
 .landing #signin-box-wrapper #signin-box #signup-btn:hover {
-    opacity: 1;
+    opacity: 0.99;
 }
 
 .landing #signin-box-wrapper #signin-box #signup-btn:active {

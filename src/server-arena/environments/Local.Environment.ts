@@ -10,6 +10,10 @@ export let LocalEnvironment = {
     web: {
         host:           'http://localhost',
         port:           8092,
+    },
+
+    arena: {
+        host:           'localhost',
         socketPort:     8093,
     },
 

@@ -4,6 +4,8 @@
 */
 
 import * as ws from 'ws';
+import * as fs from 'fs';
+import * as https from 'https';
 
 import { TextEncoder } from '../utils/TextEncoder';
 import { Environment } from '../environments/Detect.Environment';
@@ -20,6 +22,7 @@ class NetworkCore {
     private static instance: NetworkCore;
 
     private io: any;
+    private sslIo: any;
 
     private messageListeners = {};
     private events = {
@@ -281,12 +284,27 @@ class NetworkCore {
 
         // enable io
 
-        this.io = new ws.Server({ port: Environment.web.socketPort });
+        let server;
+
+        if ( Environment.name === 'Production environment' ) {
+
+            server = https.createServer({
+                key:    fs.readFileSync('/etc/letsencrypt/live/fr-arena-s1.dattank.io/privkey.pem', 'utf8'),
+                cert:   fs.readFileSync('/etc/letsencrypt/live/fr-arena-s1.dattank.io/cert.pem', 'utf8'),
+            });
+
+            this.sslIo = new ws.Server({ server });
+            this.sslIo.on( 'connection', this.onConnect.bind( this ) );
+            server.listen( 443 );
+
+        }
+
+        this.io = new ws.Server({ port: Environment.arena.socketPort });
         this.io.on( 'connection', this.onConnect.bind( this ) );
 
         //
 
-        console.log( '> DatTank ArenaServer: Network started on port ' + Environment.web.socketPort );
+        console.log( '> DatTank ArenaServer: Network started on port ' + Environment.arena.socketPort );
 
     };
 

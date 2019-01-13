@@ -13,7 +13,7 @@
         <meta property="og:title" content="DatTank.com">
         <meta property="og:description" content="DatTank - is a free multiplayer browser online tank game.">
         <meta property="og:url" content="http://dattank.com/">
-        <meta property="og:image" content="http://dattank.com/resources/img/share-img.png">
+        <meta property="og:image" content="http://dattank.com/resources/img/screen.png">
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:type" content="website" >
@@ -21,7 +21,6 @@
 
         <title>DatTank</title>
 
-        <link rel="stylesheet" id="google-fonts-css" href="http://fonts.googleapis.com/css?family=Roboto:400,400italic,700,700italic,300,300italic,500,500italic" type="text/css" media="all">
         <link rel="shortcut icon" href="/resources/img/fav.png">
 
         <link rel="stylesheet" type="text/css" href="/css/all.css?1" />
@@ -32,13 +31,37 @@
         <script src="/libs/Utils.js"></script>
         <!-- endbuild -->
 
+        <script type='text/javascript'>
+
+            var _ues = {
+            host:'dattank.userecho.com',
+            forum:'1',
+            lang:'en',
+            tab_icon_show:false,
+            tab_corner_radius:5,
+            tab_font_size:20,
+            tab_image_hash:'ZmVlZGJhY2s%3D',
+            tab_chat_hash:'Y2hhdA%3D%3D',
+            tab_alignment:'right',
+            tab_text_color:'#ffffff',
+            tab_text_shadow_color:'#00000055',
+            tab_bg_color:'#64b564',
+            tab_hover_color:'#19bf6f'
+            };
+
+            (function() {
+                var _ue = document.createElement('script'); _ue.type = 'text/javascript'; _ue.async = true;
+                _ue.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.userecho.com/js/widget-1.4.gz.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(_ue, s);
+            })();
+
+        </script>
+
         <script>
-            var fbAppId = '1845382232185797'; // test app
-            // var fbAppId = '178574662917890';
 
             window.fbAsyncInit = function () {
                 FB.init({
-                    appId      : fbAppId, // test app
+                    appId      : '178574662917890',
                     cookie     : true,
                     xfbml      : true,
                     version    : 'v3.0'
@@ -212,6 +235,7 @@
                     </div>
                 </div>
                 <div id="signin-box">
+                    <div class="background"></div>
                     <div id="title">DatTank</div>
                     <input id="username" class="field" type="text" placeholder="Username" maxlength="13" />
                     {% if fid %}
@@ -226,6 +250,9 @@
                             googletag.cmd.push(function() { googletag.display('div-gpt-ad-1484229654832-0'); });
                         </script>
                     </div>
+                    <div class="fb-ico social"><div class="bg"></div><div class="img"></div></div>
+                    <div class="tw-ico social"><div class="bg"></div><div class="img"></div></div>
+                    <div class="dd-ico social"><div class="bg"></div><div class="img"></div></div>
                 </div>
             </div>
 
@@ -561,7 +588,7 @@
             <a href="/changelog">Changelog</a>
             <a href="/policy">Privacy Policy</a>
             <a href="/terms">Terms of Service</a>
-            <a href="http://iogames.space">More Online Games</a>
+            <a href="http://iogames.space" target="_blank">More Online Games</a>
         </div>
 
         <div id="fb-root"></div>

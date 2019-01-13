@@ -277,6 +277,8 @@ class GraphicsCore {
 
         if ( time - this.lastFPSUpdate > 1000 ) {
 
+            this.lastGAStats = this.lastGAStats || time;
+
             if ( time - this.lastGAStats > 60 * 1000 ) {
 
                 Logger.newEvent( ( 10 * Math.round( this.frames / 10 ) ).toString() + 'fps', 'fps-stats' );

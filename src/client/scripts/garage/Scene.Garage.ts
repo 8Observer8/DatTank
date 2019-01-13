@@ -56,7 +56,7 @@ export class GarageScene {
         this.renderer.setSize( this.width, this.height );
         this.renderer.autoClear = false;
         this.renderer.shadowMap.enabled = true;
-        this.renderer.shadowMap.type = THREE.PCFShadowMap;
+        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
         // construct lights
 

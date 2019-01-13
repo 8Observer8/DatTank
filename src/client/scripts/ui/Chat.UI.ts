@@ -161,7 +161,8 @@ export class UIChatModule {
 
     public init () : void {
 
-        $( window ).bind( 'keypress', this.keypress.bind( this ) );
+        $( document ).bind( 'keydown', this.keypress.bind( this ) );
+        $('.chat .message-input').bind( 'keydown', this.keypress.bind( this ) );
         $('.chat .message-input').keydown( ( event ) => { event.stopPropagation(); } );
         $('.chat .message-input').keyup( ( event ) => { event.stopPropagation(); } );
 

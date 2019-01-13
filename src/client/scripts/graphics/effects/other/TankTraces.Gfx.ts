@@ -66,6 +66,7 @@ export class TankTracesGfx {
 
     public dispose () : void {
 
+        if ( ! GfxCore.coreObjects['tank-traces'] || ! this.object ) return;
         GfxCore.coreObjects['tank-traces'].remove( this.object );
 
     };

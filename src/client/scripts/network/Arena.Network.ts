@@ -146,6 +146,10 @@ export class ArenaNetwork {
 
                 offset += 5;
 
+            } else if ( ! Arena.me ) {
+
+                continue;
+
             }
 
             //

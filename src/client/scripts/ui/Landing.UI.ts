@@ -6,6 +6,7 @@
 import { UI } from './Core.UI';
 import { Game } from './../Game';
 import { SoundManager } from '../managers/other/Sound.Manager';
+import { Logger } from '../utils/Logger';
 
 //
 
@@ -163,6 +164,37 @@ export class UILandingModule {
             SoundManager.playSound('ElementHover');
 
         });
+
+        $('.social').mouseenter( () => {
+
+            SoundManager.playSound('ElementHover');
+
+        });
+
+        //
+
+        $('.social.fb-ico').click( () => {
+
+            Logger.newEvent( 'FB-open', 'social' );
+            window.open('https://www.facebook.com/dattankgame', '_blank');
+
+        });
+
+        $('.social.tw-ico').click( () => {
+
+            Logger.newEvent( 'Twitter-open', 'social' );
+            window.open('https://twitter.com/dattank_game', '_blank');
+
+        });
+
+        $('.social.dd-ico').click( () => {
+
+            Logger.newEvent( 'Discord-open', 'social' );
+            window.open('https://discord.gg/NfzEDk6', '_blank');
+
+        });
+
+        //
 
         $('#signin-box-wrapper #main-block .tab-content.screens .right-arrow').click( () => {
 

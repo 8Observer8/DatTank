@@ -131,9 +131,9 @@ class ControlsManagerCore {
 
     //
 
-    private keyDown ( event: KeyboardEvent ) : void {
+    private keyDown ( event: KeyboardEvent ) : boolean {
 
-        if ( this.pressedKey[ '' + event.keyCode ] === true ) return;
+        if ( this.pressedKey[ '' + event.keyCode ] === true ) return false;
         this.pressedKey[ '' + event.keyCode ] = true;
 
         switch ( event.keyCode ) {
@@ -141,7 +141,7 @@ class ControlsManagerCore {
             case 38: // up
             case 87: // w
 
-                if ( this.moveX === 1 ) return;
+                if ( this.moveX === 1 ) break;
                 this.moveX = 1;
                 this.startMoving();
 
@@ -150,7 +150,7 @@ class ControlsManagerCore {
             case 37: // left
             case 65: // a
 
-                if ( this.moveZ === 1 ) return;
+                if ( this.moveZ === 1 ) break;
                 this.moveZ = ( this.moveX === 0 ) ? 1 : this.moveX;
                 this.startMoving();
 
@@ -159,7 +159,7 @@ class ControlsManagerCore {
             case 40: // down
             case 83: // s
 
-                if ( this.moveX === - 1 ) return;
+                if ( this.moveX === - 1 ) break;
                 this.moveZ = - this.moveZ;
                 this.moveX = - 1;
                 this.startMoving();
@@ -169,7 +169,7 @@ class ControlsManagerCore {
             case 39: // right
             case 68: // d
 
-                if ( this.moveZ === - 1 ) return;
+                if ( this.moveZ === - 1 ) break;
                 this.moveZ = ( this.moveX === 0 ) ? - 1 : - this.moveX;
                 this.startMoving();
 
@@ -181,6 +181,8 @@ class ControlsManagerCore {
                 break;
 
         }
+
+        return false;
 
     };
 

@@ -8,15 +8,15 @@ var config = {
     name:           'Production environment',
 
     web: {
-        host:       'http://dattank.com',
+        host:       'https://dattank.io',
         port:       80,
         socketPort: 8085
     },
 
     fbApp: {
-        key:    '1845382232185797',
-        secret: 'a0fd8deff479d4655cafe7592f88d2a7',
-        cbUrl:  'http://localhost:8092/auth/facebook/callback'
+        key:    '178574662917890',
+        secret: '076201bbaa326d7ba0ab2fce011f068d',
+        cbUrl:  'https://dattank.io/auth/facebook/callback'
     }
 
 };

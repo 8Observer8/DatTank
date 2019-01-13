@@ -111,7 +111,16 @@ class NetworkCore {
 
         // establish connection
 
-        this.transport = new WebSocket( 'ws://' + this.host + ':' + this.port + '/ws/game' );
+        if ( window.location.protocol === 'https:' ) {
+
+            this.transport = new WebSocket( 'wss://' + this.host + '/ws/game' );
+
+        } else {
+
+            this.transport = new WebSocket( 'ws://' + this.host + ':' + + this.port + '/ws/game' );
+
+        }
+
         this.transport.binaryType = 'arraybuffer';
 
         // add event handlers

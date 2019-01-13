@@ -13,6 +13,11 @@ export let StagingEnvironment = {
         socketPort: 8085,
     },
 
+    arena: {
+        host:           'localhost',
+        socketPort:     8093,
+    },
+
     master: {
         host:       '167.99.255.211',
         port:       3100,

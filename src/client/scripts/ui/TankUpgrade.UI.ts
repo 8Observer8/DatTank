@@ -39,7 +39,7 @@ export class UITankUpgrade {
         const currentLevelScore = levels[ level ].score;
         const nextLevelScore = ( levels[ level - 1 ] ) ? levels[ level - 1 ].score : 0;
         const levelProgress = 100 * ( 1 - ( currentLevelScore - Arena.me.score ) / ( currentLevelScore - nextLevelScore ) );
-        $('.arena-level-indicator-block .title').html( 'Arena Level ' + ( level + 1 ) );
+        $('.arena-level-indicator-block .title').html( 'Arena skill ' + ( level + 1 ) );
         $('.arena-level-indicator-block .progress-bar .progress-indicator').css( 'width', levelProgress + '%' );
 
     };
@@ -52,17 +52,17 @@ export class UITankUpgrade {
         //
 
         $('.tank-upgrade-block .bonus .increase').off();
-        $( document ).unbind( 'keypress' );
-
         $('.tank-upgrade-block').show();
         $('.tank-upgrade-block').attr('opened', 'true');
         $('.chat .message-block-separate').hide();
         this.hideProgressIndicator();
-        $('.tank-upgrade-block .title').html( 'You have ' + bonusLevels + ' bonus levels.' );
+        $('.tank-upgrade-block .title').html( 'You have ' + bonusLevels + ' bonus skills.' );
         $('.tank-upgrade-block .bonus .increase').click( this.upgradeTank.bind( this ) );
         UI.Chat.hideChatMessageInput();
 
-        $( document ).bind( 'keypress', this.keyHandler.bind( this ) );
+        $( document ).unbind( 'keydown.handler' );
+        $( document ).bind( 'keydown.handler', this.keyHandler.bind( this ) );
+
         $('.tank-upgrade-block .bonus .increase').mouseover( () => {
 
             SoundManager.playSound('ElementSelect');
@@ -104,12 +104,14 @@ export class UITankUpgrade {
         $('.tank-upgrade-block').hide();
         $('.chat .message-block-separate').show();
         $('.tank-upgrade-block').attr('opened', 'false');
-        $( document ).unbind( 'keypress' );
+        $( document ).unbind( 'keydown.handler' );
         this.showProgressIndicator();
 
     };
 
-    private keyHandler ( event: KeyboardEvent ) : void {
+    private keyHandler = ( event: KeyboardEvent ) : void => {
+
+        if ( ! Arena.me.bonusArenaLevels ) return;
 
         switch ( event.keyCode ) {
 
