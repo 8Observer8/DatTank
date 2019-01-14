@@ -42,6 +42,12 @@ class MasterCore {
 
             });
 
+            res.on( 'error', ( err: any ) => {
+
+                //
+
+            });
+
         });
 
     };
@@ -100,6 +106,12 @@ class MasterCore {
 
             });
 
+            res.on( 'error', ( err: any ) => {
+
+                //
+
+            });
+
         });
 
     };
@@ -125,6 +137,12 @@ class MasterCore {
 
                 const data = JSON.parse( response );
                 GarageManager.set( data );
+
+            });
+
+            res.on( 'error', ( err: any ) => {
+
+                //
 
             });
 
@@ -156,6 +174,12 @@ class MasterCore {
 
             });
 
+            res.on( 'error', ( err: any ) => {
+
+                //
+
+            });
+
         });
 
     };
@@ -173,6 +197,11 @@ class MasterCore {
         request( options, () => {
 
             // nothing here
+
+        })
+        .on( 'error', ( err ) => {
+
+            //
 
         });
 
