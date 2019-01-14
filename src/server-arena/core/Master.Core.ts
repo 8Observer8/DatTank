@@ -82,7 +82,7 @@ class MasterCore {
         http.get({
             hostname:   Environment.master.host,
             port:       Environment.master.port,
-            path:       '/api/status-update?aid=' + serverId + '&players=' + players + '&ip=' + Environment.arena.host || ip.address() + '&bots=' + bots + '&bullets=' + bullets + '&cannonObjects=' + cannonObjects,
+            path:       '/api/status-update?aid=' + serverId + '&arenas=' + arenas.length + '&players=' + players + '&ip=' + ( Environment.arena.host || ip.address() ) + '&bots=' + bots + '&bullets=' + bullets + '&cannonObjects=' + cannonObjects,
         }, ( res: any ) => {
 
             let response = '';

@@ -13,6 +13,7 @@ var ArenaServer = function ( aid, ip ) {
     this.bots = 0;
     this.boxes = 0;
     this.bullets = 0;
+    this.arenas = 0;
 
 };
 

@@ -11,25 +11,26 @@ var ApiManager = {
 
     getStats: function ( req, res ) {
 
-        var arenas = [];
+        var info = [];
 
         for ( var aid in DT.arenaServersManager.arenaServers ) {
 
-            var arena = DT.arenaServersManager.arenaServers[ aid ];
+            var arenaServer = DT.arenaServersManager.arenaServers[ aid ];
 
-            arenas.push({
-                id:             arena.aid,
-                ip:             arena.ip,
-                players:        arena.players,
-                bots:           arena.bots,
-                boxes:          arena.boxes,
-                bullets:        arena.bullets,
-                cannonObjects:  arena.cannonObjects
+            info.push({
+                id:             arenaServer.aid,
+                ip:             arenaServer.ip,
+                players:        arenaServer.players,
+                bots:           arenaServer.bots,
+                boxes:          arenaServer.boxes,
+                bullets:        arenaServer.bullets,
+                cannonObjects:  arenaServer.cannonObjects,
+                arenas:         arenaServer.arenas
             });
 
         }
 
-        return res.send( arenas );
+        return res.send( info );
 
     },
 

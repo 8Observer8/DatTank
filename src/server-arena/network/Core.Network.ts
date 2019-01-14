@@ -93,6 +93,7 @@ class NetworkCore {
 
     private onMessage ( socket: ws, data: any ) : void {
 
+        if ( ! data.buffer ) return;
         const arrayBuffer = data.buffer.slice( data.byteOffset, data.byteOffset + data.byteLength );
         const eventId = new Int16Array( arrayBuffer, 0, 1 )[ 0 ];
         const content = new Int16Array( arrayBuffer, 2 );

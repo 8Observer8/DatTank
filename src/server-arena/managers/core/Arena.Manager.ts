@@ -16,7 +16,7 @@ class ArenaManagerCore {
     private static instance: ArenaManagerCore;
 
     private arenas: any = [];
-    public maxPlayersInArena: number = 24;
+    public maxPlayersInArena: number = 2;
 
     public network: ArenaManagerNetwork;
 

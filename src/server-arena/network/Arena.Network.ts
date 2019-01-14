@@ -143,10 +143,10 @@ export class ArenaNetwork {
 
     private newChatMessage ( data: any, socket: ws ) : void {
 
-        if ( data.playerId !== socket['player'].id ) return;
-
         const player = socket['player'];
         let message = data.message.substr( 0, 30 );
+
+        if ( ! player ) return;
 
         if ( message[0] !== '/' ) {
 
@@ -182,7 +182,7 @@ export class ArenaNetwork {
 
     public dispose () : void {
 
-        // todo
+        Network.removeMessageListener( 'ArenaChatMessage', this.newChatMessage );
 
     };
 
@@ -192,7 +192,11 @@ export class ArenaNetwork {
 
         //
 
-        Network.addMessageListener( 'ArenaChatMessage', this.newChatMessage.bind( this ) );
+        this.newChatMessage = this.newChatMessage.bind( this );
+
+        //
+
+        Network.addMessageListener( 'ArenaChatMessage', this.newChatMessage );
 
     };
 

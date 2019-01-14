@@ -388,8 +388,8 @@ class TankGfx {
 
         // stop all audio
 
-        this.explosionSound.pause();
-        this.movingSound.pause();
+        if ( this.explosionSound ) this.explosionSound.pause();
+        if ( this.movingSound ) this.movingSound.pause();
 
         // remove tank object from scene
 

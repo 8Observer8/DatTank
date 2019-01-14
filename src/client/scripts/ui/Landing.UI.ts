@@ -36,7 +36,6 @@ export class UILandingModule {
         for ( let i = 0, il = players.length; i < il; i ++ ) {
 
             $( $('.top-players-score tr')[ i + 1 ] ).find('td.login').html( '<span class="nmb">' + ( i + 1 ) + '</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>' + players[ i ].login + '</span>' );
-            $( $('.top-players-score tr')[ i + 1 ] ).find('td.level').html( players[ i ].level );
             $( $('.top-players-score tr')[ i + 1 ] ).find('td.score').html( players[ i ].score );
             $( $('.top-players-score tr')[ i + 1 ] ).find('td.kills').html( players[ i ].kills );
             $( $('.top-players-score tr')[ i + 1 ] ).find('td.death').html( players[ i ].death );

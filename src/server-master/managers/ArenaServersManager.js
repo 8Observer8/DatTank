@@ -146,6 +146,7 @@ ArenaServersManager.prototype.getFreeServer = function () {
 ArenaServersManager.prototype.arenaServerStatusUpdate = function ( req, res ) {
 
     var aid = req.query.aid;
+    var arenas = req.query.arenas;
     var players = req.query.players;
     var bots = req.query.bots;
     var boxes = req.query.boxes;
@@ -172,6 +173,7 @@ ArenaServersManager.prototype.arenaServerStatusUpdate = function ( req, res ) {
     }
 
     this.arenaServers[ aid ].lastStatusUpdate = Date.now();
+    this.arenaServers[ aid ].arenas = arenas;
     this.arenaServers[ aid ].players = players;
     this.arenaServers[ aid ].bots = bots;
     this.arenaServers[ aid ].boxes = boxes;
