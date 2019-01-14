@@ -137,7 +137,7 @@ export class ExplosionGfx {
 
         //
 
-        if ( Arena.me.tank ) {
+        if ( Arena.me && Arena.me.tank ) {
 
             const dist = Arena.me.tank.position.distanceTo( position );
 

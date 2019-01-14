@@ -8,18 +8,20 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
         <meta name="description" content="DatTank - is a free multiplayer browser online tank game.">
-        <meta name="keywords" content="dattank, dattankcom, io, tank, towers, game, games, web game, html5, fun, flash">
+        <meta name="keywords" content="dattank, dattankio, io, tank, towers, game, games, web game, html5, fun, flash">
         <meta property="fb:app_id" content="178574662917890" />
         <meta property="og:title" content="DatTank.com">
         <meta property="og:description" content="DatTank - is a free multiplayer browser online tank game.">
-        <meta property="og:url" content="http://dattank.com/">
-        <meta property="og:image" content="http://dattank.com/resources/img/screen.png">
+        <meta property="og:url" content="https://dattank.io/">
+        <meta property="og:image" content="https://dattank.io/resources/img/screen.png">
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:type" content="website" >
         <meta property="site_name" content="DatTank">
 
         <title>DatTank</title>
+
+        <script async src="//api.adinplay.com/libs/aiptag/pub/NWG/dattank.com/tag.min.js"></script>
 
         <link rel="shortcut icon" href="/resources/img/fav.png">
 
@@ -93,25 +95,13 @@
             ga('send', 'pageview');
         </script>
 
-        <script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
         <script>
-            var googletag = googletag || {};
-            googletag.cmd = googletag.cmd || [];
+            var aiptag = aiptag || {};
+            aiptag.cmd = aiptag.cmd || [];
+            aiptag.cmd.display = aiptag.cmd.display || [];
+            // Settings
+            aiptag.consented = true; // GDPR setting, please set this value to false if an EU user has declined or not yet accepted marketing cookies, for users outside the EU please use true and for users accepted the GDPR also use true
         </script>
-
-        <script>
-            googletag.cmd.push(function() {
-                googletag.defineSlot('/421469808/NWGS_dattank.com_300x250', [300, 250], 'div-gpt-ad-1484229654832-0').addService(googletag.pubads());
-                googletag.pubads().enableSingleRequest();
-                googletag.enableServices();
-            });
-            googletag.cmd.push(function() {
-                googletag.defineSlot('/421469808/NWGS_dattank.com_300x250', [300, 250], 'div-gpt-ad-1484229654832-1').addService(googletag.pubads());
-                googletag.pubads().enableSingleRequest();
-                googletag.enableServices();
-            });
-        </script>
-
         <script src="https://connect.facebook.net/en_US/sdk.js"></script>
 
     </head>
@@ -234,9 +224,9 @@
                     {% if not fid %}
                         <a id="signup-btn" class="btn" href="/auth/facebook"><div class="fb-icon"></div>Login to save progress</a>
                     {% endif %}
-                    <div id='div-gpt-ad-1484229654832-0' style='height:250px; width:300px; margin-left: auto; margin-right: auto; margin-bottom: 10px;'>
-                        <script>
-                            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1484229654832-0'); });
+                    <div id='dattank-com_300x250' style='margin-top: 30px; height:250px; width:300px; margin-left: auto; margin-right: auto; margin-bottom: 10px;'>
+                        <script type='text/javascript'>
+                            aiptag.cmd.display.push(function() { aipDisplayTag.display('dattank-com_300x250'); });
                         </script>
                     </div>
                     <div class="fb-ico social"><div class="bg"></div><div class="img"></div></div>
@@ -403,9 +393,9 @@
                     <div id="continue-btn"><span id="continue-btn-text">RESPAWN!</span></div>
                     <div id="garage-btn"><div class="garage-img"></div><span id="garage-btn-text">GARAGE</span></div>
                 </div>
-                <div id='div-gpt-ad-1484229654832-1' style='height:250px; width:300px; margin-top: 10px; margin-left: auto; margin-right: auto; margin-bottom: 10px;'>
-                    <script>
-                        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1484229654832-1'); });
+                <div id='dattank-com_300x250-2' style='margin-top: 30px; height:250px; width:300px; margin-left: auto; margin-right: auto; margin-bottom: 10px;'>
+                    <script type='text/javascript'>
+                        aiptag.cmd.display.push(function() { aipDisplayTag.display('dattank-com_300x250-2'); });
                     </script>
                 </div>
             </div>

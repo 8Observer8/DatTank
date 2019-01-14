@@ -34,7 +34,6 @@ class ArenaCore {
 
     private updateInterval: number;
     private updateIntervalDuration: number = 50;
-    private viewRange: number = 1.1 * 750;
 
     private network: ArenaNetwork = new ArenaNetwork();
 
@@ -135,9 +134,9 @@ class ArenaCore {
 
     };
 
-    public removePlayer ( player: PlayerCore ) : void {
+    public removePlayer ( playerId: number ) : void {
 
-        PlayerManager.remove( [ player.id ] );
+        PlayerManager.remove( [ playerId ] );
 
     };
 
@@ -188,76 +187,9 @@ class ArenaCore {
 
     };
 
-    private removeOutOfRangeObjects () : void {
-
-        // remove out of range players
-
-        const playersToRemove = [];
-        const players = PlayerManager.get();
-
-        for ( let i = 0, il = players.length; i < il; i ++ ) {
-
-            const player = players[ i ];
-
-            if ( ! player || player.id === this.meId ) continue;
-            if ( ! player.tank || ! this.me || ! this.me.tank ) continue;
-
-            if ( player.tank.position.distanceTo( this.me.tank.position ) > this.viewRange ) {
-
-                playersToRemove.push( player.id );
-
-            }
-
-        }
-
-        PlayerManager.remove( playersToRemove );
-
-        // remove out of range towers
-
-        const towersToRemove = [];
-        const towers = TowerManager.get();
-
-        for ( let i = 0, il = towers.length; i < il; i ++ ) {
-
-            const tower = towers[ i ];
-            if ( ! tower || ! this.me.tank ) continue;
-
-            if ( tower.position.distanceTo( this.me.tank.position ) > this.viewRange ) {
-
-                towersToRemove.push( tower.id );
-
-            }
-
-        }
-
-        TowerManager.remove( towersToRemove );
-
-        // remove out of range boxes
-
-        const boxesToRemove = [];
-        const boxes = BoxManager.get();
-
-        for ( let i = 0, il = boxes.length; i < il; i ++ ) {
-
-            const box = boxes[ i ];
-            if ( ! box || ! this.me.tank ) continue;
-
-            if ( box.position.distanceTo( this.me.tank.position ) > this.viewRange ) {
-
-                boxesToRemove.push( box.id );
-
-            }
-
-        }
-
-        BoxManager.remove( boxesToRemove );
-
-    };
-
     private update ( time: number, delta: number ) : void {
 
         CollisionManager.update( time, delta );
-        this.removeOutOfRangeObjects();
 
     };
 

@@ -10,6 +10,7 @@ import { BoxManager } from '../managers/objects/Box.Manager';
 import { ControlsManager } from '../managers/other/Control.Manager';
 import { PlayerManager } from '../managers/arena/Player.Manager';
 import { UI } from '../ui/Core.UI';
+import { TowerManager } from '../managers/objects/Tower.Manager';
 
 //
 
@@ -44,25 +45,42 @@ export class ArenaNetwork {
 
         //
 
-        for ( let i = 0, il = data.length / towerBinSize; i < il; i ++ ) {
+        const towerCount = data[0];
+        let offset = 1;
+
+        for ( let i = 0, il = towerCount; i < il; i ++ ) {
 
             tower = {
-                id:             data[ i * towerBinSize + 0 ],
-                team:           data[ i * towerBinSize + 1 ],
+                id:             data[ offset + 0 ],
+                team:           data[ offset + 1 ],
                 position:   {
-                    x:      data[ i * towerBinSize + 2 ],
+                    x:      data[ offset + 2 ],
                     y:      0,
-                    z:      data[ i * towerBinSize + 3 ],
+                    z:      data[ offset + 3 ],
                 },
-                rotation:       data[ i * towerBinSize + 4 ] / 1000,
-                health:         data[ i * towerBinSize + 5 ],
-                newRotation:    data[ i * towerBinSize + 6 ] / 1000,
+                rotation:       data[ offset + 4 ] / 1000,
+                health:         data[ offset + 5 ],
+                newRotation:    data[ offset + 6 ] / 1000,
             };
 
             towers.push( tower );
+            offset += towerBinSize;
 
         }
 
+        //
+
+        const removedTowers = [];
+
+        for ( let i = offset, il = data.length; i < il; i ++ ) {
+
+            removedTowers.push( data[ i ] );
+
+        }
+
+        //
+
+        TowerManager.remove( removedTowers );
         Arena.newTowers( towers );
 
     };
@@ -71,9 +89,10 @@ export class ArenaNetwork {
 
         let player;
         const players = [];
-        let offset = 0;
+        let offset = 1;
+        const tanksCount = data[0];
 
-        while ( offset < data.length ) {
+        for ( let i = 0; i < tanksCount; i ++ ) {
 
             player = {
                 id:                     data[ offset + 0 ],
@@ -146,20 +165,29 @@ export class ArenaNetwork {
 
                 offset += 5;
 
-            } else if ( ! Arena.me ) {
+                players.unshift( player );
 
-                continue;
+            } else {
+
+                players.push( player );
 
             }
-
-            //
-
-            players.push( player );
 
         }
 
         //
 
+        const removedPlayers = [];
+
+        for ( let i = offset, il = data.length; i < il; i ++ ) {
+
+            removedPlayers.push( data[ i ] );
+
+        }
+
+        //
+
+        PlayerManager.remove( removedPlayers );
         Arena.newPlayers( players );
 
     };
@@ -172,22 +200,39 @@ export class ArenaNetwork {
 
         //
 
-        for ( let i = 0, il = data.length / boxBinSize; i < il; i ++ ) {
+        const boxCount = data[0];
+        let offset = 1;
+
+        for ( let i = 0, il = boxCount; i < il; i ++ ) {
 
             box = {
-                id:         data[ i * boxBinSize + 0 ],
-                type:       data[ i * boxBinSize + 1 ],
+                id:         data[ offset + 0 ],
+                type:       data[ offset + 1 ],
                 position:   {
-                    x:  data[ i * boxBinSize + 2 ],
+                    x:  data[ offset + 2 ],
                     y:  20,
-                    z:  data[ i * boxBinSize + 3 ],
+                    z:  data[ offset + 3 ],
                 },
             };
 
             boxes.push( box );
+            offset += boxBinSize;
 
         }
 
+        //
+
+        const removedBoxes = [];
+
+        for ( let i = offset, il = data.length; i < il; i ++ ) {
+
+            removedBoxes.push( data[ i ] );
+
+        }
+
+        //
+
+        BoxManager.remove( removedBoxes );
         Arena.newBoxes( boxes );
 
     };
@@ -213,7 +258,7 @@ export class ArenaNetwork {
 
         if ( player ) {
 
-            Arena.removePlayer( player );
+            Arena.removePlayer( player.id );
 
         }
 

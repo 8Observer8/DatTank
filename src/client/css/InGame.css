@@ -635,7 +635,8 @@
 }
 
 #top-killers .kills {
-    float: right;
+    position: absolute;
+    right: 0px;
     padding-right: 10px;
     font: normal 13px 'Roboto', arial, tahoma;
 }

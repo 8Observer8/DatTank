@@ -35,7 +35,13 @@ export class UIInGameModule {
 
     public refreshAds () : void {
 
-        window['googletag'].pubads().refresh();
+        // @ts-ignore
+        aiptag.cmd.display.push( () => {
+
+            // @ts-ignore
+            aipDisplayTag.display('dattank-com_300x250-2');
+
+        });
 
     };
 
@@ -214,7 +220,7 @@ export class UIInGameModule {
 
         }
 
-        if ( killerId === Arena.me.id ) {
+        if ( Arena.me && killerId === Arena.me.id ) {
 
             this.setGlobalLabel( 'Fu.. You killed <span style="color:' + killedColor + '">' + killed + '</span>!!' );
 

@@ -230,48 +230,62 @@ export class TankNetwork {
 
     };
 
-    public updateBoxesInRange ( boxes: BoxObject[] ) : void {
+    public updateBoxesInRange ( newBoxes: BoxObject[], boxesToRemoveIds: number[] ) : void {
 
         if ( ! this.tank.player.socket ) return;
-        if ( boxes.length === 0 ) return;
+        if ( newBoxes.length === 0 && boxesToRemoveIds.length === 0 ) return;
 
         //
 
         const boxDataSize = 8;
-        const buffer = new ArrayBuffer( 2 + boxDataSize * boxes.length );
+        const buffer = new ArrayBuffer( 2 + 2 + boxDataSize * newBoxes.length + 2 * boxesToRemoveIds.length );
         const bufferView = new Int16Array( buffer );
 
-        for ( let i = 1, il = boxDataSize * boxes.length + 1; i < il; i += boxDataSize ) {
+        bufferView[1] = newBoxes.length;
 
-            const box = boxes[ ( i - 1 ) / boxDataSize ];
+        for ( let i = 1, il = boxDataSize * newBoxes.length + 1; i < il; i += boxDataSize ) {
 
-            bufferView[ i + 0 ] = box.id;
-            bufferView[ i + 1 ] = box.typeId;
-            bufferView[ i + 2 ] = box.position.x;
-            bufferView[ i + 3 ] = box.position.z;
+            const box = newBoxes[ ( i - 1 ) / boxDataSize ];
+
+            bufferView[ 1 + i + 0 ] = box.id;
+            bufferView[ 1 + i + 1 ] = box.typeId;
+            bufferView[ 1 + i + 2 ] = box.position.x;
+            bufferView[ 1 + i + 3 ] = box.position.z;
 
         }
+
+        //
+
+        for ( let i = 0, il = boxesToRemoveIds.length; i < il; i ++ ) {
+
+            bufferView[ i + boxDataSize * newBoxes.length + 1 + 1 ] = boxesToRemoveIds[ i ];
+
+        }
+
+        //
 
         Network.send( 'ArenaBoxesInRange', this.tank.player.socket, buffer, bufferView );
 
     };
 
-    public updateTowersInRange ( towers: TowerObject[] ) : void {
+    public updateTowersInRange ( newTowers: TowerObject[], towersToRemoveIds: number[] ) : void {
 
         if ( ! this.tank.player.socket ) return;
-        if ( towers.length === 0 ) return;
+        if ( newTowers.length === 0 && towersToRemoveIds.length === 0 ) return;
 
         //
 
         const towerDataSize = 14;
-        const buffer = new ArrayBuffer( 2 + towerDataSize * towers.length );
+        const buffer = new ArrayBuffer( 2 + 2 + towerDataSize * newTowers.length + 2 * towersToRemoveIds.length );
         const bufferView = new Int16Array( buffer );
         let offset;
 
-        for ( let i = 0, il = towers.length; i < il; i ++ ) {
+        bufferView[1] = newTowers.length;
 
-            const tower = towers[ i ];
-            offset = 1 + ( towerDataSize / 2 ) * i;
+        for ( let i = 0, il = newTowers.length; i < il; i ++ ) {
+
+            const tower = newTowers[ i ];
+            offset = 1 + 1 + ( towerDataSize / 2 ) * i;
 
             bufferView[ offset + 0 ] = tower.id;
             bufferView[ offset + 1 ] = tower.team.id;
@@ -283,35 +297,47 @@ export class TankNetwork {
 
         }
 
+        //
+
+        for ( let i = 0, il = towersToRemoveIds.length; i < il; i ++ ) {
+
+            bufferView[ i + towerDataSize * newTowers.length + 1 + 1 ] = towersToRemoveIds[ i ];
+
+        }
+
+        //
+
         Network.send( 'ArenaTowersInRange', this.tank.player.socket, buffer, bufferView );
 
     };
 
-    public updateTanksInRange ( tanks: TankObject[] ) : void {
+    public updateTanksInRange ( newTanks: TankObject[], tanksToRemoveIds: number[] ) : void {
 
         if ( ! this.tank.player.socket ) return;
-        if ( tanks.length === 0 ) return;
+        if ( newTanks.length === 0 && tanksToRemoveIds.length === 0 ) return;
 
         //
 
         let size = 0;
 
-        for ( let i = 0, il = tanks.length; i < il; i ++ ) {
+        for ( let i = 0, il = newTanks.length; i < il; i ++ ) {
 
             size += 20; // general
             size += 13; // login
-            size += ( tanks[ i ].id === this.tank.id ) ? 5 : 0; // personal
+            size += ( newTanks[ i ].id === this.tank.id ) ? 5 : 0; // personal
 
         }
 
-        const buffer = new ArrayBuffer( ( 1 + size ) * 2 );
+        const buffer = new ArrayBuffer( ( 1 + 1 + size + tanksToRemoveIds.length ) * 2 );
         const bufferView = new Int16Array( buffer );
         let item = 0;
-        let offset = 1;
+        let offset = 2;
 
-        for ( let i = 0, il = tanks.length; i < il; i ++ ) {
+        bufferView[1] = newTanks.length;
 
-            const tank = tanks[ item ];
+        for ( let i = 0, il = newTanks.length; i < il; i ++ ) {
+
+            const tank = newTanks[ item ];
 
             bufferView[ offset +  0 ] = tank.player.id;
             bufferView[ offset +  1 ] = tank.player.level;
@@ -363,6 +389,14 @@ export class TankNetwork {
             }
 
             item ++;
+
+        }
+
+        //
+
+        for ( let i = 0, il = tanksToRemoveIds.length; i < il; i ++ ) {
+
+            bufferView[ i + offset ] = tanksToRemoveIds[ i ];
 
         }
 

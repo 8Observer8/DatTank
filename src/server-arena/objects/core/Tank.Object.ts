@@ -37,7 +37,7 @@ export class TankObject {
     public rotation: number = 0;
     public health: number = 100;
     public ammo: number = 0;
-    public viewRange: number = 750;
+    public viewRange: number = 700;
     public size: OMath.Vec3 = new OMath.Vec3( 30, 25, 60 );
 
     public moveDirection: OMath.Vec2 = new OMath.Vec2();
@@ -349,6 +349,10 @@ export class TankObject {
 
     public updateObjectsInRange () : void {
 
+        const boxesOutOfRangeIds: number[] = [];
+        const towersOutOfRangeIds: number[] = [];
+        const tanksOutOfRangeIds: number[] = [];
+
         const newBoxesInRange: BoxObject[] = [];
         const newTowersInRange: TowerObject[] = [];
         const newTanksInRange: TankObject[] = [];
@@ -365,20 +369,25 @@ export class TankObject {
 
             if ( this.isObjectInRange( box ) ) {
 
-                if ( this.inRangeOf[ 'Box-' + box.id ] ) continue;
+                if ( this.inRangeOf[ 'Box-' + box.id ] !== undefined ) continue;
 
                 this.inRangeOf[ 'Box-' + box.id ] = box;
                 newBoxesInRange.push( box );
 
             } else {
 
-                delete this.inRangeOf[ 'Box-' + box.id ];
+                if ( this.inRangeOf[ 'Box-' + box.id ] !== undefined ) {
+
+                    delete this.inRangeOf[ 'Box-' + box.id ];
+                    boxesOutOfRangeIds.push( box.id );
+
+                }
 
             }
 
         }
 
-        this.network.updateBoxesInRange( newBoxesInRange );
+        this.network.updateBoxesInRange( newBoxesInRange, boxesOutOfRangeIds );
 
         // check towers in range
 
@@ -388,7 +397,7 @@ export class TankObject {
 
             if ( this.isObjectInRange( tower ) ) {
 
-                if ( this.inRangeOf[ 'Tower-' + tower.id ] ) continue;
+                if ( this.inRangeOf[ 'Tower-' + tower.id ] !== undefined ) continue;
 
                 this.inRangeOf[ 'Tower-' + tower.id ] = tower;
                 tower.inRangeOf[ 'Tank-' + this.id ] = this;
@@ -396,14 +405,19 @@ export class TankObject {
 
             } else {
 
-                delete this.inRangeOf[ 'Tower-' + tower.id ];
-                delete tower.inRangeOf[ 'Tank-' + this.id ];
+                if ( this.inRangeOf[ 'Tower-' + tower.id ] !== undefined ) {
+
+                    towersOutOfRangeIds.push( tower.id );
+                    delete this.inRangeOf[ 'Tower-' + tower.id ];
+                    delete tower.inRangeOf[ 'Tank-' + this.id ];
+
+                }
 
             }
 
         }
 
-        this.network.updateTowersInRange( newTowersInRange );
+        this.network.updateTowersInRange( newTowersInRange, towersOutOfRangeIds );
 
         // check tanks in range
 
@@ -421,13 +435,18 @@ export class TankObject {
 
             } else {
 
-                delete this.inRangeOf[ 'Tank-' + tank.id ];
+                if ( this.inRangeOf[ 'Tank-' + tank.id ] !== undefined ) {
+
+                    delete this.inRangeOf[ 'Tank-' + tank.id ];
+                    tanksOutOfRangeIds.push( tank.player.id ); // !!! player and not tank id! no logic to search for
+
+                }
 
             }
 
         }
 
-        this.network.updateTanksInRange( newTanksInRange );
+        this.network.updateTanksInRange( newTanksInRange, tanksOutOfRangeIds );
 
     };
 

@@ -103,7 +103,7 @@ export class PlayerCore {
 
         } else {
 
-            Arena.removePlayer( this );
+            Arena.removePlayer( this.id );
 
         }
 
