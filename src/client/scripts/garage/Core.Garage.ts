@@ -3,6 +3,7 @@
  * DatTank Garage core
 */
 
+import { Logger } from '../utils/Logger';
 import { Game } from '../Game';
 import { Arena } from '../core/Arena.Core';
 import { GarageScene } from './Scene.Garage';
@@ -197,6 +198,7 @@ export class Garage {
 
         Game.gameService.buyObject( item.type.toLowerCase(), item.id, ( response: any ) => {
 
+            Logger.newEvent( 'PartBuy', 'garage' );
             this.availableParts = response.params;
             localStorage.setItem( 'Selected' + item.type, item.id );
             this.bottomRightMenu.update();
@@ -215,6 +217,7 @@ export class Garage {
 
         Game.gameService.upgradeObject( item.type.toLowerCase(), item.id, ( response: any ) => {
 
+            Logger.newEvent( 'PartUpgrade', 'garage' );
             SoundManager.playSound('MenuBuy');
 
             this.availableParts = response.params;
