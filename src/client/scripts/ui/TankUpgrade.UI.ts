@@ -77,7 +77,7 @@ export class UITankUpgrade {
 
         //
 
-        $('.tank-upgrade-block .bonus.armor .progress .item').removeClass('active');
+        $('.tank-upgrade-block .bonus .progress .item').removeClass('active');
 
         for ( let i = 0; i < 5; i ++ ) {
 

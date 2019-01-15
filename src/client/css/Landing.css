@@ -99,6 +99,14 @@
     z-index: 1;
 }
 
+@media only screen and (max-height: 700px) {
+
+    .landing #signin-box-wrapper {
+        top: calc( 15% - 50px );
+    }
+
+}
+
 .landing #signin-box-wrapper #main-block {
     position: absolute;
     right: calc( 12% + 365px );
@@ -301,7 +309,13 @@
     }
 }
 
-@media only screen and (max-width: 1250px) {
+@media only screen and (max-width: 1435px) {
+    .landing #signin-box-wrapper #main-block .item[tab="screens"] {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 950px) {
     #signin-box-wrapper #signin-box {
         position: absolute !important;
         left: 50% !important;

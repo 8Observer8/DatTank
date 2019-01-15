@@ -423,6 +423,7 @@
     height: 100%;
     background-color: rgba( 0, 0, 0, 0.3 );
     border-bottom: 3px solid rgba( 255, 255, 255, 0.8 );
+    overflow: hidden;
 }
 
 #player-params .health .health-progress .progress {
