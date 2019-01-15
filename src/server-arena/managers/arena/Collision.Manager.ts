@@ -236,7 +236,7 @@ export class CollisionManager {
 
                 } else {
 
-                    if ( Math.abs( object.aV ) > 1 ) {
+                    if ( Math.abs( object.aV ) > 1 && Math.sign( object.aV - Math.sign( object.aV ) * 0.6 * coef ) === Math.sign( object.aV ) ) {
 
                         object.aV -= Math.sign( object.aV ) * 0.5 * coef;
 

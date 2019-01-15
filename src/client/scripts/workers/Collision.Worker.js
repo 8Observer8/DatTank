@@ -151,17 +151,17 @@ function update ( delta, objectsInfo ) {
 
         if ( objectInfo.moveDirection.y > 0 ) {
 
-            object.aV += 0.2 * coef;
+            object.aV += 0.35 * coef;
 
         } else if ( objectInfo.moveDirection.y < 0 ) {
 
-            object.aV -= 0.2 * coef;
+            object.aV -= 0.35 * coef;
 
         } else {
 
-            if ( Math.abs( object.aV ) > 1 ) {
+            if ( Math.abs( object.aV ) > 1 && Math.sign( object.aV - Math.sign( object.aV ) * 0.6 * coef ) === Math.sign( object.aV ) ) {
 
-                object.aV -= Math.sign( object.aV ) * 0.5 * coef;
+                object.aV -= Math.sign( object.aV ) * 0.6 * coef;
 
             } else {
 

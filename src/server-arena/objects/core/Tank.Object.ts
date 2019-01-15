@@ -267,7 +267,6 @@ export class TankObject {
 
         this.moveDirection.set( directionX, directionY );
         this.network.updateMovement();
-        this.network.syncState();
 
     };
 
@@ -454,10 +453,6 @@ export class TankObject {
 
         if ( this.health <= 0 ) return;
 
-        this.cannon.update( delta, time );
-        this.regenerationUpdate( delta );
-        this.updateObjectsInRange();
-
         //
 
         this.sinceLastSync += delta;
@@ -467,6 +462,12 @@ export class TankObject {
             this.sinceLastSync = 0;
 
         }
+
+        //
+
+        this.cannon.update( delta, time );
+        this.regenerationUpdate( delta );
+        this.updateObjectsInRange();
 
     };
 

@@ -248,16 +248,14 @@ export class ArenaCore {
 
         // update managers
 
+        this.collisionManager.update( delta, time );
+
         this.botManager.update( delta, time );
         this.playerManager.update( delta, time );
         this.tankManager.update( delta, time );
         this.towerManager.update( delta, time );
 
         this.laserBeamShotManager.update( delta, time );
-
-        //
-
-        this.collisionManager.update( delta, time );
 
     };
 
