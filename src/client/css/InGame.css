@@ -13,6 +13,12 @@
     z-index: 10;
 }
 
+@media only screen and (max-height: 700px) {
+    #continue-box-wrapper {
+        top: calc( 8% - 20px );
+    }
+}
+
 #continue-change-btn {
     position: relative;
     margin-top: 10px;
@@ -29,6 +35,15 @@
     border: 1px solid #CCC;
     box-shadow: #888 0 0 40px;
     background-color: #fff;
+}
+
+#continue-box-wrapper #continue-box .a {
+    margin-top: 30px;
+    height:250px;
+    width:300px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
 }
 
 #continue-box-wrapper #continue-box #continue-box-wrapper-title {

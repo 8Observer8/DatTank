@@ -228,11 +228,11 @@ export class CollisionManager {
 
                 if ( object.parent.moveDirection.y > 0 ) {
 
-                    object.aV += 0.2 * coef;
+                    object.aV += 0.35 * coef;
 
                 } else if ( object.parent.moveDirection.y < 0 ) {
 
-                    object.aV -= 0.2 * coef;
+                    object.aV -= 0.35 * coef;
 
                 } else {
 

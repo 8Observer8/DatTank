@@ -54,6 +54,8 @@ export class UILandingModule {
         $('.landing .sound').hide();
         $('.landing .fullscreen').hide();
 
+        $('#dattank-com_300x250').remove();
+
     };
 
     public showLoader () : void {

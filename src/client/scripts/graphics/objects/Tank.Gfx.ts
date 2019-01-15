@@ -207,7 +207,7 @@ class TankGfx {
 
             //
 
-            if ( Math.abs( this.tank.rotationCorrectValue ) > 0.001 ) {
+            if ( Math.abs( this.tank.rotationCorrectValue ) > 0.01 ) {
 
                 let dr = correctionSpeed * OMath.sign( this.tank.rotationCorrectValue ) / 200;
                 dr = Math.abs( dr ) < Math.abs( this.tank.rotationCorrectValue ) ? dr : this.tank.rotationCorrectValue;
@@ -217,8 +217,12 @@ class TankGfx {
 
             } else {
 
-                dRot += this.tank.rotationCorrectValue;
-                this.tank.rotationCorrectValue = 0;
+                if ( Math.abs( this.tank.rotationCorrectValue ) > 0.001 ) {
+
+                    dRot += this.tank.rotationCorrectValue;
+                    this.tank.rotationCorrectValue = 0;
+
+                }
 
             }
 

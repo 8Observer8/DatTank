@@ -99,7 +99,6 @@ export class PlayerCore {
             UI.InGame.updateAmmo( this.tank.ammo );
             UI.InGame.updateOverheat( 0 );
             UI.InGame.hideContinueBox();
-            UI.InGame.refreshAds();
 
         } else {
 

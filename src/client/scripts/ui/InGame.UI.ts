@@ -35,13 +35,20 @@ export class UIInGameModule {
 
     public refreshAds () : void {
 
-        // @ts-ignore
-        aiptag.cmd.display.push( () => {
+        $('#dattank-com_300x250').remove();
 
-            // @ts-ignore
-            aipDisplayTag.display('dattank-com_300x250-2');
+        setTimeout( () => {
 
-        });
+            $('#continue-box').append( '<div id="dattank-com_300x250" class="a"></div>' );
+
+            setTimeout( () => {
+
+                // @ts-ignore
+                aiptag.cmd.display.push( () => { aipDisplayTag.display('dattank-com_300x250') });
+
+            }, 200 );
+
+        }, 100 );
 
     };
 
@@ -80,6 +87,8 @@ export class UIInGameModule {
             $('#continue-box-wrapper').css( 'opacity', 1 );
 
         }, 100 );
+
+        UI.InGame.refreshAds();
 
     };
 
