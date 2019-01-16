@@ -102,7 +102,7 @@
 @media only screen and (max-height: 700px) {
 
     .landing #signin-box-wrapper {
-        top: calc( 15% - 50px );
+        top: calc( 15% - 20px );
     }
 
 }
