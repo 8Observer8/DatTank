@@ -128,6 +128,10 @@ export class TankObject {
 
             this.gfx.label.update( this.health, this.armor.armor, this.player.team.color, this.player.username );
 
+        } else {
+
+            UI.InGame.updateHealth( this.health );
+
         }
 
     };

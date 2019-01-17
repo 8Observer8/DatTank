@@ -319,10 +319,12 @@ class TankGfx {
         const tankShadow = new THREE.Mesh( new THREE.PlaneBufferGeometry( 3, 3 ), new THREE.MeshBasicMaterial({ map: tankShadowTexture, transparent: true, depthWrite: false, opacity: 0.7 }) );
         tankShadow.scale.set( 13, 20, 1 );
         tankShadow.rotation.x = - Math.PI / 2;
-        tankShadow.position.y += 0.5;
+        tankShadow.position.y += 0.5 - 10;
         tankShadow.renderOrder = 10;
         this.shadow = tankShadow;
         this.object.add( tankShadow );
+
+        this.wrapper.position.y = -10;
 
         //
 

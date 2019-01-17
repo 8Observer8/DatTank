@@ -89,6 +89,8 @@ export class UILandingModule {
 
     private start () : void {
 
+        if ( $('#signin-box #start-btn').attr('ready') !== 'true' ) return;
+
         const login = $('#username').val() || localStorage.getItem('login') || '';
         localStorage.setItem( 'login', login + '' );
 

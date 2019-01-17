@@ -351,6 +351,9 @@ export class Garage {
             this.bottomRightMenu.update();
             this.rightRightMenu.getMaxConfigValues();
 
+            $('#signin-box #start-btn').html('START');
+            $('#signin-box #start-btn').attr('ready', 'true');
+
         });
 
         //

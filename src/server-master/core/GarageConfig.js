@@ -131,7 +131,7 @@ var GarageConfig = {
                 levelBonuses:   1
             },
             cannon:         [ 'Plasma-g1', 'Plasma-g2', 'Plasma-double', 'Razer-v1', 'Razer-v2' ],
-            engine:         [ 'ZEL-72s', 'KTZ-r2' ],
+            engine:         [ 'ZEL-72', 'ZEL-72s', 'KTZ-r2' ],
             armor:          [ 'KS-shield', 'Z8-shield', 'KS200-shield' ],
             default:        {
                 cannon:     'Plasma-g1',
@@ -401,11 +401,11 @@ var GarageConfig = {
             shortDesc:      'Laser cannon first prototype',
             shootType:      'laser',
             levels:         {
-                1:      { damage: 12, range: 170, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 35 } },
-                2:      { damage: 13, range: 170, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 40 } },
-                3:      { damage: 14, range: 170, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 47 } },
-                4:      { damage: 15, range: 170, overheat: 10, rpm: 600, price: { levelBonuses: 2, coins: 54 } },
-                5:      { damage: 16, range: 170, overheat: 10, rpm: 600, price: { levelBonuses: 2, coins: 57 } }
+                1:      { damage: 8, range: 170, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 35 } },
+                2:      { damage: 9, range: 170, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 40 } },
+                3:      { damage: 10, range: 170, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 47 } },
+                4:      { damage: 11, range: 170, overheat: 11, rpm: 600, price: { levelBonuses: 2, coins: 54 } },
+                5:      { damage: 12, range: 170, overheat: 12, rpm: 600, price: { levelBonuses: 2, coins: 57 } }
             },
             shotSpeed:      1,
             shootInfo: [
@@ -426,11 +426,11 @@ var GarageConfig = {
             shortDesc:      'Second prototype version of laser cannon',
             shootType:      'laser',
             levels:         {
-                1:      { damage: 10, range: 200, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 40 } },
-                2:      { damage: 11, range: 200, overheat: 11, rpm: 600, price: { levelBonuses: 1, coins: 45 } },
-                3:      { damage: 12, range: 200, overheat: 11, rpm: 600, price: { levelBonuses: 1, coins: 52 } },
-                4:      { damage: 13, range: 200, overheat: 10, rpm: 600, price: { levelBonuses: 2, coins: 56 } },
-                5:      { damage: 14, range: 200, overheat: 11, rpm: 600, price: { levelBonuses: 2, coins: 72 } }
+                1:      { damage: 9, range: 200, overheat: 10, rpm: 600, price: { levelBonuses: 1, coins: 40 } },
+                2:      { damage: 10, range: 200, overheat: 11, rpm: 600, price: { levelBonuses: 1, coins: 45 } },
+                3:      { damage: 11, range: 200, overheat: 11, rpm: 600, price: { levelBonuses: 1, coins: 52 } },
+                4:      { damage: 12, range: 200, overheat: 10, rpm: 600, price: { levelBonuses: 2, coins: 56 } },
+                5:      { damage: 13, range: 200, overheat: 11, rpm: 600, price: { levelBonuses: 2, coins: 72 } }
             },
             shotSpeed:      1,
             shootInfo: [

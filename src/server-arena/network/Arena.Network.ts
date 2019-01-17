@@ -30,7 +30,7 @@ export class ArenaNetwork {
 
             const player = players[ i ];
 
-            if ( position.distanceTo( player.tank.position ) > 1.1 * player.tank.viewRange ) continue;
+            if ( position.distanceTo( player.tank.position ) > player.tank.viewRange ) continue;
             if ( ! player.socket ) continue;
 
             Network.send( eventName, player.socket, data, dataView );

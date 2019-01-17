@@ -148,7 +148,7 @@ export class TankObject {
 
         //
 
-        const position = new OMath.Vec3( this.team.spawnPosition.x, this.team.spawnPosition.y + 5, this.team.spawnPosition.z );
+        const position = new OMath.Vec3( this.team.spawnPosition.x, this.team.spawnPosition.y, this.team.spawnPosition.z );
         const offset = new OMath.Vec3();
         let iter = 0;
 
