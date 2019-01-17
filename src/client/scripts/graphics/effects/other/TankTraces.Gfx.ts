@@ -108,8 +108,8 @@ export class TankTracesGfx {
             const wx = width * Math.sin( Math.PI / 2 - angle );
             const wz = - width * Math.cos( Math.PI / 2 - angle );
 
-            a[0] = [ routPoint[0] - pos.x - wx, routPoint[1] - 10, routPoint[2] - pos.z - wz ];
-            a[1] = [ routPoint[0] - pos.x + wx, routPoint[1] - 10, routPoint[2] - pos.z + wz ];
+            a[0] = [ routPoint[0] - pos.x - wx, routPoint[1], routPoint[2] - pos.z - wz ];
+            a[1] = [ routPoint[0] - pos.x + wx, routPoint[1], routPoint[2] - pos.z + wz ];
 
             //
 
