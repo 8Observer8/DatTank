@@ -30,6 +30,18 @@ class PlayerManagerCore {
 
     };
 
+    public removeAll () : void {
+
+        for ( let i = 0, il = this.players.length; i < il; i ++ ) {
+
+            this.players[ i ].dispose();
+
+        }
+
+        this.players = [];
+
+    };
+
     public remove ( playerIds: number[] ) : void {
 
         const newPlayersList = [];

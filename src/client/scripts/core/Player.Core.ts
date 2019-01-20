@@ -11,6 +11,8 @@ import { TeamCore } from './Team.Core';
 import { TeamManager } from '../managers/arena/Team.Manager';
 import { PlayerNetwork } from '../network/Player.Network';
 import { UI } from '../ui/Core.UI';
+import { BoxManager } from '../managers/objects/Box.Manager';
+import { PlayerManager } from '../managers/arena/Player.Manager';
 
 //
 
@@ -91,6 +93,9 @@ export class PlayerCore {
     public respawn ( params: any ) : void {
 
         if ( Arena.me.id === this.id && this.tank ) {
+
+            PlayerManager.removeAll();
+            BoxManager.removeAll();
 
             this.prepareTank( params.tank );
             this.tank.init();

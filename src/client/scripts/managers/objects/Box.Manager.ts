@@ -25,6 +25,18 @@ class BoxManagerCore {
 
     };
 
+    public removeAll () : void {
+
+        for ( let i = 0, il = this.boxes.length; i < il; i ++ ) {
+
+            this.boxes[ i ].remove();
+
+        }
+
+        this.boxes = [];
+
+    };
+
     public remove ( boxIds: number[] ) : void {
 
         const newBoxList = [];

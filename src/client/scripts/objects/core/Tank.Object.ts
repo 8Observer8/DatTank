@@ -74,6 +74,14 @@ export class TankObject {
 
     public move ( directionX: number, directionZ: number ) : void {
 
+        if ( Arena.me && this.player.id === Arena.me.id ) {
+
+            this.setMovement( directionX, directionZ );
+
+        }
+
+        //
+
         this.network.move( directionX, directionZ );
 
     };
