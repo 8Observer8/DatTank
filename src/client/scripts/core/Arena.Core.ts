@@ -33,7 +33,7 @@ class ArenaCore {
     public myLevelBonuses: number;
 
     private updateInterval: number;
-    private updateIntervalDuration: number = 20;
+    private updateIntervalDuration: number = 50;
 
     private network: ArenaNetwork = new ArenaNetwork();
 

@@ -35,10 +35,11 @@ self.onmessage = function ( e ) {
 
         case 'update':
 
-            lastUpdate = lastUpdate || Date.now();
-            delta = Date.now() - lastUpdate;
+            var time = Date.now();
+            lastUpdate = lastUpdate || time;
+            delta = time - lastUpdate;
             update( delta, data.objects );
-            lastUpdate = Date.now();
+            lastUpdate = time;
             break;
 
     }
@@ -73,8 +74,6 @@ function addObject ( object, type, isDynamic ) {
 
     } else if ( type === 'tank' ) {
 
-        collisionBox.body.quaternion.setFromEuler( 0, object.rotation, 0, 'XYZ' );
-
         shape = new CANNON.Box( new CANNON.Vec3( object.size.x / 2, object.size.y / 2, object.size.z / 2 ) );
         collisionBox.body.addShape( shape, new CANNON.Vec3( 0, 0, 0 ) );
 
@@ -85,6 +84,9 @@ function addObject ( object, type, isDynamic ) {
 
         shape = new CANNON.Cylinder( 1.1 * object.size.x / 2, 1.1 * object.size.x / 2, object.size.z / 2, 8 );
         collisionBox.body.addShape( shape, new CANNON.Vec3( 0, 0, - object.size.z / 3 ), q );
+
+        collisionBox.body.quaternion.setFromEuler( 0, object.rotation, 0, 'XYZ' );
+        collisionBox.body.angularDamping = 0.95;
 
     }
 
@@ -126,8 +128,6 @@ function update ( delta, objectsInfo ) {
     if ( ! inited ) return;
     if ( delta === 0 ) return;
 
-    world.step( 1 / 20, delta / 1000, 5 );
-
     //
 
     var coef = delta / 50;
@@ -151,39 +151,34 @@ function update ( delta, objectsInfo ) {
 
         //
 
-        object.aV = object.aV || 0;
-
         if ( objectInfo.moveDirection.y > 0 ) {
 
-            object.aV += 0.35 * coef;
+            var force = new CANNON.Vec3( 0, 0, 80000 * coef );
+            object.body.applyLocalImpulse( force.negate(), new CANNON.Vec3(   5, 0, 0 ) );
+            object.body.applyLocalImpulse( force, new CANNON.Vec3( - 5, 0, 0 ) );
 
         } else if ( objectInfo.moveDirection.y < 0 ) {
 
-            object.aV -= 0.35 * coef;
-
-        } else {
-
-            if ( Math.abs( object.aV ) > 1 && Math.sign( object.aV - Math.sign( object.aV ) * 0.6 * coef ) === Math.sign( object.aV ) ) {
-
-                object.aV -= Math.sign( object.aV ) * 0.6 * coef;
-
-            } else {
-
-                object.aV = 0;
-
-            }
+            var force = new CANNON.Vec3( 0, 0, 80000 * coef );
+            object.body.applyLocalImpulse( force, new CANNON.Vec3(   5, 0, 0 ) );
+            object.body.applyLocalImpulse( force.negate(), new CANNON.Vec3( - 5, 0, 0 ) );
 
         }
-
-        object.aV = Math.sign( object.aV ) * Math.min( Math.abs( object.aV ), 1.3 );
-        object.body.angularVelocity.y = object.aV;
 
         //
 
         const rot = { x: 0, y: 0, z: 0 };
         object.body.quaternion.toEuler( rot );
-        objectInfo.rotation = ( objectInfo.rotation !== false ) ? objectInfo.rotation : rot.y;
-        object.body.quaternion.setFromEuler( 0, objectInfo.rotation, 0, 'XYZ' );
+
+        if ( objectInfo.rotation !== false ) {
+
+            object.body.quaternion.setFromEuler( 0, objectInfo.rotation, 0, 'XYZ' );
+
+        } else {
+
+            objectInfo.rotation = rot.y;
+
+        }
 
         //
 
@@ -211,28 +206,34 @@ function update ( delta, objectsInfo ) {
 
         }
 
-        if ( object.body.velocity.y > 0 ) {
-
-            object.body.velocity.y = Math.min( object.body.velocity.y, 8 );
-
-        } else {
-
-            object.body.velocity.y = Math.max( object.body.velocity.y, - 50 );
-
-        }
-
         //
 
         const dv = object.body.velocity.length() * Math.sin( velocityAngle - objectInfo.rotation );
         object.body.applyLocalImpulse( new CANNON.Vec3( - 0.2 * object.body.mass * dv * coef, 0, 0 ), new CANNON.Vec3( 0, 0, 0 ) );
 
-        //
+    }
+
+    //
+
+    world.step( 1 / 20, delta / 1000, 5 );
+
+    //
+
+    for ( var i = 0, il = objects.length; i < il; i ++ ) {
+
+        var object = objects[ i ];
+        var objectInfo = objectsInfo[ object.objType + '-' + object.id ];
+        if ( ! object ) continue;
+        if ( object.objType !== 'Tank' ) continue;
 
         var direction = ( objectInfo.moveDirection.x > 0 ) ? 0 : Math.PI;
         var vx = speed * Math.sin( objectInfo.rotation + direction );
         var vz = speed * Math.cos( objectInfo.rotation + direction );
 
         var forwardVelocity = new CANNON.Vec3( vx, 0, vz ).distanceTo( new CANNON.Vec3() );
+
+        const rot = { x: 0, y: 0, z: 0 };
+        object.body.quaternion.toEuler( rot );
 
         //
 
@@ -241,10 +242,6 @@ function update ( delta, objectsInfo ) {
         dfv = movementDirection * dfv;
         object['prevForwardVelocity'] = forwardVelocity;
 
-        if ( Math.abs( object.body.velocity.x ) < 0.2 ) object.body.velocity.x = 0;
-        if ( Math.abs( object.body.velocity.y ) < 0.2 ) object.body.velocity.y = 0;
-        if ( Math.abs( object.body.velocity.z ) < 0.2 ) object.body.velocity.z = 0;
-
         //
 
         objectsParams.push({
@@ -252,10 +249,10 @@ function update ( delta, objectsInfo ) {
             type:                   object.objType,
             acceleration:           - Math.sign( dfv ) * Math.min( Math.abs( dfv ), 8 ) / 200 / Math.PI,
             position:               { x: object.body.position.x, y: object.body.position.y, z: object.body.position.z },
-            rotation:               objectInfo.rotation,
+            rotation:               rot.y,
             velocity:               forwardVelocity,
-            angularVelocity:        object.body.angularVelocity,
-            directionVelocity:      { x: object.body.velocity.x, y: object.body.velocity.y, z: object.body.velocity.z },
+            angularVelocity:        { x: object.body.angularVelocity.x, y: object.body.angularVelocity.y, z: object.body.angularVelocity.z },
+            directionVelocity:      { x: object.body.velocity.x, y: object.body.velocity.y, z: object.body.velocity.z }
         });
 
     }

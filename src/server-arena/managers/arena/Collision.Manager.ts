@@ -136,8 +136,6 @@ export class CollisionManager {
 
         } else if ( type === 'tank' ) {
 
-            collisionBox.body.quaternion.setFromEuler( 0, object.rotation, 0, 'XYZ' );
-
             shape = new Cannon.Box( new Cannon.Vec3( object.size.x / 2, object.size.y / 2, object.size.z / 2 ) );
             collisionBox.body.addShape( shape as Cannon.Shape, new Cannon.Vec3( 0, 0, 0 ) );
 
@@ -149,7 +147,8 @@ export class CollisionManager {
             shape = new Cannon.Cylinder( 1.1 * object.size.x / 2, 1.1 * object.size.x / 2, object.size.z / 2, 8 );
             collisionBox.body.addShape( shape, new Cannon.Vec3( 0, 0, - object.size.z / 3 ), q );
 
-            collisionBox.body.angularDamping = 0.01;
+            collisionBox.body.quaternion.setFromEuler( 0, object.rotation, 0, 'XYZ' );
+            collisionBox.body.angularDamping = 0.95;
 
         }
 
@@ -228,39 +227,25 @@ export class CollisionManager {
 
             if ( object.parent.type === 'Tank' ) {
 
-                object.aV = object.aV || 0;
-
                 if ( object.parent.moveDirection.y > 0 ) {
 
-                    object.aV += 0.35 * coef;
+                    const force = new Cannon.Vec3( 0, 0, 80000 * coef );
+                    object.body.applyLocalImpulse( force.negate(), new Cannon.Vec3(   5, 0, 0 ) );
+                    object.body.applyLocalImpulse( force, new Cannon.Vec3( - 5, 0, 0 ) );
 
                 } else if ( object.parent.moveDirection.y < 0 ) {
 
-                    object.aV -= 0.35 * coef;
-
-                } else {
-
-                    if ( Math.abs( object.aV ) > 1 && Math.sign( object.aV - Math.sign( object.aV ) * 0.6 * coef ) === Math.sign( object.aV ) ) {
-
-                        object.aV -= Math.sign( object.aV ) * 0.5 * coef;
-
-                    } else {
-
-                        object.aV = 0;
-
-                    }
+                    const force = new Cannon.Vec3( 0, 0, 80000 * coef );
+                    object.body.applyLocalImpulse( force, new Cannon.Vec3(   5, 0, 0 ) );
+                    object.body.applyLocalImpulse( force.negate(), new Cannon.Vec3( - 5, 0, 0 ) );
 
                 }
-
-                object.aV = Math.sign( object.aV ) * Math.min( Math.abs( object.aV ), 1.3 );
-                object.body.angularVelocity.y = object.aV;
 
                 //
 
                 const rot = { x: 0, y: 0, z: 0 };
                 object.body.quaternion.toEuler( rot );
                 object.parent.rotation = rot.y;
-                object.body.quaternion.setFromEuler( 0, object.parent.rotation, 0, 'XYZ' );
 
                 //
 
@@ -288,24 +273,10 @@ export class CollisionManager {
 
                 }
 
-                if ( object.body.velocity.y > 0 ) {
-
-                    object.body.velocity.y = Math.min( object.body.velocity.y, 8 );
-
-                } else {
-
-                    object.body.velocity.y = Math.max( object.body.velocity.y, - 50 );
-
-                }
-
                 //
 
                 const dv = object.body.velocity.length() * Math.sin( velocityAngle - object.parent.rotation );
                 object.body.applyLocalImpulse( new Cannon.Vec3( - 0.2 * object.body.mass * dv * coef, 0, 0 ), new Cannon.Vec3( 0, 0, 0 ) );
-
-                if ( Math.abs( object.body.velocity.x ) < 1 ) object.body.velocity.x = 0;
-                if ( Math.abs( object.body.velocity.y ) < 1 ) object.body.velocity.y = 0;
-                if ( Math.abs( object.body.velocity.z ) < 1 ) object.body.velocity.z = 0;
 
                 //
 
