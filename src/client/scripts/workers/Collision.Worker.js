@@ -126,6 +126,10 @@ function update ( delta, objectsInfo ) {
     if ( ! inited ) return;
     if ( delta === 0 ) return;
 
+    world.step( 1 / 20, delta / 1000, 5 );
+
+    //
+
     var coef = delta / 50;
     var objectsParams = [];
 
@@ -179,7 +183,6 @@ function update ( delta, objectsInfo ) {
         const rot = { x: 0, y: 0, z: 0 };
         object.body.quaternion.toEuler( rot );
         objectInfo.rotation = ( objectInfo.rotation !== false ) ? objectInfo.rotation : rot.y;
-        objectInfo.rotation = Math.floor( objectInfo.rotation * 1000 ) / 1000;
         object.body.quaternion.setFromEuler( 0, objectInfo.rotation, 0, 'XYZ' );
 
         //
@@ -238,9 +241,9 @@ function update ( delta, objectsInfo ) {
         dfv = movementDirection * dfv;
         object['prevForwardVelocity'] = forwardVelocity;
 
-        if ( Math.abs( object.body.velocity.x ) < 1 ) object.body.velocity.x = 0;
-        if ( Math.abs( object.body.velocity.y ) < 1 ) object.body.velocity.y = 0;
-        if ( Math.abs( object.body.velocity.z ) < 1 ) object.body.velocity.z = 0;
+        if ( Math.abs( object.body.velocity.x ) < 0.2 ) object.body.velocity.x = 0;
+        if ( Math.abs( object.body.velocity.y ) < 0.2 ) object.body.velocity.y = 0;
+        if ( Math.abs( object.body.velocity.z ) < 0.2 ) object.body.velocity.z = 0;
 
         //
 
@@ -249,16 +252,15 @@ function update ( delta, objectsInfo ) {
             type:                   object.objType,
             acceleration:           - Math.sign( dfv ) * Math.min( Math.abs( dfv ), 8 ) / 200 / Math.PI,
             position:               { x: object.body.position.x, y: object.body.position.y, z: object.body.position.z },
+            rotation:               objectInfo.rotation,
             velocity:               forwardVelocity,
             angularVelocity:        object.body.angularVelocity,
-            directionVelocity:      object.body.velocity,
+            directionVelocity:      { x: object.body.velocity.x, y: object.body.velocity.y, z: object.body.velocity.z },
         });
 
     }
 
     //
-
-    world.step( 1 / 30, delta / 1000, 5 );
 
     self.postMessage({ type: 'update', objects: objectsParams });
 

@@ -77,6 +77,9 @@ export class PlayerCore {
 
         const selected = JSON.parse( localStorage.getItem('SelectedParts') || '{}' );
 
+        PlayerManager.removeAll();
+        BoxManager.removeAll();
+
         this.network.respawn({
             hull:       Game.GarageConfig.hull[ selected.hull || '' ].nid,
             cannon:     Game.GarageConfig.cannon[ selected.cannon || '' ].nid,
@@ -93,9 +96,6 @@ export class PlayerCore {
     public respawn ( params: any ) : void {
 
         if ( Arena.me.id === this.id && this.tank ) {
-
-            PlayerManager.removeAll();
-            BoxManager.removeAll();
 
             this.prepareTank( params.tank );
             this.tank.init();

@@ -3,7 +3,10 @@
  * DatTank Arena collision manager
 */
 
+import * as THREE from 'three';
+
 import * as OMath from '../../OMath/Core.OMath';
+import { GfxCore } from '../../graphics/Core.Gfx';
 
 //
 
@@ -31,6 +34,13 @@ class CollisionManagerCore {
             shapeType: type,
             isDynamic,
         });
+
+        if ( object.size ) {
+
+            object.physicsBox = new THREE.Mesh( new THREE.BoxBufferGeometry( object.size.x + 10, object.size.y + 10, object.size.z + 10 ), new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 0.8, transparent: true }) );
+            GfxCore.scene.add( object.physicsBox );
+
+        }
 
         this.objects.push( object );
 
@@ -116,6 +126,11 @@ class CollisionManagerCore {
                     objParent.acceleration = objects[ i ].acceleration;
                     objParent.velocity = objects[ i ].velocity;
                     objParent.updateMovement( delta, objects[ i ].directionVelocity, objects[ i ].angularVelocity );
+                    objParent.physicsBox.position.x = objects[ i ].position.x;
+                    objParent.physicsBox.position.y = objects[ i ].position.y;
+                    objParent.physicsBox.position.z = objects[ i ].position.z;
+                    objParent.physicsBox.rotation.y = objects[ i ].rotation;
+                    objParent.physicsBox.updateMatrixWorld( true );
 
                 }
 

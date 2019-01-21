@@ -217,12 +217,12 @@ export class TankObject {
 
     public syncState ( positionX: number, positionY: number, positionZ: number, rotation: number ) : void {
 
-        this.positionCorrection.set( positionX, positionY, positionZ );
+        // this.positionCorrection.set( positionX, positionY, positionZ );
 
-        rotation = OMath.formatAngle( rotation );
-        this.rotationCorrection = rotation;
+        // rotation = OMath.formatAngle( rotation );
+        // this.rotationCorrection = rotation;
 
-        this.stateNeedsCorrect = true;
+        // this.stateNeedsCorrect = true;
 
     };
 

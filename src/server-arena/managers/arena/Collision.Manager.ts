@@ -215,6 +215,10 @@ export class CollisionManager {
 
         //
 
+        this.world.step( 1 / 20, delta / 1000, 5 );
+
+        //
+
         for ( let i = 0, il = this.objects.length; i < il; i ++ ) {
 
             const object = this.objects[ i ];
@@ -332,10 +336,6 @@ export class CollisionManager {
             }
 
         }
-
-        //
-
-        this.world.step( 1 / 30, delta / 1000, 5 );
 
     };
 
