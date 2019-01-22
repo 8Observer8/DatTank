@@ -134,7 +134,7 @@ export class TowerObject {
 
             //
 
-            if ( this.health === 0 ) {
+            if ( this.health === 0 && ! this.isBase ) {
 
                 this.changeTeam( killer.team, killer.player.id );
                 killer.player.changeScore( 5 );

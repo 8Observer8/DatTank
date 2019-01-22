@@ -205,8 +205,7 @@
 }
 
 .landing #signin-box-wrapper #main-block .tab-content .top-players-score table .header:not(:first-child) {
-    padding-left: 5%;
-    padding-right: 5%;
+    width: 15%;
 }
 
 .landing #signin-box-wrapper #main-block .tab-content .top-players-score table td {

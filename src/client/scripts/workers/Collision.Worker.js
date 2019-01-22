@@ -209,6 +209,21 @@ function update ( delta, objectsInfo ) {
 
         //
 
+        var direction = ( objectInfo.moveDirection.x > 0 ) ? 0 : Math.PI;
+        var vx = speed * Math.sin( rot.y + direction );
+        var vz = speed * Math.cos( rot.y + direction );
+        var forwardVelocity = new CANNON.Vec3( vx, 0, vz ).distanceTo( new CANNON.Vec3() );
+
+        //
+
+        object['prevForwardVelocity'] = object['prevForwardVelocity'] || forwardVelocity;
+        var dfv = forwardVelocity - object['prevForwardVelocity'];
+        dfv = movementDirection * dfv;
+        object['prevForwardVelocity'] = forwardVelocity;
+        object.acceleration = - Math.sign( dfv ) * Math.min( Math.abs( dfv ), 8 ) / 200 / Math.PI;
+
+        //
+
         const dv = object.body.velocity.length() * Math.sin( velocityAngle - objectInfo.rotation );
         object.body.applyLocalImpulse( new CANNON.Vec3( - 0.2 * object.body.mass * dv * coef, 0, 0 ), new CANNON.Vec3( 0, 0, 0 ) );
 
@@ -227,28 +242,17 @@ function update ( delta, objectsInfo ) {
         if ( ! object ) continue;
         if ( object.objType !== 'Tank' ) continue;
 
-        var direction = ( objectInfo.moveDirection.x > 0 ) ? 0 : Math.PI;
-        var vx = speed * Math.sin( objectInfo.rotation + direction );
-        var vz = speed * Math.cos( objectInfo.rotation + direction );
-
-        var forwardVelocity = new CANNON.Vec3( vx, 0, vz ).distanceTo( new CANNON.Vec3() );
-
-        const rot = { x: 0, y: 0, z: 0 };
-        object.body.quaternion.toEuler( rot );
-
         //
 
-        object['prevForwardVelocity'] = object['prevForwardVelocity'] || forwardVelocity;
-        var dfv = forwardVelocity - object['prevForwardVelocity'];
-        dfv = movementDirection * dfv;
-        object['prevForwardVelocity'] = forwardVelocity;
+        var rot = { x: 0, y: 0, z: 0 };
+        object.body.quaternion.toEuler( rot );
 
         //
 
         objectsParams.push({
             id:                     object.id,
             type:                   object.objType,
-            acceleration:           - Math.sign( dfv ) * Math.min( Math.abs( dfv ), 8 ) / 200 / Math.PI,
+            acceleration:           object.acceleration,
             position:               { x: object.body.position.x, y: object.body.position.y, z: object.body.position.z },
             rotation:               rot.y,
             velocity:               forwardVelocity,
