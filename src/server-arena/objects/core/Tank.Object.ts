@@ -38,7 +38,7 @@ export class TankObject {
     public health: number = 100;
     public ammo: number = 0;
     public viewRange: number = 700;
-    public size: OMath.Vec3 = new OMath.Vec3( 30, 25, 60 );
+    public size: OMath.Vec3 = new OMath.Vec3( 30, 5, 60 );
 
     public moveDirection: OMath.Vec2 = new OMath.Vec2();
     public deltaPosition: OMath.Vec3 = new OMath.Vec3();
