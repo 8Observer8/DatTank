@@ -69,21 +69,21 @@ function addObject ( object, type, isDynamic ) {
     } else if ( type === 'circle' ) {
 
         shape = new CANNON.Cylinder( object.radius, object.radius, 100, 8 );
-        collisionBox.body.quaternion.setFromEuler( - Math.PI / 2, 0, 0, 'XYZ' );
-        collisionBox.body.addShape( shape );
+        const q = new CANNON.Quaternion().setFromEuler( - Math.PI / 2, 0, 0, 'XYZ' );
+        collisionBox.body.addShape( shape, new CANNON.Vec3(), q );
 
     } else if ( type === 'tank' ) {
 
         shape = new CANNON.Box( new CANNON.Vec3( object.size.x / 2, object.size.y / 2, object.size.z / 2 ) );
-        collisionBox.body.addShape( shape, new CANNON.Vec3( 0, object.size.y / 2, 0 ) );
+        collisionBox.body.addShape( shape, new CANNON.Vec3( 0, 0, 0 ) );
 
         const q = new CANNON.Quaternion().setFromEuler( - Math.PI / 2, 0, 0, 'XYZ' );
 
-        // shape = new CANNON.Cylinder( 1.1 * object.size.x / 2, 1.1 * object.size.x / 2, object.size.z, 8 );
-        // collisionBox.body.addShape( shape, new CANNON.Vec3( 0, 0, object.size.z / 1.7 ), q );
+        shape = new CANNON.Cylinder( 0.55 * object.size.x, 0.55 * object.size.x, object.size.y / 2, 8 );
+        collisionBox.body.addShape( shape, new CANNON.Vec3( 0, 0, object.size.z / 3 ), q );
 
-        // shape = new CANNON.Cylinder( 1.1 * object.size.x / 2, 1.1 * object.size.x / 2, object.size.z, 8 );
-        // collisionBox.body.addShape( shape, new CANNON.Vec3( 0, 0, - object.size.z / 3 ), q );
+        shape = new CANNON.Cylinder( 0.55 * object.size.x, 0.55 * object.size.x, object.size.y / 2, 8 );
+        collisionBox.body.addShape( shape, new CANNON.Vec3( 0, 0, - object.size.z / 3 ), q );
 
         collisionBox.body.quaternion.setFromEuler( 0, object.rotation, 0, 'XYZ' );
         collisionBox.body.angularDamping = 0.95;
@@ -145,6 +145,7 @@ function update ( delta, objectsInfo ) {
         if ( objectInfo.position !== false ) {
 
             object.body.position.x = objectInfo.position.x;
+            object.body.position.y = objectInfo.position.y;
             object.body.position.z = objectInfo.position.z;
 
         }
@@ -268,7 +269,7 @@ function initWorld () {
     // init world
 
     world = new CANNON.World();
-    world.gravity.set( 0, - 10, 0 );
+    world.gravity.set( 0, - 30, 0 );
     world.defaultContactMaterial.contactEquationStiffness = 500000;
     world.defaultContactMaterial.friction = 0;
     world.defaultContactMaterial.restitution = 0.2;

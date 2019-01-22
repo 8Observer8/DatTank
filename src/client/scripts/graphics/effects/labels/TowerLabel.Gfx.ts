@@ -53,11 +53,6 @@ export class TowerLabelGfx {
 
         }
 
-        // draw team color rect
-
-        this.ctx.fillStyle = OMath.intToHex( teamColor );
-        this.ctx.fillRect( 0, 15, 25, 25 );
-
         // draw player login
 
         this.ctx.fillStyle = '#ffffff';

@@ -131,21 +131,21 @@ export class CollisionManager {
         } else if ( type === 'circle' ) {
 
             shape = new Cannon.Cylinder( object.radius, object.radius, 100, 8 );
-            collisionBox.body.quaternion.setFromEuler( - Math.PI / 2, 0, 0, 'XYZ' );
-            collisionBox.body.addShape( shape as Cannon.Shape );
+            const q = new Cannon.Quaternion().setFromEuler( - Math.PI / 2, 0, 0, 'XYZ' );
+            collisionBox.body.addShape( shape, new Cannon.Vec3(), q );
 
         } else if ( type === 'tank' ) {
 
             shape = new Cannon.Box( new Cannon.Vec3( object.size.x / 2, object.size.y / 2, object.size.z / 2 ) );
-            collisionBox.body.addShape( shape as Cannon.Shape, new Cannon.Vec3( 0, object.size.y / 2, 0 ) );
+            collisionBox.body.addShape( shape as Cannon.Shape, new Cannon.Vec3( 0, 0, 0 ) );
 
-            // const q = new Cannon.Quaternion().setFromEuler( - Math.PI / 2, 0, 0, 'XYZ' );
+            const q = new Cannon.Quaternion().setFromEuler( - Math.PI / 2, 0, 0, 'XYZ' );
 
-            // shape = new Cannon.Cylinder( 1.1 * object.size.x / 2, 1.1 * object.size.x / 2, object.size.z, 8 );
-            // collisionBox.body.addShape( shape, new Cannon.Vec3( 0, 0, object.size.z / 1.7 ), q );
+            shape = new Cannon.Cylinder( 0.55 * object.size.x, 0.55 * object.size.x, object.size.y / 2, 8 );
+            collisionBox.body.addShape( shape, new Cannon.Vec3( 0, 0, object.size.z / 3 ), q );
 
-            // shape = new Cannon.Cylinder( 1.1 * object.size.x / 2, 1.1 * object.size.x / 2, object.size.z, 8 );
-            // collisionBox.body.addShape( shape, new Cannon.Vec3( 0, 0, - object.size.z / 3 ), q );
+            shape = new Cannon.Cylinder( 0.55 * object.size.x, 0.55 * object.size.x, object.size.y / 2, 8 );
+            collisionBox.body.addShape( shape, new Cannon.Vec3( 0, 0, - object.size.z / 3 ), q );
 
             collisionBox.body.quaternion.setFromEuler( 0, object.rotation, 0, 'XYZ' );
             collisionBox.body.angularDamping = 0.95;
@@ -367,7 +367,7 @@ export class CollisionManager {
         // init world
 
         this.world = new Cannon.World();
-        this.world.gravity.set( 0, - 10, 0 );
+        this.world.gravity.set( 0, - 30, 0 );
         this.world.defaultContactMaterial.contactEquationStiffness = 500000;
         this.world.defaultContactMaterial.friction = 0;
         this.world.defaultContactMaterial.restitution = 0.2;
