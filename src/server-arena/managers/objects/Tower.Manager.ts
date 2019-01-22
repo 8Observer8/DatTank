@@ -66,7 +66,14 @@ export class TowerManager {
                 pos.x = ( 0.5 - i / 2 ) * 1900;
                 pos.z = ( 0.5 - j / 2 ) * 1900;
 
-                this.add( new TowerObject( this.arena, { team, position: pos } ) );
+                const isBase = ( i === 0 && j === 0 ) || ( i === 0 && j === 2 ) || ( i === 2 && j === 0 ) || ( i === 2 && j === 2 );
+                const tower = new TowerObject( this.arena, { team, position: pos, isBase } );
+                this.add( tower );
+
+                if ( i === 0 && j === 0 ) tower.changeTeam( this.arena.teamManager.getById( 0 ) );
+                if ( i === 0 && j === 2 ) tower.changeTeam( this.arena.teamManager.getById( 2 ) );
+                if ( i === 2 && j === 0 ) tower.changeTeam( this.arena.teamManager.getById( 1 ) );
+                if ( i === 2 && j === 2 ) tower.changeTeam( this.arena.teamManager.getById( 3 ) );
 
             }
 

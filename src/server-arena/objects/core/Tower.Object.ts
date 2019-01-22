@@ -29,6 +29,7 @@ export class TowerObject {
     public range: number = 330;
     public armor: number = 50;
     public damage: number = 70;
+    private regenerationValue: number = 5;
     public collisionBox: any;
 
     public arena: ArenaCore;
@@ -36,6 +37,7 @@ export class TowerObject {
     public cooldown: number = 2000;
     public rpm: number = 1000 / this.cooldown;
     private shootTime: number;
+    public isBase: boolean = false;
 
     private sinceHitRegenerationLimit: number = 5000;
     private sinceHitTime: number;
@@ -50,8 +52,6 @@ export class TowerObject {
     //
 
     public shoot ( target: TankObject ) : void {
-
-        return;
 
         const dx = target.position.x - this.position.x;
         const dz = target.position.z - this.position.z;
@@ -147,15 +147,21 @@ export class TowerObject {
 
     };
 
-    public changeTeam ( team: TeamCore, killerId: number ) : void {
+    public changeTeam ( team: TeamCore | null, killerId?: number ) : void {
+
+        if ( ! team ) return;
 
         team.towers ++;
         this.team.towers --;
         this.team = team;
         this.health = 100;
 
-        this.arena.updateLeaderboard();
-        this.network.changeTeam( killerId );
+        if ( killerId ) {
+
+            this.arena.updateLeaderboard();
+            this.network.changeTeam( killerId );
+
+        }
 
     };
 
@@ -275,11 +281,11 @@ export class TowerObject {
 
         this.sinceHitTime += delta;
 
-        if ( this.sinceHitTime > this.sinceHitRegenerationLimit ) {
+        if ( this.sinceHitTime > this.sinceHitRegenerationLimit || this.isBase ) {
 
             if ( this.sinceRegenerationTime > this.sinceRegenerationLimit ) {
 
-                this.changeHealth( 5 );
+                this.changeHealth( this.regenerationValue );
                 this.sinceRegenerationTime = 0;
 
             } else {
@@ -304,6 +310,10 @@ export class TowerObject {
         this.team = params.team;
         this.shootTime = Date.now();
         this.sinceHitTime = Date.now();
+
+        this.regenerationValue = ( params.isBase ) ? 40 : 5;
+        this.sinceRegenerationLimit = ( params.isBase ) ? 100 : 2000;
+        this.isBase = params.isBase;
 
         this.position.set( params.position.x, params.position.y, params.position.z );
         this.arena.collisionManager.addObject( this, 'box', false );

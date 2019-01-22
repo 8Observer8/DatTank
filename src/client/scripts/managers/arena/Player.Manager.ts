@@ -34,11 +34,12 @@ class PlayerManagerCore {
 
         for ( let i = 0, il = this.players.length; i < il; i ++ ) {
 
+            if ( this.players[ i ].id === Arena.me.id ) continue;
             this.players[ i ].dispose();
 
         }
 
-        this.players = [];
+        this.players = [ Arena.me ];
 
     };
 
