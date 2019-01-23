@@ -456,7 +456,7 @@ export class TankObject {
         //
 
         this.sinceLastSync += delta;
-        if ( this.sinceLastSync > 1000 ) {
+        if ( this.sinceLastSync > 300 ) {
 
             this.network.syncState();
             this.sinceLastSync = 0;

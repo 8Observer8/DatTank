@@ -225,7 +225,7 @@ function update ( delta, objectsInfo ) {
         //
 
         const dv = object.body.velocity.length() * Math.sin( velocityAngle - objectInfo.rotation );
-        object.body.applyLocalImpulse( new CANNON.Vec3( - 0.2 * object.body.mass * dv * coef, 0, 0 ), new CANNON.Vec3( 0, 0, 0 ) );
+        object.body.applyLocalImpulse( new CANNON.Vec3( - 0.6 * object.body.mass * dv * coef, 0, 0 ), new CANNON.Vec3( 0, 0, 0 ) );
 
     }
 
