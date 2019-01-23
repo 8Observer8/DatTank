@@ -86,7 +86,7 @@ function addObject ( object, type, isDynamic ) {
         collisionBox.body.addShape( shape, new CANNON.Vec3( 0, 0, - object.size.z / 3 ), q );
 
         collisionBox.body.quaternion.setFromEuler( 0, object.rotation, 0, 'XYZ' );
-        collisionBox.body.angularDamping = 0.95;
+        collisionBox.body.angularDamping = 0.97;
 
     }
 
@@ -255,7 +255,7 @@ function update ( delta, objectsInfo ) {
             acceleration:           object.acceleration,
             position:               { x: object.body.position.x, y: object.body.position.y, z: object.body.position.z },
             rotation:               rot.y,
-            velocity:               forwardVelocity,
+            velocity:               object['prevForwardVelocity'],
             angularVelocity:        { x: object.body.angularVelocity.x, y: object.body.angularVelocity.y, z: object.body.angularVelocity.z },
             directionVelocity:      { x: object.body.velocity.x, y: object.body.velocity.y, z: object.body.velocity.z }
         });

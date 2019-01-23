@@ -28,8 +28,8 @@ export class CollisionManager {
     public raycast ( params: any ) : void {
 
         const ray = params.ray as Cannon.Ray;
-        ray.from.set( params.position.x, params.position.y, params.position.z );
-        ray.to.set( params.dPos * Math.cos( params.angle ) + params.position.x, params.position.y, params.dPos * Math.sin( params.angle ) + params.position.z );
+        ray.from.set( params.position.x, params.position.y - 15, params.position.z );
+        ray.to.set( params.dPos * Math.cos( params.angle ) + params.position.x, params.position.y - 15, params.dPos * Math.sin( params.angle ) + params.position.z );
         ray['_updateDirection']();
         ray['intersectBodies']( this.world.bodies );
 
@@ -148,7 +148,7 @@ export class CollisionManager {
             collisionBox.body.addShape( shape, new Cannon.Vec3( 0, 0, - object.size.z / 3 ), q );
 
             collisionBox.body.quaternion.setFromEuler( 0, object.rotation, 0, 'XYZ' );
-            collisionBox.body.angularDamping = 0.95;
+            collisionBox.body.angularDamping = 0.97;
 
         }
 

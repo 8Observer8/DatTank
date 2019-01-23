@@ -46,7 +46,7 @@ export class TankObject {
 
     public position: OMath.Vec3 = new OMath.Vec3();
     public rotation: number = 0;
-    public size: OMath.Vec3 = new OMath.Vec3( 30, 5, 60 );
+    public size: OMath.Vec3 = new OMath.Vec3( 30, 10, 60 );
 
     public network: TankNetwork = new TankNetwork();
     public gfx: TankGfx = new TankGfx();
