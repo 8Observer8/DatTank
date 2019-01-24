@@ -26,12 +26,27 @@
         <link rel="shortcut icon" href="/resources/img/fav.png">
 
         <link rel="stylesheet" type="text/css" href="/css/all.css?1" />
-        <!-- build:js /libs.js -->
+
+        <script>
+            var userData = {
+                pid:    '{{ pid }}',
+                sid:    '{{ sid }}',
+                fid:    '{{ fid }}',
+                coins:  +'{{ coins }}',
+                xp:     +'{{ xp }}',
+                level:  +'{{ level }}',
+                levelBonuses: +'{{ levelBonuses }}',
+                garage: {{ params|safe }}
+            };
+        </script>
+
         <script src="/libs/jquery.js"></script>
+        <script src="/scripts/bundle.js"></script>
+
         <script src="/libs/HackTimer.js"></script>
         <script src="/libs/Detector.js"></script>
         <script src="/libs/Utils.js"></script>
-        <!-- endbuild -->
+        <script src="/libs/FXAA.js"></script>
 
         <script type='text/javascript'>
 
@@ -72,19 +87,7 @@
                 FB.AppEvents.logPageView();
             };
 
-            var userData = {
-                pid:    '{{ pid }}',
-                sid:    '{{ sid }}',
-                fid:    '{{ fid }}',
-                coins:  +'{{ coins }}',
-                xp:     +'{{ xp }}',
-                level:  +'{{ level }}',
-                levelBonuses: +'{{ levelBonuses }}',
-                garage: {{ params|safe }}
-            };
         </script>
-
-        <script src="/scripts/bundle.js"></script>
 
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

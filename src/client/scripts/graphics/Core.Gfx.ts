@@ -67,6 +67,10 @@ class GraphicsCore {
     private cameraShakeIntensity: number = 0;
     private cameraShakeTime: number = 0;
 
+    public effectComposer: any;
+    private fxaaPass: any;
+    private renderPass: any;
+
     public lights = {
         ambient:    0xf9f9f9,
         sun:        {
@@ -83,9 +87,11 @@ class GraphicsCore {
 
     public setQuality ( value: string ) : void {
 
+        if ( ! this.renderer ) return;
+
         if ( value === 'HIGH' ) {
 
-            this.gfxSettings.antialias = true;
+            this.gfxSettings.antialias = false;
             this.gfxSettings.quality = Quality.HIGH;
 
         } else if ( value === 'LOW' ) {
@@ -119,7 +125,6 @@ class GraphicsCore {
         //
 
         this.updateRenderer();
-        this.resize();
 
         // setup lights
 
@@ -177,6 +182,8 @@ class GraphicsCore {
         this.camera.updateProjectionMatrix();
 
         this.renderer.setSize( this.gfxSettings.quality * this.windowWidth, this.gfxSettings.quality * this.windowHeight );
+        this.fxaaPass.uniforms.resolution.value.set( 1 / ( this.gfxSettings.quality * this.windowWidth ), 1 / ( this.gfxSettings.quality * this.windowHeight ) );
+        this.effectComposer.setSize( this.gfxSettings.quality * this.windowWidth, this.gfxSettings.quality * this.windowHeight );
 
     };
 
@@ -187,8 +194,23 @@ class GraphicsCore {
         this.container = $('#renderport')[0] as HTMLCanvasElement;
         const params = { powerPreference: 'high-performance', canvas: this.container, antialias: this.gfxSettings.antialias };
         this.renderer = new THREE.WebGLRenderer( params );
-        this.renderer.setSize( this.gfxSettings.quality * this.windowWidth, this.gfxSettings.quality * this.windowHeight );
+        this.renderer.setPixelRatio( 1 );
         this.renderer.setClearColor( this.fog.color );
+        this.renderer.autoClear = false;
+
+        // composer
+
+        this.renderPass = new THREE.RenderPass( this.scene, this.camera );
+        this.fxaaPass = new THREE.ShaderPass( THREE.FXAAShader );
+        this.fxaaPass.renderToScreen = true;
+
+        this.effectComposer = new THREE.EffectComposer( this.renderer );
+        this.effectComposer.addPass( this.renderPass );
+        this.effectComposer.addPass( this.fxaaPass );
+
+        //
+
+        this.resize();
 
     };
 
@@ -271,7 +293,8 @@ class GraphicsCore {
         this.prevRenderTime = time;
 
         this.animate( time, delta );
-        this.renderer.render( this.scene, this.camera );
+
+        this.effectComposer.render();
 
         //
 
@@ -332,5 +355,7 @@ class GraphicsCore {
 };
 
 //
+
+window['THREE'] = THREE;
 
 export let GfxCore = new GraphicsCore();

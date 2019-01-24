@@ -3,6 +3,10 @@
  * DatTank Math Vector3
 */
 
+import * as THREE from 'three';
+
+//
+
 export class Vec3 {
 
     public x: number = 0;
