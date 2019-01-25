@@ -20,6 +20,9 @@ import { TankGfx } from '../../graphics/objects/Tank.Gfx';
 import { HealthChangeLabelManager } from '../../graphics/managers/HealthChangeLabel.Manager';
 import { CollisionManager } from '../../managers/arena/Collision.Manager';
 import { GfxCore } from '../../graphics/Core.Gfx';
+import { TowerManager } from '../../managers/objects/Tower.Manager';
+import { PlayerManager } from '../../managers/arena/Player.Manager';
+import { BoxManager } from '../../managers/objects/Box.Manager';
 
 //
 
@@ -55,6 +58,7 @@ export class TankObject {
     public readonly type: string = 'Tank';
 
     public isMe: boolean = false;
+    public readonly viewRange: number = 750;
 
     public stateNeedsCorrect: boolean = false;
     public positionCorrection: OMath.Vec3 = new OMath.Vec3();
@@ -253,8 +257,51 @@ export class TankObject {
 
     public update ( time: number, delta: number ) : void {
 
+        this.removeObjectsOutOfRange();
         this.gfx.update( time, delta );
         this.cannon.update( time, delta );
+
+    };
+
+    public removeObjectsOutOfRange () : void {
+
+        const towers = TowerManager.get();
+        const players = PlayerManager.get();
+        const boxes = BoxManager.get();
+
+        const towersToRemove = [];
+        const playersToRemove = [];
+        const boxesToRemove = [];
+
+        for ( let i = 0, il = towers.length; i < il; i ++ ) {
+
+            if ( this.position.distanceTo( towers[ i ].position ) > this.viewRange ) {
+
+                towersToRemove.push( towers[ i ].id );
+
+            }
+
+        }
+
+        for ( let i = 0, il = players.length; i < il; i ++ ) {
+
+            if ( ! players[ i ].tank || this.position.distanceTo( players[ i ].tank!.position ) > this.viewRange ) {
+
+                playersToRemove.push( players[ i ].id );
+
+            }
+
+        }
+
+        for ( let i = 0, il = boxes.length; i < il; i ++ ) {
+
+            if ( this.position.distanceTo( boxes[ i ].position ) > this.viewRange ) {
+
+                boxesToRemove.push( boxes[ i ].id );
+
+            }
+
+        }
 
     };
 

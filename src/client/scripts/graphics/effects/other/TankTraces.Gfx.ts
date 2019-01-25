@@ -189,6 +189,9 @@ export class TankTracesGfx {
         this.leftTrace = new THREE.Mesh( geometry, material );
         this.rightTrace = new THREE.Mesh( geometry.clone(), material.clone() );
 
+        this.leftTrace.userData.ignoreCollision = true;
+        this.rightTrace.userData.ignoreCollision = true;
+
         this.leftTrace.drawMode = THREE.TriangleStripDrawMode;
         this.rightTrace.drawMode = THREE.TriangleStripDrawMode;
 

@@ -21,7 +21,6 @@ class ResourceManagerCore {
     private loadedSounds: number = 0;
     public loadedPacks: string[] = [];
 
-    private modelLoader: THREE.JSONLoader = new THREE.JSONLoader();
     private textureLoader: THREE.TextureLoader = new THREE.TextureLoader();
     private audioLoader: THREE.AudioLoader = new THREE.AudioLoader();
 
@@ -288,39 +287,6 @@ class ResourceManagerCore {
 
     };
 
-    private loadModel ( modelName: string, callback: () => void ) : void {
-
-        this.modelLoader.load( 'resources/models/' + modelName, ( g, m ) => {
-
-            let geometry: THREE.BufferGeometry | THREE.Geometry;
-
-            g.computeFlatVertexNormals();
-
-            if ( modelName.indexOf('Tree') !== -1 || modelName.indexOf('Rock') !== -1 ) {
-
-                geometry = new THREE.BufferGeometry().fromGeometry( g );
-
-            } else {
-
-                geometry = g;
-
-            }
-
-            const data = {
-                name:       modelName,
-                geometry,
-                material:   m,
-            };
-
-            this.models.push( data );
-            this.loadedModels ++;
-
-            callback();
-
-        });
-
-    };
-
     private loadTexture ( textureName: string, callback: () => void ) : void {
 
         this.textureLoader.load( 'resources/textures/' + textureName, ( texture ) => {
@@ -361,20 +327,6 @@ class ResourceManagerCore {
         if ( this.packsList.length ) {
 
             this.loadPack( this.packsList.pop() as string, this.load.bind( this, onProgress, onFinish ) );
-
-            if ( onProgress ) {
-
-                onProgress( progress );
-
-            }
-
-            return;
-
-        }
-
-        if ( this.modelsList.length ) {
-
-            this.loadModel( this.modelsList.pop() as string, this.load.bind( this, onProgress, onFinish ) );
 
             if ( onProgress ) {
 

@@ -63,6 +63,7 @@ export class TowerChangeTeamGfx {
 
         this.pipe = new THREE.Mesh( new THREE.CylinderBufferGeometry( 50, 50, 550, 10 ), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.0, depthWrite: false }) );
         this.pipe.renderOrder = 10;
+        this.pipe.userData.ignoreCollision = true;
         this.object.visible = false;
         this.object.add( this.pipe );
 

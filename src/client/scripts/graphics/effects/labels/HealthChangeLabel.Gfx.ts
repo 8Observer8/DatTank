@@ -112,6 +112,7 @@ export class HealthChangeLabelGfx {
         this.sprite = new THREE.Sprite( material );
         this.sprite.position.set( 0, 35, 0 );
         this.sprite.scale.set( 24, 12, 1 );
+        this.sprite.userData.ignoreCollision = true;
         this.object.add( this.sprite );
         this.object.visible = false;
 

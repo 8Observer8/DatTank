@@ -92,6 +92,7 @@ export class TowerLabelGfx {
 
         this.sprite.position.set( 0, 35, 0 );
         this.sprite.scale.set( 52, 13, 1 );
+        this.sprite.userData.ignoreCollision = true;
 
     };
 
