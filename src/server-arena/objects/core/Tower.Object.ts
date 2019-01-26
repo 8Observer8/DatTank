@@ -99,7 +99,7 @@ export class TowerObject {
 
     public changeHealth ( delta: number ) : void {
 
-        if ( this.health <= 0 ) return;
+        if ( this.health <= 0 && ! this.isBase ) return;
 
         let health = this.health + delta;
         health = Math.max( Math.min( 100, health ), 0 );

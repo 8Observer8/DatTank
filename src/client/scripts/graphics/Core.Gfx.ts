@@ -182,8 +182,9 @@ class GraphicsCore {
         this.camera.updateProjectionMatrix();
 
         this.renderer.setSize( this.gfxSettings.quality * this.windowWidth, this.gfxSettings.quality * this.windowHeight );
-        this.fxaaPass.uniforms.resolution.value.set( 1 / ( this.gfxSettings.quality * this.windowWidth ), 1 / ( this.gfxSettings.quality * this.windowHeight ) );
-        this.effectComposer.setSize( this.gfxSettings.quality * this.windowWidth, this.gfxSettings.quality * this.windowHeight );
+        this.fxaaPass.uniforms.resolution.value.set( 1 / this.windowWidth, 1 / this.windowHeight );
+        this.fxaaPass.uniforms.tDiffuse.value = null;
+        this.effectComposer.setSize( this.windowWidth, this.windowHeight );
 
     };
 

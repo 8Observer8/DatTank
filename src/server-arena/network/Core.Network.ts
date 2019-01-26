@@ -73,7 +73,7 @@ class NetworkCore {
 
         if ( arena && player ) {
 
-            player.socket = 'disconnected';
+            player.socket = false;
 
             setTimeout( () => {
 

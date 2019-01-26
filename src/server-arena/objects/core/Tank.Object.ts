@@ -246,9 +246,9 @@ export class TankObject {
 
         //
 
-        if ( this.health === 0 ) {
+        if ( this.health === 0 && killer ) {
 
-            this.die( killer! );
+            this.die( killer );
 
             if ( killer instanceof PlayerCore ) {
 
@@ -370,7 +370,7 @@ export class TankObject {
 
                 if ( this.inRangeOf[ 'Box-' + box.id ] !== undefined ) continue;
 
-                this.inRangeOf[ 'Box-' + box.id ] = box;
+                this.inRangeOf[ 'Box-' + box.id ] = box.id;
                 newBoxesInRange.push( box );
 
             } else {
@@ -398,8 +398,8 @@ export class TankObject {
 
                 if ( this.inRangeOf[ 'Tower-' + tower.id ] !== undefined ) continue;
 
-                this.inRangeOf[ 'Tower-' + tower.id ] = tower;
-                tower.inRangeOf[ 'Tank-' + this.id ] = this;
+                this.inRangeOf[ 'Tower-' + tower.id ] = tower.id;
+                tower.inRangeOf[ 'Tank-' + this.id ] = this.id;
                 newTowersInRange.push( tower );
 
             } else {
@@ -429,7 +429,7 @@ export class TankObject {
 
                 if ( this.inRangeOf[ 'Tank-' + tank.id ] ) continue;
 
-                this.inRangeOf[ 'Tank-' + tank.id ] = tank;
+                this.inRangeOf[ 'Tank-' + tank.id ] = tank.id;
                 newTanksInRange.push( tank );
 
             } else {
@@ -473,6 +473,7 @@ export class TankObject {
 
     public dispose () : void {
 
+        this.inRangeOf = {};
         this.cannon.stopShooting();
         this.network.dispose();
         this.arena.removeObjectFromRangeParams( this );

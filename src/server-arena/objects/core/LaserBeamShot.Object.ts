@@ -20,7 +20,7 @@ export class LaserBeamShotObject {
     public id: number;
     public shotId: number;
     public active: boolean = false;
-    public owner: TankObject | TowerObject;
+    public owner: TankObject | TowerObject | null;
     public position: OMath.Vec3 = new OMath.Vec3();
     public angle: number = 0;
 
@@ -42,7 +42,7 @@ export class LaserBeamShotObject {
 
     private collisionEvent ( intersect: any ) : any {
 
-        if ( intersect.body.parent.id === this.owner.id ) return;
+        if ( ! this.owner || intersect.body.parent.id === this.owner.id ) return;
 
         if ( intersect.body.name === 'Tank' || intersect.body.name === 'Tower' ) {
 
@@ -73,7 +73,7 @@ export class LaserBeamShotObject {
 
     public update ( delta: number, time: number ) : void {
 
-        if ( ! this.active ) {
+        if ( ! this.active || ! this.owner ) {
 
             return;
 
@@ -109,6 +109,13 @@ export class LaserBeamShotObject {
     public deactivate () : void {
 
         this.active = false;
+        this.owner = null;
+
+        if ( this.ray['result'] ) {
+
+            this.ray['result'].reset();
+
+        }
 
     };
 

@@ -18,7 +18,7 @@ export class BulletShotObject {
     public id: number;
     public shotId: number;
     public active: boolean = false;
-    public owner: TankObject | TowerObject;
+    public owner: TankObject | TowerObject | null;
     public radius: number = 10;
     public startPosition: OMath.Vec3 = new OMath.Vec3();
     public position: OMath.Vec3 = new OMath.Vec3();
@@ -32,7 +32,7 @@ export class BulletShotObject {
 
     public deactivate () : void {
 
-        // nothing here
+        this.owner = null;
 
     };
 
@@ -55,6 +55,7 @@ export class BulletShotObject {
 
     public detonate ( target: TankObject | TowerObject | null, position: any ) : void {
 
+        if ( ! this.owner ) return;
         if ( target && target.id === this.owner.id ) return;
 
         position = position || this.position;
@@ -68,6 +69,8 @@ export class BulletShotObject {
             target.hit( this.owner );
 
         }
+
+        this.deactivate();
 
     };
 

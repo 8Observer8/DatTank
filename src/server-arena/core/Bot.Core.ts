@@ -192,6 +192,7 @@ export class BotCore {
     private updateMovement () : void {
 
         if ( this.player.status === PlayerCore.Dead ) return;
+        if ( this.target && this.target.health <= 0 ) this.target = null;
 
         if ( Math.abs( this.player.tank.position.x ) > 1320 || Math.abs( this.player.tank.position.z ) > 1320 ) {
 
