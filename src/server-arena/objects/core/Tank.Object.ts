@@ -270,24 +270,28 @@ export class TankObject {
 
     };
 
-    public die ( killer: TankObject | TowerObject ) : void {
+    public die ( killer?: TankObject | TowerObject ) : void {
 
         if ( this.player.status !== PlayerCore.Alive ) return;
 
         this.cannon.stopShooting();
 
-        this.player.die( killer );
+        if ( killer ) {
 
-        this.player.status = PlayerCore.Dead;
-        this.player.death ++;
-        this.team.death ++;
-        killer.team.kills ++;
+            this.player.die( killer );
 
-        if ( killer instanceof TankObject ) {
+            this.player.status = PlayerCore.Dead;
+            this.player.death ++;
+            this.team.death ++;
+            killer.team.kills ++;
 
-            killer.player.kills ++;
-            killer.player.checkKillSerie();
-            killer.player.updateStats( 20, 0 );
+            if ( killer instanceof TankObject ) {
+
+                killer.player.kills ++;
+                killer.player.checkKillSerie();
+                killer.player.updateStats( 20, 0 );
+
+            }
 
         }
 
@@ -479,6 +483,7 @@ export class TankObject {
         this.arena.removeObjectFromRangeParams( this );
         this.arena.collisionManager.removeObject( this );
         this.arena.tankManager.remove( this.id );
+        this.id = -1;
 
     };
 

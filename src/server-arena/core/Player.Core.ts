@@ -215,6 +215,7 @@ export class PlayerCore {
             this.bonusArenaLevels = 0;
             this.arenaLevel = 0;
 
+            if ( this.tank.id !== -1 ) this.tank.dispose();
             this.prepareTank( tankConfig );
             this.tank.setRespawnPosition();
             this.status = PlayerCore.Alive;
