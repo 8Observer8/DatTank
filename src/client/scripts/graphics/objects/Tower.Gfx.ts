@@ -11,8 +11,8 @@ import { GfxCore } from '../Core.Gfx';
 import { TowerLabelGfx } from '../effects/labels/TowerLabel.Gfx';
 import { ResourceManager } from '../../managers/other/Resource.Manager';
 import { TowerChangeTeamGfx } from '../effects/other/TowerChangeTeam.gfx';
-import { BlastSmokeGfx } from '../effects/smokes/BlastSmoke.Gfx';
 import { TowerObject } from './../../objects/core/Tower.Object';
+import { BulletCannonShotSmokeManager } from '../../graphics/managers/BulletCannonShotSmoke.Manager';
 
 //
 
@@ -24,14 +24,12 @@ class TowerGfx {
 
     public label: TowerLabelGfx = new TowerLabelGfx();
     public changeTeamEffect: TowerChangeTeamGfx = new TowerChangeTeamGfx();
-    public blastSmoke: BlastSmokeGfx = new BlastSmokeGfx();
 
     //
 
     public update ( time: number, delta: number ) : void {
 
         this.changeTeamEffect.update( time, delta );
-        this.blastSmoke.update( time, delta );
         this.topMesh.update( delta / 1000 );
         this.object.updateMatrixWorld( true );
 
@@ -69,7 +67,10 @@ class TowerGfx {
     public shoot () : void {
 
         this.topMesh.playAnimation('shoot');
-        this.blastSmoke.show();
+
+        const angle = this.topMesh.rotation.y - Math.PI;
+        const pos = new OMath.Vec3( this.object.position.x + 50 * Math.sin( angle ), 23, this.object.position.z + 50 * Math.cos( angle ) );
+        BulletCannonShotSmokeManager.showShotSmoke( pos, angle );
 
     };
 
@@ -132,7 +133,6 @@ class TowerGfx {
 
         //
 
-        this.blastSmoke.init( this.topMesh, new OMath.Vec3( 0, 0, - 6.5 ) );
         this.changeTeamEffect.init( this.object );
         this.label.init( this.object );
 

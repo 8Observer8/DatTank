@@ -15,7 +15,6 @@ import { TankTracesGfx } from '../effects/other/TankTraces.Gfx';
 import { DeathExplosionManager } from '../managers/DeathExplosion.Manager';
 import { FriendlyFireLabelGfx } from '../effects/labels/FriendlyFireLabel.Gfx';
 import { DamageSmokeGfx } from '../effects/smokes/DamageSmoke.Gfx';
-import { BlastSmokeGfx } from '../effects/smokes/BlastSmoke.Gfx';
 import { Game } from '../../Game';
 
 //
@@ -31,7 +30,6 @@ class TankGfx {
     public label: TankLabelGfx = new TankLabelGfx();
     public friendlyFireLabel: FriendlyFireLabelGfx = new FriendlyFireLabelGfx();
     public damageSmoke: DamageSmokeGfx = new DamageSmokeGfx();
-    public blastSmoke: BlastSmokeGfx = new BlastSmokeGfx();
     public shadow: THREE.Mesh;
     public movingSound: THREE.PositionalAudio;
     public explosionSound: THREE.PositionalAudio;
@@ -97,7 +95,6 @@ class TankGfx {
     public shoot () : void {
 
         // this.mesh.playAnimation('shoot');
-        this.blastSmoke.show();
 
     };
 
@@ -163,7 +160,6 @@ class TankGfx {
         this.traces.update( time, delta );
         this.friendlyFireLabel.update( time, delta );
         this.damageSmoke.update( time, delta );
-        this.blastSmoke.update( time, delta );
 
         this.cannon.update( delta / 1000 );
         this.rotateTankXAxis( delta );
@@ -317,7 +313,6 @@ class TankGfx {
 
         this.friendlyFireLabel.init( this.object );
         this.damageSmoke.init( this.tank );
-        this.blastSmoke.init( this.object, new OMath.Vec3( 0, 0, 5.5 ) );
         this.traces.init( this.object );
 
         if ( ! this.tank.isMe ) {

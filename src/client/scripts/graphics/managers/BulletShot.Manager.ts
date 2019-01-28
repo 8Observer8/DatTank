@@ -30,7 +30,13 @@ class BulletShotManagerCore {
 
         }
 
-        return undefined;
+        //
+
+        const bullet = new BulletShotGfx();
+        bullet.init();
+        this.pool.push( bullet );
+
+        return bullet;
 
     };
 

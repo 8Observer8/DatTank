@@ -13,6 +13,7 @@ import { BulletShotManager } from '../../graphics/managers/BulletShot.Manager';
 import { LaserBeamShotManager } from '../../graphics/managers/LaserBeamShot.Manager';
 import { UI } from '../../ui/Core.UI';
 import { GfxCore } from '../../graphics/Core.Gfx';
+import { BulletCannonShotSmokeManager } from '../../graphics/managers/BulletCannonShotSmoke.Manager';
 
 //
 
@@ -166,6 +167,7 @@ export class CannonTankPart {
             position.x += offset * Math.cos( Math.PI / 2 - this.tank.rotation + this.sourceParam.shootInfo[ i ].dAngle );
             position.z += offset * Math.sin( Math.PI / 2 - this.tank.rotation + this.sourceParam.shootInfo[ i ].dAngle );
 
+            BulletCannonShotSmokeManager.showShotSmoke( position, this.tank.rotation );
             BulletShotManager.showBullet( this.tank, shotId, position, this.range, this.shotSpeed, Math.PI / 2 - this.tank.rotation );
 
         }

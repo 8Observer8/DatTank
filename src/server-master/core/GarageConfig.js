@@ -301,7 +301,7 @@ var GarageConfig = {
             },
             shotSpeed:      1.8,
             shootInfo: [
-                { dAngle: 0, offset: 25, y: 20 }
+                { dAngle: 0, offset: 30, y: 26 }
             ],
             price: {
                 coins:          8,
@@ -326,7 +326,7 @@ var GarageConfig = {
             },
             shotSpeed:      1.8,
             shootInfo: [
-                { dAngle: 0, offset: 25, y: 20 }
+                { dAngle: 0, offset: 30, y: 24.2 }
             ],
             price: {
                 coins:          12,
@@ -351,8 +351,8 @@ var GarageConfig = {
             },
             shotSpeed:      1.8,
             shootInfo: [
-                { dAngle:   0.16, offset: 25, y: 20 },
-                { dAngle: - 0.16, offset: 25, y: 20 }
+                { dAngle:   0.13, offset: 38, y: 26 },
+                { dAngle: - 0.13, offset: 38, y: 26 }
             ],
             price: {
                 coins:          20,
@@ -377,9 +377,9 @@ var GarageConfig = {
             },
             shotSpeed:      1.8,
             shootInfo: [
-                { dAngle:   0.10, offset: 25, y: 21 },
-                { dAngle:   0.00, offset: 25, y: 23 },
-                { dAngle: - 0.10, offset: 25, y: 21 }
+                { dAngle:   0.10, offset: 35, y: 26.5 },
+                { dAngle:   0.00, offset: 35, y: 28 },
+                { dAngle: - 0.10, offset: 35, y: 26.5 }
             ],
             price: {
                 coins:          40,
@@ -404,7 +404,7 @@ var GarageConfig = {
             },
             shotSpeed:      1.8,
             shootInfo: [
-                { dAngle:   0.00, offset: 30, y: 23 }
+                { dAngle:   0.00, offset: 33, y: 25 }
             ],
             price: {
                 coins:          50,
@@ -431,7 +431,7 @@ var GarageConfig = {
             },
             shotSpeed:      1,
             shootInfo: [
-                { dAngle: 0, offset: 40, y: 20 }
+                { dAngle: 0, offset: 38, y: 20 }
             ],
             price: {
                 coins:          70,
@@ -456,7 +456,7 @@ var GarageConfig = {
             },
             shotSpeed:      1,
             shootInfo: [
-                { dAngle: 0, offset: 40, y: 20 }
+                { dAngle: 0, offset: 40, y: 22 }
             ],
             price: {
                 coins:          95,
@@ -481,8 +481,8 @@ var GarageConfig = {
             },
             shotSpeed:      1,
             shootInfo: [
-                { dAngle: - 1.3, offset: 20, y: 16 },
-                { dAngle:   1.3, offset: 20, y: 16 }
+                { dAngle: - 1.37, offset: 20, y: 18 },
+                { dAngle:   1.37, offset: 20, y: 18 }
             ],
             price: {
                 coins:          130,
@@ -509,7 +509,7 @@ var GarageConfig = {
             },
             shotSpeed:      1.8,
             shootInfo: [
-                { dAngle: 0, offset: 25, y: 20 }
+                { dAngle: 0, offset: 30, y: 27 }
             ],
             price: {
                 coins:          160,
@@ -534,7 +534,7 @@ var GarageConfig = {
             },
             shotSpeed:      1.8,
             shootInfo: [
-                { dAngle: 0, offset: 25, y: 20 }
+                { dAngle: 0, offset: 25, y: 25 }
             ],
             price: {
                 coins:          180,
@@ -559,7 +559,7 @@ var GarageConfig = {
             },
             shotSpeed:      1.8,
             shootInfo: [
-                { dAngle: 0.28, offset: 45, y: 21 }
+                { dAngle: 0.33, offset: 34, y: 27.4 }
             ],
             price: {
                 coins:          220,

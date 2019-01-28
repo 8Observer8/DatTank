@@ -56,7 +56,7 @@ export class DamageSmokeGfx {
                 if ( this.particlesState[ i ] > 0 ) opacity = 2 * this.particlesState[ i ];
                 if ( this.particlesState[ i ] > 0.5 ) opacity = 2 * ( 1 - this.particlesState[ i ] );
 
-                colors.setXYZW( i, 0.1 * Math.abs( Math.sin( 3.14 * this.particlesState[ i ] ) ), 0.1 * Math.abs( Math.sin( 3.14 * this.particlesState[ i ] ) ), 0.1 * Math.abs( Math.sin( 3.14 * this.particlesState[ i ] ) ), opacity / 5 );
+                colors.setXYZW( i, 0.1 * Math.abs( Math.sin( 3.14 * this.particlesState[ i ] ) ), 0.1 * Math.abs( Math.sin( 3.14 * this.particlesState[ i ] ) ), 0.1 * Math.abs( Math.sin( 3.14 * this.particlesState[ i ] ) ), opacity / 10 );
                 sizes.setX( i, 20 * opacity );
 
                 pos.setXYZ( i,

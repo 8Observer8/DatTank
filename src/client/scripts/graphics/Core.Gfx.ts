@@ -18,9 +18,10 @@ import { DecorationManager } from '../managers/objects/Decoration.Manager';
 import { ControlsManager } from '../managers/other/Control.Manager';
 import { ExplosionManager } from './managers/Explosion.Manager';
 import { HealthChangeLabelManager } from './managers/HealthChangeLabel.Manager';
-import { BulletShotManager } from './managers/BulletShot.Manager';
 import { LaserBeamShotManager } from './managers/LaserBeamShot.Manager';
 import { DeathExplosionManager } from './managers/DeathExplosion.Manager';
+import { BulletCannonShotSmokeManager } from './managers/BulletCannonShotSmoke.Manager';
+import { BulletShotManager } from './managers/BulletShot.Manager';
 
 //
 
@@ -154,6 +155,7 @@ class GraphicsCore {
         //
 
         BulletShotManager.init();
+        BulletCannonShotSmokeManager.init();
         DeathExplosionManager.init();
         ExplosionManager.init();
         HealthChangeLabelManager.init();
@@ -277,9 +279,10 @@ class GraphicsCore {
         DecorationManager.update( time, delta );
         ControlsManager.update( time, delta );
         ExplosionManager.update( time, delta );
+        BulletShotManager.update( time, delta );
+        BulletCannonShotSmokeManager.update( time, delta );
         DeathExplosionManager.update( time, delta );
         HealthChangeLabelManager.update( time, delta );
-        BulletShotManager.update( time, delta );
         LaserBeamShotManager.update( time, delta );
 
         this.updateCamera( delta, Arena.me.tank.gfx.object.position, Arena.me.tank.gfx.object.rotation.y );
