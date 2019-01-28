@@ -194,11 +194,11 @@ export class TankObject {
 
             if ( killer instanceof TankObject ) {
 
-                this.changeHealth( - 20 * ( 0.3 * Math.random() + 0.7 ) * ( killer.hull.cannonCoef * killer.cannon.damage ) / ( this.hull.armorCoef * this.armor.armor ), killer );
+                this.changeHealth( - 15 * killer.hull.cannonCoef * killer.cannon.damage / ( this.hull.armorCoef * this.armor.armor ), killer );
 
             } else if ( killer instanceof TowerObject ) {
 
-                this.changeHealth( - 20 * ( 0.3 * Math.random() + 0.7 ) * ( killer.damage ) / ( this.hull.armorCoef * this.armor.armor ), killer );
+                this.changeHealth( - 15 * killer.damage / ( this.hull.armorCoef * this.armor.armor ), killer );
 
             }
 

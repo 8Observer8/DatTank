@@ -67,7 +67,7 @@ export class CannonTankPart {
 
     public update ( delta: number, time: number ) : void {
 
-        if ( this.shootTimeout && this.sinceLastShot > 1000 * 60 / this.rpm ) {
+        if ( this.shootTimeout && ( this.sinceLastShot > 1000 * 60 / this.rpm ) ) {
 
             this.shootTimeout = false;
 

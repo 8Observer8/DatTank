@@ -188,6 +188,9 @@ export class GarageRightMenu {
         this.maxConfigValues.rpm = 0;
         this.maxConfigValues.range = 0;
         this.maxConfigValues.overheat = 0;
+        this.maxConfigValues.dpm = 0;
+        this.maxConfigValues.armor = 0;
+        this.maxConfigValues.maxSpeed = 0;
 
         //
 
@@ -199,12 +202,11 @@ export class GarageRightMenu {
             this.maxConfigValues.rpm = ( 1.2 * cannon.rpm > this.maxConfigValues.rpm ) ? 1.2 * cannon.rpm : this.maxConfigValues.rpm;
             this.maxConfigValues.range = ( 1.2 * cannon.range > this.maxConfigValues.range ) ? 1.2 * cannon.range : this.maxConfigValues.range;
             this.maxConfigValues.overheat = ( 1.2 * cannon.overheat > this.maxConfigValues.overheat ) ? 1.2 * cannon.overheat : this.maxConfigValues.overheat;
+            this.maxConfigValues.dpm = ( 1.2 * cannon.damage * cannon.rpm > this.maxConfigValues.dpm ) ? 1.2 * cannon.damage * cannon.rpm : this.maxConfigValues.dpm;
 
         }
 
         //
-
-        this.maxConfigValues.armor = 0;
 
         for ( const name in Game.GarageConfig.armor ) {
 
@@ -214,8 +216,6 @@ export class GarageRightMenu {
         }
 
         //
-
-        this.maxConfigValues.maxSpeed = 0;
 
         for ( const name in Game.GarageConfig.engine ) {
 
@@ -285,96 +285,96 @@ export class GarageRightMenu {
         const greenColor = 'rgba( 74, 239, 74, 1 )';
         const redColor = 'rgba( 234, 63, 63, 1 )';
 
-        // updating cannon 'damage' UI
+        // updating cannon 'dpm' UI
 
         let progressValue;
 
-        const deltaDamage = 100 * ( hull.levels[ hullLevel ].cannonCoef * cannon.shootInfo.length * cannon.levels[ cannonLevel ].damage - currentCannon.shootInfo.length * currentHull.levels[ currentHullLevel ].cannonCoef * currentCannon.levels[ currentCannonLevel ].damage ) / this.maxConfigValues.damage;
-        progressValue = 100 * Math.min( currentCannon.shootInfo.length * currentHull.levels[ currentHullLevel ].cannonCoef * currentCannon.levels[ currentCannonLevel ].damage, cannon.shootInfo.length * hull.levels[ hullLevel ].cannonCoef * cannon.levels[ cannonLevel ].damage ) / this.maxConfigValues.damage;
+        const oldDPM = Math.round( 100 * currentCannon.shootInfo.length * currentHull.levels[ currentHullLevel ].cannonCoef * currentCannon.levels[ currentCannonLevel ].damage * currentCannon.levels[ currentCannonLevel ].rpm ) / 100;
+        const newDPM = Math.round( 100 * cannon.shootInfo.length * hull.levels[ hullLevel ].cannonCoef * cannon.levels[ cannonLevel ].damage * cannon.levels[ cannonLevel ].rpm ) / 100;
+        const deltaDMPValue = Math.round( newDPM - oldDPM );
+        const deltaDMPRelative = 100 * deltaDMPValue / this.maxConfigValues.dpm;
+        progressValue = 100 * Math.min( oldDPM, newDPM ) / this.maxConfigValues.dpm;
 
-        $('.garage .tank-stats .cannon.stats-delta-value').html( '(' +  ( deltaDamage >= 0 ? '+' : '' ) + Math.round( deltaDamage ) + ')' );
-        $('.garage .tank-stats .cannon.stats-delta-value').css({ color: ( deltaDamage >= 0 ) ? greenColor : redColor });
-        $('.garage .tank-stats .cannon.stats-value').html( cannon.shootInfo.length * cannon.levels[ cannonLevel ].damage + 'p' );
+        $('.garage .tank-stats .cannon.stats-delta-value').html( ( deltaDMPValue >= 0 ? '+' : '' ) + deltaDMPValue );
+        $('.garage .tank-stats .cannon.stats-delta-value').css({ color: ( deltaDMPValue >= 0 ) ? greenColor : redColor });
+        $('.garage .tank-stats .cannon.stats-value').html( newDPM + '' );
         $('.garage .tank-stats .cannon.stats-progress .green').css( 'width', progressValue + '%' );
         $('.garage .tank-stats .cannon.stats-progress .delta').css({
-            'width': Math.abs( deltaDamage ) + '%',
+            'width': Math.abs( deltaDMPRelative ) + '%',
             'left': progressValue + '%',
-            'background-color': ( deltaDamage > 0 ) ? greenColor : redColor,
-        });
-
-        // updating cannon 'reload/rpm' UI
-
-        const deltaRPM = 100 * ( cannon.levels[ cannonLevel ].rpm - currentCannon.levels[ currentCannonLevel ].rpm ) / this.maxConfigValues.rpm;
-        progressValue = 100 * Math.min( currentCannon.levels[ currentCannonLevel ].rpm, cannon.levels[ cannonLevel ].rpm ) / this.maxConfigValues.rpm;
-
-        $('.garage .tank-stats .reload.stats-delta-value').html( '(' + ( deltaRPM >= 0 ? '+' : '' ) + Math.round( deltaRPM ) + ')' );
-        $('.garage .tank-stats .reload.stats-delta-value').css({ color: ( deltaRPM >= 0 ) ? greenColor : redColor });
-        $('.garage .tank-stats .reload.stats-value').html( cannon.levels[ cannonLevel ].rpm + 'rpm' );
-        $('.garage .tank-stats .reload.stats-progress .green').css( 'width', progressValue + '%' );
-        $('.garage .tank-stats .reload.stats-progress .delta').css({
-            'width': Math.abs( deltaRPM ) + '%',
-            'left': progressValue + '%',
-            'background-color': ( deltaRPM > 0 ) ? greenColor : redColor,
+            'background-color': ( deltaDMPValue > 0 ) ? greenColor : redColor,
         });
 
         // updating cannon 'range' UI
 
-        const deltaRange = 100 * ( cannon.levels[ cannonLevel ].range - currentCannon.levels[ currentCannonLevel ].range ) / this.maxConfigValues.range;
-        progressValue = 100 * Math.min( currentCannon.levels[ currentCannonLevel ].range, cannon.levels[ cannonLevel ].range ) / this.maxConfigValues.range;
+        const newRange = cannon.levels[ cannonLevel ].range;
+        const oldRange = currentCannon.levels[ currentCannonLevel ].range;
+        const deltaRangeValue = Math.round( newRange - oldRange );
+        const deltaRangeRelative = 100 * deltaRangeValue / this.maxConfigValues.range;
+        progressValue = 100 * Math.min( newRange, oldRange ) / this.maxConfigValues.range;
 
-        $('.garage .tank-stats .range.stats-delta-value').html( '(' + ( deltaRange >= 0 ? '+' : '' ) + Math.round( deltaRange ) + ')' );
-        $('.garage .tank-stats .range.stats-delta-value').css({ color: ( deltaRange >= 0 ) ? greenColor : redColor });
-        $('.garage .tank-stats .range.stats-value').html( cannon.levels[ currentCannonLevel ].range + 'km' );
+        $('.garage .tank-stats .range.stats-delta-value').html( ( deltaRangeValue >= 0 ? '+' : '' ) + deltaRangeValue );
+        $('.garage .tank-stats .range.stats-delta-value').css({ color: ( deltaRangeValue >= 0 ) ? greenColor : redColor });
+        $('.garage .tank-stats .range.stats-value').html( newRange + '' );
         $('.garage .tank-stats .range.stats-progress .green').css( 'width', progressValue + '%' );
         $('.garage .tank-stats .range.stats-progress .delta').css({
-            'width': Math.abs( deltaRange ) + '%',
+            'width': Math.abs( deltaRangeRelative ) + '%',
             'left': progressValue + '%',
-            'background-color': ( deltaRange > 0 ) ? greenColor : redColor,
+            'background-color': ( deltaRangeValue > 0 ) ? greenColor : redColor,
         });
 
-        // updating cannon 'range' UI
+        // updating cannon 'overheat' UI
 
-        const deltaOverheat = 100 * ( cannon.levels[ cannonLevel ].overheat - currentCannon.levels[ currentCannonLevel ].overheat ) / this.maxConfigValues.overheat;
-        progressValue = 100 * Math.min( currentCannon.levels[ currentCannonLevel ].overheat, cannon.levels[ cannonLevel ].overheat ) / this.maxConfigValues.overheat;
+        const newOverheat = Math.round( cannon.levels[ cannonLevel ].overheat );
+        const oldOverheat = Math.round( currentCannon.levels[ currentCannonLevel ].overheat );
+        const deltaOverheatValue = Math.round( newOverheat - oldOverheat );
+        const deltaOverheatRelative = 100 * deltaOverheatValue / this.maxConfigValues.overheat;
+        progressValue = 100 * Math.min( newOverheat, oldOverheat ) / this.maxConfigValues.overheat;
 
-        $('.garage .tank-stats .overheat.stats-delta-value').html( '(' + ( deltaOverheat >= 0 ? '+' : '' ) + Math.round( deltaOverheat ) + ')' );
-        $('.garage .tank-stats .overheat.stats-delta-value').css({ color: ( deltaOverheat >= 0 ) ? greenColor : redColor });
-        $('.garage .tank-stats .overheat.stats-value').html( cannon.levels[ cannonLevel ].overheat + 'p' );
+        $('.garage .tank-stats .overheat.stats-delta-value').html( ( deltaOverheatValue >= 0 ? '+' : '' ) + deltaOverheatValue );
+        $('.garage .tank-stats .overheat.stats-delta-value').css({ color: ( deltaOverheatValue >= 0 ) ? greenColor : redColor });
+        $('.garage .tank-stats .overheat.stats-value').html( newOverheat + '' );
         $('.garage .tank-stats .overheat.stats-progress .green').css( 'width', progressValue + '%' );
         $('.garage .tank-stats .overheat.stats-progress .delta').css({
-            'width': Math.abs( deltaOverheat ) + '%',
+            'width': Math.abs( deltaOverheatRelative ) + '%',
             'left': progressValue + '%',
-            'background-color': ( deltaOverheat > 0 ) ? greenColor : redColor,
+            'background-color': ( deltaOverheatValue > 0 ) ? greenColor : redColor,
         });
 
         // updating armor 'armor' UI
 
-        const deltaArmor = 100 * ( hull.levels[ hullLevel ].armorCoef * armor.levels[ armorLevel ].armor - currentHull.levels[ currentHullLevel ].armorCoef * currentArmor.levels[ currentArmorLevel ].armor ) / this.maxConfigValues.armor;
+        const newArmor = Math.round( hull.levels[ hullLevel ].armorCoef * armor.levels[ armorLevel ].armor );
+        const oldArmor = Math.round( currentHull.levels[ currentHullLevel ].armorCoef * currentArmor.levels[ currentArmorLevel ].armor );
+        const deltaArmorValue = Math.round( newArmor - oldArmor );
+        const deltaArmorRelative = 100 * deltaArmorValue / this.maxConfigValues.armor;
         progressValue = 100 * Math.min( currentHull.levels[ currentHullLevel ].cannonCoef * currentArmor.levels[ currentArmorLevel ].armor, hull.levels[ hullLevel ].armorCoef * armor.levels[ armorLevel ].armor ) / this.maxConfigValues.armor;
 
-        $('.garage .tank-stats .armor.stats-delta-value').html( '(' + ( deltaArmor >= 0 ? '+' : '' ) + Math.round( deltaArmor ) + ')' );
-        $('.garage .tank-stats .armor.stats-delta-value').css({ color: ( deltaArmor >= 0 ) ? greenColor : redColor });
-        $('.garage .tank-stats .armor.stats-value').html( armor.levels[ armorLevel ].armor + 'p' );
+        $('.garage .tank-stats .armor.stats-delta-value').html( ( deltaArmorValue >= 0 ? '+' : '' ) + deltaArmorValue );
+        $('.garage .tank-stats .armor.stats-delta-value').css({ color: ( deltaArmorValue >= 0 ) ? greenColor : redColor });
+        $('.garage .tank-stats .armor.stats-value').html( newArmor + '' );
         $('.garage .tank-stats .armor.stats-progress .green').css( 'width', progressValue + '%' );
         $('.garage .tank-stats .armor.stats-progress .delta').css({
-            'width': Math.abs( deltaArmor ) + '%',
+            'width': Math.abs( deltaArmorRelative ) + '%',
             'left': progressValue + '%',
-            'background-color': ( deltaArmor > 0 ) ? greenColor : redColor,
+            'background-color': ( deltaArmorValue > 0 ) ? greenColor : redColor,
         });
 
         // updating engine 'maxSpeed' UI
 
-        const deltaSpeed = 100 * ( hull.levels[ hullLevel ].speedCoef * engine.levels[ engineLevel ].maxSpeed - currentHull.levels[ currentHullLevel ].speedCoef * currentEngine.levels[ currentEngineLevel ].maxSpeed ) / this.maxConfigValues.maxSpeed;
-        progressValue = 100 * Math.min( currentHull.levels[ currentHullLevel ].speedCoef * currentEngine.levels[ currentEngineLevel ].maxSpeed, hull.levels[ hullLevel ].speedCoef * engine.levels[ engineLevel ].maxSpeed ) / this.maxConfigValues.maxSpeed;
+        const newSpeed = Math.round( hull.levels[ hullLevel ].speedCoef * engine.levels[ engineLevel ].maxSpeed );
+        const oldSpeed = Math.round( currentHull.levels[ currentHullLevel ].speedCoef * currentEngine.levels[ currentEngineLevel ].maxSpeed );
+        const deltaSpeedValue = Math.round( newSpeed - oldSpeed );
+        const deltaSpeedRelative = 100 * deltaSpeedValue / this.maxConfigValues.maxSpeed;
+        progressValue = 100 * Math.min( newSpeed, oldSpeed ) / this.maxConfigValues.maxSpeed;
 
-        $('.garage .tank-stats .speed.stats-delta-value').html( '(' + ( deltaSpeed >= 0 ? '+' : '' ) + Math.round( deltaSpeed ) + ')' );
-        $('.garage .tank-stats .speed.stats-delta-value').css({ color: ( deltaSpeed >= 0 ) ? greenColor : redColor });
-        $('.garage .tank-stats .speed.stats-value').html( Math.floor( hull.levels[ hullLevel ].speedCoef * engine.levels[ engineLevel ].maxSpeed ) + 'km/h' );
+        $('.garage .tank-stats .speed.stats-delta-value').html( ( deltaSpeedValue >= 0 ? '+' : '' ) + deltaSpeedValue );
+        $('.garage .tank-stats .speed.stats-delta-value').css({ color: ( deltaSpeedValue >= 0 ) ? greenColor : redColor });
+        $('.garage .tank-stats .speed.stats-value').html( Math.round( newSpeed ) + '' );
         $('.garage .tank-stats .speed.stats-progress .green').css( 'width', progressValue + '%' );
         $('.garage .tank-stats .speed.stats-progress .delta').css({
-            'width': Math.abs( deltaSpeed ) + '%',
+            'width': Math.abs( deltaSpeedRelative ) + '%',
             'left': progressValue + '%',
-            'background-color': ( deltaSpeed > 0 ) ? greenColor : redColor,
+            'background-color': ( deltaSpeedValue > 0 ) ? greenColor : redColor,
         });
 
         //

@@ -36,7 +36,7 @@ export class LaserBeamShotObject {
 
     private ray: Cannon.Ray = new Cannon.Ray();
     private sinceLastRaycast: number = 0;
-    private raycastDelay: number = 200;
+    private raycastDelay: number = 50;
 
     //
 
