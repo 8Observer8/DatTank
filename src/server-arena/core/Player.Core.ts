@@ -44,8 +44,8 @@ export class PlayerCore {
     public score: number = 0;
     public level: number = 0;
     public levelBonuses: number = 0;
-    public arenaLevel: number = 0;
-    public bonusArenaLevels = 0;
+    public arenaSkill: number = 0;
+    public bonusArenaSkills = 0;
 
     public spawnTime: number;
     public tankConfig: object;
@@ -64,16 +64,16 @@ export class PlayerCore {
 
     public changeScore ( delta: number ) : void {
 
-        let arenaLevel = 0;
+        let arenaSkill = 0;
         this.score += delta;
 
-        while ( GarageManager.arenaLevels[ arenaLevel ].score <= this.score ) {
+        while ( GarageManager.arenaSkills[ arenaSkill ].score <= this.score ) {
 
-            arenaLevel ++;
+            arenaSkill ++;
 
         }
 
-        if ( this.arenaLevel + this.bonusArenaLevels < arenaLevel || delta < 0 ) {
+        if ( this.arenaSkill + this.bonusArenaSkills < arenaSkill || delta < 0 ) {
 
             if ( delta > 0 ) {
 
@@ -83,11 +83,11 @@ export class PlayerCore {
 
             if ( this.socket ) {
 
-                this.bonusArenaLevels = arenaLevel - this.arenaLevel;
+                this.bonusArenaSkills = arenaSkill - this.arenaSkill;
 
-                if ( this.bonusArenaLevels > 0 ) {
+                if ( this.bonusArenaSkills > 0 ) {
 
-                    this.network.updateArenaLevel();
+                    this.network.updateArenaSkill();
 
                 }
 
@@ -212,8 +212,8 @@ export class PlayerCore {
 
             }
 
-            this.bonusArenaLevels = 0;
-            this.arenaLevel = 0;
+            this.bonusArenaSkills = 0;
+            this.arenaSkill = 0;
 
             if ( this.tank.id !== -1 ) this.tank.dispose();
             this.prepareTank( tankConfig );

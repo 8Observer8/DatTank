@@ -121,7 +121,7 @@ class GraphicsCore {
         // setup camera and scene
 
         this.scene = new THREE.Scene();
-        this.camera = new THREE.PerspectiveCamera( 60, this.windowWidth / this.windowHeight, 1, 900 );
+        this.camera = new THREE.PerspectiveCamera( 60, this.windowWidth / this.windowHeight, 1, 1000 );
         this.camera.name = 'MainCamera';
         this.scene.add( this.camera );
         this.scene.autoUpdate = false;

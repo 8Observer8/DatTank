@@ -5,7 +5,7 @@
 
 var GarageConfig = {
 
-    arenaLevels: {
+    arenaSkills: {
         0:      { score: 5 },
         1:      { score: 35 },
         2:      { score: 50 },

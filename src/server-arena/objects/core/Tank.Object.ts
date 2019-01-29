@@ -78,7 +78,7 @@ export class TankObject {
         const upgradesList = [ 'speed', 'rpm', 'armor', 'cannon', 'power' ];
         const upgradeName = upgradesList[ upgradeId ];
 
-        if ( this.player.bonusArenaLevels <= 0 ) return;
+        if ( this.player.bonusArenaSkills <= 0 ) return;
         if ( this.upgrades[ upgradeName ] > 5 ) return;
 
         this.upgrades[ upgradeName ] ++;
@@ -121,8 +121,8 @@ export class TankObject {
 
         //
 
-        this.player.bonusArenaLevels --;
-        this.player.arenaLevel ++;
+        this.player.bonusArenaSkills --;
+        this.player.arenaSkill ++;
 
         this.network.upgrade();
 

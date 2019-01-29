@@ -90,20 +90,20 @@ export class PlayerNetwork {
 
     };
 
-    public updateArenaLevel () : void {
+    public updateArenaSkill () : void {
 
-        this.buffers['NewArenaLevel'] = this.buffers['NewArenaLevel'] || {};
-        const buffer = this.buffers['NewArenaLevel'].buffer || new ArrayBuffer( 6 );
-        const bufferView = this.buffers['NewArenaLevel'].bufferView || new Int16Array( buffer );
-        this.buffers['NewArenaLevel'].buffer = buffer;
-        this.buffers['NewArenaLevel'].bufferView = bufferView;
+        this.buffers['NewArenaSkill'] = this.buffers['NewArenaSkill'] || {};
+        const buffer = this.buffers['NewArenaSkill'].buffer || new ArrayBuffer( 6 );
+        const bufferView = this.buffers['NewArenaSkill'].bufferView || new Int16Array( buffer );
+        this.buffers['NewArenaSkill'].buffer = buffer;
+        this.buffers['NewArenaSkill'].bufferView = bufferView;
 
         //
 
         bufferView[ 1 ] = this.player.id;
-        bufferView[ 2 ] = this.player.bonusArenaLevels;
+        bufferView[ 2 ] = this.player.bonusArenaSkills;
 
-        Network.send( 'PlayerNewArenaLevel', this.player.socket, buffer, bufferView );
+        Network.send( 'PlayerNewArenaSkill', this.player.socket, buffer, bufferView );
 
     };
 

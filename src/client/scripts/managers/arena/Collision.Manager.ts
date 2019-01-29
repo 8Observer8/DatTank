@@ -30,7 +30,7 @@ class CollisionManagerCore {
                 size:       ( type === 'box' || type === 'tank' ) ? { x: object.size.x, y: object.size.y, z: object.size.z } : { x: 0, y: 0, z: 0 },
                 position:   object.position.clone(),
                 rotation:   object.rotation,
-                velocity:   object.velocityCorrection ? object.velocityCorrection.clone() : false,
+                velocity:   ( object.velocityCorrection && ! object.isMe ) ? object.velocityCorrection.clone() : false,
             },
             shapeType: type,
             isDynamic,

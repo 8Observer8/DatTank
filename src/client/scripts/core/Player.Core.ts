@@ -29,14 +29,20 @@ export class PlayerCore {
     public level: number = 0;
     public kills: number = 0;
     public score: number = 0;
-    public arenaLevel: number = 0;
-    public bonusArenaLevels: number = 0;
+    public arenaSkill: number = 0;
+    public bonusArenaSkills: number = 0;
 
     private network: PlayerNetwork = new PlayerNetwork();
 
     //
 
     public updateStats ( xp: number, coins: number, level: number, levelBonuses: number ) : void {
+
+        if ( Arena.myLevel < level ) {
+
+            alert( 'Level up ' + ( level + 1 ) );
+
+        }
 
         Arena.myCoins = coins;
         Arena.myXP = xp;
@@ -52,15 +58,15 @@ export class PlayerCore {
 
     };
 
-    public newArenaLevel ( bonusArenaLevels: number ) : void {
+    public newArenaSkill ( bonusArenaSkills: number ) : void {
 
         setTimeout( () => {
 
-            UI.InGame.tankUpgradeMenu.showUpgradeMenu( bonusArenaLevels );
+            UI.InGame.tankUpgradeMenu.showUpgradeMenu( bonusArenaSkills );
 
         }, 3000 );
 
-        this.bonusArenaLevels = bonusArenaLevels;
+        this.bonusArenaSkills = bonusArenaSkills;
 
     };
 

@@ -28,7 +28,7 @@ export class UITankUpgrade {
     public updateProgressIndicator () : void {
 
         let level = 0;
-        const levels = Game.GarageConfig.arenaLevels;
+        const levels = Game.GarageConfig.arenaSkills;
 
         while ( levels[ level ].score <= Arena.me.score ) {
 
@@ -111,7 +111,7 @@ export class UITankUpgrade {
 
     private keyHandler = ( event: KeyboardEvent ) : void => {
 
-        if ( ! Arena.me.bonusArenaLevels ) return;
+        if ( ! Arena.me.bonusArenaSkills ) return;
 
         switch ( event.keyCode ) {
 
@@ -153,15 +153,15 @@ export class UITankUpgrade {
 
         this.updateUpgradeMenu();
         Arena.me.tank.upgrade( statName );
-        Arena.me.bonusArenaLevels --;
+        Arena.me.bonusArenaSkills --;
         SoundManager.playSound('MenuClick');
         this.hideUpgradeMenu();
 
         //
 
-        if ( Arena.me.bonusArenaLevels > 0 ) {
+        if ( Arena.me.bonusArenaSkills > 0 ) {
 
-            this.showUpgradeMenu( Arena.me.bonusArenaLevels );
+            this.showUpgradeMenu( Arena.me.bonusArenaSkills );
 
         }
 

@@ -74,7 +74,7 @@ export class Garage {
         this.levelBonuses = window['userData'].levelBonuses;
 
         $('.garage .level-block .title').html( 'Level ' + ( this.level + 1 ) + '' );
-        $('.garage .level-block .progress .progress-value').css({ width: ( 100 * this.xp / Game.GarageConfig.levels[ this.level ] ) + '%' })
+        $('.garage .level-block .progress .progress-value').css({ width: Math.min( 100, ( 100 * this.xp / Game.GarageConfig.levels[ this.level ] ) ) + '%' })
         $('.garage .level-block .bonuses .value').html( this.levelBonuses );
 
         $('.garage .header .coins .value').html( this.coins );
