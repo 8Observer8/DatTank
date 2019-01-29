@@ -236,7 +236,7 @@ class NetworkCore {
         this.registerEvent( 'PlayerRespawn', EventDir.OUT, EventType.JSON, 3 );
         this.registerEvent( 'PlayerRespawn', EventDir.IN, EventType.BIN, 4 );
 
-        this.registerEvent( 'PlayerNewLevel', EventDir.OUT, EventType.BIN, 90 );
+        this.registerEvent( 'PlayerUpdateLevel', EventDir.OUT, EventType.BIN, 90 );
         this.registerEvent( 'PlayerNewArenaSkill', EventDir.OUT, EventType.BIN, 91 );
         this.registerEvent( 'PlayerStatsUpdate', EventDir.OUT, EventType.BIN, 92 );
 

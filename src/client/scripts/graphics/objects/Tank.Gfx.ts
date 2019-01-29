@@ -39,6 +39,12 @@ class TankGfx {
 
     //
 
+    public levelUp ( level: number ) : void {
+
+        // todo
+
+    };
+
     public rotateTankXAxis ( delta: number ) : void {
 
         this.wrapper.rotation.x += this.tank.acceleration * delta / 16;

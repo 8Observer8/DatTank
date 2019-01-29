@@ -112,6 +112,8 @@ export class PlayerCore {
             this.level ++;
             this.levelBonuses ++;
 
+            this.network.updateLevel();
+
         }
 
         //

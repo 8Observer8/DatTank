@@ -58,7 +58,7 @@ export class PlayerNetwork {
     public updateStats () : void {
 
         this.buffers['UpdateStats'] = this.buffers['UpdateStats'] || {};
-        const buffer = this.buffers['UpdateStats'].buffer || new ArrayBuffer( 16 );
+        const buffer = this.buffers['UpdateStats'].buffer || new ArrayBuffer( 12 );
         const bufferView = this.buffers['UpdateStats'].bufferView || new Int16Array( buffer );
         this.buffers['UpdateStats'].buffer = buffer;
         this.buffers['UpdateStats'].bufferView = bufferView;
@@ -70,8 +70,6 @@ export class PlayerNetwork {
         bufferView[ 3 ] = Math.floor( this.player.xp / 10000 );
         bufferView[ 4 ] = this.player.coins % 10000;
         bufferView[ 5 ] = Math.floor( this.player.coins / 10000 );
-        bufferView[ 6 ] = this.player.level;
-        bufferView[ 7 ] = this.player.levelBonuses;
 
         Network.send( 'PlayerStatsUpdate', this.player.socket, buffer, bufferView );
 
@@ -109,18 +107,19 @@ export class PlayerNetwork {
 
     public updateLevel () : void {
 
-        this.buffers['NewLevel'] = this.buffers['NewLevel'] || {};
-        const buffer = this.buffers['NewLevel'].buffer || new ArrayBuffer( 6 );
-        const bufferView = this.buffers['NewLevel'].bufferView || new Int16Array( buffer );
-        this.buffers['NewLevel'].buffer = buffer;
-        this.buffers['NewLevel'].bufferView = bufferView;
+        this.buffers['PlayerUpdateLevel'] = this.buffers['PlayerUpdateLevel'] || {};
+        const buffer = this.buffers['PlayerUpdateLevel'].buffer || new ArrayBuffer( 8 );
+        const bufferView = this.buffers['PlayerUpdateLevel'].bufferView || new Int16Array( buffer );
+        this.buffers['PlayerUpdateLevel'].buffer = buffer;
+        this.buffers['PlayerUpdateLevel'].bufferView = bufferView;
 
         //
 
         bufferView[ 1 ] = this.player.id;
         bufferView[ 2 ] = this.player.level;
+        bufferView[ 3 ] = this.player.levelBonuses;
 
-        Network.send( 'PlayerNewLevel', this.player.socket, buffer, bufferView );
+        this.arena.network.sendEventToPlayersInRange( this.player.tank.position, 'PlayerUpdateLevel', buffer, bufferView );
 
     };
 

@@ -36,25 +36,33 @@ export class PlayerCore {
 
     //
 
-    public updateStats ( xp: number, coins: number, level: number, levelBonuses: number ) : void {
-
-        if ( Arena.myLevel < level ) {
-
-            alert( 'Level up ' + ( level + 1 ) );
-
-        }
+    public updateStats ( xp: number, coins: number ) : void {
 
         Arena.myCoins = coins;
         Arena.myXP = xp;
-        Arena.myLevel = level;
-        Arena.myLevelBonuses = levelBonuses;
 
         window['userData'].coins = coins;
         window['userData'].xp = xp;
+
+        UI.InGame.updateCoins( coins );
+
+    };
+
+    public updateLevel ( level: number, levelBonuses: number ) : void {
+
+        Arena.myLevel = level;
+        Arena.myLevelBonuses = levelBonuses;
+
         window['userData'].level = level;
         window['userData'].levelBonuses = levelBonuses;
 
-        UI.InGame.updateCoins( coins );
+        //
+
+        if ( this.tank ) {
+
+            this.tank.gfx.levelUp( level );
+
+        }
 
     };
 
