@@ -281,6 +281,7 @@ export class CollisionManager {
                 //
 
                 object.parent.position.set( object.body.position.x, object.body.position.y, object.body.position.z );
+                object.parent.velocity.set( object.body.velocity.x, object.body.velocity.y, object.body.velocity.z );
 
             } else if ( object.parent.type === 'Bullet' ) {
 

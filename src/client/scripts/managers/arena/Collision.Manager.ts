@@ -28,8 +28,9 @@ class CollisionManagerCore {
                 type:       object.type,
                 radius:     object.radius,
                 size:       ( type === 'box' || type === 'tank' ) ? { x: object.size.x, y: object.size.y, z: object.size.z } : { x: 0, y: 0, z: 0 },
-                position:   { x: object.position.x, y: object.position.y, z: object.position.z },
+                position:   object.position.clone(),
                 rotation:   object.rotation,
+                velocity:   object.velocityCorrection ? object.velocityCorrection.clone() : false,
             },
             shapeType: type,
             isDynamic,
@@ -72,13 +73,14 @@ class CollisionManagerCore {
             if ( object.type !== 'Tank' ) continue;
 
             objects[ object.type + '-' + object.id ] = {
-                speed:          object.speed,
-                health:         object.health,
-                position:       object.stateNeedsCorrect ? { x: object.positionCorrection.x, y: object.positionCorrection.y, z: object.positionCorrection.z } : false,
-                rotation:       object.stateNeedsCorrect ? object.rotationCorrection : false,
-                moveDirection:  { x: object.moveDirection.x, y: object.moveDirection.y },
-                maxSpeed:       object.hull.speedCoef * object.engine.maxSpeed,
-                power:          object.engine.power,
+                speed:              object.speed,
+                health:             object.health,
+                position:           object.stateNeedsCorrect ? { x: object.positionCorrection.x, y: object.positionCorrection.y, z: object.positionCorrection.z } : false,
+                rotation:           object.stateNeedsCorrect ? object.rotationCorrection : false,
+                velocity:           object.stateNeedsCorrect ? object.velocityCorrection : false,
+                moveDirection:      { x: object.moveDirection.x, y: object.moveDirection.y },
+                maxSpeed:           object.hull.speedCoef * object.engine.maxSpeed,
+                power:              object.engine.power,
             };
 
             //
@@ -87,6 +89,8 @@ class CollisionManagerCore {
 
                 object.rotationCorrectValue = OMath.formatAngle( object.rotationCorrection - object.gfx.object.rotation.y );
                 object.rotationCorrection = 0;
+
+                object.velocityCorrection.set( 0, 0, 0 );
 
                 object.positionCorrectValue.set( object.positionCorrection.x - object.gfx.object.position.x, object.positionCorrection.y - object.gfx.object.position.y, object.positionCorrection.z - object.gfx.object.position.z );
                 object.positionCorrection.set( 0, 0, 0 );
@@ -124,7 +128,7 @@ class CollisionManagerCore {
                     if ( ! objParent ) continue;
 
                     objParent.acceleration = objects[ i ].acceleration;
-                    objParent.velocity = objects[ i ].velocity;
+                    objParent.forwardVelocity = objects[ i ].forwardVelocity;
                     objParent.updateMovement( delta, objects[ i ].directionVelocity, objects[ i ].angularVelocity );
 
                     objParent.physicsBox.position.x = objects[ i ].position.x;

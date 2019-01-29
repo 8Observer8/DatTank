@@ -35,6 +35,7 @@ export class TankObject {
 
     public position: OMath.Vec3 = new OMath.Vec3();
     public rotation: number = 0;
+    public velocity: OMath.Vec3 = new OMath.Vec3();
     public health: number = 100;
     public ammo: number = 0;
     public viewRange: number = 700;

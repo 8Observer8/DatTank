@@ -114,12 +114,12 @@ class TankGfx {
         const track1Map = this.hull.material[1].map;
         const track2Map = this.hull.material[2].map;
 
-        if ( Math.abs( tank.velocity ) > 20 ) {
+        if ( Math.abs( tank.forwardVelocity ) > 20 ) {
 
-            track1Map.offset.y = track1Map.offset.y - 0.00006 * tank.velocity * delta / 16;
+            track1Map.offset.y = track1Map.offset.y - 0.00006 * tank.forwardVelocity * delta / 16;
             if ( track1Map.offset.y > 1 ) track1Map.offset.y = 0;
 
-            track2Map.offset.y = track2Map.offset.y - 0.00006 * tank.velocity * delta / 16;
+            track2Map.offset.y = track2Map.offset.y - 0.00006 * tank.forwardVelocity * delta / 16;
             if ( track2Map.offset.y > 1 ) track2Map.offset.y = 0;
 
         } else if ( tank.moveDirection.y === -1 ) {
@@ -154,7 +154,7 @@ class TankGfx {
 
         //
 
-        this.movingSound.setVolume( this.tank.velocity / 40 );
+        this.movingSound.setVolume( this.tank.forwardVelocity / 40 );
 
         this.updateTracks( time, delta );
         this.traces.update( time, delta );

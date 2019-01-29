@@ -110,36 +110,41 @@ export class ArenaNetwork {
                         y:              data[ offset + 7 ],
                         z:              data[ offset + 8 ],
                     },
-                    rotation:           data[ offset + 9 ] / 1000,
-                    health:             data[ offset + 10 ],
+                    velocity:   {
+                        x:              data[ offset +  9 ] / 10,
+                        y:              data[ offset + 10 ] / 10,
+                        z:              data[ offset + 11 ] / 10,
+                    },
+                    rotation:           data[ offset + 12 ] / 1000,
+                    health:             data[ offset + 13 ],
                     ammo:               0,
                     hull:   {
-                        nid:            data[ offset + 11 ],
-                        speedCoef:      data[ offset + 12 ],
+                        nid:            data[ offset + 14 ],
+                        speedCoef:      data[ offset + 15 ],
                         ammoCapacity:   0,
                         armorCoef:      0,
                     },
                     cannon: {
-                        nid:            data[ offset + 13 ],
-                        range:          data[ offset + 14 ],
+                        nid:            data[ offset + 16 ],
+                        range:          data[ offset + 17 ],
                         rpm:            0,
                         overheat:       0,
                     },
                     armor: {
-                        nid:            data[ offset + 15 ],
-                        armor:          data[ offset + 16 ],
+                        nid:            data[ offset + 18 ],
+                        armor:          data[ offset + 19 ],
                     },
                     engine: {
-                        nid:            data[ offset + 17 ],
-                        maxSpeed:       data[ offset + 18 ],
-                        power:          data[ offset + 19 ] * 100,
+                        nid:            data[ offset + 20 ],
+                        maxSpeed:       data[ offset + 21 ],
+                        power:          data[ offset + 22 ] * 100,
                     },
                 },
             };
 
             //
 
-            offset += 20;
+            offset += 23;
 
             for ( let j = 0; j < 13; j ++ ) {
 

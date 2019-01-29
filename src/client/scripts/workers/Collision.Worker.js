@@ -90,6 +90,12 @@ function addObject ( object, type, isDynamic ) {
 
     }
 
+    if ( object.velocity ) {
+
+        collisionBox.body.velocity.set( object.velocity.x, object.velocity.y, object.velocity.z );
+
+    }
+
     collisionBox.body.position.set( object.position.x, object.position.y, object.position.z );
     collisionBox.body.type = ( ! isDynamic ) ? CANNON.Body.STATIC : CANNON.Body.DYNAMIC;
 
@@ -147,6 +153,12 @@ function update ( delta, objectsInfo ) {
             object.body.position.x = objectInfo.position.x;
             object.body.position.y = objectInfo.position.y;
             object.body.position.z = objectInfo.position.z;
+
+        }
+
+        if ( object.velocity ) {
+
+            collisionBox.body.velocity.set( object.velocity.x, object.velocity.y, object.velocity.z );
 
         }
 
@@ -255,7 +267,7 @@ function update ( delta, objectsInfo ) {
             acceleration:           object.acceleration,
             position:               { x: object.body.position.x, y: object.body.position.y, z: object.body.position.z },
             rotation:               rot.y,
-            velocity:               object['prevForwardVelocity'],
+            forwardVelocity:        object['prevForwardVelocity'],
             angularVelocity:        { x: object.body.angularVelocity.x, y: object.body.angularVelocity.y, z: object.body.angularVelocity.z },
             directionVelocity:      { x: object.body.velocity.x, y: object.body.velocity.y, z: object.body.velocity.z }
         });

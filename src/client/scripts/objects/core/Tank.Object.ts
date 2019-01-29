@@ -43,12 +43,13 @@ export class TankObject {
 
     public moveDirection: OMath.Vec2 = new OMath.Vec2();
     public acceleration: number = 0;
-    public velocity: number = 0;
+    public forwardVelocity: number = 0;
     public directionVelocity: OMath.Vec3 = new OMath.Vec3();
     public angularVelocity: OMath.Vec3 = new OMath.Vec3();
 
     public position: OMath.Vec3 = new OMath.Vec3();
     public rotation: number = 0;
+    public velocityCorrection: OMath.Vec3 = new OMath.Vec3();
     public size: OMath.Vec3 = new OMath.Vec3( 30, 10, 60 );
 
     public network: TankNetwork = new TankNetwork();
@@ -219,8 +220,9 @@ export class TankObject {
 
     };
 
-    public syncState ( positionX: number, positionY: number, positionZ: number, rotation: number ) : void {
+    public syncState ( positionX: number, positionY: number, positionZ: number, rotation: number, velocityX: number, velocityY: number, velocityZ: number ) : void {
 
+        this.velocityCorrection.set( velocityX, velocityY, velocityZ );
         this.positionCorrection.set( positionX, positionY, positionZ );
 
         rotation = OMath.formatAngle( rotation );
@@ -354,6 +356,8 @@ export class TankObject {
 
         this.id = params.id;
 
+        params.velocity = params.velocity || new OMath.Vec3( 0, 0, 0 );
+        this.velocityCorrection.set( params.velocity.x, params.velocity.y, params.velocity.z );
         this.position.set( params.position.x, params.position.y, params.position.z );
         this.gfx.setPosition( this.position );
 

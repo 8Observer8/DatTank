@@ -82,7 +82,7 @@ class GraphicsCore {
         },
     };
 
-    public fog = { color: 0xc4c4c2, density: 0.0025 };
+    public fog = { color: 0xc4c4c2, density: 0.0020 };
 
     //
 

@@ -24,8 +24,8 @@ export class Rock1Decoration extends DecorationObject {
         this.uvOffset.set( 0, 0 );
         this.size.set( 1.2 * this.scale.x, 100, 1.2 * this.scale.z );
 
-        CollisionManager.addObject( { rotation: 0, position: { x: this.position.x, y: 0, z: this.position.z + 40 }, size: this.size }, 'box', false );
-        CollisionManager.addObject( { rotation: 0, position: { x: this.position.x, y: 0, z: this.position.z - 45 }, size: this.size }, 'box', false );
+        CollisionManager.addObject( { rotation: 0, position: new OMath.Vec3( this.position.x, 0, this.position.z + 40 ), size: this.size }, 'box', false );
+        CollisionManager.addObject( { rotation: 0, position: new OMath.Vec3( this.position.x, 0, this.position.z - 45 ), size: this.size }, 'box', false );
 
     };
 
