@@ -16,12 +16,14 @@ export class IntersectManager {
 
     public addObject ( object: THREE.Object3D | THREE.Mesh ) : void {
 
+        if ( ! object ) return;
         this.intersectObjectsList.push( object );
 
     };
 
     public removeObject ( object: THREE.Mesh | THREE.Object3D ) : void {
 
+        if ( ! object ) return;
         const newList = [];
 
         for ( let i = 0, il = this.intersectObjectsList.length; i < il; i ++ ) {
