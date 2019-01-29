@@ -118,6 +118,9 @@ class TowerGfx {
         this.object.add( this.topMesh );
         this.topMesh.setAnimationFPS( 'shoot', 6 );
 
+        GfxCore.intersectManager.addObject( this.topMesh );
+        GfxCore.intersectManager.addObject( this.baseMesh );
+
         //
 
         if ( ! GfxCore.coreObjects['towers'] ) {
@@ -139,6 +142,9 @@ class TowerGfx {
     };
 
     public dispose () : void {
+
+        GfxCore.intersectManager.removeObject( this.topMesh );
+        GfxCore.intersectManager.removeObject( this.baseMesh );
 
         this.label.dispose();
         GfxCore.coreObjects['towers'].remove( this.object );

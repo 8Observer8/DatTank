@@ -325,7 +325,7 @@ export class TankNetwork {
 
         for ( let i = 0, il = newTanks.length; i < il; i ++ ) {
 
-            size += 20; // general
+            size += 23; // general
             size += 13; // login
             size += ( newTanks[ i ].id === this.tank.id ) ? 5 : 0; // personal
 

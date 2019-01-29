@@ -29,10 +29,9 @@ export class LaserShotGfx {
     private offset: OMath.Vec3;
     private target: any;
     public collisionPoint: OMath.Vec3 = new OMath.Vec3();
-
-    private intersectObjects: any;
-    private raycaster: THREE.Raycaster = new THREE.Raycaster();
     private collisionEffect: LaserCollisionGfx = new LaserCollisionGfx();
+
+    private raycastIteration: number = 0;
 
     //
 
@@ -61,21 +60,17 @@ export class LaserShotGfx {
 
         //
 
-        this.raycaster['iter'] = this.raycaster['iter'] ? this.raycaster['iter'] + 1 : 1;
+        this.raycastIteration ++;
 
-        if ( this.raycaster['iter'] === 3 ) {
+        if ( this.raycastIteration === 3 ) {
 
-            this.raycaster['iter'] = 0;
+            this.raycastIteration = 0;
 
             const position = new THREE.Vector3( this.offset.x, this.offset.y, this.offset.z );
             position.applyEuler( this.parent.gfx.object.rotation );
             position.add( this.parent.gfx.object.position );
 
-            this.raycaster.near = 5;
-            this.raycaster.far = this.dPos;
-            this.raycaster.ray.direction.set( Math.cos( Math.PI / 2 - this.parent.rotation ), 0, Math.sin( Math.PI / 2 - this.parent.rotation ) );
-            this.raycaster.ray.origin.copy( position );
-            const intersects = this.raycaster.intersectObjects( this.intersectObjects, true );
+            const intersects = GfxCore.intersectManager.getIntersection( position, Math.PI / 2 - this.parent.rotation, this.dPos );
 
             //
 
@@ -181,12 +176,6 @@ export class LaserShotGfx {
     };
 
     public init () : void {
-
-        this.intersectObjects = [
-            GfxCore.coreObjects['tanks'],
-            GfxCore.coreObjects['towers'],
-            GfxCore.coreObjects['decorations'],
-        ];
 
         this.sound = new THREE.PositionalAudio( GfxCore.audioListener );
         this.sound.setRefDistance( 100 );

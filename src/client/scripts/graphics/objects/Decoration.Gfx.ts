@@ -19,6 +19,7 @@ export class DecorationGfx {
 
     public dispose () : void {
 
+        GfxCore.intersectManager.removeObject( this.object );
         GfxCore.coreObjects['decorations'].remove( this.object );
 
     };
@@ -100,6 +101,8 @@ export class DecorationGfx {
         this.object.add( mesh );
         this.object.updateMatrixWorld( true );
         this.object.matrixAutoUpdate = false;
+
+        GfxCore.intersectManager.addObject( this.object );
 
         //
 

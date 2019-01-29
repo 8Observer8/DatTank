@@ -22,6 +22,7 @@ import { LaserBeamShotManager } from './managers/LaserBeamShot.Manager';
 import { DeathExplosionManager } from './managers/DeathExplosion.Manager';
 import { BulletCannonShotSmokeManager } from './managers/BulletCannonShotSmoke.Manager';
 import { BulletShotManager } from './managers/BulletShot.Manager';
+import { IntersectManager } from './managers/Intersect.Manager';
 
 //
 
@@ -42,6 +43,8 @@ class GraphicsCore {
     public camera: THREE.PerspectiveCamera;
     private lookAtVector: THREE.Vector3 = new THREE.Vector3();
     private cameraOffset = new THREE.Vector3();
+
+    public intersectManager: IntersectManager = new IntersectManager();
 
     public container: HTMLCanvasElement;
     public renderer: THREE.WebGLRenderer;

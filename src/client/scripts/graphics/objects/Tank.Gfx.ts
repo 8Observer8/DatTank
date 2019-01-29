@@ -329,6 +329,9 @@ class TankGfx {
         this.object.add( this.wrapper );
         this.object.rotation.y = tank.rotation;
 
+        GfxCore.intersectManager.addObject( this.cannon );
+        GfxCore.intersectManager.addObject( this.hull );
+
         //
 
         if ( ! GfxCore.coreObjects['tanks'] ) {
@@ -369,6 +372,9 @@ class TankGfx {
     public dispose () : void {
 
         // dispose tank traces
+
+        GfxCore.intersectManager.removeObject( this.cannon );
+        GfxCore.intersectManager.removeObject( this.hull );
 
         this.traces.dispose();
         this.label.dispose();
