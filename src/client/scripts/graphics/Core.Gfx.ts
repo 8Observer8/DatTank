@@ -23,6 +23,7 @@ import { DeathExplosionManager } from './managers/DeathExplosion.Manager';
 import { BulletCannonShotSmokeManager } from './managers/BulletCannonShotSmoke.Manager';
 import { BulletShotManager } from './managers/BulletShot.Manager';
 import { IntersectManager } from './managers/Intersect.Manager';
+import { LevelUpManager } from './managers/LevelUp.Manager';
 
 //
 
@@ -162,6 +163,7 @@ class GraphicsCore {
         DeathExplosionManager.init();
         ExplosionManager.init();
         HealthChangeLabelManager.init();
+        LevelUpManager.init();
 
         // user event handlers
 
@@ -287,6 +289,7 @@ class GraphicsCore {
         DeathExplosionManager.update( time, delta );
         HealthChangeLabelManager.update( time, delta );
         LaserBeamShotManager.update( time, delta );
+        LevelUpManager.update( time, delta );
 
         this.updateCamera( delta, Arena.me.tank.gfx.object.position, Arena.me.tank.gfx.object.rotation.y );
 

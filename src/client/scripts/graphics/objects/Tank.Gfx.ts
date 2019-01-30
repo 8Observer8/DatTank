@@ -11,6 +11,7 @@ import { GfxCore } from '../Core.Gfx';
 import { TankLabelGfx } from '../effects/labels/TankLabel.Gfx';
 import { TankObject } from '../../objects/core/Tank.Object';
 import { ResourceManager } from '../../managers/other/Resource.Manager';
+import { LevelUpManager } from '../managers/LevelUp.Manager';
 import { TankTracesGfx } from '../effects/other/TankTraces.Gfx';
 import { DeathExplosionManager } from '../managers/DeathExplosion.Manager';
 import { FriendlyFireLabelGfx } from '../effects/labels/FriendlyFireLabel.Gfx';
@@ -41,7 +42,8 @@ class TankGfx {
 
     public levelUp ( level: number ) : void {
 
-        // todo
+        const levelUpEffect = LevelUpManager.getNewLevelUp();
+        levelUpEffect.activate( this.object, level );
 
     };
 
@@ -100,6 +102,7 @@ class TankGfx {
 
     public shoot () : void {
 
+        this.levelUp( 5 );
         // this.mesh.playAnimation('shoot');
 
     };

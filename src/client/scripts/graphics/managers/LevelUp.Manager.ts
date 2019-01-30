@@ -15,11 +15,11 @@ class LevelUpManagerCore {
 
     //
 
-    private getNewLevelUp () : LevelUpGfx {
+    public getNewLevelUp () : LevelUpGfx {
 
         for ( let i = 0, il = this.pool.length; i < il; i ++ ) {
 
-            if ( this.pool[ i ].active === false ) {
+            if ( this.pool[ i ].isActive() === false ) {
 
                 return this.pool[ i ];
 
@@ -37,19 +37,35 @@ class LevelUpManagerCore {
 
     public update ( time: number, delta: number ) : void {
 
-        // todo
+        for ( let i = 0, il = this.pool.length; i < il; i ++ ) {
+
+            this.pool[ i ].update( time, delta );
+
+        }
 
     };
 
     public init () : void {
 
-        // todo
+        for ( let i = 0; i < this.poolSize; i ++ ) {
+
+            const levelUp = new LevelUpGfx();
+            levelUp.init();
+            this.pool.push( levelUp );
+
+        }
 
     };
 
     constructor () {
 
-        // todo
+        if ( LevelUpManagerCore.instance ) {
+
+            return LevelUpManagerCore.instance;
+
+        }
+
+        LevelUpManagerCore.instance = this;
 
     };
 
