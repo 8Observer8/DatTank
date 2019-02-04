@@ -102,7 +102,7 @@ class TankGfx {
 
     public shoot () : void {
 
-        this.levelUp( 5 );
+        // this.levelUp( 5 );
         // this.mesh.playAnimation('shoot');
 
     };

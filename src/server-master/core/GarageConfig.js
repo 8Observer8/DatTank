@@ -27,7 +27,12 @@ var GarageConfig = {
         18:     { score: 3600 },
         19:     { score: 3900 },
         20:     { score: 4400 },
-        21:     { score: 7000 },
+        21:     { score: 5000 },
+        22:     { score: 6000 },
+        23:     { score: 6500 },
+        24:     { score: 7000 },
+        25:     { score: 10000 },
+        26:     { score: 100000 },
     },
 
     levels: {
