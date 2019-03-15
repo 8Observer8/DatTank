@@ -63,7 +63,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "tslint src/**/*.ts -t verbose",
-    "start": "npm run lint & gulp"
+    "start": "npm run lint & gulp",
+    "travis": "npm run lint"
   },
   "repository": {
     "type": "git",
