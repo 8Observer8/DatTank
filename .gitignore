@@ -1,8 +1,6 @@
-/src/server/node_modules/
-/bin/
-/node_modules/
 /.vscode/
-/package-lock.json
 /.idea/
 /src/.idea/
-/typings/
+/bin/
+/node_modules/
+/package-lock.json

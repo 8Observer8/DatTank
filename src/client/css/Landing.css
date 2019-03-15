@@ -454,7 +454,7 @@
 
 .landing #signin-box-wrapper #signin-box #signup-btn {
     display: block;
-    background-image: linear-gradient(#30a6de, #1b7ba9);
+    background-image: linear-gradient(#3C5999, #426a8c);
     border: 1px solid #76909d;
     padding: 10px 0px;
     margin-top: 10px;
@@ -474,6 +474,7 @@
     width: 18px;
     height: 18px;
     left: 70px;
+    margin-left: -5px;
     background-image: url(/resources/img/fb-icon.png);
     background-size: 100% 100%;
 }

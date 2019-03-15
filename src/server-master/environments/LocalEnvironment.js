@@ -13,8 +13,8 @@ var config = {
     },
 
     fbApp: {
-        key:    '1845382232185797',
-        secret: 'a0fd8deff479d4655cafe7592f88d2a7',
+        key:    'app-key',
+        secret: 'unicorns-rulez',
         cbUrl:  'http://localhost:8092/auth/facebook/callback'
     }
 

@@ -14,8 +14,8 @@ var config = {
     },
 
     fbApp: {
-        key:    '178574662917890',
-        secret: '076201bbaa326d7ba0ab2fce011f068d',
+        key:    'app-key',
+        secret: 'unicorns-rulez',
         cbUrl:  'https://dattank.io/auth/facebook/callback'
     }
 
